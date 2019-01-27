@@ -19,7 +19,7 @@ ttd_build_job:
   stage: build
   script:
   - echo $CI_PIPELINE_ID
-  - docker build -f DockerfileApp -t iiua:build$CI_PIPELINE_ID .
+  - docker build -f DockerfileApp -t iiuaui:build$CI_PIPELINE_ID .
 
 ttd_deploy_job:
   stage: deploy
