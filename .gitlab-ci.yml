@@ -25,6 +25,6 @@ ttd_deploy_job:
   stage: deploy
   script:
   - echo $CI_PIPELINE_ID
-  - docker top iiua && docker stop iiua && docker rm iiua
+  - docker top iiuaui && docker stop iiuaui && docker rm iiuaui
  #- docker-compose up -d
   - docker run -d  --name iiuaui --env VIRTUAL_HOST=masterui.alexduxa.online --env VIRTUAL_PORT=4200  --restart=always iiuaui:build$CI_PIPELINE_ID
