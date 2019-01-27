@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  iiua:
+    container_name: 'iiuaui-dev'
+    image: "iiuaui:build${CI_PIPELINE_ID}"
+    restart: always
+    ports:
+     - "80:4200"         
+    environment:
+    - VIRTUAL_HOST=masterui.alexduxa.online
+    network_mode: bridge     
