@@ -1,3 +1,4 @@
+import { PrimeNgModule } from './primeng/primeng.module';
 import { MaterialModule } from './angular-material/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,7 +10,6 @@ import { IndexComponent } from './components/index/index.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
-
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PrimeNgModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
