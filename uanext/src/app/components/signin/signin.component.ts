@@ -13,7 +13,7 @@ export class SigninComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private authService: AuthorizationService) {
     this.signinForm = this.formBuilder.group({
-      login: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
