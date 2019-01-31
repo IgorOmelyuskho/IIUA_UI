@@ -5,12 +5,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { IndexComponent } from './components/index/index.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+
+const childHomeRoutes: Routes = [
+  // { path: '', component: ????,  redirectTo: '????', pathMatch: 'full' },
+  { path: 'profile', component: ProfilePageComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
+];
 
 const routes: Routes = [
   { path: '', component: IndexComponent, pathMatch: 'full' },
   { path: 'signin', component: SigninComponent},
   { path: 'signup', component: SignupComponent },
-  { path: 'home', component: HomePageComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
   { path: '**', redirectTo: ''}
 ];
 

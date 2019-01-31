@@ -123,5 +123,10 @@
       }
     }
   },
-  "defaultProject": "uanext"
+  "defaultProject": "uanext",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

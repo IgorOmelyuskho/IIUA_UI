@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">SignIn</button>
+            <button [disabled]="submitted && !signinForm.valid" class="btn btn-primary">SignIn</button>
           </div>
         </form>
       </div>

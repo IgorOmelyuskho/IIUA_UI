@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthorizationService } from './../../services/authorization.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -5,13 +6,13 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthorizationService) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthorizationService, private router: Router) {
     this.signupForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -74,9 +75,10 @@ export class SignupComponent implements OnInit {
     this.authService.signUp(this.signupForm.value).subscribe(
       response => {
         console.log(response);
+        this.router.navigate(['signin']);
       },
       err => {
-        console.log(err);
+        console.warn(err);
       }
     );
   }

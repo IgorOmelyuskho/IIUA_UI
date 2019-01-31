@@ -16,6 +16,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { HeaderComponent } from './components/header/header.component';
     SigninComponent,
     SignupComponent,
     HomePageComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProfilePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { HeaderComponent } from './components/header/header.component';
     BrowserAnimationsModule,
     PrimeNgModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    TextMaskModule
   ],
   providers: [
     AuthGuard,
