@@ -16,8 +16,11 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
-import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 import { TextMaskModule } from 'angular2-text-mask';
+import { InvestorComponent } from './components/investor/investor.component';
+import { VendorComponent } from './components/vendor/vendor.component';
+import { VendorProfileComponent } from './components/vendor-profile/vendor-profile.component';
+import { InvestorProfileComponent } from './components/investor-profile/investor-profile.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { TextMaskModule } from 'angular2-text-mask';
     SignupComponent,
     HomePageComponent,
     HeaderComponent,
-    ProfilePageComponent,
+    InvestorComponent,
+    VendorComponent,
+    VendorProfileComponent,
+    InvestorProfileComponent,
   ],
   imports: [
     BrowserModule,

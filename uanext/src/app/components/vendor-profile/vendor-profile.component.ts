@@ -1,20 +1,18 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserDto } from './../../models/userDto';
-import { InvestorRole } from './../../models/investorRole';
-import { Component, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { VendorRole } from 'src/app/models/vendorRole';
+import { Component, OnInit } from '@angular/core';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.scss']
+  selector: 'app-vendor-profile',
+  templateUrl: './vendor-profile.component.html',
+  styleUrls: ['./vendor-profile.component.scss']
 })
-export class ProfilePageComponent implements OnInit {
-  profile: VendorRole | InvestorRole = null;
+export class VendorProfileComponent implements OnInit {
+  profile: VendorRole = null;
   editProfileForm: FormGroup;
   isLoaded = false;
-  mask: any[] = ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+  mask: any[] = ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   constructor(private formBuilder: FormBuilder, private profileService: ProfileService) {
     this.editProfileForm = this.formBuilder.group({
@@ -25,7 +23,7 @@ export class ProfilePageComponent implements OnInit {
   }
 
   ngOnInit() {
-    const user = {
+    const user = { // getLocalUser() from authService??
       token: localStorage.getItem('token'),
       // username ???
       // email ???
@@ -39,10 +37,10 @@ export class ProfilePageComponent implements OnInit {
         phone: '+1 (123) 456-7890',
         created: 'string',
         lastEdited: 'string',
-        phoneVerified: 'boolean',
-        emailVerified: 'boolean',
+        phoneVerified: true,
+        emailVerified: true,
         Itn: 'string',
-        ItnVerified: 'boolean'
+        ItnVerified: true
       };
       this.editProfileForm.setValue({
         fullName: this.profile.fullName,
@@ -53,9 +51,8 @@ export class ProfilePageComponent implements OnInit {
     }, 3000);
 
 
-
     // this.profileService.getProfile(user).subscribe(
-    //   (response: VendorRole | InvestorRole) => {
+    //   (response: InvestorRole) => {
     //     this.profile = response,
     //     this.isLoaded = true,
     //   },
@@ -72,8 +69,7 @@ export class ProfilePageComponent implements OnInit {
   onSubmit() {
     if (this.editProfileForm.valid) {
       console.log(this.editProfileForm.controls);
+      // this.profileService.updateProfile(this.editProfileForm.controls);
     }
   }
-
 }
-

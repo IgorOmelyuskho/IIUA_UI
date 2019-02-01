@@ -1,6 +1,5 @@
 
-// use for Signup and Signin Its right?
-// or create several classes?
+// use for Signup and Signin
 export class UserDto {
     firstName?: string;
     lastName?: string;
@@ -8,6 +7,4 @@ export class UserDto {
     password: string;
     rePassword?: string;
     email?: string;
-    // token?: string;
-    // id?: string;
 }
