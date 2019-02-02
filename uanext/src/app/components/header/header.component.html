@@ -1,6 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div>Navbar</div>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
-  <div>Хедер будет один для всех роутов? Например если здесь разместить signin, signup, edit profile то както нелогично будет</div>
+<nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">Navbar</span>
+  <div class='navbar-text'>Navbar for signin, signup and index</div>
+  <div class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </div>
+  <a class="nav-link" routerLink="/signin">Sign in <span class="sr-only">(current)</span></a>
+  <a class="nav-link" routerLink="/signup">Sign up <span class="sr-only">(current)</span></a>
 </nav>
