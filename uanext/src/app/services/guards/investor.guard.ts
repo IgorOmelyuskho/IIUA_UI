@@ -24,6 +24,10 @@ export class InvestorGuard implements CanActivate {
 
     const token = localStorage.getItem('token');
 
+    if (token == null || token === '') {
+      return false;
+    }
+
     try {
       const decodedToken: any = this.helper.decodeToken(token);
       const isExpired: boolean = this.helper.isTokenExpired(token);
