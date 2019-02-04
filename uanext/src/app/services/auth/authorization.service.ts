@@ -9,13 +9,18 @@ import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
 import { UserDto } from '../../models';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ProfileService } from '../profile/profile.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
 
-  constructor(private http: HttpClient, private stateService: StateService, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private stateService: StateService,
+    private router: Router,
+    private profileService: ProfileService) { }
 
   init() {
     const helper = new JwtHelperService();
@@ -41,9 +46,9 @@ export class AuthorizationService {
       return;
     }
 
-    // fetchVendor() ?
-    // fetchInvestor() ?
-    this.fetchUser().subscribe(
+    // this.profileService.fetchVendor() ?
+    // this.profileService.fetchInvestor() ?
+    this.profileService.fetchUser().subscribe(
       response => {
         if (response.status !== 200) {
           this.signOut();
@@ -62,18 +67,6 @@ export class AuthorizationService {
       // ()  => {} complete is necessarily???
     );
   }
-
-  // I dont know what return api
-  // fetchUser call only in init() or maybe in another method? We need this method in this service?
-  fetchUser(): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/User`, {}, { observe: 'response' });
-  }
-
-  // fetchInvestor(): Observable<any> {
-  // }
-
-  // fetchVendor(): Observable<any> {
-  // }
 
   // any because api return empty or {"message": "User Email \"string4@gmail.com\" is already taken"}
   signUp(userDto: UserDto): Observable<any> {
