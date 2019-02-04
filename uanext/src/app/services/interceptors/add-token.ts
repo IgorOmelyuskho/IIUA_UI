@@ -8,9 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AddTokenInterceptor implements HttpInterceptor {
 
-    constructor() {
-        //
-    }
+    constructor() { }
 
     intercept(
         request: HttpRequest<any>,

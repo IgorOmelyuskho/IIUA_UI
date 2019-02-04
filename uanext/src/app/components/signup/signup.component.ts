@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
-import { AuthorizationService } from './../../services/authorization.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+
+import { AuthorizationService } from '../../services/auth/authorization.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,7 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      username: ['', Validators.required],
+      userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       rePassword: ['', [Validators.required, this.matchOtherValidator('password')]],
@@ -75,7 +76,9 @@ export class SignupComponent implements OnInit {
     this.authService.signUp(this.signupForm.value).subscribe(
       response => {
         console.log(response);
-        this.router.navigate(['signin']);
+        if (response.status === 200) {
+          this.router.navigate(['signin']);
+        }
       },
       err => {
         console.warn(err);

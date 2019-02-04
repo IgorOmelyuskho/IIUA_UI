@@ -1,18 +1,17 @@
-import { AuthorizationService } from './../services/authorization.service';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
+import { AuthorizationService } from '../auth/authorization.service';
+
 @Injectable({
     providedIn: 'root'
 })
 export class ErrorInterceptor  implements HttpInterceptor {
 
-    constructor(private authService: AuthorizationService) {
-        //
-    }
+    constructor(private authService: AuthorizationService) { }
 
     intercept(
         request: HttpRequest<any>,

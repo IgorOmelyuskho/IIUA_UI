@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from 'src/app/services/profile.service';
-import { InvestorRole } from 'src/app/models/investorRole';
+
+import { InvestorRole } from 'src/app/models';
 
 @Component({
   selector: 'app-investor-profile',
@@ -14,7 +14,7 @@ export class InvestorProfileComponent implements OnInit {
   isLoaded = false;
   mask: any[] = ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
-  constructor(private formBuilder: FormBuilder, private profileService: ProfileService) {
+  constructor(private formBuilder: FormBuilder) {
     this.editProfileForm = this.formBuilder.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

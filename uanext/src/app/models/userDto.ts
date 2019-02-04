@@ -1,10 +1,10 @@
 
 // use for Signup and Signin
-export class UserDto {
+export interface UserDto {
     firstName?: string;
     lastName?: string;
-    username?: string;
+    userName?: string;
     password: string;
     rePassword?: string;
-    email?: string;
+    email: string;
 }

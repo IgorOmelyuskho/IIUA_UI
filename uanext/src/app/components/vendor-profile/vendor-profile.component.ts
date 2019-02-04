@@ -1,7 +1,7 @@
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { VendorRole } from 'src/app/models/vendorRole';
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from 'src/app/services/profile.service';
+
+import { VendorRole } from 'src/app/models';
 
 @Component({
   selector: 'app-vendor-profile',
@@ -14,7 +14,7 @@ export class VendorProfileComponent implements OnInit {
   isLoaded = false;
   mask: any[] = ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
-  constructor(private formBuilder: FormBuilder, private profileService: ProfileService) {
+  constructor(private formBuilder: FormBuilder) {
     this.editProfileForm = this.formBuilder.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],

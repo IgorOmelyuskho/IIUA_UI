@@ -1,14 +1,19 @@
-import { VendorProfileComponent } from './components/vendor-profile/vendor-profile.component';
-import { AuthGuard } from './guards/auth.guard';
-import { HomePageComponent } from './components/home-page/home-page.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { IndexComponent } from './components/index/index.component';
-import { SigninComponent } from './components/signin/signin.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { InvestorComponent } from './components/investor/investor.component';
-import { VendorComponent } from './components/vendor/vendor.component';
-import { InvestorProfileComponent } from './components/investor-profile/investor-profile.component';
+
+import { IndexComponent } from './components';
+import { SigninComponent } from './components';
+import { SignupComponent } from './components';
+import { InvestorComponent } from './components';
+import { VendorComponent } from './components';
+import { InvestorProfileComponent } from './components';
+import { VendorProfileComponent } from './components';
+import { HomePageComponent } from './components';
+
+import { AuthGuard } from './services/guards';
+import { InvestorGuard } from './services/guards';
+import { VendorGuard } from './services/guards';
+
 
 const childInvestorRoutes: Routes = [
   { path: 'profile', component: InvestorProfileComponent },
@@ -19,8 +24,8 @@ const childVendorRoutes: Routes = [
 ];
 
 const childHomeRoutes: Routes = [
-  { path: 'investor', component: InvestorComponent, children: childInvestorRoutes },
-  { path: 'vendor', component: VendorComponent, children: childVendorRoutes }
+  { path: 'investor', component: InvestorComponent, children: childInvestorRoutes, canActivate: [InvestorGuard] },
+  { path: 'vendor', component: VendorComponent, children: childVendorRoutes, canActivate: [VendorGuard] }
 ];
 
 const routes: Routes = [

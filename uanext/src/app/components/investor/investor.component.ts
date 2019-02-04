@@ -1,7 +1,7 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InvestorRole } from 'src/app/models/investorRole';
+
+import { InvestorRole } from 'src/app/models';
 
 @Component({
   selector: 'app-investor',

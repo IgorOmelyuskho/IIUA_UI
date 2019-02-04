@@ -1,4 +1,4 @@
-export class InvestorRole {
+export interface InvestorRole {
   fullName: string;
   email: string;
   phone: string;
