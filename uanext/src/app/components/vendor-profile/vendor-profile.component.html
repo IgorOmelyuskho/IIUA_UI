@@ -7,23 +7,23 @@
     <div class="col-md-6 offset-md-3">
       <div class="form-group">
         <label>Created</label>
-        <input disabled=true type="text" class="form-control" value={{profile?.created}} />
+        <input disabled=true type="text" class="form-control" value={{vendor?.created}} />
       </div>
       <div class="form-group">
         <label>Last edited</label>
-        <input disabled=true type="text" class="form-control" value={{profile?.lastEdited}} />
+        <input disabled=true type="text" class="form-control" value={{vendor?.lastEdited}} />
       </div>
       <div class="form-group">
         <label>Phone verified</label>
-        <input disabled=true type="text" class="form-control" value={{profile?.phoneVerified}} />
+        <input disabled=true type="text" class="form-control" value={{vendor?.phoneVerified}} />
       </div>
       <div class="form-group">
         <label>Email verified</label>
-        <input disabled=true type="text" class="form-control" value={{profile?.emailVerified}} />
+        <input disabled=true type="text" class="form-control" value={{vendor?.emailVerified}} />
       </div>
       <div class="form-group">
         <label>Itn verified</label>
-        <input disabled=true type="text" class="form-control" value={{profile?.ItnVerified}} />
+        <input disabled=true type="text" class="form-control" value={{vendor?.ItnVerified}} />
       </div>
       <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
