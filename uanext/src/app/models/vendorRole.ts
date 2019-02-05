@@ -4,8 +4,8 @@ export interface VendorRole {
   phone: string;
   created: string;
   lastEdited: string;
+  itn: string;
   phoneVerified: boolean;
   emailVerified: boolean;
-  Itn: string;
-  ItnVerified: boolean;
+  itnVerified: boolean;
 }

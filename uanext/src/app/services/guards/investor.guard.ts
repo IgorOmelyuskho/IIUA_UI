@@ -18,26 +18,29 @@ export class InvestorGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    if (this.authService.userIsAuthorized() === false) {
-      return false;
-    }
+      // TODO
+    // if (this.authService.userIsAuthorized() === false) {
+    //   return false;
+    // }
 
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
+    // let decodedToken: any;
+    // let isExpired: boolean;
 
-    if (token == null || token === '') {
-      return false;
-    }
+    // if (token == null || token === '') {
+    //   return false;
+    // }
 
-    try {
-      const decodedToken: any = this.helper.decodeToken(token);
-      const isExpired: boolean = this.helper.isTokenExpired(token);
+    // try {
+    //   decodedToken = this.helper.decodeToken(token);
+    //   isExpired = this.helper.isTokenExpired(token);
+    // } catch {
+    //   return false;
+    // }
 
-      if (isExpired === true || decodedToken.role !== 'Investor') {
-        return false;
-      }
-    } catch {
-      return false;
-    }
+    // if (isExpired === true || decodedToken.role !== 'Investor') {
+    //   return false;
+    // }
 
     return true;
   }

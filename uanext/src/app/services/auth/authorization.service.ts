@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
-import { UserDto } from '../../models';
+import { VendorDto, InvestorDto } from '../../models';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ProfileService } from '../profile/profile.service';
 
@@ -27,6 +27,7 @@ export class AuthorizationService {
     const token = localStorage.getItem('token');
     let decodedToken: any;
     let isExpired: boolean;
+    let role: string;
 
     if (token == null || token === '') {
       this.signOut();
@@ -36,46 +37,49 @@ export class AuthorizationService {
     try {
       decodedToken = helper.decodeToken(token);
       isExpired = helper.isTokenExpired(token);
-
-      if (isExpired === true) {
-        this.signOut();
-        return;
-      }
+      role = decodedToken.role;
     } catch {
       this.signOut();
       return;
     }
 
-    // this.profileService.fetchVendor() ?
-    // this.profileService.fetchInvestor() ?
-    this.profileService.fetchUser().subscribe(
-      response => {
-        if (response.status !== 200) {
-          this.signOut();
-          return;
-        }
-        this.stateService.user$.next(response.body);
-        if (decodedToken.role === 'Vendor') {
-          this.router.navigate(['home', 'vendor']);
-        } else if (decodedToken.role === 'Investor') {
-          this.router.navigate(['home', 'investor']);
-        }
-      },
-      err => {
-        this.signOut();
-      },
-      // ()  => {} complete is necessarily???
-    );
+    if (isExpired === true) {
+      this.signOut();
+      return;
+    }
+
+    if (role !== 'Admin' && role !== 'Investor' && role !== 'Vendor') {
+      this.signOut();
+      return;
+    }
+
+    if (role === 'Vendor') {
+      this.profileService.fetchVendor().subscribe(
+        response => {},
+        err => { this.signOut(); }
+      );
+    }
+
+    if (role === 'Investor') {
+      this.profileService.fetchInvestor().subscribe(
+        response => {},
+        err => { this.signOut(); }
+      );
+    }
   }
 
   // any because api return empty or {"message": "User Email \"string4@gmail.com\" is already taken"}
-  signUp(userDto: UserDto): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/User/register`, userDto, { observe: 'response' });
+  signUpAsVendor(vendorDto: VendorDto): Observable<any> {
+    return this.http.post<any>(`${environment.api_url}api/Vendor/register`, vendorDto, { observe: 'response' });
+  }
+
+  signUpAsInvestor(investorDto: InvestorDto): Observable<any> {
+    return this.http.post<any>(`${environment.api_url}api/Investor/register`, investorDto, { observe: 'response' });
   }
 
   // any because api return different response
-  signIn(userDto: UserDto): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/User/authenticate`, userDto, { observe: 'response' });
+  signIn(investorOrVendor: {password: string, email: string}): Observable<any> {
+    return this.http.post<any>(`${environment.api_url}api/User/authenticate`, investorOrVendor, { observe: 'response' });
   }
 
   signOut(): void {

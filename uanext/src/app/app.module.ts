@@ -16,6 +16,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TextMaskModule } from 'angular2-text-mask';
+import { SignupVendorComponent } from './components/signup-vendor/signup-vendor.component';
+import { SignupInvestorComponent } from './components/signup-investor/signup-investor.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     Components.VendorComponent,
     Components.VendorProfileComponent,
     Components.InvestorProfileComponent,
+    SignupVendorComponent,
+    SignupInvestorComponent,
   ],
   imports: [
     BrowserModule,
