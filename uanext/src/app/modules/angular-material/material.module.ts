@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import {
   MatInputModule,
+  MatSnackBarModule,
 } from '@angular/material';
 
 @NgModule({
@@ -9,6 +10,7 @@ import {
   imports: [],
   exports: [
     MatInputModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule { }

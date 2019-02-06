@@ -3,6 +3,7 @@ import { AuthorizationService } from './../../services/auth/authorization.servic
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { matchOtherValidator } from '../../validators/validators';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-signup-vendor',
@@ -13,15 +14,18 @@ export class SignupVendorComponent implements OnInit {
   signupForm: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthorizationService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthorizationService,
+    private router: Router,
+    private notify: NotificationService
+  ) {
     this.signupForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      userName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      itn: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['', [Validators.required, matchOtherValidator('password')]],
+      fullName: ['fullName1', Validators.required],
+      email: ['qe@zxc.com', [Validators.required, Validators.email]],
+      itn: ['12345', Validators.required],
+      password: ['123456!@#', [Validators.required, Validators.minLength(6)]],
+      rePassword: ['123456!@#', [Validators.required, matchOtherValidator('password')]],
     });
   }
 
@@ -42,6 +46,9 @@ export class SignupVendorComponent implements OnInit {
     this.authService.signUpAsVendor(this.signupForm.value).subscribe(
       response => {
         console.log(response); // TODO email already exist
+        if (response.success === false) {
+          this.notify.show(response.message);
+        }
         if (response.status === 200) {
           this.router.navigate(['signin']);
         }

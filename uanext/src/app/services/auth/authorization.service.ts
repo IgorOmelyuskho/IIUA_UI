@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
@@ -70,16 +70,32 @@ export class AuthorizationService {
 
   // any because api return empty or {"message": "User Email \"string4@gmail.com\" is already taken"}
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/Vendor/register`, vendorDto, { observe: 'response' });
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Content-Type': 'application/json; charset=utf-8'
+    //   })
+    // };
+    const body = {
+      success: false,
+      message: 'this email already taken'
+    };
+    return of(body);
+    // return this.http.post<any>(`${environment.api_url}api/Vendor/register`, vendorDto, /* httpOptions */{ observe: 'response' } );
   }
 
   signUpAsInvestor(investorDto: InvestorDto): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/Investor/register`, investorDto, { observe: 'response' });
+    // return this.http.post<any>(`${environment.api_url}api/Investor/register`, investorDto, { observe: 'response' });
+    const body = {
+      success: false,
+      message: 'this email already taken'
+    };
+    return of(body);
   }
 
   // any because api return different response
   signIn(investorOrVendor: {password: string, email: string}): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/User/authenticate`, investorOrVendor, { observe: 'response' });
+    return this.http.post<any>(`${environment.api_url}/api/Auth/authenticate`, investorOrVendor, { observe: 'response' });
   }
 
   signOut(): void {
