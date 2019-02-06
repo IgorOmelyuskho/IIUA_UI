@@ -1,8 +1,10 @@
 <app-header></app-header>
 
-<button (click)="asVendor()" class="btn btn-primary select-role">Sign up as Vendor</button>
-<button (click)="asInvestor()" class="btn btn-primary select-role">Sign up as Investor</button>
-<div class='signup-as'>You sign up as {{userRole}}</div>
+<div class="text-center">
+  <button (click)="asVendor()" class="btn btn-primary select-role">Sign up as Vendor</button>
+  <button (click)="asInvestor()" class="btn btn-primary select-role">Sign up as Investor</button>
+</div>
+
 
 <div *ngIf="userRole === 'Vendor'">
   <app-signup-vendor></app-signup-vendor>
