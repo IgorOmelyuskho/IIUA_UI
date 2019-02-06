@@ -1,4 +1,9 @@
-export * from './home-page/home-page.component';
-export * from './index/index.component';
-export * from './signin/signin.component';
-export * from './signup/signup.component';
+export { HomePageComponent } from './home-page/home-page.component';
+export { IndexComponent } from './index/index.component';
+export { SigninComponent } from './signin/signin.component';
+export { SignupComponent } from './signup/signup.component';
+export { HeaderComponent } from './header/header.component';
+export { InvestorComponent } from './investor/investor.component';
+export { InvestorProfileComponent } from './investor-profile/investor-profile.component';
+export { VendorComponent } from './vendor/vendor.component';
+export { VendorProfileComponent } from './vendor-profile/vendor-profile.component';
