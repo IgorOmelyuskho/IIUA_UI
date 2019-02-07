@@ -22,4 +22,10 @@ export class StateService {
     const decodedToken: any = this.helper.decodeToken(token);
     return decodedToken.role;
   }
+
+  userId(): string {
+    const token = localStorage.getItem('token');
+    const decodedToken: any = this.helper.decodeToken(token);
+    return decodedToken.unique_name;
+  }
 }

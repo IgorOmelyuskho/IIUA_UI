@@ -1,3 +1,4 @@
+import { HelperService } from './../../services/helperServices/helper.service';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './../../services/auth/authorization.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -18,12 +19,14 @@ export class SignupVendorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
     private router: Router,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private helperService: HelperService // required for html
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['fullName1', Validators.required],
       email: ['qe@zxc.com', [Validators.required, Validators.email]],
       itn: ['12345', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
       password: ['123456!@#', [Validators.required, Validators.minLength(6)]],
       rePassword: ['123456!@#', [Validators.required, matchOtherValidator('password')]],
     });

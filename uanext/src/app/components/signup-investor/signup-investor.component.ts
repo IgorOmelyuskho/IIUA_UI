@@ -1,3 +1,4 @@
+import { HelperService } from './../../services/helperServices/helper.service';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './../../services/auth/authorization.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -13,20 +14,20 @@ import { NotificationService } from 'src/app/services/notification/notification.
 export class SignupInvestorComponent implements OnInit {
   signupForm: FormGroup;
   submitted = false;
-  mask: any[] = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
     private router: Router,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private helperService: HelperService // required
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['fullName', Validators.required],
-      email: ['email123q@qwe.com', [Validators.required, Validators.email]],
-      creditCardNumber: ['1111222233334444', Validators.pattern(/([0-9\s]){19}$/)],
-      password: ['12345!@QWE', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['12345!@QWE', [Validators.required, matchOtherValidator('password')]],
+      email: ['string@g.com', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
+      password: ['string123', [Validators.required, Validators.minLength(6)]],
+      rePassword: ['string123', [Validators.required, matchOtherValidator('password')]],
     });
   }
 

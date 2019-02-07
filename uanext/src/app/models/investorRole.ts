@@ -2,7 +2,7 @@ export interface InvestorRole {
   fullName: string;
   email: string;
   phone: string;
-  creditCardNumber: string;
+  // creditCardNumber: string;
   created: string;
   lastEdited: string;
 }

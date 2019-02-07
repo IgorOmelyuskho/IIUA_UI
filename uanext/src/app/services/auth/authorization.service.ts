@@ -55,53 +55,52 @@ export class AuthorizationService {
 
     if (role === 'Vendor') {
       this.profileService.fetchVendor().subscribe(
-        response => {},
-        err => { this.signOut(); }
+        vendor => {
+          this.stateService.user$.next(vendor);
+          this.stateService.authorized$.next(true);
+          this.router.navigate(['home', 'vendor']);
+        },
+        err => {
+          console.warn(err);
+          this.signOut();
+         }
       );
     }
 
     if (role === 'Investor') {
       this.profileService.fetchInvestor().subscribe(
-        response => {},
-        err => { this.signOut(); }
+        investor => {
+          this.stateService.user$.next(investor);
+          this.stateService.authorized$.next(true);
+          this.router.navigate(['home', 'investor']);
+        },
+        err => {
+          console.warn(err);
+          this.signOut();
+         }
       );
     }
   }
 
   // any because api return empty or {"message": "User Email \"string4@gmail.com\" is already taken"}
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Content-Type': 'application/json; charset=utf-8'
-    //   })
-    // };
-    const body = {
-      success: false,
-      message: 'this email already taken'
-    };
-    return of(body);
-    // return this.http.post<any>(`${environment.api_url}api/Vendor/register`, vendorDto, /* httpOptions */{ observe: 'response' } );
+    return this.http.post<any>(`${environment.api_url}api/Vendor/register`, vendorDto, /* httpOptions */{ observe: 'response' } );
   }
 
   signUpAsInvestor(investorDto: InvestorDto): Observable<any> {
-    // return this.http.post<any>(`${environment.api_url}api/Investor/register`, investorDto, { observe: 'response' });
-    const body = {
-      success: false,
-      message: 'this email already taken'
-    };
-    return of(body);
+    return this.http.post<any>(`${environment.api_url}api/Investor/register`, investorDto, { observe: 'response' });
   }
 
   // any because api return different response
   signIn(investorOrVendor: {password: string, email: string}): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}/api/Auth/authenticate`, investorOrVendor, { observe: 'response' });
+    return this.http.post<any>(`${environment.api_url}api/Auth/authenticate`, investorOrVendor, { observe: 'response' });
   }
 
   signOut(): void {
     localStorage.removeItem('token');
     this.stateService.user$.next(null);
     this.stateService.authorized$.next(false);
+    this.router.navigate(['']);
   }
 
   userIsAuthorized(): boolean {

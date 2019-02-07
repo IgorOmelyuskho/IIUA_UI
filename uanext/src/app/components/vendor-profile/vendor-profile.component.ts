@@ -1,3 +1,4 @@
+import { HelperService } from './../../services/helperServices/helper.service';
 import { StateService } from './../../services/state/state.service';
 import { AuthorizationService } from './../../services/auth/authorization.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -5,6 +6,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { VendorRole } from 'src/app/models';
 import { ProfileService } from 'src/app/services/profile/profile.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-vendor-profile',
@@ -15,7 +17,6 @@ export class VendorProfileComponent implements OnInit {
   vendor: VendorRole = null;
   editProfileForm: FormGroup;
   isLoaded = false;
-  mask: any[] = ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   @ViewChild('phone') phoneInput: ElementRef;
 
@@ -23,13 +24,15 @@ export class VendorProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private stateService: StateService,
     private authService: AuthorizationService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private helperService: HelperService,
+    private notify: NotificationService
   ) {
     this.editProfileForm = this.formBuilder.group({
       itn: ['', Validators.required],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/([0-9+()-\s]){17}$/)]],
+      phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
     });
   }
 
@@ -38,8 +41,8 @@ export class VendorProfileComponent implements OnInit {
       this.vendor = {
         fullName: 'string',
         email: 'string@ghj.com',
-        phone: '1234567890',
-        // phone: '+1 (123) 456-7890',
+        phone: '380501690664',
+        // phone: '+380 50 169 0664',
         created: 'string',
         lastEdited: 'string',
         phoneVerified: true,
@@ -73,9 +76,21 @@ export class VendorProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.editProfileForm.valid) {
-      console.log(this.editProfileForm.controls);
-      // this.profileService.updateVendorProfile(this.editProfileForm.controls);
+    if (this.editProfileForm.valid === false) {
+      return;
     }
+
+    const id = this.stateService.userId();
+    this.profileService.updateVendorProfile(id, this.editProfileForm.controls).subscribe(
+      response => {
+        console.log(response);
+        this.notify.show('You profile success update', 3000);
+       },
+      err => {
+        console.warn(err);
+        this.notify.show(err, 3000);
+      }
+    );
   }
+
 }

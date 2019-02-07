@@ -20,10 +20,11 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Credit card number</label>
-            <input [textMask]="{mask: mask}" type="text" formControlName="creditCardNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.creditCardNumber.errors }" />
-            <div *ngIf="submitted && formControls.creditCardNumber.errors" class="invalid-feedback">
-              <div *ngIf="formControls.creditCardNumber.errors.pattern">Enter valid card number</div>
+            <label>Phone</label>
+            <input #phone [textMask]="{mask: helperService.phoneMask}" type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.phone.errors }" />
+            <div *ngIf="submitted && formControls.phone.errors" class="invalid-feedback">
+              <div *ngIf="formControls.phone.errors.required">Phone is required</div>
+              <div *ngIf="formControls.phone.errors.pattern">Enter valid phone</div>
             </div>
           </div>
           <div class="form-group">

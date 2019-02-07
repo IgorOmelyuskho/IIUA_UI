@@ -1,7 +1,9 @@
-<p>
-  investor works!
-</p>
 
-<button (click)='goToProfile()' type="button" class="btn btn-primary">My profile</button>
+<nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1">Navbar</span>
+  <div class="navbar-text">Navbar for Investor</div>
+  <button (click)="goToProfile()" type="button" class="btn btn-primary">My profile</button>
+  <button (click)="signOut()" type="button" class="btn btn-primary">Sign out</button>
+</nav>
 
 <router-outlet></router-outlet>
