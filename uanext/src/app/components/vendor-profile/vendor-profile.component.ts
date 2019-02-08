@@ -31,40 +31,36 @@ export class VendorProfileComponent implements OnInit {
     this.editProfileForm = this.formBuilder.group({
       itn: ['', Validators.required],
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
     });
   }
 
-  ngOnInit() {
-    setTimeout(() => { // ITS TEST
-      this.vendor = {
-        fullName: 'string',
-        email: 'string@ghj.com',
-        phone: '380501690664',
-        // phone: '+380 50 169 0664',
-        created: 'string',
-        lastEdited: 'string',
-        phoneVerified: true,
-        emailVerified: true,
-        itn: 'string',
-        itnVerified: true
-      };
-      this.editProfileForm.setValue({
-        itn: this.vendor.itn,
-        fullName: this.vendor.fullName,
-        email: this.vendor.email,
-        phone: this.vendor.phone
-      });
+  setFormValues(): void {
+    this.editProfileForm.setValue({
+      itn: this.vendor.itn,
+      fullName: this.vendor.fullName,
+      email: this.vendor.email,
+      phone: this.vendor.phone
+    });
+    // how its fix ??
+    setTimeout(() => {
       this.phoneInput.nativeElement.dispatchEvent(new Event('input')); // fix possible bug
-      this.isLoaded = true;
-    }, 3000);
+    }, 0);
+  }
 
+  ngOnInit() {
     this.stateService.user$.asObservable().subscribe(
       vendor => {
-        this.vendor = (vendor as VendorRole);
+        if (vendor == null) {
+          return;
+        }
+        this.vendor = vendor as VendorRole;
+        this.isLoaded = true;
+        this.setFormValues();
       },
       err => {
+        console.log(err);
         this.authService.signOut();
       }
     );
@@ -81,14 +77,17 @@ export class VendorProfileComponent implements OnInit {
 
     const id = this.stateService.userId();
 
-    this.profileService.updateVendorProfile(id, this.editProfileForm.controls).subscribe(
+    if (id == null) {
+      return;
+    }
+
+    this.profileService.updateVendorProfile(id, this.editProfileForm.value).subscribe(
       response => {
         console.log(response);
-        this.notify.show('You profile success update', 3000);
-       },
+        this.notify.show(response['data']);
+      },
       err => {
         console.warn(err);
-        this.notify.show(err, 3000);
       }
     );
   }

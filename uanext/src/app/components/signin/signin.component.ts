@@ -7,6 +7,8 @@ import { StateService } from './../../services/state/state.service';
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import { Observable } from 'rxjs';
 import { VendorRole, InvestorRole } from 'src/app/models';
+import { NotificationService } from 'src/app/services/notification/notification.service';
+import { HelperService } from 'src/app/services/helperServices/helper.service';
 
 @Component({
   selector: 'app-signin',
@@ -22,10 +24,12 @@ export class SigninComponent implements OnInit {
     private authService: AuthorizationService,
     private router: Router,
     private stateService: StateService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private notify: NotificationService,
+    private helperService: HelperService
   ) {
     this.signinForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -73,11 +77,13 @@ export class SigninComponent implements OnInit {
     this.authService.signIn(this.signinForm.value).subscribe(
       response => {
         console.log(response);
-        if (response.status !== 200) {
+        // not required, in this section status always === 200 ?
+        if (response.status !== 200 || response.body.isSuccess !== true) {
+          this.notify.show(response.body.error);
           return;
         }
 
-        localStorage.setItem('token', response.body.token);
+        localStorage.setItem('token', response.body.data);
         const role = this.stateService.role();
 
         if (role === 'Vendor') {
@@ -92,7 +98,8 @@ export class SigninComponent implements OnInit {
       },
       err => {
         console.warn(err);
-        this.authService.signOut();
+        this.notify.show(err.error.error.errorMessage);
+        // this.authService.signOut();
       }
     );
   }

@@ -23,12 +23,12 @@ export class SignupVendorComponent implements OnInit {
     private helperService: HelperService // required for html
   ) {
     this.signupForm = this.formBuilder.group({
-      fullName: ['fullName1', Validators.required],
-      email: ['qe@zxc.com', [Validators.required, Validators.email]],
-      itn: ['12345', Validators.required],
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
+      itn: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
-      password: ['123456!@#', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['123456!@#', [Validators.required, matchOtherValidator('password')]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rePassword: ['', [Validators.required, matchOtherValidator('password')]],
     });
   }
 
@@ -48,16 +48,17 @@ export class SignupVendorComponent implements OnInit {
 
     this.authService.signUpAsVendor(this.signupForm.value).subscribe(
       response => {
-        console.log(response); // TODO email already exist
-        if (response.success === false) {
-          this.notify.show(response.message);
-        }
-        if (response.status === 200) {
+        console.log(response);
+        if (response.body.isSuccess === true && response.status === 200) {
+          this.notify.show(response.body.data);
           this.router.navigate(['signin']);
+        } else {
+          this.notify.show(response.body.error);
         }
       },
       err => {
         console.warn(err);
+        this.notify.show(err.error.error.errorMessage);
       }
     );
   }

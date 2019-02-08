@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SignupVendorComponent } from './components/signup-vendor/signup-vendor.component';
 import { SignupInvestorComponent } from './components/signup-investor/signup-investor.component';
+import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SignupInvestorComponent } from './components/signup-investor/signup-inv
     ...components,
     SignupVendorComponent,
     SignupInvestorComponent,
+    SnackBarComponent,
   ],
   imports: [
     BrowserModule,
