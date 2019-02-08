@@ -68,7 +68,6 @@ export class VendorProfileComponent implements OnInit {
         this.authService.signOut();
       }
     );
-
   }
 
   get formControls() {
@@ -81,6 +80,7 @@ export class VendorProfileComponent implements OnInit {
     }
 
     const id = this.stateService.userId();
+
     this.profileService.updateVendorProfile(id, this.editProfileForm.controls).subscribe(
       response => {
         console.log(response);

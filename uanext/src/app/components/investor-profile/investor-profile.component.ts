@@ -63,7 +63,6 @@ export class InvestorProfileComponent implements OnInit {
         this.authService.signOut();
       }
     );
-
   }
 
   get formControls() {
@@ -76,6 +75,7 @@ export class InvestorProfileComponent implements OnInit {
     }
 
     const id = this.stateService.userId();
+
     this.profileService.updateInvestorProfile(id, this.editProfileForm.controls).subscribe(
       response => {
         console.log(response);
