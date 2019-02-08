@@ -1,6 +1,3 @@
-<p>
-  investor-profile works!
-</p>
 
 <div class="container">
   <div class="row">
@@ -14,15 +11,6 @@
         <input disabled=true type="text" class="form-control" value={{investor?.lastEdited}} />
       </div>
       <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label>Credit card number</label>
-          <input #cardNumber [textMask]="{mask: maskCardNumber}" type="text" formControlName="creditCardNumber" class="form-control"
-            [ngClass]="{ 'is-invalid': isLoaded && formControls.creditCardNumber.errors }" />
-          <div *ngIf="formControls.creditCardNumber.errors" class="invalid-feedback">
-            <div *ngIf="formControls.creditCardNumber.errors.required">This field cannot be empty</div>
-            <div *ngIf="formControls.creditCardNumber.errors.pattern">Enter valid card number</div>
-          </div>
-        </div>
         <div class="form-group">
           <label>Full name</label>
           <input type="text" formControlName="fullName" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.fullName.errors }" />
@@ -40,7 +28,7 @@
         </div>
         <div class="form-group">
           <label>Phone</label>
-          <input #phone [textMask]="{mask: maskPhone}" type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.phone.errors }" />
+          <input #phone [textMask]="{mask: helperService.phoneMask}" type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.phone.errors }" />
           <div *ngIf="formControls.phone.errors" class="invalid-feedback">
             <div *ngIf="formControls.phone.errors.required">Phone cannot be empty</div>
             <div *ngIf="formControls.phone.errors.pattern">Enter valid phone</div>

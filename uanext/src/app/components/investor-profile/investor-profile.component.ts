@@ -5,6 +5,8 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { InvestorRole } from 'src/app/models';
 import { StateService } from 'src/app/services/state/state.service';
+import { HelperService } from 'src/app/services/helperServices/helper.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-investor-profile',
@@ -15,23 +17,22 @@ export class InvestorProfileComponent implements OnInit {
   investor: InvestorRole = null;
   editProfileForm: FormGroup;
   isLoaded = false;
-  maskPhone: any[] = ['+', '1', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  maskCardNumber: any[] = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
 
   @ViewChild('phone') phoneInput: ElementRef;
-  @ViewChild('cardNumber') carNumberInput: ElementRef;
+  // @ViewChild('cardNumber') carNumberInput: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
     private stateService: StateService,
     private authService: AuthorizationService,
-    private profileService: ProfileService
+    private profileService: ProfileService, // required for html
+    private helperService: HelperService,
+    private notify: NotificationService
   ) {
     this.editProfileForm = this.formBuilder.group({
-      creditCardNumber: ['', [Validators.required, Validators.pattern(/([0-9\s]){19}$/)]],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/([0-9+()-\s]){17}$/)]],
+      phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
     });
   }
 
@@ -40,24 +41,18 @@ export class InvestorProfileComponent implements OnInit {
       this.investor = {
         fullName: 'string',
         email: 'string@ghj.com',
-        // phone: '+1 (123) 456-7890',
-        phone: '1234567890',
+        phone: '380501690664',
         created: 'string',
-        lastEdited: 'string',
-        creditCardNumber: '1111 2222 3333 4444',
-        // creditCardNumber: '1111222233334444',
+        lastEdited: 'string'
       };
       this.editProfileForm.setValue({
-        creditCardNumber: this.investor.creditCardNumber,
         fullName: this.investor.fullName,
         email: this.investor.email,
         phone: this.investor.phone
       });
       this.phoneInput.nativeElement.dispatchEvent(new Event('input')); // fix possible bug
-      this.carNumberInput.nativeElement.dispatchEvent(new Event('input')); // fix possible bug
       this.isLoaded = true;
     }, 3000);
-
 
 
     this.stateService.user$.asObservable().subscribe(
@@ -68,7 +63,6 @@ export class InvestorProfileComponent implements OnInit {
         this.authService.signOut();
       }
     );
-
   }
 
   get formControls() {
@@ -76,9 +70,22 @@ export class InvestorProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.editProfileForm.valid) {
-      console.log(this.editProfileForm.controls);
-      // this.profileService.updateInvestorProfile(this.editProfileForm.controls);
+    if (this.editProfileForm.valid === false) {
+      return;
     }
+
+    const id = this.stateService.userId();
+
+    this.profileService.updateInvestorProfile(id, this.editProfileForm.controls).subscribe(
+      response => {
+        console.log(response);
+        this.notify.show('You profile success update', 3000);
+      },
+      err => {
+        console.warn(err);
+        this.notify.show(err, 3000);
+      }
+    );
   }
+
 }

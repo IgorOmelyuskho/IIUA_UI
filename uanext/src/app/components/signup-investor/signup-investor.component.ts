@@ -1,8 +1,10 @@
+import { HelperService } from './../../services/helperServices/helper.service';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './../../services/auth/authorization.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { matchOtherValidator } from '../../validators/validators';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
   selector: 'app-signup-investor',
@@ -12,17 +14,20 @@ import { matchOtherValidator } from '../../validators/validators';
 export class SignupInvestorComponent implements OnInit {
   signupForm: FormGroup;
   submitted = false;
-  mask: any[] = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthorizationService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthorizationService,
+    private router: Router,
+    private notify: NotificationService,
+    private helperService: HelperService // required
+  ) {
     this.signupForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      userName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      creditCardNumber: ['', Validators.pattern(/([0-9\s]){19}$/)],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['', [Validators.required, matchOtherValidator('password')]],
+      fullName: ['fullName', Validators.required],
+      email: ['string@g.com', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
+      password: ['string123', [Validators.required, Validators.minLength(6)]],
+      rePassword: ['string123', [Validators.required, matchOtherValidator('password')]],
     });
   }
 
@@ -43,6 +48,9 @@ export class SignupInvestorComponent implements OnInit {
     this.authService.signUpAsInvestor(this.signupForm.value).subscribe(
       response => {
         console.log(response); // TODO email already exist
+        if (response.success === false) {
+          this.notify.show(response.message);
+        }
         if (response.status === 200) {
           this.router.navigate(['signin']);
         }

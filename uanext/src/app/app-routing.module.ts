@@ -30,7 +30,7 @@ const childHomeRoutes: Routes = [
 
 const routes: Routes = [
   { path: '', component: IndexComponent, pathMatch: 'full' },
-  { path: 'signin', component: SigninComponent},
+  { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
   { path: '**', redirectTo: ''}

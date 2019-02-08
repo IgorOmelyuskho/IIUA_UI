@@ -7,7 +7,7 @@ import { AddTokenInterceptor } from './services/interceptors';
 import { AuthGuard } from './services/guards';
 
 import { AppComponent } from './app.component';
-import * as Components from './components';
+import { components } from './components';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -22,15 +22,7 @@ import { SignupInvestorComponent } from './components/signup-investor/signup-inv
 @NgModule({
   declarations: [
     AppComponent,
-    Components.IndexComponent,
-    Components.SigninComponent,
-    Components.SignupComponent,
-    Components.HomePageComponent,
-    Components.HeaderComponent,
-    Components.InvestorComponent,
-    Components.VendorComponent,
-    Components.VendorProfileComponent,
-    Components.InvestorProfileComponent,
+    ...components,
     SignupVendorComponent,
     SignupInvestorComponent,
   ],

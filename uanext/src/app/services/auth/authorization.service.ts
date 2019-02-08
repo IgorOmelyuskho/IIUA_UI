@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
@@ -55,22 +55,36 @@ export class AuthorizationService {
 
     if (role === 'Vendor') {
       this.profileService.fetchVendor().subscribe(
-        response => {},
-        err => { this.signOut(); }
+        vendor => {
+          this.stateService.user$.next(vendor);
+          this.stateService.authorized$.next(true);
+          this.router.navigate(['home', 'vendor']);
+        },
+        err => {
+          console.warn(err);
+          this.signOut();
+         }
       );
     }
 
     if (role === 'Investor') {
       this.profileService.fetchInvestor().subscribe(
-        response => {},
-        err => { this.signOut(); }
+        investor => {
+          this.stateService.user$.next(investor);
+          this.stateService.authorized$.next(true);
+          this.router.navigate(['home', 'investor']);
+        },
+        err => {
+          console.warn(err);
+          this.signOut();
+         }
       );
     }
   }
 
   // any because api return empty or {"message": "User Email \"string4@gmail.com\" is already taken"}
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/Vendor/register`, vendorDto, { observe: 'response' });
+    return this.http.post<any>(`${environment.api_url}api/Vendor/register`, vendorDto, /* httpOptions */{ observe: 'response' } );
   }
 
   signUpAsInvestor(investorDto: InvestorDto): Observable<any> {
@@ -79,13 +93,14 @@ export class AuthorizationService {
 
   // any because api return different response
   signIn(investorOrVendor: {password: string, email: string}): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/User/authenticate`, investorOrVendor, { observe: 'response' });
+    return this.http.post<any>(`${environment.api_url}api/Auth/authenticate`, investorOrVendor, { observe: 'response' });
   }
 
   signOut(): void {
     localStorage.removeItem('token');
     this.stateService.user$.next(null);
     this.stateService.authorized$.next(false);
+    this.router.navigate(['']);
   }
 
   userIsAuthorized(): boolean {
