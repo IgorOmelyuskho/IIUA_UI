@@ -6,12 +6,15 @@ import { SnackBarComponent } from '../../components/snack-bar/snack-bar.componen
   providedIn: 'root'
 })
 export class NotificationService {
+  private ref = null;
 
   constructor(private notifier: MatSnackBar) { }
 
   show(msg: string, duration: number = 5000): void {
-    this.notifier.open(msg, null, {
+    this.ref = this.notifier.openFromComponent(SnackBarComponent, {
       duration: duration,
+      data: msg,
     });
   }
+
 }
