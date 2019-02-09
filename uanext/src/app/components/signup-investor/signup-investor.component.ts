@@ -23,11 +23,11 @@ export class SignupInvestorComponent implements OnInit {
     private helperService: HelperService // required
   ) {
     this.signupForm = this.formBuilder.group({
-      fullName: ['fullName', Validators.required],
-      email: ['string@g.com', [Validators.required, Validators.email]],
+      fullName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
-      password: ['string123', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['string123', [Validators.required, matchOtherValidator('password')]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      rePassword: ['', [Validators.required, matchOtherValidator('password')]],
     });
   }
 
@@ -47,16 +47,17 @@ export class SignupInvestorComponent implements OnInit {
 
     this.authService.signUpAsInvestor(this.signupForm.value).subscribe(
       response => {
-        console.log(response); // TODO email already exist
-        if (response.success === false) {
-          this.notify.show(response.message);
-        }
-        if (response.status === 200) {
+        console.log(response);
+        if (response.body.isSuccess === true && response.status === 200) {
+          this.notify.show(response.body.data);
           this.router.navigate(['signin']);
+        } else {
+          this.notify.show(response.body.error);
         }
       },
       err => {
         console.warn(err);
+        this.notify.show(err.error.error.errorMessage);
       }
     );
   }

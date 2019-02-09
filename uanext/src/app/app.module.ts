@@ -16,15 +16,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TextMaskModule } from 'angular2-text-mask';
-import { SignupVendorComponent } from './components/signup-vendor/signup-vendor.component';
-import { SignupInvestorComponent } from './components/signup-investor/signup-investor.component';
+import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ...components,
-    SignupVendorComponent,
-    SignupInvestorComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +32,9 @@ import { SignupInvestorComponent } from './components/signup-investor/signup-inv
     ReactiveFormsModule,
     HttpClientModule,
     TextMaskModule
+  ],
+  entryComponents: [
+    SnackBarComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true},

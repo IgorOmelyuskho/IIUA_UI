@@ -6,8 +6,8 @@ import { Injectable } from '@angular/core';
 export class HelperService {
   phoneMask: any[] = ['+', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
   phonePattern = /\+\d{3}\s\d{2}\s\d{3}\s\d{4}/;
-  // phoneMask: any[] = ['+', /\d/, /\d/, /\d/];
-  // phonePattern = /\+\d{3}/;
+
+  emailPattern = /\S+@\S+\.\S+/;
 
   creditCardMask: any[] = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
   creditCardPattern = /([0-9\s]){19}$/;

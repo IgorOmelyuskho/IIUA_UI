@@ -17,11 +17,15 @@ export class ProfileService {
   constructor(private http: HttpClient, private stateService: StateService) { }
 
   fetchInvestor(): Observable<InvestorRole> {
-    return this.http.get<InvestorRole>(`${environment.api_url}api/Investor`);
+    return this.http.get<InvestorRole>(`${environment.api_url}api/Investor`).pipe(
+      map(response => response['data'])
+    );
   }
 
   fetchVendor(): Observable<VendorRole> {
-    return this.http.get<VendorRole>(`${environment.api_url}api/Vendor`);
+    return this.http.get<VendorRole>(`${environment.api_url}api/Vendor`).pipe(
+      map(response => response['data'])
+    );
   }
 
   updateInvestorProfile(userId: string, updatedData: any) {

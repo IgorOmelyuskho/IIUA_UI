@@ -25,41 +25,41 @@ export class InvestorProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private stateService: StateService,
     private authService: AuthorizationService,
-    private profileService: ProfileService, // required for html
-    private helperService: HelperService,
+    private profileService: ProfileService,
+    private helperService: HelperService, // required for html
     private notify: NotificationService
   ) {
     this.editProfileForm = this.formBuilder.group({
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
     });
   }
 
-  ngOnInit() {
-    setTimeout(() => { // ITS TEST
-      this.investor = {
-        fullName: 'string',
-        email: 'string@ghj.com',
-        phone: '380501690664',
-        created: 'string',
-        lastEdited: 'string'
-      };
-      this.editProfileForm.setValue({
-        fullName: this.investor.fullName,
-        email: this.investor.email,
-        phone: this.investor.phone
-      });
+  setFormValues(): void {
+    this.editProfileForm.setValue({
+      fullName: this.investor.fullName,
+      email: this.investor.email,
+      phone: this.investor.phone
+    });
+    // how its fix ??
+    setTimeout(() => {
       this.phoneInput.nativeElement.dispatchEvent(new Event('input')); // fix possible bug
-      this.isLoaded = true;
-    }, 3000);
+    }, 0);
+  }
 
-
+  ngOnInit() {
     this.stateService.user$.asObservable().subscribe(
       investor => {
-        this.investor = (investor as InvestorRole);
+        if (investor == null) {
+          return;
+        }
+        this.investor = investor as InvestorRole;
+        this.isLoaded = true;
+        this.setFormValues();
       },
       err => {
+        console.log(err);
         this.authService.signOut();
       }
     );
@@ -76,14 +76,17 @@ export class InvestorProfileComponent implements OnInit {
 
     const id = this.stateService.userId();
 
-    this.profileService.updateInvestorProfile(id, this.editProfileForm.controls).subscribe(
+    if (id == null) {
+      return;
+    }
+
+    this.profileService.updateInvestorProfile(id, this.editProfileForm.value).subscribe(
       response => {
         console.log(response);
-        this.notify.show('You profile success update', 3000);
+        this.notify.show(response['data']);
       },
       err => {
         console.warn(err);
-        this.notify.show(err, 3000);
       }
     );
   }
