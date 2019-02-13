@@ -18,9 +18,9 @@ export class UpdateVendorCompanyComponent implements OnInit {
   emptyAvatar = '../../../assets/img/empty-profile.jpg';
 
   newStep: string;
-  newStepMin = true;
-  newStepMax = true;
-  newStepNull = true;
+  newStepMinValid = true;
+  newStepMaxValid = true;
+  newStepNullValid = true;
   newStepBtnWasPressed = false;
   maxStepsCount = 15;
   minStepsCount = 3;
@@ -106,30 +106,30 @@ export class UpdateVendorCompanyComponent implements OnInit {
 
   checkNewStep(): boolean {
     if (this.newStep == null || this.newStep === '') {
-      this.newStepNull = false;
-      this.newStepMin = true;
-      this.newStepMax = true;
+      this.newStepNullValid = false;
+      this.newStepMinValid = true;
+      this.newStepMaxValid = true;
       return false;
     } else {
-      this.newStepNull = true;
+      this.newStepNullValid = true;
     }
 
     const minLength = 3;
     const maxLength = 255;
 
     if (this.newStep.length < minLength) {
-      this.newStepMin = false;
+      this.newStepMinValid = false;
     } else {
-      this.newStepMin = true;
+      this.newStepMinValid = true;
     }
 
     if (this.newStep.length > maxLength) {
-      this.newStepMax = false;
+      this.newStepMaxValid = false;
     } else {
-      this.newStepMax = true;
+      this.newStepMaxValid = true;
     }
 
-    if (this.newStepMin === false || this.newStepMax === false) {
+    if (this.newStepMinValid === false || this.newStepMaxValid === false) {
       return false;
     }
 
@@ -229,14 +229,6 @@ export class UpdateVendorCompanyComponent implements OnInit {
     });
 
     this.vendorCompanyForm.controls['avatar'].setErrors(null);
-
-    // fix ?
-    setTimeout(() => {
-      // this.vendorCompanyForm.controls['avatar'].setErrors(null);
-      // this.vendorCompanyForm.controls['photos'].setErrors(null);
-      // this.vendorCompanyForm.controls['files'].setErrors(null);
-    }, 0);
-
   }
 
   onSubmit() {
