@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://master.alexduxa.online/'
+  api_url: 'http://master.alexduxa.online/',
+  api_2_url: ''
 };
 
 /*

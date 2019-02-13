@@ -1,0 +1,22 @@
+.steps {
+  padding: 5px;
+  border: 1px solid blueviolet;
+
+  .step-name {
+    margin-bottom: 5px;
+  }
+
+  .invalid-new-step {
+    color: #dc3545;
+    font-size: 80%;
+  }
+
+  .close {
+    outline: none;
+    margin: 5px;
+    &:hover {
+      color: red;
+    }
+  }
+}
+

@@ -13,10 +13,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { TextMaskModule } from 'angular2-text-mask';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
+import { NgxSortableModule } from 'ngx-sortable';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
     PrimeNgModule,
     ReactiveFormsModule,
     HttpClientModule,
-    TextMaskModule
+    TextMaskModule,
+    FormsModule,
+    NgxSortableModule
   ],
   entryComponents: [
     SnackBarComponent

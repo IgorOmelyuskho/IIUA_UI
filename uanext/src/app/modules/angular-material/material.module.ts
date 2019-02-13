@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import {
   MatInputModule,
   MatSnackBarModule,
-  MatButtonModule
+  MatButtonModule,
+  MatListModule,
 } from '@angular/material';
 
 @NgModule({
@@ -12,7 +13,8 @@ import {
   exports: [
     MatInputModule,
     MatSnackBarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatListModule,
   ]
 })
 export class MaterialModule { }

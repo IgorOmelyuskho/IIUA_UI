@@ -10,6 +10,8 @@ import { VendorProfileComponent } from './vendor-profile/vendor-profile.componen
 import { SignupVendorComponent } from './signup-vendor/signup-vendor.component';
 import { SignupInvestorComponent } from './signup-investor/signup-investor.component';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { CreateVendorCompanyComponent } from './create-vendor-company/create-vendor-company.component';
+import { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
 
 // this exports for app-routing.module.ts
 export { HomePageComponent } from './home-page/home-page.component';
@@ -24,6 +26,8 @@ export { VendorProfileComponent } from './vendor-profile/vendor-profile.componen
 export { SignupVendorComponent } from './signup-vendor/signup-vendor.component';
 export { SignupInvestorComponent } from './signup-investor/signup-investor.component';
 export { SnackBarComponent } from './snack-bar/snack-bar.component';
+export { CreateVendorCompanyComponent } from './create-vendor-company/create-vendor-company.component';
+export { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
 
 export const components = [
   HomePageComponent,
@@ -38,6 +42,8 @@ export const components = [
   SignupVendorComponent,
   SignupInvestorComponent,
   SnackBarComponent,
+  CreateVendorCompanyComponent,
+  UpdateVendorCompanyComponent
 ];
 
 

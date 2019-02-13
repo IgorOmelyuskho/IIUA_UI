@@ -27,6 +27,7 @@
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "ngx-sortable": "^1.0.1",
     "primeicons": "^1.0.0",
     "primeng": "^6.1.7",
     "rxjs": "^6.0.0",
