@@ -1,7 +1,7 @@
 export interface VendorCompany {
   id?: string;
   name: string;
-  avatar?: any; // imageData
+  avatar?: any;
   legalEntityName: string;
   goal: string;
   region: string;
@@ -11,11 +11,11 @@ export interface VendorCompany {
   employeesNumber: string;
   employeesToHire: number;
   grossIncome: string;
-  averageCheck: string;
+  averageCheck: number;
   mounthlyClients: number;
-  averagePrice: string;
+  averagePrice: number;
   description: string;
-  moneyRequired: string;
+  moneyRequired: number;
   investmentDescription: string;
   steps?: any; // string[];
 

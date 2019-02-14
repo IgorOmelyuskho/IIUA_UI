@@ -12,6 +12,8 @@ import { SignupInvestorComponent } from './signup-investor/signup-investor.compo
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { CreateVendorCompanyComponent } from './create-vendor-company/create-vendor-company.component';
 import { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
+import { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
+
 
 // this exports for app-routing.module.ts
 export { HomePageComponent } from './home-page/home-page.component';
@@ -28,6 +30,7 @@ export { SignupInvestorComponent } from './signup-investor/signup-investor.compo
 export { SnackBarComponent } from './snack-bar/snack-bar.component';
 export { CreateVendorCompanyComponent } from './create-vendor-company/create-vendor-company.component';
 export { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
+export { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
 
 export const components = [
   HomePageComponent,
@@ -43,7 +46,8 @@ export const components = [
   SignupInvestorComponent,
   SnackBarComponent,
   CreateVendorCompanyComponent,
-  UpdateVendorCompanyComponent
+  UpdateVendorCompanyComponent,
+  VendorProjectsComponent
 ];
 
 

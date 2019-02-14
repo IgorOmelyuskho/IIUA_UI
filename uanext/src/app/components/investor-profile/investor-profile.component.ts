@@ -5,7 +5,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { InvestorRole } from 'src/app/models';
 import { StateService } from 'src/app/services/state/state.service';
-import { HelperService } from 'src/app/services/helperServices/helper.service';
+import FormHelper from '../../services/helperServices/formHelper';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
@@ -20,19 +20,19 @@ export class InvestorProfileComponent implements OnInit {
 
   @ViewChild('phone') phoneInput: ElementRef;
   // @ViewChild('cardNumber') carNumberInput: ElementRef;
+  FormHelper = FormHelper;
 
   constructor(
     private formBuilder: FormBuilder,
     private stateService: StateService,
     private authService: AuthorizationService,
     private profileService: ProfileService,
-    private helperService: HelperService, // required for html
     private notify: NotificationService
   ) {
     this.editProfileForm = this.formBuilder.group({
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
-      phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
+      email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
+      phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
     });
   }
 

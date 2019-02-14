@@ -1,0 +1,18 @@
+<div>
+  <button class="btn btn-success m-1" (click)="createNewCompany()">Create new project(company)</button>
+
+  <h1>LIST OF PROJECTS</h1>
+  <div *ngIf="projects?.length !== 0; else noProjects" class="projects">
+    <div *ngFor="let project of projects" class="project">
+      <img height=100 src={{project.avatar}} alt="">
+      <div>{{project.name}}</div>
+      <button class="btn btn-primary" (click)="goToProject(project)">Go to project</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #noProjects>
+  <div>
+    You have no project
+  </div>
+</ng-template>

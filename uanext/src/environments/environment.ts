@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api_url: 'http://master.alexduxa.online/',
-  api_2_url: ''
+  api_projects_url: 'http://proxy.alexduxa.online/projects/'
 };
 
 /*

@@ -3,26 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { VendorCompany } from 'src/app/models';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map, delay } from 'rxjs/operators';
+import { map, delay, tap } from 'rxjs/operators';
 
-const result = { // todo remove
+const result: VendorCompany = { // todo remove
   id: 'id_123',
-  name: 'string',
+  name: 'name1',
   avatar: 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=650&w=940', // imageData
-  legalEntityName: 'string',
-  goal: 'string',
-  region: 'string',
-  address: 'string',
-  fieldOfActivity: 'string',
+  legalEntityName: 'legalEntityName',
+  goal: 'goal',
+  region: 'region',
+  address: 'address',
+  fieldOfActivity: 'fieldOfActivity',
   companyAge: 10,
-  employeesNumber: '6-10',
+  employeesNumber: '101',
   employeesToHire: 5,
   grossIncome: '100',
-  averageCheck: 'string',
+  averageCheck: 1000,
   mounthlyClients: 50,
-  averagePrice: 'string',
+  averagePrice: 123,
   description: 'string',
-  moneyRequired: 'string',
+  moneyRequired: 10000,
   investmentDescription: 'string',
   steps: [{ id: 1111, data: 'step1' }, { id: 2222, data: 'step2' }, { id: 3333, data: 'step3' }],
 
@@ -44,11 +44,11 @@ const emptyVendorCompany: VendorCompany = {
   employeesNumber: '',
   employeesToHire: 0,
   grossIncome: '',
-  averageCheck: '',
+  averageCheck: 10,
   mounthlyClients: 0,
-  averagePrice: '',
+  averagePrice: 50,
   description: '',
-  moneyRequired: '',
+  moneyRequired: 123,
   investmentDescription: '',
   steps: [],
 
@@ -63,22 +63,29 @@ const emptyVendorCompany: VendorCompany = {
 export class VendorCompanyService {
   readonly emptyVendorCompany: VendorCompany =  emptyVendorCompany;
 
+  projectForUpdate: VendorCompany = null; // initial when click on selected project
+
   constructor(private http: HttpClient) { }
 
-  fetchVendorCompany(companyId: number): Observable<VendorCompany> {
-    // return this.http.get<VendorCompany>(`${environment.api_2_url}api/Vendor/company${companyId}`).pipe(
-    //   map(response => response['data'])
+  fetchVendorCompanies(): Observable<VendorCompany[]> {
+    // return this.http.get<VendorCompany[]>(`${environment.api_projects_url}api/Projects`)
+    // .pipe(
+    //   // map(response => response['data'])
+    //   tap(
+    //     data => console.log(data)
+    //   )
     // );
-    return of(result).pipe(
-      delay(3000)
+    return of([result, result]).pipe(
+      delay(1000)
     );
   }
 
   createVendorCompany(newVendorCompany: VendorCompany): Observable<any> {
-    return this.http.post<any>(`${environment.api_2_url}api/Vendor/createCompany`, newVendorCompany);
+    return this.http.post<any>(`${environment.api_projects_url}api/Projects`, newVendorCompany);
   }
 
-  updateVendorCompany(vendorId: string, updatedVendorCompany: VendorCompany): Observable<any> {
-    return this.http.post<any>(`${environment.api_2_url}api/Vendor/updateCompany/${vendorId}`, updatedVendorCompany);
+
+  updateVendorCompany(projectId: string, updatedVendorCompany: VendorCompany): Observable<any> {
+    return this.http.post<any>(`${environment.api_projects_url}/api/Projects${projectId}`, updatedVendorCompany);
   }
 }

@@ -1,186 +1,191 @@
 <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-  
-        <form [formGroup]="vendorCompanyForm" (ngSubmit)="onSubmit()">
-          <h1>Create a new company</h1>
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.name.errors }" />
-            <div *ngIf="formControls.name.errors" class="invalid-feedback">
-              <div *ngIf="formControls.name.errors.required">Name cannot be empty</div>
-            </div>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+
+      <form [formGroup]="vendorCompanyForm" (ngSubmit)="onSubmit()">
+        <h1>Create a new company</h1>
+
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.name.errors }" />
+          <div *ngIf="formControls.name.errors" class="invalid-feedback">
+            <div *ngIf="formControls.name.errors.required">Name cannot be empty</div>
           </div>
-  
-          <div class="form-group">
-            <img id="avatar-image" height=100 src={{emptyAvatar}} alt="avatar">
-            <label>Avatar</label>
-            <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar" class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && formControls.avatar.errors }" />
-            <div *ngIf="formControls.avatar.errors" class="invalid-feedback">
-              <div *ngIf="formControls.avatar.errors.required">Avatar cannot be empty</div>
-              <div *ngIf="formControls.avatar.errors.maxAvatarSizeErr">Max avatar size is 5Mb</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <img #avatar2 height=100 src={{emptyAvatar}} alt="avatar">
+          <label>Avatar</label>
+          <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && formControls.avatar.errors }" />
+          <div *ngIf="formControls.avatar.errors" class="invalid-feedback">
+            <div *ngIf="formControls.avatar.errors.required">Avatar cannot be empty</div>
+            <div *ngIf="formControls.avatar.errors.maxAvatarSizeErr">Max avatar size is 5Mb</div>
           </div>
-  
-          <div class="form-group">
-            <label>Legal entity name</label>
-            <input type="text" formControlName="legalEntityName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.legalEntityName.errors }" />
-            <div *ngIf="formControls.legalEntityName.errors" class="invalid-feedback">
-              <div *ngIf="formControls.legalEntityName.errors.required">Legal entity name cannot be empty</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <label>Legal entity name</label>
+          <input type="text" formControlName="legalEntityName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.legalEntityName.errors }" />
+          <div *ngIf="formControls.legalEntityName.errors" class="invalid-feedback">
+            <div *ngIf="formControls.legalEntityName.errors.required">Legal entity name cannot be empty</div>
           </div>
-  
-          <div class="form-group">
-            <label for="vendor-goal-textarea">Goal</label>
-            <textarea id="vendor-goal-textarea" rows="3" formControlName="goal" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.goal.errors }"></textarea>
-            <div *ngIf="formControls.goal.errors" class="invalid-feedback">
-              <div *ngIf="formControls.goal.errors.required">goal cannot be empty</div>
-              <div *ngIf="formControls.goal.errors.minlength">Minimal length is 200 charset</div>
-              <div *ngIf="formControls.goal.errors.maxlength">Maximal length is 1024 charset</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <label for="vendor-goal-textarea">Goal</label>
+          <textarea id="vendor-goal-textarea" rows="3" formControlName="goal" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.goal.errors }"></textarea>
+          <div *ngIf="formControls.goal.errors" class="invalid-feedback">
+            <div *ngIf="formControls.goal.errors.required">goal cannot be empty</div>
+            <div *ngIf="formControls.goal.errors.minlength">Minimal length is 200 charset</div>
+            <div *ngIf="formControls.goal.errors.maxlength">Maximal length is 1024 charset</div>
           </div>
-  
-          <div class="form-group steps card">
-            <label>Steps</label>
-            <textarea [ngModelOptions]="{standalone: true}" (input)="newStepOnInput()" type="text" [(ngModel)]="newStep"
-              placeholder="Enter new step" class="form-control step-name" [ngClass]="{ 'is-invalid': !newStepMin || !newStepMax || !newStepNull }"></textarea>
-            <div *ngIf="!newStepMin || !newStepMax || !newStepNull" class="invalid-new-step">
-              <div *ngIf="!newStepNull">Step cannot be empty</div>
-              <div *ngIf="!newStepMin">Minimal length is 3 charset</div>
-              <div *ngIf="!newStepMax">Maximal length is 256 charset</div>
-            </div>
-  
-            <!-- <div class="form-group"> -->
-              <input style="display:none" type="text" formControlName="forSteps" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.forSteps.errors }">
-              <div *ngIf="formControls.forSteps.errors" class="invalid-feedback">
-                <div *ngIf="formControls.forSteps.errors?.minCount">Minimal steps count is 3</div>
-                <div *ngIf="formControls.forSteps.errors?.maxCount">Maximal steps count is 15</div>
+        </div>
+
+        <div class="form-group steps card">
+          <label>Steps</label>
+          <textarea [ngModelOptions]="{standalone: true}" (input)="newStepOnInput()" type="text" [(ngModel)]="newStep"
+            placeholder="Enter new step" class="form-control step-name" [ngClass]="{ 'is-invalid': !newStepMinValid || !newStepMaxValid || !newStepNullValid }"></textarea>
+          <div *ngIf="!newStepMinValid || !newStepMaxValid || !newStepNullValid" class="invalid-new-step">
+            <div *ngIf="!newStepNullValid">Step cannot be empty</div>
+            <div *ngIf="!newStepMinValid">Minimal length is 3 charset</div>
+            <div *ngIf="!newStepMaxValid">Maximal length is 256 charset</div>
+          </div>
+
+          <input style="display:none" type="text" formControlName="forSteps" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.forSteps.errors }">
+          <div *ngIf="formControls.forSteps.errors" class="invalid-feedback">
+            <div *ngIf="formControls.forSteps.errors?.minCount">Minimal steps count is 3</div>
+            <div *ngIf="formControls.forSteps.errors?.maxCount">Maximal steps count is 15</div>
+          </div>
+
+          <button (click)="addNewStepClick()" [disabled]="!newStepMinValid || !newStepMaxValid || !newStepNullValid"
+            type="button" class="btn btn-success">Add to my steps</button>
+          <ngx-sortable [items]="vendorCompany?.steps" [name]="'List'" [listStyle]="{dropZoneHeight: '50px'}">
+            <ng-template let-step>
+              <div class="sortable-list-item">
+                <div>{{step.data}}</div>
+                <button (click)="removeStepsItem(step.id)" type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-            <!-- </div> -->
-  
-            <button (click)="addNewStepClick()" [disabled]="!newStepMin || !newStepMax || !newStepNull" type="button"
-              class="btn btn-success">Add to my steps</button>
-            <ngx-sortable [items]="vendorCompany?.steps" [name]="'List'" [listStyle]="{dropZoneHeight: '50px'}">
-              <ng-template let-step>
-                <div class="sortable-list-item">
-                  <div>{{step.data}}</div>
-                  <button (click)="removeStepsItem(step.id)" type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-              </ng-template>
-            </ngx-sortable>
+            </ng-template>
+          </ngx-sortable>
+        </div>
+
+        <div class="form-group">
+          <label>Region</label>
+          <input type="text" formControlName="region" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <input type="text" formControlName="address" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label>Field of activity</label>
+          <input type="text" formControlName="fieldOfActivity" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.fieldOfActivity.errors }" />
+          <div *ngIf="formControls.fieldOfActivity.errors" class="invalid-feedback">
+            <div *ngIf="formControls.fieldOfActivity.errors.required">Field of activity cannot be empty</div>
           </div>
-  
-          <div class="form-group">
-            <label>Region</label>
-            <input type="text" formControlName="region" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label>Company age</label>
+          <input type="number" min=0 formControlName="companyAge" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.companyAge.errors }" />
+          <div *ngIf="formControls.companyAge.errors" class="invalid-feedback">
+            <div *ngIf="formControls.companyAge.errors.required">Company age cannot be empty</div>
           </div>
-  
-          <div class="form-group">
-            <label>Address</label>
-            <input type="text" formControlName="address" class="form-control" />
+        </div>
+
+        <div class="form-group">
+          <label>Employees number</label>
+          <select type="number" min=0 formControlName="employeesNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.employeesNumber.errors }">
+            <option value="1">0-1</option>
+            <option value="5">2-5</option>
+            <option value="10">6-10</option>
+            <option value="25">11-25</option>
+            <option value="50">26-50</option>
+            <option value="100">51-100</option>
+            <option value="101">100+</option>
+          </select>
+          <div *ngIf="formControls.employeesNumber.errors" class="invalid-feedback">
+            <div *ngIf="formControls.employeesNumber.errors.required">Specify employees number</div>
           </div>
-  
-          <div class="form-group">
-            <label>Field of activity</label>
-            <input type="text" formControlName="fieldOfActivity" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.fieldOfActivity.errors }" />
-            <div *ngIf="formControls.fieldOfActivity.errors" class="invalid-feedback">
-              <div *ngIf="formControls.fieldOfActivity.errors.required">Field of activity cannot be empty</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <label>Employees to hire</label>
+          <input type="number" min=0 formControlName="employeesToHire" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.employeesToHire.errors }" />
+          <div *ngIf="formControls.employeesToHire.errors" class="invalid-feedback">
+            <div *ngIf="formControls.employeesToHire.errors.required">Specify count employees to hire</div>
           </div>
-  
-          <div class="form-group">
-            <label>Company age</label>
-            <input type="number" min=0 formControlName="companyAge" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.companyAge.errors }" />
-            <div *ngIf="formControls.companyAge.errors" class="invalid-feedback">
-              <div *ngIf="formControls.companyAge.errors.required">Company age cannot be empty</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <label>Gross income</label>
+          <select type="number" min=0 formControlName="grossIncome" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.grossIncome.errors }">
+            <option value="0">0</option>
+            <option value="100">100</option>
+          </select>
+          <div *ngIf="formControls.grossIncome.errors" class="invalid-feedback">
+            <div *ngIf="formControls.grossIncome.errors.required">Specify gross income</div>
           </div>
-  
-          <div class="form-group">
-            <label>Employees number</label>
-            <select type="number" min=0 formControlName="employeesNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.employeesNumber.errors }">
-              <option value="0-1">0-1</option>
-              <option value="2-5">2-5</option>
-              <option value="6-10">6-10</option>
-              <option value="11-25">11-25</option>
-              <option value="26-50">26-50</option>
-              <option value="51-100">51-100</option>
-              <option value="100+">100+</option>
-            </select>
-            <div *ngIf="formControls.employeesNumber.errors" class="invalid-feedback">
-              <div *ngIf="formControls.employeesNumber.errors.required">Specify employees number</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <label>Average price</label>
+          <input type="number" formControlName="averagePrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.averagePrice.errors }" />
+          <div *ngIf="formControls.averagePrice.errors" class="invalid-feedback">
+            <div *ngIf="formControls.averagePrice.errors.required">Average price cannot be empty</div>
           </div>
-  
-          <div class="form-group">
-            <label>Employees to hire</label>
-            <input type="number" min=0 formControlName="employeesToHire" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.employeesToHire.errors }" />
-            <div *ngIf="formControls.employeesToHire.errors" class="invalid-feedback">
-              <div *ngIf="formControls.employeesToHire.errors.required">Specify count employees to hire</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <label>Average check</label>
+          <input type="number" formControlName="averageCheck" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.averageCheck.errors }" />
+          <div *ngIf="formControls.averageCheck.errors" class="invalid-feedback">
+            <div *ngIf="formControls.averageCheck.errors.required">Average check cannot be empty</div>
           </div>
-  
-          <div class="form-group">
-            <label>Gross income</label>
-            <select type="number" min=0 formControlName="grossIncome" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.grossIncome.errors }">
-              <option value="0">0</option>
-              <option value="100">100</option>
-            </select>
-            <div *ngIf="formControls.grossIncome.errors" class="invalid-feedback">
-              <div *ngIf="formControls.grossIncome.errors.required">Specify gross income</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <label>Clients count per mount</label>
+          <input type="number" formControlName="mounthlyClients" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.mounthlyClients.errors }" />
+          <div *ngIf="formControls.mounthlyClients.errors" class="invalid-feedback">
+            <div *ngIf="formControls.mounthlyClients.errors.required">Clients count per mount cannot be empty</div>
           </div>
-  
-          <div class="form-group">
-            <label>Average price</label>
-            <input type="text" formControlName="averagePrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.averagePrice.errors }" />
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.description.errors }" />
+          <div *ngIf="formControls.description.errors" class="invalid-feedback">
+            <div *ngIf="formControls.description.errors.required">Business description cannot be empty</div>
+            <div *ngIf="formControls.description.errors.maxlength">Business description length cannot be
+              largest than 1024 chars</div>
           </div>
-  
-          <div class="form-group">
-            <label>Average check</label>
-            <input type="text" formControlName="averageCheck" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.averageCheck.errors }" />
+        </div>
+
+        <div class="form-group">
+          <label>Investment description</label>
+          <textarea rows=3 formControlName="investmentDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.investmentDescription.errors }"></textarea>
+          <div *ngIf="formControls.investmentDescription.errors" class="invalid-feedback">
+            <div *ngIf="formControls.investmentDescription.errors.required">Investment description cannot be empty</div>
+            <div *ngIf="formControls.investmentDescription.errors.maxlength">Investment description length cannot be
+              largest than 4096 chars</div>
           </div>
-  
-          <div class="form-group">
-            <label>Clients count per mount</label>
-            <input type="number" formControlName="mounthlyClients" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.mounthlyClients.errors }" />
-            <div *ngIf="formControls.mounthlyClients.errors" class="invalid-feedback">
-              <div *ngIf="formControls.mounthlyClients.errors.required">Clients count per mount cannot be empty</div>
-            </div>
+        </div>
+
+        <div class="form-group">
+          <label>How much money required</label>
+          <input type="number" formControlName="moneyRequired" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.moneyRequired.errors }" />
+          <div *ngIf="formControls.moneyRequired.errors" class="invalid-feedback">
+            <div *ngIf="formControls.moneyRequired.errors.required">Specify how much money required</div>
           </div>
-  
-          <div class="form-group">
-            <label>Description</label>
-            <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.description.errors }" />
-            <div *ngIf="formControls.description.errors" class="invalid-feedback">
-              <div *ngIf="formControls.description.errors.required">Business description cannot be empty</div>
-              <div *ngIf="formControls.description.errors.maxlength">Business description length cannot be
-                largest than 1024 chars</div>
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label>Investment description</label>
-            <textarea rows=3 formControlName="investmentDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.investmentDescription.errors }"></textarea>
-            <div *ngIf="formControls.investmentDescription.errors" class="invalid-feedback">
-              <div *ngIf="formControls.investmentDescription.errors.required">Investment description cannot be empty</div>
-              <div *ngIf="formControls.investmentDescription.errors.maxlength">Investment description length cannot be
-                largest than 4096 chars</div>
-            </div>
-          </div>
-  
-          <div class="form-group">
-            <label>How much money required</label>
-            <input type="text" formControlName="moneyRequired" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.moneyRequired.errors }" />
-            <div *ngIf="formControls.moneyRequired.errors" class="invalid-feedback">
-              <div *ngIf="formControls.moneyRequired.errors.required">Specify how much money required</div>
-            </div>
-          </div>
-  
-          <!-- <div class="form-group">
+        </div>
+
+        <!-- <div class="form-group">
               <label>Photos</label>
               <input multiple (change)="handlePhotosSelect($event)" type="file" accept="image/*" formControlName="photos"
                 class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.photos.errors }" />
@@ -194,13 +199,12 @@
               <input multiple (change)="handleFilesSelect($event)" type="file" accept="*" formControlName="files" class="form-control"
                 [ngClass]="{ 'is-invalid': submitted && formControls.files.errors }" />
             </div> -->
-  
-          <div class="form-group">
-            <button [disabled]="submitted && !vendorCompanyForm.valid" class="btn btn-success">Create company</button>
-          </div>
-        </form>
-  
-      </div>
+
+        <div class="form-group">
+          <button [disabled]="submitted && !vendorCompanyForm.valid" class="btn btn-success">Create company</button>
+        </div>
+      </form>
+
     </div>
   </div>
-  
+</div>

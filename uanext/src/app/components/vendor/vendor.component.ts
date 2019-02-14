@@ -18,6 +18,10 @@ export class VendorComponent implements OnInit {
     this.router.navigate(['home', 'vendor', 'profile']);
   }
 
+  goToProjects() {
+    this.router.navigate(['home', 'vendor', 'projects']);
+  }
+
   signOut() {
     this.authService.signOut();
   }

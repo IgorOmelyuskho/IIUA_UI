@@ -8,7 +8,7 @@ import { ProfileService } from 'src/app/services/profile/profile.service';
 import { Observable } from 'rxjs';
 import { VendorRole, InvestorRole } from 'src/app/models';
 import { NotificationService } from 'src/app/services/notification/notification.service';
-import { HelperService } from 'src/app/services/helperServices/helper.service';
+import FormHelper from '../../services/helperServices/formHelper';
 
 @Component({
   selector: 'app-signin',
@@ -18,6 +18,7 @@ import { HelperService } from 'src/app/services/helperServices/helper.service';
 export class SigninComponent implements OnInit {
   signinForm: FormGroup;
   submitted = false;
+  FormHelper = FormHelper;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,10 +27,9 @@ export class SigninComponent implements OnInit {
     private stateService: StateService,
     private profileService: ProfileService,
     private notify: NotificationService,
-    private helperService: HelperService
   ) {
     this.signinForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
+      email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }

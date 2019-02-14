@@ -1,6 +1,6 @@
-import { HelperService } from './../../services/helperServices/helper.service';
 import { StateService } from './../../services/state/state.service';
 import { AuthorizationService } from './../../services/auth/authorization.service';
+import FormHelper from '../../services/helperServices/formHelper';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
@@ -17,6 +17,7 @@ export class VendorProfileComponent implements OnInit {
   vendor: VendorRole = null;
   editProfileForm: FormGroup;
   isLoaded = false;
+  FormHelper = FormHelper;
 
   @ViewChild('phone') phoneInput: ElementRef;
 
@@ -25,14 +26,13 @@ export class VendorProfileComponent implements OnInit {
     private stateService: StateService,
     private authService: AuthorizationService,
     private profileService: ProfileService,
-    private helperService: HelperService,
     private notify: NotificationService
   ) {
     this.editProfileForm = this.formBuilder.group({
       itn: ['', Validators.required],
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
-      phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
+      email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
+      phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
     });
   }
 

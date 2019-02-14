@@ -1,4 +1,4 @@
-import { HelperService } from './../../services/helperServices/helper.service';
+import FormHelper from '../../services/helperServices/formHelper';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './../../services/auth/authorization.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -14,18 +14,18 @@ import { NotificationService } from 'src/app/services/notification/notification.
 export class SignupInvestorComponent implements OnInit {
   signupForm: FormGroup;
   submitted = false;
+  FormHelper = FormHelper;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
     private router: Router,
-    private notify: NotificationService,
-    private helperService: HelperService // required
+    private notify: NotificationService
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
-      phone: ['', [Validators.required, Validators.pattern(this.helperService.phonePattern)]],
+      email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
+      phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       rePassword: ['', [Validators.required, matchOtherValidator('password')]],
     });

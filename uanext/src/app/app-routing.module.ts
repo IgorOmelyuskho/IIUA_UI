@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IndexComponent } from './components';
+import { IndexComponent, VendorProjectsComponent, CreateVendorCompanyComponent, UpdateVendorCompanyComponent } from './components';
 import { SigninComponent } from './components';
 import { SignupComponent } from './components';
 import { InvestorComponent } from './components';
@@ -21,6 +21,9 @@ const childInvestorRoutes: Routes = [
 
 const childVendorRoutes: Routes = [
   { path: 'profile', component: VendorProfileComponent },
+  { path: 'projects', component: VendorProjectsComponent },
+  { path: 'newProject', component: CreateVendorCompanyComponent },
+  { path: 'project/:id', component: UpdateVendorCompanyComponent },
 ];
 
 const childHomeRoutes: Routes = [

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { VendorCompany } from 'src/app/models';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { VendorCompanyService } from 'src/app/services/vendorCompany/vendor-company.service';
 import { Observable, forkJoin, Observer } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import VendorProjectHelper from '../../services/helperServices/vendorProjectHelper';
 
 @Component({
   selector: 'app-update-vendor-company',
@@ -11,11 +13,12 @@ import { Observable, forkJoin, Observer } from 'rxjs';
   styleUrls: ['./update-vendor-company.component.scss']
 })
 export class UpdateVendorCompanyComponent implements OnInit {
-  vendorCompany: VendorCompany;
+  vendorCompany: VendorCompany = this.vendorCompanyService.emptyVendorCompany;
   vendorCompanyForm: FormGroup;
   isLoaded = false;
-
-  emptyAvatar = '../../../assets/img/empty-profile.jpg';
+  @ViewChild('avatar') avatarImg: ElementRef;
+  projectId: string;
+  VendorProjectHelper = VendorProjectHelper;
 
   newStep: string;
   newStepMinValid = true;
@@ -26,7 +29,6 @@ export class UpdateVendorCompanyComponent implements OnInit {
   minStepsCount = 3;
 
   avatarSize = 0;
-  maxAvatarSize = 1024 * 1024 * 5;
   avatar: any; // avatar data
 
   filesEvent: Event;
@@ -36,6 +38,7 @@ export class UpdateVendorCompanyComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notify: NotificationService,
     private vendorCompanyService: VendorCompanyService,
+    private activateRoute: ActivatedRoute
   ) {
     this.vendorCompanyForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -47,11 +50,11 @@ export class UpdateVendorCompanyComponent implements OnInit {
       fieldOfActivity: ['', Validators.required],
       companyAge: ['', Validators.required], // todo min - 0 max - 100
       employeesNumber: ['', Validators.required],
-      employeesToHire: [''], // max 1000
+      employeesToHire: ['', Validators.required], // max 1000
       grossIncome: ['', Validators.required],
-      averageCheck: [''],
+      averageCheck: ['', Validators.required],
       mounthlyClients: ['', Validators.required],
-      averagePrice: [''],
+      averagePrice: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(1024)]],
       moneyRequired: ['', Validators.required], // max 1000 0000 000
       investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
@@ -68,23 +71,43 @@ export class UpdateVendorCompanyComponent implements OnInit {
     });
   }
 
+  whenProjectIsLoaded() {
+    this.isLoaded = true;
+    this.setFormValues();
+    this.avatarImg.nativeElement['src'] = this.vendorCompany.avatar;
+  }
+
   ngOnInit() {
-    this.vendorCompanyService.fetchVendorCompany(100000).subscribe(
-      (company: VendorCompany) => {
-        this.vendorCompany = company;
-        this.isLoaded = true;
-        document.getElementById('avatar-image_2')['src'] = this.vendorCompany.avatar;
-        this.setFormValues();
-      },
-      err => {
-        console.warn(err);
-      }
-    );
+    // use when page reload
+    // this.vendorCompanyService.fetchVendorCompanies().subscribe(
+    //   (companies: VendorCompany[]) => {
+    //     // for (let i = 0; i < companies.length; i++) {
+    //     //   if (companies[i].id === this.projectId) {
+    //     //     this.vendorCompany = companies[i];
+    //     //     break;
+    //     //   }
+    //     // }
+    //     this.vendorCompany = companies[0];
+    //     this.whenProjectIsLoaded();
+    //   },
+    //   err => {
+    //     console.warn(err);
+    //   }
+    // );
+
+    // else if navigate from projects
+    setTimeout(() => {
+      this.vendorCompany = this.vendorCompanyService.projectForUpdate;
+      this.whenProjectIsLoaded();
+    }, 0);
+    // this.vendorCompany = this.vendorCompanyService.projectForUpdate;
+    // this.whenProjectIsLoaded();
   }
 
   get formControls() {
     return this.vendorCompanyForm.controls;
   }
+
 
   removeStepsItem(id) {
     for (let i = 0; i < this.vendorCompany.steps.length; i++) {
@@ -163,25 +186,24 @@ export class UpdateVendorCompanyComponent implements OnInit {
   }
 
   handleAvatarSelect(event) {
-    const avatarImg = document.getElementById('avatar-image_2');
-
+    const maxAvatarSize = 1024 * 1024 * 5;
     if (event.target.files == null || event.target.files.length === 0) {
-      avatarImg['src'] = this.emptyAvatar;
-      this.avatar = 'null';
+      this.avatarImg.nativeElement['src'] = VendorProjectHelper.emptyAvatar;
+      this.avatar = '';
       return;
     }
 
     this.avatarSize = event.target.files[0].size;
-    if (this.avatarSize > this.maxAvatarSize) {
+    if (this.avatarSize > maxAvatarSize) {
       this.vendorCompanyForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
-      avatarImg['src'] = this.emptyAvatar;
-      this.avatar = 'null';
+      this.avatarImg.nativeElement['src'] = VendorProjectHelper.emptyAvatar;
+      this.avatar = '';
       return;
     }
 
     const avatarReader = new FileReader();
     avatarReader.onload = (avatar) => {
-      avatarImg['src'] = avatar.target['result'];
+      this.avatarImg.nativeElement['src'] = avatar.target['result'];
       this.avatar = avatar.target['result'];
     };
 
@@ -236,19 +258,13 @@ export class UpdateVendorCompanyComponent implements OnInit {
       return;
     }
 
-    // const id = this.stateService.userId();
-    // if (id == null) {
-    //   return;
-    // }
-    const id = '150'; // todo vendorRole id
-
     const updatedVendorCompany: VendorCompany = {
       ...this.vendorCompanyForm.value,
     };
 
     updatedVendorCompany.avatar = this.avatar;
 
-    this.vendorCompanyService.updateVendorCompany(id, updatedVendorCompany).subscribe(
+    this.vendorCompanyService.updateVendorCompany(this.vendorCompany.id, updatedVendorCompany).subscribe(
       response => {
         console.log(response);
         this.notify.show(response['data']);

@@ -19,7 +19,7 @@
       </div>
       <div class="form-group">
         <label>Itn verified</label>
-        <input disabled=true type="text" class="form-control" value={{vendor?.ItnVerified}} />
+        <input disabled=true type="text" class="form-control" value={{vendor?.itnVerified}} />
       </div>
 
 
@@ -49,7 +49,7 @@
         </div>
         <div class="form-group">
           <label>Phone</label>
-          <input #phone [textMask]="{mask: helperService.phoneMask}" type="text" formControlName="phone" class="form-control"
+          <input #phone [textMask]="{mask: FormHelper.phoneMask}" type="text" formControlName="phone" class="form-control"
             [ngClass]="{ 'is-invalid': isLoaded && formControls.phone.errors }" />
           <div *ngIf="formControls.phone.errors" class="invalid-feedback">
             <div *ngIf="formControls.phone.errors.required">Phone cannot be empty</div>

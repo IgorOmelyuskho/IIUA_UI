@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { VendorCompany } from 'src/app/models';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification/notification.service';
@@ -14,8 +14,8 @@ export class CreateVendorCompanyComponent implements OnInit {
   vendorCompany: VendorCompany = this.vendorCompanyService.emptyVendorCompany;
   vendorCompanyForm: FormGroup;
   submitted = false;
-
   emptyAvatar = '../../../assets/img/empty-profile.jpg';
+  @ViewChild('avatar2') avatarImg: ElementRef;
 
   newStep: string;
   newStepMinValid = true;
@@ -47,11 +47,11 @@ export class CreateVendorCompanyComponent implements OnInit {
       fieldOfActivity: ['', Validators.required],
       companyAge: ['', Validators.required], // todo min - 0 max - 100
       employeesNumber: ['', Validators.required],
-      employeesToHire: [''], // max 1000
+      employeesToHire: ['', Validators.required], // max 1000
       grossIncome: ['', Validators.required],
-      averageCheck: [''],
+      averageCheck: ['', Validators.required],
       mounthlyClients: ['', Validators.required],
-      averagePrice: [''],
+      averagePrice: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(1024)]],
       moneyRequired: ['', Validators.required], // max 1000 0000 000
       investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
@@ -151,10 +151,8 @@ export class CreateVendorCompanyComponent implements OnInit {
   }
 
   handleAvatarSelect(event) {
-    const avatarImg = document.getElementById('avatar-image');
-
     if (event.target.files == null || event.target.files.length === 0) {
-      avatarImg['src']  = this.emptyAvatar;
+      this.avatarImg.nativeElement['src']  = this.emptyAvatar;
       this.avatar = 'null';
       return;
     }
@@ -162,14 +160,14 @@ export class CreateVendorCompanyComponent implements OnInit {
     this.avatarSize = event.target.files[0].size;
     if (this.avatarSize > this.maxAvatarSize) {
       this.vendorCompanyForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
-      avatarImg['src']  = this.emptyAvatar;
+      this.avatarImg.nativeElement['src']  = this.emptyAvatar;
       this.avatar = 'null';
       return;
     }
 
     const avatarReader = new FileReader();
     avatarReader.onload = (avatar) => {
-      avatarImg['src']  = avatar.target['result'];
+      this.avatarImg.nativeElement['src']  = avatar.target['result'];
       this.avatar = avatar.target['result'];
     };
 
@@ -195,17 +193,11 @@ export class CreateVendorCompanyComponent implements OnInit {
       return;
     }
 
-    // const id = this.stateService.userId();
-    // if (id == null) {
-    //   return;
-    // }
-    const id = '150'; // todo vendorRole id
-
     const newVendorCompany: VendorCompany = {
       ...this.vendorCompanyForm.value,
     };
 
-    newVendorCompany.avatar = this.avatar;
+    // newVendorCompany.avatar = this.avatar; // todo
 
     this.vendorCompanyService.createVendorCompany(newVendorCompany).subscribe(
       response => {
