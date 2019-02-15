@@ -58,7 +58,9 @@ export class AuthorizationService {
         vendor => {
           this.stateService.user$.next(vendor);
           this.stateService.authorized$.next(true);
-          this.router.navigate(['home', 'vendor']);
+          if (this.router.url === '' || this.router.url === '/') {
+            this.router.navigate(['home', 'vendor']);
+          }
         },
         err => {
           console.warn(err);
@@ -72,7 +74,9 @@ export class AuthorizationService {
         investor => {
           this.stateService.user$.next(investor);
           this.stateService.authorized$.next(true);
-          this.router.navigate(['home', 'investor']);
+          if (this.router.url === '' || this.router.url === '/') {
+            this.router.navigate(['home', 'investor']);
+          }
         },
         err => {
           console.warn(err);
