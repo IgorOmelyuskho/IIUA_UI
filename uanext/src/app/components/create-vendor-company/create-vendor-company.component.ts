@@ -74,9 +74,9 @@ export class CreateVendorCompanyComponent implements OnInit {
     return this.vendorCompanyForm.controls;
   }
 
-  removeStepsItem(id) {
+  removeStepsItem(step) {
     for (let i = 0; i < this.vendorCompany.steps.length; i++) {
-      if (this.vendorCompany.steps[i].id === id) {
+      if (this.vendorCompany.steps[i] === step) {
         this.vendorCompany.steps.splice(i, 1);
 
         const length = this.vendorCompany.steps.length;
@@ -146,7 +146,7 @@ export class CreateVendorCompanyComponent implements OnInit {
 
     const isValid = this.checkNewStep();
     if (isValid) {
-      this.vendorCompany.steps.push({ id: Math.floor(Math.random() * 1000000), data: this.newStep });
+      this.vendorCompany.steps.push({ data: this.newStep });
     }
   }
 
@@ -197,7 +197,8 @@ export class CreateVendorCompanyComponent implements OnInit {
       ...this.vendorCompanyForm.value,
     };
 
-    // newVendorCompany.avatar = this.avatar; // todo
+    newVendorCompany.avatar = this.avatar;
+    newVendorCompany.steps = this.vendorCompany.steps;
 
     this.vendorCompanyService.createVendorCompany(newVendorCompany).subscribe(
       response => {

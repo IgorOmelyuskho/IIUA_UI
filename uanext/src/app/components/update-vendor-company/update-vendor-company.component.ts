@@ -109,9 +109,9 @@ export class UpdateVendorCompanyComponent implements OnInit {
   }
 
 
-  removeStepsItem(id) {
+  removeStepsItem(step) {
     for (let i = 0; i < this.vendorCompany.steps.length; i++) {
-      if (this.vendorCompany.steps[i].id === id) {
+      if (this.vendorCompany.steps[i] === step) {
         this.vendorCompany.steps.splice(i, 1);
 
         const length = this.vendorCompany.steps.length;
@@ -181,7 +181,7 @@ export class UpdateVendorCompanyComponent implements OnInit {
 
     const isValid = this.checkNewStep();
     if (isValid) {
-      this.vendorCompany.steps.push({ id: Math.floor(Math.random() * 1000000), data: this.newStep });
+      this.vendorCompany.steps.push({ data: this.newStep });
     }
   }
 
@@ -263,6 +263,7 @@ export class UpdateVendorCompanyComponent implements OnInit {
     };
 
     updatedVendorCompany.avatar = this.avatar;
+    updatedVendorCompany.steps = this.vendorCompany.steps;
 
     this.vendorCompanyService.updateVendorCompany(this.vendorCompany.id, updatedVendorCompany).subscribe(
       response => {

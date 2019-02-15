@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { map, delay, tap } from 'rxjs/operators';
 
 const result: VendorCompany = { // todo remove
-  id: 'id_123',
+  id: 3,
   name: 'name1',
   avatar: 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=650&w=940', // imageData
   legalEntityName: 'legalEntityName',
@@ -32,7 +32,6 @@ const result: VendorCompany = { // todo remove
 };
 
 const emptyVendorCompany: VendorCompany = {
-  id: '',
   name: '',
   avatar: 'https://www.pexels.com/photo/scenic-view-of-beach-248797/', // imageData
   legalEntityName: '',
@@ -68,12 +67,12 @@ export class VendorCompanyService {
   constructor(private http: HttpClient) { }
 
   fetchVendorCompanies(): Observable<VendorCompany[]> {
-    // return this.http.get<VendorCompany[]>(`${environment.api_projects_url}api/Projects`)
+    // return this.http.get<VendorCompany[]>(`${environment.api_projects_url}api/Projects`);
     // .pipe(
     //   // map(response => response['data'])
-    //   tap(
-    //     data => console.log(data)
-    //   )
+    //   // tap(
+    //   //   data => console.log(data)
+    //   // )
     // );
     return of([result, result]).pipe(
       delay(1000)
@@ -84,8 +83,7 @@ export class VendorCompanyService {
     return this.http.post<any>(`${environment.api_projects_url}api/Projects`, newVendorCompany);
   }
 
-
-  updateVendorCompany(projectId: string, updatedVendorCompany: VendorCompany): Observable<any> {
-    return this.http.post<any>(`${environment.api_projects_url}/api/Projects${projectId}`, updatedVendorCompany);
+  updateVendorCompany(projectId: number, updatedVendorCompany: VendorCompany): Observable<any> {
+    return this.http.put<any>(`${environment.api_projects_url}/api/Projects/${projectId}`, updatedVendorCompany);
   }
 }
