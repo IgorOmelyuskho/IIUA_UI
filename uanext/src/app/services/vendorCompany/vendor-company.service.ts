@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { VendorCompany } from 'src/app/models';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map, delay, tap } from 'rxjs/operators';
 
 const result: VendorCompany = { // todo remove
-  id: 3,
+  id: '3',
   name: 'name1',
   avatar: 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=650&w=940', // imageData
   legalEntityName: 'legalEntityName',
@@ -83,7 +83,11 @@ export class VendorCompanyService {
     return this.http.post<any>(`${environment.api_projects_url}api/Projects`, newVendorCompany);
   }
 
-  updateVendorCompany(projectId: number, updatedVendorCompany: VendorCompany): Observable<any> {
-    return this.http.put<any>(`${environment.api_projects_url}/api/Projects/${projectId}`, updatedVendorCompany);
+  updateVendorCompany(projectId: string, updatedVendorCompany: VendorCompany): Observable<any> {
+    return this.http.put<any>(`${environment.api_projects_url}api/Projects/${projectId}`, updatedVendorCompany);
+  }
+
+  uploadPhotos(formData) {
+    return this.http.post<any>(`${environment.api_projects_url}api/Projects/`, formData);
   }
 }

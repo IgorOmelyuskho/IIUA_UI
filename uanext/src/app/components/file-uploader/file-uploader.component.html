@@ -1,0 +1,23 @@
+<div class="files-uploader">
+  <div class="input-group mb-3">
+    <div class="custom-file">
+      <input multiple (change)="handleFilesSelect($event)" type="file" class="custom-file-input" id="inputGroupFile05">
+      <label class="custom-file-label" for="inputGroupFile05">Choose file</label>
+    </div>
+    <div *ngIf="parentSubmitted === true" style="display:block" class="invalid-feedback">
+      <div *ngIf="true">Minimal photos count is {{minCount}}</div>
+    </div>
+  </div>
+  <div>
+    <mat-progress-bar *ngIf="filesIsUploaded === false" mode="indeterminate"></mat-progress-bar>
+    <div *ngFor="let fileName of filesArr">
+      {{fileName}}
+    </div>
+  </div> 
+  <button type="button" (click)=uploadFiles()>Upload</button>
+</div>
+
+<!-- unknow
+<div>{{parentSubmitted}}</div>
+<div *ngIf="!parentSubmitted">ZZZXXX111</div>
+<div *ngIf="parentSubmitted">ZZZXXX22</div> -->

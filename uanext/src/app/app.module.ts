@@ -18,11 +18,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { NgxSortableModule } from 'ngx-sortable';
+import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ...components,
+    FileUploaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@
   <button class="btn btn-success m-1" (click)="createNewCompany()">Create new project(company)</button>
 
   <h1>LIST OF PROJECTS</h1>
-  <div *ngIf="projects?.length !== 0; else noProjects" class="projects">
+  <div *ngIf="projects?.length !== 0 && isLoaded === true" class="projects">
     <div *ngFor="let project of projects" class="project">
       <img height=100 src={{project.avatar}} alt="">
       <div>{{project.name}}</div>
@@ -11,8 +11,9 @@
   </div>
 </div>
 
-<ng-template #noProjects>
-  <div>
-    You have no project
-  </div>
-</ng-template>
+<div *ngIf="projects?.length === 0 && isLoaded === true">
+  You have no projects
+</div>
+
+<mat-spinner *ngIf="isLoaded === false"></mat-spinner>
+

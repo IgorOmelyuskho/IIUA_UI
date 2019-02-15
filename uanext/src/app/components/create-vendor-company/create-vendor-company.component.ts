@@ -29,8 +29,8 @@ export class CreateVendorCompanyComponent implements OnInit {
   maxAvatarSize = 1024 * 1024 * 5;
   avatar: any; // avatar data
 
-  filesEvent: Event; // todo remove
-  photosEvent: Event; // todo remove
+  photosIsUploaded = true;
+  photosIsValid = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,6 +57,7 @@ export class CreateVendorCompanyComponent implements OnInit {
       investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
 
       forSteps: [''],
+      forPhotos: [''],
 
       // NACE: ['NACE', Validators.required],
       // turnoverPerMonth: ['100 $', Validators.required],
@@ -174,12 +175,12 @@ export class CreateVendorCompanyComponent implements OnInit {
     avatarReader.readAsDataURL(event.target['files'][0]);
   }
 
-  handlePhotosSelect(event) {
-    this.photosEvent = event;
+  photosUploaded(event) {
+    this.photosIsUploaded = event;
   }
 
-  handleFilesSelect(event) {
-    this.filesEvent = event;
+  photosValid(event) {
+    this.photosIsValid = event;
   }
 
   onSubmit() {

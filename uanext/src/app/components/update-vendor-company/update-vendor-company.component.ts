@@ -31,8 +31,7 @@ export class UpdateVendorCompanyComponent implements OnInit {
   avatarSize = 0;
   avatar: any; // avatar data
 
-  filesEvent: Event;
-  photosEvent: Event;
+  photosIsUploaded = true; // for form controls setError
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,29 +78,32 @@ export class UpdateVendorCompanyComponent implements OnInit {
 
   ngOnInit() {
     // use when page reload
-    // this.vendorCompanyService.fetchVendorCompanies().subscribe(
-    //   (companies: VendorCompany[]) => {
-    //     // for (let i = 0; i < companies.length; i++) {
-    //     //   if (companies[i].id === this.projectId) {
-    //     //     this.vendorCompany = companies[i];
-    //     //     break;
-    //     //   }
-    //     // }
-    //     this.vendorCompany = companies[0];
-    //     this.whenProjectIsLoaded();
-    //   },
-    //   err => {
-    //     console.warn(err);
-    //   }
-    // );
+    const arrLength: number = this.activateRoute.url['value'].length;
+    this.projectId = this.activateRoute.url['value'][arrLength - 1].path;
+
+    this.vendorCompanyService.fetchVendorCompanies().subscribe(
+      (companies: VendorCompany[]) => {
+        for (let i = 0; i < companies.length; i++) {
+          if (companies[i].id === this.projectId) {
+            this.vendorCompany = companies[i];
+            this.whenProjectIsLoaded();
+            return;
+          }
+        }
+      },
+      err => {
+        console.warn(err);
+      }
+    );
 
     // else if navigate from projects
+    if (this.vendorCompanyService.projectForUpdate == null) {
+      return;
+    }
     setTimeout(() => {
       this.vendorCompany = this.vendorCompanyService.projectForUpdate;
       this.whenProjectIsLoaded();
     }, 0);
-    // this.vendorCompany = this.vendorCompanyService.projectForUpdate;
-    // this.whenProjectIsLoaded();
   }
 
   get formControls() {
@@ -210,14 +212,6 @@ export class UpdateVendorCompanyComponent implements OnInit {
     avatarReader.readAsDataURL(event.target['files'][0]);
   }
 
-  handlePhotosSelect(event) {
-    this.photosEvent = event;
-  }
-
-  handleFilesSelect(event) {
-    this.filesEvent = event;
-  }
-
   setFormValues(): void {
     const avatar = '';
     // const photos = '';
@@ -251,6 +245,10 @@ export class UpdateVendorCompanyComponent implements OnInit {
     });
 
     this.vendorCompanyForm.controls['avatar'].setErrors(null);
+  }
+
+  photosUploaded(event) {
+    this.photosIsUploaded = event;
   }
 
   onSubmit() {

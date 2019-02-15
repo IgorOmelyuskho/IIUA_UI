@@ -1,5 +1,5 @@
 export interface VendorCompany {
-  id?: number;
+  id?: string;
   name: string;
   avatar?: any;
   legalEntityName: string;
