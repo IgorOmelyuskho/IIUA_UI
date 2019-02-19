@@ -29,8 +29,11 @@ export class CreateVendorCompanyComponent implements OnInit {
   maxAvatarSize = 1024 * 1024 * 5;
   avatar: any; // avatar data
 
-  photosIsUploaded = true;
-  photosIsValid = true;
+  photosIsUploaded = false;
+  // photosIsValid = false;
+
+  filesIsUploaded = true;
+  // filesIsValid = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,34 +41,31 @@ export class CreateVendorCompanyComponent implements OnInit {
     private vendorCompanyService: VendorCompanyService,
   ) {
     this.vendorCompanyForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['gfdgd', Validators.required],
       avatar: ['', Validators.required],
-      legalEntityName: ['', Validators.required],
-      goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
-      region: [''],
-      address: [''],
-      fieldOfActivity: ['', Validators.required],
-      companyAge: ['', Validators.required], // todo min - 0 max - 100
-      employeesNumber: ['', Validators.required],
-      employeesToHire: ['', Validators.required], // max 1000
-      grossIncome: ['', Validators.required],
-      averageCheck: ['', Validators.required],
-      mounthlyClients: ['', Validators.required],
-      averagePrice: ['', Validators.required],
-      description: ['', [Validators.required, Validators.maxLength(1024)]],
-      moneyRequired: ['', Validators.required], // max 1000 0000 000
-      investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
+      legalEntityName: ['hfghgf', Validators.required],
+      goal: ['hgfhf', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
+      region: ['', Validators.required],
+      address: ['', Validators.required],
+      fieldOfActivity: ['jghfjhg', Validators.required],
+      companyAge: ['1', Validators.required], // todo min - 0 max - 100
+      employeesNumber: ['101', Validators.required],
+      employeesToHire: ['100', Validators.required], // max 1000
+      grossIncome: ['100', Validators.required],
+      averageCheck: ['123', Validators.required],
+      mounthlyClients: ['101', Validators.required],
+      averagePrice: ['123', Validators.required],
+      description: ['hjghg', [Validators.required, Validators.maxLength(1024)]],
+      moneyRequired: ['10000', Validators.required], // max 1000 0000 000
+      investmentDescription: ['gfdhf', [Validators.required, Validators.maxLength(4096)]],
 
       forSteps: [''],
       forPhotos: [''],
+      forFiles: [''],
 
       // NACE: ['NACE', Validators.required],
       // turnoverPerMonth: ['100 $', Validators.required],
       // averageUnitCost: ['50 $'],
-
-      // photos: ['', Validators.required], // min 5 max 100
-      // videos: [''], // max 10
-      // files: [''],
     });
   }
 
@@ -177,10 +177,20 @@ export class CreateVendorCompanyComponent implements OnInit {
 
   photosUploaded(event) {
     this.photosIsUploaded = event;
+    if (event === true) {
+      this.vendorCompanyForm.controls['forPhotos'].setErrors(null);
+    } else {
+      this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'photosNotUploaded': true });
+    }
   }
 
-  photosValid(event) {
-    this.photosIsValid = event;
+  filesUploaded(event) {
+    this.filesIsUploaded = event;
+    if (event === true) {
+      this.vendorCompanyForm.controls['forFiles'].setErrors(null);
+    } else {
+      this.vendorCompanyForm.controls['forFiles'].setErrors({ 'filesNotUploaded': true });
+    }
   }
 
   onSubmit() {
@@ -188,6 +198,12 @@ export class CreateVendorCompanyComponent implements OnInit {
 
     if (this.vendorCompany.steps.length === 0) {
       this.vendorCompanyForm.controls['forSteps'].setErrors({ 'minCount': true });
+    }
+    if (this.filesIsUploaded === false) {
+      this.vendorCompanyForm.controls['forFiles'].setErrors({ 'filesNotUploaded': true });
+    }
+    if (this.photosIsUploaded === false) {
+      this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'photosNotUploaded': true });
     }
 
     if (this.vendorCompanyForm.valid === false) {
@@ -211,4 +227,14 @@ export class CreateVendorCompanyComponent implements OnInit {
       }
     );
   }
+
+
+  formStatus() {
+    console.log(this.vendorCompanyForm);
+  }
 }
+
+
+
+
+

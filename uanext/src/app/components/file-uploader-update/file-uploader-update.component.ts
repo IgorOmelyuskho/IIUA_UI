@@ -1,51 +1,58 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { VendorCompanyService } from 'src/app/services/vendorCompany/vendor-company.service';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
+import { VendorCompanyService } from 'src/app/services/vendorCompany/vendor-company.service';
 
 @Component({
-  selector: 'app-file-uploader',
-  templateUrl: './file-uploader.component.html',
-  styleUrls: ['./file-uploader.component.scss']
+  selector: 'app-file-uploader-update',
+  templateUrl: './file-uploader-update.component.html',
+  styleUrls: ['./file-uploader-update.component.scss']
 })
-export class FileUploaderComponent implements OnInit {
+export class FileUploaderUpdateComponent implements OnInit {
   formData: FormData;
   filesArr: any[];
   filesIsUploaded = true;
   showProgress = false;
   files: any[];
   unTouched = true;
+  isLoaded = false;
   @Output() filesUploadedEvent = new EventEmitter<boolean>();
   @Input() content: string; // required
   @Input() minCount = 0;
   @Input() maxCount = 1000;
   @Input() maxSize = 5 * 1024 * 1024;
-  @Input() parentSubmitted = false;
   @Input() accept = '*';
 
   constructor(private vendorCompanyService: VendorCompanyService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.content === 'photos') {
+      this.fetchSubscriber(this.vendorCompanyService.fetchPhotos());
+    }
+    if (this.content === 'files') {
+      this.fetchSubscriber(this.vendorCompanyService.fetchFiles());
+    }
+  }
+
+  fetchSubscriber(observable: Observable<any>) {
+    observable.subscribe(
+      res => {
+        console.log(res);
+        this.isLoaded = true;
+      },
+      err => {
+        console.log(err);
+        this.isLoaded = false;
+        // this.filesIsUploaded = true;
+      }
+    );
+  }
 
   minCountValid(): boolean {
-    if (this.minCount === 0) {
-      return true;
-    }
-    if (this.files && this.files.length >= this.minCount) {
-      return true;
-    }
-
-    return false;
+    return true; // todo calc files from server + local files
   }
 
   maxCountValid(): boolean {
-    if (this.maxCount === 1000) {
-      return true;
-    }
-    if (this.files && this.files.length <= this.maxCount) {
-      return true;
-    }
-
-    return false;
+    return true; // todo calc files from server + local files
   }
 
   maxSizeValid(): boolean {
@@ -54,6 +61,9 @@ export class FileUploaderComponent implements OnInit {
     }
 
     for (let i = 0; i < this.files.length; i++) {
+      if (this.files[i].size == null) {
+        this.files[i].size = -1;
+      }
       if (this.files[i].size > this.maxSize) {
         return false;
       }

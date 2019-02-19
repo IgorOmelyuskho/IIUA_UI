@@ -87,13 +87,14 @@ export class SigninComponent implements OnInit {
         const role = this.stateService.role();
 
         if (role === 'Vendor') {
-          this.router.navigate(['home', 'vendor']);
+          console.log('NAVIGATE TO HOME/VENDOR');
           this.fetchVendorSubscribe( this.profileService.fetchVendor() );
+          this.router.navigate(['home', 'vendor']);
         }
-
         if (role === 'Investor') {
-          this.router.navigate(['home', 'investor']);
+          console.log('NAVIGATE TO HOME/INVESTOR');
           this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
+          this.router.navigate(['home', 'investor']);
         }
       },
       err => {

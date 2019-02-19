@@ -21,10 +21,13 @@ export class VendorProjectsComponent implements OnInit {
       (vendorCompanies: VendorCompany[]) => {
         this.projects = vendorCompanies;
         this.isLoaded = true;
-
       },
       err => {
         console.warn(err);
+        if (err.error.error.code === 2) {
+          this.projects = [];
+        }
+        this.isLoaded = true;
       }
     );
   }

@@ -10,7 +10,7 @@ import { InvestorProfileComponent } from './components';
 import { VendorProfileComponent } from './components';
 import { HomePageComponent } from './components';
 
-import { AuthGuard } from './services/guards';
+import { AuthGuard, NoAuthGuard } from './services/guards';
 import { InvestorGuard } from './services/guards';
 import { VendorGuard } from './services/guards';
 
@@ -33,8 +33,8 @@ const childHomeRoutes: Routes = [
 
 const routes: Routes = [
   { path: '', component: IndexComponent, pathMatch: 'full' },
-  { path: 'signin', component: SigninComponent },
-  { path: 'signup', component: SignupComponent },
+  { path: 'signin', component: SigninComponent, canActivate: [NoAuthGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
   { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
   { path: '**', redirectTo: ''}
 ];

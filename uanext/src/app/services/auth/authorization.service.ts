@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { tap } from 'rxjs/operators';
+import { tap, delay } from 'rxjs/operators';
 import { Observable, of, merge, combineLatest } from 'rxjs';
 
 import { StateService } from '../state/state.service';
@@ -23,6 +23,7 @@ export class AuthorizationService {
     private profileService: ProfileService) { }
 
   init() {
+    console.log('INIT IN APP');
     const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     let decodedToken: any;
@@ -108,7 +109,9 @@ export class AuthorizationService {
   }
 
   userIsAuthorized(): Observable<boolean> {
-    // return of(true);
+    // return of(true).pipe(
+    //   delay(1000)
+    // );
     return combineLatest(
       this.stateService.authorized$.asObservable(),
       this.stateService.user$.asObservable(),
@@ -123,5 +126,14 @@ export class AuthorizationService {
       }
     );
   }
+  // userIsAuthorized(): boolean {
+  //   if (this.stateService.authorized$.getValue() === true && this.stateService.user$.getValue() !== null) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
 }
+
+

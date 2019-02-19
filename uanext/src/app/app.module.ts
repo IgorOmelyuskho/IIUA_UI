@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { ErrorInterceptor } from './services/interceptors';
 import { AddTokenInterceptor } from './services/interceptors';
-import { AuthGuard } from './services/guards';
+import { AuthGuard, NoAuthGuard, InvestorGuard, VendorGuard } from './services/guards';
 
 import { AppComponent } from './app.component';
 import { components } from './components';
@@ -19,12 +19,14 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { NgxSortableModule } from 'ngx-sortable';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { FileUploaderUpdateComponent } from './components/file-uploader-update/file-uploader-update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ...components,
     FileUploaderComponent,
+    FileUploaderUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,10 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
     SnackBarComponent
   ],
   providers: [
+    AuthGuard,
+    NoAuthGuard,
+    InvestorGuard,
+    VendorGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],

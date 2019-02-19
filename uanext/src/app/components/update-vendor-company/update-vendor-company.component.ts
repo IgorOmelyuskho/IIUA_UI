@@ -31,7 +31,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
   avatarSize = 0;
   avatar: any; // avatar data
 
-  photosIsUploaded = true; // for form controls setError
+  photosIsUploaded = false;
+  filesIsUploaded = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,8 +45,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
       avatar: ['', Validators.required],
       legalEntityName: ['', Validators.required],
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
-      region: [''],
-      address: [''],
+      region: ['', Validators.required],
+      address: ['', Validators.required],
       fieldOfActivity: ['', Validators.required],
       companyAge: ['', Validators.required], // todo min - 0 max - 100
       employeesNumber: ['', Validators.required],
@@ -59,14 +60,12 @@ export class UpdateVendorCompanyComponent implements OnInit {
       investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
 
       forSteps: [''],
+      forPhotos: [''],
+      forFiles: [''],
 
       // NACE: ['NACE', Validators.required],
       // turnoverPerMonth: ['100 $', Validators.required],
       // averageUnitCost: ['50 $'],
-
-      // photos: ['', Validators.required], // min 5 max 100
-      // videos: [''], // max 10
-      // files: [''],
     });
   }
 
@@ -76,15 +75,24 @@ export class UpdateVendorCompanyComponent implements OnInit {
     this.avatarImg.nativeElement['src'] = this.vendorCompany.avatar;
   }
 
-  ngOnInit() {
-    // use when page reload
+  getCompanyFromService() {
+    if (this.vendorCompanyService.projectForUpdate == null) {
+      return;
+    }
+    setTimeout(() => {
+      this.vendorCompany = this.vendorCompanyService.projectForUpdate;
+      this.whenProjectIsLoaded();
+    }, 0);
+  }
+
+  getCompanyFromServer() {
     const arrLength: number = this.activateRoute.url['value'].length;
     this.projectId = this.activateRoute.url['value'][arrLength - 1].path;
 
     this.vendorCompanyService.fetchVendorCompanies().subscribe(
       (companies: VendorCompany[]) => {
         for (let i = 0; i < companies.length; i++) {
-          if (companies[i].id === this.projectId) {
+          if (companies[i].id === parseInt(this.projectId, 10)) {
             this.vendorCompany = companies[i];
             this.whenProjectIsLoaded();
             return;
@@ -95,21 +103,24 @@ export class UpdateVendorCompanyComponent implements OnInit {
         console.warn(err);
       }
     );
+  }
 
-    // else if navigate from projects
-    if (this.vendorCompanyService.projectForUpdate == null) {
-      return;
+  ngOnInit() {
+    if (
+      this.vendorCompanyService.projectForUpdate == null ||
+      this.vendorCompanyService.projectForUpdate === this.vendorCompanyService.emptyVendorCompany
+    ) {
+      // use when page reload
+      this.getCompanyFromServer();
+    } else {
+      // else if navigate from projects
+      this.getCompanyFromService();
     }
-    setTimeout(() => {
-      this.vendorCompany = this.vendorCompanyService.projectForUpdate;
-      this.whenProjectIsLoaded();
-    }, 0);
   }
 
   get formControls() {
     return this.vendorCompanyForm.controls;
   }
-
 
   removeStepsItem(step) {
     for (let i = 0; i < this.vendorCompany.steps.length; i++) {
@@ -213,14 +224,9 @@ export class UpdateVendorCompanyComponent implements OnInit {
   }
 
   setFormValues(): void {
-    const avatar = '';
-    // const photos = '';
-    // const files = '';
-    // const videos = '';
-
     this.vendorCompanyForm.setValue({
       name: this.vendorCompany.name,
-      avatar: avatar,
+      avatar: '',
       legalEntityName: this.vendorCompany.legalEntityName,
       goal: this.vendorCompany.goal,
       region: this.vendorCompany.region,
@@ -238,10 +244,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
       investmentDescription: this.vendorCompany.investmentDescription,
 
       forSteps: '',
-
-      // photos: photos,
-      // videos: this.vendorCompany.videos,
-      // files: files
+      forPhotos: '',
+      forFiles: '',
     });
 
     this.vendorCompanyForm.controls['avatar'].setErrors(null);
@@ -249,6 +253,20 @@ export class UpdateVendorCompanyComponent implements OnInit {
 
   photosUploaded(event) {
     this.photosIsUploaded = event;
+    if (event === true) {
+      this.vendorCompanyForm.controls['forPhotos'].setErrors(null);
+    } else {
+      this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'photosNotUploaded': true });
+    }
+  }
+
+  filesUploaded(event) {
+    this.filesIsUploaded = event;
+    if (event === true) {
+      this.vendorCompanyForm.controls['forFiles'].setErrors(null);
+    } else {
+      this.vendorCompanyForm.controls['forFiles'].setErrors({ 'filesNotUploaded': true });
+    }
   }
 
   onSubmit() {
