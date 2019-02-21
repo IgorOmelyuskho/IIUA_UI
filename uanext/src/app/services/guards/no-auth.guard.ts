@@ -7,27 +7,13 @@ import { AuthorizationService } from '../auth/authorization.service';
   providedIn: 'root'
 })
 export class NoAuthGuard implements CanActivate {
-  isAuthorized = false;
 
-  constructor(private authService: AuthorizationService) {
-    // authService.userIsAuthorized().subscribe(
-    //   isAuth => {
-    //     this.isAuthorized = isAuth;
-    //   },
-    //   err => {
-    //     this.isAuthorized = false;
-    //   }
-    // );
-  }
+  constructor(private authService: AuthorizationService) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    // if (this.isAuthorized === true) {
-    //   return false;
-    // } else {
-    //   return true;
-    // }
-    return true;
+
+    return !this.authService.userIsAuthorized();
   }
 }

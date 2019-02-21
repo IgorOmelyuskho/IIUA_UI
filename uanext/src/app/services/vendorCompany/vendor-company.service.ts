@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { VendorCompany } from 'src/app/models';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map, delay, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 const result: VendorCompany = { // todo remove
   id: 3,
@@ -67,62 +67,71 @@ export class VendorCompanyService {
   constructor(private http: HttpClient) { }
 
   fetchVendorCompanies(): Observable<VendorCompany[]> {
-    return this.http.get<VendorCompany[]>(`${environment.api_projects_url}api/Projects`)
+    return this.http.get<VendorCompany[]>(environment.projects_api_url + environment.vendorProject)
       .pipe(
         map(response => response['data']),
-
-        map((projects: VendorCompany[]) => {
+        map(projects => {
           for (let i = 0; i < projects.length; i++) {
             projects[i].avatar = 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+
+            projects[i].photos = [];
+            for (let photo = 0; photo < 5; photo++) {
+              const photoObj = {
+                url: 'https://images.pexels.com/photos/248797/' +
+                  'pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+                name: 'photo name ' + photo,
+              };
+              projects[i].photos.push(photoObj);
+            }
+
+            projects[i].files = [];
+            for (let file = 0; file < 5; file++) {
+              const fileObj = {
+                name: 'file name ' + file
+              };
+              projects[i].files.push(fileObj);
+            }
           }
           return projects;
-        }),
-
-        tap(
-          data => console.log(data)
-        ),
+        })
       );
-
-    // return of([result, result]).pipe(
-    //   delay(1000)
-    // );
   }
 
   createVendorCompany(newVendorCompany: VendorCompany): Observable<any> {
-    return this.http.post<any>(`${environment.api_projects_url}api/Projects`, newVendorCompany);
+    return this.http.post<any>(environment.projects_api_url + environment.vendorProject, newVendorCompany);
   }
 
   updateVendorCompany(projectId: number, updatedVendorCompany: VendorCompany): Observable<any> {
-    return this.http.put<any>(`${environment.api_projects_url}api/Projects/${projectId}`, updatedVendorCompany);
+    return this.http.put<any>(environment.projects_api_url + environment.vendorProject + projectId, updatedVendorCompany);
   }
 
 
 
 
   fetchPhotos(): Observable<any> {
-    return this.http.get<any>(`${environment.api_projects_url}api/Projects/fetchphotos`);
+    return this.http.get<any>(`${environment.projects_api_url}`);
   }
 
   fetchFiles(): Observable<any> {
-    return this.http.get<any>(`${environment.api_projects_url}api/Projects/fetcfiles`);
+    return this.http.get<any>(`${environment.projects_api_url}`);
   }
 
   fetchVideos(): Observable<any> {
-    return this.http.get<any>(`${environment.api_projects_url}api/Projects/fetcvideos`);
+    return this.http.get<any>(`${environment.projects_api_url}`);
   }
 
 
 
 
   uploadPhotos(formData) {
-    return this.http.post<any>(`${environment.api_projects_url}api/Projects/photos`, formData);
+    return this.http.post<any>(`${environment.projects_api_url}`, formData);
   }
 
   uploadVideos(formData) {
-    return this.http.post<any>(`${environment.api_projects_url}api/Projects/videos`, formData);
+    return this.http.post<any>(`${environment.projects_api_url}`, formData);
   }
 
   uploadFiles(formData) {
-    return this.http.post<any>(`${environment.api_projects_url}api/Projects/files`, formData);
+    return this.http.post<any>(`${environment.projects_api_url}`, formData);
   }
 }

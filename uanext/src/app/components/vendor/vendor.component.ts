@@ -14,6 +14,10 @@ export class VendorComponent implements OnInit {
   ngOnInit() {
   }
 
+  home() {
+    this.router.navigate(['home', 'vendor']);
+  }
+
   goToProfile() {
     this.router.navigate(['home', 'vendor', 'profile']);
   }

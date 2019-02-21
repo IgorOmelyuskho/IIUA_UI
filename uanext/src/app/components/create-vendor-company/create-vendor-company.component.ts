@@ -3,7 +3,6 @@ import { VendorCompany } from 'src/app/models';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { VendorCompanyService } from 'src/app/services/vendorCompany/vendor-company.service';
-import { Observable, forkJoin, Observer } from 'rxjs';
 
 @Component({
   selector: 'app-create-vendor-company',
@@ -27,13 +26,10 @@ export class CreateVendorCompanyComponent implements OnInit {
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
-  avatar: any; // avatar data
+  avatar: any;
 
   photosIsUploaded = false;
-  // photosIsValid = false;
-
   filesIsUploaded = true;
-  // filesIsValid = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,31 +37,27 @@ export class CreateVendorCompanyComponent implements OnInit {
     private vendorCompanyService: VendorCompanyService,
   ) {
     this.vendorCompanyForm = this.formBuilder.group({
-      name: ['gfdgd', Validators.required],
+      name: ['', Validators.required],
       avatar: ['', Validators.required],
-      legalEntityName: ['hfghgf', Validators.required],
-      goal: ['hgfhf', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
+      legalEntityName: ['', Validators.required],
+      goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['', Validators.required],
       address: ['', Validators.required],
-      fieldOfActivity: ['jghfjhg', Validators.required],
-      companyAge: ['1', Validators.required], // todo min - 0 max - 100
-      employeesNumber: ['101', Validators.required],
-      employeesToHire: ['100', Validators.required], // max 1000
-      grossIncome: ['100', Validators.required],
-      averageCheck: ['123', Validators.required],
-      mounthlyClients: ['101', Validators.required],
-      averagePrice: ['123', Validators.required],
-      description: ['hjghg', [Validators.required, Validators.maxLength(1024)]],
-      moneyRequired: ['10000', Validators.required], // max 1000 0000 000
-      investmentDescription: ['gfdhf', [Validators.required, Validators.maxLength(4096)]],
+      fieldOfActivity: ['', Validators.required],
+      companyAge: ['', Validators.required],
+      employeesNumber: ['', Validators.required],
+      employeesToHire: ['', Validators.required],
+      grossIncome: ['', Validators.required],
+      averageCheck: ['', Validators.required],
+      mounthlyClients: ['', Validators.required],
+      averagePrice: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(1024)]],
+      moneyRequired: ['', Validators.required],
+      investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
 
       forSteps: [''],
       forPhotos: [''],
       forFiles: [''],
-
-      // NACE: ['NACE', Validators.required],
-      // turnoverPerMonth: ['100 $', Validators.required],
-      // averageUnitCost: ['50 $'],
     });
   }
 
@@ -226,11 +218,6 @@ export class CreateVendorCompanyComponent implements OnInit {
         console.warn(err);
       }
     );
-  }
-
-
-  formStatus() {
-    console.log(this.vendorCompanyForm);
   }
 }
 

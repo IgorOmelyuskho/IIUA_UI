@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { VendorCompany } from 'src/app/models';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { VendorCompanyService } from 'src/app/services/vendorCompany/vendor-company.service';
-import { Observable, forkJoin, Observer } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import VendorProjectHelper from '../../services/helperServices/vendorProjectHelper';
 
@@ -29,7 +28,7 @@ export class UpdateVendorCompanyComponent implements OnInit {
   minStepsCount = 3;
 
   avatarSize = 0;
-  avatar: any; // avatar data
+  avatar: any;
 
   photosIsUploaded = false;
   filesIsUploaded = true;
@@ -48,24 +47,20 @@ export class UpdateVendorCompanyComponent implements OnInit {
       region: ['', Validators.required],
       address: ['', Validators.required],
       fieldOfActivity: ['', Validators.required],
-      companyAge: ['', Validators.required], // todo min - 0 max - 100
+      companyAge: ['', Validators.required],
       employeesNumber: ['', Validators.required],
-      employeesToHire: ['', Validators.required], // max 1000
+      employeesToHire: ['', Validators.required],
       grossIncome: ['', Validators.required],
       averageCheck: ['', Validators.required],
       mounthlyClients: ['', Validators.required],
       averagePrice: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(1024)]],
-      moneyRequired: ['', Validators.required], // max 1000 0000 000
+      moneyRequired: ['', Validators.required],
       investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
 
       forSteps: [''],
       forPhotos: [''],
       forFiles: [''],
-
-      // NACE: ['NACE', Validators.required],
-      // turnoverPerMonth: ['100 $', Validators.required],
-      // averageUnitCost: ['50 $'],
     });
   }
 

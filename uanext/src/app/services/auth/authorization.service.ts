@@ -1,9 +1,8 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import { tap, delay } from 'rxjs/operators';
-import { Observable, of, merge, combineLatest } from 'rxjs';
+import { Observable} from 'rxjs';
 
 import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
@@ -23,7 +22,6 @@ export class AuthorizationService {
     private profileService: ProfileService) { }
 
   init() {
-    console.log('INIT IN APP');
     const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     let decodedToken: any;
@@ -89,51 +87,32 @@ export class AuthorizationService {
 
   // any because api return empty or {"message": "User Email \"string4@gmail.com\" is already taken"}
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/Vendor/register`, vendorDto, /* httpOptions */{ observe: 'response' });
+    return this.http.post<any>(environment.api_url + environment.vendorRegister, vendorDto, /* httpOptions */{ observe: 'response' });
   }
 
   signUpAsInvestor(investorDto: InvestorDto): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/Investor/register`, investorDto, { observe: 'response' });
+    return this.http.post<any>(environment.api_url + environment.investorRegister, investorDto, { observe: 'response' });
   }
 
   // any because api return different response
   signIn(investorOrVendor: { password: string, email: string }): Observable<any> {
-    return this.http.post<any>(`${environment.api_url}api/Auth/authenticate`, investorOrVendor, { observe: 'response' });
+    return this.http.post<any>(environment.api_url + environment.authenticate, investorOrVendor, { observe: 'response' });
   }
 
   signOut(): void {
     localStorage.removeItem('token');
     this.stateService.user$.next(null);
     this.stateService.authorized$.next(false);
-    this.router.navigate(['']);
+    this.router.navigate(['signin']);
   }
 
-  userIsAuthorized(): Observable<boolean> {
-    // return of(true).pipe(
-    //   delay(1000)
-    // );
-    return combineLatest(
-      this.stateService.authorized$.asObservable(),
-      this.stateService.user$.asObservable(),
-      (authorized, user) => {
-        if (authorized === true && user != null) {
-          console.log('userIsAuthorized = TRUE');
-          return true;
-        } else {
-          console.log('userIsAuthorized = FALSE');
-          return false;
-        }
-      }
-    );
+  userIsAuthorized(): boolean {
+    if (this.stateService.authorized$.getValue() === true && this.stateService.user$.getValue() !== null) {
+      return true;
+    } else {
+      return false;
+    }
   }
-  // userIsAuthorized(): boolean {
-  //   if (this.stateService.authorized$.getValue() === true && this.stateService.user$.getValue() !== null) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
 }
 
 

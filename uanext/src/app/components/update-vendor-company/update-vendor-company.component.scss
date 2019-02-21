@@ -20,9 +20,20 @@
   }
 }
 
-.photos-uploader,
-.files-uploader {
-  padding: 5px;
-  border: 1px solid blueviolet;
+// .photos-uploader,
+// .files-uploader {
+//   padding: 5px;
+//   border: 1px solid blueviolet;
+// }
+
+.project-photos {
+  margin: 30px 0 0 0;
+  img {
+    height: 20px;
+  }
+}
+
+.project-files {
+  margin: 30px 0 0 0;
 }
 

@@ -5,7 +5,14 @@
 export const environment = {
   production: false,
   api_url: 'http://master.alexduxa.online/',
-  api_projects_url: 'http://proxy.alexduxa.online/projects/'
+  projects_api_url: 'http://proxy.alexduxa.online/projects/',
+
+  vendorRegister: 'api/Vendor/register',
+  investorRegister: 'api/Investor/register',
+  authenticate: 'api/Auth/authenticate',
+  investorProfile: 'api/Investor/',
+  vendorProfile: 'api/Vendor/',
+  vendorProject: 'api/Projects/'
 };
 
 /*

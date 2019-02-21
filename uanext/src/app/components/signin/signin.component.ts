@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { VendorRole, InvestorRole } from 'src/app/models';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import FormHelper from '../../services/helperServices/formHelper';
+import { take, first, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signin',
@@ -19,6 +20,7 @@ export class SigninComponent implements OnInit {
   signinForm: FormGroup;
   submitted = false;
   FormHelper = FormHelper;
+  showProgressBar = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,6 +48,7 @@ export class SigninComponent implements OnInit {
       (vendor: VendorRole) => {
         this.stateService.user$.next(vendor);
         this.stateService.authorized$.next(true);
+        this.router.navigate(['home', 'vendor']);
       },
       err => {
         console.warn(err);
@@ -59,6 +62,7 @@ export class SigninComponent implements OnInit {
       (investor: InvestorRole) => {
         this.stateService.user$.next(investor);
         this.stateService.authorized$.next(true);
+        this.router.navigate(['home', 'investor']);
       },
       err => {
         console.warn(err);
@@ -74,33 +78,26 @@ export class SigninComponent implements OnInit {
       return;
     }
 
+    this.showProgressBar = true;
+
     this.authService.signIn(this.signinForm.value).subscribe(
       response => {
-        console.log(response);
-        // not required, in this section status always === 200 ?
-        if (response.status !== 200 || response.body.isSuccess !== true) {
-          this.notify.show(response.body.error);
-          return;
-        }
+        this.showProgressBar = false;
 
         localStorage.setItem('token', response.body.data);
         const role = this.stateService.role();
 
         if (role === 'Vendor') {
-          console.log('NAVIGATE TO HOME/VENDOR');
           this.fetchVendorSubscribe( this.profileService.fetchVendor() );
-          this.router.navigate(['home', 'vendor']);
         }
         if (role === 'Investor') {
-          console.log('NAVIGATE TO HOME/INVESTOR');
           this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
-          this.router.navigate(['home', 'investor']);
         }
       },
       err => {
         console.warn(err);
+        this.showProgressBar = false;
         this.notify.show(err.error.error.errorMessage);
-        // this.authService.signOut();
       }
     );
   }

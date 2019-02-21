@@ -15,6 +15,7 @@ export class SignupInvestorComponent implements OnInit {
   signupForm: FormGroup;
   submitted = false;
   FormHelper = FormHelper;
+  showProgressBar = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,9 +46,11 @@ export class SignupInvestorComponent implements OnInit {
       return;
     }
 
+    this.showProgressBar = true;
+
     this.authService.signUpAsInvestor(this.signupForm.value).subscribe(
       response => {
-        console.log(response);
+        this.showProgressBar = false;
         if (response.body.isSuccess === true && response.status === 200) {
           this.notify.show(response.body.data);
           this.router.navigate(['signin']);
@@ -57,6 +60,7 @@ export class SignupInvestorComponent implements OnInit {
       },
       err => {
         console.warn(err);
+        this.showProgressBar = false;
         this.notify.show(err.error.error.errorMessage);
       }
     );

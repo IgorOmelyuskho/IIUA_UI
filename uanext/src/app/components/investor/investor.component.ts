@@ -16,6 +16,10 @@ export class InvestorComponent implements OnInit {
   ngOnInit() {
   }
 
+  home() {
+    this.router.navigate(['home', 'investor']);
+  }
+
   goToProfile() {
     this.router.navigate(['home', 'investor', 'profile']);
   }

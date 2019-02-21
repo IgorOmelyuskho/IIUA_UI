@@ -25,6 +25,7 @@ export class FileUploaderUpdateComponent implements OnInit {
   constructor(private vendorCompanyService: VendorCompanyService) { }
 
   ngOnInit() {
+    // todo remove if data get from parent component, and add @Input() for get data
     if (this.content === 'photos') {
       this.fetchSubscriber(this.vendorCompanyService.fetchPhotos());
     }
@@ -41,8 +42,7 @@ export class FileUploaderUpdateComponent implements OnInit {
       },
       err => {
         console.log(err);
-        this.isLoaded = false;
-        // this.filesIsUploaded = true;
+        this.isLoaded = true; // todo
       }
     );
   }
@@ -111,12 +111,12 @@ export class FileUploaderUpdateComponent implements OnInit {
       },
       err => {
         console.log(err);
-        this.filesIsUploaded = false;
-        this.showProgressBar(false);
-        this.filesUploadedEvent.emit(false);
-        // this.filesIsUploaded = true;
+        // this.filesIsUploaded = false; // todo
         // this.showProgressBar(false);
-        // this.filesUploadedEvent.emit(true);
+        // this.filesUploadedEvent.emit(false);
+        this.filesIsUploaded = true;
+        this.showProgressBar(false);
+        this.filesUploadedEvent.emit(true);
       }
     );
   }

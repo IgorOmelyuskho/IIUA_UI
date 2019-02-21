@@ -101,12 +101,12 @@ export class FileUploaderComponent implements OnInit {
       },
       err => {
         console.log(err);
-        this.filesIsUploaded = false;
-        this.showProgressBar(false);
-        this.filesUploadedEvent.emit(false);
-        // this.filesIsUploaded = true;
+        // this.filesIsUploaded = false; // todo
         // this.showProgressBar(false);
-        // this.filesUploadedEvent.emit(true);
+        // this.filesUploadedEvent.emit(false);
+        this.filesIsUploaded = true;
+        this.showProgressBar(false);
+        this.filesUploadedEvent.emit(true);
       }
     );
   }

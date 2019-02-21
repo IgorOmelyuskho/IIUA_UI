@@ -29,6 +29,7 @@ export class VendorProfileComponent implements OnInit {
     private notify: NotificationService
   ) {
     this.editProfileForm = this.formBuilder.group({
+      password: ['', Validators.minLength(6)],
       itn: ['', Validators.required],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
@@ -38,6 +39,7 @@ export class VendorProfileComponent implements OnInit {
 
   setFormValues(): void {
     this.editProfileForm.setValue({
+      password: '',
       itn: this.vendor.itn,
       fullName: this.vendor.fullName,
       email: this.vendor.email,
@@ -87,7 +89,7 @@ export class VendorProfileComponent implements OnInit {
         this.notify.show(response['data']);
       },
       err => {
-        console.warn(err);
+       console.warn(err);
       }
     );
   }

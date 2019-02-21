@@ -1,13 +1,13 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, } from 'rxjs';
 
 import { VendorRole } from './../../models';
 import { InvestorRole } from './../../models';
-import { AuthorizationService } from '../auth/authorization.service';
 import { NotificationService } from '../notification/notification.service';
 import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class StateService {
     localStorage.removeItem('token');
     this.user$.next(null);
     this.authorized$.next(false);
-    this.router.navigate(['']);
+    this.router.navigate(['signin']);
   }
 
   /**

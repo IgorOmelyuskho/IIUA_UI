@@ -30,6 +30,7 @@ export class InvestorProfileComponent implements OnInit {
     private notify: NotificationService
   ) {
     this.editProfileForm = this.formBuilder.group({
+      password: ['', Validators.minLength(6)],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
@@ -38,6 +39,7 @@ export class InvestorProfileComponent implements OnInit {
 
   setFormValues(): void {
     this.editProfileForm.setValue({
+      password: '',
       fullName: this.investor.fullName,
       email: this.investor.email,
       phone: this.investor.phone

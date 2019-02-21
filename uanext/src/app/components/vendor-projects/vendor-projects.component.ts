@@ -19,11 +19,13 @@ export class VendorProjectsComponent implements OnInit {
     this.isLoaded = false;
     this.vendorCompanyService.fetchVendorCompanies().subscribe(
       (vendorCompanies: VendorCompany[]) => {
+        console.log(vendorCompanies);
         this.projects = vendorCompanies;
         this.isLoaded = true;
       },
       err => {
         console.warn(err);
+        // user no have projects
         if (err.error.error.code === 2) {
           this.projects = [];
         }

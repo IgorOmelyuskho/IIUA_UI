@@ -2,8 +2,7 @@ import { MaterialModule } from './modules';
 import { PrimeNgModule } from './modules';
 import { AppRoutingModule } from './app-routing.module';
 
-import { ErrorInterceptor } from './services/interceptors';
-import { AddTokenInterceptor } from './services/interceptors';
+import { ErrorInterceptor, AddTokenInterceptor } from './services/interceptors';
 import { AuthGuard, NoAuthGuard, InvestorGuard, VendorGuard } from './services/guards';
 
 import { AppComponent } from './app.component';
@@ -18,15 +17,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { NgxSortableModule } from 'ngx-sortable';
-import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
-import { FileUploaderUpdateComponent } from './components/file-uploader-update/file-uploader-update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ...components,
-    FileUploaderComponent,
-    FileUploaderUpdateComponent,
   ],
   imports: [
     BrowserModule,
