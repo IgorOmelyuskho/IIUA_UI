@@ -50,9 +50,9 @@ const emptyVendorCompany: VendorCompany = {
   moneyRequired: 0,
   investmentDescription: '',
   steps: [],
+  videos: [],
 
   // photos: []', // imageData
-  // videos: [], // unknow
   // files: [], // fileData
 };
 

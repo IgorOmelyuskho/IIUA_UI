@@ -16,14 +16,6 @@ export class CreateVendorCompanyComponent implements OnInit {
   emptyAvatar = '../../../assets/img/empty-profile.jpg';
   @ViewChild('avatar2') avatarImg: ElementRef;
 
-  newStep: string;
-  newStepMinValid = true;
-  newStepMaxValid = true;
-  newStepNullValid = true;
-  newStepBtnWasPressed = false;
-  maxStepsCount = 15;
-  minStepsCount = 3;
-
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
   avatar: any;
@@ -37,23 +29,23 @@ export class CreateVendorCompanyComponent implements OnInit {
     private vendorCompanyService: VendorCompanyService,
   ) {
     this.vendorCompanyForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['hgf', Validators.required],
       avatar: ['', Validators.required],
-      legalEntityName: ['', Validators.required],
-      goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
-      region: ['', Validators.required],
-      address: ['', Validators.required],
-      fieldOfActivity: ['', Validators.required],
-      companyAge: ['', Validators.required],
-      employeesNumber: ['', Validators.required],
-      employeesToHire: ['', Validators.required],
-      grossIncome: ['', Validators.required],
-      averageCheck: ['', Validators.required],
-      mounthlyClients: ['', Validators.required],
-      averagePrice: ['', Validators.required],
-      description: ['', [Validators.required, Validators.maxLength(1024)]],
-      moneyRequired: ['', Validators.required],
-      investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
+      legalEntityName: ['gfd', Validators.required],
+      goal: ['gfdgfd', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
+      region: ['gfd', Validators.required],
+      address: ['gfd', Validators.required],
+      fieldOfActivity: ['gfdgd', Validators.required],
+      companyAge: ['1', Validators.required],
+      employeesNumber: ['1', Validators.required],
+      employeesToHire: ['10', Validators.required],
+      grossIncome: ['100', Validators.required],
+      averageCheck: ['1000', Validators.required],
+      mounthlyClients: ['100', Validators.required],
+      averagePrice: ['100', Validators.required],
+      description: ['dff', [Validators.required, Validators.maxLength(1024)]],
+      moneyRequired: ['100000', Validators.required],
+      investmentDescription: ['fdsfs', [Validators.required, Validators.maxLength(4096)]],
 
       forSteps: [''],
       forPhotos: [''],
@@ -67,85 +59,27 @@ export class CreateVendorCompanyComponent implements OnInit {
     return this.vendorCompanyForm.controls;
   }
 
-  removeStepsItem(step) {
-    for (let i = 0; i < this.vendorCompany.steps.length; i++) {
-      if (this.vendorCompany.steps[i] === step) {
-        this.vendorCompany.steps.splice(i, 1);
-
-        const length = this.vendorCompany.steps.length;
-        if (length <= this.maxStepsCount && length >= this.minStepsCount) {
-          this.vendorCompanyForm.controls['forSteps'].setErrors(null);
-        }
-        if (length < this.minStepsCount) {
-          this.vendorCompanyForm.controls['forSteps'].setErrors({ 'minCount': true });
-        }
-
-        return;
-      }
-    }
-  }
-
-  checkNewStep(): boolean {
-    if (this.newStep == null || this.newStep === '') {
-      this.newStepNullValid = false;
-      this.newStepMinValid = true;
-      this.newStepMaxValid = true;
-      return false;
-    } else {
-      this.newStepNullValid = true;
-    }
-
-    const minLength = 3;
-    const maxLength = 255;
-
-    if (this.newStep.length < minLength) {
-      this.newStepMinValid = false;
-    } else {
-      this.newStepMinValid = true;
-    }
-
-    if (this.newStep.length > maxLength) {
-      this.newStepMaxValid = false;
-    } else {
-      this.newStepMaxValid = true;
-    }
-
-    if (this.newStepMinValid === false || this.newStepMaxValid === false) {
-      return false;
-    }
-
-    return true;
-  }
-
-  newStepOnInput() {
-    if (this.newStepBtnWasPressed === false) {
+  stepsEventHandler(e) {
+    if (e.error) {
+      this.vendorCompanyForm.controls['forSteps'].setErrors({ 'err': true });
       return;
     }
 
-    this.checkNewStep();
+    this.vendorCompany.steps = e;
+    this.vendorCompanyForm.controls['forSteps'].setErrors(null);
   }
 
-  addNewStepClick() {
-    this.newStepBtnWasPressed = true;
-
-    const length = this.vendorCompany.steps.length;
-    if (length < this.maxStepsCount && length >= this.minStepsCount - 1) {
-      this.vendorCompanyForm.controls['forSteps'].setErrors(null);
-    }
-    if (length >= this.maxStepsCount + 1) {
-      this.vendorCompanyForm.controls['forSteps'].setErrors({ 'maxCount': true });
+  videosEventHandler(e) {
+    if (e.error) {
       return;
     }
 
-    const isValid = this.checkNewStep();
-    if (isValid) {
-      this.vendorCompany.steps.push({ data: this.newStep });
-    }
+    this.vendorCompany.videos = e;
   }
 
   handleAvatarSelect(event) {
     if (event.target.files == null || event.target.files.length === 0) {
-      this.avatarImg.nativeElement['src']  = this.emptyAvatar;
+      this.avatarImg.nativeElement['src'] = this.emptyAvatar;
       this.avatar = 'null';
       return;
     }
@@ -153,14 +87,14 @@ export class CreateVendorCompanyComponent implements OnInit {
     this.avatarSize = event.target.files[0].size;
     if (this.avatarSize > this.maxAvatarSize) {
       this.vendorCompanyForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
-      this.avatarImg.nativeElement['src']  = this.emptyAvatar;
+      this.avatarImg.nativeElement['src'] = this.emptyAvatar;
       this.avatar = 'null';
       return;
     }
 
     const avatarReader = new FileReader();
     avatarReader.onload = (avatar) => {
-      this.avatarImg.nativeElement['src']  = avatar.target['result'];
+      this.avatarImg.nativeElement['src'] = avatar.target['result'];
       this.avatar = avatar.target['result'];
     };
 
@@ -189,7 +123,7 @@ export class CreateVendorCompanyComponent implements OnInit {
     this.submitted = true;
 
     if (this.vendorCompany.steps.length === 0) {
-      this.vendorCompanyForm.controls['forSteps'].setErrors({ 'minCount': true });
+      this.vendorCompanyForm.controls['forSteps'].setErrors({ 'err': true });
     }
     if (this.filesIsUploaded === false) {
       this.vendorCompanyForm.controls['forFiles'].setErrors({ 'filesNotUploaded': true });
@@ -208,6 +142,7 @@ export class CreateVendorCompanyComponent implements OnInit {
 
     newVendorCompany.avatar = this.avatar;
     newVendorCompany.steps = this.vendorCompany.steps;
+    newVendorCompany.videos = this.vendorCompany.videos;
 
     this.vendorCompanyService.createVendorCompany(newVendorCompany).subscribe(
       response => {

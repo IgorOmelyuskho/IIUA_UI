@@ -15,6 +15,7 @@ import { UpdateVendorCompanyComponent } from './update-vendor-company/update-ven
 import { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
 import { FileUploaderComponent  } from './file-uploader/file-uploader.component';
 import { FileUploaderUpdateComponent } from './file-uploader-update/file-uploader-update.component';
+import { StepOrVideoComponent } from './step-or-video/step-or-video.component';
 
 
 // this exports for app-routing.module.ts
@@ -35,6 +36,7 @@ export { UpdateVendorCompanyComponent } from './update-vendor-company/update-ven
 export { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
 export { FileUploaderComponent  } from './file-uploader/file-uploader.component';
 export { FileUploaderUpdateComponent } from './file-uploader-update/file-uploader-update.component';
+export { StepOrVideoComponent } from './step-or-video/step-or-video.component';
 
 
 export const components = [
@@ -54,7 +56,8 @@ export const components = [
   UpdateVendorCompanyComponent,
   VendorProjectsComponent,
   FileUploaderComponent,
-  FileUploaderUpdateComponent
+  FileUploaderUpdateComponent,
+  StepOrVideoComponent
 ];
 
 

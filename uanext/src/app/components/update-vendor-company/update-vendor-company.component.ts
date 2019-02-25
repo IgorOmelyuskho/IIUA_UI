@@ -5,6 +5,7 @@ import { NotificationService } from 'src/app/services/notification/notification.
 import { VendorCompanyService } from 'src/app/services/vendorCompany/vendor-company.service';
 import { ActivatedRoute } from '@angular/router';
 import VendorProjectHelper from '../../services/helperServices/vendorProjectHelper';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-update-vendor-company',
@@ -18,14 +19,6 @@ export class UpdateVendorCompanyComponent implements OnInit {
   @ViewChild('avatar') avatarImg: ElementRef;
   projectId: string;
   VendorProjectHelper = VendorProjectHelper;
-
-  newStep: string;
-  newStepMinValid = true;
-  newStepMaxValid = true;
-  newStepNullValid = true;
-  newStepBtnWasPressed = false;
-  maxStepsCount = 15;
-  minStepsCount = 3;
 
   avatarSize = 0;
   avatar: any;
@@ -117,80 +110,22 @@ export class UpdateVendorCompanyComponent implements OnInit {
     return this.vendorCompanyForm.controls;
   }
 
-  removeStepsItem(step) {
-    for (let i = 0; i < this.vendorCompany.steps.length; i++) {
-      if (this.vendorCompany.steps[i] === step) {
-        this.vendorCompany.steps.splice(i, 1);
-
-        const length = this.vendorCompany.steps.length;
-        if (length <= this.maxStepsCount && length >= this.minStepsCount) {
-          this.vendorCompanyForm.controls['forSteps'].setErrors(null);
-        }
-        if (length < this.minStepsCount) {
-          this.vendorCompanyForm.controls['forSteps'].setErrors({ 'minCount': true });
-        }
-
-        return;
-      }
-    }
-  }
-
-  checkNewStep(): boolean {
-    if (this.newStep == null || this.newStep === '') {
-      this.newStepNullValid = false;
-      this.newStepMinValid = true;
-      this.newStepMaxValid = true;
-      return false;
-    } else {
-      this.newStepNullValid = true;
-    }
-
-    const minLength = 3;
-    const maxLength = 255;
-
-    if (this.newStep.length < minLength) {
-      this.newStepMinValid = false;
-    } else {
-      this.newStepMinValid = true;
-    }
-
-    if (this.newStep.length > maxLength) {
-      this.newStepMaxValid = false;
-    } else {
-      this.newStepMaxValid = true;
-    }
-
-    if (this.newStepMinValid === false || this.newStepMaxValid === false) {
-      return false;
-    }
-
-    return true;
-  }
-
-  newStepOnInput() {
-    if (this.newStepBtnWasPressed === false) {
+  stepsEventHandler(e) {
+    if (e.error) {
+      this.vendorCompanyForm.controls['forSteps'].setErrors({ 'err': true });
       return;
     }
 
-    this.checkNewStep();
+    this.vendorCompany.steps = e;
+    this.vendorCompanyForm.controls['forSteps'].setErrors(null);
   }
 
-  addNewStepClick() {
-    this.newStepBtnWasPressed = true;
-
-    const length = this.vendorCompany.steps.length;
-    if (length < this.maxStepsCount && length >= this.minStepsCount - 1) {
-      this.vendorCompanyForm.controls['forSteps'].setErrors(null);
-    }
-    if (length >= this.maxStepsCount + 1) {
-      this.vendorCompanyForm.controls['forSteps'].setErrors({ 'maxCount': true });
+  videosEventHandler(e) {
+    if (e.error) {
       return;
     }
 
-    const isValid = this.checkNewStep();
-    if (isValid) {
-      this.vendorCompany.steps.push({ data: this.newStep });
-    }
+    this.vendorCompany.videos = e;
   }
 
   handleAvatarSelect(event) {
@@ -264,6 +199,10 @@ export class UpdateVendorCompanyComponent implements OnInit {
     }
   }
 
+  getSteps() {
+    console.log(this.vendorCompany.steps);
+  }
+
   onSubmit() {
     if (this.vendorCompanyForm.valid === false) {
       return;
@@ -275,15 +214,17 @@ export class UpdateVendorCompanyComponent implements OnInit {
 
     updatedVendorCompany.avatar = this.avatar;
     updatedVendorCompany.steps = this.vendorCompany.steps;
+    updatedVendorCompany.videos = this.vendorCompany.videos;
 
-    this.vendorCompanyService.updateVendorCompany(this.vendorCompany.id, updatedVendorCompany).subscribe(
-      response => {
-        console.log(response);
-        this.notify.show(response['data']);
-      },
-      err => {
-        console.warn(err);
-      }
-    );
+    this.vendorCompanyService.updateVendorCompany(this.vendorCompany.id, updatedVendorCompany)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.notify.show(response['data']);
+        },
+        err => {
+          console.warn(err);
+        }
+      );
   }
 }

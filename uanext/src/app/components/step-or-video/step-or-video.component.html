@@ -1,0 +1,32 @@
+<div class="form-group items">
+    <label>
+      <span *ngIf="content === 'step'">Steps</span>
+      <span *ngIf="content === 'video'">Videos</span>
+    </label>
+    <textarea (input)="newItemOnInput()" type="text" [(ngModel)]="newItem" placeholder="Enter new {{content}}" class="form-control item-name"
+      [ngClass]="{ 'is-invalid': !newItemMinValid || !newItemMaxValid || !newItemNullValid }"></textarea>
+    <div *ngIf="!newItemMinValid || !newItemMaxValid || !newItemNullValid" class="invalid-feedback">
+      <div *ngIf="!newItemNullValid">
+        <span *ngIf="content === 'step'">Step cannot be empty</span>
+        <span *ngIf="content === 'video'">Videos cannot be empty</span>
+      </div>
+      <div *ngIf="!newItemMinValid">Minimal {{content}} length is 3 charset</div>
+      <div *ngIf="!newItemMaxValid">Maximal length is 256 charset</div>
+    </div>
+  
+    <div class="invalid-item-count" *ngIf="showMinItemsCountErr()">Minimal {{content}}s count is {{minItemsCount}}</div>
+    <div class="invalid-item-count" *ngIf="showMaxItemsCountErr()">Maximal {{content}}s count is {{maxItemsCount}}</div>
+  
+    <button (click)="addNewItem()" type="button" class="btn btn-success">Add to my {{content}}s</button>
+    <ngx-sortable [items]="items" [name]="'List'" [listStyle]="{dropZoneHeight: '50px'}">
+      <ng-template let-item>
+        <div class="sortable-list-item">
+          <div>{{item.data}}</div>
+          <button (click)="removeItem(item)" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </ng-template>
+    </ngx-sortable>
+  </div>
+  

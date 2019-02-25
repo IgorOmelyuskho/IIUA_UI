@@ -44,35 +44,9 @@
           </div>
         </div>
 
-        <div class="form-group steps">
-          <label>Steps</label>
-          <textarea [ngModelOptions]="{standalone: true}" (input)="newStepOnInput()" type="text" [(ngModel)]="newStep"
-            placeholder="Enter new step" class="form-control step-name" [ngClass]="{ 'is-invalid': !newStepMinValid || !newStepMaxValid || !newStepNullValid }"></textarea>
-          <div *ngIf="!newStepMinValid || !newStepMaxValid || !newStepNullValid" class="invalid-new-step">
-            <div *ngIf="!newStepNullValid">Step cannot be empty</div>
-            <div *ngIf="!newStepMinValid">Minimal step length is 3 charset</div>
-            <div *ngIf="!newStepMaxValid">Maximal length is 256 charset</div>
-          </div>
+        <app-step-or-video [parentSubmitted]="submitted" [items]="vendorCompany.steps" content="step" [minItemsCount]=3 [maxItemsCount]=15 (itemsEvent)="stepsEventHandler($event)"></app-step-or-video>
 
-          <input style="display:none" type="text" formControlName="forSteps" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.forSteps.errors }">
-          <div *ngIf="formControls.forSteps.errors" class="invalid-feedback">
-            <div *ngIf="formControls.forSteps.errors?.minCount">Minimal steps count is 3</div>
-            <div *ngIf="formControls.forSteps.errors?.maxCount">Maximal steps count is 15</div>
-          </div>
-
-          <button (click)="addNewStepClick()" [disabled]="!newStepMinValid || !newStepMaxValid || !newStepNullValid"
-            type="button" class="btn btn-success">Add to my steps</button>
-          <ngx-sortable [items]="vendorCompany?.steps" [name]="'List'" [listStyle]="{dropZoneHeight: '50px'}">
-            <ng-template let-step>
-              <div class="sortable-list-item">
-                <div>{{step.data}}</div>
-                <button (click)="removeStepsItem(step)" type="button" class="close" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </ng-template>
-          </ngx-sortable>
-        </div>
+        <!-- <app-step-or-video [psarentSubmitted]="submitted" [items]="vendorCompany.videos" content="video" (itemsEvent)="videosEventHandler($event)"></app-step-or-video> -->
 
         <div class="form-group">
           <label>Address</label>
@@ -234,3 +208,6 @@
     </div>
   </div>
 </div>
+
+
+<button (click)="getSteps()">get Steps</button>
