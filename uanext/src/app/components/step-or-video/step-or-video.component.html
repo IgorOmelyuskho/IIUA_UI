@@ -21,7 +21,8 @@
     <ngx-sortable [items]="items" [name]="'List'" [listStyle]="{dropZoneHeight: '50px'}">
       <ng-template let-item>
         <div class="sortable-list-item">
-          <div>{{item.data}}</div>
+          <div *ngIf="content === 'step'">{{item.data}}</div>
+          <div *ngIf="content === 'video'">{{item.url}}</div>
           <button (click)="removeItem(item)" type="button" class="close" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -20,20 +20,32 @@
   }
 }
 
-// .photos-uploader,
-// .files-uploader {
-//   padding: 5px;
-//   border: 1px solid blueviolet;
-// }
+%shared-data {
+  margin: 30px 0 20px 0;
+  padding: 5px;
+  border: 1px solid rgba(113, 20, 199, 0.596);
+  border-radius: 3px;
+}
+
+.avatar {
+  @extend %shared-data;
+  button {
+    margin: 10px 0;
+  }
+}
 
 .project-photos {
-  margin: 30px 0 0 0;
+  @extend %shared-data;
   img {
     height: 20px;
   }
 }
 
 .project-files {
-  margin: 30px 0 0 0;
+  @extend %shared-data;
+}
+
+.update-project-btn {
+  margin-top: 10px;
 }
 

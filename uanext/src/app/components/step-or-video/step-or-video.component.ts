@@ -101,7 +101,12 @@ export class StepOrVideoComponent implements OnInit {
 
     const isValid = this.checkNewItem();
     if (isValid) {
-      this.items.push({ data: this.newItem });
+      if (this.content === 'step') {
+        this.items.push({ data: this.newItem });
+      }
+      if (this.content === 'video') {
+        this.items.push({ url: this.newItem });
+      }
     }
     if (this.items.length > this.maxItemsCount || this.items.length < this.minItemsCount) {
       this.itemsEvent.emit({ error: true });

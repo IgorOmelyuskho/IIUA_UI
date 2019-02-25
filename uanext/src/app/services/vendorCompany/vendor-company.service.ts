@@ -24,11 +24,8 @@ const result: VendorCompany = { // todo remove
   description: 'string',
   moneyRequired: 10000,
   investmentDescription: 'string',
-  steps: [{ id: 1111, data: 'step1' }, { id: 2222, data: 'step2' }, { id: 3333, data: 'step3' }],
-
-  // photos: '1111', // imageData
-  // videos: '22222', // unknow
-  // files: '33333', // fileData
+  steps: [],
+  videos: []
 };
 
 const emptyVendorCompany: VendorCompany = {
@@ -51,9 +48,8 @@ const emptyVendorCompany: VendorCompany = {
   investmentDescription: '',
   steps: [],
   videos: [],
-
-  // photos: []', // imageData
-  // files: [], // fileData
+  photos: [],
+  files: []
 };
 
 @Injectable({
@@ -70,10 +66,21 @@ export class VendorCompanyService {
     return this.http.get<VendorCompany[]>(environment.projects_api_url + environment.vendorProject)
       .pipe(
         map(response => response['data']),
+        map(projects => { // replace avatara to avatar
+          for (let i = 0; i < projects.length; i++) {
+            projects[i].avatar = projects[i].avatara;
+            delete projects[i].avatara;
+          }
+          return projects;
+        }),
         map(projects => {
           for (let i = 0; i < projects.length; i++) {
-            projects[i].avatar = 'https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
 
+            // avatar
+            projects[i].avatar = 'https://images.pexels.com/photos/248797/' +
+              'pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=650&w=940';
+
+            // photos
             projects[i].photos = [];
             for (let photo = 0; photo < 5; photo++) {
               const photoObj = {
@@ -84,6 +91,7 @@ export class VendorCompanyService {
               projects[i].photos.push(photoObj);
             }
 
+            // foles
             projects[i].files = [];
             for (let file = 0; file < 5; file++) {
               const fileObj = {
@@ -91,9 +99,11 @@ export class VendorCompanyService {
               };
               projects[i].files.push(fileObj);
             }
+
           }
           return projects;
-        })
+        }),
+        tap(val => console.log(val))
       );
   }
 
@@ -107,21 +117,9 @@ export class VendorCompanyService {
 
 
 
-
-  fetchPhotos(): Observable<any> {
-    return this.http.get<any>(`${environment.projects_api_url}`);
+  uploadAvatar(avatar, projectId) {
+    return this.http.post<any>(environment.projects_api_url + environment.uploadAvatar + projectId, avatar);
   }
-
-  fetchFiles(): Observable<any> {
-    return this.http.get<any>(`${environment.projects_api_url}`);
-  }
-
-  fetchVideos(): Observable<any> {
-    return this.http.get<any>(`${environment.projects_api_url}`);
-  }
-
-
-
 
   uploadPhotos(formData) {
     return this.http.post<any>(`${environment.projects_api_url}`, formData);

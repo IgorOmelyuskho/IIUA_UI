@@ -21,7 +21,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
   VendorProjectHelper = VendorProjectHelper;
 
   avatarSize = 0;
-  avatar: any;
+  maxAvatarSize = 1024 * 1024 * 5;
+  avatarFormData: FormData = new FormData();
 
   photosIsUploaded = false;
   filesIsUploaded = true;
@@ -50,7 +51,6 @@ export class UpdateVendorCompanyComponent implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(1024)]],
       moneyRequired: ['', Validators.required],
       investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
-
       forSteps: [''],
       forPhotos: [''],
       forFiles: [''],
@@ -129,28 +129,50 @@ export class UpdateVendorCompanyComponent implements OnInit {
   }
 
   handleAvatarSelect(event) {
-    const maxAvatarSize = 1024 * 1024 * 5;
     if (event.target.files == null || event.target.files.length === 0) {
       this.avatarImg.nativeElement['src'] = VendorProjectHelper.emptyAvatar;
-      this.avatar = '';
       return;
     }
 
     this.avatarSize = event.target.files[0].size;
-    if (this.avatarSize > maxAvatarSize) {
+    if (this.avatarSize > this.maxAvatarSize) {
       this.vendorCompanyForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
       this.avatarImg.nativeElement['src'] = VendorProjectHelper.emptyAvatar;
-      this.avatar = '';
       return;
     }
 
+    this.vendorCompanyForm.controls['avatar'].setErrors({ 'avatarNotUploaded': true });
+
+    // for show avatar miniature
     const avatarReader = new FileReader();
     avatarReader.onload = (avatar) => {
       this.avatarImg.nativeElement['src'] = avatar.target['result'];
-      this.avatar = avatar.target['result'];
     };
-
     avatarReader.readAsDataURL(event.target['files'][0]);
+    // ....................... //
+
+    const avatarFile = event.target['files'][0];
+    this.avatarFormData.append('AVATAR', avatarFile, avatarFile.name);
+  }
+
+  uploadAvatar() {
+    if (this.avatarFormData.getAll('AVATAR').length < 1) {
+      return;
+    }
+
+    this.vendorCompanyService.uploadAvatar(this.avatarFormData, this.vendorCompany.id)
+      .subscribe(
+        res => {
+          this.vendorCompanyForm.controls['avatar'].setErrors(null);
+          console.log(res);
+          this.avatarFormData.delete('AVATAR');
+        },
+        err => {
+          this.vendorCompanyForm.controls['avatar'].setErrors(null); // todo
+          console.log(err);
+          this.avatarFormData.delete('AVATAR');
+        }
+      );
   }
 
   setFormValues(): void {
@@ -199,10 +221,6 @@ export class UpdateVendorCompanyComponent implements OnInit {
     }
   }
 
-  getSteps() {
-    console.log(this.vendorCompany.steps);
-  }
-
   onSubmit() {
     if (this.vendorCompanyForm.valid === false) {
       return;
@@ -212,7 +230,6 @@ export class UpdateVendorCompanyComponent implements OnInit {
       ...this.vendorCompanyForm.value,
     };
 
-    updatedVendorCompany.avatar = this.avatar;
     updatedVendorCompany.steps = this.vendorCompany.steps;
     updatedVendorCompany.videos = this.vendorCompany.videos;
 

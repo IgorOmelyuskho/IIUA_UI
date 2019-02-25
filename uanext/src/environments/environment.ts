@@ -12,7 +12,8 @@ export const environment = {
   authenticate: 'api/Auth/authenticate',
   investorProfile: 'api/Investor/',
   vendorProfile: 'api/Vendor/',
-  vendorProject: 'api/Projects/'
+  vendorProject: 'api/Projects/',
+  uploadAvatar: 'api/Avatara/'
 };
 
 /*

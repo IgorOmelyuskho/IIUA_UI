@@ -18,7 +18,7 @@ export class CreateVendorCompanyComponent implements OnInit {
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
-  avatar: any;
+  avatarFormData: FormData = new FormData();
 
   photosIsUploaded = false;
   filesIsUploaded = true;
@@ -80,7 +80,6 @@ export class CreateVendorCompanyComponent implements OnInit {
   handleAvatarSelect(event) {
     if (event.target.files == null || event.target.files.length === 0) {
       this.avatarImg.nativeElement['src'] = this.emptyAvatar;
-      this.avatar = 'null';
       return;
     }
 
@@ -88,17 +87,41 @@ export class CreateVendorCompanyComponent implements OnInit {
     if (this.avatarSize > this.maxAvatarSize) {
       this.vendorCompanyForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
       this.avatarImg.nativeElement['src'] = this.emptyAvatar;
-      this.avatar = 'null';
       return;
     }
 
+    this.vendorCompanyForm.controls['avatar'].setErrors({ 'avatarNotUploaded': true });
+
+    // for show avatar miniature
     const avatarReader = new FileReader();
     avatarReader.onload = (avatar) => {
       this.avatarImg.nativeElement['src'] = avatar.target['result'];
-      this.avatar = avatar.target['result'];
     };
-
     avatarReader.readAsDataURL(event.target['files'][0]);
+    // ....................... //
+
+    const avatarFile = event.target['files'][0];
+    this.avatarFormData.append('AVATAR', avatarFile, avatarFile.name);
+  }
+
+  uploadAvatar() {
+    if (this.avatarFormData.getAll('AVATAR').length < 1) {
+      return;
+    }
+
+    this.vendorCompanyService.uploadAvatar(this.avatarFormData, this.vendorCompany.id)
+      .subscribe(
+        res => {
+          this.vendorCompanyForm.controls['avatar'].setErrors(null);
+          console.log(res);
+          this.avatarFormData.delete('AVATAR');
+        },
+        err => {
+          this.vendorCompanyForm.controls['avatar'].setErrors(null); // todo
+          console.log(err);
+          this.avatarFormData.delete('AVATAR');
+        }
+      );
   }
 
   photosUploaded(event) {
@@ -140,7 +163,6 @@ export class CreateVendorCompanyComponent implements OnInit {
       ...this.vendorCompanyForm.value,
     };
 
-    newVendorCompany.avatar = this.avatar;
     newVendorCompany.steps = this.vendorCompany.steps;
     newVendorCompany.videos = this.vendorCompany.videos;
 

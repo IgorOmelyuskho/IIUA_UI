@@ -26,12 +26,12 @@ export class FileUploaderUpdateComponent implements OnInit {
 
   ngOnInit() {
     // todo remove if data get from parent component, and add @Input() for get data
-    if (this.content === 'photos') {
-      this.fetchSubscriber(this.vendorCompanyService.fetchPhotos());
-    }
-    if (this.content === 'files') {
-      this.fetchSubscriber(this.vendorCompanyService.fetchFiles());
-    }
+    // if (this.content === 'photos') {
+    //   this.fetchSubscriber(this.vendorCompanyService.fetchPhotos());
+    // }
+    // if (this.content === 'files') {
+    //   this.fetchSubscriber(this.vendorCompanyService.fetchFiles());
+    // }
   }
 
   fetchSubscriber(observable: Observable<any>) {
