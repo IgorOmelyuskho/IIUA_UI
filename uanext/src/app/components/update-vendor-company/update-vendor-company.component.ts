@@ -23,6 +23,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
   avatarFormData: FormData = new FormData();
+  showAvatarProgress = false;
+  avatarIsTouched = false;
 
   photosIsUploaded = false;
   filesIsUploaded = true;
@@ -129,6 +131,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
   }
 
   handleAvatarSelect(event) {
+    this.avatarIsTouched = true;
+
     if (event.target.files == null || event.target.files.length === 0) {
       this.avatarImg.nativeElement['src'] = VendorProjectHelper.emptyAvatar;
       return;
@@ -155,22 +159,36 @@ export class UpdateVendorCompanyComponent implements OnInit {
     this.avatarFormData.append('AVATAR', avatarFile, avatarFile.name);
   }
 
+  showAvatarProgressBar(show: boolean) {
+    if (show === true) {
+      this.showAvatarProgress = true;
+    } else {
+      this.showAvatarProgress = false;
+    }
+  }
+
   uploadAvatar() {
+    this.avatarIsTouched = true;
+
     if (this.avatarFormData.getAll('AVATAR').length < 1) {
       return;
     }
 
+    this.showAvatarProgressBar(true);
+
     this.vendorCompanyService.uploadAvatar(this.avatarFormData, this.vendorCompany.id)
       .subscribe(
         res => {
+          console.log(res); // todo avatar = res
           this.vendorCompanyForm.controls['avatar'].setErrors(null);
-          console.log(res);
           this.avatarFormData.delete('AVATAR');
+          this.showAvatarProgressBar(false);
         },
         err => {
-          this.vendorCompanyForm.controls['avatar'].setErrors(null); // todo
-          console.log(err);
+          console.warn(err);
+          this.vendorCompanyForm.controls['avatar'].setErrors(null);
           this.avatarFormData.delete('AVATAR');
+          this.showAvatarProgressBar(false);
         }
       );
   }

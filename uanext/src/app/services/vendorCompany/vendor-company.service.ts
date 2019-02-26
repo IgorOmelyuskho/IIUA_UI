@@ -125,10 +125,6 @@ export class VendorCompanyService {
     return this.http.post<any>(`${environment.projects_api_url}`, formData);
   }
 
-  uploadVideos(formData) {
-    return this.http.post<any>(`${environment.projects_api_url}`, formData);
-  }
-
   uploadFiles(formData) {
     return this.http.post<any>(`${environment.projects_api_url}`, formData);
   }

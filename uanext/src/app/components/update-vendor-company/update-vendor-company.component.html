@@ -19,12 +19,13 @@
           <img #avatar height=100 src={{VendorProjectHelper.emptyAvatar}} alt="avatar">
           <label>Avatar</label>
           <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar" class="form-control"
-            [ngClass]="{ 'is-invalid': isLoaded && formControls.avatar.errors }" />
-          <div *ngIf="formControls.avatar.errors" class="invalid-feedback">
-            <div *ngIf="formControls.avatar.errors.required">Avatar cannot be empty</div>
-            <div *ngIf="formControls.avatar.errors.maxAvatarSizeErr">Max avatar size is 5Mb</div>
-            <div *ngIf="formControls.avatar.errors.avatarNotUploaded">Upload selected avatar</div>
+          [ngClass]="{ 'is-invalid': (submitted && formControls.avatar.errors) || (avatarIsTouched && formControls.avatar.errors)}" />
+          <div *ngIf="formControls.avatar.errors || avatarIsTouched" class="invalid-feedback">
+            <div *ngIf="formControls.avatar.errors?.required">Avatar cannot be empty</div>
+            <div *ngIf="formControls.avatar.errors?.maxAvatarSizeErr">Max avatar size is 5Mb</div>
+            <div *ngIf="formControls.avatar.errors?.avatarNotUploaded">Upload selected avatar</div>
           </div>
+          <mat-progress-bar *ngIf="showAvatarProgress === true" mode="indeterminate"></mat-progress-bar>
           <button type="button" (click)="uploadAvatar()" class="btn btn-primary">Upload avatar</button>
         </div>
 

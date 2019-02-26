@@ -103,10 +103,10 @@ export class FileUploaderComponent implements OnInit {
         console.log(err);
         // this.filesIsUploaded = false; // todo
         // this.showProgressBar(false);
-        // this.filesUploadedEvent.emit(false);
+        // this.filesUploadedEvent.emit(false); // EMIT FILES[]
         this.filesIsUploaded = true;
         this.showProgressBar(false);
-        this.filesUploadedEvent.emit(true);
+        this.filesUploadedEvent.emit(true); // EMIT FILES[]
       }
     );
   }
@@ -124,9 +124,6 @@ export class FileUploaderComponent implements OnInit {
     }
     if (this.content === 'files') {
       this.subscriber(this.vendorCompanyService.uploadFiles(this.formData));
-    }
-    if (this.content === 'videos') {
-      this.subscriber(this.vendorCompanyService.uploadVideos(this.formData));
     }
   }
 
