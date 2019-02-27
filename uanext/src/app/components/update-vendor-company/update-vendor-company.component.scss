@@ -10,13 +10,13 @@
     color: #dc3545;
     font-size: 80%;
   }
+}
 
-  .close {
-    outline: none;
-    margin: 5px;
-    &:hover {
-      color: red;
-    }
+.close {
+  outline: none;
+  margin: 5px;
+  &:hover {
+    color: red;
   }
 }
 
@@ -38,6 +38,11 @@
   @extend %shared-data;
   img {
     height: 20px;
+  }
+  .min-photos-count {
+    color: #dc3545;
+    font-size: 80%;
+    margin-bottom: 20px;
   }
 }
 

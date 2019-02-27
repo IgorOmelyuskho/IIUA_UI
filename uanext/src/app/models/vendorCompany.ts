@@ -2,6 +2,7 @@ export interface VendorCompany {
   id?: number;
   name: string;
   avatar?: any;
+  avatara?: any;
   legalEntityName: string;
   goal: string;
   region: string;
@@ -17,9 +18,8 @@ export interface VendorCompany {
   description: string;
   moneyRequired: number;
   investmentDescription: string;
-  steps?: any; // string[];
-
-  photos?: any; // any[]; // imageData
-  videos?: any; // any[]; // unknow
-  files?: any; // any[]; // fileData
+  steps?: any[];
+  images?: any[];
+  videos?: any[];
+  files?: any[];
 }

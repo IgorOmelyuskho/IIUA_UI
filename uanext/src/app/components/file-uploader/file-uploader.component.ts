@@ -14,7 +14,7 @@ export class FileUploaderComponent implements OnInit {
   showProgress = false;
   files: any[];
   unTouched = true;
-  @Output() filesUploadedEvent = new EventEmitter<boolean>();
+  @Output() filesUploadedEvent = new EventEmitter<{ error: boolean, files: any[] }>();
   @Input() content: string; // required
   @Input() minCount = 0;
   @Input() maxCount = 1000;
@@ -76,6 +76,10 @@ export class FileUploaderComponent implements OnInit {
     this.formData = new FormData();
     this.filesArr = [];
     this.files = event.target['files'];
+    if (this.files == null || this.files.length === 0) {
+      this.filesUploadedEvent.emit({error: true, files: null});
+      return;
+    }
 
     for (let i = 0; i < this.files.length; i++) {
       this.formData.append(this.files[i].name, this.files[i]);
@@ -94,19 +98,15 @@ export class FileUploaderComponent implements OnInit {
   subscriber(observable: Observable<any>) {
     observable.subscribe(
       res => {
-        console.log(res);
         this.filesIsUploaded = true;
         this.showProgressBar(false);
-        this.filesUploadedEvent.emit(true);
+        this.filesUploadedEvent.emit({error: false, files: res});
       },
       err => {
-        console.log(err);
-        // this.filesIsUploaded = false; // todo
-        // this.showProgressBar(false);
-        // this.filesUploadedEvent.emit(false); // EMIT FILES[]
-        this.filesIsUploaded = true;
+        console.warn(err);
+        this.filesIsUploaded = false;
         this.showProgressBar(false);
-        this.filesUploadedEvent.emit(true); // EMIT FILES[]
+        this.filesUploadedEvent.emit({error: true, files: null});
       }
     );
   }
@@ -120,7 +120,7 @@ export class FileUploaderComponent implements OnInit {
     this.showProgressBar(true);
 
     if (this.content === 'photos') {
-      this.subscriber(this.vendorCompanyService.uploadPhotos(this.formData));
+      this.subscriber(this.vendorCompanyService.uploadImages(this.formData));
     }
     if (this.content === 'files') {
       this.subscriber(this.vendorCompanyService.uploadFiles(this.formData));

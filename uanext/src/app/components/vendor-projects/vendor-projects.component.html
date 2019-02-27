@@ -4,7 +4,7 @@
   <h1>LIST OF PROJECTS</h1>
   <div *ngIf="projects?.length !== 0 && isLoaded === true" class="projects">
     <div *ngFor="let project of projects" class="project">
-      <img height=100 src={{project.avatar}} alt="">
+      <img height=100 src={{project.avatar.url}} alt="">
       <div class="card-title">{{project.name}}</div>
       <button class="btn btn-primary" (click)="goToProject(project)">Go to project</button>
     </div>

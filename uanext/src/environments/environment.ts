@@ -13,7 +13,8 @@ export const environment = {
   investorProfile: 'api/Investor/',
   vendorProfile: 'api/Vendor/',
   vendorProject: 'api/Projects/',
-  uploadAvatar: 'api/Avatara/'
+  uploadImages: 'api/Image/',
+  uploadFiles: 'api/File/'
 };
 
 /*

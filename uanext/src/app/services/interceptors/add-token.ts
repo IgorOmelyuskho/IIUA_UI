@@ -16,7 +16,8 @@ export class AddTokenInterceptor implements HttpInterceptor {
 
     const tokenizedRequest: HttpRequest<any> = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Access-Control-Allow-Origin': '*',
       }
     });
 

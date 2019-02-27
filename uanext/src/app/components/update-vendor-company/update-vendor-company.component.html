@@ -19,7 +19,7 @@
           <img #avatar height=100 src={{VendorProjectHelper.emptyAvatar}} alt="avatar">
           <label>Avatar</label>
           <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar" class="form-control"
-          [ngClass]="{ 'is-invalid': (submitted && formControls.avatar.errors) || (avatarIsTouched && formControls.avatar.errors)}" />
+            [ngClass]="{ 'is-invalid': (submitted && formControls.avatar.errors) || (avatarIsTouched && formControls.avatar.errors)}" />
           <div *ngIf="formControls.avatar.errors || avatarIsTouched" class="invalid-feedback">
             <div *ngIf="formControls.avatar.errors?.required">Avatar cannot be empty</div>
             <div *ngIf="formControls.avatar.errors?.maxAvatarSizeErr">Max avatar size is 5Mb</div>
@@ -47,9 +47,11 @@
           </div>
         </div>
 
-        <app-step-or-video [parentSubmitted]="submitted" [items]="vendorCompany.steps" content="step" [minItemsCount]=3 [maxItemsCount]=15 (itemsEvent)="stepsEventHandler($event)"></app-step-or-video>
+        <app-step-or-video [parentSubmitted]="submitted" [items]="vendorCompany.steps" content="step" [minItemsCount]=3
+          [maxItemsCount]=15 (itemsEvent)="stepsEventHandler($event)"></app-step-or-video>
 
-        <app-step-or-video [parentSubmitted]="submitted" [items]="vendorCompany.videos" content="video" [minItemsCount]=1 [maxItemsCount]=10 (itemsEvent)="videosEventHandler($event)"></app-step-or-video>
+        <app-step-or-video [parentSubmitted]="submitted" [items]="vendorCompany.videos" content="video" [minItemsCount]=1
+          [maxItemsCount]=10 (itemsEvent)="videosEventHandler($event)"></app-step-or-video>
 
         <div class="form-group">
           <label>Address</label>
@@ -173,13 +175,20 @@
         <div class="project-photos">
           <h3>Project photos</h3>
           <ul class="list-group">
-            <li *ngFor="let photo of vendorCompany.photos" class="list-group-item">
+            <li *ngFor="let photo of vendorCompany.images" class="list-group-item">
               <img src={{photo.url}} alt="">
-              {{photo.name}}
+              <span>{{photo.name}}</span>
+              <span>
+                <button (click)="removePhotoItem(photo)" type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </span>
             </li>
           </ul>
+          <div *ngIf="vendorCompany.images.length < minPhotosCount" class="min-photos-count">Minimal photos count is {{minPhotosCount}}</div>
           <div class="form-group">
-            <app-file-uploader-update accept="image/*" content="photos" (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader-update>
+            <!-- <app-file-uploader-update accept="image/*" content="photos" (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader-update> -->
+            <app-file-uploader [parentSubmitted]="true" accept="image/*" content="photos" (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader>
             <input style="display:none" type="text" formControlName="forPhotos" />
           </div>
         </div>
@@ -188,17 +197,24 @@
           <h3>Project files</h3>
           <ul class="list-group">
             <li *ngFor="let file of vendorCompany.files" class="list-group-item">
-              {{file.name}}
+              <span>{{file.name}}</span>
+              <span>
+                <button (click)="removeFileItem(file)" type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span> 
+                </button>
+              </span>
             </li>
           </ul>
           <div class="form-group">
-            <app-file-uploader-update accept="*" content="files" (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader-update>
+            <!-- <app-file-uploader-update accept="*" content="files" (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader-update> -->
+            <app-file-uploader [parentSubmitted]="true" accept="*" content="files" (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader>
             <input style="display:none" type="text" formControlName="forFiles" />
           </div>
         </div>
 
         <div class="form-group">
-          <button [disabled]="!isLoaded || !vendorCompanyForm.valid" class="btn btn-success update-project-btn">Update data</button>
+          <button [disabled]="!isLoaded || !vendorCompanyForm.valid" class="btn btn-success update-project-btn">Update
+            data</button>
         </div>
       </form>
 

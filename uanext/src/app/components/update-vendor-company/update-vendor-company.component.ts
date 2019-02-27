@@ -27,6 +27,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
   avatarIsTouched = false;
 
   photosIsUploaded = false;
+  minPhotosCount = 5;
+
   filesIsUploaded = true;
 
   constructor(
@@ -54,6 +56,7 @@ export class UpdateVendorCompanyComponent implements OnInit {
       moneyRequired: ['', Validators.required],
       investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
       forSteps: [''],
+      forVideos: [''],
       forPhotos: [''],
       forFiles: [''],
     });
@@ -62,7 +65,7 @@ export class UpdateVendorCompanyComponent implements OnInit {
   whenProjectIsLoaded() {
     this.isLoaded = true;
     this.setFormValues();
-    this.avatarImg.nativeElement['src'] = this.vendorCompany.avatar;
+    this.avatarImg.nativeElement['src'] = this.vendorCompany.avatar.url;
   }
 
   getCompanyFromService() {
@@ -124,10 +127,12 @@ export class UpdateVendorCompanyComponent implements OnInit {
 
   videosEventHandler(e) {
     if (e.error) {
+      this.vendorCompanyForm.controls['forVideos'].setErrors({ 'err': true });
       return;
     }
 
     this.vendorCompany.videos = e;
+    this.vendorCompanyForm.controls['forVideos'].setErrors(null);
   }
 
   handleAvatarSelect(event) {
@@ -176,17 +181,16 @@ export class UpdateVendorCompanyComponent implements OnInit {
 
     this.showAvatarProgressBar(true);
 
-    this.vendorCompanyService.uploadAvatar(this.avatarFormData, this.vendorCompany.id)
+    this.vendorCompanyService.uploadImages(this.avatarFormData)
       .subscribe(
         res => {
-          console.log(res); // todo avatar = res
+          this.vendorCompany.avatar = res[0];
           this.vendorCompanyForm.controls['avatar'].setErrors(null);
           this.avatarFormData.delete('AVATAR');
           this.showAvatarProgressBar(false);
         },
         err => {
           console.warn(err);
-          this.vendorCompanyForm.controls['avatar'].setErrors(null);
           this.avatarFormData.delete('AVATAR');
           this.showAvatarProgressBar(false);
         }
@@ -212,8 +216,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
       description: this.vendorCompany.description,
       moneyRequired: this.vendorCompany.moneyRequired,
       investmentDescription: this.vendorCompany.investmentDescription,
-
       forSteps: '',
+      forVideos: '',
       forPhotos: '',
       forFiles: '',
     });
@@ -222,21 +226,38 @@ export class UpdateVendorCompanyComponent implements OnInit {
   }
 
   photosUploaded(event) {
-    this.photosIsUploaded = event;
-    if (event === true) {
+    this.photosIsUploaded = !event.error;
+    if (event.error === false) {
+      const photosData: any[] = event.files;
+      for (let i = 0; i < photosData.length; i++) {
+        this.vendorCompany.images.push(photosData[i]);
+      }
+    }
+
+    if (event.error === false && this.vendorCompany.images.length >= this.minPhotosCount) {
       this.vendorCompanyForm.controls['forPhotos'].setErrors(null);
     } else {
-      this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'photosNotUploaded': true });
+      this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'err': true });
+    }
+  }
+
+  removePhotoItem(event) {
+    for (let i = 0; i < this.vendorCompany.images.length; i++) {
+      if (this.vendorCompany.images[i] === event) {
+        this.vendorCompany.images.splice(i, 1);
+      }
+    }
+
+    if (this.vendorCompany.images.length < this.minPhotosCount) {
+      this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'err': true });
     }
   }
 
   filesUploaded(event) {
-    this.filesIsUploaded = event;
-    if (event === true) {
-      this.vendorCompanyForm.controls['forFiles'].setErrors(null);
-    } else {
-      this.vendorCompanyForm.controls['forFiles'].setErrors({ 'filesNotUploaded': true });
-    }
+  }
+
+  removeFileItem(event) {
+    console.log(event);
   }
 
   onSubmit() {
@@ -250,6 +271,8 @@ export class UpdateVendorCompanyComponent implements OnInit {
 
     updatedVendorCompany.steps = this.vendorCompany.steps;
     updatedVendorCompany.videos = this.vendorCompany.videos;
+    updatedVendorCompany.avatara = this.vendorCompany.avatar;
+    updatedVendorCompany.images = this.vendorCompany.images;
 
     this.vendorCompanyService.updateVendorCompany(this.vendorCompany.id, updatedVendorCompany)
       .subscribe(

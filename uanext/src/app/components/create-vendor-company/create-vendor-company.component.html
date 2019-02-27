@@ -3,7 +3,7 @@
     <div class="col-md-6 offset-md-3">
 
       <form [formGroup]="vendorCompanyForm" (ngSubmit)="onSubmit()">
-        <h1>Create a new company</h1>
+        <h1>Create a new project</h1>
 
         <div class="form-group">
           <label>Name</label>
@@ -178,7 +178,7 @@
 
         <div class="form-group">
           <div class="photos-uploader">
-            <app-file-uploader [parentSubmitted]="submitted" accept="image/*" content="photos" minCount=3
+            <app-file-uploader [parentSubmitted]="submitted" accept="image/*" content="photos" minCount=5
               (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader>
           </div>
           <input style="display:none" type="text" formControlName="forPhotos" />
@@ -200,3 +200,6 @@
     </div>
   </div>
 </div>
+
+
+<button (click)="getFormControls()">getFormControls</button>

@@ -18,7 +18,7 @@
     <div class="invalid-item-count" *ngIf="showMaxItemsCountErr()">Maximal {{content}}s count is {{maxItemsCount}}</div>
   
     <button (click)="addNewItem()" type="button" class="btn btn-success">Add to my {{content}}s</button>
-    <ngx-sortable [items]="items" [name]="'List'" [listStyle]="{dropZoneHeight: '50px'}">
+    <ngx-sortable (listSorted)="listOrderChanged($event)" [items]="items" [name]="'List'" [listStyle]="{dropZoneHeight: '50px'}">
       <ng-template let-item>
         <div class="sortable-list-item">
           <div *ngIf="content === 'step'">{{item.data}}</div>

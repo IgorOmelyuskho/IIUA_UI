@@ -14,7 +14,6 @@ import { CreateVendorCompanyComponent } from './create-vendor-company/create-ven
 import { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
 import { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
 import { FileUploaderComponent  } from './file-uploader/file-uploader.component';
-import { FileUploaderUpdateComponent } from './file-uploader-update/file-uploader-update.component';
 import { StepOrVideoComponent } from './step-or-video/step-or-video.component';
 
 
@@ -35,7 +34,6 @@ export { CreateVendorCompanyComponent } from './create-vendor-company/create-ven
 export { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
 export { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
 export { FileUploaderComponent  } from './file-uploader/file-uploader.component';
-export { FileUploaderUpdateComponent } from './file-uploader-update/file-uploader-update.component';
 export { StepOrVideoComponent } from './step-or-video/step-or-video.component';
 
 
@@ -56,7 +54,6 @@ export const components = [
   UpdateVendorCompanyComponent,
   VendorProjectsComponent,
   FileUploaderComponent,
-  FileUploaderUpdateComponent,
   StepOrVideoComponent
 ];
 
