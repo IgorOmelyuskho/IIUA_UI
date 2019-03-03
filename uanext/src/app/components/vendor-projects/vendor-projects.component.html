@@ -1,19 +1,19 @@
-<div>
-  <button class="btn btn-success m-1" (click)="createNewCompany()">Create new project(company)</button>
+<mat-progress-bar *ngIf="isLoaded === false" mode="indeterminate"></mat-progress-bar>
 
-  <h1>LIST OF PROJECTS</h1>
+<div class="container">
+  <button class="btn btn-success m-1" (click)="createNewCompany()">Create new project</button>
+
   <div *ngIf="projects?.length !== 0 && isLoaded === true" class="projects">
     <div *ngFor="let project of projects" class="project">
       <img height=100 src={{project.avatar.url}} alt="">
-      <div class="card-title">{{project.name}}</div>
-      <button class="btn btn-primary" (click)="goToProject(project)">Go to project</button>
+      <div class="ml-2">
+        <h5 class="card-title">{{project.name}}</h5>
+        <button class="btn btn-primary" (click)="goToProject(project)">Go to project</button>
+      </div>
     </div>
   </div>
+
+  <h5 *ngIf="projects?.length === 0 && isLoaded === true">
+    You have no projects
+  </h5>
 </div>
-
-<div *ngIf="projects?.length === 0 && isLoaded === true">
-  You have no projects
-</div>
-
-<mat-spinner *ngIf="isLoaded === false"></mat-spinner>
-

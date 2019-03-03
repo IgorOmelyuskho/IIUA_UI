@@ -1,5 +1,7 @@
 <app-header></app-header>
 
+<mat-progress-bar *ngIf="showProgress" mode="indeterminate"></mat-progress-bar>
+
 <div class="text-center">
   <button (click)="asVendor()" class="btn btn-primary select-role">Sign up as Vendor</button>
   <button (click)="asInvestor()" class="btn btn-primary select-role">Sign up as Investor</button>
@@ -7,11 +9,11 @@
 
 
 <div *ngIf="userRole === 'Vendor'">
-  <app-signup-vendor></app-signup-vendor>
+  <app-signup-vendor (showProgress)="showProgressBar($event)"></app-signup-vendor>
 </div>
 
 <div *ngIf="userRole === 'Investor'">
-  <app-signup-investor></app-signup-investor>
+  <app-signup-investor (showProgress)="showProgressBar($event)"></app-signup-investor>
 </div>
 
 

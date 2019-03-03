@@ -3,6 +3,7 @@ import { VendorCompany } from 'src/app/models';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { VendorCompanyService } from 'src/app/services/vendorCompany/vendor-company.service';
+import FormHelper from '../../services/helperServices/formHelper';
 
 @Component({
   selector: 'app-create-vendor-company',
@@ -14,7 +15,9 @@ export class CreateVendorCompanyComponent implements OnInit {
   vendorCompanyForm: FormGroup;
   submitted = false;
   emptyAvatar = '../../../assets/img/empty-profile.jpg';
+  showProgressBar = false;
   @ViewChild('avatar2') avatarImg: ElementRef;
+  FormHelper = FormHelper;
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
@@ -24,10 +27,6 @@ export class CreateVendorCompanyComponent implements OnInit {
   avatarData: any;
 
   photosIsUploaded = false;
-  photosData: any[];
-
-  filesIsUploaded = true;
-  filesData: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -152,13 +151,16 @@ export class CreateVendorCompanyComponent implements OnInit {
     this.photosIsUploaded = !event.error;
     if (event.error === false) {
       this.vendorCompanyForm.controls['forPhotos'].setErrors(null);
-      this.photosData = event.files;
+      this.vendorCompany.images = event.files;
     } else {
       this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'err': true });
     }
   }
 
   filesUploaded(event) {
+    if (event.error === false) {
+      this.vendorCompany.files = event.files;
+    }
   }
 
   getFormControls() {
@@ -173,9 +175,6 @@ export class CreateVendorCompanyComponent implements OnInit {
     }
     if (this.vendorCompany.videos.length === 0) {
       this.vendorCompanyForm.controls['forVideos'].setErrors({ 'err': true });
-    }
-    if (this.filesIsUploaded === false) {
-      this.vendorCompanyForm.controls['forFiles'].setErrors({ 'err': true });
     }
     if (this.photosIsUploaded === false) {
       this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'err': true });
@@ -192,15 +191,20 @@ export class CreateVendorCompanyComponent implements OnInit {
     newVendorCompany.steps = this.vendorCompany.steps;
     newVendorCompany.videos = this.vendorCompany.videos;
     newVendorCompany.avatara = this.avatarData;
-    newVendorCompany.images = this.photosData;
+    newVendorCompany.images = this.vendorCompany.images;
+    newVendorCompany.files = this.vendorCompany.files;
+
+    this.showProgressBar = true;
 
     this.vendorCompanyService.createVendorCompany(newVendorCompany).subscribe(
       response => {
         console.log(response);
+        this.showProgressBar = false;
         this.notify.show(response['data']);
       },
       err => {
         console.warn(err);
+        this.showProgressBar = false;
       }
     );
   }

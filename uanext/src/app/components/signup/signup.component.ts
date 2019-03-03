@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
   userRole = 'Vendor'; // DEFAULT
+  showProgress = false;
 
   constructor() { }
 
@@ -17,6 +18,14 @@ export class SignupComponent implements OnInit {
 
   asInvestor() {
     this.userRole = 'Investor';
+  }
+
+  showProgressBar(show: boolean) {
+    if (show === true) {
+      this.showProgress = true;
+    } else {
+      this.showProgress = false;
+    }
   }
 
 }

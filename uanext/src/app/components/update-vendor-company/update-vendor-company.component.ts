@@ -4,8 +4,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { VendorCompanyService } from 'src/app/services/vendorCompany/vendor-company.service';
 import { ActivatedRoute } from '@angular/router';
-import VendorProjectHelper from '../../services/helperServices/vendorProjectHelper';
-import { delay } from 'rxjs/operators';
+import FormHelper from '../../services/helperServices/formHelper';
 
 @Component({
   selector: 'app-update-vendor-company',
@@ -16,9 +15,11 @@ export class UpdateVendorCompanyComponent implements OnInit {
   vendorCompany: VendorCompany = this.vendorCompanyService.emptyVendorCompany;
   vendorCompanyForm: FormGroup;
   isLoaded = false;
+  showProgressBar = false;
   @ViewChild('avatar') avatarImg: ElementRef;
+  emptyAvatar = '../../../assets/img/empty-profile.jpg';
   projectId: string;
-  VendorProjectHelper = VendorProjectHelper;
+  FormHelper = FormHelper;
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
@@ -139,14 +140,14 @@ export class UpdateVendorCompanyComponent implements OnInit {
     this.avatarIsTouched = true;
 
     if (event.target.files == null || event.target.files.length === 0) {
-      this.avatarImg.nativeElement['src'] = VendorProjectHelper.emptyAvatar;
+      this.avatarImg.nativeElement['src'] = this.emptyAvatar;
       return;
     }
 
     this.avatarSize = event.target.files[0].size;
     if (this.avatarSize > this.maxAvatarSize) {
       this.vendorCompanyForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
-      this.avatarImg.nativeElement['src'] = VendorProjectHelper.emptyAvatar;
+      this.avatarImg.nativeElement['src'] = this.emptyAvatar;
       return;
     }
 
@@ -254,10 +255,20 @@ export class UpdateVendorCompanyComponent implements OnInit {
   }
 
   filesUploaded(event) {
+    if (event.error === false) {
+      const filesData: any[] = event.files;
+      for (let i = 0; i < filesData.length; i++) {
+        this.vendorCompany.files.push(filesData[i]);
+      }
+    }
   }
 
   removeFileItem(event) {
-    console.log(event);
+    for (let i = 0; i < this.vendorCompany.files.length; i++) {
+      if (this.vendorCompany.files[i] === event) {
+        this.vendorCompany.files.splice(i, 1);
+      }
+    }
   }
 
   onSubmit() {
@@ -273,15 +284,20 @@ export class UpdateVendorCompanyComponent implements OnInit {
     updatedVendorCompany.videos = this.vendorCompany.videos;
     updatedVendorCompany.avatara = this.vendorCompany.avatar;
     updatedVendorCompany.images = this.vendorCompany.images;
+    updatedVendorCompany.files = this.vendorCompany.files;
+
+    this.showProgressBar = true;
 
     this.vendorCompanyService.updateVendorCompany(this.vendorCompany.id, updatedVendorCompany)
       .subscribe(
         response => {
           console.log(response);
+          this.showProgressBar = false;
           this.notify.show(response['data']);
         },
         err => {
           console.warn(err);
+          this.showProgressBar = false;
         }
       );
   }

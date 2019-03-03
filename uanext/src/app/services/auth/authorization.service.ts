@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
@@ -52,13 +52,17 @@ export class AuthorizationService {
       return;
     }
 
+    const pathName = window.location.pathname.slice();
+
     if (role === 'Vendor') {
       this.profileService.fetchVendor().subscribe(
         vendor => {
           this.stateService.user$.next(vendor);
           this.stateService.authorized$.next(true);
-          if (this.router.url === '' || this.router.url === '/') {
+          if (pathName === '' || pathName === '/') {
             this.router.navigate(['home', 'vendor']);
+          } else {
+            this.router.navigateByUrl(pathName);
           }
         },
         err => {
@@ -73,8 +77,10 @@ export class AuthorizationService {
         investor => {
           this.stateService.user$.next(investor);
           this.stateService.authorized$.next(true);
-          if (this.router.url === '' || this.router.url === '/') {
+          if (pathName === '' || pathName === '/') {
             this.router.navigate(['home', 'investor']);
+          } else {
+            this.router.navigateByUrl(pathName);
           }
         },
         err => {

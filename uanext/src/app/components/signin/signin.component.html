@@ -2,7 +2,7 @@
 
 <mat-progress-bar *ngIf="showProgressBar" mode="indeterminate"></mat-progress-bar>
 
-<div class="jumbotron">      
+<section class="bg-color-signin">
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
@@ -16,7 +16,7 @@
               <div *ngIf="formControls.email.errors.pattern">Email must be a valid email address</div>
             </div>
           </div>
-          <div class="form-group"> 
+          <div class="form-group">
             <label>Password</label>
             <input autocomplete="on" type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.password.errors }" />
             <div *ngIf="submitted && formControls.password.errors" class="invalid-feedback">
@@ -31,4 +31,4 @@
       </div>
     </div>
   </div>
-</div>
+</section>

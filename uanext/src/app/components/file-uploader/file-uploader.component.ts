@@ -24,7 +24,9 @@ export class FileUploaderComponent implements OnInit {
 
   constructor(private vendorCompanyService: VendorCompanyService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.accept);
+   }
 
   minCountValid(): boolean {
     if (this.minCount === 0) {
@@ -77,7 +79,7 @@ export class FileUploaderComponent implements OnInit {
     this.filesArr = [];
     this.files = event.target['files'];
     if (this.files == null || this.files.length === 0) {
-      this.filesUploadedEvent.emit({error: true, files: null});
+      this.filesUploadedEvent.emit({error: true, files: []});
       return;
     }
 
@@ -106,7 +108,7 @@ export class FileUploaderComponent implements OnInit {
         console.warn(err);
         this.filesIsUploaded = false;
         this.showProgressBar(false);
-        this.filesUploadedEvent.emit({error: true, files: null});
+        this.filesUploadedEvent.emit({error: true, files: []});
       }
     );
   }

@@ -2,7 +2,7 @@ import FormHelper from './../../services/helperServices/formHelper';
 import { Router } from '@angular/router';
 import { AuthorizationService } from './../../services/auth/authorization.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { matchOtherValidator } from '../../validators/validators';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
@@ -15,7 +15,7 @@ export class SignupVendorComponent implements OnInit {
   signupForm: FormGroup;
   submitted = false;
   FormHelper = FormHelper;
-  showProgressBar = false;
+  @Output() showProgress = new EventEmitter<boolean>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,11 +47,11 @@ export class SignupVendorComponent implements OnInit {
       return;
     }
 
-    this.showProgressBar = true;
+    this.showProgress.emit(true);
 
     this.authService.signUpAsVendor(this.signupForm.value).subscribe(
       response => {
-        this.showProgressBar = false;
+        this.showProgress.emit(false);
         if (response.body.isSuccess === true && response.status === 200) {
           this.notify.show(response.body.data);
           this.router.navigate(['signin']);
@@ -61,7 +61,7 @@ export class SignupVendorComponent implements OnInit {
       },
       err => {
         console.warn(err);
-        this.showProgressBar = false;
+        this.showProgress.emit(false);
         this.notify.show(err.error.error.errorMessage);
       }
     );

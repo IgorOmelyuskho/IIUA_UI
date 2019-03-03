@@ -1,12 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { join } from 'path';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-step-or-video',
-  templateUrl: './step-or-video.component.html',
-  styleUrls: ['./step-or-video.component.scss']
+  selector: 'app-videos',
+  templateUrl: './videos.component.html',
+  styleUrls: ['./videos.component.scss']
 })
-export class StepOrVideoComponent implements OnInit, OnChanges {
+export class VideosComponent implements OnInit {
   newItem: string;
   newItemMinValid = true;
   newItemMaxValid = true;
@@ -17,16 +16,11 @@ export class StepOrVideoComponent implements OnInit, OnChanges {
   @Input() maxItemsCount = 1000;
   @Input() minItemsCount = 0;
   @Input() parentSubmitted = false;
-  @Input() content = 'step';
   @Input() items: any[] = [];
 
   constructor() { }
 
   ngOnInit() { }
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.setItems();
-  }
 
   removeItem(item) {
     this.isTouched = true;
@@ -36,7 +30,6 @@ export class StepOrVideoComponent implements OnInit, OnChanges {
         this.items.splice(i, 1);
 
         if (this.items.length <= this.maxItemsCount && this.items.length >= this.minItemsCount) {
-          this.setStepNumber();
           this.itemsEvent.emit(this.items);
         }
         if (this.items.length < this.minItemsCount) {
@@ -46,29 +39,6 @@ export class StepOrVideoComponent implements OnInit, OnChanges {
         return;
       }
     }
-  }
-
-  setItems() {
-    if (this.content !== 'step') {
-      return;
-    }
-
-    this.items.sort((a, b) => {
-      if (a.stepNumber > b.stepNumber) { return 1; }
-      if (a.stepNumber < b.stepNumber) { return -1; }
-      if (a.stepNumber === b.stepNumber) { return 0; }
-    });
-  }
-
-  setStepNumber() {
-    for (let i = 0; i < this.items.length; i++) {
-      this.items[i].stepNumber = i;
-    }
-  }
-
-  listOrderChanged(e) {
-    this.setStepNumber();
-    this.itemsEvent.emit(this.items);
   }
 
   showMaxItemsCountErr(): boolean {
@@ -130,19 +100,13 @@ export class StepOrVideoComponent implements OnInit, OnChanges {
 
     const isValid = this.checkNewItem();
     if (isValid) {
-      if (this.content === 'step') {
-        this.items.push({ data: this.newItem });
-      }
-      if (this.content === 'video') {
-        this.items.push({ url: this.newItem });
-      }
+      this.items.push({ url: this.newItem });
     }
     if (this.items.length > this.maxItemsCount || this.items.length < this.minItemsCount) {
       this.itemsEvent.emit({ error: true });
       return;
     }
 
-    this.setStepNumber();
     this.itemsEvent.emit(this.items);
   }
 

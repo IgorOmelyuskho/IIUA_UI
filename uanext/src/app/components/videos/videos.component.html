@@ -1,0 +1,32 @@
+<div class="form-group videos">
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-12 mb-2">Link to video</div>
+      <div class="col-8">
+        <input (input)="newItemOnInput()" type="text" placeholder="http://..." [(ngModel)]="newItem" class="form-control item-name"
+          [ngClass]="{ 'is-invalid': !newItemMinValid || !newItemMaxValid || !newItemNullValid }">
+        <div *ngIf="!newItemMinValid || !newItemMaxValid || !newItemNullValid" class="invalid-feedback">
+          <div *ngIf="!newItemNullValid">Videos cannot be empty</div>
+          <div *ngIf="!newItemMinValid">Minimal videos length is 3 charset</div>
+          <div *ngIf="!newItemMaxValid">Maximal length is 256 charset</div>
+        </div>
+
+        <div class="invalid-item-count" *ngIf="showMinItemsCountErr()">Minimal videos count is {{minItemsCount}}</div>
+        <div class="invalid-item-count" *ngIf="showMaxItemsCountErr()">Maximal videos count is {{maxItemsCount}}</div>
+      </div>
+      <div class="col-2">
+        <button (click)="addNewItem()" type="button" class="btn btn-primary">Add to my videos</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-10">
+    <div class="list-group">
+      <div *ngFor="let item of items" class="list-group-item">
+        <div class="video-url">{{item.url}}</div>
+        <button (click)="removeItem(item)" type="button" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>

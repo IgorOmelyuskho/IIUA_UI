@@ -3,9 +3,11 @@
     <span class="navbar-brand mb-0 h1">Navbar</span>
   </a>
   <div class="navbar-text">Navbar for Investor</div>
-  <button (click)="home()" type="button" class="btn btn-primary">Home</button>
-  <button (click)="goToProfile()" type="button" class="btn btn-primary">My profile</button>
-  <button (click)="signOut()" type="button" class="btn btn-primary">Sign out</button>
+  <div>
+    <button (click)="home()" type="button" class="btn btn-primary">Home</button>
+    <button (click)="goToProfile()" type="button" class="btn btn-primary">My profile</button>
+    <button (click)="signOut()" type="button" class="btn btn-primary">Sign out</button>
+  </div>
 </nav>
 
 <router-outlet></router-outlet>

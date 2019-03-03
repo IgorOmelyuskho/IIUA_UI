@@ -1,8 +1,16 @@
 <div class="files-uploader">
   <div class="input-group mb-3">
-    <div class="custom-file">
-      <input multiple (change)="handleFilesSelect($event)" accept={{accept}} type="file" class="custom-file-input">
-      <label class="custom-file-label">Choose <span>{{content}}</span></label>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="custom-file col-10">
+          <input multiple (change)="handleFilesSelect($event)" accept={{accept}} type="file" class="custom-file-input">
+          <label class="custom-file-label">Choose <span>{{content}}</span></label>
+        </div>
+        <div class="col-2">
+          <button [disabled]="allFieldsValid() === false || !files || files.length === 0" class="btn btn-primary" type="button"
+            (click)=uploadFiles()>Upload</button>
+        </div>
+      </div>
     </div>
     <div *ngIf="parentSubmitted === true || unTouched === false" style="display:block" class="invalid-feedback">
       <div *ngIf="minCountValid() === false">Minimal files count is {{minCount}}</div>
@@ -13,11 +21,9 @@
   </div>
   <div>
     <mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
-    <div class="file" *ngFor="let file of filesArr">
+    <div class="file" *ngFor="let file of filesArr"> 
       <span class="file-name">{{file.name}},</span>
       <span [ngClass]="{ 'too-large': file.size > maxSize }"> size: {{file.size}} bytes</span>
     </div>
   </div>
-  <button [disabled]="allFieldsValid() === false || !files || files.length === 0" class="btn btn-primary" type="button"
-    (click)=uploadFiles()>Upload</button>
 </div>

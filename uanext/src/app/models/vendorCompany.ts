@@ -1,5 +1,6 @@
 export interface VendorCompany {
   id?: number;
+  userId?: number;
   name: string;
   avatar?: any;
   avatara?: any;
@@ -19,7 +20,7 @@ export interface VendorCompany {
   moneyRequired: number;
   investmentDescription: string;
   steps?: any[];
-  images?: any[];
   videos?: any[];
+  images?: any[];
   files?: any[];
 }

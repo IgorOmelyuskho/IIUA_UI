@@ -63,19 +63,20 @@ export class VendorCompanyService {
         }),
 
         // fakeFiles
-        map((projects: VendorCompany[]) => {
-          for (let i = 0; i < projects.length; i++) {
-            projects[i].files = [];
-            for (let file = 0; file < 5; file++) {
-              projects[i].files.push(fakeFile);
-            }
+        // map((projects: VendorCompany[]) => {
+        //   for (let i = 0; i < projects.length; i++) {
+        //     projects[i].files = [];
+        //     for (let file = 0; file < 5; file++) {
+        //       projects[i].files.push(fakeFile);
+        //     }
 
-          }
-          return projects;
-        }),
+        //   }
+        //   return projects;
+        // }),
 
         // replace relative link to absolute link
         map((projects: VendorCompany[]) => {
+          console.log(projects);
           for (let i = 0; i < projects.length; i++) {
             // avatar
             projects[i].avatar.url = environment.projects_api_url.slice(0, -1) + projects[i].avatar.url;
@@ -86,9 +87,9 @@ export class VendorCompanyService {
             }
 
             // files
-            // for (let f = 0; f < projects[i].images.length; f++) {
-            //   projects[i].files[f].url = environment.projects_api_url.slice(0, -1) + projects[i].files[f].url;
-            // }
+            for (let f = 0; f < projects[i].files.length; f++) {
+              projects[i].files[f].url = environment.projects_api_url.slice(0, -1) + projects[i].files[f].url;
+            }
           }
 
           return projects;

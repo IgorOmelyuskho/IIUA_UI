@@ -14,7 +14,8 @@ import { CreateVendorCompanyComponent } from './create-vendor-company/create-ven
 import { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
 import { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
 import { FileUploaderComponent  } from './file-uploader/file-uploader.component';
-import { StepOrVideoComponent } from './step-or-video/step-or-video.component';
+import { StepsComponent } from './steps/steps.component';
+import { VideosComponent } from './videos/videos.component';
 
 
 // this exports for app-routing.module.ts
@@ -34,7 +35,8 @@ export { CreateVendorCompanyComponent } from './create-vendor-company/create-ven
 export { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
 export { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
 export { FileUploaderComponent  } from './file-uploader/file-uploader.component';
-export { StepOrVideoComponent } from './step-or-video/step-or-video.component';
+export { StepsComponent } from './steps/steps.component';
+export { VideosComponent } from './videos/videos.component';
 
 
 export const components = [
@@ -54,7 +56,8 @@ export const components = [
   UpdateVendorCompanyComponent,
   VendorProjectsComponent,
   FileUploaderComponent,
-  StepOrVideoComponent
+  StepsComponent,
+  VideosComponent
 ];
 
 
