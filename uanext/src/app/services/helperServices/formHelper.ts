@@ -13,6 +13,6 @@ export default class FormHelper {
 
   static readonly  microsoftWordMIMETypes = 'application/msword,' +
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.template' +
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.template,' +
   'application/vnd.ms-word.document.macroEnabled.12';
 }

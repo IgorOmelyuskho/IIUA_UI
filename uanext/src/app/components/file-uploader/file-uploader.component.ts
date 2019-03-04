@@ -26,7 +26,7 @@ export class FileUploaderComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.accept);
-   }
+  }
 
   minCountValid(): boolean {
     if (this.minCount === 0) {
@@ -79,13 +79,23 @@ export class FileUploaderComponent implements OnInit {
     this.filesArr = [];
     this.files = event.target['files'];
     if (this.files == null || this.files.length === 0) {
-      this.filesUploadedEvent.emit({error: true, files: []});
+      this.filesUploadedEvent.emit({ error: true, files: [] });
       return;
     }
 
     for (let i = 0; i < this.files.length; i++) {
       this.formData.append(this.files[i].name, this.files[i]);
       this.filesArr.push(this.files[i]);
+
+      if (this.content !== 'photos') {
+        continue;
+      }
+
+      const imageReader = new FileReader();
+      imageReader.onload = (image) => {
+        this.filesArr[i].url = image.target['result'];
+      };
+      imageReader.readAsDataURL(event.target['files'][i]);
     }
   }
 
@@ -101,14 +111,16 @@ export class FileUploaderComponent implements OnInit {
     observable.subscribe(
       res => {
         this.filesIsUploaded = true;
+        this.filesArr = [];
         this.showProgressBar(false);
-        this.filesUploadedEvent.emit({error: false, files: res});
+        this.filesUploadedEvent.emit({ error: false, files: res });
       },
       err => {
         console.warn(err);
         this.filesIsUploaded = false;
+        this.filesArr = [];
         this.showProgressBar(false);
-        this.filesUploadedEvent.emit({error: true, files: []});
+        this.filesUploadedEvent.emit({ error: true, files: [] });
       }
     );
   }

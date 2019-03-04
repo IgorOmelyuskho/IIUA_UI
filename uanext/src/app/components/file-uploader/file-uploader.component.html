@@ -21,7 +21,8 @@
   </div>
   <div>
     <mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
-    <div class="file" *ngFor="let file of filesArr"> 
+    <div class="file" *ngFor="let file of filesArr">
+      <img *ngIf="content==='photos'" height=50 src="{{file.url}}" alt="{{file.name}}">
       <span class="file-name">{{file.name}},</span>
       <span [ngClass]="{ 'too-large': file.size > maxSize }"> size: {{file.size}} bytes</span>
     </div>
