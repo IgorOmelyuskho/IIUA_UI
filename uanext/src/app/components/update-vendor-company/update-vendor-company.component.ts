@@ -17,7 +17,6 @@ export class UpdateVendorCompanyComponent implements OnInit {
   isLoaded = false;
   showProgressBar = false;
   @ViewChild('avatar') avatarImg: ElementRef;
-  emptyAvatar = '../../../assets/img/empty-profile.jpg';
   projectId: string;
   FormHelper = FormHelper;
 
@@ -27,10 +26,7 @@ export class UpdateVendorCompanyComponent implements OnInit {
   showAvatarProgress = false;
   avatarIsTouched = false;
 
-  photosIsUploaded = false;
   minPhotosCount = 5;
-
-  filesIsUploaded = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -140,14 +136,14 @@ export class UpdateVendorCompanyComponent implements OnInit {
     this.avatarIsTouched = true;
 
     if (event.target.files == null || event.target.files.length === 0) {
-      this.avatarImg.nativeElement['src'] = this.emptyAvatar;
+      this.avatarImg.nativeElement['src'] = this.FormHelper.emptyAvatar;
       return;
     }
 
     this.avatarSize = event.target.files[0].size;
     if (this.avatarSize > this.maxAvatarSize) {
       this.vendorCompanyForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
-      this.avatarImg.nativeElement['src'] = this.emptyAvatar;
+      this.avatarImg.nativeElement['src'] = this.FormHelper.emptyAvatar;
       return;
     }
 
@@ -227,9 +223,9 @@ export class UpdateVendorCompanyComponent implements OnInit {
   }
 
   photosUploaded(event) {
-    this.photosIsUploaded = !event.error;
     if (event.error === false) {
       const photosData: any[] = event.files;
+      console.log(photosData);
       for (let i = 0; i < photosData.length; i++) {
         this.vendorCompany.images.push(photosData[i]);
       }

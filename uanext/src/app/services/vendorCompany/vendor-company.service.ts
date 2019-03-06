@@ -29,13 +29,6 @@ const emptyVendorCompany: VendorCompany = {
   files: []
 };
 
-const fakeFile = {
-  'id': 23,
-  'url': '/files/2ecf89d7-5fa0-7bc1-662b-5c58fb5e393f.txt',
-  'name': '2ecf89d7-5fa0-7bc1-662b-5c58fb5e393f.txt',
-  'accessFile': 1
-};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -53,7 +46,7 @@ export class VendorCompanyService {
           return response['data'];
         }),
 
-        // todo replace avatara to avatar
+        // replace avatara to avatar
         map((projects: VendorCompany[]) => {
           for (let i = 0; i < projects.length; i++) {
             projects[i].avatar = projects[i].avatara;
@@ -61,18 +54,6 @@ export class VendorCompanyService {
           }
           return projects;
         }),
-
-        // fakeFiles
-        // map((projects: VendorCompany[]) => {
-        //   for (let i = 0; i < projects.length; i++) {
-        //     projects[i].files = [];
-        //     for (let file = 0; file < 5; file++) {
-        //       projects[i].files.push(fakeFile);
-        //     }
-
-        //   }
-        //   return projects;
-        // }),
 
         // replace relative link to absolute link
         map((projects: VendorCompany[]) => {

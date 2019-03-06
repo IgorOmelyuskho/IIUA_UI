@@ -59,6 +59,27 @@ hr {
   }
 }
 
+.project-photos,
+.project-files {
+  img {
+    height: 50px;
+  }
+  .min-files-count {
+    color: #dc3545;
+    font-size: 80%;
+    margin-bottom: 20px;
+  }
+  .extension {
+    font-size: 1.5em;
+    color: rgb(83, 23, 139);
+    padding-left: 5px;
+  }
+  .list-group-item {
+    padding: 4px 10px;
+  }
+  
+}
+
 .progress-bar-fixed {
   position: fixed;
   left: 0;

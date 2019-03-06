@@ -14,7 +14,6 @@ export class CreateVendorCompanyComponent implements OnInit {
   vendorCompany: VendorCompany = this.vendorCompanyService.emptyVendorCompany;
   vendorCompanyForm: FormGroup;
   submitted = false;
-  emptyAvatar = '../../../assets/img/empty-profile.jpg';
   showProgressBar = false;
   @ViewChild('avatar2') avatarImg: ElementRef;
   FormHelper = FormHelper;
@@ -26,7 +25,7 @@ export class CreateVendorCompanyComponent implements OnInit {
   avatarIsTouched = false;
   avatarData: any;
 
-  photosIsUploaded = false;
+  minPhotosCount = 5;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -88,7 +87,7 @@ export class CreateVendorCompanyComponent implements OnInit {
     this.avatarIsTouched = true;
 
     if (event.target.files == null || event.target.files.length === 0) {
-      this.avatarImg.nativeElement['src'] = this.emptyAvatar;
+      this.avatarImg.nativeElement['src'] = this.FormHelper.emptyAvatar;
       this.avatarFormData.delete('AVATAR');
       return;
     }
@@ -96,7 +95,7 @@ export class CreateVendorCompanyComponent implements OnInit {
     this.avatarSize = event.target.files[0].size;
     if (this.avatarSize > this.maxAvatarSize) {
       this.vendorCompanyForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
-      this.avatarImg.nativeElement['src'] = this.emptyAvatar;
+      this.avatarImg.nativeElement['src'] = this.FormHelper.emptyAvatar;
       return;
     }
 
@@ -148,18 +147,46 @@ export class CreateVendorCompanyComponent implements OnInit {
   }
 
   photosUploaded(event) {
-    this.photosIsUploaded = !event.error;
     if (event.error === false) {
+      const photosData: any[] = event.files;
+      for (let i = 0; i < photosData.length; i++) {
+        this.vendorCompany.images.push(photosData[i]);
+      }
+    }
+
+    if (event.error === false && this.vendorCompany.images.length >= this.minPhotosCount) {
       this.vendorCompanyForm.controls['forPhotos'].setErrors(null);
-      this.vendorCompany.images = event.files;
     } else {
+      this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'err': true });
+    }
+  }
+
+  removePhotoItem(event) {
+    for (let i = 0; i < this.vendorCompany.images.length; i++) {
+      if (this.vendorCompany.images[i] === event) {
+        this.vendorCompany.images.splice(i, 1);
+      }
+    }
+
+    if (this.vendorCompany.images.length < this.minPhotosCount) {
       this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'err': true });
     }
   }
 
   filesUploaded(event) {
     if (event.error === false) {
-      this.vendorCompany.files = event.files;
+      const filesData: any[] = event.files;
+      for (let i = 0; i < filesData.length; i++) {
+        this.vendorCompany.files.push(filesData[i]);
+      }
+    }
+  }
+
+  removeFileItem(event) {
+    for (let i = 0; i < this.vendorCompany.files.length; i++) {
+      if (this.vendorCompany.files[i] === event) {
+        this.vendorCompany.files.splice(i, 1);
+      }
     }
   }
 
@@ -176,7 +203,7 @@ export class CreateVendorCompanyComponent implements OnInit {
     if (this.vendorCompany.videos.length === 0) {
       this.vendorCompanyForm.controls['forVideos'].setErrors({ 'err': true });
     }
-    if (this.photosIsUploaded === false) {
+    if (this.vendorCompany.images.length < this.minPhotosCount) {
       this.vendorCompanyForm.controls['forPhotos'].setErrors({ 'err': true });
     }
 

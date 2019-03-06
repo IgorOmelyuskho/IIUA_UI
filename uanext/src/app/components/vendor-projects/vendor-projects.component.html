@@ -7,7 +7,7 @@
     <div *ngFor="let project of projects" class="project">
       <img height=100 src={{project.avatar.url}} alt="">
       <div class="ml-2">
-        <h5 class="card-title">{{project.name}}</h5>
+        <h5>{{project.name}}</h5>
         <button class="btn btn-primary" (click)="goToProject(project)">Go to project</button>
       </div>
     </div>

@@ -112,6 +112,7 @@ export class FileUploaderComponent implements OnInit {
       res => {
         this.filesIsUploaded = true;
         this.filesArr = [];
+        this.files = [];
         this.showProgressBar(false);
         this.filesUploadedEvent.emit({ error: false, files: res });
       },
@@ -119,6 +120,7 @@ export class FileUploaderComponent implements OnInit {
         console.warn(err);
         this.filesIsUploaded = false;
         this.filesArr = [];
+        this.files = [];
         this.showProgressBar(false);
         this.filesUploadedEvent.emit({ error: true, files: [] });
       }

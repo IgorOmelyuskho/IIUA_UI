@@ -11,8 +11,10 @@ export default class FormHelper {
 
   static readonly creditCardPattern = /([0-9\s]){19}$/;
 
-  static readonly  microsoftWordMIMETypes = 'application/msword,' +
+  static readonly  acceptFilesTypes = 'text/*,application/pdf,application/msword,' +
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +
   'application/vnd.openxmlformats-officedocument.wordprocessingml.template,' +
-  'application/vnd.ms-word.document.macroEnabled.12';
+  'application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-excel';
+
+  static readonly emptyAvatar = '../../../assets/img/empty-profile.jpg';
 }
