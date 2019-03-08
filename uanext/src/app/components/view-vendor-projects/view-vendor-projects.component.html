@@ -1,0 +1,15 @@
+<div class="container">
+
+  <h3>Projecs</h3>
+
+  <div class="projects">
+    <div *ngFor="let project of projects" class="project">
+      <img height=100 src={{project.avatara.url}} alt="">
+      <div class="ml-2">
+        <h5>{{project.name}}</h5>
+        <button class="btn btn-primary" (click)="goToProject(project)">Go to project</button>
+      </div>
+    </div>
+  </div>
+
+</div>

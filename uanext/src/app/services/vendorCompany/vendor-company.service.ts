@@ -57,7 +57,6 @@ export class VendorCompanyService {
 
         // replace relative link to absolute link
         map((projects: VendorCompany[]) => {
-          console.log(projects);
           for (let i = 0; i < projects.length; i++) {
             // avatar
             projects[i].avatar.url = environment.projects_api_url.slice(0, -1) + projects[i].avatar.url;
@@ -74,9 +73,7 @@ export class VendorCompanyService {
           }
 
           return projects;
-        }),
-
-        tap(projects => console.log(projects))
+        })
       );
   }
 
@@ -98,8 +95,7 @@ export class VendorCompanyService {
             response.data[i].url = environment.projects_api_url.slice(0, -1) + response.data[i].url;
           }
           return response.data;
-        }),
-        tap(images => console.log(images)),
+        })
       );
   }
 
@@ -111,8 +107,7 @@ export class VendorCompanyService {
             response.data[i].url = environment.projects_api_url.slice(0, -1) + response.data[i].url;
           }
           return response.data;
-        }),
-        tap(files => console.log(files)),
+        })
       );
   }
 

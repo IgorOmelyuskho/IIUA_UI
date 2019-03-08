@@ -24,9 +24,7 @@ export class FileUploaderComponent implements OnInit {
 
   constructor(private vendorCompanyService: VendorCompanyService) { }
 
-  ngOnInit() {
-    console.log(this.accept);
-  }
+  ngOnInit() { }
 
   minCountValid(): boolean {
     if (this.minCount === 0) {

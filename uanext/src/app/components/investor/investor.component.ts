@@ -28,6 +28,10 @@ export class InvestorComponent implements OnInit {
     this.authService.signOut();
   }
 
+  viewProjects() {
+    this.router.navigate(['home', 'investor', 'viewProjects']);
+  }
+
 }
 
 

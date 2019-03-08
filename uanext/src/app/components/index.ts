@@ -16,6 +16,8 @@ import { VendorProjectsComponent } from './vendor-projects/vendor-projects.compo
 import { FileUploaderComponent  } from './file-uploader/file-uploader.component';
 import { StepsComponent } from './steps/steps.component';
 import { VideosComponent } from './videos/videos.component';
+import { ViewProjectComponent } from './view-project/view-project.component';
+import { ViewVendorProjectsComponent } from './view-vendor-projects/view-vendor-projects.component';
 
 
 // this exports for app-routing.module.ts
@@ -37,6 +39,8 @@ export { VendorProjectsComponent } from './vendor-projects/vendor-projects.compo
 export { FileUploaderComponent  } from './file-uploader/file-uploader.component';
 export { StepsComponent } from './steps/steps.component';
 export { VideosComponent } from './videos/videos.component';
+export { ViewProjectComponent } from './view-project/view-project.component';
+export { ViewVendorProjectsComponent } from './view-vendor-projects/view-vendor-projects.component';
 
 
 export const components = [
@@ -57,7 +61,9 @@ export const components = [
   VendorProjectsComponent,
   FileUploaderComponent,
   StepsComponent,
-  VideosComponent
+  VideosComponent,
+  ViewProjectComponent,
+  ViewVendorProjectsComponent
 ];
 
 

@@ -33,23 +33,23 @@ export class CreateVendorCompanyComponent implements OnInit {
     private vendorCompanyService: VendorCompanyService,
   ) {
     this.vendorCompanyForm = this.formBuilder.group({
-      name: ['hgf', Validators.required],
+      name: ['', Validators.required],
       avatar: ['', Validators.required],
-      legalEntityName: ['gfd', Validators.required],
-      goal: ['gfdgfd', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
-      region: ['gfd', Validators.required],
-      address: ['gfd', Validators.required],
-      fieldOfActivity: ['gfdgd', Validators.required],
-      companyAge: ['1', Validators.required],
-      employeesNumber: ['1', Validators.required],
-      employeesToHire: ['10', Validators.required],
-      grossIncome: ['100', Validators.required],
-      averageCheck: ['1000', Validators.required],
-      mounthlyClients: ['100', Validators.required],
-      averagePrice: ['100', Validators.required],
-      description: ['dff', [Validators.required, Validators.maxLength(1024)]],
-      moneyRequired: ['100000', Validators.required],
-      investmentDescription: ['fdsfs', [Validators.required, Validators.maxLength(4096)]],
+      legalEntityName: ['', Validators.required],
+      goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
+      region: ['', Validators.required],
+      address: ['', Validators.required],
+      fieldOfActivity: ['', Validators.required],
+      companyAge: ['', Validators.required],
+      employeesNumber: ['', Validators.required],
+      employeesToHire: ['', Validators.required],
+      grossIncome: ['', Validators.required],
+      averageCheck: ['', Validators.required],
+      mounthlyClients: ['', Validators.required],
+      averagePrice: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(1024)]],
+      moneyRequired: ['', Validators.required],
+      investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
       forSteps: [''],
       forVideos: [''],
       forPhotos: [''],
@@ -188,10 +188,6 @@ export class CreateVendorCompanyComponent implements OnInit {
         this.vendorCompany.files.splice(i, 1);
       }
     }
-  }
-
-  getFormControls() {
-    console.log(this.vendorCompanyForm);
   }
 
   onSubmit() {
