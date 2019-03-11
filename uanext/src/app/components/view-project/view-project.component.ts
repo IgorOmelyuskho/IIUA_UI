@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import * as maptalks from 'maptalks';
+
+const objCoordinates = { x: 30.137, y: 49.24 };
 
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.component.html',
   styleUrls: ['./view-project.component.scss']
 })
-export class ViewProjectComponent implements OnInit {
+export class ViewProjectComponent implements OnInit, AfterViewInit {
 
   project: ViewVendorProject = null;
   projectId: string;
+
+  maptalks = maptalks;
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -51,6 +56,58 @@ export class ViewProjectComponent implements OnInit {
         preview: false
       }
     ];
+  }
+
+  ngAfterViewInit() {
+    // tslint:disable:max-line-length
+    const map = new maptalks.Map('view-project-map', {
+      center: [objCoordinates.x, objCoordinates.y],
+      zoom: 5,
+      pitch: 0,
+      bearing: 0,
+      baseLayer: new maptalks.TileLayer('tile', {
+        'urlTemplate': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+        'subdomains': ['a', 'b', 'c', 'd']
+      }),
+      layers: [
+        new maptalks.VectorLayer('v')
+      ]
+    });
+
+    const layer = new maptalks.VectorLayer('vector').addTo(map);
+
+    const marker = new maptalks.Marker(
+      [objCoordinates.x, objCoordinates.y],
+      {
+        'properties': {
+          'name': 'Hello\nMapTalks'
+        },
+        symbol: [
+          {
+            'markerFile': '../../../assets/img/marker.svg',
+            'markerWidth': 28,
+            'markerHeight': 40
+          },
+          {
+            'textFaceName': 'sans-serif',
+            'textName': '{name}',
+            'textSize': 14,
+            'textDy': 24
+          }
+        ]
+      }
+    ).addTo(layer);
+
+    marker.setInfoWindow({
+      'title'     : 'Marker\'s InfoWindow',
+      'content'   : 'Click on marker to open.',
+      'autoPan': true,
+      'width': 300,
+      'minHeight': 120,
+      'custom': false,
+      'autoOpenOn' : 'click',
+      'autoCloseOn' : 'click'
+    });
   }
 
   downloadFile(file) { // todo download attribute only works for same-origin URLs.

@@ -27,6 +27,7 @@
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
+    "maptalks": "^0.43.0",
     "ngx-gallery": "^5.9.1",
     "ngx-sortable": "^1.0.1",
     "primeicons": "^1.0.0",
