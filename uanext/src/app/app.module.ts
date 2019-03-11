@@ -17,6 +17,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { NgxSortableModule } from 'ngx-sortable';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NgxSortableModule } from 'ngx-sortable';
     HttpClientModule,
     TextMaskModule,
     FormsModule,
-    NgxSortableModule
+    NgxSortableModule,
+    NgxGalleryModule
   ],
   entryComponents: [
     SnackBarComponent

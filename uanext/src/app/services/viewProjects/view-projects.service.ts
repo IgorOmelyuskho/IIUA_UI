@@ -32,12 +32,12 @@ const fakeProject: ViewVendorProject = {
     {
       'id': 992095,
       'stepNumber': 1,
-      'data': 'steps11 steps11 steps11 steps11 steps11 steps11 steps11'
+      'data': 'step22 step22 step22 step22 step22 step22 step22 step22 step22'
     },
     {
       'id': 992096,
       'stepNumber': 2,
-      'data': 'steps11 steps11 steps11 steps11 steps11 steps11 steps11'
+      'data': 'step33 step33 step33 step33 step33 step33 step33 step33 step33 step33 step33 step33 step33 step33 step33 step33 step33'
     },
     {
       'id': 992097,
@@ -52,6 +52,11 @@ const fakeProject: ViewVendorProject = {
   'videos': [
     {
       'id': 147,
+      'url': 'https://www.youtube.com/watch?v=0G-vP5-pIpI',
+      'projectId': 135
+    },
+    {
+      'id': 148,
       'url': 'https://www.youtube.com/watch?v=0G-vP5-pIpI',
       'projectId': 135
     }],
