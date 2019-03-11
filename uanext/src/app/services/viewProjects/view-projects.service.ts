@@ -10,7 +10,8 @@ const fakeProject: ViewVendorProject = {
   'userId': 88,
   'name': 'test_steps',
   'legalEntityName': 'legalEntityName',
-  'goal': 'goal',
+  'goal': 'goalgoalgoalgoalgoalgoalg  ggoalgoalgoalgoalgoalgo alggoalgoalgoalgoalgoa lgoalggoalgoalgoalgoalgoal goalggoalgoalgoalg' +
+          'goalgoalgoalgoalgoalgoalg  ggoalgoalgoalgoalgoalgo alggoalgoalgoalgoalgoa lgoalggoalgoalgoalgoalgoal goalggoalgoalgoalg',
   'fieldOfActivity': 'fieldOfActivity',
   'companyAge': 1,
   'employeesNumber': '100+',
@@ -26,27 +27,27 @@ const fakeProject: ViewVendorProject = {
     {
       'id': 992094,
       'stepNumber': 0,
-      'data': '111'
+      'data': 'steps11 steps11 steps11 steps11 steps11 steps11 steps11'
     },
     {
       'id': 992095,
       'stepNumber': 1,
-      'data': '222'
+      'data': 'steps11 steps11 steps11 steps11 steps11 steps11 steps11'
     },
     {
       'id': 992096,
       'stepNumber': 2,
-      'data': '333'
+      'data': 'steps11 steps11 steps11 steps11 steps11 steps11 steps11'
     },
     {
       'id': 992097,
       'stepNumber': 3,
-      'data': '444'
+      'data': 'steps11 steps11 steps11 steps11 steps11 steps11 steps11'
     },
     {
       'id': 992098,
       'stepNumber': 4,
-      'data': '555'
+      'data': 'steps11 steps11 steps11 steps11 steps11 steps11 steps11'
     }],
   'videos': [
     {
@@ -116,20 +117,6 @@ export class ViewProjectsService {
 
   constructor(private http: HttpClient) { }
 
-  makeClone(obj): ViewVendorProject {
-    const clone: any = {}; // Создаем новый пустой объект
-    for (const prop in obj) { // Перебираем все свойства копируемого объекта
-      if (obj.hasOwnProperty(prop)) { // Только собственные свойства
-        if ('object' === typeof obj[prop]) {
-          clone[prop] = this.makeClone(obj[prop]); // Делаем клон свойства
-        } else {
-          clone[prop] = obj[prop]; // Или же просто копируем значение
-        }
-      }
-    }
-    return clone;
-  }
-
   replaceLinks(project: ViewVendorProject): ViewVendorProject {
     // avatara
     project.avatara.url = environment.projects_api_url.slice(0, -1) + project.avatara.url;
@@ -151,7 +138,7 @@ export class ViewProjectsService {
 
   fetchProjects(filter?: any): Observable<ViewVendorProject[]> {
     // return this.http.get<ViewVendorProject[]>(environment.projects_api_url + environment)
-    return of([this.makeClone(fakeProject), this.makeClone(fakeProject)])
+    return of( [JSON.parse(JSON.stringify(fakeProject)), JSON.parse(JSON.stringify(fakeProject))] )
       .pipe(
         map((projects: ViewVendorProject[]) => {
           for (let i = 0; i < projects.length; i++) {
@@ -165,7 +152,7 @@ export class ViewProjectsService {
 
   fetchProjectById(id: string): Observable<ViewVendorProject> {
     // return this.http.get<ViewVendorProject[]>(environment.projects_api_url + environment)
-    return of(this.makeClone(fakeProject))
+    return of(JSON.parse(JSON.stringify(fakeProject)))
       .pipe(
         map((project: ViewVendorProject) => {
           return this.replaceLinks(project);

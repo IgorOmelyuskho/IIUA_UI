@@ -32,6 +32,7 @@ export class ViewProjectComponent implements OnInit {
     this.viewProjectsService.fetchProjectById(this.projectId).subscribe(
       (project: ViewVendorProject) => {
         this.project = project;
+        console.log(this.project);
       },
       err => {
         console.warn(err);
@@ -41,6 +42,7 @@ export class ViewProjectComponent implements OnInit {
 
   getProjectFromService() {
     this.project = this.viewProjectsService.projectForView;
+    console.log(this.project);
   }
 
 }
