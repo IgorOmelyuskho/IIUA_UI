@@ -11,7 +11,7 @@ const fakeProject: ViewVendorProject = {
   'name': 'test_steps',
   'legalEntityName': 'legalEntityName',
   'goal': 'goalgoalgoalgoalgoalgoalg  ggoalgoalgoalgoalgoalgo alggoalgoalgoalgoalgoa lgoalggoalgoalgoalgoalgoal goalggoalgoalgoalg' +
-          'goalgoalgoalgoalgoalgoalg  ggoalgoalgoalgoalgoalgo alggoalgoalgoalgoalgoa lgoalggoalgoalgoalgoalgoal goalggoalgoalgoalg',
+    'goalgoalgoalgoalgoalgoalg  ggoalgoalgoalgoalgoalgo alggoalgoalgoalgoalgoa lgoalggoalgoalgoalgoalgoal goalggoalgoalgoalg',
   'fieldOfActivity': 'fieldOfActivity',
   'companyAge': 1,
   'employeesNumber': '100+',
@@ -97,6 +97,36 @@ const fakeProject: ViewVendorProject = {
       'url': '/files/9c769856-5522-42a6-8857-09f107e88ad1.png',
       'name': '9c769856-5522-42a6-8857-09f107e88ad1.png',
       'accessFile': 1
+    },
+    {
+      'id': 812,
+      'url': '/files/9d7eebb8-0e8a-46a9-8ddf-cc4165392f54.jpg',
+      'name': '9d7eebb8-0e8a-46a9-8ddf-cc4165392f54.jpg',
+      'accessFile': 1
+    },
+    {
+      'id': 813,
+      'url': '/files/4664deb5-edf6-43dc-aa14-fcca0acfe7a1.jpg',
+      'name': '4664deb5-edf6-43dc-aa14-fcca0acfe7a1.jpg',
+      'accessFile': 1
+    },
+    {
+      'id': 814,
+      'url': '/files/eb578653-0ecf-4f16-8839-e914258a50ea.jpg',
+      'name': 'eb578653-0ecf-4f16-8839-e914258a50ea.jpg',
+      'accessFile': 1
+    },
+    {
+      'id': 815,
+      'url': '/files/0ce73fc3-2458-48b7-ae6c-0c36c9beda9f.png',
+      'name': '0ce73fc3-2458-48b7-ae6c-0c36c9beda9f.png',
+      'accessFile': 1
+    },
+    {
+      'id': 816,
+      'url': '/files/9c769856-5522-42a6-8857-09f107e88ad1.png',
+      'name': '9c769856-5522-42a6-8857-09f107e88ad1.png',
+      'accessFile': 1
     }],
   'files': [
     {
@@ -110,7 +140,14 @@ const fakeProject: ViewVendorProject = {
       'url': '/files/64b1569c-90ae-4872-8566-6b5350eeb59d.txt',
       'name': '64b1569c-90ae-4872-8566-6b5350eeb59d.txt',
       'accessFile': 1
-    }]
+    },
+    {
+      'id': 813,
+      'url': '/files/64b1569c-90ae-4872-8566-6b5350eeb59d.txt',
+      'name': '64b1569c-90ae-4872-8566-6b5350eeb59d.txt',
+      'accessFile': 1
+    }
+  ]
 };
 
 @Injectable({
@@ -143,7 +180,7 @@ export class ViewProjectsService {
 
   fetchProjects(filter?: any): Observable<ViewVendorProject[]> {
     // return this.http.get<ViewVendorProject[]>(environment.projects_api_url + environment)
-    return of( [JSON.parse(JSON.stringify(fakeProject)), JSON.parse(JSON.stringify(fakeProject))] )
+    return of([JSON.parse(JSON.stringify(fakeProject)), JSON.parse(JSON.stringify(fakeProject))])
       .pipe(
         map((projects: ViewVendorProject[]) => {
           for (let i = 0; i < projects.length; i++) {

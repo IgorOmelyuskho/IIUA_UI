@@ -38,7 +38,8 @@ export class ViewProjectComponent implements OnInit, AfterViewInit {
         width: '600px',
         height: '400px',
         thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide
+        imageAnimation: NgxGalleryAnimation.Slide,
+        thumbnailsMoveSize: 4
       },
       // max-width 800
       {
