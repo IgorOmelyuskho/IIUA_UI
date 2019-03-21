@@ -1,23 +1,30 @@
+
+    // tslint:disable
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
-import * as maptalks from 'maptalks';
+import init from './map.js';
 
-const objCoordinates = { x: 30.137, y: 49.24 };
+// import * as THREE from 'three';
+// import * as maptalks from 'maptalks';
+// import { ThreeLayer } from 'maptalks.three';
 
+// const objCoordinates = { x: 30.137, y: 49.24 };
+
+    // tslint:disable
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.component.html',
   styleUrls: ['./view-project.component.scss']
 })
 export class ViewProjectComponent implements OnInit, AfterViewInit {
-
+  // tslint:disable
   project: ViewVendorProject = null;
   projectId: string;
 
-  maptalks = maptalks;
+  // maptalks = window.maptalks;
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -25,6 +32,10 @@ export class ViewProjectComponent implements OnInit, AfterViewInit {
   constructor(private viewProjectsService: ViewProjectsService, private activateRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    // console.log(maptalks);
+    // console.log(THREE);
+    // console.log(ThreeLayer);
+
     if (this.viewProjectsService.projectForView == null) {
       // use when page reload
       this.getProjectFromServer();
@@ -60,55 +71,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // tslint:disable:max-line-length
-    const map = new maptalks.Map('view-project-map', {
-      center: [objCoordinates.x, objCoordinates.y],
-      zoom: 5,
-      pitch: 0,
-      bearing: 0,
-      baseLayer: new maptalks.TileLayer('tile', {
-        'urlTemplate': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-        'subdomains': ['a', 'b', 'c', 'd']
-      }),
-      layers: [
-        new maptalks.VectorLayer('v')
-      ]
-    });
-
-    const layer = new maptalks.VectorLayer('vector').addTo(map);
-
-    const marker = new maptalks.Marker(
-      [objCoordinates.x, objCoordinates.y],
-      {
-        'properties': {
-          'name': 'Hello\nMapTalks'
-        },
-        symbol: [
-          {
-            'markerFile': '../../../assets/img/marker.svg',
-            'markerWidth': 28,
-            'markerHeight': 40
-          },
-          {
-            'textFaceName': 'sans-serif',
-            'textName': '{name}',
-            'textSize': 14,
-            'textDy': 24
-          }
-        ]
-      }
-    ).addTo(layer);
-
-    marker.setInfoWindow({
-      'title'     : 'Marker\'s InfoWindow',
-      'content'   : 'Click on marker to open.',
-      'autoPan': true,
-      'width': 300,
-      'minHeight': 120,
-      'custom': false,
-      'autoOpenOn' : 'click',
-      'autoCloseOn' : 'click'
-    });
+    init();
   }
 
   downloadFile(file) { // todo download attribute only works for same-origin URLs.
@@ -150,6 +113,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit {
   getProjectFromService() {
     this.project = this.viewProjectsService.projectForView;
     console.log(this.project);
+    this.setGalleryImages(this.project.images);
   }
 
 }

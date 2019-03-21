@@ -27,7 +27,15 @@
               "./node_modules/font-awesome/css/font-awesome.css", 
               "./node_modules/maptalks/dist/maptalks.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./src/js/three.min.js",
+              "./src/js/maptalks.min.js",
+              "./src/js/maptalks.three.min.js",
+              "./src/js/DDSLoader.js",
+              "./src/js/OBJLoader.js",
+              "./src/js/stats.min.js",
+              "./src/js/MTLLoader.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -78,7 +86,15 @@
               "./node_modules/font-awesome/css/font-awesome.css", 
               "./node_modules/maptalks/dist/maptalks.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./src/js/three.min.js",
+              "./src/js/maptalks.min.js",
+              "./src/js/maptalks.three.min.js",
+              "./src/js/DDSLoader.js",
+              "./src/js/OBJLoader.js",
+              "./src/js/stats.min.js",
+              "./src/js/MTLLoader.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
