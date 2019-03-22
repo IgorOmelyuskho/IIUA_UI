@@ -1,20 +1,25 @@
 const zoomWhenChangeVisible = 16;
 const initZoom = 15;
-const updatedInterval = 10000;
-const drawInterval = 50;
+const updatedInterval = 5000;
+const drawInterval = 100;
 
-const infoWindow = {};
-let canvasDOMElem = null;
+let infoWindow = {};
+let canvasElem = null;
 let stats = null;
-let scene;
-let threeLayer;
+let scene = null;
+let threeLayer = null;
 let raycaster = null;
 let mouse = null;
-let markerLayer;
+let markerLayer = null;
 let selectedObject = null;
 let map = null;
 let objectsArr = [];
 let mapFullScreen = false;
+let timer1 = null;
+let timer2 = null;
+let animationFrame = null;
+let mapElement = null;
+let mapWrapperElement = null;
 
 const polygon1 = [
   [13.417223404477, 52.5283447684827],
@@ -34,7 +39,7 @@ const polygonArr = [polygon1, polygon2];
 
 // init();
 
-export default function init() {
+export function init() {
   createMap();
   createMarkerLayer();
   createThreeLayer();
@@ -44,8 +49,10 @@ export default function init() {
   mouse = new THREE.Vector2();
 
   initInfoWindow();
-  document.getElementById('map').appendChild(stats.dom);
-  canvasDOMElem = document.getElementById('map').querySelector('canvas');
+  mapElement = document.getElementById('map');
+  mapWrapperElement = document.getElementsByClassName('map-wrapper')[0];
+  mapElement.appendChild(stats.dom);
+  canvasElem = mapElement.querySelector('canvas');
 
   document.getElementById('full-screen-img').onclick = fullScreen;
 
@@ -53,35 +60,75 @@ export default function init() {
   initFetchObjects();
   createPolygon(polygonArr);
 
-  setInterval(() => {
+  window.addEventListener("resize", bodyOnResize);
+
+  timer1 = setInterval(() => {
     updateCoordsFromServer();
   }, updatedInterval);
 
-
-  setInterval(() => {
+  timer2 = setInterval(() => {
     updateCoordsForRedraw();
   }, drawInterval);
 };
 
+export function destroy() {
+  clearInterval(timer1);
+  clearInterval(timer2);
+  cancelAnimationFrame(animationFrame);
+  infoWindow = {};
+  canvasElem = null;
+  stats = null;
+  scene = null;
+  threeLayer = null;
+  raycaster = null;
+  mouse = null;
+  markerLayer = null;
+  selectedObject = null;
+  map = null;
+  objectsArr = [];
+  mapFullScreen = false;
+  timer1 = null;
+  timer2 = null;
+  animationFrame = null;
+  mapElement = null;
+  mapWrapperElement = null;
+};
+
+function bodyOnResize(event) {
+  if (mapFullScreen === false) {
+    return;
+  }
+
+  const e = document.documentElement;
+  const g = document.getElementsByTagName('body')[0];
+  const x = window.innerWidth || e.clientWidth || g.clientWidth;
+  const y = window.innerHeight || e.clientHeight || g.clientHeight;
+  mapWrapperElement.style.width = x + 'px';
+  mapWrapperElement.style.height = y + 'px';
+  mapWrapperElement.style.height = y + 'px';
+}
+
 function fullScreen(event) {
-  const mapWrapper = document.getElementsByClassName('map-wrapper')[0];
-  const map = document.getElementById('map');
   const e = document.documentElement;
   const g = document.getElementsByTagName('body')[0];
   const x = window.innerWidth || e.clientWidth || g.clientWidth;
   const y = window.innerHeight || e.clientHeight || g.clientHeight;
 
   if (mapFullScreen === false) {
-    mapWrapper.style.position = 'fixed';
-    mapWrapper.style.width = x + 'px';
-    mapWrapper.style.height = y + 'px';
-    map.style.height = y + 'px';
+    document.body.style.overflow = 'hidden';
+    mapWrapperElement.style.position = 'fixed';
+    mapWrapperElement.style.width = x + 'px';
+    mapWrapperElement.style.height = y + 'px';
+    mapWrapperElement.style.zIndex = '10000000';
+    mapElement.style.height = y + 'px';
     mapFullScreen = true;
   } else {
-    mapWrapper.style.position = 'relative';
-    mapWrapper.style.width = '';
-    mapWrapper.style.height = '';
-    map.style.height = '';
+    document.body.style.overflow = '';
+    mapWrapperElement.style.position = 'relative';
+    mapWrapperElement.style.width = '';
+    mapWrapperElement.style.height = '';
+    mapWrapperElement.style.zIndex = '';
+    mapWrapperElement.style.height = '';
     mapFullScreen = false;
   }
 }
@@ -99,10 +146,10 @@ function updateCoordsFromServer() {
     const newObj = {
       id: objectsArr[i].id,
       coords: {
-        // x: objectsArr[i].coords.x + Math.random() * 0.01 - Math.random() * 0.01,
-        // y: objectsArr[i].coords.y + Math.random() * 0.01 - Math.random() * 0.01,
-        x: objectsArr[i].coords.x - 0.01,
-        y: objectsArr[i].coords.y - 0,
+        x: objectsArr[i].coords.x + Math.random() * 0.001 - Math.random() * 0.001,
+        y: objectsArr[i].coords.y + Math.random() * 0.001 - Math.random() * 0.001,
+        // x: objectsArr[i].coords.x - 0.01,
+        // y: objectsArr[i].coords.y - 0,
       },
       name: objectsArr[i].name,
     };
@@ -124,12 +171,12 @@ function updateCoordsFromServer() {
 }
 
 function updateStats() {
-  requestAnimationFrame(updateStats);
+  animationFrame = requestAnimationFrame(updateStats);
   stats.update();
 };
 
 function initFetchObjects() {
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 5; i++) {
     const newObj = {
       id: 'id' + i,
       coords: map.getCenter().add(Math.random() * 0.003, Math.random() * 0.002),
@@ -185,9 +232,6 @@ function createMap() {
       'imperial': true
     },
     // overviewControl: true, // add overview control
-    attribution: {
-      'content': '<span style="padding:4px;">&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a> &copy; <a href="https://osmbuilding.org">osmbuilding.org</a></span>'
-    },
     baseLayer: new maptalks.TileLayer('tile', {
       'urlTemplate': 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
       'subdomains': ['a', 'b', 'c', 'd']
@@ -250,7 +294,21 @@ function createMarker(obj) {
   marker.on('click', (e) => {
     selectedObject = e.target.parent;
     showInformation(selectedObject);
-  })
+  });
+
+  marker.on('mouseenter', function (e) {
+    marker.updateSymbol({
+      'markerWidth': 28 + 5,
+      'markerHeight': 40 + 5,
+    });
+  });
+
+  marker.on('mouseout', function (e) {
+    marker.updateSymbol({
+      'markerWidth': 28,
+      'markerHeight': 40,
+    });
+  });
 };
 
 function createPolygon(dotsArr) {
@@ -277,7 +335,8 @@ function createPolygon(dotsArr) {
     });
 
     polygon.on('click', function (e) {
-      console.log(e.target.options.customName);
+      document.getElementById('area-info').innerHTML = e.target.options.customName;
+      document.getElementById('area-info').style.display = 'block';
     });
 
     polygon.on('mouseenter', function (e) {
@@ -336,7 +395,7 @@ function loadObjectModel(obj) {
       object.position.z = v.z;
 
       changeVisible(obj, map.getZoom());
-      console.log(scene);
+      console.log(scene); // ??
       scene.add(object);
       threeLayer.renderScene();
     });
@@ -462,7 +521,7 @@ function selectObject(obj) {
 };
 
 function setCanvasCursor(cursor) {
-  canvasDOMElem.style.cursor = cursor;
+  canvasElem.style.cursor = cursor;
 };
 
 function changeVisible(obj, zoom) {

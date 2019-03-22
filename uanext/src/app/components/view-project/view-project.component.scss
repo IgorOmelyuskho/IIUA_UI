@@ -8,7 +8,6 @@
   bottom: 0;
   left: 0;
   position: relative;
-  z-index: 100000000;
   background: black;
 
   .map {
@@ -25,7 +24,8 @@
     cursor: pointer;
   }
 
-  #info {
+  #info,
+  #area-info {
     display: none;
     position: absolute;
     background-color: rgba(13, 13, 13, 0.5);
@@ -35,6 +35,10 @@
     right: 20px;
     top: 20px;
     overflow: hidden
+  }
+
+  #area-info {
+    top: 120px;
   }
 }
 

@@ -1,30 +1,19 @@
 
-    // tslint:disable
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
-import init from './map.js';
+import { init, destroy } from './map.js';
 
-// import * as THREE from 'three';
-// import * as maptalks from 'maptalks';
-// import { ThreeLayer } from 'maptalks.three';
-
-// const objCoordinates = { x: 30.137, y: 49.24 };
-
-    // tslint:disable
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.component.html',
   styleUrls: ['./view-project.component.scss']
 })
-export class ViewProjectComponent implements OnInit, AfterViewInit {
-  // tslint:disable
+export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   project: ViewVendorProject = null;
   projectId: string;
-
-  // maptalks = window.maptalks;
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -32,10 +21,6 @@ export class ViewProjectComponent implements OnInit, AfterViewInit {
   constructor(private viewProjectsService: ViewProjectsService, private activateRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    // console.log(maptalks);
-    // console.log(THREE);
-    // console.log(ThreeLayer);
-
     if (this.viewProjectsService.projectForView == null) {
       // use when page reload
       this.getProjectFromServer();
@@ -71,6 +56,11 @@ export class ViewProjectComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    if (window['initAlreadyInvoke'] === true) {
+      // return;
+    }
+
+    window['initAlreadyInvoke'] = true;
     init();
   }
 
@@ -114,6 +104,10 @@ export class ViewProjectComponent implements OnInit, AfterViewInit {
     this.project = this.viewProjectsService.projectForView;
     console.log(this.project);
     this.setGalleryImages(this.project.images);
+  }
+
+  ngOnDestroy() {
+    destroy();
   }
 
 }
