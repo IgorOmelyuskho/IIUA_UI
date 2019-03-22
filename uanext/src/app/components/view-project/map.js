@@ -60,7 +60,7 @@ export function init() {
   initFetchObjects();
   createPolygon(polygonArr);
 
-  window.addEventListener("resize", bodyOnResize);
+  window.addEventListener("resize", windowOnResize);
 
   timer1 = setInterval(() => {
     updateCoordsFromServer();
@@ -94,7 +94,7 @@ export function destroy() {
   mapWrapperElement = null;
 };
 
-function bodyOnResize(event) {
+function windowOnResize(event) {
   if (mapFullScreen === false) {
     return;
   }
@@ -129,6 +129,7 @@ function fullScreen(event) {
     mapWrapperElement.style.height = '';
     mapWrapperElement.style.zIndex = '';
     mapWrapperElement.style.height = '';
+    mapElement.style.height = '';
     mapFullScreen = false;
   }
 }
