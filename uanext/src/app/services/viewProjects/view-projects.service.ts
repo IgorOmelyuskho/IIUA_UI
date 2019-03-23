@@ -12,6 +12,7 @@ const fakeProject: ViewVendorProject = {
   'legalEntityName': 'legalEntityName',
   'goal': 'goalgoalgoalgoalgoalgoalg  ggoalgoalgoalgoalgoalgo alggoalgoalgoalgoalgoa lgoalggoalgoalgoalgoalgoal goalggoalgoalgoalg' +
     'goalgoalgoalgoalgoalgoalg  ggoalgoalgoalgoalgoalgo alggoalgoalgoalgoalgoa lgoalggoalgoalgoalgoalgoal goalggoalgoalgoalg',
+  'region': 'region',
   'fieldOfActivity': 'fieldOfActivity',
   'companyAge': 1,
   'employeesNumber': '100+',
@@ -22,7 +23,8 @@ const fakeProject: ViewVendorProject = {
   'averagePrice': 100.00,
   'description': 'description',
   'moneyRequired': 100000.00,
-  'investmentDescription': 'investmentDescription',
+  'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription ' +
+  'investmentDescription investmentDescription investmentDescription investmentDescription investmentDescription investmentDescription',
   'steps': [
     {
       'id': 992094,

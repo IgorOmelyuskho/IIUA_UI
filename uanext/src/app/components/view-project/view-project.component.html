@@ -60,7 +60,7 @@
       <label>Average price {{project.averagePrice}} $</label>
     </div>
     <div class="col-lg-3 col-md-6">
-      <label>Gross income {{project.grossIncome}}</label>
+      <label>Gross income {{project.grossIncome}} $</label>
     </div>
   </div>
 
@@ -91,10 +91,20 @@
 
   <hr>
 
-  <div class="videos">
+  <!-- <div class="videos">
     <h6>Videos</h6>
     <div *ngFor="let video of project.videos">
       <a href="{{video.url}}" target="_blank" rel="noopener noreferrer">{{video.url}}</a>
+    </div>
+  </div> -->
+
+  <div class="videos">
+    <h6>Videos</h6>
+    <div class="d-flex flex-wrap">
+      <div class="m-1" *ngFor="let video of project.videos">
+        <iframe width="250" height="180" [src]="video.safeVideoUrl" frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 

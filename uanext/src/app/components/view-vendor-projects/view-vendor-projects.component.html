@@ -1,15 +1,87 @@
 <div class="container">
 
-  <h3>Projecs</h3>
+  <h3>Projects</h3>
 
-  <div class="projects">
-    <div *ngFor="let project of projects" class="project">
-      <img height=100 src={{project.avatara.url}} alt="">
-      <div class="ml-2">
-        <h5>{{project.name}}</h5>
-        <button class="btn btn-primary" (click)="goToProject(project)">Go to project</button>
+  <div class="row">
+    <div class="col-12">
+      <div class="input-group mb-3">
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" type="button">Search</button>
+        </div>
+        <input type="text" class="form-control" placeholder="By company or project name"
+          aria-label="By company or project name" aria-describedby="basic-addon2">
       </div>
     </div>
   </div>
+
+  <div class="row">
+
+    <div class="col-3">
+      <div class="mb-2">Filter:</div>
+
+      <div>Investment budget</div>
+      <div class="input-group input-group-sm mb-3">
+        <div class="from-to-width">From</div>
+        <input type="number" class="form-control">
+      </div>
+      <div class="input-group input-group-sm mb-3">
+        <div class="from-to-width">To</div>
+        <input type="number" class="form-control">
+      </div>
+      <input type="range" class="custom-range">
+
+      <div>Region</div>
+      <div>Dropdown list?</div>
+
+      <div>Field of activity</div>
+      <div>Dropdown list?</div>
+
+      <div>Employees number</div>
+      <div class="input-group input-group-sm mb-3">
+        <div class="from-to-width">From</div>
+        <input type="number" class="form-control">
+      </div>
+      <div class="input-group input-group-sm mb-3">
+        <div class="from-to-width">To</div>
+        <input type="number" class="form-control">
+      </div>
+      <input type="range" class="custom-range">
+
+      <div>Data update?</div>
+
+    </div>
+
+    <div class="col-9">
+      <div class="projects">
+        <div *ngFor="let project of projects" class="project">
+          <div class="d-flex">
+            <div class="mr-2">
+              <img height=100 src={{project.avatara.url}} alt="">
+              <button class="btn btn-primary m-1" (click)="goToProject(project)">Detailed</button>
+            </div>
+            <div class="pr-1">
+              <div class="d-flex">
+                <h5 class="mr-4">{{project.name}}</h5>
+                <div>Investment budget: {{project.moneyRequired}} $</div>
+              </div>
+              <div>{{project.investmentDescription}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-5 ml-1">
+              Region: {{project.region}}
+            </div>
+            <div class="col-6">
+              Field of activity: {{project.fieldOfActivity}}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
 
 </div>

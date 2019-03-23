@@ -5,6 +5,7 @@ import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { init, destroy } from './map.js';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-view-project',
@@ -18,7 +19,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  constructor(private viewProjectsService: ViewProjectsService, private activateRoute: ActivatedRoute) { }
+  constructor(private viewProjectsService: ViewProjectsService, private activateRoute: ActivatedRoute, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     if (this.viewProjectsService.projectForView == null) {
@@ -84,6 +85,15 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     this.galleryImages = imagesArr;
   }
 
+  videoUrlToSafe(videos: any[]) {
+    for (let i = 0; i < videos.length; i++) {
+      console.log(videos[i]);
+      let url = videos[i]['url'].replace('watch?v=', 'embed/');
+      url = url.split('&')[0];
+      videos[i].safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+  }
+
   getProjectFromServer() {
     const arrLength: number = this.activateRoute.url['value'].length;
     this.projectId = this.activateRoute.url['value'][arrLength - 1].path;
@@ -92,6 +102,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
       (project: ViewVendorProject) => {
         this.project = project;
         console.log(this.project);
+        this.videoUrlToSafe(this.project.videos);
         this.setGalleryImages(this.project.images);
       },
       err => {
@@ -103,6 +114,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   getProjectFromService() {
     this.project = this.viewProjectsService.projectForView;
     console.log(this.project);
+    this.videoUrlToSafe(this.project.videos);
     this.setGalleryImages(this.project.images);
   }
 

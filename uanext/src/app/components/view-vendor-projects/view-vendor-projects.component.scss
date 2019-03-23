@@ -1,6 +1,6 @@
 .projects {
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-wrap: wrap;
   .project {
     margin: 10px 10px 10px 0;
     padding-bottom: 5px;
@@ -11,4 +11,8 @@
       margin-bottom: 5px;
     }
   }
+}
+
+.from-to-width {
+  width: 50px;
 }

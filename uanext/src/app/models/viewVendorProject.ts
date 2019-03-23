@@ -5,6 +5,7 @@ export interface ViewVendorProject {
   avatara: any;
   legalEntityName: string;
   goal: string;
+  region: string;
   fieldOfActivity: string;
   companyAge: number;
   employeesNumber: string;
