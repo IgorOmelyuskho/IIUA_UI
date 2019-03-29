@@ -7,6 +7,7 @@ import {
   MatListModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
+  MatPaginatorModule
 } from '@angular/material';
 
 @NgModule({
@@ -18,7 +19,8 @@ import {
     MatButtonModule,
     MatListModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatPaginatorModule
   ]
 })
 export class MaterialModule { }

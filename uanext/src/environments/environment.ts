@@ -14,7 +14,8 @@ export const environment = {
   vendorProfile: 'api/Vendor/',
   vendorProject: 'api/Projects/',
   uploadImages: 'api/Image/',
-  uploadFiles: 'api/File/'
+  uploadFiles: 'api/File/',
+  filteringProjects: 'api/FilteringProjects'
 };
 
 /*

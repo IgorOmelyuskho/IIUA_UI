@@ -25,7 +25,8 @@
             "styles": [
               "src/styles.scss",
               "./node_modules/font-awesome/css/font-awesome.css", 
-              "./node_modules/maptalks/dist/maptalks.css"
+              "./node_modules/maptalks/dist/maptalks.css",
+              "./node_modules/nouislider/distribute/nouislider.min.css"
             ],
             "scripts": [
               "./src/js/three.min.js",
@@ -34,7 +35,9 @@
               "./src/js/DDSLoader.js",
               "./src/js/OBJLoader.js",
               "./src/js/stats.min.js",
-              "./src/js/MTLLoader.js"
+              "./src/js/MTLLoader.js",
+              "./src/js/maptalks.markercluster.min.js",
+              "./node_modules/nouislider/distribute/nouislider.min.js"
             ]
           },
           "configurations": {
@@ -84,7 +87,8 @@
             "styles": [
               "src/styles.scss",
               "./node_modules/font-awesome/css/font-awesome.css", 
-              "./node_modules/maptalks/dist/maptalks.css"
+              "./node_modules/maptalks/dist/maptalks.css",
+              "./node_modules/nouislider/distribute/nouislider.min.css"
             ],
             "scripts": [
               "./src/js/three.min.js",
@@ -93,7 +97,9 @@
               "./src/js/DDSLoader.js",
               "./src/js/OBJLoader.js",
               "./src/js/stats.min.js",
-              "./src/js/MTLLoader.js"
+              "./src/js/MTLLoader.js",
+              "./src/js/maptalks.markercluster.min.js",
+              "./node_modules/nouislider/distribute/nouislider.min.js"
             ],
             "assets": [
               "src/favicon.ico",

@@ -1,15 +1,32 @@
+<mat-progress-bar *ngIf="showProgress === true" mode="indeterminate" class="progress-bar-fixed"></mat-progress-bar>
+
 <div class="container">
 
   <h3>Projects</h3>
+  <div>Page size {{this.pageSize}}</div>
+  <div>Pages count {{this.pagesCount}}</div>
+  <div>Projects count {{this.projectsCount}}</div>
+  <div>Page number {{this.pageNumber}}</div>
 
   <div class="row">
-    <div class="col-12">
+    <div class="col-6">
+      <div>Search by company name</div>
       <div class="input-group mb-3">
         <div class="input-group-append">
-          <button class="btn btn-outline-primary" type="button">Search</button>
+          <button (click)="searchByCompanyNameBtn()" class="btn btn-outline-primary" type="button">Search</button>
         </div>
-        <input type="text" class="form-control" placeholder="By company or project name"
-          aria-label="By company or project name" aria-describedby="basic-addon2">
+        <input type="text" (keydown)=searchByCompanyInput($event) [(ngModel)]="searchCompanyName" class="form-control"
+          placeholder="Company name" aria-label="Company name" aria-describedby="basic-addon2">
+      </div>
+    </div>
+    <div class="col-6">
+      <div>Search by project name</div>
+      <div class="input-group mb-3">
+        <div class="input-group-append">
+          <button (click)="searchByProjectNameBtn()" class="btn btn-outline-primary" type="button">Search</button>
+        </div>
+        <input type="text" (keydown)=searchByProjectInput($event) [(ngModel)]="searchProjectName" class="form-control"
+          placeholder="Project name" aria-label="Project name" aria-describedby="basic-addon2">
       </div>
     </div>
   </div>
@@ -22,32 +39,60 @@
       <div>Investment budget</div>
       <div class="input-group input-group-sm mb-3">
         <div class="from-to-width">From</div>
-        <input type="number" class="form-control">
+        <input [(ngModel)]="budgetFrom" id="budget-from" type="number" class="form-control">
       </div>
       <div class="input-group input-group-sm mb-3">
         <div class="from-to-width">To</div>
-        <input type="number" class="form-control">
+        <input [(ngModel)]="budgetTo" id="budget-to" type="number" class="form-control">
       </div>
-      <input type="range" class="custom-range">
+      <div id="budget-range"></div>
 
       <div>Region</div>
-      <div>Dropdown list?</div>
+      <select [(ngModel)]="region" type="text" class="form-control">
+        <option value="Autonomous Republic of Crimea">Autonomous Republic of Crimea</option>
+        <option value="Cherkasy oblast">Cherkasy oblast</option>
+        <option value="Chernihiv oblast">Chernihiv oblast</option>
+        <option value="Chernivtsi oblast">Chernivtsi oblast</option>
+        <option value="Dnipropetrovsk oblast">Dnipropetrovsk oblast</option>
+        <option value="Donetsk oblast">Donetsk oblast</option>
+        <option value="Ivano-Frankivsk oblast">Ivano-Frankivsk oblast</option>
+        <option value="Kharkiv oblast">Kharkiv oblast</option>
+        <option value="Kherson oblast">Kherson oblast</option>
+        <option value="Khmelnytsk oblast">Khmelnytsk oblast</option>
+        <option value="Kirovohrad oblast">Kirovohrad oblast</option>
+        <option value="Kyiv oblast">Kyiv oblast</option>
+        <option value="Luhansk oblast">Luhansk oblast</option>
+        <option value="Lviv oblast">Lviv oblast</option>
+        <option value="Mykolaiv oblast">Mykolaiv oblast</option>
+        <option value="Odesa oblast">Odesa oblast</option>
+        <option value="Poltava oblast">Poltava oblast</option>
+        <option value="Rivne oblast">Rivne oblast</option>
+        <option value="Sumy oblast">Sumy oblast</option>
+        <option value="Ternopil oblast">Ternopil oblast</option>
+        <option value="Vinnytsia oblast">Vinnytsia oblast</option>
+        <option value="Volyn oblast">Volyn oblast</option>
+        <option value="Zakarpattia oblast">Zakarpattia oblast</option>
+        <option value="Zaporizhzhia oblast">Zaporizhzhia oblast</option>
+        <option value="Zhytomyr oblast">Zhytomyr oblast</option>
+      </select>
 
       <div>Field of activity</div>
       <div>Dropdown list?</div>
 
-      <div>Employees number</div>
+      <div>Money required</div>
       <div class="input-group input-group-sm mb-3">
         <div class="from-to-width">From</div>
-        <input type="number" class="form-control">
+        <input [(ngModel)]="moneyFrom" id="money-from" type="number" class="form-control">
       </div>
       <div class="input-group input-group-sm mb-3">
         <div class="from-to-width">To</div>
-        <input type="number" class="form-control">
+        <input [(ngModel)]="moneyTo" id="money-to" type="number" class="form-control">
       </div>
-      <input type="range" class="custom-range">
+      <div id="money-range"></div>
 
       <div>Data update?</div>
+
+      <button (click)="searchByFilterBtn()" type="button" class="btn btn-primary">Apply filter</button>
 
     </div>
 
@@ -55,11 +100,13 @@
       <div class="projects">
         <div *ngFor="let project of projects" class="project">
           <div class="d-flex">
-            <div class="mr-2">
-              <img height=100 src={{project.avatara.url}} alt="">
+            <div class="mr-2 d-flex flex-column">
+              <img height=100 src={{project.avatara.url}} alt="avatar">
               <button class="btn btn-primary m-1" (click)="goToProject(project)">Detailed</button>
             </div>
             <div class="pr-1">
+              <h5>ID = {{project.id}}</h5>
+              <h5>Company name: {{project.legalEntityName}}</h5>
               <div class="d-flex">
                 <h5 class="mr-4">{{project.name}}</h5>
                 <div>Investment budget: {{project.moneyRequired}} $</div>
@@ -74,10 +121,12 @@
             <div class="col-6">
               Field of activity: {{project.fieldOfActivity}}
             </div>
-
           </div>
         </div>
       </div>
+
+      <mat-paginator class="paginator" *ngIf="projects.length > 0" [length]="projectsCount" [pageSize]="pageSize"
+        [pageSizeOptions]="[2, 5, 10, 25, 100]" (page)="pageEvent($event)"></mat-paginator>
     </div>
 
   </div>

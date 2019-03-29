@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { init, destroy } from './map.js';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { FilteredProjects } from 'src/app/models/index.js';
 
 @Component({
   selector: 'app-view-project',
@@ -57,12 +58,9 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (window['initAlreadyInvoke'] === true) {
-      // return;
+    if (this.project != null) {
+      init();
     }
-
-    window['initAlreadyInvoke'] = true;
-    init();
   }
 
   downloadFile(file) { // todo download attribute only works for same-origin URLs.
@@ -87,8 +85,11 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   videoUrlToSafe(videos: any[]) {
     for (let i = 0; i < videos.length; i++) {
-      console.log(videos[i]);
       let url = videos[i]['url'].replace('watch?v=', 'embed/');
+      if (url.includes('https://www.youtube.com') === false) {
+        videos[i].safeVideoUrl = false;
+        continue;
+      }
       url = url.split('&')[0];
       videos[i].safeVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
@@ -98,12 +99,20 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     const arrLength: number = this.activateRoute.url['value'].length;
     this.projectId = this.activateRoute.url['value'][arrLength - 1].path;
 
-    this.viewProjectsService.fetchProjectById(this.projectId).subscribe(
-      (project: ViewVendorProject) => {
-        this.project = project;
-        console.log(this.project);
-        this.videoUrlToSafe(this.project.videos);
-        this.setGalleryImages(this.project.images);
+    this.viewProjectsService.fetchProjects({}).subscribe(
+      (filteringProjects: FilteredProjects) => {
+        for (let i = 0; i < filteringProjects.projectsList.length; i++) {
+          if (filteringProjects.projectsList[i].id === parseInt(this.projectId, 10)) {
+            this.project = filteringProjects.projectsList[i];
+            console.log(this.project);
+            this.videoUrlToSafe(this.project.videos);
+            this.setGalleryImages(this.project.images);
+            requestAnimationFrame(() => {
+              init();
+            });
+            return;
+          }
+        }
       },
       err => {
         console.warn(err);

@@ -37,9 +37,9 @@ export class CreateVendorCompanyComponent implements OnInit {
       avatar: ['', Validators.required],
       legalEntityName: ['', Validators.required],
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
-      region: ['', Validators.required],
+      region: ['Kyiv oblast', Validators.required],
       address: ['', Validators.required],
-      fieldOfActivity: ['', Validators.required],
+      fieldOfActivity: ['Agriculture, Forestry and Fisheries', Validators.required],
       companyAge: ['', Validators.required],
       employeesNumber: ['1', Validators.required],
       employeesToHire: ['', Validators.required],
@@ -149,6 +149,7 @@ export class CreateVendorCompanyComponent implements OnInit {
   photosUploaded(event) {
     if (event.error === false) {
       const photosData: any[] = event.files;
+      console.log(photosData);
       for (let i = 0; i < photosData.length; i++) {
         this.vendorCompany.images.push(photosData[i]);
       }

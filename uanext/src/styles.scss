@@ -32,3 +32,9 @@
 .mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
   transform: none !important;
 }
+
+.paginator {
+  button:focus {
+    outline: none !important;
+  }
+}

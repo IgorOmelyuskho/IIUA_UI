@@ -1,6 +1,4 @@
 .projects {
-  // display: flex;
-  // flex-wrap: wrap;
   .project {
     margin: 10px 10px 10px 0;
     padding-bottom: 5px;
@@ -15,4 +13,11 @@
 
 .from-to-width {
   width: 50px;
+}
+
+.progress-bar-fixed {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10000;
 }

@@ -21,8 +21,8 @@
 
         <div class="select-avatar-input">
           <button type="button" class="btn btn-primary">Choose avatar</button>
-          <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar" class="form-control"
-            [ngClass]="{ 'is-invalid': avatarIsTouched && formControls.avatar.errors}">
+          <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar"
+            class="form-control" [ngClass]="{ 'is-invalid': avatarIsTouched && formControls.avatar.errors}">
         </div>
 
         <button type="button" (click)="uploadAvatar()" class="btn btn-primary">Upload avatar</button>
@@ -31,8 +31,8 @@
       <div class="col-lg-4 col-md-6">
         <div class="form-group">
           <label>Project name</label>
-          <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.name.errors }"
-            placeholder="Enter project name" />
+          <input type="text" formControlName="name" class="form-control"
+            [ngClass]="{ 'is-invalid': isLoaded && formControls.name.errors }" placeholder="Enter project name" />
           <div *ngIf="formControls.name.errors" class="invalid-feedback" placeholder="Enter project name">
             <div *ngIf="formControls.name.errors.required">Name cannot be empty</div>
           </div>
@@ -40,7 +40,8 @@
 
         <div class="form-group">
           <label>Company name</label>
-          <input type="text" formControlName="legalEntityName" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.legalEntityName.errors }"
+          <input type="text" formControlName="legalEntityName" class="form-control"
+            [ngClass]="{ 'is-invalid': isLoaded && formControls.legalEntityName.errors }"
             placeholder="Enter company name" />
           <div *ngIf="formControls.legalEntityName.errors" class="invalid-feedback">
             <div *ngIf="formControls.legalEntityName.errors.required">Company name cannot be empty</div>
@@ -52,16 +53,17 @@
     <div class="row">
       <div class="form-group col-md-10 col-12">
         <label for="vendor-goal-textarea2">Describe why you need investments</label>
-        <textarea id="vendor-goal-textarea2" rows="3" formControlName="goal" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.goal.errors }"
+        <textarea id="vendor-goal-textarea2" rows="3" formControlName="goal" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.goal.errors }"
           placeholder="What do you want to realize through investment?"></textarea>
         <div *ngIf="formControls.goal.errors" class="invalid-feedback">
-          <div *ngIf="formControls.goal.errors.required">goal cannot be empty</div>
+          <div *ngIf="formControls.goal.errors.required">Goal cannot be empty</div>
           <div *ngIf="formControls.goal.errors.minlength">Minimal length is 200 charset</div>
           <div *ngIf="formControls.goal.errors.maxlength">Maximal length is 1024 charset</div>
         </div>
       </div>
       <div class="col-12 pl-0 pr-0">
-        <app-steps [parentSubmitted]="submitted" [items]="vendorCompany.steps" [minItemsCount]=3 [maxItemsCount]=15
+        <app-steps [parentSubmitted]="true" [items]="vendorCompany.steps" [minItemsCount]=3 [maxItemsCount]=15
           (itemsEvent)="stepsEventHandler($event)"></app-steps>
       </div>
     </div>
@@ -72,7 +74,8 @@
       <h6 class="col-12">Address</h6>
       <div class="form-group col-lg-4 col-md-6 col-12">
         <label>Address</label>
-        <input type="text" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.address.errors }" />
+        <input type="text" formControlName="address" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.address.errors }" />
         <div *ngIf="formControls.address.errors" class="invalid-feedback">
           <div *ngIf="formControls.address.errors.required">Address cannot be empty</div>
         </div>
@@ -80,7 +83,35 @@
 
       <div class="form-group col-lg-4 col-md-6 col-12">
         <label>Region</label>
-        <input type="text" formControlName="region" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.region.errors }" />
+        <!-- <input type="text" formControlName="region" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.region.errors }" /> -->
+        <select type="text" formControlName="region" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.region.errors }">
+          <option value="Autonomous Republic of Crimea">Autonomous Republic of Crimea</option>
+          <option value="Cherkasy oblast">Cherkasy oblast</option>
+          <option value="Chernihiv oblast">Chernihiv oblast</option>
+          <option value="Chernivtsi oblast">Chernivtsi oblast</option>
+          <option value="Dnipropetrovsk oblast">Dnipropetrovsk oblast</option>
+          <option value="Donetsk oblast">Donetsk oblast</option>
+          <option value="Ivano-Frankivsk oblast">Ivano-Frankivsk oblast</option>
+          <option value="Kharkiv oblast">Kharkiv oblast</option>
+          <option value="Kherson oblast">Kherson oblast</option>
+          <option value="Khmelnytsk oblast">Khmelnytsk oblast</option>
+          <option value="Kirovohrad oblast">Kirovohrad oblast</option>
+          <option value="Kyiv oblast">Kyiv oblast</option>
+          <option value="Luhansk oblast">Luhansk oblast</option>
+          <option value="Lviv oblast">Lviv oblast</option>
+          <option value="Mykolaiv oblast">Mykolaiv oblast</option>
+          <option value="Odesa oblast">Odesa oblast</option>
+          <option value="Poltava oblast">Poltava oblast</option>
+          <option value="Rivne oblast">Rivne oblast</option>
+          <option value="Sumy oblast">Sumy oblast</option>
+          <option value="Ternopil oblast">Ternopil oblast</option>
+          <option value="Vinnytsia oblast">Vinnytsia oblast</option>
+          <option value="Volyn oblast">Volyn oblast</option>
+          <option value="Zakarpattia oblast">Zakarpattia oblast</option>
+          <option value="Zaporizhzhia oblast">Zaporizhzhia oblast</option>
+          <option value="Zhytomyr oblast">Zhytomyr oblast</option>
+        </select>
         <div *ngIf="formControls.region.errors" class="invalid-feedback">
           <div *ngIf="formControls.region.errors.required">Region cannot be empty</div>
         </div>
@@ -93,7 +124,8 @@
       <h6 class="col-12">About company</h6>
       <div class="form-group col-lg-3 col-md-6">
         <label>Employees number</label>
-        <select type="number" min=0 formControlName="employeesNumber" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.employeesNumber.errors }">
+        <select type="number" min=0 formControlName="employeesNumber" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.employeesNumber.errors }">
           <option value="1">0-1</option>
           <option value="5">2-5</option>
           <option value="10">6-10</option>
@@ -108,21 +140,37 @@
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>Employees to hire</label>
-        <input type="number" min=0 formControlName="employeesToHire" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.employeesToHire.errors }" />
+        <input type="number" min=0 formControlName="employeesToHire" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.employeesToHire.errors }" />
         <div *ngIf="formControls.employeesToHire.errors" class="invalid-feedback">
           <div *ngIf="formControls.employeesToHire.errors.required">Specify count employees to hire</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>Field of activity</label>
-        <input type="text" formControlName="fieldOfActivity" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.fieldOfActivity.errors }" />
+        <!-- <input type="text" formControlName="fieldOfActivity" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.fieldOfActivity.errors }" /> -->
+        <select type="text" formControlName="fieldOfActivity" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.fieldOfActivity.errors }">
+          <option value="Agriculture, Forestry and Fisheries">Agriculture, Forestry and Fisheries</option>
+          <option value="Mining and quarrying">Mining and quarrying</option>
+          <option value="Manufacturing industry">Manufacturing industry</option>
+          <option value="Supply of electricity, gas, steam and air conditioning">Supply of electricity, gas, steam and air conditioning</option>
+          <option value="Water supply; sewage, waste management">Water supply; sewage, waste management</option>
+          <option value="Construction">Construction</option>
+          <option value="Wholesale and retail trade; repair of motor vehicles and motorcycles">Wholesale and retail trade; repair of motor vehicles and motorcycles</option>
+          <option value="Transport, warehousing, postal and courier activities">Transport, warehousing, postal and courier activities</option>
+          <option value="Temporary placement and organization of food">Temporary placement and organization of food</option>
+          <option value="Information and telecommunications">Information and telecommunications</option>
+        </select>
         <div *ngIf="formControls.fieldOfActivity.errors" class="invalid-feedback">
           <div *ngIf="formControls.fieldOfActivity.errors.required">Field of activity cannot be empty</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>Company age</label>
-        <input type="number" min=0 formControlName="companyAge" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.companyAge.errors }" />
+        <input type="number" min=0 formControlName="companyAge" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.companyAge.errors }" />
         <div *ngIf="formControls.companyAge.errors" class="invalid-feedback">
           <div *ngIf="formControls.companyAge.errors.required">Company age cannot be empty</div>
         </div>
@@ -132,28 +180,32 @@
     <div class="row">
       <div class="form-group col-lg-3 col-md-6">
         <label>Average check</label>
-        <input type="number" formControlName="averageCheck" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.averageCheck.errors }" />
+        <input type="number" formControlName="averageCheck" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.averageCheck.errors }" />
         <div *ngIf="formControls.averageCheck.errors" class="invalid-feedback">
           <div *ngIf="formControls.averageCheck.errors.required">Average check cannot be empty</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>Clients count per month</label>
-        <input type="number" formControlName="mounthlyClients" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.mounthlyClients.errors }" />
+        <input type="number" min=0 formControlName="mounthlyClients" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.mounthlyClients.errors }" />
         <div *ngIf="formControls.mounthlyClients.errors" class="invalid-feedback">
           <div *ngIf="formControls.mounthlyClients.errors.required">Clients count per month cannot be empty</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>Average price</label>
-        <input type="number" formControlName="averagePrice" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.averagePrice.errors }" />
+        <input type="number" formControlName="averagePrice" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.averagePrice.errors }" />
         <div *ngIf="formControls.averagePrice.errors" class="invalid-feedback">
           <div *ngIf="formControls.averagePrice.errors.required">Average price cannot be empty</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>Gross income</label>
-        <select type="number" min=0 formControlName="grossIncome" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.grossIncome.errors }">
+        <select type="number" min=0 formControlName="grossIncome" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.grossIncome.errors }">
           <option value="0">0</option>
           <option value="100">100</option>
         </select>
@@ -169,7 +221,8 @@
       <h6 class="col-12">Investments</h6>
       <div class="form-group col-md-10 col-12">
         <label>Describe your business</label>
-        <textarea type="text" rows=3 formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.description.errors }"></textarea>
+        <textarea type="text" rows=3 formControlName="description" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.description.errors }"></textarea>
         <div *ngIf="formControls.description.errors" class="invalid-feedback">
           <div *ngIf="formControls.description.errors.required">Business description cannot be empty</div>
           <div *ngIf="formControls.description.errors.maxlength">Business description length cannot be
@@ -178,14 +231,16 @@
       </div>
       <div class="form-group col-md-6 col-xl-4 col-12">
         <label>How much money required</label>
-        <input type="number" formControlName="moneyRequired" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.moneyRequired.errors }" />
+        <input type="number" formControlName="moneyRequired" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.moneyRequired.errors }" />
         <div *ngIf="formControls.moneyRequired.errors" class="invalid-feedback">
           <div *ngIf="formControls.moneyRequired.errors.required">Specify how much money required</div>
         </div>
       </div>
       <div class="form-group col-md-10 col-12">
         <label>Describe in detail how, for what and in what period you plan to spend money</label>
-        <textarea rows=3 formControlName="investmentDescription" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.investmentDescription.errors }"></textarea>
+        <textarea rows=3 formControlName="investmentDescription" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.investmentDescription.errors }"></textarea>
         <div *ngIf="formControls.investmentDescription.errors" class="invalid-feedback">
           <div *ngIf="formControls.investmentDescription.errors.required">Investment description cannot be empty</div>
           <div *ngIf="formControls.investmentDescription.errors.maxlength">Investment description length cannot be
@@ -199,7 +254,7 @@
     <div class="row">
       <h6 class="col-12">Media</h6>
       <div class="col-12 pl-0 pr-0">
-        <app-videos [parentSubmitted]="submitted" [items]="vendorCompany.videos" [minItemsCount]=1 [maxItemsCount]=10
+        <app-videos [parentSubmitted]="true" [items]="vendorCompany.videos" [minItemsCount]=1 [maxItemsCount]=10
           (itemsEvent)="videosEventHandler($event)"></app-videos>
       </div>
 
@@ -210,7 +265,7 @@
             <li *ngFor="let photo of vendorCompany.images" class="list-group-item">
               <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-end">
-                  <img src={{photo.url}} alt="">
+                  <img src={{photo.url}} alt="photo">
                   <div class="position-relative">
                     <div class="extension">{{ photo.name.split('.').pop() }}</div>
                   </div>
@@ -225,7 +280,8 @@
             {{minPhotosCount}}</div>
         </div>
         <div class="photos-uploader">
-          <app-file-uploader [parentSubmitted]="true" accept="image/*" content="photos" (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader>
+          <app-file-uploader [parentSubmitted]="true" accept="image/*" content="photos"
+            (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader>
         </div>
         <input style="display:none" type="text" formControlName="forPhotos" />
       </div>
@@ -237,7 +293,7 @@
             <li *ngFor="let file of vendorCompany.files" class="list-group-item">
               <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-end">
-                  <img src="../../../assets/img/file.png" alt="">
+                  <img src="../../../assets/img/file.png" alt="file">
                   <div class="position-relative">
                     <div class="extension">{{ file.name.split('.').pop() }}</div>
                   </div>
@@ -250,8 +306,8 @@
           </ul>
         </div>
         <div class="files-uploader">
-          <app-file-uploader [parentSubmitted]="true" accept="{{FormHelper.acceptFilesTypes}}"
-            content="files" (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader>
+          <app-file-uploader [parentSubmitted]="true" accept="{{FormHelper.acceptFilesTypes}}" content="files"
+            (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader>
         </div>
         <input style="display:none" type="text" formControlName="forFiles" />
       </div>

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { environment } from 'src/environments/environment';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
+import { FilteredProjects } from 'src/app/models';
 
-const fakeProject: ViewVendorProject = {
+const fakeProject: ViewVendorProject = { // todo remove
   'id': 135,
   'userId': 88,
   'name': 'test_steps',
@@ -24,7 +25,7 @@ const fakeProject: ViewVendorProject = {
   'description': 'description',
   'moneyRequired': 100000.00,
   'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription ' +
-  'investmentDescription investmentDescription investmentDescription investmentDescription investmentDescription investmentDescription',
+    'investmentDescription investmentDescription investmentDescription investmentDescription investmentDescription investmentDescription',
   'steps': [
     {
       'id': 992094,
@@ -161,46 +162,126 @@ export class ViewProjectsService {
 
   constructor(private http: HttpClient) { }
 
-  replaceLinks(project: ViewVendorProject): ViewVendorProject {
-    // avatara
-    project.avatara.url = environment.projects_api_url.slice(0, -1) + project.avatara.url;
+  // replaceLinks(project: ViewVendorProject): ViewVendorProject {
+  //   // avatara
+  //   try { // todo - drop in database all projects with avatara === null
+  //     project.avatara.url = environment.projects_api_url.slice(0, -1) + project.avatara.url;
+  //   } catch {
+  //     project.avatara = {};
+  //     project.avatara.url = 'http://proxy.alexduxa.online/projects/files/feff0d66-dbf6-4669-a1d7-2c8d81439d57.jpg';
+  //   }
 
-    // images
-    for (let img = 0; img < project.images.length; img++) {
-      project.images[img].url = environment.projects_api_url.slice(0, -1) + project.images[img].url;
-    }
+  //   // images
+  //   for (let img = 0; img < project.images.length; img++) {
+  //     try { // todo
+  //       project.images[img].url = environment.projects_api_url.slice(0, -1) + project.images[img].url;
+  //     } catch {
+  //       project.images[img] = {};
+  //       project.images[img].url = 'http://proxy.alexduxa.online/projects/files/feff0d66-dbf6-4669-a1d7-2c8d81439d57.jpg';
+  //     }
+  //   }
 
-    // files
-    for (let f = 0; f < project.files.length; f++) {
-      project.files[f].url = environment.projects_api_url.slice(0, -1) + project.files[f].url;
-    }
+  //   // files
+  //   for (let f = 0; f < project.files.length; f++) {
+  //     try { // todo
+  //       project.files[f].url = environment.projects_api_url.slice(0, -1) + project.files[f].url;
+  //     } catch {
+  //       project.files[f] = {};
+  //       project.files[f].url = 'http://proxy.alexduxa.online/projects/files/b3ae48a6-66f9-4492-a2d9-ddd34e45c7f3.txt';
+  //     }
+  //   }
 
-    return project;
-  }
+  //   return project;
+  // }
 
-
-
-  fetchProjects(filter?: any): Observable<ViewVendorProject[]> {
-    // return this.http.get<ViewVendorProject[]>(environment.projects_api_url + environment)
-    return of([JSON.parse(JSON.stringify(fakeProject)), JSON.parse(JSON.stringify(fakeProject))])
+  fetchProjects(filter: any = {}): Observable<FilteredProjects> {
+    return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, filter)
+      // return of([JSON.parse(JSON.stringify(fakeProject)), JSON.parse(JSON.stringify(fakeProject))])
       .pipe(
-        map((projects: ViewVendorProject[]) => {
-          for (let i = 0; i < projects.length; i++) {
-            this.replaceLinks(projects[i]);
-          }
+        map((response: any) => {
+          return response['data'];
+        }),
+        // map((filteredProjects: FilteredProjects) => {
+        //   console.log(filteredProjects);
+        //   for (let i = 0; i < filteredProjects.projectsList.length; i++) {
+        //     this.replaceLinks(filteredProjects.projectsList[i]);
+        //   }
 
-          return projects;
-        })
+        //   return filteredProjects;
+        // }),
+        catchError(val => of({
+          pages: 0,
+          projectsCount: 0,
+          projectsList: []
+        }))
       );
   }
 
-  fetchProjectById(id: string): Observable<ViewVendorProject> {
-    // return this.http.get<ViewVendorProject[]>(environment.projects_api_url + environment)
-    return of(JSON.parse(JSON.stringify(fakeProject)))
+  // fetchVendorProjects(): Observable<ViewVendorProject[]> {
+  //   return this.http.get<ViewVendorProject[]>(environment.projects_api_url + environment.vendorProject)
+  //   // return of(JSON.parse(JSON.stringify(fakeProject))) //  todo
+  //     .pipe(
+  //       tap(res => {
+  //         console.log(res);
+  //       }),
+  //       map(response => {
+  //         return response['data'];
+  //       })
+  //       // map((project: ViewVendorProject) => {
+  //       //   return this.replaceLinks(project);
+  //       // })
+  //     );
+  // }
+
+  searchByProjectName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
+    return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, {
+      projectName: name,
+      pageSize,
+      page
+    })
       .pipe(
-        map((project: ViewVendorProject) => {
-          return this.replaceLinks(project);
-        })
+        map(response => {
+          return response['data'];
+        }),
+        // map((filteredProjects: FilteredProjects) => {
+        //   console.log(filteredProjects);
+        //   for (let i = 0; i < filteredProjects.projectsList.length; i++) {
+        //     this.replaceLinks(filteredProjects.projectsList[i]);
+        //   }
+
+        //   return filteredProjects;
+        // }),
+        catchError(val => of({
+          pages: 0,
+          projectsCount: 0,
+          projectsList: []
+        }))
+      );
+  }
+
+  searchByCompanyName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
+    return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, {
+      companyName: name,
+      pageSize,
+      page
+    })
+      .pipe(
+        map(response => {
+          return response['data'];
+        }),
+        // map((filteredProjects: FilteredProjects) => {
+        //   console.log(filteredProjects);
+        //   for (let i = 0; i < filteredProjects.projectsList.length; i++) {
+        //     this.replaceLinks(filteredProjects.projectsList[i]);
+        //   }
+
+        //   return filteredProjects;
+        // }),
+        catchError(val => of({
+          pages: 0,
+          projectsCount: 0,
+          projectsList: []
+        }))
       );
   }
 }
