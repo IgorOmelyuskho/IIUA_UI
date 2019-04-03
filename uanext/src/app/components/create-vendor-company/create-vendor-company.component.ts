@@ -57,7 +57,10 @@ export class CreateVendorCompanyComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.vendorCompany.images = [];
+    this.vendorCompany.files = [];
+   }
 
   get formControls() {
     return this.vendorCompanyForm.controls;

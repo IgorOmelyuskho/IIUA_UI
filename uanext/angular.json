@@ -37,6 +37,7 @@
               "./src/js/stats.min.js",
               "./src/js/MTLLoader.js",
               "./src/js/maptalks.markercluster.min.js",
+              "./src/js/CSS2DRenderer.js",
               "./node_modules/nouislider/distribute/nouislider.min.js"
             ]
           },
@@ -99,6 +100,7 @@
               "./src/js/stats.min.js",
               "./src/js/MTLLoader.js",
               "./src/js/maptalks.markercluster.min.js",
+              "./src/js/CSS2DRenderer.js",
               "./node_modules/nouislider/distribute/nouislider.min.js"
             ],
             "assets": [

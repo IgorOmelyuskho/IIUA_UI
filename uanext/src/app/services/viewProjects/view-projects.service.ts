@@ -153,6 +153,12 @@ const fakeProject: ViewVendorProject = { // todo remove
   ]
 };
 
+const emptyFilteredProjects = {
+  pages: 0,
+  projectsCount: 0,
+  projectsList: []
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -199,6 +205,9 @@ export class ViewProjectsService {
       // return of([JSON.parse(JSON.stringify(fakeProject)), JSON.parse(JSON.stringify(fakeProject))])
       .pipe(
         map((response: any) => {
+          if (response['data'] == null) {
+            return emptyFilteredProjects;
+          }
           return response['data'];
         }),
         // map((filteredProjects: FilteredProjects) => {
@@ -209,11 +218,7 @@ export class ViewProjectsService {
 
         //   return filteredProjects;
         // }),
-        catchError(val => of({
-          pages: 0,
-          projectsCount: 0,
-          projectsList: []
-        }))
+        catchError(val => of(emptyFilteredProjects))
       );
   }
 
@@ -241,6 +246,9 @@ export class ViewProjectsService {
     })
       .pipe(
         map(response => {
+          if (response['data'] == null) {
+            return emptyFilteredProjects;
+          }
           return response['data'];
         }),
         // map((filteredProjects: FilteredProjects) => {
@@ -251,11 +259,7 @@ export class ViewProjectsService {
 
         //   return filteredProjects;
         // }),
-        catchError(val => of({
-          pages: 0,
-          projectsCount: 0,
-          projectsList: []
-        }))
+        catchError(val => of(emptyFilteredProjects))
       );
   }
 
@@ -267,6 +271,9 @@ export class ViewProjectsService {
     })
       .pipe(
         map(response => {
+          if (response['data'] == null) {
+            return emptyFilteredProjects;
+          }
           return response['data'];
         }),
         // map((filteredProjects: FilteredProjects) => {
@@ -277,11 +284,7 @@ export class ViewProjectsService {
 
         //   return filteredProjects;
         // }),
-        catchError(val => of({
-          pages: 0,
-          projectsCount: 0,
-          projectsList: []
-        }))
+        catchError(val => of(emptyFilteredProjects))
       );
   }
 }

@@ -59,7 +59,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (this.project != null) {
-      init();
+      init(this.project); // 2 init
     }
   }
 
@@ -108,7 +108,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             this.videoUrlToSafe(this.project.videos);
             this.setGalleryImages(this.project.images);
             requestAnimationFrame(() => {
-              init();
+              init(this.project); // 2 init
             });
             return;
           }

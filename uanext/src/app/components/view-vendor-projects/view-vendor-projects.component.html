@@ -2,11 +2,11 @@
 
 <div class="container">
 
-  <h3>Projects</h3>
+  <!-- <h3>Projects</h3>
   <div>Page size {{this.pageSize}}</div>
   <div>Pages count {{this.pagesCount}}</div>
   <div>Projects count {{this.projectsCount}}</div>
-  <div>Page number {{this.pageNumber}}</div>
+  <div>Page number {{this.pageNumber}}</div> -->
 
   <div class="row">
     <div class="col-6">
@@ -37,18 +37,19 @@
       <div class="mb-2">Filter:</div>
 
       <div>Investment budget</div>
-      <div class="input-group input-group-sm mb-3">
+      <div class="input-group input-group-sm mb-1">
         <div class="from-to-width">From</div>
-        <input [(ngModel)]="budgetFrom" id="budget-from" type="number" class="form-control">
+        <input id="budget-from" type="number" class="form-control">
       </div>
-      <div class="input-group input-group-sm mb-3">
+      <div class="input-group input-group-sm mb-2">
         <div class="from-to-width">To</div>
-        <input [(ngModel)]="budgetTo" id="budget-to" type="number" class="form-control">
+        <input id="budget-to" type="number" class="form-control">
       </div>
       <div id="budget-range"></div>
 
-      <div>Region</div>
+      <div class="mt-3">Region</div>
       <select [(ngModel)]="region" type="text" class="form-control">
+        <option selected value="ALL">ALL</option>
         <option value="Autonomous Republic of Crimea">Autonomous Republic of Crimea</option>
         <option value="Cherkasy oblast">Cherkasy oblast</option>
         <option value="Chernihiv oblast">Chernihiv oblast</option>
@@ -76,32 +77,27 @@
         <option value="Zhytomyr oblast">Zhytomyr oblast</option>
       </select>
 
-      <div>Field of activity</div>
-      <div>Dropdown list?</div>
-
-      <div>Money required</div>
-      <div class="input-group input-group-sm mb-3">
+      <div class="mt-3">Company age</div>
+      <div class="input-group input-group-sm mb-1">
         <div class="from-to-width">From</div>
-        <input [(ngModel)]="moneyFrom" id="money-from" type="number" class="form-control">
+        <input id="age-from" type="number" class="form-control">
       </div>
-      <div class="input-group input-group-sm mb-3">
+      <div class="input-group input-group-sm mb-2">
         <div class="from-to-width">To</div>
-        <input [(ngModel)]="moneyTo" id="money-to" type="number" class="form-control">
+        <input id="age-to" type="number" class="form-control">
       </div>
-      <div id="money-range"></div>
+      <div id="age-range"></div>
 
-      <div>Data update?</div>
-
-      <button (click)="searchByFilterBtn()" type="button" class="btn btn-primary">Apply filter</button>
+      <button (click)="searchByFilterBtn()" type="button" class="btn btn-primary mt-3">Apply filter</button>
 
     </div>
 
-    <div class="col-9">
+    <div class="col-5">
       <div class="projects">
-        <div *ngFor="let project of projects" class="project">
+        <div *ngFor="let project of projects" class="project" (mouseenter)="projectMouseEnter(project)">
           <div class="d-flex">
             <div class="mr-2 d-flex flex-column">
-              <img height=100 src={{project.avatara.url}} alt="avatar">
+              <img height=100 src={{project.avatara?.url}} alt="avatar">
               <button class="btn btn-primary m-1" (click)="goToProject(project)">Detailed</button>
             </div>
             <div class="pr-1">
@@ -114,7 +110,7 @@
               <div>{{project.investmentDescription}}</div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mt-2">
             <div class="col-5 ml-1">
               Region: {{project.region}}
             </div>
@@ -126,11 +122,23 @@
       </div>
 
       <mat-paginator class="paginator" *ngIf="projects.length > 0" [length]="projectsCount" [pageSize]="pageSize"
-        [pageSizeOptions]="[2, 5, 10, 25, 100]" (page)="pageEvent($event)"></mat-paginator>
+        [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event)"></mat-paginator>
     </div>
 
+    <div class="col-4">
+
+      <div #mapWrapper class="map-wrapper-2">
+        <div id="map-2"></div>
+        <div id="info-2">
+          <div class="name"></div>
+          <div class="coords-x"></div>
+          <div class="coords-y"></div>
+        </div>
+        <div id="area-info-2"></div>
+        <img id="full-screen-img-2" src="../../../assets/img/full-screen.png" alt="full-screen">
+      </div>
+
+    </div>
   </div>
-
-
 
 </div>

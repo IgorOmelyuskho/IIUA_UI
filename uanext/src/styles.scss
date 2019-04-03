@@ -38,3 +38,19 @@
     outline: none !important;
   }
 }
+
+.obj-label {
+  color: #FFF;
+  font-family: sans-serif;
+  padding: 2px;
+  line-height: 1.0;
+  background: rgba(0, 0, 0, .4);
+}
+
+#label-renderer,
+#label-renderer-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}

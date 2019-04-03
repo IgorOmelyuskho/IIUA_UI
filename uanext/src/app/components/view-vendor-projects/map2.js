@@ -44,9 +44,8 @@ const polygonArr = [polygon1, polygon2];
 // init();
 // export
 
-export function init(vendorProject) {
-  console.log('MAP INIT');
-  console.log(vendorProject);
+export function init() {
+  console.log('MAP2 INIT');
   createMap();
   createThreeLayer();
   createPolygonLayer();
@@ -54,10 +53,10 @@ export function init(vendorProject) {
   createClusterLayer();
   initInfoWindow();
 
-  mapElement = document.getElementById('map');
-  mapWrapperElement = document.getElementsByClassName('map-wrapper')[0];
+  mapElement = document.getElementById('map-2');
+  mapWrapperElement = document.getElementsByClassName('map-wrapper-2')[0];
   canvasElem = mapElement.querySelector('canvas');
-  document.getElementById('full-screen-img').onclick = fullScreen;
+  document.getElementById('full-screen-img-2').onclick = fullScreen;
 
   stats = new Stats();
   mapElement.appendChild(stats.dom);
@@ -80,8 +79,13 @@ export function init(vendorProject) {
   }, drawInterval);
 };
 
+export function setProject(project) {
+  console.log(project);
+  map.setCenter(new maptalks.Coordinate(project.projectCoords.x, project.projectCoords.y));
+}
+
 export function destroy() {
-  console.log('MAP DESTROY');
+  console.log('MAP2 DESTROY');
   clearInterval(timer1);
   clearInterval(timer2);
   cancelAnimationFrame(animationFrame);
@@ -111,12 +115,12 @@ export function destroy() {
 function createLabelRenderer() {
   labelRenderer = new THREE.CSS2DRenderer();
   labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
-  labelRenderer.domElement.id = 'label-renderer';
+  labelRenderer.domElement.id = 'label-renderer-2';
   mapElement.appendChild(labelRenderer.domElement);
 }
 
 function windowOnResize(event) {
-  console.log('windowOnResize');
+  console.log('windowOnResize2');
   if (mapFullScreen === false) { // necessarily
     labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
     return;
@@ -128,7 +132,7 @@ function windowOnResize(event) {
   const y = window.innerHeight || e.clientHeight || g.clientHeight;
   mapWrapperElement.style.width = x + 'px';
   mapWrapperElement.style.height = y + 'px';
-  mapElement.style.height = y + 'px';
+  mapElement.style.height = y + 'px'
   labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
 }
 
@@ -160,7 +164,7 @@ function fullScreen(event) {
 }
 
 function initInfoWindow() {
-  infoWindow.infoElem = document.getElementById('info');
+  infoWindow.infoElem = document.getElementById('info-2');
   infoWindow.coordX = infoWindow.infoElem.querySelector('.coords-x');
   infoWindow.coordY = infoWindow.infoElem.querySelector('.coords-y');
   infoWindow.name = infoWindow.infoElem.querySelector('.name');
@@ -208,7 +212,7 @@ function animation() {
 };
 
 function initFetchObjects() {
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 1; i++) {
     const newObj = {
       id: 'id' + i,
       coords: map.getCenter().add(Math.random() * 0.003, Math.random() * 0.002),
@@ -248,7 +252,7 @@ function initFetchObjects() {
 }
 
 function createMap() {
-  map = new maptalks.Map("map", { // DIV id
+  map = new maptalks.Map("map-2", { // DIV id
     center: [13.41261, 52.529611],
     // center: [0, 0],
     zoom: initZoom,
@@ -306,7 +310,7 @@ function createMarker(obj) {
     visible: true,
     cursor: 'pointer',
     symbol: [{
-      'markerFile': '../../../assets/img/marker.svg', // different in map2.js
+      'markerFile': '../../assets/img/marker.svg', // different in map.js
       'markerWidth': 28,
       'markerHeight': 40,
     },
@@ -379,8 +383,8 @@ function createPolygon(dotsArr) {
     });
 
     polygon.on('click', function (e) {
-      document.getElementById('area-info').innerHTML = e.target.options.customName;
-      document.getElementById('area-info').style.display = 'block';
+      document.getElementById('area-info-2').innerHTML = e.target.options.customName;
+      document.getElementById('area-info-2').style.display = 'block';
     });
 
     polygon.on('mouseenter', function (e) {
