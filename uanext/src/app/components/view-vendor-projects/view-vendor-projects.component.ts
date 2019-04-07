@@ -12,15 +12,17 @@ import { init, destroy, setProject } from './map2.js';
   styleUrls: ['./view-vendor-projects.component.scss']
 })
 export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('mapWrapper')
-  mapWrapperElement: ElementRef;
+  @ViewChild('mapWrapper') mapWrapperElement: ElementRef;
+  @ViewChild('projectInfo') projectInfoWindow: ElementRef;
   onScrollBind = this.onScroll.bind(this);
 
   projects: ViewVendorProject[] = [];
+  selectedProject: ViewVendorProject;
   noUiSlider: any;
   showProgress = false;
   searchCompanyName: string;
   searchProjectName: string;
+  scrolled = 0;
 
   pageSize = 5;
   pagesCount = 0;
@@ -50,7 +52,6 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    console.log(this.mapWrapperElement);
     this.noUiSlider = window['noUiSlider'];
     this.initBudgetSlider();
     this.initAgeSlider();
@@ -71,6 +72,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
 
   onScroll() {
     const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+    this.scrolled = scrolled;
     this.mapWrapperElement.nativeElement.style.marginTop = scrolled + 'px';
   }
 
@@ -141,6 +143,18 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
   goToProject(project: ViewVendorProject) {
     this.viewProjectsService.projectForView = project;
     this.router.navigate(['home', 'investor', 'project', project.id]);
+  }
+
+  showProjectInfo(project: ViewVendorProject) {
+    this.selectedProject = project;
+    const coords = this.mapWrapperElement.nativeElement.getBoundingClientRect();
+    this.projectInfoWindow.nativeElement.style.display = 'block';
+    this.projectInfoWindow.nativeElement.style.top = coords.top + this.projectInfoWindow.nativeElement.style.right + 'px';
+    this.projectInfoWindow.nativeElement.style.width = coords.width + 10 + 'px';
+  }
+
+  hideProjectInfo() {
+    this.projectInfoWindow.nativeElement.style.display = '';
   }
 
   searchByCompanyInput(e) {
@@ -220,7 +234,6 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     if (filter.region != null && filter.region === 'ALL') {
       filter.region = '';
     }
-    console.log(filter);
     this.prevSearch = 'filter';
     this.showProgressBar(true);
     this.viewProjectsService.fetchProjects(filter).subscribe(
@@ -256,12 +269,11 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   projectMouseEnter(project: ViewVendorProject) { // or request for data ?
-    console.log(project);
     const rightProject: any = {};
     rightProject.id = project.id;
     rightProject.projectCoords = {
-      x: Math.random() * 50,
-      y: Math.random() * 50,
+      x: 13.41561 + Math.random() * 0.1,
+      y: 52.539611 + Math.random() * 0.1,
     };
 
     setProject(rightProject);

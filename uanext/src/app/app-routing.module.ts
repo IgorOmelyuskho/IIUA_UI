@@ -11,6 +11,7 @@ import { VendorProfileComponent } from './components';
 import { HomePageComponent } from './components';
 import { ViewProjectComponent } from './components';
 import { UpdateVendorCompanyComponent } from './components';
+import { Object3dUploadComponent } from './components';
 
 import { AuthGuard, NoAuthGuard } from './services/guards';
 import { InvestorGuard } from './services/guards';
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'signin', component: SigninComponent, canActivate: [NoAuthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
   { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
+  { path: 'upload3DObject', component: Object3dUploadComponent },
   { path: '**', redirectTo: ''}
 ];
 

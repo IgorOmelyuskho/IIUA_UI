@@ -208,7 +208,7 @@ function animation() {
 };
 
 function initFetchObjects() {
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 10; i++) {
     const newObj = {
       id: 'id' + i,
       coords: map.getCenter().add(Math.random() * 0.003, Math.random() * 0.002),
@@ -242,7 +242,7 @@ function initFetchObjects() {
   for (let i = 0; i < objectsArr.length; i++) {
     // setTimeout(() => {
     //   loadObjectModel(objectsArr[i]);
-    // }, i * 1500)
+    // }, i * 2500)
     loadObjectModel(objectsArr[i]);
   };
 }
@@ -403,8 +403,10 @@ function createMarkerLayer() {
 
 function createClusterLayer() {
   clusterLayer = new maptalks.ClusterLayer('cluster', {
-    'noClusterWithOneMarker': false,
-    'maxClusterZoom': zoomWhenChangeVisible - 2,
+    'noClusterWithOneMarker': true,
+    'animation': false,
+    'maxClusterRadius': 50,
+    'maxClusterZoom': zoomWhenChangeVisible, // -2
     //"count" is an internal variable: marker count in the cluster.
     'symbol': {
       'markerType': 'ellipse',

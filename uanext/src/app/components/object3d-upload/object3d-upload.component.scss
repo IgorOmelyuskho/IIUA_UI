@@ -1,0 +1,12 @@
+
+.uploaded-file {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  padding: 3px;
+  border: 1px solid grey;
+  .file-img {
+    height: 50px;
+  }
+}

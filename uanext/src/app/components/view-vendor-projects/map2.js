@@ -228,7 +228,7 @@ function initFetchObjects() {
       model: null,
       mouseUnder: false,
       loaderPath: '../../../assets/objects/tractorObj/',
-      // loaderPath: 'https://gitlab.com/omelyushko.igor/tractor/tree/master/43-tractor/', 
+      // loaderPath: 'https://gitlab.com/omelyushko.igor/tractor/blob/master/43-tractor/Tractor.mtl', 
       modelMtl: 'Tractor.mtl',
       modelObj: 'Tractor.obj',
     };
@@ -310,19 +310,19 @@ function createMarker(obj) {
     visible: true,
     cursor: 'pointer',
     symbol: [{
-      'markerFile': '../../assets/img/marker.svg', // different in map.js
-      'markerWidth': 28,
-      'markerHeight': 40,
-    },
-    {
-      'textFaceName': 'sans-serif',
-      'textName': obj.name,
-      'textSize': 16,
-      'textDy': 10,
-      'textFill': 'black',
-      'textHaloColor': '#fff',
-      'textHaloRadius': 2,
-    }
+        'markerFile': '../../assets/img/marker.svg', // different in map.js
+        'markerWidth': 28,
+        'markerHeight': 40,
+      },
+      {
+        'textFaceName': 'sans-serif',
+        'textName': obj.name,
+        'textSize': 16,
+        'textDy': 10,
+        'textFill': 'black',
+        'textHaloColor': '#fff',
+        'textHaloRadius': 2,
+      }
     ]
   });
 
@@ -407,18 +407,44 @@ function createMarkerLayer() {
 
 function createClusterLayer() {
   clusterLayer = new maptalks.ClusterLayer('cluster', {
-    'noClusterWithOneMarker': false,
-    'maxClusterZoom': zoomWhenChangeVisible - 2,
+    'noClusterWithOneMarker': true,
+    'animation': false,
+    'maxClusterRadius': 50,
+    'maxClusterZoom': zoomWhenChangeVisible, // -2
     //"count" is an internal variable: marker count in the cluster.
     'symbol': {
       'markerType': 'ellipse',
-      'markerFill': { property: 'count', type: 'interval', stops: [[0, 'rgb(135, 196, 240)'], [9, '#1bbc9b'], [99, 'rgb(216, 115, 149)']] },
+      'markerFill': {
+        property: 'count',
+        type: 'interval',
+        stops: [
+          [0, 'rgb(135, 196, 240)'],
+          [9, '#1bbc9b'],
+          [99, 'rgb(216, 115, 149)']
+        ]
+      },
       'markerFillOpacity': 0.7,
       'markerLineOpacity': 1,
       'markerLineWidth': 3,
       'markerLineColor': '#fff',
-      'markerWidth': { property: 'count', type: 'interval', stops: [[0, 40], [9, 60], [99, 80]] },
-      'markerHeight': { property: 'count', type: 'interval', stops: [[0, 40], [9, 60], [99, 80]] }
+      'markerWidth': {
+        property: 'count',
+        type: 'interval',
+        stops: [
+          [0, 40],
+          [9, 60],
+          [99, 80]
+        ]
+      },
+      'markerHeight': {
+        property: 'count',
+        type: 'interval',
+        stops: [
+          [0, 40],
+          [9, 60],
+          [99, 80]
+        ]
+      }
     },
     'drawClusterText': true,
     'geometryEvents': true,
@@ -442,7 +468,7 @@ function loadObjectModel(obj) {
   //   threeLayer.renderScene();
   // }
 
-  mtlLoader.setPath(obj.loaderPath);
+  mtlLoader.setPath(obj.loaderPath); // ../../../assets/objects/tractorObj/
   mtlLoader.load(obj.modelMtl, function (materials) {
     materials.preload();
     objLoader.setMaterials(materials);
@@ -467,7 +493,9 @@ function loadObjectModel(obj) {
 
       obj.box3 = new THREE.Box3().setFromObject(object);
       const cubeGeometry = new THREE.BoxGeometry(0.03, 0.03, 0.03);
-      const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const cubeMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00ff00
+      });
       obj.cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
       obj.cube.position.x = obj.model.position.x;
       obj.cube.position.y = obj.model.position.y;
@@ -487,11 +515,46 @@ function loadObjectModel(obj) {
 
       changeVisible(obj, map.getZoom());
       // console.log(scene); // todo
+
+      const str = JSON.stringify(object);
+      const jsonObject = JSON.parse(str);
+
+      const copy = Object.assign({}, object);
+
+      const copy2 = extend(object);
+
+      // let objJsonStr = btoa(JSON.stringify(obj));
+      // console.log(objJsonStr);
+      // let objJsonB64 = JSON.parse(atob(e));
+      // console.log(objJsonB64);
+
+      console.log(object);
+      console.log(jsonObject);
+      console.log(copy);
+      console.log(copy2);
+      // console.log(objJsonB64);
+
       scene.add(object);
       threeLayer.renderScene();
     });
   });
 };
+
+function extend(from, to) {
+  if (from == null || typeof from != "object") return from;
+  if (from.constructor != Object && from.constructor != Array) return from;
+  if (from.constructor == Date || from.constructor == RegExp || from.constructor == Function ||
+    from.constructor == String || from.constructor == Number || from.constructor == Boolean)
+    return new from.constructor(from);
+
+  to = to || new from.constructor();
+
+  for (var name in from) {
+    to[name] = typeof to[name] == "undefined" ? extend(from[name], null) : to[name];
+  }
+
+  return to;
+}
 
 function createPolygonLayer() {
   polygonLayer = new maptalks.VectorLayer('polygonLayer');
