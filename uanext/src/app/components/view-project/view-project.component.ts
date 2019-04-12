@@ -7,6 +7,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
 import { init, destroy } from './map.js';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FilteredProjects } from 'src/app/models/index.js';
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
 @Component({
   selector: 'app-view-project',
@@ -20,9 +21,24 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  constructor(private viewProjectsService: ViewProjectsService, private activateRoute: ActivatedRoute, private sanitizer: DomSanitizer) { }
+  private hubConnection: HubConnection;
+
+  constructor(
+    private viewProjectsService: ViewProjectsService,
+    private activateRoute: ActivatedRoute,
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit() {
+    this.hubConnection = new HubConnectionBuilder().withUrl('http:/:localhost:1874/notify').build();
+    this.hubConnection
+      .start()
+      .then(() => console.log('Connection started!'))
+      .catch(err => console.log('Error while establishing connection :('));
+    this.hubConnection.on('BroadcastMessage', (type: string, payload: string) => {
+      console.log(type, payload);
+    });
+
     if (this.viewProjectsService.projectForView == null) {
       // use when page reload
       this.getProjectFromServer();

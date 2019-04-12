@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserRole } from 'src/app/models';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -13,11 +14,11 @@ export class SignupComponent implements OnInit {
   ngOnInit() { }
 
   asVendor() {
-    this.userRole = 'Vendor';
+    this.userRole = UserRole.Vendor;
   }
 
   asInvestor() {
-    this.userRole = 'Investor';
+    this.userRole = UserRole.Investor;
   }
 
   showProgressBar(show: boolean) {

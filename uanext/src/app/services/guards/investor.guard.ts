@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthorizationService } from './../auth/authorization.service';
+import { UserRole } from 'src/app/models';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class InvestorGuard implements CanActivate {
       return false;
     }
 
-    if (decodedToken.role !== 'Investor') {
+    if (decodedToken.role !== UserRole.Investor) {
       return false;
     }
 

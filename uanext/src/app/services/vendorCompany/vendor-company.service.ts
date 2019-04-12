@@ -96,7 +96,7 @@ export class VendorCompanyService {
       );
   }
 
-  uploadFiles(formData): Observable<any> {
+  uploadFiles(formData: FormData): Observable<any> {
     return this.http.post<any>(environment.projects_api_url + environment.uploadFiles, formData)
       .pipe(
         map(response => {

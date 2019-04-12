@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, } from 'rxjs';
 
-import { VendorRole } from './../../models';
+import { VendorRole, AdminRole } from './../../models';
 import { InvestorRole } from './../../models';
 import { NotificationService } from '../notification/notification.service';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class StateService {
   private helper = new JwtHelperService();
-  user$: BehaviorSubject<VendorRole | InvestorRole> = new BehaviorSubject(null);
+  user$: BehaviorSubject<VendorRole | InvestorRole | AdminRole> = new BehaviorSubject(null);
   authorized$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private notify: NotificationService, private router: Router) { }

@@ -6,7 +6,7 @@ import { AuthorizationService } from '../../services/auth/authorization.service'
 import { StateService } from './../../services/state/state.service';
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import { Observable } from 'rxjs';
-import { VendorRole, InvestorRole } from 'src/app/models';
+import { VendorRole, InvestorRole, AdminRole, UserRole } from 'src/app/models';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import FormHelper from '../../services/helperServices/formHelper';
 import { take, first, delay } from 'rxjs/operators';
@@ -71,6 +71,20 @@ export class SigninComponent implements OnInit {
     );
   }
 
+  fetchAdminSubscribe(observable: Observable<AdminRole>): void {
+    observable.subscribe(
+      (admin: AdminRole) => {
+        this.stateService.user$.next(admin);
+        this.stateService.authorized$.next(true);
+        this.router.navigate(['home', 'admin']);
+      },
+      err => {
+        console.warn(err);
+        this.authService.signOut();
+      }
+    );
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -87,10 +101,13 @@ export class SigninComponent implements OnInit {
         localStorage.setItem('token', response.body.data);
         const role = this.stateService.role();
 
-        if (role === 'Vendor') {
+        if (role === UserRole.Vendor) {
           this.fetchVendorSubscribe( this.profileService.fetchVendor() );
         }
-        if (role === 'Investor') {
+        if (role === UserRole.Investor) {
+          this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
+        }
+        if (role === UserRole.Admin) {
           this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
         }
       },

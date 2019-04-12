@@ -2,13 +2,14 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
-import { VendorDto, InvestorDto } from '../../models';
+import { VendorDto, InvestorDto, UserRole } from '../../models';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ProfileService } from '../profile/profile.service';
+import { AdminDto } from 'src/app/models/adminDto';
 
 @Injectable({
   providedIn: 'root'
@@ -47,14 +48,14 @@ export class AuthorizationService {
       return;
     }
 
-    if (role !== 'Admin' && role !== 'Investor' && role !== 'Vendor') {
+    if (role !== UserRole.Admin && role !== UserRole.Investor && role !== UserRole.Vendor) {
       this.signOut();
       return;
     }
 
     const pathName = window.location.pathname.slice();
 
-    if (role === 'Vendor') {
+    if (role === UserRole.Vendor) {
       this.profileService.fetchVendor().subscribe(
         vendor => {
           this.stateService.user$.next(vendor);
@@ -72,13 +73,31 @@ export class AuthorizationService {
       );
     }
 
-    if (role === 'Investor') {
+    if (role === UserRole.Investor) {
       this.profileService.fetchInvestor().subscribe(
         investor => {
           this.stateService.user$.next(investor);
           this.stateService.authorized$.next(true);
           if (pathName === '' || pathName === '/') {
             this.router.navigate(['home', 'investor']);
+          } else {
+            this.router.navigateByUrl(pathName);
+          }
+        },
+        err => {
+          console.warn(err);
+          this.signOut();
+        }
+      );
+    }
+
+    if (role === UserRole.Admin) {
+      this.profileService.fetchAdmin().subscribe(
+        admin => {
+          this.stateService.user$.next(admin);
+          this.stateService.authorized$.next(true);
+          if (pathName === '' || pathName === '/') {
+            this.router.navigate(['home', 'admin']);
           } else {
             this.router.navigateByUrl(pathName);
           }
@@ -98,6 +117,11 @@ export class AuthorizationService {
 
   signUpAsInvestor(investorDto: InvestorDto): Observable<any> {
     return this.http.post<any>(environment.api_url + environment.investorRegister, investorDto, { observe: 'response' });
+  }
+
+  signUpAsAdmin(admin: AdminDto): Observable<any> { // todo
+    return of({});
+    // return this.http.post<any>(environment.api_url + environment.investorRegister, investorDto, { observe: 'response' });
   }
 
   // any because api return different response

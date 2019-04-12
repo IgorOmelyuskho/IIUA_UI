@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthorizationService } from 'src/app/services/auth/authorization.service';
 import { Router } from '@angular/router';
+import { UserRole } from 'src/app/models';
 
 @Component({
   selector: 'app-header',
@@ -41,17 +42,21 @@ export class HeaderComponent implements OnInit {
       return;
     }
 
-    if (role !== 'Admin' && role !== 'Investor' && role !== 'Vendor') {
+    if (role !== UserRole.Admin && role !== UserRole.Investor && role !== UserRole.Vendor) {
       this.authService.signOut();
       return;
     }
 
-    if (role === 'Vendor') {
+    if (role === UserRole.Vendor) {
       this.router.navigate(['home', 'vendor']);
     }
 
-    if (role === 'Investor') {
+    if (role === UserRole.Investor) {
       this.router.navigate(['home', 'investor']);
+    }
+
+    if (role === UserRole.Admin) {
+      this.router.navigate(['home', 'admin']);
     }
   }
 }

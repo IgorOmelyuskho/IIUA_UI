@@ -5,3 +5,6 @@ export { InvestorDto } from './investorDto';
 export { VendorDto } from './vendorDto';
 export { VendorCompany } from './vendorCompany';
 export { FilteredProjects } from './filteredProjects';
+export { AdminRole } from './adminRole';
+export { AdminDto } from './adminDto';
+export { UserRole } from './userRole';

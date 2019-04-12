@@ -148,6 +148,7 @@ function fullScreen(event) {
     mapWrapperElement.style.width = x + 'px';
     mapWrapperElement.style.height = y + 'px';
     mapWrapperElement.style.zIndex = '10000000';
+    mapWrapperElement.style.marginTop = '';
     mapElement.style.height = y + 'px';
     labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
     mapFullScreen = true;
@@ -157,6 +158,7 @@ function fullScreen(event) {
     mapWrapperElement.style.width = '';
     mapWrapperElement.style.height = '';
     mapWrapperElement.style.zIndex = '';
+    mapWrapperElement.style.marginTop = window.pageYOffset + 'px';
     mapElement.style.height = '';
     labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
     mapFullScreen = false;

@@ -19,6 +19,7 @@ import { VideosComponent } from './videos/videos.component';
 import { ViewProjectComponent } from './view-project/view-project.component';
 import { ViewVendorProjectsComponent } from './view-vendor-projects/view-vendor-projects.component';
 import { Object3dUploadComponent } from './object3d-upload/object3d-upload.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 
 // this exports for app-routing.module.ts
@@ -43,6 +44,7 @@ export { VideosComponent } from './videos/videos.component';
 export { ViewProjectComponent } from './view-project/view-project.component';
 export { ViewVendorProjectsComponent } from './view-vendor-projects/view-vendor-projects.component';
 export { Object3dUploadComponent } from './object3d-upload/object3d-upload.component';
+export { AdminPageComponent } from './admin-page/admin-page.component';
 
 
 export const components = [
@@ -66,7 +68,8 @@ export const components = [
   VideosComponent,
   ViewProjectComponent,
   ViewVendorProjectsComponent,
-  Object3dUploadComponent
+  Object3dUploadComponent,
+  AdminPageComponent
 ];
 
 

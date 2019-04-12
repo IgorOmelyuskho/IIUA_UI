@@ -34,7 +34,7 @@
   <div class="row">
 
     <div class="col-3">
-      <div class="filter">
+      <div class="filter pl-1">
         <div class="mb-2">Filter:</div>
 
         <div>Investment budget</div>
@@ -99,7 +99,7 @@
           <div class="d-flex justify-content-between">
             <div class="mr-2 d-flex flex-column">
               <img height=100 src={{project.avatara?.url}} alt="avatar">
-              <button (click)="goToProject(selectedProject)" class="btn btn-primary m-1">Go to project</button>
+              <button (click)="goToProject(project)" class="btn btn-primary m-1">Go to project</button>
             </div>
             <div class="pr-1">
               <h5>ID = {{project.id}}</h5>
@@ -111,7 +111,7 @@
               <div>{{project.investmentDescription}}</div>
             </div>
             <div class="arrow-div">
-              <img (click)="showProjectInfo(project)" src="../../../assets/img/right-arrow.png" alt="">
+              <img matTooltip="Detailed" [matTooltipPosition]="'above'" (click)="showProjectInfo(project)" src="../../../assets/img/right-arrow.png" alt="">
             </div>
           </div>
           <div class="row mt-2">
