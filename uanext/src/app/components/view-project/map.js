@@ -208,7 +208,7 @@ function animation() {
 };
 
 function initFetchObjects() {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 1; i++) {
     const newObj = {
       id: 'id' + i,
       coords: map.getCenter().add(Math.random() * 0.003, Math.random() * 0.002),

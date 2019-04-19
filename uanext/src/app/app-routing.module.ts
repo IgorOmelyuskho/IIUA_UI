@@ -13,12 +13,12 @@ import { ViewProjectComponent } from './components';
 import { UpdateVendorCompanyComponent } from './components';
 import { Object3dUploadComponent } from './components';
 import { AdminPageComponent } from './components';
+import { ViewVendorProjectsComponent } from './components/view-vendor-projects/view-vendor-projects.component';
+import { AdminProfileComponent } from './components';
 
 import { AuthGuard, NoAuthGuard, AdminGuard } from './services/guards';
 import { InvestorGuard } from './services/guards';
 import { VendorGuard } from './services/guards';
-import { ViewVendorProjectsComponent } from './components/view-vendor-projects/view-vendor-projects.component';
-
 
 const childInvestorRoutes: Routes = [
   { path: 'profile', component: InvestorProfileComponent },
@@ -33,10 +33,14 @@ const childVendorRoutes: Routes = [
   { path: 'project/:id', component: UpdateVendorCompanyComponent },
 ];
 
+const childAdminRoutes: Routes = [
+  { path: 'upload3dModel', component: Object3dUploadComponent },
+  { path: 'profile', component: AdminProfileComponent }
+];
+
 const childHomeRoutes: Routes = [
   { path: 'investor', component: InvestorComponent, children: childInvestorRoutes, canActivate: [InvestorGuard] },
-  { path: 'vendor', component: VendorComponent, children: childVendorRoutes, canActivate: [VendorGuard] },
-  { path: 'admin', component: AdminPageComponent, canActivate: [AdminGuard] },
+  { path: 'vendor', component: VendorComponent, children: childVendorRoutes, canActivate: [VendorGuard] }
 ];
 
 const routes: Routes = [
@@ -44,6 +48,7 @@ const routes: Routes = [
   { path: 'signin', component: SigninComponent, canActivate: [NoAuthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
   { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminPageComponent, children: childAdminRoutes, canActivate: [AdminGuard] },
   { path: '**', redirectTo: ''}
 ];
 

@@ -1,5 +1,13 @@
-<p>
-  admin-page works!
-</p>
-
-<app-object3d-upload></app-object3d-upload>
+<nav class="navbar navbar-dark bg-dark">
+    <a routerLink="">
+      <span class="navbar-brand mb-0 h1">Navbar</span>
+    </a>
+    <div class='navbar-text'>Navbar for Admin</div>
+    <div>
+      <button (click)='goToProfile()' type="button" class="btn btn-primary">My profile</button>
+      <button (click)='uploadModel()' type="button" class="btn btn-primary">Upload 3d models</button>
+      <button (click)="signOut()" type="button" class="btn btn-primary">Sign out</button>
+    </div>
+  </nav>
+  
+  <router-outlet></router-outlet>

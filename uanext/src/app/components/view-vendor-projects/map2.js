@@ -271,8 +271,8 @@ function createMap() {
     },
     // overviewControl: true, // add overview control
     baseLayer: new maptalks.TileLayer('tile', {
-      'urlTemplate': 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-      'subdomains': ['a', 'b', 'c', 'd']
+      'urlTemplate' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+      'subdomains'  : ['a','b','c'],
     })
   });
 

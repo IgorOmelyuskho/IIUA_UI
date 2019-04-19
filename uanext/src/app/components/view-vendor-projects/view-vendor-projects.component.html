@@ -1,4 +1,4 @@
-<mat-progress-bar *ngIf="showProgress === true" mode="indeterminate" class="progress-bar-fixed"></mat-progress-bar>
+<mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
 
 <div class="container-fluid">
 
@@ -158,7 +158,7 @@
     </div>
 
     <div class="window-body">
-      <img class="project-avatar pb-1" src="{{selectedProject.avatara.url}}" alt="avatar">
+      <img class="project-avatar pb-1" src="{{selectedProject.avatara?.url}}" alt="avatar">
       <div class="pb-1">Legal entity name: {{selectedProject.legalEntityName}}</div>
       <div class="pb-1">Goal: {{selectedProject.goal}}</div>
       <div class="pb-1">Region: {{selectedProject.region}}</div>

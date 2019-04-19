@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthorizationService } from 'src/app/services/auth/authorization.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private authService: AuthorizationService) { }
 
   ngOnInit() {
+  }
+
+  goToProfile() {
+    this.router.navigate(['admin', 'profile']);
+  }
+
+  uploadModel() {
+    this.router.navigate(['admin', 'upload3dModel']);
+  }
+
+  signOut() {
+    this.authService.signOut();
   }
 
 }
