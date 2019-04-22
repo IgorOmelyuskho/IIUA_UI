@@ -21,6 +21,8 @@ import { ViewVendorProjectsComponent } from './view-vendor-projects/view-vendor-
 import { Object3dUploadComponent } from './object3d-upload/object3d-upload.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { AdminSigninComponent } from './admin-signin/admin-signin.component';
+import { AdminSignupComponent } from './admin-signup/admin-signup.component';
 
 
 // this exports for app-routing.module.ts
@@ -47,6 +49,8 @@ export { ViewVendorProjectsComponent } from './view-vendor-projects/view-vendor-
 export { Object3dUploadComponent } from './object3d-upload/object3d-upload.component';
 export { AdminPageComponent } from './admin-page/admin-page.component';
 export { AdminProfileComponent } from './admin-profile/admin-profile.component';
+export { AdminSigninComponent } from './admin-signin/admin-signin.component';
+export { AdminSignupComponent } from './admin-signup/admin-signup.component';
 
 export const components = [
   HomePageComponent,
@@ -71,7 +75,9 @@ export const components = [
   ViewVendorProjectsComponent,
   Object3dUploadComponent,
   AdminPageComponent,
-  AdminProfileComponent
+  AdminProfileComponent,
+  AdminSigninComponent,
+  AdminSignupComponent
 ];
 
 

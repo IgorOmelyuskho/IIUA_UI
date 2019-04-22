@@ -16,7 +16,9 @@ export const environment = {
   vendorProject: 'api/Projects/',
   uploadImages: 'api/Image/',
   uploadFiles: 'api/File/',
-  filteringProjects: 'api/FilteringProjects'
+  filteringProjects: 'api/FilteringProjects',
+  adminRegister: 'api/ProjectUser/register',
+  adminProfile: 'api/ProjectUser/',
 };
 
 /*

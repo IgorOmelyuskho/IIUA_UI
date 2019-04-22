@@ -14,6 +14,14 @@ export class AdminPageComponent implements OnInit {
   ngOnInit() {
   }
 
+  // signUp() {
+  //   this.router.navigate(['admin', 'signup']);
+  // }
+
+  // signIn() {
+  //   this.router.navigate(['admin', 'signin']);
+  // }
+
   goToProfile() {
     this.router.navigate(['admin', 'profile']);
   }

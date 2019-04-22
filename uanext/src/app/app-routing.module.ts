@@ -15,6 +15,8 @@ import { Object3dUploadComponent } from './components';
 import { AdminPageComponent } from './components';
 import { ViewVendorProjectsComponent } from './components/view-vendor-projects/view-vendor-projects.component';
 import { AdminProfileComponent } from './components';
+import { AdminSignupComponent } from './components';
+import { AdminSigninComponent } from './components';
 
 import { AuthGuard, NoAuthGuard, AdminGuard } from './services/guards';
 import { InvestorGuard } from './services/guards';
@@ -35,7 +37,9 @@ const childVendorRoutes: Routes = [
 
 const childAdminRoutes: Routes = [
   { path: 'upload3dModel', component: Object3dUploadComponent },
-  { path: 'profile', component: AdminProfileComponent }
+  { path: 'profile', component: AdminProfileComponent },
+  // { path: 'signup', component: AdminSignupComponent }, // sign in single route
+  // { path: 'signin', component: AdminSigninComponent }, // sign in as user
 ];
 
 const childHomeRoutes: Routes = [
@@ -49,7 +53,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
   { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPageComponent, children: childAdminRoutes, canActivate: [AdminGuard] },
-  { path: '**', redirectTo: ''}
+  { path: 'adminSignup', component: AdminSignupComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

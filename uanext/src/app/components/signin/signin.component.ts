@@ -76,7 +76,7 @@ export class SigninComponent implements OnInit {
       (admin: AdminRole) => {
         this.stateService.user$.next(admin);
         this.stateService.authorized$.next(true);
-        this.router.navigate(['home', 'admin']);
+        this.router.navigate(['admin']);
       },
       err => {
         console.warn(err);
@@ -108,7 +108,7 @@ export class SigninComponent implements OnInit {
           this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
         }
         if (role === UserRole.Admin) {
-          this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
+          this.fetchAdminSubscribe( this.profileService.fetchInvestor() );
         }
       },
       err => {

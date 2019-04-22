@@ -13,12 +13,12 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() { }
 
-  asVendor() {
-    this.userRole = UserRole.Vendor;
+  asVendor() { // use for button
+    this.userRole = UserRole.Vendor; // use only  for HTML
   }
 
-  asInvestor() {
-    this.userRole = UserRole.Investor;
+  asInvestor() { // use for button
+    this.userRole = UserRole.Investor; // use only  for HTML
   }
 
   showProgressBar(show: boolean) {

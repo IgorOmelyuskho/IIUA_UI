@@ -1,9 +1,10 @@
-<mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar class="progress-bar-fixed" *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
+<!-- use class="progress-bar-fixed" when page scrolled -->
 
 <div class="container-fluid">
 
-  <!-- <h3>Projects</h3>
-  <div>Page size {{this.pageSize}}</div>
+  <h3>Projects</h3>
+  <!-- <div>Page size {{this.pageSize}}</div>
   <div>Pages count {{this.pagesCount}}</div>
   <div>Projects count {{this.projectsCount}}</div>
   <div>Page number {{this.pageNumber}}</div> -->
@@ -94,7 +95,9 @@
     </div>
 
     <div class="col-5">
-      <div class="projects">
+      <div class="projects search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500"
+        (scrolled)="onScroll2()" (scrolledUp)="onScrollUp()">
+        <h5 *ngIf="projects?.length === 0 && showProgress === false">No projects found</h5>
         <div *ngFor="let project of projects" class="project" (mouseenter)="projectMouseEnter(project)">
           <div class="d-flex justify-content-between">
             <div class="mr-2 d-flex flex-column">
@@ -111,7 +114,8 @@
               <div>{{project.investmentDescription}}</div>
             </div>
             <div class="arrow-div">
-              <img matTooltip="Detailed" [matTooltipPosition]="'above'" (click)="showProjectInfo(project)" src="../../../assets/img/right-arrow.png" alt="">
+              <img matTooltip="Detailed" [matTooltipPosition]="'above'" (click)="showProjectInfo(project)"
+                src="../../../assets/img/right-arrow.png" alt="">
             </div>
           </div>
           <div class="row mt-2">
@@ -125,8 +129,8 @@
         </div>
       </div>
 
-      <mat-paginator class="paginator" *ngIf="projects.length > 0" [length]="projectsCount" [pageSize]="pageSize"
-        [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event)"></mat-paginator>
+      <!-- <mat-paginator class="paginator" *ngIf="projects.length > 0" [length]="projectsCount" [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event)"></mat-paginator> -->
     </div>
 
     <div class="col-4">
@@ -174,3 +178,11 @@
     </div>
   </div>
 </div>
+
+
+<!-- <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll2()" (scrolledUp)="onScrollUp()">
+  <p *ngFor="let i of TEST_SCROLL">
+    {{ i }}
+  </p>
+</div> -->

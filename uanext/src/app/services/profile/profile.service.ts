@@ -27,8 +27,8 @@ export class ProfileService {
     );
   }
 
-  fetchAdmin(): Observable<VendorRole> { // todo now as fetchVendor
-    return this.http.get<VendorRole>(environment.api_url + environment.vendorProfile).pipe(
+  fetchAdmin(): Observable<VendorRole> { // todo response[data] ???
+    return this.http.get<VendorRole>(environment.api_url + environment.adminProfile).pipe(
       map(response => response['data'])
     );
   }
@@ -39,5 +39,9 @@ export class ProfileService {
 
   updateVendorProfile(userId: string, updatedData: any) {
     return this.http.put(environment.api_url + environment.vendorProfile + userId, updatedData);
+  }
+
+  updateAdminProfile(userId: string, updatedData: any) {
+    return this.http.put(environment.api_url + environment.adminProfile + userId, updatedData);
   }
 }

@@ -18,6 +18,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { NgxSortableModule } from 'ngx-sortable';
 import { NgxGalleryModule } from 'ngx-gallery';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NgxGalleryModule } from 'ngx-gallery';
     TextMaskModule,
     FormsModule,
     NgxSortableModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    InfiniteScrollModule
   ],
   entryComponents: [
     SnackBarComponent

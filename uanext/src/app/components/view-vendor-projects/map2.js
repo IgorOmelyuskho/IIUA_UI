@@ -271,7 +271,7 @@ function createMap() {
     },
     // overviewControl: true, // add overview control
     baseLayer: new maptalks.TileLayer('tile', {
-      'urlTemplate' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+      'urlTemplate' : 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
       'subdomains'  : ['a','b','c'],
     })
   });

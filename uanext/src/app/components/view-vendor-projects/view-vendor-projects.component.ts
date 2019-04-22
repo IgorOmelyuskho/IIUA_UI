@@ -159,21 +159,25 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
 
   searchByCompanyInput(e) {
     if (e.code === 'Enter') {
+      this.changeSearchType();
       this.searchByCompanyName(this.searchCompanyName, this.pageSize, this.pageNumber);
     }
   }
 
   searchByProjectInput(e) {
     if (e.code === 'Enter') {
+      this.changeSearchType();
       this.searchByProjectName(this.searchProjectName, this.pageSize, this.pageNumber);
     }
   }
 
   searchByCompanyNameBtn() {
+    this.changeSearchType();
     this.searchByCompanyName(this.searchCompanyName, this.pageSize, this.pageNumber);
   }
 
   searchByProjectNameBtn() {
+    this.changeSearchType();
     this.searchByProjectName(this.searchProjectName, this.pageSize, this.pageNumber);
   }
 
@@ -185,7 +189,8 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
         (filteringProjects: FilteredProjects) => {
           this.pagesCount = filteringProjects.pages;
           this.projectsCount = filteringProjects.projectsCount;
-          this.projects = filteringProjects.projectsList;
+          // this.projects = filteringProjects.projectsList; // use for pagination
+          this.addNewProjects(filteringProjects.projectsList);
           this.showProgressBar(false);
         },
         err => {
@@ -203,7 +208,8 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
         (filteringProjects: FilteredProjects) => {
           this.pagesCount = filteringProjects.pages;
           this.projectsCount = filteringProjects.projectsCount;
-          this.projects = filteringProjects.projectsList;
+          // this.projects = filteringProjects.projectsList; // use for pagination
+          this.addNewProjects(filteringProjects.projectsList);
           this.showProgressBar(false);
         },
         err => {
@@ -227,6 +233,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     this.filter.region = this.region;
     this.filter.companyAgeFrom = this.ageFromElement.value;
     this.filter.companyAgeTo = this.ageToElement.value;
+    this.changeSearchType();
     this.searchByFilter(this.filter);
   }
 
@@ -241,7 +248,8 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
         console.log(filteringProjects);
         this.pagesCount = filteringProjects.pages;
         this.projectsCount = filteringProjects.projectsCount;
-        this.projects = filteringProjects.projectsList;
+        // this.projects = filteringProjects.projectsList; // use for pagination
+        this.addNewProjects(filteringProjects.projectsList);
         this.showProgressBar(false);
       },
       err => {
@@ -251,9 +259,38 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     );
   }
 
+  addNewProjects(newProjects: any[]) {
+    for (let i = 0; i < newProjects.length; i++) {
+      this.projects.push(newProjects[i]);
+    }
+  }
+
+  changeSearchType() {
+    this.projects = [];
+    this.pageNumber = 1;
+    this.filter.page = 1;
+  }
+
   pageEvent(e: PageEvent) {
-    this.pageSize = e.pageSize;
-    this.pageNumber = e.pageIndex + 1;
+    // this.pageSize = e.pageSize;
+    // this.pageNumber = e.pageIndex + 1;
+
+    // if (this.prevSearch === 'filter') {
+    //   this.filter.page = this.pageNumber;
+    //   this.filter.pageSize = this.pageSize;
+    //   this.searchByFilter(this.filter);
+    // }
+    // if (this.prevSearch === 'companyName') {
+    //   this.searchByCompanyName(this.searchCompanyName, this.pageSize, this.pageNumber);
+    // }
+    // if (this.prevSearch === 'projectName') {
+    //   this.searchByProjectName(this.searchProjectName, this.pageSize, this.pageNumber);
+    // }
+  }
+
+  onScroll2() {
+    console.log('scrolled!!');
+    this.pageNumber += 1;
 
     if (this.prevSearch === 'filter') {
       this.filter.page = this.pageNumber;
@@ -266,6 +303,11 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     if (this.prevSearch === 'projectName') {
       this.searchByProjectName(this.searchProjectName, this.pageSize, this.pageNumber);
     }
+  }
+
+  onScrollUp() {
+    console.log('scroll UP');
+    // this.pageNumber -= 1;
   }
 
   projectMouseEnter(project: ViewVendorProject) { // or request for data ?

@@ -118,7 +118,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   signalRSendMsg() {
     // connection.invoke("SendMessage", message).catch(function (err) {
-      this.hubConnection.invoke('SendMessage')
+    this.hubConnection.invoke('SendMessage')
       .catch(function (err) {
         console.error(err.toString());
         return;

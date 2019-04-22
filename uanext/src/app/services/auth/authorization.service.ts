@@ -97,7 +97,7 @@ export class AuthorizationService {
           this.stateService.user$.next(admin);
           this.stateService.authorized$.next(true);
           if (pathName === '' || pathName === '/') {
-            this.router.navigate(['home', 'admin']);
+            this.router.navigate(['admin']);
           } else {
             this.router.navigateByUrl(pathName);
           }
@@ -119,9 +119,9 @@ export class AuthorizationService {
     return this.http.post<any>(environment.api_url + environment.investorRegister, investorDto, { observe: 'response' });
   }
 
-  signUpAsAdmin(admin: AdminDto): Observable<any> { // todo
-    return of({});
-    // return this.http.post<any>(environment.api_url + environment.investorRegister, investorDto, { observe: 'response' });
+  signUpAsAdmin(adminDto: AdminDto): Observable<any> { // todo
+    // return of({});
+    return this.http.post<any>(environment.api_url + environment.adminRegister, adminDto, { observe: 'response' });
   }
 
   // any because api return different response
