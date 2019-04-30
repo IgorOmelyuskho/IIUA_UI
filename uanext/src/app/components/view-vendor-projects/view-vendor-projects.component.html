@@ -3,138 +3,58 @@
 
 <div class="container-fluid">
 
-  <h3>Projects</h3>
+  <!-- <h3>Projects</h3> -->
   <!-- <div>Page size {{this.pageSize}}</div>
   <div>Pages count {{this.pagesCount}}</div>
   <div>Projects count {{this.projectsCount}}</div>
   <div>Page number {{this.pageNumber}}</div> -->
 
   <div class="row">
-    <div class="col-6">
-      <div>Search by company name</div>
-      <div class="input-group mb-3">
-        <div class="input-group-append">
-          <button (click)="searchByCompanyNameBtn()" class="btn btn-outline-primary" type="button">Search</button>
+    <!-- main -->
+    <div class="col-8 bg-color left-col">
+      <div class="search-by-name">
+        <div class="input-group mb-3 mt-3">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="button">
+              <span class="fa fa-search"></span>
+            </button>
+          </div>
+          <input type="text" (keydown)=searchByProjectInput($event) [(ngModel)]="searchProjectName" class="form-control"
+            placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
+            aria-describedby="basic-addon2">
         </div>
-        <input type="text" (keydown)=searchByCompanyInput($event) [(ngModel)]="searchCompanyName" class="form-control"
-          placeholder="Company name" aria-label="Company name" aria-describedby="basic-addon2">
       </div>
-    </div>
-    <div class="col-6">
-      <div>Search by project name</div>
-      <div class="input-group mb-3">
-        <div class="input-group-append">
-          <button (click)="searchByProjectNameBtn()" class="btn btn-outline-primary" type="button">Search</button>
+
+      <div class="row">
+        <div class="col-3 pl-0 pr-0">
+          <!-- filter -->
+          <app-filter (filterChange)="filterOnChange($event)" (updateRateChange)="updateRateOnChange($event)"></app-filter>
         </div>
-        <input type="text" (keydown)=searchByProjectInput($event) [(ngModel)]="searchProjectName" class="form-control"
-          placeholder="Project name" aria-label="Project name" aria-describedby="basic-addon2">
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-
-    <div class="col-3">
-      <div class="filter pl-1">
-        <div class="mb-2">Filter:</div>
-
-        <div>Investment budget</div>
-        <div class="input-group input-group-sm mb-1">
-          <div class="from-to-width">From</div>
-          <input id="budget-from" type="number" class="form-control">
-        </div>
-        <div class="input-group input-group-sm mb-2">
-          <div class="from-to-width">To</div>
-          <input id="budget-to" type="number" class="form-control">
-        </div>
-        <div id="budget-range"></div>
-
-        <div class="mt-3">Region</div>
-        <select [(ngModel)]="region" type="text" class="form-control">
-          <option selected value="ALL">ALL</option>
-          <option value="Autonomous Republic of Crimea">Autonomous Republic of Crimea</option>
-          <option value="Cherkasy oblast">Cherkasy oblast</option>
-          <option value="Chernihiv oblast">Chernihiv oblast</option>
-          <option value="Chernivtsi oblast">Chernivtsi oblast</option>
-          <option value="Dnipropetrovsk oblast">Dnipropetrovsk oblast</option>
-          <option value="Donetsk oblast">Donetsk oblast</option>
-          <option value="Ivano-Frankivsk oblast">Ivano-Frankivsk oblast</option>
-          <option value="Kharkiv oblast">Kharkiv oblast</option>
-          <option value="Kherson oblast">Kherson oblast</option>
-          <option value="Khmelnytsk oblast">Khmelnytsk oblast</option>
-          <option value="Kirovohrad oblast">Kirovohrad oblast</option>
-          <option value="Kyiv oblast">Kyiv oblast</option>
-          <option value="Luhansk oblast">Luhansk oblast</option>
-          <option value="Lviv oblast">Lviv oblast</option>
-          <option value="Mykolaiv oblast">Mykolaiv oblast</option>
-          <option value="Odesa oblast">Odesa oblast</option>
-          <option value="Poltava oblast">Poltava oblast</option>
-          <option value="Rivne oblast">Rivne oblast</option>
-          <option value="Sumy oblast">Sumy oblast</option>
-          <option value="Ternopil oblast">Ternopil oblast</option>
-          <option value="Vinnytsia oblast">Vinnytsia oblast</option>
-          <option value="Volyn oblast">Volyn oblast</option>
-          <option value="Zakarpattia oblast">Zakarpattia oblast</option>
-          <option value="Zaporizhzhia oblast">Zaporizhzhia oblast</option>
-          <option value="Zhytomyr oblast">Zhytomyr oblast</option>
-        </select>
-
-        <div class="mt-3">Company age</div>
-        <div class="input-group input-group-sm mb-1">
-          <div class="from-to-width">From</div>
-          <input id="age-from" type="number" class="form-control">
-        </div>
-        <div class="input-group input-group-sm mb-2">
-          <div class="from-to-width">To</div>
-          <input id="age-to" type="number" class="form-control">
-        </div>
-        <div id="age-range"></div>
-
-        <button (click)="searchByFilterBtn()" type="button" class="btn btn-primary mt-3">Apply filter</button>
-      </div>
-    </div>
-
-    <div class="col-5">
-      <div class="projects search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500"
-        (scrolled)="onScroll2()" (scrolledUp)="onScrollUp()">
-        <h5 *ngIf="projects?.length === 0 && showProgress === false">No projects found</h5>
-        <div *ngFor="let project of projects" class="project" (mouseenter)="projectMouseEnter(project)">
-          <div class="d-flex justify-content-between">
-            <div class="mr-2 d-flex flex-column">
-              <img height=100 src={{project.avatara?.url}} alt="avatar">
-              <button (click)="goToProject(project)" class="btn btn-primary m-1">Go to project</button>
+        <div class="col-9">
+          <div class="projects-wrapper">
+            <!-- filter-property -->
+            <div class="filter-properties">
+              FILTER PROPERTIES TODO
             </div>
-            <div class="pr-1">
-              <h5>ID = {{project.id}}</h5>
-              <h5>Company name: {{project.legalEntityName}}</h5>
-              <div class="d-flex">
-                <h5 class="mr-4">{{project.name}}</h5>
-                <div>Investment budget: {{project.moneyRequired}} $</div>
+            <!-- projects -->
+            <div class="projects search-results" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
+              [infiniteScrollThrottle]="500" (scrolled)="onScroll2()" (scrolledUp)="onScrollUp()">
+              <h5 *ngIf="projects?.length === 0 && showProgress === false">No projects found</h5>
+
+              <div *ngFor="let project of projects" class="project-wrapper" (mouseenter)="projectMouseEnter(project)">
+                <app-filtered-project [project]="project" (selectProject)="selectProject($event)"></app-filtered-project>
               </div>
-              <div>{{project.investmentDescription}}</div>
-            </div>
-            <div class="arrow-div">
-              <img matTooltip="Detailed" [matTooltipPosition]="'above'" (click)="showProjectInfo(project)"
-                src="../../../assets/img/right-arrow.png" alt="">
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-5 ml-1">
-              Region: {{project.region}}
-            </div>
-            <div class="col-6">
-              Field of activity: {{project.fieldOfActivity}}
             </div>
           </div>
         </div>
       </div>
 
-      <!-- <mat-paginator class="paginator" *ngIf="projects.length > 0" [length]="projectsCount" [pageSize]="pageSize"
-        [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event)"></mat-paginator> -->
+
     </div>
 
-    <div class="col-4">
-
+    <div class="col-4 pr-0 pl-0 right-col">
+      <!-- map -->
       <div #mapWrapper class="map-wrapper-2">
         <div id="map-2"></div>
         <div id="info-2">
@@ -146,43 +66,52 @@
         <img id="full-screen-img-2" src="../../../assets/img/full-screen.png" alt="full-screen">
       </div>
 
+      <div class="detail-project-info">
+        <div class="project-info-menu">
+          <button [disabled]="!selectedProject" type="button"
+            [ngClass]="{selectedMenuItem: selectedMenuItem === 'shared'}"
+            (click)="selectedMenuItem = 'shared'">Общее</button>
+          <button [disabled]="!selectedProject" type="button"
+            [ngClass]="{selectedMenuItem: selectedMenuItem === 'gallery'}"
+            (click)="selectedMenuItem = 'gallery'">Галерея</button>
+          <button [disabled]="!selectedProject" type="button"
+            [ngClass]="{selectedMenuItem: selectedMenuItem === 'documents'}"
+            (click)="selectedMenuItem = 'documents'">Документы</button>
+        </div>
+        <div class="no-selected" *ngIf="selectedMenuItem == null">
+          <div class="iiua">IIUA</div>
+          <div>Начинай инвестировать в будущее.</div>
+          <div class="grey-text">Тут будет отображена информация по выбранному проекту.</div>
+        </div>
+        <div class="shared" *ngIf="selectedMenuItem === 'shared'">
+          <h5 class="mt-2 mb-2">Для чего нужны инвестиции</h5>
+          <div class="steps">
+            <div class="step" *ngFor="let step of selectedProject.steps">
+              {{step.data}}
+            </div>
+          </div>
+          <hr>
+          <div>{{selectedProject.investmentDescription}}</div>
+        </div>
+        <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
+          <div class="images-gallery">
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+          </div>
+          <div class="videos">
+            todo link or preview?
+          </div>
+        </div>
+        <div class="documents" *ngIf="selectedMenuItem === 'documents'">
+          <div class="documents-wrapper">
+            <div class="document" *ngFor="let document of selectedProject.files">
+              <img src="../../../assets/img/file.png" alt="file">
+              <span>{{document.url}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 
 </div>
-
-
-<div #projectInfo class="project-info">
-  <div *ngIf="selectedProject" class="content">
-    <div class="window-header">
-      <h6>Project: {{selectedProject.name}}</h6>
-      <button (click)="hideProjectInfo()" type="button" class="close" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
-    <div class="window-body">
-      <img class="project-avatar pb-1" src="{{selectedProject.avatara?.url}}" alt="avatar">
-      <div class="pb-1">Legal entity name: {{selectedProject.legalEntityName}}</div>
-      <div class="pb-1">Goal: {{selectedProject.goal}}</div>
-      <div class="pb-1">Region: {{selectedProject.region}}</div>
-      <div class="pb-1">Field of activity: {{selectedProject.fieldOfActivity}}</div>
-      <div class="pb-1">Employees number: {{selectedProject.employeesNumber}}</div>
-      <div class="pb-1">Company age: {{selectedProject.companyAge}}</div>
-      <div class="pb-1">Money required: {{selectedProject.moneyRequired}}</div>
-    </div>
-
-    <div class="window-footer">
-      <button (click)="hideProjectInfo()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button (click)="goToProject(selectedProject)" type="button" class="btn btn-primary ml-1">Go to project</button>
-    </div>
-  </div>
-</div>
-
-
-<!-- <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
-  (scrolled)="onScroll2()" (scrolledUp)="onScrollUp()">
-  <p *ngFor="let i of TEST_SCROLL">
-    {{ i }}
-  </p>
-</div> -->

@@ -23,34 +23,40 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { AdminSigninComponent } from './admin-signin/admin-signin.component';
 import { AdminSignupComponent } from './admin-signup/admin-signup.component';
+import { FilterComponent } from './filter/filter.component';
+import { FilteredProjectComponent } from './filtered-project/filtered-project.component';
 
 
 // this exports for app-routing.module.ts
-export { HomePageComponent } from './home-page/home-page.component';
-export { IndexComponent } from './index/index.component';
-export { SigninComponent } from './signin/signin.component';
-export { SignupComponent } from './signup/signup.component';
-export { HeaderComponent } from './header/header.component';
-export { InvestorComponent } from './investor/investor.component';
-export { InvestorProfileComponent } from './investor-profile/investor-profile.component';
-export { VendorComponent } from './vendor/vendor.component';
-export { VendorProfileComponent } from './vendor-profile/vendor-profile.component';
-export { SignupVendorComponent } from './signup-vendor/signup-vendor.component';
-export { SignupInvestorComponent } from './signup-investor/signup-investor.component';
-export { SnackBarComponent } from './snack-bar/snack-bar.component';
-export { CreateVendorCompanyComponent } from './create-vendor-company/create-vendor-company.component';
-export { UpdateVendorCompanyComponent } from './update-vendor-company/update-vendor-company.component';
-export { VendorProjectsComponent } from './vendor-projects/vendor-projects.component';
-export { FileUploaderComponent  } from './file-uploader/file-uploader.component';
-export { StepsComponent } from './steps/steps.component';
-export { VideosComponent } from './videos/videos.component';
-export { ViewProjectComponent } from './view-project/view-project.component';
-export { ViewVendorProjectsComponent } from './view-vendor-projects/view-vendor-projects.component';
-export { Object3dUploadComponent } from './object3d-upload/object3d-upload.component';
-export { AdminPageComponent } from './admin-page/admin-page.component';
-export { AdminProfileComponent } from './admin-profile/admin-profile.component';
-export { AdminSigninComponent } from './admin-signin/admin-signin.component';
-export { AdminSignupComponent } from './admin-signup/admin-signup.component';
+export {
+  HomePageComponent,
+  IndexComponent,
+  SigninComponent,
+  SignupComponent,
+  HeaderComponent,
+  InvestorComponent,
+  InvestorProfileComponent,
+  VendorComponent,
+  VendorProfileComponent,
+  SignupVendorComponent,
+  SignupInvestorComponent,
+  SnackBarComponent,
+  CreateVendorCompanyComponent,
+  UpdateVendorCompanyComponent,
+  VendorProjectsComponent,
+  FileUploaderComponent,
+  StepsComponent,
+  VideosComponent,
+  ViewProjectComponent,
+  ViewVendorProjectsComponent,
+  Object3dUploadComponent,
+  AdminPageComponent,
+  AdminProfileComponent,
+  AdminSigninComponent,
+  AdminSignupComponent,
+  FilterComponent,
+  FilteredProjectComponent
+};
 
 export const components = [
   HomePageComponent,
@@ -77,7 +83,9 @@ export const components = [
   AdminPageComponent,
   AdminProfileComponent,
   AdminSigninComponent,
-  AdminSignupComponent
+  AdminSignupComponent,
+  FilterComponent,
+  FilteredProjectComponent
 ];
 
 

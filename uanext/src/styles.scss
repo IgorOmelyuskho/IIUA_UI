@@ -7,11 +7,18 @@
 @import "~primeng/resources/themes/nova-light/theme.css";
 @import "~primeng/resources/primeng.min.css";
 
+@import "./styles-variables.scss";
+
+html,
+body {
+  font-family: OpenSans;
+}
+
 .sortable-header {
   display: none;
 }
 
-.sortable-container { 
+.sortable-container {
   border: none !important;
 }
 
@@ -29,7 +36,9 @@
   cursor: grab;
 }
 
-.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+.mat-sidenav-container,
+.mat-sidenav-content,
+.mat-tab-body-content {
   transform: none !important;
 }
 
@@ -61,4 +70,109 @@
   left: 0 !important;
   top: 0 !important;
   z-index: 10000 !important;
+}
+
+// noUi-slider
+.noUi-origin {
+  left: -11px !important
+}
+
+.noUi-handle {
+  top: -6px !important;
+  background: $green !important;
+  width: 14px !important;
+  box-shadow: none !important;
+  height: 14px !important;
+  border-radius: 100% !important;
+  outline: none !important;
+  border: none !important;
+
+  &:before,
+  &:after {
+    content: none !important;
+    display: none !important;
+  }
+}
+
+.noUi-connects {
+  background: $green !important;
+
+  .noUi-connect {
+    background: $green !important;
+  }
+}
+
+// mat expansion
+.filter {
+  .mat-expansion-indicator {
+    position: relative !important;
+    right: 15px !important;
+    top: -9px !important;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+
+  .mat-expansion-panel-content {
+    font: inherit;
+  }
+
+  .mat-expansion-panel-header {
+    font: inherit;
+  }
+}
+
+// filtering projects gallery
+.detail-project-info {
+  .gallery {
+    .ngx-gallery-image {
+      border-radius: 5px !important;
+    }
+
+    .ngx-gallery-thumbnail {
+      border-radius: 5px !important;
+    }
+  }
+}
+
+// scrollbar
+::-webkit-scrollbar-track {
+  // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(129, 129, 129);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgb(185, 185, 185);
+}
+
+
+// custom radiogroup
+.radio-group {
+  .mat-radio-button.mat-primary .mat-radio-inner-circle {
+    background-color: $green;
+    height: 15px;
+    width: 15px;
+  }
+
+  .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $green;
+    height: 15px;
+    width: 15px;
+  }
+
+  .mat-radio-outer-circle {
+    height: 15px;
+    width: 15px;
+  }
 }

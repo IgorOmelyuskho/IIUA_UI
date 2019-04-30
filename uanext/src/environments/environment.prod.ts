@@ -13,6 +13,8 @@ export const environment = {
   uploadImages: 'api/Image/',
   uploadFiles: 'api/File/',
   filteringProjects: 'api/FilteringProjects',
-  adminRegister: 'api/ProjectUser/register',
-  adminProfile: 'api/ProjectUser/',
+  projectUserRegister: 'api/ProjectUser/register',
+  projectUserProfile: 'api/ProjectUser/',
+  adminRegister: 'api/todo/register',
+  adminProfile: 'api/todo/',
 };

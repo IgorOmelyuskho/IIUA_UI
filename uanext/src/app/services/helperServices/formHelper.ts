@@ -17,4 +17,7 @@ export default class FormHelper {
   'application/vnd.ms-word.document.macroEnabled.12,application/vnd.ms-excel';
 
   static readonly emptyAvatar = '../../../assets/img/empty-profile.jpg';
+
+  static readonly bigNumberMask: any[] = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/,
+  '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/];
 }
