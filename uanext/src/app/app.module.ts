@@ -19,11 +19,13 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { NgxSortableModule } from 'ngx-sortable';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { HighlightPipe } from './services/pipes/highlight.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ...components,
+    HighlightPipe,
   ],
   imports: [
     BrowserModule,

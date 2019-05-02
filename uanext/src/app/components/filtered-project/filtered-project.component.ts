@@ -10,6 +10,13 @@ export class FilteredProjectComponent implements OnInit, AfterViewInit {
   @Input() project: ViewVendorProject;
   @Output() selectProject = new EventEmitter<ViewVendorProject>();
 
+  _searchText = 'prev_search'; // need some default string
+  @Input()
+  set searchText(text: string) {
+    console.log('SEARCH TEXT = ', text);
+    this._searchText = text;
+  }
+
   @ViewChild('stepsElement')
   private stepsElement: ElementRef;
 
@@ -52,7 +59,7 @@ export class FilteredProjectComponent implements OnInit, AfterViewInit {
 
   getAvatarUrl(project) {
     const url = project.avatara.url;
-    return 'url("' +  url + '")';
+    return 'url("' + url + '")';
   }
 
   projectOnSelect() {

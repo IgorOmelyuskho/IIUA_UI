@@ -43,7 +43,7 @@
               <h5 *ngIf="projects?.length === 0 && showProgress === false">No projects found</h5>
 
               <div *ngFor="let project of projects" class="project-wrapper">
-                <app-filtered-project [project]="project" (selectProject)="selectProject($event)"></app-filtered-project>
+                <app-filtered-project [searchText]="searchWord" [project]="project" (selectProject)="selectProject($event)"></app-filtered-project>
               </div>
             </div>
           </div>

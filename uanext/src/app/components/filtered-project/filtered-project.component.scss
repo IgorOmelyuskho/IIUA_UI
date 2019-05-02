@@ -146,3 +146,8 @@
   overflow: hidden;
   /* older browsers */
 }
+
+:host ::ng-deep .highlighted {
+  background: rgb(201, 181, 8);
+  color: red;
+}
