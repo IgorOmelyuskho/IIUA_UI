@@ -200,7 +200,7 @@ export class ViewProjectsService {
   //   return project;
   // }
 
-  fetchProjects(filter: any = {}): Observable<FilteredProjects> {
+  searchByFilter(filter: any = {}): Observable<FilteredProjects> {
     return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, filter)
       // return of([JSON.parse(JSON.stringify(fakeProject)), JSON.parse(JSON.stringify(fakeProject))])
       .pipe(
@@ -266,6 +266,31 @@ export class ViewProjectsService {
   searchByCompanyName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
     return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, {
       companyName: name,
+      pageSize,
+      page
+    })
+      .pipe(
+        map(response => {
+          if (response['data'] == null) {
+            return emptyFilteredProjects;
+          }
+          return response['data'];
+        }),
+        // map((filteredProjects: FilteredProjects) => {
+        //   console.log(filteredProjects);
+        //   for (let i = 0; i < filteredProjects.projectsList.length; i++) {
+        //     this.replaceLinks(filteredProjects.projectsList[i]);
+        //   }
+
+        //   return filteredProjects;
+        // }),
+        catchError(val => of(emptyFilteredProjects))
+      );
+  }
+
+  searchByKeyword(keyword: string, pageSize: number, page: number): Observable<FilteredProjects> {
+    return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, {
+      keyWord_TODO_NAME: keyword,
       pageSize,
       page
     })

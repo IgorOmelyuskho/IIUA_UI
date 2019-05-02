@@ -15,11 +15,11 @@
       <div class="search-by-name">
         <div class="input-group mb-3 mt-3">
           <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button">
+            <button (click)="searchByKeywordBtn($event)" class="btn btn-outline-secondary" type="button">
               <span class="fa fa-search"></span>
             </button>
           </div>
-          <input type="text" (keydown)=searchByProjectInput($event) [(ngModel)]="searchProjectName" class="form-control"
+          <input #searchByKeyWordInput type="text" (keydown)="searchByKeywordKeyDown($event)" [(ngModel)]="searchWord" class="form-control"
             placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
             aria-describedby="basic-addon2">
         </div>
@@ -28,21 +28,21 @@
       <div class="row">
         <div class="col-3 pl-0 pr-0">
           <!-- filter -->
-          <app-filter (filterChange)="filterOnChange($event)" (updateRateChange)="updateRateOnChange($event)"></app-filter>
+          <app-filter [filterItemForRemove]="filterItemForRemove" (filterChange)="filterOnChange($event)"></app-filter>
         </div>
 
         <div class="col-9">
           <div class="projects-wrapper">
             <!-- filter-property -->
             <div class="filter-properties">
-              FILTER PROPERTIES TODO
+              <app-filter-items (filterItemRemove)="onFilterItemRemove($event)" [filter]="filter"></app-filter-items>
             </div>
             <!-- projects -->
             <div class="projects search-results" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
-              [infiniteScrollThrottle]="500" (scrolled)="onScroll2()" (scrolledUp)="onScrollUp()">
+              [infiniteScrollThrottle]="500" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()">
               <h5 *ngIf="projects?.length === 0 && showProgress === false">No projects found</h5>
 
-              <div *ngFor="let project of projects" class="project-wrapper" (mouseenter)="projectMouseEnter(project)">
+              <div *ngFor="let project of projects" class="project-wrapper">
                 <app-filtered-project [project]="project" (selectProject)="selectProject($event)"></app-filtered-project>
               </div>
             </div>

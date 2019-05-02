@@ -3,6 +3,11 @@
 .project {
   display: flex;
   height: 198px;
+  background: white;
+
+  &:hover {
+    background-color: #f6f7f3;
+  }
 
   h5 {
     font-weight: bold;
@@ -42,11 +47,6 @@
   .short-project-info {
     width: 100%;
 
-    img {
-      height: 15px;
-      margin-left: 10px;
-    }
-
     hr {
       border-top: 1px solid rgba(36, 21, 21, 0.2);
       margin: 0;
@@ -59,6 +59,16 @@
       margin-top: 14px;
       margin-bottom: 4px;
 
+      img.flame {
+        height: 21px;
+        margin-left: 15px;
+      }
+
+      img.right-img {
+        height: 16px;
+        margin-left: 15px;
+      }
+
       .project-name {
         color: $green;
         font-size: 18px;
@@ -68,11 +78,14 @@
 
     .field-activity {
       display: flex;
+      font-size: 15px;
+      letter-spacing: 0.5px;
 
       img {
         position: relative;
-        top: 4px;
+        top: 6px;
         margin-right: 10px;
+        height: 12px;
       }
     }
 
@@ -87,6 +100,11 @@
 
   .company-name {
     font-size: 15px;
+    letter-spacing: 0.5px;
+  }
+
+  .region {
+    letter-spacing: 0.5px;
   }
 
   .fa-map-marker {
@@ -118,9 +136,13 @@
   padding: 0px 9px;
   line-height: 1.7;
   padding-bottom: 2px;
-  height: 25px;
-  text-overflow: ellipsis; /* will make [...] at the end */
-  max-width: 310px; /* change to your preferences */
-  white-space: nowrap; /* paragraph to one line */
-  overflow:hidden; /* older browsers */
+  height: 27px;
+  text-overflow: ellipsis;
+  /* will make [...] at the end */
+  max-width: 310px;
+  /* change to your preferences */
+  white-space: nowrap;
+  /* paragraph to one line */
+  overflow: hidden;
+  /* older browsers */
 }

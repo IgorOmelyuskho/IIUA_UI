@@ -161,7 +161,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     const arrLength: number = this.activateRoute.url['value'].length;
     this.projectId = this.activateRoute.url['value'][arrLength - 1].path;
 
-    this.viewProjectsService.fetchProjects({}).subscribe(
+    this.viewProjectsService.searchByFilter({}).subscribe(
       (filteringProjects: FilteredProjects) => {
         for (let i = 0; i < filteringProjects.projectsList.length; i++) {
           if (filteringProjects.projectsList[i].id === parseInt(this.projectId, 10)) {

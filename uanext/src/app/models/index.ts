@@ -8,3 +8,4 @@ export { FilteredProjects } from './filteredProjects';
 export { AdminRole } from './adminRole';
 export { AdminDto } from './adminDto';
 export { UserRole } from './userRole';
+export { FilterFields, FilterItemsName } from './filterFields';

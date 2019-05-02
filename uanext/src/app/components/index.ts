@@ -25,7 +25,7 @@ import { AdminSigninComponent } from './admin-signin/admin-signin.component';
 import { AdminSignupComponent } from './admin-signup/admin-signup.component';
 import { FilterComponent } from './filter/filter.component';
 import { FilteredProjectComponent } from './filtered-project/filtered-project.component';
-
+import { FilterItemsComponent } from './filter-items/filter-items.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -55,7 +55,8 @@ export {
   AdminSigninComponent,
   AdminSignupComponent,
   FilterComponent,
-  FilteredProjectComponent
+  FilteredProjectComponent,
+  FilterItemsComponent
 };
 
 export const components = [
@@ -85,7 +86,8 @@ export const components = [
   AdminSigninComponent,
   AdminSignupComponent,
   FilterComponent,
-  FilteredProjectComponent
+  FilteredProjectComponent,
+  FilterItemsComponent
 ];
 
 

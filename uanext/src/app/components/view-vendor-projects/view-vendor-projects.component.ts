@@ -1,12 +1,13 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { Router } from '@angular/router';
-import { FilteredProjects } from 'src/app/models';
-import { PageEvent } from '@angular/material';
+import { FilteredProjects, FilterFields } from 'src/app/models';
 import { init, destroy, setProject } from './map2.js';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import FormHelper from '../../services/helperServices/formHelper';
+import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service.js';
+import { fromEvent } from 'rxjs';
+import { tap, map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 const response = {
   'isSuccess': true,
@@ -737,13 +738,14 @@ const response = {
   styleUrls: ['./view-vendor-projects.component.scss']
 })
 export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('searchByKeyWordInput') searchByKeyWordInput: ElementRef;
+
   FormHelper = FormHelper;
 
   projects: ViewVendorProject[] = [];
   selectedProject: ViewVendorProject;
   showProgress = false;
-  searchCompanyName: string;
-  searchProjectName: string;
+  searchWord: string;
 
   pageSize = 5;
   pagesCount = 0;
@@ -752,17 +754,23 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
 
   selectedMenuItem: string;
 
-  prevSearch: string; // filter/projectName/companyName
+  prevSearch: string; // filter/keyWord
+
+  _filterItemForRemove: any;
+  get filterItemForRemove(): any {
+    return this._filterItemForRemove;
+  }
+  set filterItemForRemove(value: any) {
+    this._filterItemForRemove = value;
+    console.log(this._filterItemForRemove);
+  }
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  filter: any = {
-    page: this.pageNumber,
-    pageSize: this.pageSize
-  };
+  filter: FilterFields;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private viewProjectsService: ViewProjectsService) { }
 
   ngOnInit() {
     this.galleryOptions = [
@@ -792,27 +800,36 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    // todo
-    // this.filter.moneyRequiredFrom = this.budgetFromElement.value;
-    // this.filter.moneyRequiredTo = this.budgetToElement.value;
-    // this.filter.region = this.region;
-    // this.filter.companyAgeFrom = this.ageFromElement.value;
-    // this.filter.companyAgeTo = this.ageToElement.value;
     setTimeout(() => { // mat-progress-bar
-      this.searchByFilter(this.filter);
+      this.searchProjectsByFilter(this.filter);
     }, 0);
 
     // if (this.projects != null) {
     // init();
     // }
+
+    fromEvent<any>(this.searchByKeyWordInput.nativeElement, 'input')
+      .pipe(
+        map(e => e.target.value),
+        debounceTime(700),
+        filter(e => e.length >= 3),
+        distinctUntilChanged((a, b) => a === b),
+      )
+      .subscribe(res => {
+        this.resetBeforeNewSearch();
+        this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
+      });
   }
 
-  filterOnChange(filter) {
-    console.log(filter); // todo
+  onFilterItemRemove(filterItemForRemove) {
+    console.log('CLEAR ALL iN VIEW_VENROR');
+    // this.filterItemForRemove = filterItemForRemove;
+    this.filterItemForRemove = JSON.parse(JSON.stringify(filterItemForRemove));
   }
 
-  updateRateOnChange(updateRate) {
-    console.log(updateRate); // todo
+  filterOnChange(filterParam: FilterFields) {
+    this.filter = filterParam;
+    console.log(this.filter);
   }
 
   setGalleryImages(images) {
@@ -834,102 +851,65 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     this.selectedProject = project;
     this.selectedMenuItem = 'shared';
     this.setGalleryImages(this.selectedProject.images);
+    this.setMapCoordinateByProject(project);
   }
 
-  searchByCompanyInput(e) {
-    if (e.code === 'Enter') {
-      this.changeSearchType();
-      this.searchByCompanyName(this.searchCompanyName, this.pageSize, this.pageNumber);
-    }
-  }
-
-  searchByProjectInput(e) {
-    if (e.code === 'Enter') {
-      this.changeSearchType();
-      this.searchByProjectName(this.searchProjectName, this.pageSize, this.pageNumber);
-    }
-  }
-
-  searchByCompanyNameBtn() {
-    this.changeSearchType();
-    this.searchByCompanyName(this.searchCompanyName, this.pageSize, this.pageNumber);
-  }
-
-  searchByProjectNameBtn() {
-    this.changeSearchType();
-    this.searchByProjectName(this.searchProjectName, this.pageSize, this.pageNumber);
-  }
-
-  searchByCompanyName(name: string, pageSize: number, pageNumber: number) {
-    this.prevSearch = 'companyName';
-    this.showProgressBar(true);
-    // this.viewProjectsService.searchByCompanyName(name, pageSize, pageNumber)
-    //   .subscribe(
-    //     (filteringProjects: FilteredProjects) => {
-    //       this.pagesCount = filteringProjects.pages;
-    //       this.projectsCount = filteringProjects.projectsCount;
-    //       // this.projects = filteringProjects.projectsList; // use for pagination
-    //       this.addNewProjects(filteringProjects.projectsList);
-    //       this.showProgressBar(false);
-    //     },
-    //     err => {
-    //       console.warn(err);
-    //       this.showProgressBar(false);
-    //     }
-    //   );
-    this.addNewProjects(response.data.projectsList);
-    this.showProgressBar(false);
-  }
-
-  searchByProjectName(name: string, pageSize: number, pageNumber: number) {
-    this.prevSearch = 'projectName';
-    this.showProgressBar(true);
-    // this.viewProjectsService.searchByProjectName(name, pageSize, pageNumber)
-    //   .subscribe(
-    //     (filteringProjects: FilteredProjects) => {
-    //       this.pagesCount = filteringProjects.pages;
-    //       this.projectsCount = filteringProjects.projectsCount;
-    //       // this.projects = filteringProjects.projectsList; // use for pagination
-    //       this.addNewProjects(filteringProjects.projectsList);
-    //       this.showProgressBar(false);
-    //     },
-    //     err => {
-    //       console.warn(err);
-    //       this.showProgressBar(false);
-    //     }
-    //   );
-    this.addNewProjects(response.data.projectsList);
-    this.showProgressBar(false);
-  }
-
-  showProgressBar(show: boolean) {
-    if (show === true) {
-      this.showProgress = true;
-    } else {
-      this.showProgress = false;
-    }
-  }
-
-  searchByFilterBtn() {
+  setMapCoordinateByProject(project: ViewVendorProject) {
     // todo
-    // this.filter.moneyRequiredFrom = this.budgetFromElement.value;
-    // this.filter.moneyRequiredTo = this.budgetToElement.value;
-    // this.filter.region = this.region;
-    // this.filter.companyAgeFrom = this.ageFromElement.value;
-    // this.filter.companyAgeTo = this.ageToElement.value;
-    this.changeSearchType();
-    this.searchByFilter(this.filter);
+    project['projectCoords'] = {
+      x: 13.41561 + Math.random() * 0.1,
+      y: 52.539611 + Math.random() * 0.1,
+    };
+
+    setProject(project); // map2.js
   }
 
-  searchByFilter(filter: any) {
+  searchByKeywordBtn(event) {
+    this.resetBeforeNewSearch();
+    this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
+  }
+
+  searchByKeywordKeyDown(e) {
+    if (e.code === 'Enter') {
+      this.resetBeforeNewSearch();
+      this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
+    }
+  }
+
+  searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
+    console.log('searchProjectsByKeyword = ', keyword);
+    this.prevSearch = 'keyWord';
+    this.showProgressBar(true);
+    // this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
+    //   .subscribe(
+    //     (filteringProjects: FilteredProjects) => {
+    //       this.pagesCount = filteringProjects.pages;
+    //       this.projectsCount = filteringProjects.projectsCount;
+    //       this.addNewProjects(filteringProjects.projectsList);
+    //       this.showProgressBar(false);
+    //     },
+    //     err => {
+    //       console.warn(err);
+    //       this.showProgressBar(false);
+    //     }
+    //   );
+    this.addNewProjects(response.data.projectsList);
+    this.showProgressBar(false);
+  }
+
+  searchByFilter() {
+    this.resetBeforeNewSearch();
+    this.searchByKeywordBtn(this.filter); // todo this.filter
+  }
+
+  searchProjectsByFilter(filterParam: any) {
     this.prevSearch = 'filter';
     this.showProgressBar(true);
-    // this.viewProjectsService.fetchProjects(filter).subscribe(
+    // this.viewProjectsService.searchByFilter(filter).subscribe(
     //   (filteringProjects: FilteredProjects) => {
     //     console.log(filteringProjects);
     //     this.pagesCount = filteringProjects.pages;
     //     this.projectsCount = filteringProjects.projectsCount;
-    //     // this.projects = filteringProjects.projectsList; // use for pagination
     //     this.addNewProjects(filteringProjects.projectsList);
     //     this.showProgressBar(false);
     //   },
@@ -942,66 +922,43 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     this.showProgressBar(false);
   }
 
+  showProgressBar(show: boolean) {
+    if (show === true) {
+      this.showProgress = true;
+    } else {
+      this.showProgress = false;
+    }
+  }
+
   addNewProjects(newProjects: any[]) {
     for (let i = 0; i < newProjects.length; i++) {
       this.projects.push(newProjects[i]);
     }
   }
 
-  changeSearchType() {
+  resetBeforeNewSearch() {
     this.projects = [];
     this.pageNumber = 1;
     this.filter.page = 1;
   }
 
-  pageEvent(e: PageEvent) {
-    // this.pageSize = e.pageSize;
-    // this.pageNumber = e.pageIndex + 1;
-
-    // if (this.prevSearch === 'filter') {
-    //   this.filter.page = this.pageNumber;
-    //   this.filter.pageSize = this.pageSize;
-    //   this.searchByFilter(this.filter);
-    // }
-    // if (this.prevSearch === 'companyName') {
-    //   this.searchByCompanyName(this.searchCompanyName, this.pageSize, this.pageNumber);
-    // }
-    // if (this.prevSearch === 'projectName') {
-    //   this.searchByProjectName(this.searchProjectName, this.pageSize, this.pageNumber);
-    // }
-  }
-
-  onScroll2() {
+  onScroll() {
     console.log('scrolled!!');
     this.pageNumber += 1;
 
     if (this.prevSearch === 'filter') {
       this.filter.page = this.pageNumber;
       this.filter.pageSize = this.pageSize;
-      this.searchByFilter(this.filter);
+      this.searchProjectsByFilter(this.filter);
     }
-    if (this.prevSearch === 'companyName') {
-      this.searchByCompanyName(this.searchCompanyName, this.pageSize, this.pageNumber);
-    }
-    if (this.prevSearch === 'projectName') {
-      this.searchByProjectName(this.searchProjectName, this.pageSize, this.pageNumber);
+    if (this.prevSearch === 'keyWord') {
+      this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
     }
   }
 
   onScrollUp() {
     console.log('scroll UP');
     // this.pageNumber -= 1;
-  }
-
-  projectMouseEnter(project: ViewVendorProject) { // or request for data ?
-    const rightProject: any = {};
-    rightProject.id = project.id;
-    rightProject.projectCoords = {
-      x: 13.41561 + Math.random() * 0.1,
-      y: 52.539611 + Math.random() * 0.1,
-    };
-
-    setProject(rightProject);
   }
 
   ngOnDestroy() {

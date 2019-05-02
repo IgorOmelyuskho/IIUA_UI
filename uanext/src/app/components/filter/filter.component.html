@@ -134,15 +134,24 @@
   </div>
 
   <div class="border-bottom">
-    <h5 class="filter-item-name pt-3">Обновление Данных</h5>
-    <div class="update-rate">
-      <mat-radio-group class="radio-group" [(ngModel)]="updateRate">
-        <mat-radio-button class="radio-button" *ngFor="let updateRate of updateRates" color="primary"
-          disableRipple='true' (change)="updateRateOnChange($event)" [value]="updateRate.value">
-          {{updateRate.name}}
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <h5 class="filter-item-name pt-3">Обновление Данных</h5>
+      </mat-expansion-panel-header>
+      <div class="slider">
+        <div class="form-group">
+          <div class="custom-checkbox" *ngFor="let option of updateRateOptions">
+            <label class="checkbox-container">
+              <div class="field-activity">{{option.name}}</div>
+              <input type="checkbox" name="updateRateOptions" value="{{option.name}}" [(ngModel)]="option.checked"
+                (change)="updateRateChange($event)" />
+                <!-- use only (change) - not (input) -->
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
   </div>
 
   <!-- <button (click)="searchByFilterBtn()" type="button" class="btn btn-primary mt-3">Apply filter</button> -->
