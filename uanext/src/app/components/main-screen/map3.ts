@@ -1,3 +1,6 @@
+declare var THREE: any;
+declare var maptalks: any;
+
 const zoomWhenChangeVisible = 16;
 const initZoom = 15;
 const updatedInterval = 15000;
@@ -67,7 +70,7 @@ export function mapInit() {
   initFetchObjects();
   createPolygon(polygonArr);
 
-  window.addEventListener("resize", windowOnResize);
+  window.addEventListener('resize', windowOnResize);
 
   timer1 = setInterval(() => {
     updateCoordsFromServer();
@@ -76,7 +79,7 @@ export function mapInit() {
   timer2 = setInterval(() => {
     updateCoordsForRedraw();
   }, drawInterval);
-};
+}
 
 export function mapSetProject(project) {
   console.log(project);
@@ -88,7 +91,7 @@ export function mapDestroy() {
   clearInterval(timer1);
   clearInterval(timer2);
   cancelAnimationFrame(animationFrame);
-  window.removeEventListener("resize", windowOnResize);
+  window.removeEventListener('resize', windowOnResize);
   infoWindow = {};
   canvasElem = null;
   stats = null;
@@ -108,7 +111,7 @@ export function mapDestroy() {
   clusterLayer = null;
   polygonLayer = null;
   camera = null;
-};
+}
 
 function setMapFullScreen() { // todo navbar height
   const e = document.documentElement;
@@ -137,16 +140,16 @@ function windowOnResize(event) {
   const y = window.innerHeight || e.clientHeight || g.clientHeight;
   mapWrapperElement.style.width = x + 'px';
   mapWrapperElement.style.height = y + 'px';
-  mapElement.style.height = y + 'px'
+  mapElement.style.height = y + 'px';
   labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
 }
 
 
 function initInfoWindow() {
-  infoWindow.infoElem = document.getElementById('info-3');
-  infoWindow.coordX = infoWindow.infoElem.querySelector('.coords-x');
-  infoWindow.coordY = infoWindow.infoElem.querySelector('.coords-y');
-  infoWindow.name = infoWindow.infoElem.querySelector('.name');
+  infoWindow['infoElem'] = document.getElementById('info-3');
+  infoWindow['coordX'] = infoWindow['infoElem'].querySelector('.coords-x');
+  infoWindow['coordY'] = infoWindow['infoElem'].querySelector('.coords-y');
+  infoWindow['name'] = infoWindow['infoElem'].querySelector('.name');
 }
 
 function updateCoordsFromServer() {
@@ -188,10 +191,10 @@ function animation() {
   if (labelRenderer != null && scene != null && camera != null) {
     labelRenderer.render(scene, camera);
   }
-};
+}
 
 function initFetchObjects() {
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 2; i++) {
     const newObj = {
       id: 'id' + i,
       coords: map.getCenter().add(Math.random() * 0.003, Math.random() * 0.002),
@@ -207,31 +210,31 @@ function initFetchObjects() {
       model: null,
       mouseUnder: false,
       loaderPath: '../../../assets/objects/tractorObj/',
-      // loaderPath: 'https://gitlab.com/omelyushko.igor/tractor/blob/master/43-tractor/Tractor.mtl', 
+      // loaderPath: 'https://gitlab.com/omelyushko.igor/tractor/blob/master/43-tractor/Tractor.mtl',
       modelMtl: 'Tractor.mtl',
       modelObj: 'Tractor.obj',
     };
 
-    newObj.prevCoords = {};
-    newObj.prevCoords.x = newObj.coords.x;
-    newObj.prevCoords.y = newObj.coords.y;
+    newObj['prevCoords'] = {};
+    newObj['prevCoords'].x = newObj.coords.x;
+    newObj['prevCoords'].y = newObj.coords.y;
     objectsArr.push(newObj);
   }
 
   for (let i = 0; i < objectsArr.length; i++) {
     createMarker(objectsArr[i]);
-  };
+  }
 
   for (let i = 0; i < objectsArr.length; i++) {
     // setTimeout(() => {
     //   loadObjectModel(objectsArr[i]);
     // }, i * 1500)
     loadObjectModel(objectsArr[i]);
-  };
+  }
 }
 
 function createMap() {
-  map = new maptalks.Map("map-3", { // DIV id
+  map = new maptalks.Map('map-3', { // DIV id
     center: [13.41261, 52.529611],
     // center: [0, 0],
     zoom: initZoom,
@@ -249,7 +252,7 @@ function createMap() {
     // overviewControl: true, // add overview control
     baseLayer: new maptalks.TileLayer('tile', {
       'urlTemplate' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-      'subdomains'  : ['a','b','c'],
+      'subdomains'  : ['a', 'b', 'c'],
     })
   });
 
@@ -284,7 +287,7 @@ function createMap() {
 }
 
 function createMarker(obj) {
-  const coords = new maptalks.Coordinate(obj.coords.x, obj.coords.y)
+  const coords = new maptalks.Coordinate(obj.coords.x, obj.coords.y);
   const marker = new maptalks.Marker(coords, {
     visible: true,
     cursor: 'pointer',
@@ -336,7 +339,7 @@ function createMarker(obj) {
     });
     marker.setZIndex(1);
   });
-};
+}
 
 function createPolygon(dotsArr) {
   const initialSymbol = {
@@ -375,14 +378,14 @@ function createPolygon(dotsArr) {
     });
 
     polygonLayer.addGeometry(polygon);
-  };
+  }
 
 }
 
 function createMarkerLayer() {
   markerLayer = new maptalks.VectorLayer('markerLayer');
   markerLayer.addTo(map);
-};
+}
 
 function createClusterLayer() {
   clusterLayer = new maptalks.ClusterLayer('cluster', {
@@ -390,7 +393,7 @@ function createClusterLayer() {
     'animation': false,
     'maxClusterRadius': 50,
     'maxClusterZoom': zoomWhenChangeVisible, // -2
-    //"count" is an internal variable: marker count in the cluster.
+    // "count" is an internal variable: marker count in the cluster.
     'symbol': {
       'markerType': 'ellipse',
       'markerFill': {
@@ -455,7 +458,7 @@ function loadObjectModel(obj) {
     objLoader.load(obj.modelObj, function (object) {
       object.traverse(function (child) {
         if (child instanceof THREE.Mesh) {
-          child.scale.set(childScale, childScale, childScale); // todo 
+          child.scale.set(childScale, childScale, childScale); // todo
           child.rotation.set(Math.PI * 1 / 2, -Math.PI * 1 / 2, 0);
           if (Array.isArray(child.material)) {
             return; // todo maybe remove this mesh
@@ -494,46 +497,12 @@ function loadObjectModel(obj) {
 
       changeVisible(obj, map.getZoom());
       // console.log(scene); // todo
-
-      const str = JSON.stringify(object);
-      const jsonObject = JSON.parse(str);
-
-      const copy = Object.assign({}, object);
-
-      const copy2 = extend(object);
-
-      // let objJsonStr = btoa(JSON.stringify(obj));
-      // console.log(objJsonStr);
-      // let objJsonB64 = JSON.parse(atob(e));
-      // console.log(objJsonB64);
-
-      console.log(object);
-      console.log(jsonObject);
-      console.log(copy);
-      console.log(copy2);
-      // console.log(objJsonB64);
-
       scene.add(object);
       threeLayer.renderScene();
     });
   });
-};
-
-function extend(from, to) {
-  if (from == null || typeof from != "object") return from;
-  if (from.constructor != Object && from.constructor != Array) return from;
-  if (from.constructor == Date || from.constructor == RegExp || from.constructor == Function ||
-    from.constructor == String || from.constructor == Number || from.constructor == Boolean)
-    return new from.constructor(from);
-
-  to = to || new from.constructor();
-
-  for (var name in from) {
-    to[name] = typeof to[name] == "undefined" ? extend(from[name], null) : to[name];
-  }
-
-  return to;
 }
+
 
 function createPolygonLayer() {
   polygonLayer = new maptalks.VectorLayer('polygonLayer');
@@ -549,14 +518,14 @@ function createThreeLayer() {
     scene.add(new THREE.AmbientLight(0xffffff, 1));
   };
   threeLayer.addTo(map);
-};
+}
 
 function customRedraw() {
   // console.log('CUSTOM REDRAW');
   // threeLayer.renderScene(); // not remove prev textures
   // map.panBy([0, 0]);   // map.panTo(coordinate); not always work
   map.setCenter(new maptalks.Coordinate(map.getCenter()));
-};
+}
 
 function updateCoordsForRedraw() {
   for (let i = 0; i < objectsArr.length; i++) { // todo
@@ -570,7 +539,7 @@ function updateCoordsForRedraw() {
   }
 
   customRedraw();
-};
+}
 
 function updateCoordsForDraw(obj) { // todo
   if (obj == null || obj.model == null || obj.marker == null) {
@@ -591,7 +560,7 @@ function updateCoordsForDraw(obj) { // todo
   // obj.cube.position.x = v.x;
   // obj.cube.position.y = v.y;
   // obj.cube.position.z = v.z;
-};
+}
 
 function selectObjects() {
   setCanvasCursor('inherit');
@@ -602,7 +571,7 @@ function selectObjects() {
       return;
     }
   }
-};
+}
 
 function selectObject(obj) {
   if (obj.model == null || obj.model.visible === false) {
@@ -610,7 +579,7 @@ function selectObject(obj) {
     return false;
   }
 
-  var objects = [];
+  const objects = [];
 
   obj.model.traverse(function (child) {
     if (child instanceof THREE.Mesh) {
@@ -619,7 +588,7 @@ function selectObject(obj) {
   });
 
   raycaster.setFromCamera(mouse, threeLayer.getCamera());
-  var intersects = raycaster.intersectObjects(objects);
+  const intersects = raycaster.intersectObjects(objects);
 
   if (intersects.length > 0) {
     obj.mouseUnder = true;
@@ -664,11 +633,11 @@ function selectObject(obj) {
     return false;
   }
 
-};
+}
 
 function setCanvasCursor(cursor) {
   canvasElem.style.cursor = cursor;
-};
+}
 
 function changeVisible(obj, zoom) {
   if (zoom < zoomWhenChangeVisible + 0.2 || zoom < zoomWhenChangeVisible - 0.2) {
@@ -688,18 +657,18 @@ function changeVisible(obj, zoom) {
       obj.marker.options.visible = false;
     }
   }
-};
+}
 
 function showInformation(obj) {
   if (obj == null) {
     return;
   }
 
-  infoWindow.infoElem.style.display = 'block';
-  infoWindow.coordX.innerHTML = 'X = ' + obj.coords.x.toFixed(8);
-  infoWindow.coordY.innerHTML = 'Y = ' + obj.coords.y.toFixed(8);
-  infoWindow.name.innerHTML = obj.name;
-};
+  infoWindow['infoElem'].style.display = 'block';
+  infoWindow['coordX'].innerHTML = 'X = ' + obj.coords.x.toFixed(8);
+  infoWindow['coordY'].innerHTML = 'Y = ' + obj.coords.y.toFixed(8);
+  infoWindow['name'].innerHTML = obj.name;
+}
 
 function deltaToScale(delta) {
   let res = 1;
@@ -707,7 +676,7 @@ function deltaToScale(delta) {
     res = 2 * res;
   }
   return res;
-};
+}
 
 function linearInterpolation(y0, y1, x0, x1, x) {
   if (Math.abs(x1 - x0) < 0.000000000001) {
@@ -715,11 +684,10 @@ function linearInterpolation(y0, y1, x0, x1, x) {
   }
 
   return y0 + ((y1 - y0) / (x1 - x0)) * (x - x0);
-};
+}
 
 function calcScale(mapZoom) {
   let delta = 0;
-  let result = 1;
   if (mapZoom === initZoom) {
     return 1;
   } else if (mapZoom > initZoom) {
@@ -729,7 +697,7 @@ function calcScale(mapZoom) {
     delta = initZoom - mapZoom + 1;
     return deltaToScale(delta);
   }
-};
+}
 
 function calcInterpolationScale(mapZoom) {
   const x0 = Math.floor(mapZoom);
@@ -737,4 +705,4 @@ function calcInterpolationScale(mapZoom) {
   const y0 = calcScale(x0);
   const y1 = calcScale(x1);
   return linearInterpolation(y0, y1, x0, x1, mapZoom);
-};
+}

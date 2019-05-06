@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { mapInit, mapDestroy, mapSetProject } from './map3.js';
+import { mapInit, mapDestroy, mapSetProject } from './map3';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject.js';
 import { FilterFields } from 'src/app/models/index.js';
 
