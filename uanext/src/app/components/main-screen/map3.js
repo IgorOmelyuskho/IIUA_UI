@@ -14,7 +14,6 @@ let markerLayer = null;
 let selectedObject = null;
 let map = null;
 let objectsArr = [];
-let mapFullScreen = false;
 let timer1 = null;
 let timer2 = null;
 let animationFrame = null;
@@ -45,7 +44,7 @@ const polygonArr = [polygon1, polygon2];
 // export
 
 export function mapInit() {
-  console.log('MAP2 INIT');
+  console.log('MAP3 INIT');
   createMap();
   createThreeLayer();
   createPolygonLayer();
@@ -53,10 +52,9 @@ export function mapInit() {
   createClusterLayer();
   initInfoWindow();
 
-  mapElement = document.getElementById('map-2');
-  mapWrapperElement = document.getElementsByClassName('map-wrapper-2')[0];
+  mapElement = document.getElementById('map-3');
+  mapWrapperElement = document.getElementsByClassName('map-wrapper-3')[0];
   canvasElem = mapElement.querySelector('canvas');
-  document.getElementById('full-screen-img-2').onclick = fullScreen;
 
   stats = new Stats();
   mapElement.appendChild(stats.dom);
@@ -64,6 +62,7 @@ export function mapInit() {
   mouse = new THREE.Vector2();
 
   createLabelRenderer();
+  setMapFullScreen();
   animation();
   initFetchObjects();
   createPolygon(polygonArr);
@@ -85,7 +84,7 @@ export function mapSetProject(project) {
 }
 
 export function mapDestroy() {
-  console.log('MAP2 DESTROY');
+  console.log('MAP3 DESTROY');
   clearInterval(timer1);
   clearInterval(timer2);
   cancelAnimationFrame(animationFrame);
@@ -101,7 +100,6 @@ export function mapDestroy() {
   selectedObject = null;
   map = null;
   objectsArr = [];
-  mapFullScreen = false;
   timer1 = null;
   timer2 = null;
   animationFrame = null;
@@ -112,20 +110,27 @@ export function mapDestroy() {
   camera = null;
 };
 
+function setMapFullScreen() { // todo navbar height
+  const e = document.documentElement;
+  const g = document.body;
+  const x = window.innerWidth || e.clientWidth || g.clientWidth;
+  const y = window.innerHeight || e.clientHeight || g.clientHeight;
+  mapWrapperElement.style.width = x + 'px';
+  mapWrapperElement.style.height = y + 'px';
+  mapElement.style.width = x + 'px';
+  mapElement.style.height = y + 'px';
+  labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
+}
+
 function createLabelRenderer() {
   labelRenderer = new THREE.CSS2DRenderer();
   labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
-  labelRenderer.domElement.id = 'label-renderer-2';
+  labelRenderer.domElement.id = 'label-renderer-3';
   mapElement.appendChild(labelRenderer.domElement);
 }
 
 function windowOnResize(event) {
-  console.log('windowOnResize2');
-  if (mapFullScreen === false) { // necessarily
-    labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
-    return;
-  }
-
+  console.log('windowOnResize3');
   const e = document.documentElement;
   const g = document.body;
   const x = window.innerWidth || e.clientWidth || g.clientWidth;
@@ -136,37 +141,9 @@ function windowOnResize(event) {
   labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
 }
 
-function fullScreen(event) {
-  const e = document.documentElement;
-  const g = document.body;
-  const x = window.innerWidth || e.clientWidth || g.clientWidth;
-  const y = window.innerHeight || e.clientHeight || g.clientHeight;
-
-  if (mapFullScreen === false) {
-    document.body.style.overflow = 'hidden';
-    mapWrapperElement.style.position = 'fixed';
-    mapWrapperElement.style.width = x + 'px';
-    mapWrapperElement.style.height = y + 'px';
-    mapWrapperElement.style.zIndex = '10000000';
-    mapWrapperElement.style.marginTop = '';
-    mapElement.style.height = y + 'px';
-    labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
-    mapFullScreen = true;
-  } else {
-    document.body.style.overflow = '';
-    mapWrapperElement.style.position = 'relative';
-    mapWrapperElement.style.width = '';
-    mapWrapperElement.style.height = '';
-    mapWrapperElement.style.zIndex = '';
-    mapWrapperElement.style.marginTop = window.pageYOffset + 'px';
-    mapElement.style.height = '';
-    labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
-    mapFullScreen = false;
-  }
-}
 
 function initInfoWindow() {
-  infoWindow.infoElem = document.getElementById('info-2');
+  infoWindow.infoElem = document.getElementById('info-3');
   infoWindow.coordX = infoWindow.infoElem.querySelector('.coords-x');
   infoWindow.coordY = infoWindow.infoElem.querySelector('.coords-y');
   infoWindow.name = infoWindow.infoElem.querySelector('.name');
@@ -254,7 +231,7 @@ function initFetchObjects() {
 }
 
 function createMap() {
-  map = new maptalks.Map("map-2", { // DIV id
+  map = new maptalks.Map("map-3", { // DIV id
     center: [13.41261, 52.529611],
     // center: [0, 0],
     zoom: initZoom,
@@ -271,7 +248,7 @@ function createMap() {
     },
     // overviewControl: true, // add overview control
     baseLayer: new maptalks.TileLayer('tile', {
-      'urlTemplate' : 'http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png',
+      'urlTemplate' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
       'subdomains'  : ['a','b','c'],
     })
   });
@@ -385,8 +362,8 @@ function createPolygon(dotsArr) {
     });
 
     polygon.on('click', function (e) {
-      document.getElementById('area-info-2').innerHTML = e.target.options.customName;
-      document.getElementById('area-info-2').style.display = 'block';
+      document.getElementById('area-info-3').innerHTML = e.target.options.customName;
+      document.getElementById('area-info-3').style.display = 'block';
     });
 
     polygon.on('mouseenter', function (e) {

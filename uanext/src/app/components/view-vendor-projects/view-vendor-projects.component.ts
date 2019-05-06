@@ -2,14 +2,14 @@ import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inp
 import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { Router } from '@angular/router';
 import { FilteredProjects, FilterFields } from 'src/app/models';
-import { init, destroy, setProject } from './map2.js';
+import { mapInit, mapDestroy, mapSetProject } from './map2.js';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import FormHelper from '../../services/helperServices/formHelper';
 import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service.js';
 import { fromEvent } from 'rxjs';
 import { tap, map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-const response = {
+const responseProjects = {
   'isSuccess': true,
   'data': {
     'pages': 1,
@@ -61,6 +61,16 @@ const response = {
           {
             'id': 0,
             'url': 'video_urlstring',
+            'projectId': 0
+          },
+          {
+            'id': 0,
+            'url': 'video_urlstring2',
+            'projectId': 0
+          },
+          {
+            'id': 0,
+            'url': 'video_urlstring3',
             'projectId': 0
           }
         ],
@@ -805,7 +815,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     }, 0);
 
     // if (this.projects != null) {
-    // init();
+    // mapInit();
     // }
 
     fromEvent<any>(this.searchByKeyWordInput.nativeElement, 'input')
@@ -821,10 +831,10 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
       });
   }
 
-  onFilterItemRemove(filterItemForRemove) {
+  onFilterItemRemove(filterItemForRemove) { // chang detector mark for check
     console.log('CLEAR ALL iN VIEW_VENROR');
-    // this.filterItemForRemove = filterItemForRemove;
-    this.filterItemForRemove = JSON.parse(JSON.stringify(filterItemForRemove));
+    this.filterItemForRemove = {...filterItemForRemove};
+    // this.filterItemForRemove = JSON.parse(JSON.stringify(filterItemForRemove));
   }
 
   filterOnChange(filterParam: FilterFields) {
@@ -861,7 +871,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
       y: 52.539611 + Math.random() * 0.1,
     };
 
-    setProject(project); // map2.js
+    mapSetProject(project); // map2.js
   }
 
   searchByKeywordBtn(event) {
@@ -893,7 +903,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     //       this.showProgressBar(false);
     //     }
     //   );
-    this.addNewProjects(response.data.projectsList);
+    this.addNewProjects(responseProjects.data.projectsList);
     this.showProgressBar(false);
   }
 
@@ -918,7 +928,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     //     this.showProgressBar(false);
     //   }
     // );
-    this.addNewProjects(response.data.projectsList);
+    this.addNewProjects(responseProjects.data.projectsList);
     this.showProgressBar(false);
   }
 
@@ -962,7 +972,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnDestroy() {
-    destroy();
+    mapDestroy();
   }
 
 }

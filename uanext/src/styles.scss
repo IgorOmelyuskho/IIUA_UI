@@ -14,6 +14,7 @@
 html,
 body {
   font-family: 'Open Sans', sans-serif;
+  color: black;
 }
 
 .sortable-header {
@@ -177,4 +178,13 @@ body {
     height: 15px;
     width: 15px;
   }
+}
+
+// map-wrapper
+.map-wrapper,
+.map-wrapper-2,
+.map-wrapper-3,
+.map-wrapper-4,
+.map-wrapper-5 {
+  overflow: hidden;
 }

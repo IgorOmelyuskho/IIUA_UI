@@ -1,89 +1,152 @@
 @import '../../../styles-variables.scss';
 
-.bg-color {
-  background: #fafafa;
-}
+.project-card {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+  background: white;
+  width: 46vw;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
 
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: $green;
-  box-shadow: 0 0 0 0.2rem rgba(117, 175, 39, 0.25);
-  outline: none;
-}
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 100000;
 
-.left-col {
-  .search-by-name {
-    button {
-      background: $green;
-      color: white;
+    img {
+      height: 21px;
+      cursor: pointer;
     }
   }
 
-  .projects {
-    max-height: 1500px;
-    overflow: auto;
-
-    .project-wrapper {
-      margin: 0px 10px 10px 0;
-      border-radius: 7px;
-      border: solid 1px #bfbfbf;
-      overflow: hidden;
-    }
-  }
-}
-
-.right-col {
-  .map-wrapper-2 {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  .avatar-wrapper {
+    min-width: 210px;
+    height: 185px;
+    margin-right: 20px;
     position: relative;
-    background: black;
 
-    #map-2 {
+    .avatar {
       width: 100%;
-      height: 400px;
-      position: relative;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
     }
 
-    #full-screen-img-2 {
+    .raiting {
       position: absolute;
-      right: 5px;
-      bottom: 5px;
-      width: 20px;
-      height: 20px;
+      right: 0;
+      bottom: 0;
+      width: 60px;
+      height: 50px;
+      border-top-left-radius: 6px;
+      background: $green;
+      line-height: 47px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+    }
+  }
+
+  .wrapper-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    h5.project-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .company-name {
+      font-size: 18px;
+    }
+
+    button {
+      width: 205px;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid $darkGreen;
+      outline: none;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
       cursor: pointer;
     }
 
-    #info-2,
-    #area-info-2 {
-      display: none;
-      position: absolute;
-      background-color: rgba(13, 13, 13, 0.5);
-      padding: 10px 10px 10px 10px;
-      font: 18px bold sans-serif;
-      color: #fff;
-      right: 20px;
-      top: 20px;
-      overflow: hidden
+    button.start-chat {
+      background: white;
+      color: $darkGreen;
+
+      &:hover {
+        background: $darkGreen;
+        color: white;
+      }
+
+      &:hover .img-bg {
+        background-image: url('../../../assets/img/message-hover.png');
+      }
+
+      .img-bg {
+        padding-left: 35px;
+        margin-left: 10px;
+        background-image: url('../../../assets/img/message.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
     }
 
-    #area-info-2 {
-      top: 120px;
+    button.invest {
+      background: white;
+      color: $darkGreen;
+
+      &:hover {
+        background: $darkGreen;
+        color: white;
+      }
+
+      .big-font {
+        font-size: 20px;
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .info-items-wrapper {
+    margin-top: 15px;
+
+    .info-item {
+      margin-bottom: 20px;
+
+      .name {
+        font-size: 12px;
+        letter-spacing: 0.4px;
+        color: $darkGreen;
+        margin-bottom: 5px;
+      }
+
+      .value {
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+      }
     }
   }
 
   .detail-project-info {
     .project-info-menu {
       border-bottom: 2px solid $green;
-      margin-top: 20px;
+      margin-top: 10px;
 
       button {
         font-size: 18px;
-        margin-right: 20px;
+        margin-right: 10px;
         background: transparent;
         border: none;
         outline: none;
@@ -161,7 +224,7 @@ textarea:focus {
           margin-bottom: 10px;
           font-size: 18px;
           font-weight: bold;
-  
+
           img {
             height: 18px;
             position: relative;
@@ -169,16 +232,16 @@ textarea:focus {
             margin-right: 15px;
           }
         }
-  
+
         .video-links-wrapper {
           margin-top: 20px;
-  
+
           .link {
             font-size: 16px;
             letter-spacing: 0.4px;
             cursor: pointer;
             margin-top: 5px;
-  
+
             img {
               height: 12px;
               position: relative;
@@ -210,5 +273,14 @@ textarea:focus {
         }
       }
     }
+
+    .updates {
+      font-size: 30px;
+    }
+
+    .comments {
+      font-size: 30px;
+    }
   }
+
 }

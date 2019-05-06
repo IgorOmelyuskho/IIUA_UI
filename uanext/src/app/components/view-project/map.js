@@ -44,7 +44,7 @@ const polygonArr = [polygon1, polygon2];
 // init();
 // export
 
-export function init(vendorProject) {
+export function mapInit(vendorProject) {
   console.log('MAP INIT');
   console.log(vendorProject);
   createMap();
@@ -80,7 +80,7 @@ export function init(vendorProject) {
   }, drawInterval);
 };
 
-export function destroy() {
+export function mapDestroy() {
   console.log('MAP DESTROY');
   clearInterval(timer1);
   clearInterval(timer2);

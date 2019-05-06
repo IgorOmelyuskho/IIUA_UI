@@ -19,8 +19,8 @@
               <span class="fa fa-search"></span>
             </button>
           </div>
-          <input #searchByKeyWordInput type="text" (keydown)="searchByKeywordKeyDown($event)" [(ngModel)]="searchWord" class="form-control"
-            placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
+          <input #searchByKeyWordInput type="text" (keydown)="searchByKeywordKeyDown($event)" [(ngModel)]="searchWord"
+            class="form-control" placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
             aria-describedby="basic-addon2">
         </div>
       </div>
@@ -43,7 +43,8 @@
               <h5 *ngIf="projects?.length === 0 && showProgress === false">No projects found</h5>
 
               <div *ngFor="let project of projects" class="project-wrapper">
-                <app-filtered-project [searchText]="searchWord" [project]="project" (selectProject)="selectProject($event)"></app-filtered-project>
+                <app-filtered-project [searchText]="searchWord" [project]="project"
+                  (selectProject)="selectProject($event)"></app-filtered-project>
               </div>
             </div>
           </div>
@@ -84,7 +85,10 @@
           <div class="grey-text">Тут будет отображена информация по выбранному проекту.</div>
         </div>
         <div class="shared" *ngIf="selectedMenuItem === 'shared'">
-          <h5 class="mt-2 mb-2">Для чего нужны инвестиции</h5>
+          <h5 class="mb-2">
+            <img src="../../../assets/img/notepad.png" alt="">
+            <span>Для чего нужны инвестиции</span>
+          </h5>
           <div class="steps">
             <div class="step" *ngFor="let step of selectedProject.steps">
               {{step.data}}
@@ -98,7 +102,16 @@
             <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
           </div>
           <div class="videos">
-            todo link or preview?
+            <h5>
+              <img src="../../../assets/img/video.png" alt="">
+              <span>Videos</span>
+            </h5>
+            <div class="video-links-wrapper">
+              <div *ngFor="let video of selectedProject.videos" class="link">
+                <img src="../../../assets/img/video-link.png" alt="">
+                <a target="_blank" rel="noopener noreferrer" href="video.url">{{video.url}}</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="documents" *ngIf="selectedMenuItem === 'documents'">

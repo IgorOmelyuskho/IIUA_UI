@@ -4,7 +4,7 @@ import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects
 import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
-import { init, destroy } from './map.js';
+import { mapInit, mapDestroy } from './map.js';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FilteredProjects } from 'src/app/models/index.js';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
@@ -69,7 +69,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (this.project != null) {
-      init(this.project); // 2 init
+      mapInit(this.project); // 2 init
     }
   }
 
@@ -170,7 +170,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             this.videoUrlToSafe(this.project.videos);
             this.setGalleryImages(this.project.images);
             requestAnimationFrame(() => {
-              init(this.project); // 2 init
+              mapInit(this.project); // 2 init
             });
             return;
           }
@@ -190,7 +190,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    destroy();
+    mapDestroy();
   }
 
 }

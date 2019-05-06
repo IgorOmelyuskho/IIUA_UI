@@ -1,0 +1,55 @@
+<app-header></app-header> <!-- todo remove -->
+
+
+<div class="full-screen-block">
+
+  <div class="map-wrapper-3">
+    <div id="map-3"></div>
+    <div id="info-3">
+      <div class="name"></div>
+      <div class="coords-x"></div>
+      <div class="coords-y"></div>
+    </div>
+    <div id="area-info-3"></div>
+  </div>
+
+  <div class="filter-wrapper">
+    <div class="search-by-name">
+      <div class="input-group mb-3 mt-3">
+        <div class="input-group-prepend">
+          <button (click)="searchByKeywordBtn($event)" class="btn btn-outline-secondary" type="button">
+            <span class="fa fa-search"></span>
+          </button>
+        </div>
+        <input #searchByKeyWordInput type="text" (keydown)="searchByKeywordKeyDown($event)" [(ngModel)]="searchWord"
+          class="form-control" placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
+          aria-describedby="basic-addon2">
+      </div>
+    </div>
+
+    <button type="button" class="filter-btn">
+      <span>Фильтры</span>
+    </button>
+
+    <div class="filter-width">
+      <app-filter (filterChange)="filterOnChange($event)"></app-filter>
+    </div>
+  </div>
+
+  <div class="project-card-wrapper">
+    <app-main-screen-project-card [selectedProject]="selectedProject"></app-main-screen-project-card>
+  </div>
+
+  <div class="right-component-wrapper">
+    <app-main-screen-right></app-main-screen-right>
+  </div>
+
+
+</div>
+
+
+
+
+<div class='upload-advance' style="background: '../../../assets/img/message-hover.png'"></div>
+<div class='upload-advance' style="background: '../../../assets/img/bell-hover.png'"></div>
+<div class='upload-advance' style="background: '../../../assets/img/approve-hover.png'"></div>

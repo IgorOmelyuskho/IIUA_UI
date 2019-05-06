@@ -26,6 +26,10 @@ import { AdminSignupComponent } from './admin-signup/admin-signup.component';
 import { FilterComponent } from './filter/filter.component';
 import { FilteredProjectComponent } from './filtered-project/filtered-project.component';
 import { FilterItemsComponent } from './filter-items/filter-items.component';
+import { MainScreenComponent } from './main-screen/main-screen.component';
+import { MainScreenFilterComponent } from './main-screen-filter/main-screen-filter.component';
+import { MainScreenProjectCardComponent } from './main-screen-project-card/main-screen-project-card.component';
+import { MainScreenRightComponent } from './main-screen-right/main-screen-right.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -56,7 +60,11 @@ export {
   AdminSignupComponent,
   FilterComponent,
   FilteredProjectComponent,
-  FilterItemsComponent
+  FilterItemsComponent,
+  MainScreenComponent,
+  MainScreenFilterComponent,
+  MainScreenProjectCardComponent,
+  MainScreenRightComponent
 };
 
 export const components = [
@@ -87,7 +95,11 @@ export const components = [
   AdminSignupComponent,
   FilterComponent,
   FilteredProjectComponent,
-  FilterItemsComponent
+  FilterItemsComponent,
+  MainScreenComponent,
+  MainScreenFilterComponent,
+  MainScreenProjectCardComponent,
+  MainScreenRightComponent
 ];
 
 
