@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { mapInit, mapDestroy, mapSetProject } from './map3';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+// import { mapInit, mapDestroy, mapSetProject } from './map3'; Map
+import { Map } from './map3';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject.js';
 import { FilterFields } from 'src/app/models/index.js';
 
@@ -208,11 +209,13 @@ const responseProject2 = {
   templateUrl: './main-screen.component.html',
   styleUrls: ['./main-screen.component.scss']
 })
-export class MainScreenComponent implements OnInit, AfterViewInit {
+export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedProject: any = responseProject; // ViewVendorProject
   selectedProjectId: any = responseProject.id; // todo use when page reload
 
   filter: FilterFields;
+
+  map: Map = null; // init in afterWiewInit
 
   constructor() { }
 
@@ -230,12 +233,16 @@ export class MainScreenComponent implements OnInit, AfterViewInit {
     // if (this.selectedProject != null) {
     //   mapInit(this.selectedProject);
     // }
-    mapInit(); // todo init with selected project or set project after
+    this.map = new Map(); // todo init with selected project or set project after
   }
 
   filterOnChange(filterParam: FilterFields) {
     this.filter = filterParam;
     console.log(this.filter);
+  }
+
+  ngOnDestroy() {
+    this.map.mapDestroy();
   }
 
 }
