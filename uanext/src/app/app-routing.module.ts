@@ -20,6 +20,7 @@ import { AdminProfileComponent } from './components';
 import { AdminSignupComponent } from './components';
 import { AdminSigninComponent } from './components';
 import { MainScreenComponent } from './components';
+import { MapComponent } from './components';
 
 import { AuthGuard, NoAuthGuard, AdminGuard } from './services/guards';
 import { InvestorGuard } from './services/guards';
@@ -55,6 +56,7 @@ const childHomeRoutes: Routes = [
 const routes: Routes = [
   { path: 'investor11', component: ViewVendorProjectsComponent },
   { path: 'main-screen', component: MainScreenComponent },
+  { path: 'map', component: MapComponent },
   // { path: '', component: IndexComponent, pathMatch: 'full' },
   // { path: 'signin', component: SigninComponent, canActivate: [NoAuthGuard] },
   // { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },

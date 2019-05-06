@@ -1,0 +1,26 @@
+.map-wrapper-4 {
+  position: relative;
+
+  #map-4 {
+    width: 1000px;
+    height: 500px;
+    position: relative;
+  }
+
+  #info-4,
+  #area-info-4 {
+    display: none;
+    position: absolute;
+    background-color: rgba(13, 13, 13, 0.5);
+    padding: 10px 10px 10px 10px;
+    font: 18px bold sans-serif;
+    color: #fff;
+    right: 20px;
+    top: 20px;
+    overflow: hidden
+  }
+
+  #area-info-4 {
+    top: 120px;
+  }
+}

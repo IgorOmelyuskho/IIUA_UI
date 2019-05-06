@@ -1,3 +1,6 @@
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+// import { Map } from './map4';
+
 declare const THREE: any;
 declare const maptalks: any;
 
@@ -23,7 +26,12 @@ const polygon2 = [
 
 const polygonArr = [polygon1, polygon2];
 
-export class Map {
+@Component({
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.scss']
+})
+export class MapComponent implements OnInit, AfterViewInit {
   infoWindow = {};
   canvasElem = null;
   stats = null;
@@ -45,15 +53,24 @@ export class Map {
   labelRenderer = null;
   camera = null;
 
-  constructor() {
-    console.log(this);
-    this.mapInit();
-    console.log(this.animation);
-    console.log(this.animationFrame);
+  constructor() { }
+
+  ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    this.mapInit();
+
+    // setInterval(() => {
+    //   console.log(this);
+    // }, 5000);
+  }
+
+
+
+
   private mapInit() {
-    console.log('MAP3 INIT');
+    console.log('MAP4 INIT');
     this.createMap();
     this.createThreeLayer();
     this.createPolygonLayer();
@@ -61,8 +78,8 @@ export class Map {
     this.createClusterLayer();
     this.initInfoWindow();
 
-    this.mapElement = document.getElementById('map-3');
-    this.mapWrapperElement = document.getElementsByClassName('map-wrapper-3')[0];
+    this.mapElement = document.getElementById('map-4');
+    this.mapWrapperElement = document.getElementsByClassName('map-wrapper-4')[0];
     this.canvasElem = this.mapElement.querySelector('canvas');
 
     this.stats = new Stats();
@@ -93,7 +110,7 @@ export class Map {
   }
 
   public mapDestroy() {
-    console.log('MAP3 DESTROY');
+    console.log('MAP4 DESTROY');
     clearInterval(this.timer1);
     clearInterval(this.timer2);
     cancelAnimationFrame(this.animationFrame);
@@ -134,7 +151,7 @@ export class Map {
   private createLabelRenderer() {
     this.labelRenderer = new THREE.CSS2DRenderer();
     this.labelRenderer.setSize(this.mapElement.clientWidth, this.mapElement.clientHeight);
-    this.labelRenderer.domElement.id = 'label-renderer-3';
+    this.labelRenderer.domElement.id = 'label-renderer-4';
     this.mapElement.appendChild(this.labelRenderer.domElement);
   }
 
@@ -151,7 +168,7 @@ export class Map {
   }
 
   private initInfoWindow() {
-    this.infoWindow['infoElem'] = document.getElementById('info-3');
+    this.infoWindow['infoElem'] = document.getElementById('info-4');
     this.infoWindow['coordX'] = this.infoWindow['infoElem'].querySelector('.coords-x');
     this.infoWindow['coordY'] = this.infoWindow['infoElem'].querySelector('.coords-y');
     this.infoWindow['name'] = this.infoWindow['infoElem'].querySelector('.name');
@@ -239,7 +256,7 @@ export class Map {
   }
 
   private createMap() {
-    this.map = new maptalks.Map('map-3', { // DIV id
+    this.map = new maptalks.Map('map-4', { // DIV id
       center: [13.41261, 52.529611],
       // center: [0, 0],
       zoom: initZoom,
@@ -371,8 +388,8 @@ export class Map {
       });
 
       polygon.on('click', function (e) {
-        document.getElementById('area-info-3').innerHTML = e.target.options.customName;
-        document.getElementById('area-info-3').style.display = 'block';
+        document.getElementById('area-info-4').innerHTML = e.target.options.customName;
+        document.getElementById('area-info-4').style.display = 'block';
       });
 
       polygon.on('mouseenter', function (e) {
@@ -713,4 +730,3 @@ export class Map {
   }
 
 }
-

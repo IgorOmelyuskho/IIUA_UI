@@ -30,6 +30,7 @@ import { MainScreenComponent } from './main-screen/main-screen.component';
 import { MainScreenFilterComponent } from './main-screen-filter/main-screen-filter.component';
 import { MainScreenProjectCardComponent } from './main-screen-project-card/main-screen-project-card.component';
 import { MainScreenRightComponent } from './main-screen-right/main-screen-right.component';
+import { MapComponent } from './map/map.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -64,7 +65,8 @@ export {
   MainScreenComponent,
   MainScreenFilterComponent,
   MainScreenProjectCardComponent,
-  MainScreenRightComponent
+  MainScreenRightComponent,
+  MapComponent
 };
 
 export const components = [
@@ -99,7 +101,8 @@ export const components = [
   MainScreenComponent,
   MainScreenFilterComponent,
   MainScreenProjectCardComponent,
-  MainScreenRightComponent
+  MainScreenRightComponent,
+  MapComponent
 ];
 
 
