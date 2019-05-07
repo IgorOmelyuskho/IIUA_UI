@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-// import { mapInit, mapDestroy, mapSetProject } from './map3'; Map
+// import { mapInit, mapDestroy, mapSetProject } from './map3-no-class';
 import { Map } from './map3';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject.js';
 import { FilterFields } from 'src/app/models/index.js';
@@ -215,7 +215,7 @@ export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
 
   filter: FilterFields;
 
-  map: Map = null; // init in afterWiewInit
+  map: Map = null; // init in afterViewInit
 
   constructor() { }
 
@@ -233,7 +233,9 @@ export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
     // if (this.selectedProject != null) {
     //   mapInit(this.selectedProject);
     // }
+
     this.map = new Map(); // todo init with selected project or set project after
+    // mapInit();
   }
 
   filterOnChange(filterParam: FilterFields) {
@@ -242,7 +244,8 @@ export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.map.mapDestroy();
+    // this.map.mapDestroy();
+    // mapDestroy();
   }
 
 }

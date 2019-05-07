@@ -51,22 +51,6 @@ body {
   }
 }
 
-.obj-label {
-  color: #FFF;
-  font-family: sans-serif;
-  padding: 2px;
-  line-height: 1.0;
-  background: rgba(0, 0, 0, .4);
-}
-
-#label-renderer,
-#label-renderer-2 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-}
-
 // use class="progress-bar-fixed" when page scrolled 
 .progress-bar-fixed {
   position: fixed !important;
@@ -76,6 +60,7 @@ body {
 }
 
 // noUi-slider
+//#region
 .noUi-origin {
   left: -11px !important
 }
@@ -104,8 +89,10 @@ body {
     background: $green !important;
   }
 }
+//#endregion
 
 // mat expansion
+//#region
 .filter {
   .mat-expansion-indicator {
     position: relative !important;
@@ -125,6 +112,7 @@ body {
     font: inherit;
   }
 }
+//#endregion
 
 // filtering projects gallery
 .detail-project-info {
@@ -140,6 +128,7 @@ body {
 }
 
 // scrollbar
+//#region
 ::-webkit-scrollbar-track {
   // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
@@ -158,7 +147,7 @@ body {
   border-radius: 3px;
   background-color: rgb(185, 185, 185);
 }
-
+//#endregion
 
 // custom radiogroup
 .radio-group {
@@ -180,7 +169,8 @@ body {
   }
 }
 
-// map-wrapper
+// map
+//#region
 .map-wrapper,
 .map-wrapper-2,
 .map-wrapper-3,
@@ -188,3 +178,36 @@ body {
 .map-wrapper-5 {
   overflow: hidden;
 }
+
+#label-renderer,
+#label-renderer-2,
+#label-renderer-3
+#label-renderer-4
+#label-renderer-5 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.obj-label {
+  color: $green;
+  font-size: 18px;
+  padding: 7px 10px;
+  line-height: 1.0;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+}
+
+.obj-label-selected {
+  color: white;
+  font-size: 18px;
+  padding: 7px 10px;
+  line-height: 1.0;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: $green
+}
+//#endregion
+

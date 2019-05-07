@@ -1,5 +1,6 @@
 declare const THREE: any;
 declare const maptalks: any;
+import Stats from 'stats-js';
 
 const zoomWhenChangeVisible = 16;
 const initZoom = 15;
