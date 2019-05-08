@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 // import { mapInit, mapDestroy, mapSetProject } from './map3-no-class';
-import { Map } from './map3';
+// import { Map } from './map3';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject.js';
 import { FilterFields } from 'src/app/models/index.js';
 
@@ -214,8 +214,9 @@ export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedProjectId: any = responseProject.id; // todo use when page reload
 
   filter: FilterFields;
+  filterIsExpanded = false; // false - свернут
 
-  map: Map = null; // init in afterViewInit
+  // map: Map = null; // init in afterViewInit
 
   constructor() { }
 
@@ -223,10 +224,6 @@ export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
     new Image().src = '../../../assets/img/message-hover.png';
     new Image().src = '../../../assets/img/bell-hover.png';
     new Image().src = '../../../assets/img/approve-hover.png';
-
-    setTimeout(() => {
-      this.selectedProject = responseProject2;
-    }, 4000);
   }
 
   ngAfterViewInit() {
@@ -234,7 +231,7 @@ export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
     //   mapInit(this.selectedProject);
     // }
 
-    this.map = new Map(); // todo init with selected project or set project after
+    // this.map = new Map(); // todo init with selected project or set project after
     // mapInit();
   }
 
@@ -246,6 +243,12 @@ export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     // this.map.mapDestroy();
     // mapDestroy();
+  }
+
+  onMapObjectClick(mapObject: any) {
+    console.log('mapObject = ', mapObject);
+    this.selectedProject = mapObject.project;
+    this.selectedProjectId = mapObject.project.id;
   }
 
 }

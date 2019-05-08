@@ -6,13 +6,6 @@
   height: 100%;
   position: relative;
 
-  button:focus,
-  input:focus {
-    border-color: $green;
-    box-shadow: 0 0 0 0.2rem rgba(117, 175, 39, 0.25);
-    outline: none;
-  }
-
   .map-wrapper-3 {
     width: 100%;
     min-height: 100%;
@@ -51,16 +44,38 @@
 
     .search-by-name {
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23);
+      border-radius: 6px;
+
+      button {
+        background: $green;
+
+
+        span {
+          color: white;
+        }
+      }
     }
 
-    button {
-      background: $green;
+    .filter-btn {
+      border-radius: 6px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      outline: none;
+      border: none;
+      padding: 5px 20px;
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23);
+      background-color: #ffffff;
+      cursor: pointer;
+    }
+
+    .filter-btn-expanded {
+      background-color: $green;
       color: white;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
     }
 
     .filter-width {
       width: 80%;
+      border-radius: 6px;
       box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
     }
   }

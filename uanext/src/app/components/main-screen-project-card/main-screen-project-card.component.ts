@@ -15,7 +15,9 @@ export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
   @Input()
   set selectedProject(selectedProject: ViewVendorProject) {
     this._selectedProject = selectedProject;
+    this.projectCard.nativeElement.style.display = '';
     this.setGalleryImages(this._selectedProject.images);
+    console.log('CHANGE PROJECT');
   }
 
   selectedMenuItem = 'shared';

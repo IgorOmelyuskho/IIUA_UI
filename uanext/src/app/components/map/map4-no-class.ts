@@ -7,14 +7,15 @@ const initZoom = 15;
 const updatedInterval = 15000;
 const drawInterval = 50;
 
+// callbacks
+let on_click_object: Function = null;
+
 let infoWindow = {};
 let canvasElem = null;
 let stats = null;
 let scene = null;
-let threeLayer = null;
 let raycaster = null;
 let mouse = null;
-let markerLayer = null;
 let selectedObject = null;
 let map = null;
 let objectsArr = [];
@@ -23,41 +24,22 @@ let timer2 = null;
 let animationFrame = null;
 let mapElement = null;
 let mapWrapperElement = null;
+let threeLayer = null;
 let clusterLayer = null;
 let polygonLayer = null;
 let labelRenderer = null;
 let camera = null;
-
-const polygon1 = [
-  [13.417223404477, 52.5283447684827],
-  [13.41620416505134, 52.52709807661344],
-  [13.417598913739084, 52.526699911021495],
-  [13.418757628033518, 52.527861761172375],
-  [13.42018456322944, 52.527463602503616],
-  [13.421311091015696, 52.528605851303695]
-];
-const polygon2 = [
-  [13.41561, 52.539611],
-  [13.41861, 52.539611],
-  [13.41861, 52.542611],
-  [13.41561, 52.542611]
-];
-const polygonArr = [polygon1, polygon2];
-
-// init();
-// export
 
 export function mapInit() {
   console.log('MAP4 INIT');
   createMap();
   createThreeLayer();
   createPolygonLayer();
-  // createMarkerLayer();
   createClusterLayer();
   initInfoWindow();
 
   mapElement = document.getElementById('map-4');
-  mapWrapperElement = document.getElementsByClassName('map-wrapper-4')[0];
+  mapWrapperElement = document.getElementsByClassName('map-wrapper-4')[0]; // todo unique name
   canvasElem = mapElement.querySelector('canvas');
 
   stats = new Stats();
@@ -66,10 +48,7 @@ export function mapInit() {
   mouse = new THREE.Vector2();
 
   createLabelRenderer();
-  setMapFullScreen();
   animation();
-  initFetchObjects();
-  createPolygon(polygonArr);
 
   window.addEventListener('resize', windowOnResize);
 
@@ -100,7 +79,6 @@ export function mapDestroy() {
   threeLayer = null;
   raycaster = null;
   mouse = null;
-  markerLayer = null;
   selectedObject = null;
   map = null;
   objectsArr = [];
@@ -114,7 +92,7 @@ export function mapDestroy() {
   camera = null;
 }
 
-function setMapFullScreen() { // todo navbar height
+export function mapSetFullScreen() { // todo navbar height
   const e = document.documentElement;
   const g = document.body;
   const x = window.innerWidth || e.clientWidth || g.clientWidth;
@@ -134,17 +112,11 @@ function createLabelRenderer() {
 }
 
 function windowOnResize(event) {
-  console.log('windowOnResize4');
-  const e = document.documentElement;
-  const g = document.body;
-  const x = window.innerWidth || e.clientWidth || g.clientWidth;
-  const y = window.innerHeight || e.clientHeight || g.clientHeight;
-  mapWrapperElement.style.width = x + 'px';
-  mapWrapperElement.style.height = y + 'px';
-  mapElement.style.height = y + 'px';
-  labelRenderer.setSize(mapElement.clientWidth, mapElement.clientHeight);
+  const x = mapWrapperElement.clientWidth; // offsetWidth
+  const y = mapWrapperElement.clientHeight; // offsetHeight
+  // mapElement width and height 100% in styles.scss
+  labelRenderer.setSize(x, y);
 }
-
 
 function initInfoWindow() {
   infoWindow['infoElem'] = document.getElementById('info-4');
@@ -194,44 +166,40 @@ function animation() {
   }
 }
 
-function initFetchObjects() {
-  for (let i = 0; i < 2; i++) {
-    const newObj = {
-      id: 'id' + i,
-      coords: map.getCenter().add(Math.random() * 0.003, Math.random() * 0.002),
-      // coords: {
-      //   x: 0,
-      //   y: 0,
-      // },
-      speedX: 0,
-      speedY: 0,
-      rotationZ: 0,
-      name: 'object ' + i,
-      marker: null,
-      model: null,
-      mouseUnder: false,
-      loaderPath: '../../../assets/objects/tractorObj/',
-      // loaderPath: 'https://gitlab.com/omelyushko.igor/tractor/blob/master/43-tractor/Tractor.mtl',
-      modelMtl: 'Tractor.mtl',
-      modelObj: 'Tractor.obj',
-    };
+export function mapReplaceObjects(objects: any[]) {
+  // threeLayer.clear();
+  // clusterLayer.clear();
+  for (let i = 0; i < objectsArr.length; i++) {
+    // todo remove [i] object
+  }
 
-    newObj['prevCoords'] = {};
-    newObj['prevCoords'].x = newObj.coords.x;
-    newObj['prevCoords'].y = newObj.coords.y;
+  objectsArr = [];
+  mapAddNewObjects(objects);
+}
+
+export function mapAddNewObjects(objects: any[]) {
+  for (let i = 0; i < objects.length; i++) {
+    const newObj = { ...objects[i] };
+    newObj.marker = null,
+    newObj.model = null,
+    newObj.mouseUnder = false,
+    newObj.speedX = 0,
+    newObj.speedY = 0,
+    newObj.rotationZ = 0,
+    newObj.coords = map.getCenter().add(Math.random() * 0.003, Math.random() * 0.002), // todo remove
+    newObj.prevCoords = {};
+    newObj.prevCoords.x = newObj.coords.x;
+    newObj.prevCoords.y = newObj.coords.y;
+
+    createMarker(newObj);
+    loadObjectModel(newObj); // async
     objectsArr.push(newObj);
   }
+}
 
-  for (let i = 0; i < objectsArr.length; i++) {
-    createMarker(objectsArr[i]);
-  }
-
-  for (let i = 0; i < objectsArr.length; i++) {
-    // setTimeout(() => {
-    //   loadObjectModel(objectsArr[i]);
-    // }, i * 1500)
-    loadObjectModel(objectsArr[i]);
-  }
+// callbacks
+export function setObjectClickCallback(cb: Function) {
+  on_click_object = cb;
 }
 
 function createMap() {
@@ -280,6 +248,9 @@ function createMap() {
     for (let i = 0; i < objectsArr.length; i++) {
       if (objectsArr[i].mouseUnder === true) {
         selectedObject = objectsArr[i];
+        if (on_click_object != null) {
+          on_click_object(selectedObject);
+        }
         selectedObject.objectDivLabel.className = 'obj-label-selected';
         showInformation(selectedObject);
       } else {
@@ -295,7 +266,7 @@ function createMarker(obj) {
     visible: true,
     cursor: 'pointer',
     symbol: [{
-        'markerFile': '../../assets/img/marker.svg', // different in map.js
+        'markerFile': '../../assets/img/marker.svg',
         'markerWidth': 28,
         'markerHeight': 40,
       },
@@ -313,12 +284,14 @@ function createMarker(obj) {
 
   obj.marker = marker;
   obj.marker.parent = obj;
-  // markerLayer.addGeometry(obj.marker);
   clusterLayer.addGeometry(marker);
   changeVisible(obj, map.getZoom());
 
   marker.on('click', (e) => {
     selectedObject = e.target.parent;
+    if (on_click_object != null) {
+      on_click_object(selectedObject);
+    }
     showInformation(selectedObject);
   });
 
@@ -344,7 +317,7 @@ function createMarker(obj) {
   });
 }
 
-function createPolygon(dotsArr) {
+export function mapAddNewPolygons(polygons: any[]) {
   const initialSymbol = {
     'lineColor': '#334a5e',
     'lineWidth': 1,
@@ -359,8 +332,8 @@ function createPolygon(dotsArr) {
     'polygonOpacity': 0.5
   };
 
-  for (let i = 0; i < polygonArr.length; i++) {
-    const polygon = new maptalks.Polygon(dotsArr[i], {
+  for (let i = 0; i < polygons.length; i++) {
+    const polygon = new maptalks.Polygon(polygons[i], {
       visible: true,
       customName: 'polygon' + i,
       cursor: 'pointer',
@@ -385,9 +358,9 @@ function createPolygon(dotsArr) {
 
 }
 
-function createMarkerLayer() {
-  markerLayer = new maptalks.VectorLayer('markerLayer');
-  markerLayer.addTo(map);
+export function mapReplacePolygons(polygons: any[]) {
+  polygonLayer.clear();
+  mapAddNewPolygons(polygons);
 }
 
 function createClusterLayer() {
@@ -453,18 +426,18 @@ function loadObjectModel(obj) {
   //   threeLayer.renderScene();
   // }
 
-  mtlLoader.setPath(obj.loaderPath); // ../../../assets/objects/tractorObj/
+  mtlLoader.setPath(obj.pathToFolder);
   mtlLoader.load(obj.modelMtl, function (materials) {
     materials.preload();
     objLoader.setMaterials(materials);
-    objLoader.setPath(obj.loaderPath);
+    objLoader.setPath(obj.pathToFolder);
     objLoader.load(obj.modelObj, function (object) {
       object.traverse(function (child) {
         if (child instanceof THREE.Mesh) {
-          child.scale.set(childScale, childScale, childScale); // todo
+          child.scale.set(childScale, childScale, childScale);
           child.rotation.set(Math.PI * 1 / 2, -Math.PI * 1 / 2, 0);
           if (Array.isArray(child.material)) {
-            return; // todo maybe remove this mesh
+            return;
           }
           child.material.initColor = child.material.color.getHex();
         }
@@ -505,7 +478,6 @@ function loadObjectModel(obj) {
     });
   });
 }
-
 
 function createPolygonLayer() {
   polygonLayer = new maptalks.VectorLayer('polygonLayer');

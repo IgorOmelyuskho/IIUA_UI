@@ -1,9 +1,12 @@
-.map-wrapper-4 {
+.map-wrapper-4 { // todo unique
   position: relative;
+  width: 100%;
+  height: 500px; // default value
+  background: black;
 
   #map-4 {
-    width: 1000px;
-    height: 500px;
+    width: 100%;
+    height: 100%;
     position: relative;
   }
 

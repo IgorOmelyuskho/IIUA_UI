@@ -3,7 +3,7 @@
 
 <div class="full-screen-block">
 
-  <div class="map-wrapper-3">
+  <!-- <div class="map-wrapper-3">
     <div id="map-3"></div>
     <div id="info-3">
       <div class="name"></div>
@@ -11,6 +11,9 @@
       <div class="coords-y"></div>
     </div>
     <div id="area-info-3"></div>
+  </div> -->
+  <div class="map-wrapper1234">
+    <app-map (objectClick)="onMapObjectClick($event)"></app-map>
   </div>
 
   <div class="filter-wrapper">
@@ -27,11 +30,13 @@
       </div>
     </div>
 
-    <button type="button" class="filter-btn">
+    <button (click)="filterIsExpanded = !filterIsExpanded" type="button" class="filter-btn" [ngClass]="{ 'filter-btn-expanded': filterIsExpanded }">
       <span>Фильтры</span>
+      <i *ngIf="filterIsExpanded" class="fa fa-angle-up ml-2"></i>
+      <i *ngIf="!filterIsExpanded" class="fa fa-angle-down ml-2"></i>
     </button>
 
-    <div class="filter-width">
+    <div *ngIf="filterIsExpanded" class="filter-width">
       <app-filter (filterChange)="filterOnChange($event)"></app-filter>
     </div>
   </div>

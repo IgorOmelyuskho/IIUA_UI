@@ -211,3 +211,12 @@ body {
 }
 //#endregion
 
+// focus
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: $green !important;
+  box-shadow: 0 0 0 0.2rem rgba(117, 175, 39, 0.25) !important;
+  outline: none !important;
+}

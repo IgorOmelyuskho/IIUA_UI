@@ -1,16 +1,135 @@
-<div class="main-screen-right">
+<div #mainScreenRight class="main-screen-right">
+  <div class="main-block">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2 pr-0 pl-0">
+          <div class="projects_1">
+            <div *ngFor="let project of projects_1" class="project-wrapper">
+              <div class="project">
+                <div class="avatar-wrapper">
+                  <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>
+                </div>
+                <div class="info">
+                  <div class="project-name">{{project.name}}</div>
+                  <div class="region">
+                    <i class="fa fa-map-marker mr-1" aria-hidden="true"></i>
+                    <span class="region">{{project.region}}</span>
+                  </div>
+                  <div class="field-activity">
+                    <div class="d-flex">
+                      <img class="flame" src="../../../assets/img/squares.png" alt="">
+                      <div class="max-width">{{project.fieldOfActivity}}</div>
+                    </div>
+                    <div class="d-flex">
+                      <img class="right-img" src="../../../assets/img/car.png" alt="">
+                      <img class="right-img" src="../../../assets/img/s-city.png" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 pr-0">
+          <div class="messages" *ngIf="messages_show">
+            messages
+            messages
+            messages
+            messages
+            messages
+            messages
+            messages
+            messages
+            messages
+          </div>
+        </div>
+        <div class="col-3 pr-0">
+          <div class="projects_2" *ngIf="projects_2_show">
+            <div *ngFor="let project of projects_2" class="project">
+              <div class="top-part">
+                <div class="avatar-wrapper">
+                  <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>
+                </div>
+                <div class="info">
+                  <div class="project-name">{{project.name}}</div>
+                  <div class="company-name">{{project.legalEntityName}}</div>
+                  <div class="bottom-info">
+                    <div class="region">
+                      <i class="fa fa-map-marker mr-1" aria-hidden="true"></i>
+                      <span class="region">{{project.region}}</span>
+                    </div>
+                    <div class="d-flex ml-3">
+                      <img src="../../../assets/img/squares.png" alt="">
+                      <div class="max-width">{{project.fieldOfActivity}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
+              <div class="project-info">
+                Aut possimus ea consequatur dignissimos cum et. Voluptas corrupti incidunt voluptatem repellendus id.
+                Quas nesciunt accusamus aut ut aut tenetur.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 pr-0 pl-0">
+          <div class="projects_3" *ngIf="projects_3_show">
+            <div *ngFor="let project of projects_3" class="project">
+              <div class="top-part">
+                <div class="avatar-wrapper">
+                  <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>
+                </div>
+                <div class="info">
+                  <div class="project-name">{{project.name}}</div>
+                  <div class="company-name">{{project.legalEntityName}}</div>
+                  <div class="bottom-info">
+                    <div class="region">
+                      <i class="fa fa-map-marker mr-1" aria-hidden="true"></i>
+                      <span class="region">{{project.region}}</span>
+                    </div>
+                    <div class="d-flex ml-3">
+                      <img src="../../../assets/img/squares.png" alt="">
+                      <div class="max-width">{{project.fieldOfActivity}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="project-info">
+                Aut possimus ea consequatur dignissimos cum et. Voluptas corrupti incidunt voluptatem repellendus id.
+                Quas nesciunt accusamus aut ut aut tenetur.
+              </div>
+              <div class="bottom-part">
+                <button class="approve" type="button">Утвердить</button>
+                <button class="discuss" type="button">Обсудить</button>
+                <button class="reject" type="button">Отклонить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div (click)="hideRightBlock()" class="close-btn">
+    <img src="../../../assets/img/close-2.png" alt="close">
+  </div>
 </div>
 
 
+
+
+
+<!-- right menu -->
 <div class="right-menu">
-  <div class="message">
+  <div (click)="showMessages()" class="message" [ngClass]="{ 'selected': messages_show }">
     <div class="img-bg"></div>
   </div>
-  <div class="bell">
+  <div (click)="showProjects_2()" class="bell" [ngClass]="{ 'selected': projects_2_show }">
     <div class="img-bg"></div>
   </div>
-  <div class="approve">
+  <div (click)="showProjects_3()" class="approve" [ngClass]="{ 'selected': projects_3_show }">
     <div class="img-bg"></div>
   </div>
 </div>

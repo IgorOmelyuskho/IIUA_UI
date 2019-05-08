@@ -4,17 +4,11 @@
   background: #fafafa;
 }
 
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: $green;
-  box-shadow: 0 0 0 0.2rem rgba(117, 175, 39, 0.25);
-  outline: none;
-}
-
 .left-col {
   .search-by-name {
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23);
+    border-radius: 6px;
+
     button {
       background: $green;
       color: white;

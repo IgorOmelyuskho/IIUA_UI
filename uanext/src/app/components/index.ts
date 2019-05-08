@@ -27,7 +27,6 @@ import { FilterComponent } from './filter/filter.component';
 import { FilteredProjectComponent } from './filtered-project/filtered-project.component';
 import { FilterItemsComponent } from './filter-items/filter-items.component';
 import { MainScreenComponent } from './main-screen/main-screen.component';
-import { MainScreenFilterComponent } from './main-screen-filter/main-screen-filter.component';
 import { MainScreenProjectCardComponent } from './main-screen-project-card/main-screen-project-card.component';
 import { MainScreenRightComponent } from './main-screen-right/main-screen-right.component';
 import { MapComponent } from './map/map.component';
@@ -63,7 +62,6 @@ export {
   FilteredProjectComponent,
   FilterItemsComponent,
   MainScreenComponent,
-  MainScreenFilterComponent,
   MainScreenProjectCardComponent,
   MainScreenRightComponent,
   MapComponent
@@ -99,7 +97,6 @@ export const components = [
   FilteredProjectComponent,
   FilterItemsComponent,
   MainScreenComponent,
-  MainScreenFilterComponent,
   MainScreenProjectCardComponent,
   MainScreenRightComponent,
   MapComponent
