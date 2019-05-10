@@ -1,8 +1,9 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 // import { mapInit, mapDestroy, mapSetProject } from './map3-no-class';
 // import { Map } from './map3';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject.js';
-import { FilterFields } from 'src/app/models/index.js';
+import { FilterFields, UserRole } from 'src/app/models/index.js';
+import { StateService } from 'src/app/services/state/state.service';
 
 const responseProject = {
   'id': 0,
@@ -205,34 +206,31 @@ const responseProject2 = {
 };
 
 @Component({
-  selector: 'app-main-screen',
-  templateUrl: './main-screen.component.html',
-  styleUrls: ['./main-screen.component.scss']
+  selector: 'app-main-screen-investor',
+  templateUrl: './main-screen-investor.component.html',
+  styleUrls: ['./main-screen-investor.component.scss']
 })
-export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MainScreenInvestorComponent implements OnInit, AfterViewInit {
   selectedProject: any = responseProject; // ViewVendorProject
   selectedProjectId: any = responseProject.id; // todo use when page reload
 
   filter: FilterFields;
   filterIsExpanded = false; // false - свернут
 
-  // map: Map = null; // init in afterViewInit
+  UserRole = UserRole;
+  role: UserRole;
 
-  constructor() { }
+  constructor(private stateService: StateService) { }
 
   ngOnInit() {
     new Image().src = '../../../assets/img/message-hover.png';
     new Image().src = '../../../assets/img/bell-hover.png';
     new Image().src = '../../../assets/img/approve-hover.png';
+
+    this.role = this.stateService.role();
   }
 
   ngAfterViewInit() {
-    // if (this.selectedProject != null) {
-    //   mapInit(this.selectedProject);
-    // }
-
-    // this.map = new Map(); // todo init with selected project or set project after
-    // mapInit();
   }
 
   filterOnChange(filterParam: FilterFields) {
@@ -240,15 +238,9 @@ export class MainScreenComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.filter);
   }
 
-  ngOnDestroy() {
-    // this.map.mapDestroy();
-    // mapDestroy();
-  }
-
   onMapObjectClick(mapObject: any) {
     console.log('mapObject = ', mapObject);
-    this.selectedProject = mapObject.project;
+    this.selectedProject = {...mapObject.project};
     this.selectedProjectId = mapObject.project.id;
   }
-
 }

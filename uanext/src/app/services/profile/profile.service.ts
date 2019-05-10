@@ -16,32 +16,32 @@ export class ProfileService {
   constructor(private http: HttpClient) { }
 
   fetchInvestor(): Observable<InvestorRole> {
-    return this.http.get<InvestorRole>(environment.api_url + environment.investorProfile).pipe(
+    return this.http.get<InvestorRole>(environment.auth + environment.investorProfile).pipe(
       map(response => response['data'])
     );
   }
 
   fetchVendor(): Observable<VendorRole> {
-    return this.http.get<VendorRole>(environment.api_url + environment.vendorProfile).pipe(
+    return this.http.get<VendorRole>(environment.auth + environment.vendorProfile).pipe(
       map(response => response['data'])
     );
   }
 
   fetchAdmin(): Observable<VendorRole> { // todo response[data] ???
-    return this.http.get<VendorRole>(environment.api_url + environment.adminProfile).pipe(
+    return this.http.get<VendorRole>(environment.auth + environment.adminProfile).pipe(
       map(response => response['data'])
     );
   }
 
   updateInvestorProfile(userId: string, updatedData: any) {
-    return this.http.put(environment.api_url + environment.investorProfile + userId, updatedData);
+    return this.http.put(environment.auth + environment.investorProfile + userId, updatedData);
   }
 
   updateVendorProfile(userId: string, updatedData: any) {
-    return this.http.put(environment.api_url + environment.vendorProfile + userId, updatedData);
+    return this.http.put(environment.auth + environment.vendorProfile + userId, updatedData);
   }
 
   updateAdminProfile(userId: string, updatedData: any) {
-    return this.http.put(environment.api_url + environment.adminProfile + userId, updatedData);
+    return this.http.put(environment.auth + environment.adminProfile + userId, updatedData);
   }
 }

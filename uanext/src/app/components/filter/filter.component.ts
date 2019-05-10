@@ -14,7 +14,6 @@ export class FilterComponent implements OnInit, AfterViewInit {
 
   @Input()
   set filterItemForRemove(itemForReset: any) {
-    console.log('CHANGE INPUT');
     this.resetItem(itemForReset);
   }
 
@@ -103,11 +102,10 @@ export class FilterComponent implements OnInit, AfterViewInit {
 
   resetItem(itemForReset: any) {
     if (itemForReset == null) {
-      console.log('itemForReset == NULL');
       return;
     }
 
-    if (itemForReset === FilterItemsName.CLEAR_ALL) {
+    if (itemForReset.name === FilterItemsName.CLEAR_ALL) {
       this.resetAll();
     }
 
@@ -141,7 +139,6 @@ export class FilterComponent implements OnInit, AfterViewInit {
   }
 
   resetAll() {
-    console.log('RESET ALL');
     this.fieldOfActivityResetAll();
     this.updateRateResetAll();
     this.moneyRequiredReset();
@@ -505,11 +502,9 @@ export class FilterComponent implements OnInit, AfterViewInit {
         filter.avgCheckTo_TODO_NAME = this.avgCheckToElement.value;
       }
 
-      console.log(filter);
       // this.filterChange.emit(filter);
       this.filter$.next(filter);
     } catch (err) {
-      console.log(filter);
       // this.filterChange.emit(filter);
       this.filter$.next(filter);
     }

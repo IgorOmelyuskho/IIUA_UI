@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, } from 'rxjs';
 
-import { VendorRole, AdminRole } from './../../models';
+import { VendorRole, AdminRole, UserRole } from './../../models';
 import { InvestorRole } from './../../models';
 import { NotificationService } from '../notification/notification.service';
 import { Router } from '@angular/router';
@@ -30,7 +30,7 @@ export class StateService {
   /**
   * must call after localStorage.setItem(token)
   */
-  role(): string {
+  role(): UserRole {
     try {
       const token = localStorage.getItem('token');
       const decodedToken: any = this.helper.decodeToken(token);

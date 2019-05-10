@@ -40,7 +40,7 @@ export class VendorCompanyService {
   constructor(private http: HttpClient) { }
 
   fetchVendorCompanies(): Observable<VendorCompany[]> {
-    return this.http.get<VendorCompany[]>(environment.projects_api_url + environment.vendorProject)
+    return this.http.get<VendorCompany[]>(environment.projects + environment.vendorProject)
       .pipe(
         map((response: any) => {
           return response['data'];
@@ -78,16 +78,16 @@ export class VendorCompanyService {
   }
 
   createVendorCompany(newVendorCompany: VendorCompany): Observable<any> {
-    return this.http.post<any>(environment.projects_api_url + environment.vendorProject, newVendorCompany);
+    return this.http.post<any>(environment.projects + environment.vendorProject, newVendorCompany);
   }
 
   updateVendorCompany(projectId: number, updatedVendorCompany: VendorCompany): Observable<any> {
-    return this.http.put<any>(environment.projects_api_url + environment.vendorProject + projectId, updatedVendorCompany);
+    return this.http.put<any>(environment.projects + environment.vendorProject + projectId, updatedVendorCompany);
   }
 
 
   uploadImages(formData: FormData): Observable<any> {
-    return this.http.post<any>(environment.projects_api_url + environment.uploadImages, formData)
+    return this.http.post<any>(environment.projects + environment.uploadImages, formData)
       .pipe(
         map(response => {
           return response.data;
@@ -97,7 +97,7 @@ export class VendorCompanyService {
   }
 
   uploadFiles(formData: FormData): Observable<any> {
-    return this.http.post<any>(environment.projects_api_url + environment.uploadFiles, formData)
+    return this.http.post<any>(environment.projects + environment.uploadFiles, formData)
       .pipe(
         map(response => {
           return response.data;

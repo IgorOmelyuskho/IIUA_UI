@@ -9,6 +9,7 @@ import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 export class FilteredProjectComponent implements OnInit, AfterViewInit {
   @Input() project: ViewVendorProject;
   @Output() selectProject = new EventEmitter<ViewVendorProject>();
+  @Output() goToProject = new EventEmitter<ViewVendorProject>();
 
   _searchText = 'prev_search'; // need some default string
   @Input()
@@ -64,6 +65,10 @@ export class FilteredProjectComponent implements OnInit, AfterViewInit {
 
   projectOnSelect() {
     this.selectProject.emit(this.project);
+  }
+
+  goToProjectClick() {
+    this.goToProject.emit(this.project);
   }
 
 }

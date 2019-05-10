@@ -26,10 +26,15 @@ import { AdminSignupComponent } from './admin-signup/admin-signup.component';
 import { FilterComponent } from './filter/filter.component';
 import { FilteredProjectComponent } from './filtered-project/filtered-project.component';
 import { FilterItemsComponent } from './filter-items/filter-items.component';
-import { MainScreenComponent } from './main-screen/main-screen.component';
+import { MainScreenInvestorComponent } from './main-screen-investor/main-screen-investor.component';
 import { MainScreenProjectCardComponent } from './main-screen-project-card/main-screen-project-card.component';
 import { MainScreenRightComponent } from './main-screen-right/main-screen-right.component';
 import { MapComponent } from './map/map.component';
+import { VendorNavbarComponent } from './vendor-navbar/vendor-navbar.component';
+import { InvestorNavbarComponent } from './investor-navbar/investor-navbar.component';
+import { MainScreenVendorComponent } from './main-screen-vendor/main-screen-vendor.component';
+import { InvestorMessageComponent } from './investor-message/investor-message.component';
+
 
 // this exports for app-routing.module.ts
 export {
@@ -61,10 +66,14 @@ export {
   FilterComponent,
   FilteredProjectComponent,
   FilterItemsComponent,
-  MainScreenComponent,
+  MainScreenInvestorComponent,
   MainScreenProjectCardComponent,
   MainScreenRightComponent,
-  MapComponent
+  MapComponent,
+  VendorNavbarComponent,
+  InvestorNavbarComponent,
+  MainScreenVendorComponent,
+  InvestorMessageComponent
 };
 
 export const components = [
@@ -96,10 +105,14 @@ export const components = [
   FilterComponent,
   FilteredProjectComponent,
   FilterItemsComponent,
-  MainScreenComponent,
+  MainScreenInvestorComponent,
   MainScreenProjectCardComponent,
   MainScreenRightComponent,
-  MapComponent
+  MapComponent,
+  VendorNavbarComponent,
+  InvestorNavbarComponent,
+  MainScreenVendorComponent,
+  InvestorMessageComponent
 ];
 
 

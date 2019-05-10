@@ -39,7 +39,7 @@ export function mapInit() {
   initInfoWindow();
 
   mapElement = document.getElementById('map-4');
-  mapWrapperElement = document.getElementsByClassName('map-wrapper-4')[0]; // todo unique name
+  mapWrapperElement = document.getElementsByClassName('map-wrapper-4-unique-3585349')[0];
   canvasElem = mapElement.querySelector('canvas');
 
   stats = new Stats();
@@ -62,8 +62,11 @@ export function mapInit() {
 }
 
 export function mapSetProject(project) {
-  console.log(project);
-  map.setCenter(new maptalks.Coordinate(project.projectCoords.x, project.projectCoords.y));
+  project.coords = {};
+  project.coords.x = Math.random() * 30;
+  project.coords.y = Math.random() * 30;
+  map.setCenter(new maptalks.Coordinate(project.coords.x, project.coords.y));
+  // set selected project
 }
 
 export function mapDestroy() {
@@ -72,6 +75,7 @@ export function mapDestroy() {
   clearInterval(timer2);
   cancelAnimationFrame(animationFrame);
   window.removeEventListener('resize', windowOnResize);
+
   infoWindow = {};
   canvasElem = null;
   stats = null;
@@ -90,6 +94,8 @@ export function mapDestroy() {
   clusterLayer = null;
   polygonLayer = null;
   camera = null;
+
+  on_click_object = null;
 }
 
 export function mapSetFullScreen() { // todo navbar height
@@ -181,13 +187,13 @@ export function mapAddNewObjects(objects: any[]) {
   for (let i = 0; i < objects.length; i++) {
     const newObj = { ...objects[i] };
     newObj.marker = null,
-    newObj.model = null,
-    newObj.mouseUnder = false,
-    newObj.speedX = 0,
-    newObj.speedY = 0,
-    newObj.rotationZ = 0,
-    newObj.coords = map.getCenter().add(Math.random() * 0.003, Math.random() * 0.002), // todo remove
-    newObj.prevCoords = {};
+      newObj.model = null,
+      newObj.mouseUnder = false,
+      newObj.speedX = 0,
+      newObj.speedY = 0,
+      newObj.rotationZ = 0,
+      newObj.coords = map.getCenter().add(Math.random() * 0.008, Math.random() * 0.009), // todo remove
+      newObj.prevCoords = {};
     newObj.prevCoords.x = newObj.coords.x;
     newObj.prevCoords.y = newObj.coords.y;
 
@@ -220,8 +226,8 @@ function createMap() {
     },
     // overviewControl: true, // add overview control
     baseLayer: new maptalks.TileLayer('tile', {
-      'urlTemplate' : 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-      'subdomains'  : ['a', 'b', 'c'],
+      'urlTemplate': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+      'subdomains': ['a', 'b', 'c'],
     })
   });
 
@@ -247,17 +253,41 @@ function createMap() {
   map.on('click', function (event) {
     for (let i = 0; i < objectsArr.length; i++) {
       if (objectsArr[i].mouseUnder === true) {
+        if (selectedObject != null) {
+          selectedObject.objectDivLabel.className = 'obj-label';
+          setMarkerSymbolDefault(selectedObject.marker);
+        }
         selectedObject = objectsArr[i];
+        selectedObject.objectDivLabel.className = 'obj-label-selected';
+        setMarkerSymbolSelected(selectedObject.marker);
         if (on_click_object != null) {
           on_click_object(selectedObject);
         }
-        selectedObject.objectDivLabel.className = 'obj-label-selected';
         showInformation(selectedObject);
-      } else {
-        objectsArr[i].objectDivLabel.className = 'obj-label';
       }
     }
   });
+}
+
+function setMarkerSymbolDefault(marker1) {
+  marker1.updateSymbol({
+    'markerWidth': 28,
+    'markerHeight': 40,
+    'textSize': 16,
+    'textFill': 'black',
+    'zIndex': 1
+  });
+  marker1.setZIndex(1);
+}
+
+function setMarkerSymbolSelected(marker1) {
+  marker1.updateSymbol({
+    'markerWidth': 28 + 5,
+    'markerHeight': 40 + 5,
+    'textSize': 18,
+    'textFill': 'green',
+  });
+  marker1.setZIndex(1000);
 }
 
 function createMarker(obj) {
@@ -266,20 +296,19 @@ function createMarker(obj) {
     visible: true,
     cursor: 'pointer',
     symbol: [{
-        'markerFile': '../../assets/img/marker.svg',
-        'markerWidth': 28,
-        'markerHeight': 40,
-      },
-      {
-        'textFaceName': 'sans-serif',
-        'textName': obj.name,
-        'textSize': 16,
-        'textDy': 10,
-        'textFill': 'black',
-        'textHaloColor': '#fff',
-        'textHaloRadius': 2,
-      }
-    ]
+      'markerFile': '../../assets/img/marker.svg',
+      'markerWidth': 28,
+      'markerHeight': 40,
+    },
+    {
+      'textFaceName': 'sans-serif',
+      'textName': obj.name,
+      'textSize': 16,
+      'textDy': 10,
+      'textFill': 'black',
+      'textHaloColor': '#fff',
+      'textHaloRadius': 2,
+    }]
   });
 
   obj.marker = marker;
@@ -287,8 +316,15 @@ function createMarker(obj) {
   clusterLayer.addGeometry(marker);
   changeVisible(obj, map.getZoom());
 
-  marker.on('click', (e) => {
+  marker.on('click', function (e) {
+    console.log(e);
+    if (selectedObject != null) {
+      selectedObject.objectDivLabel.className = 'obj-label';
+      setMarkerSymbolDefault(selectedObject.marker);
+    }
     selectedObject = e.target.parent;
+    selectedObject.objectDivLabel.className = 'obj-label-selected';
+    setMarkerSymbolSelected(selectedObject.marker);
     if (on_click_object != null) {
       on_click_object(selectedObject);
     }
@@ -296,24 +332,14 @@ function createMarker(obj) {
   });
 
   marker.on('mouseenter', function (e) {
-    marker.updateSymbol({
-      'markerWidth': 28 + 5,
-      'markerHeight': 40 + 5,
-      'textSize': 18,
-      'textFill': 'green',
-    });
-    marker.setZIndex(1000);
+    setMarkerSymbolSelected(marker);
   });
 
   marker.on('mouseout', function (e) {
-    marker.updateSymbol({
-      'markerWidth': 28,
-      'markerHeight': 40,
-      'textSize': 16,
-      'textFill': 'black',
-      'zIndex': 1
-    });
-    marker.setZIndex(1);
+    if (marker.parent === selectedObject) {
+      return;
+    }
+    setMarkerSymbolDefault(marker);
   });
 }
 

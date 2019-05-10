@@ -19,7 +19,8 @@ import { ViewVendorProjectsComponent } from './components';
 import { AdminProfileComponent } from './components';
 import { AdminSignupComponent } from './components';
 import { AdminSigninComponent } from './components';
-import { MainScreenComponent } from './components';
+import { MainScreenInvestorComponent } from './components';
+import { MainScreenVendorComponent } from './components';
 import { MapComponent } from './components';
 
 import { AuthGuard, NoAuthGuard, AdminGuard } from './services/guards';
@@ -30,6 +31,7 @@ const childInvestorRoutes: Routes = [
   { path: 'profile', component: InvestorProfileComponent },
   { path: 'viewProjects', component: ViewVendorProjectsComponent },
   { path: 'project/:id', component: ViewProjectComponent },
+  { path: 'main-page', component: MainScreenInvestorComponent },
 ];
 
 const childVendorRoutes: Routes = [
@@ -37,6 +39,7 @@ const childVendorRoutes: Routes = [
   { path: 'projects', component: VendorProjectsComponent },
   { path: 'newProject', component: CreateVendorCompanyComponent },
   { path: 'project/:id', component: UpdateVendorCompanyComponent },
+  { path: 'main-page', component: MainScreenVendorComponent },
 ];
 
 const childAdminRoutes: Routes = [
@@ -47,23 +50,22 @@ const childAdminRoutes: Routes = [
 ];
 
 const childHomeRoutes: Routes = [
-  { path: 'investor', component: InvestorComponent, children: childInvestorRoutes },
-  { path: 'vendor', component: VendorComponent, children: childVendorRoutes }
-  // { path: 'investor', component: InvestorComponent, children: childInvestorRoutes, canActivate: [InvestorGuard] },
-  // { path: 'vendor', component: VendorComponent, children: childVendorRoutes, canActivate: [VendorGuard] }
+  { path: 'investor', component: InvestorComponent, children: childInvestorRoutes, canActivate: [InvestorGuard] },
+  { path: 'vendor', component: VendorComponent, children: childVendorRoutes, canActivate: [VendorGuard] }
 ];
 
 const routes: Routes = [
   { path: 'investor11', component: ViewVendorProjectsComponent },
-  { path: 'main-screen', component: MainScreenComponent },
+  { path: 'main-screen', component: MainScreenInvestorComponent },
   { path: 'map', component: MapComponent },
-  // { path: '', component: IndexComponent, pathMatch: 'full' },
-  // { path: 'signin', component: SigninComponent, canActivate: [NoAuthGuard] },
-  // { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
-  // { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
-  // { path: 'admin', component: AdminPageComponent, children: childAdminRoutes, canActivate: [AdminGuard] },
-  // { path: 'adminSignup', component: AdminSignupComponent },
-  // { path: '**', redirectTo: '' }
+
+  { path: '', component: IndexComponent, pathMatch: 'full' },
+  { path: 'signin', component: SigninComponent, canActivate: [NoAuthGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
+  { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminPageComponent, children: childAdminRoutes, canActivate: [AdminGuard] },
+  { path: 'adminSignup', component: AdminSignupComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

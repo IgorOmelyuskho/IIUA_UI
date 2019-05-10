@@ -11,6 +11,9 @@ export class FilterItemsComponent implements OnInit {
 
   @Input()
   set filter(filter: FilterFields) {
+    if (filter == null) {
+      return;
+    }
     this.setFilterItems(filter);
   }
 
@@ -26,7 +29,7 @@ export class FilterItemsComponent implements OnInit {
   }
 
   clearAll() {
-    this.filterItemRemove.emit(FilterItemsName.CLEAR_ALL);
+    this.filterItemRemove.emit({name: FilterItemsName.CLEAR_ALL});
   }
 
   setFilterItems(filterParam: FilterFields) {

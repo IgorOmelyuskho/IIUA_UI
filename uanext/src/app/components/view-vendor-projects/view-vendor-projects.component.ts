@@ -1,8 +1,9 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Input } from '@angular/core';
+import {
+  Component, OnInit, AfterViewInit,
+  ViewChild, ElementRef, Input } from '@angular/core';
 import { ViewVendorProject } from 'src/app/models/viewVendorProject';
 import { Router } from '@angular/router';
 import { FilteredProjects, FilterFields } from 'src/app/models';
-import { mapInit, mapDestroy, mapSetProject } from './map2.js';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import FormHelper from '../../services/helperServices/formHelper';
 import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service.js';
@@ -747,7 +748,7 @@ const responseProjects = {
   templateUrl: './view-vendor-projects.component.html',
   styleUrls: ['./view-vendor-projects.component.scss']
 })
-export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
   @ViewChild('searchByKeyWordInput') searchByKeyWordInput: ElementRef;
 
   FormHelper = FormHelper;
@@ -766,21 +767,17 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
 
   prevSearch: string; // filter/keyWord
 
-  _filterItemForRemove: any;
-  get filterItemForRemove(): any {
-    return this._filterItemForRemove;
-  }
-  set filterItemForRemove(value: any) {
-    this._filterItemForRemove = value;
-    console.log(this._filterItemForRemove);
-  }
+  filterItemForRemove: any;
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
   filter: FilterFields;
 
-  constructor(private router: Router, private viewProjectsService: ViewProjectsService) { }
+  constructor(
+    private router: Router,
+    private viewProjectsService: ViewProjectsService
+  ) { }
 
   ngOnInit() {
     this.galleryOptions = [
@@ -814,10 +811,6 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
       this.searchProjectsByFilter(this.filter);
     }, 0);
 
-    // if (this.projects != null) {
-    // mapInit();
-    // }
-
     fromEvent<any>(this.searchByKeyWordInput.nativeElement, 'input')
       .pipe(
         map(e => e.target.value),
@@ -831,10 +824,10 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
       });
   }
 
-  onFilterItemRemove(filterItemForRemove) { // chang detector mark for check
+  onFilterItemRemove(filterItemForRemoveParam) {
     console.log('CLEAR ALL iN VIEW_VENROR');
-    this.filterItemForRemove = {...filterItemForRemove};
-    // this.filterItemForRemove = JSON.parse(JSON.stringify(filterItemForRemove));
+    // this.filterItemForRemove = JSON.parse(JSON.stringify(filterItemForRemoveParam));
+    this.filterItemForRemove = filterItemForRemoveParam;
   }
 
   filterOnChange(filterParam: FilterFields) {
@@ -853,25 +846,24 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
   }
 
   goToProject(project: ViewVendorProject) {
-    // this.viewProjectsService.projectForView = project;
+    this.viewProjectsService.projectForView = project;
     this.router.navigate(['home', 'investor', 'project', project.id]);
   }
 
   selectProject(project: ViewVendorProject) {
-    this.selectedProject = project;
+    this.selectedProject = {...project};
     this.selectedMenuItem = 'shared';
     this.setGalleryImages(this.selectedProject.images);
     this.setMapCoordinateByProject(project);
   }
 
   setMapCoordinateByProject(project: ViewVendorProject) {
-    // todo
     project['projectCoords'] = {
       x: 13.41561 + Math.random() * 0.1,
       y: 52.539611 + Math.random() * 0.1,
     };
 
-    mapSetProject(project); // map2.js
+    // mapSetProject(project); // todo
   }
 
   searchByKeywordBtn(event) {
@@ -971,8 +963,8 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDes
     // this.pageNumber -= 1;
   }
 
-  ngOnDestroy() {
-    mapDestroy();
+  onMapObjectClick(mapProject: any) {
+    console.log(mapProject);
   }
 
 }

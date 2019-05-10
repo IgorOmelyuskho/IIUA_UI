@@ -112,21 +112,21 @@ export class AuthorizationService {
 
   // any because api return empty or {"message": "User Email \"string4@gmail.com\" is already taken"}
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
-    return this.http.post<any>(environment.api_url + environment.vendorRegister, vendorDto, /* httpOptions */{ observe: 'response' });
+    return this.http.post<any>(environment.auth + environment.vendorRegister, vendorDto, /* httpOptions */{ observe: 'response' });
   }
 
   signUpAsInvestor(investorDto: InvestorDto): Observable<any> {
-    return this.http.post<any>(environment.api_url + environment.investorRegister, investorDto, { observe: 'response' });
+    return this.http.post<any>(environment.auth + environment.investorRegister, investorDto, { observe: 'response' });
   }
 
   signUpAsAdmin(adminDto: AdminDto): Observable<any> { // todo
     // return of({});
-    return this.http.post<any>(environment.api_url + environment.adminRegister, adminDto, { observe: 'response' });
+    return this.http.post<any>(environment.auth + environment.adminRegister, adminDto, { observe: 'response' });
   }
 
   // any because api return different response
   signIn(investorOrVendor: { password: string, email: string }): Observable<any> {
-    return this.http.post<any>(environment.api_url + environment.authenticate, investorOrVendor, { observe: 'response' });
+    return this.http.post<any>(environment.auth + environment.authenticate, investorOrVendor, { observe: 'response' });
   }
 
   signOut(): void {

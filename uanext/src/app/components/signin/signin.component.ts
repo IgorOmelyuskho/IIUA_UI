@@ -99,7 +99,7 @@ export class SigninComponent implements OnInit {
         this.showProgressBar = false;
 
         localStorage.setItem('token', response.body.data);
-        const role = this.stateService.role();
+        const role: UserRole = this.stateService.role();
 
         if (role === UserRole.Vendor) {
           this.fetchVendorSubscribe( this.profileService.fetchVendor() );

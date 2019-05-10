@@ -3,17 +3,22 @@
 .main-screen-right {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
   background: white;
-  width: 90vw;
   position: absolute;
   right: 0;
   top: 0;
   z-index: 10000;
+  height: 100%;
 
   .main-block {
     padding-right: 70px;
+    display: inline-flex;
+    height: 100%;
 
     .projects_1 {
       border-right: 1px solid #dbdbdb;
+      width: 15vw;
+      overflow: auto;
+      height: 100%;
 
       .project-wrapper {
         .project {
@@ -93,9 +98,17 @@
       }
     }
 
-    .messages {}
+    .messages {
+      width: 30vw;
+      overflow: auto;
+      height: 100%;
+    }
 
     .projects_2 {
+      width: 20vw;
+      overflow: auto;
+      height: 100%;
+
       .project {
         border-left: 1px solid #d3d3d3;
         border-right: 1px solid #d3d3d3;
@@ -188,6 +201,10 @@
     }
 
     .projects_3 {
+      width: 20vw;
+      overflow: auto;
+      height: 100%;
+
       .project {
         border-left: 1px solid #d3d3d3;
         border-right: 1px solid #d3d3d3;

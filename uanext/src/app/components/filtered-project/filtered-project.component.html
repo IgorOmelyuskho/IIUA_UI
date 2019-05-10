@@ -1,4 +1,4 @@
-<div class="project" (click)="projectOnSelect(project)">
+<div class="project" (click)="projectOnSelect()">
 
   <div>{{searchText}}</div>
 
@@ -14,7 +14,7 @@
     <!-- <h5>ID = {{project.id}}</h5> -->
     <div class="bottom-info">
       <div class="d-flex">
-        <h5 class="project-name" [innerHTML]="project.legalEntityName | highlight: _searchText"></h5>
+        <h5 (click)="goToProjectClick()" class="project-name" [innerHTML]="project.legalEntityName | highlight: _searchText"></h5>
         <img class="flame" src="../../../assets/img/flame1.png" alt="">
         <img class="flame" src="../../../assets/img/flame2.png" alt="">
       </div>

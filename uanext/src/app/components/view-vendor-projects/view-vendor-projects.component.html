@@ -44,7 +44,7 @@
 
               <div *ngFor="let project of projects" class="project-wrapper">
                 <app-filtered-project [searchText]="searchWord" [project]="project"
-                  (selectProject)="selectProject($event)"></app-filtered-project>
+                  (selectProject)="selectProject($event)" (goToProject)="goToProject($event)"></app-filtered-project>
               </div>
             </div>
           </div>
@@ -55,16 +55,8 @@
     </div>
 
     <div class="col-4 pr-0 pl-0 right-col">
-      <!-- map -->
-      <div #mapWrapper class="map-wrapper-2">
-        <div id="map-2"></div>
-        <div id="info-2">
-          <div class="name"></div>
-          <div class="coords-x"></div>
-          <div class="coords-y"></div>
-        </div>
-        <div id="area-info-2"></div>
-        <img id="full-screen-img-2" src="../../../assets/img/full-screen.png" alt="full-screen">
+      <div class="map-wrapper">
+        <app-map [changeSelectedProject]="selectedProject" (objectClick)="onMapObjectClick($event)"></app-map>
       </div>
 
       <div class="detail-project-info">

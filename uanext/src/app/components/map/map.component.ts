@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 // import { Map } from './map4';
 import {
   mapInit,
@@ -274,6 +274,12 @@ const object4 = {
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() objectClick = new EventEmitter<any>();
+  @Input()
+  set changeSelectedProject(project: any) {
+    if (project != null) {
+      mapSetProject(project);
+    }
+  }
 
   // map: Map = null;
 
@@ -289,7 +295,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     // this.map = new Map();
     mapInit();
-    // setObjectClickCallback(this.onClickObjectCallback);
     setObjectClickCallback(this.clickObjectCallback);
 
     setTimeout(() => {

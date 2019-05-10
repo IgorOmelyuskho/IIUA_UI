@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     const token = localStorage.getItem('token');
     let decodedToken: any;
     let isExpired: boolean;
-    let role: string;
+    let role: UserRole;
 
     if (token == null || token === '') {
       this.authService.signOut();

@@ -1,8 +1,10 @@
-.map-wrapper-4 { // todo unique
+.map-wrapper-4-unique-3585349 {
   position: relative;
   width: 100%;
-  height: 500px; // default value
+  // height: 500px; // default value
+  height: 100%;
   background: black;
+  overflow: hidden;
 
   #map-4 {
     width: 100%;
@@ -25,5 +27,12 @@
 
   #area-info-4 {
     top: 120px;
+  }
+
+  #label-renderer-4 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
   }
 }

@@ -171,25 +171,6 @@ body {
 
 // map
 //#region
-.map-wrapper,
-.map-wrapper-2,
-.map-wrapper-3,
-.map-wrapper-4,
-.map-wrapper-5 {
-  overflow: hidden;
-}
-
-#label-renderer,
-#label-renderer-2,
-#label-renderer-3
-#label-renderer-4
-#label-renderer-5 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-}
-
 .obj-label {
   color: $green;
   font-size: 18px;

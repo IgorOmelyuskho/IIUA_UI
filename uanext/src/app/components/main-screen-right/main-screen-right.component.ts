@@ -436,6 +436,8 @@ const responseProjects = {
     ]
   }
 };
+
+const messages = [1, 2, 3];
 @Component({
   selector: 'app-main-screen-right',
   templateUrl: './main-screen-right.component.html',
@@ -444,9 +446,10 @@ const responseProjects = {
 export class MainScreenRightComponent implements OnInit {
   @ViewChild('mainScreenRight') rightBlock: ElementRef;
 
-  projects_1: any[] = responseProjects.data.projectsList;
-  projects_2: any[] = [responseProjects.data.projectsList[0], responseProjects.data.projectsList[1]];
-  projects_3: any[] = [responseProjects.data.projectsList[0], responseProjects.data.projectsList[1]];
+  projects_1: any[] = [...responseProjects.data.projectsList, ...responseProjects.data.projectsList, ...responseProjects.data.projectsList];
+  messages: any[] = messages;
+  projects_2: any[] = [responseProjects.data.projectsList[0], ...responseProjects.data.projectsList];
+  projects_3: any[] = [responseProjects.data.projectsList[0], ...responseProjects.data.projectsList];
 
   messages_show = false;
   projects_2_show = false;
@@ -471,17 +474,17 @@ export class MainScreenRightComponent implements OnInit {
   }
 
   showMessages() {
-    this.messages_show = true;
+    this.messages_show = !this.messages_show;
     this.rightBlock.nativeElement.style.display = '';
   }
 
   showProjects_2() {
-    this.projects_2_show = true;
+    this.projects_2_show = !this.projects_2_show;
     this.rightBlock.nativeElement.style.display = '';
   }
 
   showProjects_3() {
-    this.projects_3_show = true;
+    this.projects_3_show = !this.projects_3_show;
     this.rightBlock.nativeElement.style.display = '';
   }
 }

@@ -201,7 +201,7 @@ export class ViewProjectsService {
   // }
 
   searchByFilter(filter: any = {}): Observable<FilteredProjects> {
-    return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, filter)
+    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
       // return of([JSON.parse(JSON.stringify(fakeProject)), JSON.parse(JSON.stringify(fakeProject))])
       .pipe(
         map((response: any) => {
@@ -239,7 +239,7 @@ export class ViewProjectsService {
   // }
 
   searchByProjectName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
-    return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, {
+    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
       projectName: name,
       pageSize,
       page
@@ -264,7 +264,7 @@ export class ViewProjectsService {
   }
 
   searchByCompanyName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
-    return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, {
+    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
       companyName: name,
       pageSize,
       page
@@ -289,7 +289,7 @@ export class ViewProjectsService {
   }
 
   searchByKeyword(keyword: string, pageSize: number, page: number): Observable<FilteredProjects> {
-    return this.http.post<FilteredProjects>(environment.projects_api_url + environment.filteringProjects, {
+    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
       keyWord_TODO_NAME: keyword,
       pageSize,
       page
