@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { ViewVendorProject } from 'src/app/models/viewVendorProject';
+import { VendorProject } from 'src/app/models/vendorProject';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 
 @Component({
@@ -8,16 +8,15 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
   styleUrls: ['./main-screen-project-card.component.scss']
 })
 export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
-  _selectedProject: ViewVendorProject;
+  _selectedProject: VendorProject;
 
   @ViewChild('projectCard') projectCard: ElementRef;
 
   @Input()
-  set selectedProject(selectedProject: ViewVendorProject) {
+  set selectedProject(selectedProject: VendorProject) {
     this._selectedProject = selectedProject;
     this.projectCard.nativeElement.style.display = '';
     this.setGalleryImages(this._selectedProject.images);
-    console.log('CHANGE PROJECT');
   }
 
   selectedMenuItem = 'shared';

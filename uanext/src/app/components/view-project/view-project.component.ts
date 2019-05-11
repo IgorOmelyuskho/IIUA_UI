@@ -1,7 +1,7 @@
 
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service';
-import { ViewVendorProject } from 'src/app/models/viewVendorProject';
+import { VendorProject } from 'src/app/models/vendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import { mapInit, mapDestroy } from './map.js';
@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment.js';
   styleUrls: ['./view-project.component.scss']
 })
 export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
-  project: ViewVendorProject = null;
+  project: VendorProject = null;
   projectId: string;
 
   galleryOptions: NgxGalleryOptions[];

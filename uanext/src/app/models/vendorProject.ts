@@ -1,4 +1,4 @@
-export interface ViewVendorProject {
+export interface VendorProject {
   id: number;
   userId: number;
   name: string;

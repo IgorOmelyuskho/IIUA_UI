@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
-import { ViewVendorProject } from 'src/app/models/viewVendorProject';
+import { VendorProject } from 'src/app/models/vendorProject';
 
 @Component({
   selector: 'app-filtered-project',
@@ -7,9 +7,9 @@ import { ViewVendorProject } from 'src/app/models/viewVendorProject';
   styleUrls: ['./filtered-project.component.scss']
 })
 export class FilteredProjectComponent implements OnInit, AfterViewInit {
-  @Input() project: ViewVendorProject;
-  @Output() selectProject = new EventEmitter<ViewVendorProject>();
-  @Output() goToProject = new EventEmitter<ViewVendorProject>();
+  @Input() project: VendorProject;
+  @Output() selectProject = new EventEmitter<VendorProject>();
+  @Output() goToProject = new EventEmitter<VendorProject>();
 
   _searchText = 'prev_search'; // need some default string
   @Input()

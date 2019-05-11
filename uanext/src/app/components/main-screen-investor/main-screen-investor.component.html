@@ -1,6 +1,7 @@
 <div class="full-screen-block">
   <div class="map-wrapper">
-    <!-- <app-map (objectClick)="onMapObjectClick($event)"></app-map> -->
+    <app-map (objectClick)="onMapObjectClick($event)" (objectHover)="onMapObjectHover($event)"
+      (mapClick)="onMapClick($event)"></app-map>
   </div>
 
   <div class="filter-wrapper">
@@ -43,6 +44,17 @@
 </div>
 
 
+
+
+<!-- <div #previewCard *ngIf="showPreviewCard" class="preview-card">
+  some text
+  some text
+</div> -->
+
+<!-- <div #previewCard class="preview-card">
+  some text
+  some text
+</div> -->
 
 
 

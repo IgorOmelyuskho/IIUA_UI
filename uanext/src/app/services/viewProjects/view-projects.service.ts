@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, forkJoin, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ViewVendorProject } from 'src/app/models/viewVendorProject';
+import { VendorProject } from 'src/app/models/vendorProject';
 import { environment } from 'src/environments/environment';
 import { tap, map, catchError } from 'rxjs/operators';
 import { FilteredProjects } from 'src/app/models';
 
-const fakeProject: ViewVendorProject = { // todo remove
+const fakeProject: VendorProject = { // todo remove
   'id': 135,
   'userId': 88,
   'name': 'test_steps',
@@ -164,7 +164,7 @@ const emptyFilteredProjects = {
 })
 export class ViewProjectsService {
 
-  projectForView: ViewVendorProject = null; // initial when click on selected project
+  projectForView: VendorProject = null; // initial when click on selected project
 
   constructor(private http: HttpClient) { }
 

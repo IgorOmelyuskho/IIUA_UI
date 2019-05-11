@@ -10,8 +10,8 @@
       <div class="col-6 pr-1">
         <div class="avatar-wrapper">
           <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(_selectedProject) }"></div>
-          <div class="raiting">
-            {{_selectedProject.raiting}}
+          <div class="rating">
+            {{_selectedProject.rating}}
           </div>
         </div>
       </div>
@@ -153,10 +153,10 @@
         </div>
       </div>
       <div class="updates" *ngIf="selectedMenuItem === 'updates'">
-        <div>UPDATES TODO</div>
+        <app-investor-updates [project]="_selectedProject"></app-investor-updates>
       </div>
       <div class="comments" *ngIf="selectedMenuItem === 'comments'">
-        <div>COMMENTS TODO</div>
+        <app-investor-comments [project]="_selectedProject"></app-investor-comments>
       </div>
     </div>
 

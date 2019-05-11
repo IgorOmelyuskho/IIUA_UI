@@ -1,0 +1,26 @@
+<div class="updates">
+  <div *ngFor="let update of updates" class="update">
+
+    <div class="sender">
+      <div class="avatar-wrapper">
+        <img src="{{project.avatara.url}}" alt="">
+      </div>
+      <div class="right-part">
+        <div class="name-and-time">
+          <div class="name">{{project.legalEntityName}}</div>
+          <div class="time">{{update.date}}</div>
+        </div>
+        <div class="time-ago">{{update.timeAgo}}</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="header">{{update.header}}</div>
+
+    <div class="text">{{update.text}}</div>
+
+    <hr class="bottom">
+
+  </div>
+</div>

@@ -1,7 +1,7 @@
-import { ViewVendorProject } from './viewVendorProject';
+import { VendorProject } from './vendorProject';
 
 export interface FilteredProjects {
   pages: number;
   projectsCount: number;
-  projectsList: ViewVendorProject[];
+  projectsList: VendorProject[];
 }

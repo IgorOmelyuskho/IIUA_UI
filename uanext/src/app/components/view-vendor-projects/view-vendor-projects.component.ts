@@ -1,7 +1,7 @@
 import {
   Component, OnInit, AfterViewInit,
   ViewChild, ElementRef, Input } from '@angular/core';
-import { ViewVendorProject } from 'src/app/models/viewVendorProject';
+import { VendorProject } from 'src/app/models/vendorProject';
 import { Router } from '@angular/router';
 import { FilteredProjects, FilterFields } from 'src/app/models';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
@@ -18,7 +18,7 @@ const responseProjects = {
     'projectsList': [
       {
         'id': 0,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -138,7 +138,7 @@ const responseProjects = {
       },
       {
         'id': 1,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -221,7 +221,7 @@ const responseProjects = {
       },
       {
         'id': 0,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -291,7 +291,7 @@ const responseProjects = {
       },
       {
         'id': 0,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -361,7 +361,7 @@ const responseProjects = {
       },
       {
         'id': 1,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -439,7 +439,7 @@ const responseProjects = {
       },
       {
         'id': 0,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -509,7 +509,7 @@ const responseProjects = {
       },
       {
         'id': 1,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -587,7 +587,7 @@ const responseProjects = {
       },
       {
         'id': 0,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -657,7 +657,7 @@ const responseProjects = {
       },
       {
         'id': 1,
-        'raiting': 9.3,
+        'rating': 9.3,
         'userId': 0,
         'name': 'SLON&Co',
         'legalEntityName': 'legalEntityName',
@@ -742,7 +742,6 @@ const responseProjects = {
     ]
   }
 };
-
 @Component({
   selector: 'app-view-vendor-projects',
   templateUrl: './view-vendor-projects.component.html',
@@ -753,8 +752,8 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
 
   FormHelper = FormHelper;
 
-  projects: ViewVendorProject[] = [];
-  selectedProject: ViewVendorProject;
+  projects: VendorProject[] = [];
+  selectedProject: VendorProject;
   showProgress = false;
   searchWord: string;
 
@@ -845,19 +844,19 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
     this.galleryImages = imagesArr;
   }
 
-  goToProject(project: ViewVendorProject) {
+  goToProject(project: VendorProject) {
     this.viewProjectsService.projectForView = project;
     this.router.navigate(['home', 'investor', 'project', project.id]);
   }
 
-  selectProject(project: ViewVendorProject) {
+  selectProject(project: VendorProject) {
     this.selectedProject = {...project};
     this.selectedMenuItem = 'shared';
     this.setGalleryImages(this.selectedProject.images);
     this.setMapCoordinateByProject(project);
   }
 
-  setMapCoordinateByProject(project: ViewVendorProject) {
+  setMapCoordinateByProject(project: VendorProject) {
     project['projectCoords'] = {
       x: 13.41561 + Math.random() * 0.1,
       y: 52.539611 + Math.random() * 0.1,

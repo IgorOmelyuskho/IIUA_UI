@@ -33,7 +33,12 @@ import { MapComponent } from './map/map.component';
 import { VendorNavbarComponent } from './vendor-navbar/vendor-navbar.component';
 import { InvestorNavbarComponent } from './investor-navbar/investor-navbar.component';
 import { MainScreenVendorComponent } from './main-screen-vendor/main-screen-vendor.component';
-import { InvestorMessageComponent } from './investor-message/investor-message.component';
+import { InvestorIterativeInvestmentComponent } from './investor-iterative-investment/investor-iterative-investment.component';
+import { InvestorLastActivityComponent } from './investor-last-activity/investor-last-activity.component';
+import { InvestorMessagesComponent } from './investor-messages/investor-messages.component';
+import { InvestorNotificationsComponent } from './investor-notifications/investor-notifications.component';
+import { InvestorCommentsComponent } from './investor-comments/investor-comments.component';
+import { InvestorUpdatesComponent } from './investor-updates/investor-updates.component';
 
 
 // this exports for app-routing.module.ts
@@ -73,7 +78,12 @@ export {
   VendorNavbarComponent,
   InvestorNavbarComponent,
   MainScreenVendorComponent,
-  InvestorMessageComponent
+  InvestorMessagesComponent,
+  InvestorLastActivityComponent,
+  InvestorNotificationsComponent,
+  InvestorIterativeInvestmentComponent,
+  InvestorCommentsComponent,
+  InvestorUpdatesComponent
 };
 
 export const components = [
@@ -112,7 +122,12 @@ export const components = [
   VendorNavbarComponent,
   InvestorNavbarComponent,
   MainScreenVendorComponent,
-  InvestorMessageComponent
+  InvestorMessagesComponent,
+  InvestorLastActivityComponent,
+  InvestorNotificationsComponent,
+  InvestorIterativeInvestmentComponent,
+  InvestorCommentsComponent,
+  InvestorUpdatesComponent
 ];
 
 

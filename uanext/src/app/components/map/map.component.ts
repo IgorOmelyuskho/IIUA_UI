@@ -9,7 +9,9 @@ import {
   mapReplacePolygons,
   mapAddNewObjects,
   mapReplaceObjects,
-  setObjectClickCallback
+  setObjectClickCallback,
+  setObjectHoverCallback,
+  setMapClickCallback
 } from './map4-no-class';
 
 const polygon1 = [
@@ -29,7 +31,7 @@ const polygon2 = [
 
 const responseProject = {
   'id': 0,
-  'raiting': 9.3,
+  'rating': 9.3,
   'userId': 0,
   'name': 'SLON&Co',
   'legalEntityName': 'legalEntityName',
@@ -140,7 +142,7 @@ const responseProject = {
 
 const responseProject2 = {
   'id': 1,
-  'raiting': 9.3,
+  'rating': 9.3,
   'userId': 0,
   'name': 'SLON&Co',
   'legalEntityName': 'legalEntityName',
@@ -274,6 +276,9 @@ const object4 = {
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() objectClick = new EventEmitter<any>();
+  @Output() objectHover = new EventEmitter<any>();
+  @Output() mapClick = new EventEmitter<any>();
+
   @Input()
   set changeSelectedProject(project: any) {
     if (project != null) {
@@ -281,10 +286,24 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  timeOut1: any;
+  timeOut2: any;
+  timeOut3: any;
+  timeOut4: any;
+  timeOut5: any;
+
   // map: Map = null;
 
   clickObjectCallback: Function = (object: any) => {
     this.objectClick.emit(object);
+  }
+
+  hoverObjectCallback: Function = (object: any) => {
+    this.objectHover.emit(object);
+  }
+
+  mapClickCallback: Function = (event) => {
+    this.mapClick.emit(event);
   }
 
   constructor() { }
@@ -296,29 +315,38 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.map = new Map();
     mapInit();
     setObjectClickCallback(this.clickObjectCallback);
+    setObjectHoverCallback(this.hoverObjectCallback);
+    setMapClickCallback(this.mapClickCallback);
 
-    setTimeout(() => {
+    this.timeOut1 = setTimeout(() => {
       mapAddNewPolygons([polygon1]);
-    }, 1000);
+    }, 10);
 
-    setTimeout(() => {
+    this.timeOut2 = setTimeout(() => {
       mapReplacePolygons([polygon1, polygon2]);
-    }, 2000);
+    }, 20);
 
-    setTimeout(() => {
+    this.timeOut3 = setTimeout(() => {
       mapAddNewObjects([object1, object2, object3, object4]);
-    }, 3000);
+    }, 30);
 
-    // setTimeout(() => {
+    // this.timeOut4 = setTimeout(() => {
     //   mapReplaceObjects([object1, object2]);
     // }, 8000);
 
-    // setTimeout(() => {
+    // this.timeOut5 = setTimeout(() => {
     //   mapSetFullScreen();
     // }, 5000);
   }
 
   ngOnDestroy() {
+    // if use http - clear http request
+    clearTimeout(this.timeOut1);
+    clearTimeout(this.timeOut2);
+    clearTimeout(this.timeOut3);
+    clearTimeout(this.timeOut4);
+    clearTimeout(this.timeOut5);
+
     // this.map.mapDestroy();
     mapDestroy();
   }

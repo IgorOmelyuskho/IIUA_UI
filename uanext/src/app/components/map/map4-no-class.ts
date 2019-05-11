@@ -9,6 +9,8 @@ const drawInterval = 50;
 
 // callbacks
 let on_click_object: Function = null;
+let on_hover_object: Function = null;
+let on_map_click: Function = null;
 
 let infoWindow = {};
 let canvasElem = null;
@@ -96,6 +98,8 @@ export function mapDestroy() {
   camera = null;
 
   on_click_object = null;
+  on_hover_object = null;
+  on_map_click = null;
 }
 
 export function mapSetFullScreen() { // todo navbar height
@@ -208,6 +212,15 @@ export function setObjectClickCallback(cb: Function) {
   on_click_object = cb;
 }
 
+export function setObjectHoverCallback(cb: Function) {
+  on_hover_object = cb;
+}
+
+export function setMapClickCallback(cb: Function) {
+  on_map_click = cb;
+}
+
+
 function createMap() {
   map = new maptalks.Map('map-4', { // DIV id
     center: [13.41261, 52.529611],
@@ -251,6 +264,10 @@ function createMap() {
 
 
   map.on('click', function (event) {
+    if (on_map_click != null) {
+      on_map_click(event);
+    }
+
     for (let i = 0; i < objectsArr.length; i++) {
       if (objectsArr[i].mouseUnder === true) {
         if (selectedObject != null) {
@@ -317,7 +334,6 @@ function createMarker(obj) {
   changeVisible(obj, map.getZoom());
 
   marker.on('click', function (e) {
-    console.log(e);
     if (selectedObject != null) {
       selectedObject.objectDivLabel.className = 'obj-label';
       setMarkerSymbolDefault(selectedObject.marker);
@@ -332,14 +348,17 @@ function createMarker(obj) {
   });
 
   marker.on('mouseenter', function (e) {
-    setMarkerSymbolSelected(marker);
+    setMarkerSymbolSelected(e.target); // e.target === marker
+    if (on_hover_object != null) {
+      on_hover_object(e.target.parent);
+    }
   });
 
   marker.on('mouseout', function (e) {
-    if (marker.parent === selectedObject) {
+    if (e.target.parent === selectedObject) {
       return;
     }
-    setMarkerSymbolDefault(marker);
+    setMarkerSymbolDefault(e.target);
   });
 }
 
@@ -592,8 +611,17 @@ function selectObject(obj) {
   const intersects = raycaster.intersectObjects(objects);
 
   if (intersects.length > 0) {
+    const prevMouseUnderObject_2 = obj.mouseUnder;
     obj.mouseUnder = true;
 
+    // on hover event
+    if (prevMouseUnderObject_2 !== obj.mouseUnder) {
+      if (on_hover_object != null) {
+        on_hover_object(obj);
+      }
+    }
+
+    // set selected color
     obj.model.traverse(function (child) {
       if (!(child instanceof THREE.Mesh)) {
         return;
@@ -612,9 +640,10 @@ function selectObject(obj) {
   }
 
   if (intersects.length === 0) {
-    const prevMouseUnderTractor = obj.mouseUnder;
+    const prevMouseUnderObject = obj.mouseUnder;
     obj.mouseUnder = false;
 
+    // set default color
     obj.model.traverse(function (child) {
       if (!(child instanceof THREE.Mesh)) {
         return;
@@ -627,7 +656,9 @@ function selectObject(obj) {
       }
     });
 
-    if (prevMouseUnderTractor !== obj.mouseUnder) {
+    // event when mouse move and mouse leave 3d object
+    if (prevMouseUnderObject !== obj.mouseUnder) {
+      console.log('event when mouse move and mouse leave 3d object');
       customRedraw();
     }
 

@@ -1,13 +1,13 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 // import { mapInit, mapDestroy, mapSetProject } from './map3-no-class';
 // import { Map } from './map3';
-import { ViewVendorProject } from 'src/app/models/viewVendorProject.js';
+import { VendorProject } from 'src/app/models/vendorProject.js';
 import { FilterFields, UserRole } from 'src/app/models/index.js';
 import { StateService } from 'src/app/services/state/state.service';
 
 const responseProject = {
   'id': 0,
-  'raiting': 9.3,
+  'rating': 9.3,
   'userId': 0,
   'name': 'SLON&Co',
   'legalEntityName': 'legalEntityName',
@@ -118,7 +118,7 @@ const responseProject = {
 
 const responseProject2 = {
   'id': 1,
-  'raiting': 9.3,
+  'rating': 9.3,
   'userId': 0,
   'name': 'SLON&Co',
   'legalEntityName': 'legalEntityName',
@@ -211,6 +211,8 @@ const responseProject2 = {
   styleUrls: ['./main-screen-investor.component.scss']
 })
 export class MainScreenInvestorComponent implements OnInit, AfterViewInit {
+  @ViewChild('previewCard') previewCard: ElementRef;
+
   selectedProject: any = responseProject; // ViewVendorProject
   selectedProjectId: any = responseProject.id; // todo use when page reload
 
@@ -219,6 +221,8 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit {
 
   UserRole = UserRole;
   role: UserRole;
+
+  showPreviewCard = false;
 
   constructor(private stateService: StateService) { }
 
@@ -239,8 +243,21 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit {
   }
 
   onMapObjectClick(mapObject: any) {
-    console.log('mapObject = ', mapObject);
     this.selectedProject = {...mapObject.project};
     this.selectedProjectId = mapObject.project.id;
+  }
+
+  onMapObjectHover(mapObject: any) {
+    this.showPreviewCard = true;
+    console.log('mapObject hover ', mapObject);
+  }
+
+  onMapClick(event: any) {
+    this.showPreviewCard = false;
+    console.log('MAP CLICK');
+    console.log(event);
+    // console.log(this.previewCard.nativeElement);
+    // this.previewCard.nativeElement.style.left = event.containerPoint.x + 'px';
+    // this.previewCard.nativeElement.style.top = event.containerPoint.y + 'px';
   }
 }

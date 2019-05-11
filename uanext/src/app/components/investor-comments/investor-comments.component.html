@@ -1,0 +1,45 @@
+<div class="comments">
+  <div class="send-comment">
+    <input type="text" placeholder="Оставте свой комментарий…">
+    <button type="button">ОТПРАВИТЬ</button>
+  </div>
+
+  <div class="comments-wrapper">
+    <div *ngFor="let comment of comments" class="comment">
+
+      <div *ngIf="comment.type === 'their'" class="their">
+        <div class="avatar-wrapper">
+          <img src="{{project.avatara.url}}" alt="">
+        </div>
+        <div class="right-part">
+          <div class="data-and-name">
+            <div class="name">{{project.legalEntityName}}</div>
+            <div class="data">
+              <span>Ответить • </span>
+              <span>{{comment.date}}</span>
+            </div>
+          </div>
+          <div class="text">{{comment.text}}</div>
+        </div>
+      </div>
+
+      <div *ngIf="comment.type === 'you'" class="you">
+        <div class="content-wrapper">
+          <div class="avatar-wrapper">
+            <img src="https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png" alt="">
+          </div>
+          <div class="right-part">
+            <div class="data-and-name">
+              <div class="name">Инвестор</div>
+              <div class="data">
+                <span>Ответить • </span>
+                <span>{{comment.date}}</span>
+              </div>
+            </div>
+            <div class="text">{{comment.text}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

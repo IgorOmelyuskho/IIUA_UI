@@ -35,15 +35,17 @@
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
+      border-radius: 6px;
     }
 
-    .raiting {
+    .rating {
       position: absolute;
       right: 0;
       bottom: 0;
       width: 60px;
       height: 50px;
       border-top-left-radius: 6px;
+      border-bottom-right-radius: 6px;
       background: $green;
       line-height: 47px;
       text-align: center;
@@ -64,10 +66,12 @@
     h5.project-name {
       font-size: 24px;
       font-weight: bold;
+      margin-bottom: 0px;
     }
 
     .company-name {
       font-size: 18px;
+      margin-bottom: 15px;
     }
 
     button {
@@ -278,11 +282,11 @@
     }
 
     .updates {
-      font-size: 30px;
+      font-weight: normal;
     }
 
     .comments {
-      font-size: 30px;
+      font-weight: normal;
     }
   }
 
