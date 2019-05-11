@@ -11,7 +11,6 @@ import {
   mapReplaceObjects,
   setObjectClickCallback,
   setObjectHoverCallback,
-  setMapClickCallback
 } from './map4-no-class';
 
 const polygon1 = [
@@ -277,7 +276,6 @@ const object4 = {
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() objectClick = new EventEmitter<any>();
   @Output() objectHover = new EventEmitter<any>();
-  @Output() mapClick = new EventEmitter<any>();
 
   @Input()
   set changeSelectedProject(project: any) {
@@ -302,10 +300,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.objectHover.emit(object);
   }
 
-  mapClickCallback: Function = (event) => {
-    this.mapClick.emit(event);
-  }
-
   constructor() { }
 
   ngOnInit() {
@@ -316,7 +310,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     mapInit();
     setObjectClickCallback(this.clickObjectCallback);
     setObjectHoverCallback(this.hoverObjectCallback);
-    setMapClickCallback(this.mapClickCallback);
 
     this.timeOut1 = setTimeout(() => {
       mapAddNewPolygons([polygon1]);

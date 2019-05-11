@@ -1,27 +1,39 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
-import { VendorProject } from 'src/app/models/vendorProject';
+import { Component, OnInit, AfterViewInit, Renderer2, ElementRef, ViewChild, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-filtered-project',
-  templateUrl: './filtered-project.component.html',
-  styleUrls: ['./filtered-project.component.scss']
+  selector: 'app-hovered-project-card',
+  templateUrl: './hovered-project-card.component.html',
+  styleUrls: ['./hovered-project-card.component.scss']
 })
-export class FilteredProjectComponent implements OnInit, AfterViewInit {
-  @Input() project: VendorProject;
-  @Output() selectProject = new EventEmitter<VendorProject>();
-  @Output() goToProject = new EventEmitter<VendorProject>();
-
-  @Input() searchText = 'prev_search'; // need some default string
-
+export class HoveredProjectCardComponent implements OnInit, AfterViewInit {
   @ViewChild('stepsElement') stepsElement: ElementRef;
+  project: any;
 
-  constructor(private renderer: Renderer2) { }
+  @Input()
+  set hoveredProject(project: any) { // project id
+    this.fetchProject(project);
+  }
+
+  projectUploaded = false;
+
+  constructor(private renderer: Renderer2) {
+  }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    this.numberNotFitSteps();
+  }
+
+  fetchProject(project) {  // project id
+    this.projectUploaded = false;
+    setTimeout(() => {
+      this.project = project;
+      this.projectUploaded = true;
+      requestAnimationFrame(() => {
+        this.numberNotFitSteps();
+      });
+    }, 10);
   }
 
   numberNotFitSteps() {
@@ -55,14 +67,6 @@ export class FilteredProjectComponent implements OnInit, AfterViewInit {
   getAvatarUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
-  }
-
-  projectOnSelect() {
-    this.selectProject.emit(this.project);
-  }
-
-  goToProjectClick() {
-    this.goToProject.emit(this.project);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy, Renderer2 } from '@angular/core';
 // import { mapInit, mapDestroy, mapSetProject } from './map3-no-class';
 // import { Map } from './map3';
 import { VendorProject } from 'src/app/models/vendorProject.js';
@@ -210,8 +210,8 @@ const responseProject2 = {
   templateUrl: './main-screen-investor.component.html',
   styleUrls: ['./main-screen-investor.component.scss']
 })
-export class MainScreenInvestorComponent implements OnInit, AfterViewInit {
-  @ViewChild('previewCard') previewCard: ElementRef;
+export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('previewCardWrapper') previewCardWrapper: ElementRef;
 
   selectedProject: any = responseProject; // ViewVendorProject
   selectedProjectId: any = responseProject.id; // todo use when page reload
@@ -223,8 +223,24 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit {
   role: UserRole;
 
   showPreviewCard = false;
+  previewCardX = 0;
+  previewCardY = 0;
+  hoveredProjectUploaded = false;
+  hoveredProject: any;
 
-  constructor(private stateService: StateService) { }
+  @ViewChild('stepsElement') stepsElement: ElementRef;
+
+  windowMouseMoveHandler = (e) => {
+    this.previewCardX = e.pageX;
+    this.previewCardY = e.pageY;
+  }
+
+  windowClickHandler = (e) => {
+    console.log('CLICK');
+    this.showPreviewCard = false;
+  }
+
+  constructor(private stateService: StateService, private renderer: Renderer2) { }
 
   ngOnInit() {
     new Image().src = '../../../assets/img/message-hover.png';
@@ -235,6 +251,8 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    window.addEventListener('mousemove', this.windowMouseMoveHandler);
+    window.addEventListener('mousedown', this.windowClickHandler);
   }
 
   filterOnChange(filterParam: FilterFields) {
@@ -243,21 +261,24 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit {
   }
 
   onMapObjectClick(mapObject: any) {
-    this.selectedProject = {...mapObject.project};
+    this.selectedProject = { ...mapObject.project };
     this.selectedProjectId = mapObject.project.id;
   }
 
   onMapObjectHover(mapObject: any) {
+    this.hoveredProject = mapObject.project;
     this.showPreviewCard = true;
-    console.log('mapObject hover ', mapObject);
+    this.previewCardWrapper.nativeElement.style.left = this.previewCardX + 'px';
+    this.previewCardWrapper.nativeElement.style.top = this.previewCardY + 'px';
   }
 
-  onMapClick(event: any) {
-    this.showPreviewCard = false;
-    console.log('MAP CLICK');
-    console.log(event);
-    // console.log(this.previewCard.nativeElement);
-    // this.previewCard.nativeElement.style.left = event.containerPoint.x + 'px';
-    // this.previewCard.nativeElement.style.top = event.containerPoint.y + 'px';
+  ngOnDestroy() {
+    window.removeEventListener('mousemove', this.windowMouseMoveHandler);
+    window.removeEventListener('mousedown', this.windowClickHandler);
+  }
+
+  getAvatarUrl(project) {
+    const url = project.avatara.url;
+    return 'url("' + url + '")';
   }
 }

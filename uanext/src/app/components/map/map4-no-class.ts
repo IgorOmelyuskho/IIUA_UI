@@ -10,7 +10,6 @@ const drawInterval = 50;
 // callbacks
 let on_click_object: Function = null;
 let on_hover_object: Function = null;
-let on_map_click: Function = null;
 
 let infoWindow = {};
 let canvasElem = null;
@@ -99,7 +98,6 @@ export function mapDestroy() {
 
   on_click_object = null;
   on_hover_object = null;
-  on_map_click = null;
 }
 
 export function mapSetFullScreen() { // todo navbar height
@@ -216,10 +214,6 @@ export function setObjectHoverCallback(cb: Function) {
   on_hover_object = cb;
 }
 
-export function setMapClickCallback(cb: Function) {
-  on_map_click = cb;
-}
-
 
 function createMap() {
   map = new maptalks.Map('map-4', { // DIV id
@@ -264,10 +258,6 @@ function createMap() {
 
 
   map.on('click', function (event) {
-    if (on_map_click != null) {
-      on_map_click(event);
-    }
-
     for (let i = 0; i < objectsArr.length; i++) {
       if (objectsArr[i].mouseUnder === true) {
         if (selectedObject != null) {

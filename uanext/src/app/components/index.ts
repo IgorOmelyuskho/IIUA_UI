@@ -39,7 +39,7 @@ import { InvestorMessagesComponent } from './investor-messages/investor-messages
 import { InvestorNotificationsComponent } from './investor-notifications/investor-notifications.component';
 import { InvestorCommentsComponent } from './investor-comments/investor-comments.component';
 import { InvestorUpdatesComponent } from './investor-updates/investor-updates.component';
-
+import { HoveredProjectCardComponent } from './hovered-project-card/hovered-project-card.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -83,7 +83,8 @@ export {
   InvestorNotificationsComponent,
   InvestorIterativeInvestmentComponent,
   InvestorCommentsComponent,
-  InvestorUpdatesComponent
+  InvestorUpdatesComponent,
+  HoveredProjectCardComponent
 };
 
 export const components = [
@@ -127,7 +128,8 @@ export const components = [
   InvestorNotificationsComponent,
   InvestorIterativeInvestmentComponent,
   InvestorCommentsComponent,
-  InvestorUpdatesComponent
+  InvestorUpdatesComponent,
+  HoveredProjectCardComponent
 ];
 
 
