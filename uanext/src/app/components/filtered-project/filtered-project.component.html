@@ -1,4 +1,4 @@
-<div class="project" (click)="projectOnSelect()">
+<div id={{project.id}} class="project" (click)="projectOnSelect()">
 
   <div class="avatar-wrapper">
     <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>

@@ -10,6 +10,7 @@ const drawInterval = 50;
 // callbacks
 let on_click_object: Function = null;
 let on_hover_object: Function = null;
+let on_map_init: Function = null;
 
 let infoWindow = {};
 let canvasElem = null;
@@ -31,10 +32,9 @@ let polygonLayer = null;
 let labelRenderer = null;
 let camera = null;
 
-export function mapInit() {
+export function mapInit(cb: Function) {
   console.log('MAP4 INIT');
   createMap();
-  createThreeLayer();
   createPolygonLayer();
   createClusterLayer();
   initInfoWindow();
@@ -53,13 +53,8 @@ export function mapInit() {
 
   window.addEventListener('resize', windowOnResize);
 
-  timer1 = setInterval(() => {
-    updateCoordsFromServer();
-  }, updatedInterval);
-
-  timer2 = setInterval(() => {
-    updateCoordsForRedraw();
-  }, drawInterval);
+  on_map_init = cb;
+  createThreeLayer(); // async
 }
 
 export function mapSetProject(project) {
@@ -98,6 +93,7 @@ export function mapDestroy() {
 
   on_click_object = null;
   on_hover_object = null;
+  on_map_init = null;
 }
 
 export function mapSetFullScreen() { // todo navbar height
@@ -214,7 +210,6 @@ export function setObjectHoverCallback(cb: Function) {
   on_hover_object = cb;
 }
 
-
 function createMap() {
   map = new maptalks.Map('map-4', { // DIV id
     center: [13.41261, 52.529611],
@@ -245,8 +240,7 @@ function createMap() {
   });
 
   map.on('zooming', function (event) {
-    const scale = calcInterpolationScale(map.getZoom());
-
+    // const scale = calcInterpolationScale(map.getZoom());
     for (let i = 0; i < objectsArr.length; i++) {
       if (objectsArr[i].model == null || objectsArr[i].marker == null) {
         continue; // objectsArr[i].marker uses in changeVisible
@@ -526,6 +520,9 @@ function createThreeLayer() {
     scene = localScene;
     camera = localCamera;
     scene.add(new THREE.AmbientLight(0xffffff, 1));
+    if (on_map_init != null) {
+      on_map_init();
+    }
   };
   threeLayer.addTo(map);
 }

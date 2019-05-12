@@ -269,7 +269,11 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.hoveredProject = mapObject.project;
     this.showPreviewCard = true;
     this.previewCardWrapper.nativeElement.style.left = this.previewCardX + 'px';
-    this.previewCardWrapper.nativeElement.style.top = this.previewCardY + 'px';
+    this.previewCardWrapper.nativeElement.style.top = this.previewCardY + 30 + 'px';
+  }
+
+  onMapFinishInit() {
+    console.log('load obj model after this log');
   }
 
   ngOnDestroy() {

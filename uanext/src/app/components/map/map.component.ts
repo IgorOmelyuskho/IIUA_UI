@@ -276,6 +276,7 @@ const object4 = {
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() objectClick = new EventEmitter<any>();
   @Output() objectHover = new EventEmitter<any>();
+  @Output() mapFinishInit = new EventEmitter<any>();
 
   @Input()
   set changeSelectedProject(project: any) {
@@ -300,6 +301,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.objectHover.emit(object);
   }
 
+  mapFinishInitCallback: Function = () => {
+    console.log('MAP FINISH INIT');
+    this.mapFinishInit.emit();
+  }
+
   constructor() { }
 
   ngOnInit() {
@@ -307,21 +313,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     // this.map = new Map();
-    mapInit();
+    mapInit(this.mapFinishInitCallback);
     setObjectClickCallback(this.clickObjectCallback);
     setObjectHoverCallback(this.hoverObjectCallback);
 
     this.timeOut1 = setTimeout(() => {
       mapAddNewPolygons([polygon1]);
-    }, 10);
+    }, 100);
 
     this.timeOut2 = setTimeout(() => {
       mapReplacePolygons([polygon1, polygon2]);
-    }, 20);
+    }, 500);
 
     this.timeOut3 = setTimeout(() => {
       mapAddNewObjects([object1, object2, object3, object4]);
-    }, 30);
+    }, 500);
 
     // this.timeOut4 = setTimeout(() => {
     //   mapReplaceObjects([object1, object2]);

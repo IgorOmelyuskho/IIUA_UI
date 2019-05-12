@@ -9,9 +9,9 @@
   <div>Projects count {{this.projectsCount}}</div>
   <div>Page number {{this.pageNumber}}</div> -->
 
-  <div class="row">
+  <div class="row bg-color">
     <!-- main -->
-    <div class="col-8 bg-color left-col">
+    <div class="col-8 left-col">
       <div class="search-by-name">
         <div class="input-group mb-3 mt-3">
           <div class="input-group-prepend">
@@ -56,7 +56,7 @@
 
     <div class="col-4 pr-0 pl-0 right-col">
       <div class="map-wrapper">
-        <app-map [changeSelectedProject]="selectedProject" (objectClick)="onMapObjectClick($event)"></app-map>
+        <app-map (mapFinishInit)="onMapFinishInit()" [changeSelectedProject]="selectedProject" (objectClick)="onMapObjectClick($event)"></app-map>
       </div>
 
       <div class="detail-project-info">
