@@ -37,6 +37,7 @@
     "primeng": "^6.1.7",
     "rxjs": "^6.0.0",
     "stats-js": "^1.0.1",
+    "three-ziploader": "0.0.1",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

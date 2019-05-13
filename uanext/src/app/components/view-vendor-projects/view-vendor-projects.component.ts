@@ -1,22 +1,22 @@
 import {
   Component, OnInit, AfterViewInit,
-  ViewChild, ElementRef, Input } from '@angular/core';
+  ViewChild, ElementRef, Input, OnDestroy
+} from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { Router } from '@angular/router';
 import { FilteredProjects, FilterFields } from 'src/app/models';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 import FormHelper from '../../services/helperServices/formHelper';
 import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service.js';
-import { fromEvent } from 'rxjs';
+import { fromEvent, BehaviorSubject, Observable, Subscription, concat } from 'rxjs';
 import { tap, map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { responseProjects } from 'src/app/services/helperServices/projects';
 
 @Component({
   selector: 'app-view-vendor-projects',
   templateUrl: './view-vendor-projects.component.html',
   styleUrls: ['./view-vendor-projects.component.scss']
 })
-export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
+export class ViewVendorProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('searchByKeyWordInput') searchByKeyWordInput: ElementRef;
 
   FormHelper = FormHelper;
@@ -32,15 +32,15 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
   pageNumber = 1;
 
   selectedMenuItem: string;
-
   prevSearch: string; // filter/keyWord
-
   filterItemForRemove: any;
-
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
-
-  filter: FilterFields;
+  filter: FilterFields = {};
+  $searchByFilterChange: BehaviorSubject<FilterFields> = new BehaviorSubject(this.filter);
+  $fromEvent: Subscription;
+  searchByScroll = false; // by scroll or by (filter/name)
+  mapObjects = [];
 
   constructor(
     private router: Router,
@@ -75,32 +75,43 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => { // mat-progress-bar
-      this.searchProjectsByFilter(this.filter);
-    }, 0);
+    // setTimeout(() => { // todo remove (use when click to mapObject)
+    //   // this.scrollToElement(4);
+    //   const el = document.getElementById('4');
+    //   console.log(el.scrollTop);
+    //   console.log(el.scrollHeight);
+    //   console.log(el.scrollHeight - el.clientHeight);
+    // }, 1500);
 
-    setTimeout(() => { // todo remove (use when click to mapObject)
-      // this.scrollToElement(4);
-      const el = document.getElementById('4');
-      console.log(el.scrollTop);
-      console.log(el.scrollHeight);
-      console.log(el.scrollHeight - el.clientHeight);
-    }, 1500);
+    // setTimeout(() => { // todo remove
+    //   this.scrollToElement(1);
+    // }, 20000);
 
-    setTimeout(() => { // todo remove
-      this.scrollToElement(1);
-    }, 20000);
-
-    fromEvent<any>(this.searchByKeyWordInput.nativeElement, 'input')
+    this.$fromEvent = fromEvent<any>(this.searchByKeyWordInput.nativeElement, 'input')
       .pipe(
         map(e => e.target.value),
         debounceTime(700),
         filter(e => e.length >= 3),
         distinctUntilChanged((a, b) => a === b),
+        tap(res => {
+          this.searchByScroll = false;
+        })
       )
       .subscribe(res => {
         this.resetBeforeNewSearch();
         this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
+      });
+
+    this.$searchByFilterChange
+      .pipe(
+        debounceTime(700),
+        tap(res => {
+          this.searchByScroll = false;
+        })
+      )
+      .subscribe(filterParam => {
+        this.resetBeforeNewSearch();
+        this.searchProjectsByFilter(filterParam); // async
       });
   }
 
@@ -110,7 +121,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
 
   filterOnChange(filterParam: FilterFields) {
     this.filter = filterParam;
-    console.log(this.filter);
+    this.$searchByFilterChange.next(this.filter);
   }
 
   setGalleryImages(images) {
@@ -129,7 +140,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
   }
 
   selectProject(project: VendorProject) {
-    this.selectedProject = {...project};
+    this.selectedProject = { ...project };
     this.selectedMenuItem = 'shared';
     this.setGalleryImages(this.selectedProject.images);
     this.setMapCoordinateByProject(project);
@@ -145,61 +156,59 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
   }
 
   searchByKeywordBtn(event) {
+    this.searchByScroll = false;
     this.resetBeforeNewSearch();
     this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
   }
 
   searchByKeywordKeyDown(e) {
     if (e.code === 'Enter') {
+      this.searchByScroll = false;
       this.resetBeforeNewSearch();
       this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
     }
   }
 
+  // http
   searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
-    console.log('searchProjectsByKeyword = ', keyword);
     this.prevSearch = 'keyWord';
     this.showProgressBar(true);
-    // this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
-    //   .subscribe(
-    //     (filteringProjects: FilteredProjects) => {
-    //       this.pagesCount = filteringProjects.pages;
-    //       this.projectsCount = filteringProjects.projectsCount;
-    //       this.addNewProjects(filteringProjects.projectsList);
-    //       this.showProgressBar(false);
-    //     },
-    //     err => {
-    //       console.warn(err);
-    //       this.showProgressBar(false);
-    //     }
-    //   );
-    this.addNewProjects(responseProjects.data.projectsList);
-    this.showProgressBar(false);
+    concat(
+      this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
+    )
+      .subscribe(
+        (filteringProjects: FilteredProjects) => {
+          this.pagesCount = filteringProjects.pages;
+          this.projectsCount = filteringProjects.projectsCount;
+          this.addNewProjects(filteringProjects.projectsList);
+          this.showProgressBar(false);
+        },
+        err => {
+          console.warn(err);
+          this.showProgressBar(false);
+        }
+      );
   }
 
-  searchByFilter() {
-    this.resetBeforeNewSearch();
-    this.searchByKeywordBtn(this.filter); // todo this.filter
-  }
-
+  // http
   searchProjectsByFilter(filterParam: any) {
     this.prevSearch = 'filter';
     this.showProgressBar(true);
-    // this.viewProjectsService.searchByFilter(filter).subscribe(
-    //   (filteringProjects: FilteredProjects) => {
-    //     console.log(filteringProjects);
-    //     this.pagesCount = filteringProjects.pages;
-    //     this.projectsCount = filteringProjects.projectsCount;
-    //     this.addNewProjects(filteringProjects.projectsList);
-    //     this.showProgressBar(false);
-    //   },
-    //   err => {
-    //     console.warn(err);
-    //     this.showProgressBar(false);
-    //   }
-    // );
-    this.addNewProjects(responseProjects.data.projectsList);
-    this.showProgressBar(false);
+    concat(
+      this.viewProjectsService.searchByFilter(filterParam)
+    )
+      .subscribe(
+        (filteringProjects: FilteredProjects) => {
+          this.pagesCount = filteringProjects.pages;
+          this.projectsCount = filteringProjects.projectsCount;
+          this.addNewProjects(filteringProjects.projectsList);
+          this.showProgressBar(false);
+        },
+        err => {
+          console.warn(err);
+          this.showProgressBar(false);
+        }
+      );
   }
 
   showProgressBar(show: boolean) {
@@ -211,6 +220,10 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
   }
 
   addNewProjects(newProjects: any[]) {
+    if (this.searchByScroll === false) {
+      this.projects = [];
+    }
+
     for (let i = 0; i < newProjects.length; i++) {
       this.projects.push(newProjects[i]);
     }
@@ -225,6 +238,7 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
   onScroll() {
     console.log('scrolled!!');
     this.pageNumber += 1;
+    this.searchByScroll = true;
 
     if (this.prevSearch === 'filter') {
       this.filter.page = this.pageNumber;
@@ -250,8 +264,18 @@ export class ViewVendorProjectsComponent implements OnInit, AfterViewInit {
   }
 
   scrollToElement(id) {
-    // const el = document.getElementById(id);
-    // el.scrollIntoView({behavior: 'smooth', inline: 'start'});
+    const el = document.getElementById('2');
+    // el.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+    el.scrollIntoView();
+    el.classList.remove('animation-class');
+    setTimeout(() => {
+      el.classList.add('animation-class');
+    }, 0);
+  }
+
+  ngOnDestroy() {
+    this.$fromEvent.unsubscribe();
+    this.$searchByFilterChange.unsubscribe();
   }
 
 }

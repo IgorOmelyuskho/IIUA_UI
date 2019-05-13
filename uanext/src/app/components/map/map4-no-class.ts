@@ -55,6 +55,14 @@ export function mapInit(cb: Function) {
 
   on_map_init = cb;
   createThreeLayer(); // async
+
+  timer1 = setInterval(() => {
+    updateCoordsFromServer();
+  }, updatedInterval);
+
+  timer2 = setInterval(() => {
+    updateCoordsForRedraw();
+  }, drawInterval);
 }
 
 export function mapSetProject(project) {
@@ -173,11 +181,11 @@ function animation() {
 export function mapReplaceObjects(objects: any[]) {
   // threeLayer.clear();
   // clusterLayer.clear();
-  for (let i = 0; i < objectsArr.length; i++) {
+  // for (let i = 0; i < objectsArr.length; i++) {
     // todo remove [i] object
-  }
+  // }
 
-  objectsArr = [];
+  // objectsArr = [];
   mapAddNewObjects(objects);
 }
 
@@ -441,71 +449,79 @@ function createClusterLayer() {
   map.addLayer(clusterLayer);
 }
 
-function loadObjectModel(obj) {
+function init3dObject(obj, object) {
   const childScale = 0.004;
-  const mtlLoader = new THREE.MTLLoader();
-  const objLoader = new THREE.OBJLoader();
-  // const myWorker = new Worker("loadModelWorker.js");
-  // myWorker.postMessage(JSON.parse(JSON.stringify(obj)));
-  // myWorker.onmessage = function(e) {
-  //   const object = e.data;
-  //   console.log(object);
-  //   changeVisible(obj, map.getZoom());
-  //   scene.add(object);
-  //   threeLayer.renderScene();
-  // }
-
-  mtlLoader.setPath(obj.pathToFolder);
-  mtlLoader.load(obj.modelMtl, function (materials) {
-    materials.preload();
-    objLoader.setMaterials(materials);
-    objLoader.setPath(obj.pathToFolder);
-    objLoader.load(obj.modelObj, function (object) {
-      object.traverse(function (child) {
-        if (child instanceof THREE.Mesh) {
-          child.scale.set(childScale, childScale, childScale);
-          child.rotation.set(Math.PI * 1 / 2, -Math.PI * 1 / 2, 0);
-          if (Array.isArray(child.material)) {
-            return;
-          }
-          child.material.initColor = child.material.color.getHex();
-        }
-      });
-
-      obj.model = object;
-      const v = threeLayer.coordinateToVector3(new maptalks.Coordinate(obj.coords.x, obj.coords.y));
-      object.position.x = v.x;
-      object.position.y = v.y;
-      object.position.z = v.z;
-
-      obj.box3 = new THREE.Box3().setFromObject(object);
-      const cubeGeometry = new THREE.BoxGeometry(0.03, 0.03, 0.03);
-      const cubeMaterial = new THREE.MeshBasicMaterial({
-        color: 0x00ff00
-      });
-      obj.cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-      obj.cube.position.x = obj.model.position.x;
-      obj.cube.position.y = obj.model.position.y;
-      obj.cube.position.z = obj.model.position.z;
-      scene.add(obj.cube);
-
-      const objectDivLabel = document.createElement('div');
-      objectDivLabel.className = 'obj-label';
-      objectDivLabel.textContent = obj.name;
-      objectDivLabel.style.marginTop = '-1em';
-      const objLabel = new THREE.CSS2DObject(objectDivLabel);
-      obj.objectDivLabel = objectDivLabel;
-      objLabel.position.x = 0;
-      objLabel.position.y = 0;
-      objLabel.position.z = obj.box3.getSize().z * 1.1;
-      obj.model.add(objLabel);
-
-      changeVisible(obj, map.getZoom());
-      // console.log(scene); // todo
-      scene.add(object);
-      threeLayer.renderScene();
-    });
+  object.traverse(function (child) {
+    if (child instanceof THREE.Mesh) {
+      child.scale.set(childScale, childScale, childScale);
+      child.rotation.set(Math.PI * 1 / 2, -Math.PI * 1 / 2, 0);
+      if (Array.isArray(child.material)) {
+        return;
+      }
+      child.material.initColor = child.material.color.getHex();
+    }
   });
+
+  obj.model = object;
+  const v = threeLayer.coordinateToVector3(new maptalks.Coordinate(obj.coords.x, obj.coords.y));
+  object.position.x = v.x;
+  object.position.y = v.y;
+  object.position.z = v.z;
+
+  obj.box3 = new THREE.Box3().setFromObject(object);
+  const cubeGeometry = new THREE.BoxGeometry(0.03, 0.03, 0.03);
+  const cubeMaterial = new THREE.MeshBasicMaterial({
+    color: 0x00ff00
+  });
+  obj.cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  obj.cube.position.x = obj.model.position.x;
+  obj.cube.position.y = obj.model.position.y;
+  obj.cube.position.z = obj.model.position.z;
+  scene.add(obj.cube);
+
+  const objectDivLabel = document.createElement('div');
+  objectDivLabel.className = 'obj-label';
+  objectDivLabel.textContent = obj.name;
+  objectDivLabel.style.marginTop = '-1em';
+  const objLabel = new THREE.CSS2DObject(objectDivLabel);
+  obj.objectDivLabel = objectDivLabel;
+  objLabel.position.x = 0;
+  objLabel.position.y = 0;
+  objLabel.position.z = obj.box3.getSize().z * 1.1;
+  obj.model.add(objLabel);
+
+  changeVisible(obj, map.getZoom());
+  scene.add(object);
+  threeLayer.renderScene();
+}
+
+function loadObjectModel(obj) {
+  THREE.ZipLoadingManager
+    .uncompress(obj.pathToZip, ['.mtl', '.obj', '.jpg', '.png'])
+    .then(function (zip) {
+      const pathToFolder = zip.urls[0].substring(0, zip.urls[0].lastIndexOf('/') + 1);
+      let mtlFileName = '';
+      let objFileName = '';
+      for (let i = 0; i < zip.urls.length; i++) {
+        if (zip.urls[i].match('.mtl$')) {
+          mtlFileName = zip.urls[i].replace(/^.*[\\\/]/, '');
+        }
+        if (zip.urls[i].match('.obj$')) {
+          objFileName = zip.urls[i].replace(/^.*[\\\/]/, '');
+        }
+      }
+      const mtlLoader = new THREE.MTLLoader(zip.manager);
+      const objLoader = new THREE.OBJLoader(zip.manager);
+      mtlLoader.setPath(pathToFolder);
+      mtlLoader.load(mtlFileName, function (materials) {
+        materials.preload();
+        objLoader.setMaterials(materials);
+        objLoader.setPath(pathToFolder);
+        objLoader.load(objFileName, function (object) {
+          init3dObject(obj, object);
+        });
+      });
+    });
 }
 
 function createPolygonLayer() {

@@ -1,7 +1,7 @@
 <mat-progress-bar class="progress-bar-fixed" *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
 <!-- use class="progress-bar-fixed" when page scrolled -->
 
-<div class="container-fluid">
+<div class="container-fluid" (dblclick)="scrollToElement()">
 
   <!-- <h3>Projects</h3> -->
   <!-- <div>Page size {{this.pageSize}}</div>
@@ -56,7 +56,7 @@
 
     <div class="col-4 pr-0 pl-0 right-col">
       <div class="map-wrapper">
-        <app-map (mapFinishInit)="onMapFinishInit()" [changeSelectedProject]="selectedProject" (objectClick)="onMapObjectClick($event)"></app-map>
+        <app-map (mapFinishInit)="onMapFinishInit()" [replace3DObjects]="mapObjects" [changeSelectedProject]="selectedProject" (objectClick)="onMapObjectClick($event)"></app-map>
       </div>
 
       <div class="detail-project-info">

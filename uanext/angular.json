@@ -39,7 +39,7 @@
               "./src/js/maptalks.markercluster.min.js",
               "./src/js/CSS2DRenderer.js",
               "./node_modules/nouislider/distribute/nouislider.min.js",
-              "./src/js/AssimpJSONLoader.js"
+              "./node_modules/three-ziploader/build/ziploader.min.js"
             ]
           },
           "configurations": {
@@ -103,7 +103,7 @@
               "./src/js/maptalks.markercluster.min.js",
               "./src/js/CSS2DRenderer.js",
               "./node_modules/nouislider/distribute/nouislider.min.js",
-              "./src/js/AssimpJSONLoader.js"
+              "./node_modules/three-ziploader/build/ziploader.min.js"
             ],
             "assets": [
               "src/favicon.ico",
