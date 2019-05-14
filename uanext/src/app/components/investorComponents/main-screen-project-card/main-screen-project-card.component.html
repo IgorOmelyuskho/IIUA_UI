@@ -1,0 +1,164 @@
+<div #projectCard class="project-card">
+
+  <div (click)="hideSelectedProjectInfo()" class="close-btn">
+    <img src="../../../assets/img/close-2.png" alt="close">
+  </div>
+
+  <div class="container">
+
+    <div class="row pt-3">
+      <div class="col-6 pr-1">
+        <div class="avatar-wrapper">
+          <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(_selectedProject) }"></div>
+          <div class="rating">
+            {{_selectedProject.rating}}
+          </div>
+        </div>
+      </div>
+      <div class="col-6 pl-1">
+        <div class="wrapper-1">
+          <h5 class="project-name">{{_selectedProject.name}}</h5>
+          <div class="company-name">{{_selectedProject.legalEntityName}}</div>
+          <button class="start-chat">
+            <span>НАЧАТЬ ЧАТ</span>
+            <span class="img-bg"></span>
+          </button>
+          <button class="invest">
+            <span>ИНВЕСТИРОВАТЬ</span>
+            <span class="big-font">$</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-items-wrapper">
+      <div class="row">
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Средний чек</div>
+            <div class="value">{{_selectedProject.averageCheck}} грн</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Клиентов в месяц</div>
+            <div class="value">{{_selectedProject.mounthlyClients}}</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Средняя цена</div>
+            <div class="value">{{_selectedProject.averagePrice}} грн</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Валовой доход</div>
+            <div class="value">?? грн</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Возрас компании</div>
+            <div class="value">{{_selectedProject.companyAge}}</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Сотрудники</div>
+            <div class="value">{{_selectedProject.employeesNumber}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Сфера деятельности</div>
+            <div class="value">{{_selectedProject.fieldOfActivity}}</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Регион</div>
+            <div class="value">{{_selectedProject.region}}</div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="info-item">
+            <div class="name">Планируется нанять</div>
+            <div class="value">{{_selectedProject.employeesToHire}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-project-info">
+      <div class="project-info-menu">
+        <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'shared'}"
+          (click)="selectedMenuItem = 'shared'">Общее</button>
+        <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'gallery'}"
+          (click)="selectedMenuItem = 'gallery'">Галерея</button>
+        <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'documents'}"
+          (click)="selectedMenuItem = 'documents'">Документы</button>
+        <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'updates'}"
+          (click)="selectedMenuItem = 'updates'">Обновления</button>
+        <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'comments'}"
+          (click)="selectedMenuItem = 'comments'">Комментарии</button>
+      </div>
+      <div class="no-selected" *ngIf="selectedMenuItem == null">
+        <div class="iiua">IIUA</div>
+        <div>Начинай инвестировать в будущее.</div>
+        <div class="grey-text">Тут будет отображена информация по выбранному проекту.</div>
+      </div>
+      <div class="shared" *ngIf="selectedMenuItem === 'shared'">
+        <h5 class="mb-2">
+          <img src="../../../assets/img/notepad.png" alt="">
+          <span>Для чего нужны инвестиции</span>
+        </h5>
+        <div class="steps">
+          <div class="step" *ngFor="let step of _selectedProject.steps">
+            {{step.data}}
+          </div>
+        </div>
+        <hr>
+        <div>{{_selectedProject.investmentDescription}}</div>
+      </div>
+      <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
+        <div class="images-gallery">
+          <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+        </div>
+        <div class="videos">
+          <h5>
+            <img src="../../../assets/img/video.png" alt="">
+            <span>Videos</span>
+          </h5>
+          <div class="video-links-wrapper">
+            <div *ngFor="let video of _selectedProject.videos" class="link">
+              <img src="../../../assets/img/video-link.png" alt="">
+              <a target="_blank" rel="noopener noreferrer" href="video.url">{{video.url}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="documents" *ngIf="selectedMenuItem === 'documents'">
+        <div class="documents-wrapper">
+          <div class="document" *ngFor="let document of _selectedProject.files">
+            <img src="../../../assets/img/file.png" alt="file">
+            <span>{{document.url}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="updates" *ngIf="selectedMenuItem === 'updates'">
+        <app-investor-updates [project]="_selectedProject"></app-investor-updates>
+      </div>
+      <div class="comments" *ngIf="selectedMenuItem === 'comments'">
+        <app-investor-comments [project]="_selectedProject"></app-investor-comments>
+      </div>
+    </div>
+
+  </div>
+</div>

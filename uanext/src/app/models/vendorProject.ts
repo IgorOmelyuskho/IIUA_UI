@@ -1,11 +1,13 @@
 export interface VendorProject {
-  id: number;
-  userId: number;
+  id?: string;
+  userId?: number;
   name: string;
-  avatara: any;
+  avatar?: any;
+  avatara?: any;
   legalEntityName: string;
   goal: string;
   region: string;
+  address: string;
   fieldOfActivity: string;
   companyAge: number;
   employeesNumber: string;
@@ -17,8 +19,9 @@ export interface VendorProject {
   description: string;
   moneyRequired: number;
   investmentDescription: string;
-  steps: any[];
-  videos: any[];
-  images: any[];
-  files: any[];
+  steps?: any[];
+  videos?: any[];
+  images?: any[];
+  files?: any[];
+  rating: string;
 }

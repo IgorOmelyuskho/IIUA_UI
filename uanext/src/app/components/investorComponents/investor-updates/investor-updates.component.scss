@@ -1,0 +1,65 @@
+@import '../../../../styles-variables.scss';
+
+.updates {
+  .update {
+    padding-top: 15px;
+
+    .sender {
+      display: flex;
+      justify-content: flex-start;
+
+      .avatar-wrapper {
+        img {
+          height: 48px;
+          border-radius: 6px;
+        }
+      }
+
+      .right-part {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+        .name-and-time {
+          padding-left: 15px;
+
+          .name {
+            font-size: 13px;
+            font-weight: bold;
+            color: $green;
+          }
+
+          .time {
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.8);
+          }
+        }
+
+        .time-ago {
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.8);
+        }
+      }
+    }
+
+    .header {
+      font-weight: bold;
+      padding-bottom: 15px;
+    }
+
+    .text {
+      font-size: 15px;
+      line-height: 1.4;
+      letter-spacing: 0.4px;
+    }
+
+    hr {
+      margin-bottom: 10px;
+      border-top: solid 1px #d3d3d3;
+    }
+
+    hr.bottom {
+      margin-bottom: 0px;
+    }
+  }
+}

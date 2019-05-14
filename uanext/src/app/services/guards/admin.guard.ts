@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthorizationService } from '../auth/authorization.service';
+import { AuthorizationService } from '../http/authorization.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRole } from 'src/app/models';
 

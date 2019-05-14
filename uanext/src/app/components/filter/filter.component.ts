@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter, OnChanges } from '@angular/core';
-import FormHelper from '../../services/helperServices/formHelper';
+import FormHelper from '../../helperClasses/helperClass';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, throttleTime, distinctUntilChanged } from 'rxjs/operators';
 import { FilterFields, FilterItemsName } from 'src/app/models';

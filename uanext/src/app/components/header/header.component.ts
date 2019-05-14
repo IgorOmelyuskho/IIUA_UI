@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthorizationService } from 'src/app/services/auth/authorization.service';
+import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { Router } from '@angular/router';
 import { UserRole } from 'src/app/models';
 

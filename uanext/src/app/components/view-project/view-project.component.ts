@@ -1,6 +1,6 @@
 
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { ViewProjectsService } from 'src/app/services/viewProjects/view-projects.service';
+import { ViewProjectsService } from 'src/app/services/http/view-projects.service';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
@@ -164,7 +164,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     this.viewProjectsService.searchByFilter({}).subscribe(
       (filteringProjects: FilteredProjects) => {
         for (let i = 0; i < filteringProjects.projectsList.length; i++) {
-          if (filteringProjects.projectsList[i].id === parseInt(this.projectId, 10)) {
+          if (filteringProjects.projectsList[i].id === this.projectId) {
             this.project = filteringProjects.projectsList[i];
             console.log(this.project);
             this.videoUrlToSafe(this.project.videos);

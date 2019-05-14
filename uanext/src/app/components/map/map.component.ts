@@ -12,7 +12,7 @@ import {
   setObjectClickCallback,
   setObjectHoverCallback,
 } from './map4-no-class';
-import { polygon1, polygon2, female, male, tractor, walt } from 'src/app/services/helperServices/projects';
+import { polygon1, polygon2, female, male, tractor, walt } from 'src/app/helperClasses/projects';
 
 @Component({
   selector: 'app-map',
@@ -55,7 +55,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   mapFinishInitCallback: Function = () => {
-    console.log('MAP FINISH INIT');
     this.mapFinishInit.emit();
   }
 
@@ -72,19 +71,20 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.timeOut1 = setTimeout(() => {
       mapAddNewPolygons([polygon1]);
-    }, 100);
+    }, 1000);
 
     this.timeOut2 = setTimeout(() => {
       mapReplacePolygons([polygon1, polygon2]);
-    }, 500);
+    }, 1500);
 
     this.timeOut3 = setTimeout(() => {
-      mapAddNewObjects([female, male, tractor, walt]);
-    }, 500);
+      mapReplaceObjects([female, male]);
+      // mapAddNewObjects([female, male]);
+    }, 1500);
 
-    // this.timeOut4 = setTimeout(() => {
-    //   mapReplaceObjects([object1, object2]);
-    // }, 8000);
+    this.timeOut4 = setTimeout(() => {
+      mapReplaceObjects([tractor, walt]);
+    }, 10000);
 
     // this.timeOut5 = setTimeout(() => {
     //   mapSetFullScreen();

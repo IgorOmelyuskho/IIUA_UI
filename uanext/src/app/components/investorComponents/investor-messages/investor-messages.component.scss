@@ -1,0 +1,199 @@
+@import '../../../../styles-variables.scss';
+
+
+.messages-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .messages {
+    padding: 10px;
+    padding-right: 5px;
+    overflow: auto;
+
+    .message {
+      .you {
+        .attachments {
+          .img-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 5px;
+
+            .img {
+              width: 60%;
+              height: 150px;
+              border-radius: 6px;
+              box-shadow: 0 2px 4px 0 rgba(51, 51, 51, 0.1);
+            }
+          }
+        }
+
+        .message-text-wrapper {
+          width: 100%;
+          padding: 5px 0px;
+          justify-content: flex-end;
+          display: flex;
+
+          .text {
+            background: $green;
+            display: flex;
+            border-radius: 20px;
+            border-bottom-right-radius: 0px;
+            padding: 8px 0px 8px 15px;
+            align-items: flex-end;
+
+            .message-text {
+              font-size: 15px;
+              color: white;
+              letter-spacing: -0.4px;
+            }
+
+            .time {
+              font-size: 11px;
+              margin-right: 8px;
+              margin-left: 8px;
+              color: rgba(255, 255, 255, 0.65);
+              position: relative;
+              top: 5px;
+              font-family: Helvetica;
+              letter-spacing: -0.3px;
+            }
+          }
+        }
+      }
+
+      .their {
+        .attachments {
+          .img-wrapper {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 5px;
+
+            .img {
+              width: 60%;
+              height: 150px;
+              border-radius: 6px;
+              box-shadow: 0 2px 4px 0 rgba(51, 51, 51, 0.1);
+            }
+          }
+        }
+
+        .message-text-avatar-wrapper {
+          width: 100%;
+          padding: 5px 0px;
+          justify-content: flex-start;
+          display: flex;
+
+          .avatar-wrapper {
+            margin-right: 5px;
+
+            img {
+              height: 40px;
+              border-radius: 6px;
+            }
+          }
+
+          .text-and-sender {
+            .sender {
+              font-family: Helvetica;
+              font-size: 11px;
+              letter-spacing: -0.3px;
+              color: rgba(50, 50, 50, 0.6);
+              margin-bottom: 5px;
+            }
+
+            .text {
+              background: white;
+              display: flex;
+              border-radius: 20px;
+              border-top-left-radius: 0px;
+              padding: 8px 0px 8px 15px;
+              box-shadow: 0 2px 4px 0 rgba(50, 50, 50, 0.2);
+              align-items: flex-end;
+
+              .message-text {
+                font-size: 15px;
+                letter-spacing: -0.4px;
+              }
+
+              .time {
+                font-size: 11px;
+                margin-right: 8px;
+                margin-left: 8px;
+                position: relative;
+                top: 5px;
+                font-family: Helvetica;
+                letter-spacing: -0.3px;
+                color: rgba(50, 50, 50, 0.6);
+              }
+            }
+          }
+        }
+      }
+
+      .date {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        .text {
+          padding-left: 15px;
+          padding-right: 15px;
+          font-size: 11px;
+          letter-spacing: -0.3px;
+          color: rgba(50, 50, 50, 0.6);
+        }
+
+        hr {
+          flex-grow: 1;
+          border-top: solid 1px rgba(50, 50, 50, 0.25);
+        }
+      }
+    }
+  }
+
+  .send-message {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #fcfcfc;
+    border-top: solid 1px #e8e8e8;
+    padding: 10px;
+    align-items: center;
+
+    .attach {
+      font-size: 30px;
+      color: rgb(82, 82, 82);
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    input {
+      border-radius: 20px;
+      border: solid 1px #000000;
+      margin-left: 20px;
+      margin-right: 20px;
+      width: 100%;
+      padding: 6px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    .send {
+      cursor: pointer;
+
+      img {
+        height: 27px;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}

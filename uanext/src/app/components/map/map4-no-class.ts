@@ -1,10 +1,11 @@
 declare var THREE: any;
 declare var maptalks: any;
 import Stats from 'stats-js';
+import { GeoObject } from 'src/app/models';
 
 const zoomWhenChangeVisible = 16;
 const initZoom = 15;
-const updatedInterval = 15000;
+const updatedInterval = 3500;
 const drawInterval = 50;
 
 // callbacks
@@ -13,19 +14,19 @@ let on_hover_object: Function = null;
 let on_map_init: Function = null;
 
 let infoWindow = {};
-let canvasElem = null;
-let stats = null;
+let canvasElem: HTMLElement = null;
+let stats: Stats = null;
 let scene = null;
 let raycaster = null;
 let mouse = null;
-let selectedObject = null;
+let selectedObject: GeoObject = null;
 let map = null;
-let objectsArr = [];
+let objectsArr: GeoObject[] = [];
 let timer1 = null;
 let timer2 = null;
 let animationFrame = null;
-let mapElement = null;
-let mapWrapperElement = null;
+let mapElement: HTMLElement = null;
+let mapWrapperElement: HTMLElement | any = null;
 let threeLayer = null;
 let clusterLayer = null;
 let polygonLayer = null;
@@ -33,7 +34,6 @@ let labelRenderer = null;
 let camera = null;
 
 export function mapInit(cb: Function) {
-  console.log('MAP4 INIT');
   createMap();
   createPolygonLayer();
   createClusterLayer();
@@ -70,11 +70,10 @@ export function mapSetProject(project) {
   project.coords.x = Math.random() * 30;
   project.coords.y = Math.random() * 30;
   map.setCenter(new maptalks.Coordinate(project.coords.x, project.coords.y));
-  // set selected project
+  // set selected project ??
 }
 
 export function mapDestroy() {
-  console.log('MAP4 DESTROY');
   clearInterval(timer1);
   clearInterval(timer2);
   cancelAnimationFrame(animationFrame);
@@ -141,29 +140,26 @@ function updateCoordsFromServer() {
   const res = [];
   for (let i = 0; i < objectsArr.length; i++) {
     const newObj = {
-      id: objectsArr[i].id,
+      geoObjectId: objectsArr[i].geoObjectId,
       coords: {
         x: objectsArr[i].coords.x + Math.random() * 0.001 - Math.random() * 0.001,
         y: objectsArr[i].coords.y + Math.random() * 0.001 - Math.random() * 0.001,
-        // x: objectsArr[i].coords.x - 0.01,
-        // y: objectsArr[i].coords.y - 0.1,
       },
-      name: objectsArr[i].name,
     };
     res.push(newObj);
   }
 
   for (let i = 0; i < res.length; i++) {
     for (let j = 0; j < objectsArr.length; j++) {
-      if (res[i].id === objectsArr[j].id) {
+      if (res[i].geoObjectId === objectsArr[j].geoObjectId) {
         objectsArr[j].prevCoords.x = objectsArr[j].coords.x;
         objectsArr[j].prevCoords.y = objectsArr[j].coords.y;
         objectsArr[j].speedX = (res[i].coords.x - objectsArr[j].prevCoords.x) * drawInterval / updatedInterval;
         objectsArr[j].speedY = (res[i].coords.y - objectsArr[j].prevCoords.y) * drawInterval / updatedInterval;
 
         const v = threeLayer.coordinateToVector3(new THREE.Vector3(res[i].coords.x, res[i].coords.y, 0.1));
-        objectsArr[j].cube.position.x = v.x;
-        objectsArr[j].cube.position.y = v.y;
+        objectsArr[j].pointForMove.position.x = v.x;
+        objectsArr[j].pointForMove.position.y = v.y;
         // objectsArr[j].cube.position.z = v.z;
       }
     }
@@ -178,28 +174,55 @@ function animation() {
   }
 }
 
-export function mapReplaceObjects(objects: any[]) {
-  // threeLayer.clear();
-  // clusterLayer.clear();
-  // for (let i = 0; i < objectsArr.length; i++) {
-    // todo remove [i] object
+export function mapReplaceObjects(objects: GeoObject[]) {
+  clearInterval(timer1);
+  clearInterval(timer2);
+  for (let i = 0; i < objectsArr.length; i++) {
+    objectsArr[i].pointForMove.visible = false; // todo remove also objectsArr[i].model.
+    objectsArr[i].objectDivLabel.style.display = 'none';
+    objectsArr[i].objectDivLabel.parentNode.removeChild(objectsArr[i].objectDivLabel); // not work
+    objectsArr[i].model.visible = false; // todo use visible because not removed 3dmodel with scene
+    // maybe use traverse
+    if (objectsArr[i].model.geometry) {
+      objectsArr[i].model.geometry.dispose();
+    }
+    if (objectsArr[i].model.material) {
+      objectsArr[i].model.material.dispose();
+    }
+    if (objectsArr[i].model.texture) {
+      objectsArr[i].model.texture.dispose();
+    }
+    scene.remove(objectsArr[i]); // get by name?
+  }
+  // while (scene.children.length > 0) { // not correctly work
+  //   scene.remove(scene.children[0]);
   // }
-
-  // objectsArr = [];
+  // scene.remove.apply(scene, scene.children); // not correctly work
+  // scene.add(new THREE.AmbientLight(0xffffff, 1));
+  // maybe remove and add new threeLayer
+  clusterLayer.clear();
+  objectsArr = [];
+  customRedraw();
   mapAddNewObjects(objects);
+  timer1 = setInterval(() => {
+    updateCoordsFromServer();
+  }, updatedInterval);
+  timer2 = setInterval(() => {
+    updateCoordsForRedraw();
+  }, drawInterval);
 }
 
-export function mapAddNewObjects(objects: any[]) {
+export function mapAddNewObjects(objects: GeoObject[]) {
   for (let i = 0; i < objects.length; i++) {
-    const newObj = { ...objects[i] };
+    const newObj = objects[i];
     newObj.marker = null,
-      newObj.model = null,
-      newObj.mouseUnder = false,
-      newObj.speedX = 0,
-      newObj.speedY = 0,
-      newObj.rotationZ = 0,
-      newObj.coords = map.getCenter().add(Math.random() * 0.008, Math.random() * 0.009), // todo remove
-      newObj.prevCoords = {};
+    newObj.model = null,
+    newObj.mouseUnder = false,
+    newObj.speedX = 0,
+    newObj.speedY = 0,
+    newObj.rotationZ = 0,
+    newObj.coords = map.getCenter().add(Math.random() * 0.008, Math.random() * 0.009), // todo remove
+    newObj.prevCoords = {};
     newObj.prevCoords.x = newObj.coords.x;
     newObj.prevCoords.y = newObj.coords.y;
 
@@ -278,28 +301,28 @@ function createMap() {
   });
 }
 
-function setMarkerSymbolDefault(marker1) {
-  marker1.updateSymbol({
+function setMarkerSymbolDefault(marker) {
+  marker.updateSymbol({
     'markerWidth': 28,
     'markerHeight': 40,
     'textSize': 16,
     'textFill': 'black',
     'zIndex': 1
   });
-  marker1.setZIndex(1);
+  marker.setZIndex(1);
 }
 
-function setMarkerSymbolSelected(marker1) {
-  marker1.updateSymbol({
+function setMarkerSymbolSelected(marker) {
+  marker.updateSymbol({
     'markerWidth': 28 + 5,
     'markerHeight': 40 + 5,
     'textSize': 18,
     'textFill': 'green',
   });
-  marker1.setZIndex(1000);
+  marker.setZIndex(1000);
 }
 
-function createMarker(obj) {
+function createMarker(obj: GeoObject) {
   const coords = new maptalks.Coordinate(obj.coords.x, obj.coords.y);
   const marker = new maptalks.Marker(coords, {
     visible: true,
@@ -311,7 +334,7 @@ function createMarker(obj) {
     },
     {
       'textFaceName': 'sans-serif',
-      'textName': obj.name,
+      'textName': obj.projectName,
       'textSize': 16,
       'textDy': 10,
       'textFill': 'black',
@@ -449,7 +472,7 @@ function createClusterLayer() {
   map.addLayer(clusterLayer);
 }
 
-function init3dObject(obj, object) {
+function init3dObject(obj: GeoObject, object: any) {
   const childScale = 0.004;
   object.traverse(function (child) {
     if (child instanceof THREE.Mesh) {
@@ -469,19 +492,19 @@ function init3dObject(obj, object) {
   object.position.z = v.z;
 
   obj.box3 = new THREE.Box3().setFromObject(object);
-  const cubeGeometry = new THREE.BoxGeometry(0.03, 0.03, 0.03);
+  const cubeGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
   const cubeMaterial = new THREE.MeshBasicMaterial({
     color: 0x00ff00
   });
-  obj.cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  obj.cube.position.x = obj.model.position.x;
-  obj.cube.position.y = obj.model.position.y;
-  obj.cube.position.z = obj.model.position.z;
-  scene.add(obj.cube);
+  obj.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  obj.pointForMove.position.x = obj.model.position.x;
+  obj.pointForMove.position.y = obj.model.position.y;
+  obj.pointForMove.position.z = obj.model.position.z;
+  scene.add(obj.pointForMove);
 
   const objectDivLabel = document.createElement('div');
   objectDivLabel.className = 'obj-label';
-  objectDivLabel.textContent = obj.name;
+  objectDivLabel.textContent = obj.projectName;
   objectDivLabel.style.marginTop = '-1em';
   const objLabel = new THREE.CSS2DObject(objectDivLabel);
   obj.objectDivLabel = objectDivLabel;
@@ -495,7 +518,7 @@ function init3dObject(obj, object) {
   threeLayer.renderScene();
 }
 
-function loadObjectModel(obj) {
+function loadObjectModel(obj: GeoObject) {
   THREE.ZipLoadingManager
     .uncompress(obj.pathToZip, ['.mtl', '.obj', '.jpg', '.png'])
     .then(function (zip) {
@@ -544,33 +567,31 @@ function createThreeLayer() {
 }
 
 function customRedraw() {
-  // console.log('CUSTOM REDRAW');
-  // threeLayer.renderScene(); // not remove prev textures
-  // map.panBy([0, 0]);   // map.panTo(coordinate); not always work
   map.setCenter(new maptalks.Coordinate(map.getCenter()));
 }
 
 function updateCoordsForRedraw() {
-  for (let i = 0; i < objectsArr.length; i++) { // todo
+  for (let i = 0; i < objectsArr.length; i++) {
     updateCoordsForDraw(objectsArr[i]);
   }
 
   showInformation(selectedObject);
 
   if (map.getZoom() < zoomWhenChangeVisible + 0.2 || map.getZoom() < zoomWhenChangeVisible - 0.2) {
+    customRedraw(); // todo remove
     return;
   }
 
   customRedraw();
 }
 
-function updateCoordsForDraw(obj) { // todo
+function updateCoordsForDraw(obj: GeoObject) {
   if (obj == null || obj.model == null || obj.marker == null) {
     return;
   }
   obj.coords.x += obj.speedX; // geographical coordinates
   obj.coords.y += obj.speedY; // geographical coordinates
-  obj.marker.setCoordinates(new maptalks.Coordinate(obj.coords)); // geographical coordinates
+  obj.marker.setCoordinates(new maptalks.Coordinate(obj.coords));
 
   const prevX = obj.model.position.x;
   const prevY = obj.model.position.y;
@@ -596,7 +617,7 @@ function selectObjects() {
   }
 }
 
-function selectObject(obj) {
+function selectObject(obj: GeoObject) {
   if (obj.model == null || obj.model.visible === false) {
     obj.mouseUnder = false;
     return false;
@@ -637,8 +658,7 @@ function selectObject(obj) {
       }
     });
 
-    threeLayer.renderScene();
-    // customRedraw();
+    customRedraw();
     return true;
   }
 
@@ -661,7 +681,6 @@ function selectObject(obj) {
 
     // event when mouse move and mouse leave 3d object
     if (prevMouseUnderObject !== obj.mouseUnder) {
-      console.log('event when mouse move and mouse leave 3d object');
       customRedraw();
     }
 
@@ -674,7 +693,7 @@ function setCanvasCursor(cursor) {
   canvasElem.style.cursor = cursor;
 }
 
-function changeVisible(obj, zoom) {
+function changeVisible(obj: GeoObject, zoom: number) {
   if (zoom < zoomWhenChangeVisible + 0.2 || zoom < zoomWhenChangeVisible - 0.2) {
     if (obj.model) {
       obj.model.visible = false;
@@ -694,7 +713,7 @@ function changeVisible(obj, zoom) {
   }
 }
 
-function showInformation(obj) {
+function showInformation(obj: GeoObject) {
   if (obj == null) {
     return;
   }
@@ -702,10 +721,10 @@ function showInformation(obj) {
   infoWindow['infoElem'].style.display = 'block';
   infoWindow['coordX'].innerHTML = 'X = ' + obj.coords.x.toFixed(8);
   infoWindow['coordY'].innerHTML = 'Y = ' + obj.coords.y.toFixed(8);
-  infoWindow['name'].innerHTML = obj.name;
+  infoWindow['name'].innerHTML = obj.projectName;
 }
 
-function deltaToScale(delta) {
+function deltaToScale(delta: number) {
   let res = 1;
   for (let i = 1; i < delta; i++) {
     res = 2 * res;
@@ -713,7 +732,7 @@ function deltaToScale(delta) {
   return res;
 }
 
-function linearInterpolation(y0, y1, x0, x1, x) {
+function linearInterpolation(y0: number, y1: number, x0: number, x1: number, x: number) {
   if (Math.abs(x1 - x0) < 0.000000000001) {
     return y0;
   }
@@ -721,7 +740,7 @@ function linearInterpolation(y0, y1, x0, x1, x) {
   return y0 + ((y1 - y0) / (x1 - x0)) * (x - x0);
 }
 
-function calcScale(mapZoom) {
+function calcScale(mapZoom: number) {
   let delta = 0;
   if (mapZoom === initZoom) {
     return 1;
@@ -734,7 +753,7 @@ function calcScale(mapZoom) {
   }
 }
 
-function calcInterpolationScale(mapZoom) {
+function calcInterpolationScale(mapZoom: number) {
   const x0 = Math.floor(mapZoom);
   const x1 = Math.ceil(mapZoom);
   const y0 = calcScale(x0);

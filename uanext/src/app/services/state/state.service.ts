@@ -5,7 +5,7 @@ import { BehaviorSubject, } from 'rxjs';
 
 import { VendorRole, AdminRole, UserRole } from './../../models';
 import { InvestorRole } from './../../models';
-import { NotificationService } from '../notification/notification.service';
+import { NotificationService } from '../http/notification.service';
 import { Router } from '@angular/router';
 
 

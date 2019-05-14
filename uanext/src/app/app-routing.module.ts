@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IndexComponent } from './components';
 import { VendorProjectsComponent } from './components';
-import { CreateVendorCompanyComponent } from './components';
+import { CreateVendorProjectComponent } from './components';
 import { SigninComponent } from './components';
 import { SignupComponent } from './components';
 import { InvestorComponent } from './components';
@@ -12,10 +12,10 @@ import { InvestorProfileComponent } from './components';
 import { VendorProfileComponent } from './components';
 import { HomePageComponent } from './components';
 import { ViewProjectComponent } from './components';
-import { UpdateVendorCompanyComponent } from './components';
+import { UpdateVendorProjectComponent } from './components';
 import { Object3dUploadComponent } from './components';
 import { AdminPageComponent } from './components';
-import { ViewVendorProjectsComponent } from './components';
+import { InvestorFilterPageComponent } from './components';
 import { AdminProfileComponent } from './components';
 import { AdminSignupComponent } from './components';
 import { AdminSigninComponent } from './components';
@@ -29,7 +29,7 @@ import { VendorGuard } from './services/guards';
 
 const childInvestorRoutes: Routes = [
   { path: 'profile', component: InvestorProfileComponent },
-  { path: 'viewProjects', component: ViewVendorProjectsComponent },
+  { path: 'viewProjects', component: InvestorFilterPageComponent },
   { path: 'project/:id', component: ViewProjectComponent },
   { path: 'main-page', component: MainScreenInvestorComponent },
 ];
@@ -37,8 +37,8 @@ const childInvestorRoutes: Routes = [
 const childVendorRoutes: Routes = [
   { path: 'profile', component: VendorProfileComponent },
   { path: 'projects', component: VendorProjectsComponent },
-  { path: 'newProject', component: CreateVendorCompanyComponent },
-  { path: 'project/:id', component: UpdateVendorCompanyComponent },
+  { path: 'newProject', component: CreateVendorProjectComponent },
+  { path: 'project/:id', component: UpdateVendorProjectComponent },
   { path: 'main-page', component: MainScreenVendorComponent },
 ];
 
@@ -55,7 +55,7 @@ const childHomeRoutes: Routes = [
 ];
 
 const routes: Routes = [
-  { path: 'investor11', component: ViewVendorProjectsComponent },
+  { path: 'investor11', component: InvestorFilterPageComponent },
   { path: 'main-screen', component: MainScreenInvestorComponent },
   { path: 'map', component: MapComponent },
 

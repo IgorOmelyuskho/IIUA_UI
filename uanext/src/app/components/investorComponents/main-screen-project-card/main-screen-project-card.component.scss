@@ -1,0 +1,293 @@
+@import '../../../../styles-variables.scss';
+
+.project-card {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+  background: white;
+  width: 46vw;
+  height: 100%;
+  overflow: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 100000;
+
+    img {
+      height: 21px;
+      cursor: pointer;
+    }
+  }
+
+  .avatar-wrapper {
+    min-width: 210px;
+    height: 185px;
+    margin-right: 20px;
+    position: relative;
+
+    .avatar {
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      border-radius: 6px;
+    }
+
+    .rating {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 60px;
+      height: 50px;
+      border-top-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+      background: $green;
+      line-height: 47px;
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      font-style: normal;
+      font-stretch: normal;
+    }
+  }
+
+  .wrapper-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+    h5.project-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+
+    .company-name {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 205px;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid $darkGreen;
+      outline: none;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      cursor: pointer;
+    }
+
+    button.start-chat {
+      background: white;
+      color: $darkGreen;
+
+      &:hover {
+        background: $darkGreen;
+        color: white;
+      }
+
+      &:hover .img-bg {
+        background-image: url('../../../../assets/img/message-hover.png');
+      }
+
+      .img-bg {
+        padding-left: 35px;
+        margin-left: 10px;
+        background-image: url('../../../../assets/img/message.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+    }
+
+    button.invest {
+      background: white;
+      color: $darkGreen;
+
+      &:hover {
+        background: $darkGreen;
+        color: white;
+      }
+
+      .big-font {
+        font-size: 20px;
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .info-items-wrapper {
+    margin-top: 15px;
+
+    .info-item {
+      margin-bottom: 20px;
+
+      .name {
+        font-size: 12px;
+        letter-spacing: 0.4px;
+        color: $darkGreen;
+        margin-bottom: 5px;
+      }
+
+      .value {
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .detail-project-info {
+    .project-info-menu {
+      border-bottom: 2px solid $green;
+      margin-top: 10px;
+
+      button {
+        font-size: 18px;
+        margin-right: 10px;
+        background: transparent;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        border-bottom: 3px solid transparent;
+        cursor: pointer;
+        box-shadow: none !important;
+      }
+
+      .selectedMenuItem {
+        border-bottom: 3px solid $green;
+        font-weight: bold;
+        color: $green;
+      }
+    }
+
+    .no-selected {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+
+      .iiua {
+        font-size: 30px;
+        color: $green;
+        margin-top: 70px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      .grey-text {
+        color: $grey;
+        font-size: 12px;
+        margin-top: 10px;
+      }
+    }
+
+    .shared {
+      h5 {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 18px;
+
+        img {
+          height: 20px;
+          position: relative;
+          bottom: 1px;
+          padding-right: 20px;
+        }
+      }
+
+      .steps {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 5px;
+        padding-left: 0;
+
+        .step {
+          border-radius: 6px;
+          border: solid 1px $green;
+          color: $green;
+          font-size: 15px;
+          margin: 2px 5px 2px 0px;
+          padding: 0px 9px 3px 9px;
+        }
+      }
+    }
+
+    .gallery {
+      .images-gallery {
+        margin-top: 15px;
+      }
+
+      .videos {
+        h5 {
+          margin-top: 10px;
+          margin-bottom: 10px;
+          font-size: 18px;
+          font-weight: bold;
+
+          img {
+            height: 18px;
+            position: relative;
+            bottom: 2px;
+            margin-right: 15px;
+          }
+        }
+
+        .video-links-wrapper {
+          margin-top: 20px;
+
+          .link {
+            font-size: 16px;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            margin-top: 5px;
+
+            img {
+              height: 12px;
+              position: relative;
+              bottom: 5px;
+              margin-right: 5px;
+            }
+
+            a {
+              color: black
+            }
+          }
+        }
+      }
+    }
+
+    .documents {
+      .documents-wrapper {
+        width: 90%;
+        overflow: hidden;
+
+        .document {
+          display: flex;
+          margin: 5px;
+
+          img {
+            margin-right: 10px;
+            height: 20px;
+          }
+        }
+      }
+    }
+
+    .updates {
+      font-weight: normal;
+    }
+
+    .comments {
+      font-weight: normal;
+    }
+  }
+
+}

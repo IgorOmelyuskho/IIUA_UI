@@ -2,13 +2,13 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-import { AuthorizationService } from '../../services/auth/authorization.service';
+import { AuthorizationService } from '../../services/http/authorization.service';
 import { StateService } from './../../services/state/state.service';
-import { ProfileService } from 'src/app/services/profile/profile.service';
+import { ProfileService } from 'src/app/services/http/profile.service';
 import { Observable } from 'rxjs';
 import { VendorRole, InvestorRole, AdminRole, UserRole } from 'src/app/models';
-import { NotificationService } from 'src/app/services/notification/notification.service';
-import FormHelper from '../../services/helperServices/formHelper';
+import { NotificationService } from 'src/app/services/http/notification.service';
+import FormHelper from '../../helperClasses/helperClass';
 import { take, first, delay } from 'rxjs/operators';
 
 @Component({
