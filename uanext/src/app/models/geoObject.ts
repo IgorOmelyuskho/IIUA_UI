@@ -7,7 +7,7 @@ export interface GeoObject {
   pathToZip: string;
   project: VendorProject;
 
-  model?: any;
+  object3D?: any;
   prevCoords?: any;
   speedX?: number;
   speedY?: number;

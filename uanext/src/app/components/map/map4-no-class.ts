@@ -174,32 +174,33 @@ function animation() {
   }
 }
 
+function remove3DObjectFromScene(object: any) { // any - not geoObject !
+  if (object.geometry) {
+    object.geometry.dispose();
+  }
+  if (object.material) {
+    object.material.dispose();
+  }
+  if (object.texture) {
+    object.texture.dispose();
+  }
+  scene.remove(object);
+}
+
 export function mapReplaceObjects(objects: GeoObject[]) {
   clearInterval(timer1);
   clearInterval(timer2);
   for (let i = 0; i < objectsArr.length; i++) {
-    objectsArr[i].pointForMove.visible = false; // todo remove also objectsArr[i].model.
+    remove3DObjectFromScene(objectsArr[i].pointForMove);
     objectsArr[i].objectDivLabel.style.display = 'none';
     objectsArr[i].objectDivLabel.parentNode.removeChild(objectsArr[i].objectDivLabel); // not work
-    objectsArr[i].model.visible = false; // todo use visible because not removed 3dmodel with scene
-    // maybe use traverse
-    if (objectsArr[i].model.geometry) {
-      objectsArr[i].model.geometry.dispose();
-    }
-    if (objectsArr[i].model.material) {
-      objectsArr[i].model.material.dispose();
-    }
-    if (objectsArr[i].model.texture) {
-      objectsArr[i].model.texture.dispose();
-    }
-    scene.remove(objectsArr[i]); // get by name?
+    remove3DObjectFromScene(objectsArr[i].object3D);
   }
-  // while (scene.children.length > 0) { // not correctly work
+  // while (scene.children.length > 0) {
   //   scene.remove(scene.children[0]);
   // }
-  // scene.remove.apply(scene, scene.children); // not correctly work
+  // scene.remove.apply(scene, scene.children);
   // scene.add(new THREE.AmbientLight(0xffffff, 1));
-  // maybe remove and add new threeLayer
   clusterLayer.clear();
   objectsArr = [];
   customRedraw();
@@ -214,9 +215,9 @@ export function mapReplaceObjects(objects: GeoObject[]) {
 
 export function mapAddNewObjects(objects: GeoObject[]) {
   for (let i = 0; i < objects.length; i++) {
-    const newObj = objects[i];
+    const newObj: GeoObject = objects[i];
     newObj.marker = null,
-    newObj.model = null,
+    newObj.object3D = null,
     newObj.mouseUnder = false,
     newObj.speedX = 0,
     newObj.speedY = 0,
@@ -227,7 +228,7 @@ export function mapAddNewObjects(objects: GeoObject[]) {
     newObj.prevCoords.y = newObj.coords.y;
 
     createMarker(newObj);
-    loadObjectModel(newObj); // async
+    loadObject3D(newObj); // async
     objectsArr.push(newObj);
   }
 }
@@ -273,7 +274,7 @@ function createMap() {
   map.on('zooming', function (event) {
     // const scale = calcInterpolationScale(map.getZoom());
     for (let i = 0; i < objectsArr.length; i++) {
-      if (objectsArr[i].model == null || objectsArr[i].marker == null) {
+      if (objectsArr[i].object3D == null || objectsArr[i].marker == null) {
         continue; // objectsArr[i].marker uses in changeVisible
       }
       changeVisible(objectsArr[i], event.to);
@@ -472,9 +473,9 @@ function createClusterLayer() {
   map.addLayer(clusterLayer);
 }
 
-function init3dObject(obj: GeoObject, object: any) {
+function init3dObject(geoObject: GeoObject, object3D: any) {
   const childScale = 0.004;
-  object.traverse(function (child) {
+  object3D.traverse(function (child) {
     if (child instanceof THREE.Mesh) {
       child.scale.set(childScale, childScale, childScale);
       child.rotation.set(Math.PI * 1 / 2, -Math.PI * 1 / 2, 0);
@@ -485,40 +486,40 @@ function init3dObject(obj: GeoObject, object: any) {
     }
   });
 
-  obj.model = object;
-  const v = threeLayer.coordinateToVector3(new maptalks.Coordinate(obj.coords.x, obj.coords.y));
-  object.position.x = v.x;
-  object.position.y = v.y;
-  object.position.z = v.z;
+  geoObject.object3D = object3D;
+  const v = threeLayer.coordinateToVector3(new maptalks.Coordinate(geoObject.coords.x, geoObject.coords.y));
+  object3D.position.x = v.x;
+  object3D.position.y = v.y;
+  object3D.position.z = v.z;
 
-  obj.box3 = new THREE.Box3().setFromObject(object);
+  geoObject.box3 = new THREE.Box3().setFromObject(object3D);
   const cubeGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
   const cubeMaterial = new THREE.MeshBasicMaterial({
     color: 0x00ff00
   });
-  obj.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
-  obj.pointForMove.position.x = obj.model.position.x;
-  obj.pointForMove.position.y = obj.model.position.y;
-  obj.pointForMove.position.z = obj.model.position.z;
-  scene.add(obj.pointForMove);
+  geoObject.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
+  geoObject.pointForMove.position.x = geoObject.object3D.position.x;
+  geoObject.pointForMove.position.y = geoObject.object3D.position.y;
+  geoObject.pointForMove.position.z = geoObject.object3D.position.z;
+  scene.add(geoObject.pointForMove);
 
   const objectDivLabel = document.createElement('div');
   objectDivLabel.className = 'obj-label';
-  objectDivLabel.textContent = obj.projectName;
+  objectDivLabel.textContent = geoObject.projectName;
   objectDivLabel.style.marginTop = '-1em';
   const objLabel = new THREE.CSS2DObject(objectDivLabel);
-  obj.objectDivLabel = objectDivLabel;
+  geoObject.objectDivLabel = objectDivLabel;
   objLabel.position.x = 0;
   objLabel.position.y = 0;
-  objLabel.position.z = obj.box3.getSize().z * 1.1;
-  obj.model.add(objLabel);
+  objLabel.position.z = geoObject.box3.getSize().z * 1.1;
+  geoObject.object3D.add(objLabel);
 
-  changeVisible(obj, map.getZoom());
-  scene.add(object);
+  changeVisible(geoObject, map.getZoom());
+  scene.add(object3D);
   threeLayer.renderScene();
 }
 
-function loadObjectModel(obj: GeoObject) {
+function loadObject3D(obj: GeoObject) {
   THREE.ZipLoadingManager
     .uncompress(obj.pathToZip, ['.mtl', '.obj', '.jpg', '.png'])
     .then(function (zip) {
@@ -540,8 +541,8 @@ function loadObjectModel(obj: GeoObject) {
         materials.preload();
         objLoader.setMaterials(materials);
         objLoader.setPath(pathToFolder);
-        objLoader.load(objFileName, function (object) {
-          init3dObject(obj, object);
+        objLoader.load(objFileName, function (object3D) {
+          init3dObject(obj, object3D);
         });
       });
     });
@@ -586,20 +587,20 @@ function updateCoordsForRedraw() {
 }
 
 function updateCoordsForDraw(obj: GeoObject) {
-  if (obj == null || obj.model == null || obj.marker == null) {
+  if (obj == null || obj.object3D == null || obj.marker == null) {
     return;
   }
   obj.coords.x += obj.speedX; // geographical coordinates
   obj.coords.y += obj.speedY; // geographical coordinates
   obj.marker.setCoordinates(new maptalks.Coordinate(obj.coords));
 
-  const prevX = obj.model.position.x;
-  const prevY = obj.model.position.y;
+  const prevX = obj.object3D.position.x;
+  const prevY = obj.object3D.position.y;
   const v = threeLayer.coordinateToVector3(obj.coords);
-  obj.model.position.x = v.x;
-  obj.model.position.y = v.y;
-  obj.model.position.z = v.z;
-  obj.model.rotation.z = Math.atan2(prevY - obj.model.position.y, prevX - obj.model.position.x);
+  obj.object3D.position.x = v.x;
+  obj.object3D.position.y = v.y;
+  obj.object3D.position.z = v.z;
+  obj.object3D.rotation.z = Math.atan2(prevY - obj.object3D.position.y, prevX - obj.object3D.position.x);
 
   // obj.cube.position.x = v.x;
   // obj.cube.position.y = v.y;
@@ -618,14 +619,14 @@ function selectObjects() {
 }
 
 function selectObject(obj: GeoObject) {
-  if (obj.model == null || obj.model.visible === false) {
+  if (obj.object3D == null || obj.object3D.visible === false) {
     obj.mouseUnder = false;
     return false;
   }
 
   const objects = [];
 
-  obj.model.traverse(function (child) {
+  obj.object3D.traverse(function (child) {
     if (child instanceof THREE.Mesh) {
       objects.push(child);
     }
@@ -646,7 +647,7 @@ function selectObject(obj: GeoObject) {
     }
 
     // set selected color
-    obj.model.traverse(function (child) {
+    obj.object3D.traverse(function (child) {
       if (!(child instanceof THREE.Mesh)) {
         return;
       }
@@ -667,7 +668,7 @@ function selectObject(obj: GeoObject) {
     obj.mouseUnder = false;
 
     // set default color
-    obj.model.traverse(function (child) {
+    obj.object3D.traverse(function (child) {
       if (!(child instanceof THREE.Mesh)) {
         return;
       }
@@ -695,16 +696,16 @@ function setCanvasCursor(cursor) {
 
 function changeVisible(obj: GeoObject, zoom: number) {
   if (zoom < zoomWhenChangeVisible + 0.2 || zoom < zoomWhenChangeVisible - 0.2) {
-    if (obj.model) {
-      obj.model.visible = false;
+    if (obj.object3D) {
+      obj.object3D.visible = false;
       obj.objectDivLabel.style.display = 'none';
     }
     if (obj.marker) {
       obj.marker.options.visible = true;
     }
   } else {
-    if (obj.model) {
-      obj.model.visible = true;
+    if (obj.object3D) {
+      obj.object3D.visible = true;
       obj.objectDivLabel.style.display = '';
     }
     if (obj.marker) {

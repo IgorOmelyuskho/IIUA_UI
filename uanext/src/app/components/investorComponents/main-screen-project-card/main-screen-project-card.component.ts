@@ -16,7 +16,9 @@ export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
   set selectedProject(selectedProject: VendorProject) {
     if (selectedProject != null) {
       this._selectedProject = selectedProject;
-      this.projectCard.nativeElement.style.display = '';
+      requestAnimationFrame(() => {
+        this.projectCard.nativeElement.style.display = '';
+      });
       this.setGalleryImages(this._selectedProject.images);
     }
   }
