@@ -3,6 +3,8 @@ import FormHelper from '../../helperClasses/helperClass';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, throttleTime, distinctUntilChanged } from 'rxjs/operators';
 import { FilterFields, FilterItemsName } from 'src/app/models';
+import { fieldActivityOptions, FieldActivityInterface } from 'src/app/helperClasses/fieldOfActivity';
+import { updateRateOptions, UpdateRateInterface } from 'src/app/helperClasses/updateRateOptions';
 
 @Component({
   selector: 'app-filter',
@@ -17,28 +19,8 @@ export class FilterComponent implements OnInit, AfterViewInit {
     this.resetItem(itemForReset);
   }
 
-  fieldActivityOptions = [
-    { name: 'Выбрать все', checked: false },
-    { name: 'Agriculture, Forestry and Fisheries', checked: false },
-    { name: 'Mining and quarrying', checked: false },
-    { name: 'Manufacturing industry', checked: false },
-    { name: 'Supply of electricity, gas, steam and air conditioning', checked: false },
-    { name: 'Water supply; sewage, waste management', checked: false },
-    { name: 'Construction', checked: false },
-    { name: 'Wholesale and retail trade; repair of motor vehicles and motorcycles', checked: false },
-    { name: 'Transport, warehousing, postal and courier activities', checked: false },
-    { name: 'Temporary placement and organization of food', checked: false },
-    { name: 'Information and telecommunications', checked: false },
-  ];
-
-  updateRateOptions = [
-    { name: 'Выбрать все', checked: false },
-    { name: 'Часто', checked: false },
-    { name: 'Средне', checked: false },
-    { name: 'Редко', checked: false },
-  ];
-
   FormHelper = FormHelper;
+  updateRateOptions: UpdateRateInterface[] = JSON.parse(JSON.stringify(updateRateOptions));
 
   noUiSlider: any;
 
@@ -52,7 +34,7 @@ export class FilterComponent implements OnInit, AfterViewInit {
 
   region = 'ALL';
 
-  fieldOfActivity: string[] = null;
+  fieldOfActivity: FieldActivityInterface[] = null;
 
   updateRate: string[] = null;
 
@@ -73,6 +55,8 @@ export class FilterComponent implements OnInit, AfterViewInit {
   avgCheckToElement: any;
   avgCheckMin = 0;
   avgCheckMax = 10000;
+
+  fieldActivityOptions = JSON.parse(JSON.stringify(fieldActivityOptions));
 
   constructor() { }
 
@@ -225,15 +209,16 @@ export class FilterComponent implements OnInit, AfterViewInit {
     this.filterOnChange();
   }
 
-
-
-
-
-  selectedFieldOfActivity(): string[] {
+  selectedFieldOfActivity(): any[] {
     return this.fieldActivityOptions
       .filter(opt => opt.checked)
       .filter(opt => opt.name !== this.fieldActivityOptions[0].name)
-      .map(opt => opt.name);
+      .map(opt => {
+        return {
+          id: opt.id,
+          name: opt.name
+        };
+      });
   }
 
   fieldActivityChange(event) {
@@ -265,11 +250,16 @@ export class FilterComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  selectedUpdateRate(): string[] {
+  selectedUpdateRate(): any[] {
     return this.updateRateOptions
       .filter(opt => opt.checked)
       .filter(opt => opt.name !== this.updateRateOptions[0].name)
-      .map(opt => opt.name);
+      .map(opt => {
+        return {
+          id: opt.id,
+          name: opt.name
+        };
+      });
   }
 
   updateRateChange(event) {
@@ -462,11 +452,11 @@ export class FilterComponent implements OnInit, AfterViewInit {
       }
 
       if (this.fieldOfActivity != null && this.fieldOfActivity.length !== 0) {
-        filter.fieldOfActivity_TODO_NAME = this.fieldOfActivity;
+        filter.fieldOfActivity = this.fieldOfActivity;
       }
 
       if (this.updateRate != null && this.updateRate.length !== 0) {
-        filter.updateRate_TODO_NAME = this.updateRate;
+        filter.updateRate = this.updateRate;
       }
 
       if (
@@ -487,8 +477,8 @@ export class FilterComponent implements OnInit, AfterViewInit {
           this.employeesToElement.value === this.employeesMax.toString()
         )
       ) {
-        filter.employeesFrom_TODO_NAME = this.employeesFromElement.value;
-        filter.employeesTo_TODO_NAME = this.employeesToElement.value;
+        filter.employeesFrom = this.employeesFromElement.value;
+        filter.employeesTo = this.employeesToElement.value;
       }
 
       if (
@@ -498,8 +488,8 @@ export class FilterComponent implements OnInit, AfterViewInit {
           this.avgCheckToElement.value === this.avgCheckMax.toString()
         )
       ) {
-        filter.avgCheckFrom_TODO_NAME = this.avgCheckFromElement.value;
-        filter.avgCheckTo_TODO_NAME = this.avgCheckToElement.value;
+        filter.avgCheckFrom = this.avgCheckFromElement.value;
+        filter.avgCheckTo = this.avgCheckToElement.value;
       }
 
       // this.filterChange.emit(filter);

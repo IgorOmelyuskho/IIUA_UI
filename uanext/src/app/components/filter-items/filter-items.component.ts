@@ -49,26 +49,26 @@ export class FilterItemsComponent implements OnInit {
       });
     }
 
-    if (filterParam.fieldOfActivity_TODO_NAME && filterParam.fieldOfActivity_TODO_NAME.length !== 0) {
-      for (let i = 0; i < filterParam.fieldOfActivity_TODO_NAME.length; i++) {
+    if (filterParam.fieldOfActivity && filterParam.fieldOfActivity.length !== 0) {
+      for (let i = 0; i < filterParam.fieldOfActivity.length; i++) {
         filterItems.push({
-          value: filterParam.fieldOfActivity_TODO_NAME[i],
-          text: filterParam.fieldOfActivity_TODO_NAME[i],
+          value: filterParam.fieldOfActivity[i],
+          text: filterParam.fieldOfActivity[i],
           name: FilterItemsName.FIELD_OF_ACTIVITY
         });
       }
     }
 
-    if (filterParam.employeesFrom_TODO_NAME && filterParam.employeesTo_TODO_NAME) {
+    if (filterParam.employeesFrom && filterParam.employeesTo) {
       filterItems.push({
-        text: filterParam.employeesFrom_TODO_NAME + ' - ' + filterParam.employeesTo_TODO_NAME + ' сотрудника',
+        text: filterParam.employeesFrom + ' - ' + filterParam.employeesTo + ' сотрудника',
         name: FilterItemsName.EMPLOYEES
       });
     }
 
-    if (filterParam.avgCheckFrom_TODO_NAME && filterParam.avgCheckTo_TODO_NAME) {
+    if (filterParam.avgCheckFrom && filterParam.avgCheckTo) {
       filterItems.push({
-        text: 'средний чек ' + filterParam.avgCheckFrom_TODO_NAME + ' - ' + filterParam.avgCheckTo_TODO_NAME + ' грн',
+        text: 'средний чек ' + filterParam.avgCheckFrom + ' - ' + filterParam.avgCheckTo + ' грн',
         name: FilterItemsName.AVG_CHECK
       });
     }
@@ -80,7 +80,7 @@ export class FilterItemsComponent implements OnInit {
       });
     }
 
-    if (filterParam.updateRate_TODO_NAME && filterParam.updateRate_TODO_NAME.length !== 0) {
+    if (filterParam.updateRate && filterParam.updateRate.length !== 0) {
       this.setUpdateRateFields(filterParam, filterItems);
     }
 
@@ -88,26 +88,26 @@ export class FilterItemsComponent implements OnInit {
   }
 
   setUpdateRateFields(filterParam, filterItems) {
-    for (let i = 0; i < filterParam.updateRate_TODO_NAME.length; i++) {
-      if (filterParam.updateRate_TODO_NAME[i] === 'Часто') {
+    for (let i = 0; i < filterParam.updateRate.length; i++) {
+      if (filterParam.updateRate[i] === 'Часто') {
         filterItems.push({
-          value: filterParam.updateRate_TODO_NAME[i],
+          value: filterParam.updateRate[i],
           text: 'Частые обновления',
           name: FilterItemsName.UPDATE_RATE
         });
       }
 
-      if (filterParam.updateRate_TODO_NAME[i] === 'Средне') {
+      if (filterParam.updateRate[i] === 'Средне') {
         filterItems.push({
-          value: filterParam.updateRate_TODO_NAME[i],
+          value: filterParam.updateRate[i],
           text: 'Средние обновления',
           name: FilterItemsName.UPDATE_RATE
         });
       }
 
-      if (filterParam.updateRate_TODO_NAME[i] === 'Редко') {
+      if (filterParam.updateRate[i] === 'Редко') {
         filterItems.push({
-          value: filterParam.updateRate_TODO_NAME[i],
+          value: filterParam.updateRate[i],
           text: 'Редкие обновления',
           name: FilterItemsName.UPDATE_RATE
         });

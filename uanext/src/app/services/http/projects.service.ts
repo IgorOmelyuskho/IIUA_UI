@@ -55,26 +55,6 @@ export class ProjectsService {
           }
           return projects;
         }),
-
-        // replace relative link to absolute link
-        // map((projects: VendorProject[]) => {
-        //   for (let i = 0; i < projects.length; i++) {
-        //     // avatar
-        //     projects[i].avatar.url = environment.projects_api_url.slice(0, -1) + projects[i].avatar.url;
-
-        //     // images
-        //     for (let img = 0; img < projects[i].images.length; img++) {
-        //       projects[i].images[img].url = environment.projects_api_url.slice(0, -1) + projects[i].images[img].url;
-        //     }
-
-        //     // files
-        //     for (let f = 0; f < projects[i].files.length; f++) {
-        //       projects[i].files[f].url = environment.projects_api_url.slice(0, -1) + projects[i].files[f].url;
-        //     }
-        //   }
-
-        //   return projects;
-        // })
       );
   }
 
@@ -86,13 +66,11 @@ export class ProjectsService {
     return this.http.put<any>(environment.projects + environment.vendorProject + projectId, updatedVendorProject);
   }
 
-
   uploadImages(formData: FormData): Observable<any> {
     return this.http.post<any>(environment.projects + environment.uploadImages, formData)
       .pipe(
         map(response => {
           return response.data;
-          // replace relative link to absolute link
         })
       );
   }
@@ -102,7 +80,6 @@ export class ProjectsService {
       .pipe(
         map(response => {
           return response.data;
-          // replace relative link to absolute link
         })
       );
   }

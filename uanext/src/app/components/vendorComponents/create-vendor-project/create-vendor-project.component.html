@@ -154,16 +154,9 @@
           placeholder="Enter field of activity" /> -->
         <select type="text" formControlName="fieldOfActivity" class="form-control"
           [ngClass]="{ 'is-invalid': submitted && formControls.fieldOfActivity.errors }">
-          <option value="Agriculture, Forestry and Fisheries">Agriculture, Forestry and Fisheries</option>
-          <option value="Mining and quarrying">Mining and quarrying</option>
-          <option value="Manufacturing industry">Manufacturing industry</option>
-          <option value="Supply of electricity, gas, steam and air conditioning">Supply of electricity, gas, steam and air conditioning</option>
-          <option value="Water supply; sewage, waste management">Water supply; sewage, waste management</option>
-          <option value="Construction">Construction</option>
-          <option value="Wholesale and retail trade; repair of motor vehicles and motorcycles">Wholesale and retail trade; repair of motor vehicles and motorcycles</option>
-          <option value="Transport, warehousing, postal and courier activities">Transport, warehousing, postal and courier activities</option>
-          <option value="Temporary placement and organization of food">Temporary placement and organization of food</option>
-          <option value="Information and telecommunications">Information and telecommunications</option>
+          <ng-container *ngFor="let option of fieldActivityOptions; let i = index">
+            <option *ngIf="i !== 0" value="option.name">{{option.name}}</option>
+          </ng-container>
         </select>
         <div *ngIf="formControls.fieldOfActivity.errors" class="invalid-feedback">
           <div *ngIf="formControls.fieldOfActivity.errors.required">Field of activity cannot be empty</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Upload3dModelService } from 'src/app/services/http/upload-3d-model.service';
+import { MapService } from 'src/app/services/http/map.service';
 
 @Component({
   selector: 'app-object3d-upload',
@@ -11,25 +11,16 @@ export class Object3dUploadComponent implements OnInit {
   formData: FormData;
   file: any;
 
-  constructor(private http: HttpClient, private upload3dModelService: Upload3dModelService) { }
+  constructor(private http: HttpClient, private mapService: MapService) { }
 
   ngOnInit() {
-    this.upload3dModelService.fetchAll3dModels().subscribe(
-      response => {
-        console.log(response);
-        // this.models = response.data;
-      },
-      err => {
-        console.warn(err);
-      }
-    );
   }
 
   filesChange(e) {
     this.file = e.target['files'][0];
   }
 
-  uploadFiles() {
+  uploadFile() {
     if (this.file == null) {
       return;
     }
@@ -37,18 +28,7 @@ export class Object3dUploadComponent implements OnInit {
     this.formData = new FormData();
     this.formData.append(this.file.name, this.file);
 
-    this.upload3dModelService.upload3dModel(this.formData).subscribe(
-      response => {
-        console.log(response);
-      },
-      err => {
-        console.warn(err);
-      }
-    );
-  }
-
-  removeFile(model) {
-    this.upload3dModelService.remove3dModel(['key1', 'key2', 'key3']).subscribe(
+    this.mapService.post3DObject(this.formData).subscribe(
       response => {
         console.log(response);
       },

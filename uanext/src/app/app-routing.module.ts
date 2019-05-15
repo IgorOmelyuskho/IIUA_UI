@@ -55,9 +55,11 @@ const childHomeRoutes: Routes = [
 ];
 
 const routes: Routes = [
-  { path: 'investor11', component: InvestorFilterPageComponent },
-  { path: 'main-screen', component: MainScreenInvestorComponent },
-  { path: 'map', component: MapComponent },
+  { path: 'investor_test', component: InvestorFilterPageComponent },
+  { path: 'main-screen_test', component: MainScreenInvestorComponent },
+  { path: 'map_test', component: MapComponent },
+  { path: 'upload_zip_test', component: Object3dUploadComponent },
+
 
   { path: '', component: IndexComponent, pathMatch: 'full' },
   { path: 'signin', component: SigninComponent, canActivate: [NoAuthGuard] },

@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <div class="project-card-wrapper">
+  <div *ngIf="selectedProject" class="project-card-wrapper">
     <app-main-screen-project-card [selectedProject]="selectedProject"></app-main-screen-project-card>
   </div>
 

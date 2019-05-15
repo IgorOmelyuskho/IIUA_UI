@@ -4,8 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { environment } from 'src/environments/environment';
 import { tap, map, catchError, delay } from 'rxjs/operators';
-import { FilteredProjects } from 'src/app/models';
+import { FilteredProjects, FilterFields } from 'src/app/models';
 import { responseProjects } from 'src/app/helperClasses/projects';
+import { FilterComponent } from 'src/app/components';
 
 const emptyFilteredProjects = {
   pages: 0,
@@ -22,34 +23,29 @@ export class ViewProjectsService {
 
   constructor(private http: HttpClient) { }
 
-  searchByFilter(filter: any = {}): Observable<FilteredProjects> {
-    // return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
-    return of(JSON.parse(JSON.stringify(responseProjects)))
+  searchByFilter(filter: FilterFields = {}): Observable<FilteredProjects> {
+    if (filter.companyName == null) { // todo remove
+      filter.companyName = '';
+    }
+    if (filter.projectName == null) { // todo remove
+      filter.projectName = '';
+    }
+
+    if (filter.moneyRequiredFrom == null || filter.moneyRequiredTo == null) {
+      filter.moneyRequiredFrom = '0';
+      filter.moneyRequiredTo = '100000000000000';
+    }
+    // replace fieldOfActivity to activities
+    if (filter.fieldOfActivity) {
+      filter.activities = filter.fieldOfActivity;
+    }
+    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
+      // return of(JSON.parse(JSON.stringify(responseProjects)))
       .pipe(
-        delay(1500), // todo remove
-        map((response) => {
-          for (let i = 0; i < response.data.projectsList.length; i++) {
-            response.data.projectsList[i].id = Math.random();
-          }
-        }),
-
-
         map((response: any) => {
           if (response['data'] == null) {
             return emptyFilteredProjects;
           }
-          return response['data'];
-        })
-      );
-  }
-
-  fetchVendorProjects(): Observable<VendorProject[]> {
-    return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
-      .pipe(
-        tap(res => {
-          console.log(res);
-        }),
-        map(response => {
           return response['data'];
         })
       );
@@ -88,21 +84,14 @@ export class ViewProjectsService {
   // }
 
   searchByKeyword(keyword: string, pageSize: number, page: number): Observable<FilteredProjects> {
-    // return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
-    //   keyWord_TODO_NAME: keyword,
-    //   pageSize,
-    //   page
-    // })
-    return of(JSON.parse(JSON.stringify(responseProjects)))
+    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
+      projectName: keyword,
+      companyName: keyword,
+      pageSize,
+      page
+    })
+      // return of(JSON.parse(JSON.stringify(responseProjects)))
       .pipe(
-        delay(1500), // todo remove
-        map((response) => {
-          for (let i = 0; i < response.data.projectsList.length; i++) {
-            response.data.projectsList[i].id = Math.random();
-          }
-        }),
-
-
         map(response => {
           if (response['data'] == null) {
             return emptyFilteredProjects;

@@ -2,23 +2,27 @@ export interface FilterFields {
   page?: string | number;
   pageSize?: string | number;
 
+  projectName?: string;
+  companyName?: string;
+
   moneyRequiredFrom?: string;
   moneyRequiredTo?: string;
 
   region?: string;
 
-  fieldOfActivity_TODO_NAME?: string[];
+  fieldOfActivity?: { id: string, name: string }[];
+  activities?: { id: string, name: string }[];
 
   companyAgeFrom?: string;
   companyAgeTo?: string;
 
-  employeesFrom_TODO_NAME?: string;
-  employeesTo_TODO_NAME?: string;
+  employeesFrom?: string;
+  employeesTo?: string;
 
-  avgCheckFrom_TODO_NAME?: string;
-  avgCheckTo_TODO_NAME?: string;
+  avgCheckFrom?: string;
+  avgCheckTo?: string;
 
-  updateRate_TODO_NAME?: string[];
+  updateRate?: string[];
 }
 
 export enum FilterItemsName {

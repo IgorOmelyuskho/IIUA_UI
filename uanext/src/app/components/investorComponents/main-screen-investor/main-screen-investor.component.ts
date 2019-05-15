@@ -13,9 +13,10 @@ import { responseProject } from 'src/app/helperClasses/projects';
 })
 export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('previewCardWrapper') previewCardWrapper: ElementRef;
+  @ViewChild('stepsElement') stepsElement: ElementRef;
 
-  selectedProject: VendorProject = responseProject;
-  selectedProjectId: string  = responseProject.id;
+  selectedProject: VendorProject = null;
+  selectedProjectId: string  = null;
 
   filter: FilterFields;
   filterIsExpanded = false; // false - свернут
@@ -28,8 +29,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   previewCardY = 0;
   hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
-
-  @ViewChild('stepsElement') stepsElement: ElementRef;
 
   windowMouseMoveHandler = (e) => {
     this.previewCardX = e.pageX;

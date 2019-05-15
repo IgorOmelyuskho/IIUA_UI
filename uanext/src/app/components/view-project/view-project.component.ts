@@ -1,10 +1,9 @@
 
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { ViewProjectsService } from 'src/app/services/http/view-projects.service';
+import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
-import { mapInit, mapDestroy } from './map.js';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FilteredProjects } from 'src/app/models/index.js';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
@@ -68,61 +67,6 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (this.project != null) {
-      mapInit(this.project); // 2 init
-    }
-  }
-
-  signalRConnect() {
-    const token = localStorage.getItem('token');
-
-    // this.hubConnection = new HubConnectionBuilder()
-    //   // .withUrl(environment.signalR)
-    //   .withUrl('http://proxy.alexduxa.online/notifications/chatHub', {
-    //     accessTokenFactory: () => token
-    //   })
-    //   .build();
-
-    // this.hubConnection
-    //   .start()
-    //   .then(() => console.log('Connection started!'))
-    //   .catch(err => console.warn(err));
-
-    // this.hubConnection.on('BroadcastMessage', (type: string, payload: string) => {
-    //   console.log('BroadcastMessage: ', type, payload);
-    // });
-
-    // this.hubConnection.on('ReceiveMessage', (message: string) => {
-    //   console.log('ReceiveMessage: ', message);
-    // });
-
-    this.hubConnection = new HubConnectionBuilder()
-      .withUrl(
-        'http://proxy.alexduxa.online/notifications/chatHub',
-        {
-          accessTokenFactory: () => token + ''
-        })
-      .build();
-
-    this.hubConnection.on('ReceiveMessage', function (message) {
-      console.log(message);
-    });
-
-    this.hubConnection.start().then(function () {
-      console.log('START');
-    }).catch(function (err) {
-      console.error(err.toString());
-      return;
-    });
-  }
-
-  signalRSendMsg() {
-    // connection.invoke("SendMessage", message).catch(function (err) {
-    this.hubConnection.invoke('SendMessage')
-      .catch(function (err) {
-        console.error(err.toString());
-        return;
-      });
   }
 
   downloadFile(file) { // todo download attribute only works for same-origin URLs.
@@ -166,12 +110,8 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         for (let i = 0; i < filteringProjects.projectsList.length; i++) {
           if (filteringProjects.projectsList[i].id === this.projectId) {
             this.project = filteringProjects.projectsList[i];
-            console.log(this.project);
             this.videoUrlToSafe(this.project.videos);
             this.setGalleryImages(this.project.images);
-            requestAnimationFrame(() => {
-              mapInit(this.project); // 2 init
-            });
             return;
           }
         }
@@ -184,13 +124,11 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getProjectFromService() {
     this.project = this.viewProjectsService.projectForView;
-    console.log(this.project);
     this.videoUrlToSafe(this.project.videos);
     this.setGalleryImages(this.project.images);
   }
 
   ngOnDestroy() {
-    mapDestroy();
   }
 
 }

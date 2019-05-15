@@ -13,6 +13,8 @@ import {
   setObjectHoverCallback,
 } from './map4-no-class';
 import { polygon1, polygon2, female, male, tractor, walt } from 'src/app/helperClasses/projects';
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-map',
@@ -44,6 +46,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   timeOut4: any;
   timeOut5: any;
 
+  hubConnection: HubConnection;
+
   // map: Map = null;
 
   clickObjectCallback: Function = (object: any) => {
@@ -56,6 +60,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   mapFinishInitCallback: Function = () => {
     this.mapFinishInit.emit();
+    this.signalRConnect();
   }
 
   constructor() { }
@@ -89,6 +94,57 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.timeOut5 = setTimeout(() => {
     //   mapSetFullScreen();
     // }, 5000);
+  }
+
+  signalRConnect() {
+    const token = localStorage.getItem('token');
+    // this.hubConnection = new HubConnectionBuilder()
+    //   // .withUrl(environment.signalR)
+    //   .withUrl('http://proxy.alexduxa.online/notifications/chatHub', {
+    //     accessTokenFactory: () => token
+    //   })
+    //   .build();
+
+    // this.hubConnection
+    //   .start()
+    //   .then(() => console.log('Connection started!'))
+    //   .catch(err => console.warn(err));
+
+    // this.hubConnection.on('BroadcastMessage', (type: string, payload: string) => {
+    //   console.log('BroadcastMessage: ', type, payload);
+    // });
+
+    // this.hubConnection.on('ReceiveMessage', (message: string) => {
+    //   console.log('ReceiveMessage: ', message);
+    // });
+
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(
+        environment.signalR,
+        {
+          accessTokenFactory: () => token + ''
+        })
+      .build();
+
+    this.hubConnection.on('ReceiveMessage', function (message) {
+      console.log(message);
+    });
+
+    this.hubConnection.start().then(function () {
+      console.log('START');
+    }).catch(function (err) {
+      console.error(err.toString());
+      return;
+    });
+  }
+
+  signalRSendMsg() {
+    // connection.invoke("SendMessage", message).catch(function (err) {
+    this.hubConnection.invoke('SendMessage')
+      .catch(function (err) {
+        console.error(err.toString());
+        return;
+      });
   }
 
   ngOnDestroy() {

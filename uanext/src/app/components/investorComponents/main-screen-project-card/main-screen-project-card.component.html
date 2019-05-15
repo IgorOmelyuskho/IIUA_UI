@@ -1,4 +1,4 @@
-<div #projectCard class="project-card">
+<div *ngIf="_selectedProject" #projectCard class="project-card">
 
   <div (click)="hideSelectedProjectInfo()" class="close-btn">
     <img src="../../../assets/img/close-2.png" alt="close">

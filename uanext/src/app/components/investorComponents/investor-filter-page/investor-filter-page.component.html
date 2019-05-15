@@ -1,7 +1,7 @@
 <mat-progress-bar class="progress-bar-fixed" *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
 <!-- use class="progress-bar-fixed" when page scrolled -->
 
-<div class="container-fluid" (dblclick)="scrollToElement()">
+<div class="container-fluid" (dblclick)="scrollToElement($event)">
 
   <!-- <h3>Projects</h3> -->
   <!-- <div>Page size {{this.pageSize}}</div>

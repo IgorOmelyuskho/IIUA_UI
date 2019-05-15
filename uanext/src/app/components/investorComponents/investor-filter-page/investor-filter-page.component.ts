@@ -9,7 +9,7 @@ import { fromEvent, BehaviorSubject, Observable, Subscription, concat } from 'rx
 import { tap, map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { FilterFields, FilteredProjects, GeoObject } from 'src/app/models';
-import { ViewProjectsService } from 'src/app/services/http/view-projects.service';
+import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
 
 @Component({
   selector: 'app-investor-filter-page',
@@ -75,18 +75,6 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
-    // setTimeout(() => { // todo remove (use when click to mapObject)
-    //   // this.scrollToElement(4);
-    //   const el = document.getElementById('4');
-    //   console.log(el.scrollTop);
-    //   console.log(el.scrollHeight);
-    //   console.log(el.scrollHeight - el.clientHeight);
-    // }, 1500);
-
-    // setTimeout(() => { // todo remove
-    //   this.scrollToElement(1);
-    // }, 20000);
-
     this.$fromEvent = fromEvent<any>(this.searchByKeyWordInput.nativeElement, 'input')
       .pipe(
         map(e => e.target.value),
@@ -121,6 +109,8 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
 
   filterOnChange(filterParam: FilterFields) {
     this.filter = filterParam;
+    this.filter.page = 1;
+    this.filter.pageSize = this.pageSize;
     this.$searchByFilterChange.next(this.filter);
   }
 

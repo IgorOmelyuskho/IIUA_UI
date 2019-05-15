@@ -4,6 +4,7 @@ import { NotificationService } from 'src/app/services/http/notification.service'
 import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ProjectsService } from 'src/app/services/http/projects.service';
+import { fieldActivityOptions } from 'src/app/helperClasses/fieldOfActivity';
 
 @Component({
   selector: 'app-create-vendor-project',
@@ -26,6 +27,7 @@ export class CreateVendorProjectComponent implements OnInit {
   avatarData: any;
 
   minPhotosCount = 5;
+  fieldActivityOptions = JSON.parse(JSON.stringify(fieldActivityOptions));
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,7 +41,7 @@ export class CreateVendorProjectComponent implements OnInit {
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['Kyiv oblast', Validators.required],
       address: ['', Validators.required],
-      fieldOfActivity: ['Agriculture, Forestry and Fisheries', Validators.required],
+      fieldOfActivity: ['', Validators.required],
       companyAge: ['', Validators.required],
       employeesNumber: ['1', Validators.required],
       employeesToHire: ['', Validators.required],
