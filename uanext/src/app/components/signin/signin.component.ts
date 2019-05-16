@@ -10,6 +10,7 @@ import { VendorRole, InvestorRole, AdminRole, UserRole } from 'src/app/models';
 import { NotificationService } from 'src/app/services/http/notification.service';
 import FormHelper from '../../helperClasses/helperClass';
 import { take, first, delay } from 'rxjs/operators';
+import { ProjectUserRole } from 'src/app/models/projectUserRole';
 
 @Component({
   selector: 'app-signin',
@@ -85,6 +86,20 @@ export class SigninComponent implements OnInit {
     );
   }
 
+  fetchProjectUserSubscribe(observable: Observable<ProjectUserRole>): void {
+    observable.subscribe(
+      (projectUser: ProjectUserRole) => {
+        this.stateService.user$.next(projectUser);
+        this.stateService.authorized$.next(true);
+        this.router.navigate(['projectUser']);
+      },
+      err => {
+        console.warn(err);
+        this.authService.signOut();
+      }
+    );
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -108,7 +123,10 @@ export class SigninComponent implements OnInit {
           this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
         }
         if (role === UserRole.Admin) {
-          this.fetchAdminSubscribe( this.profileService.fetchInvestor() );
+          this.fetchAdminSubscribe( this.profileService.fetchAdmin() );
+        }
+        if (role === UserRole.ProjectUser) {
+          this.fetchProjectUserSubscribe( this.profileService.fetchProjectUser() );
         }
       },
       err => {

@@ -601,10 +601,6 @@ function updateCoordsForDraw(obj: GeoObject) {
   obj.object3D.position.y = v.y;
   obj.object3D.position.z = v.z;
   obj.object3D.rotation.z = Math.atan2(prevY - obj.object3D.position.y, prevX - obj.object3D.position.x);
-
-  // obj.cube.position.x = v.x;
-  // obj.cube.position.y = v.y;
-  // obj.cube.position.z = v.z;
 }
 
 function selectObjects() {
@@ -687,7 +683,6 @@ function selectObject(obj: GeoObject) {
 
     return false;
   }
-
 }
 
 function setCanvasCursor(cursor) {

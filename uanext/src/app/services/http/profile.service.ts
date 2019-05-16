@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { InvestorRole } from 'src/app/models';
 import { VendorRole } from '../../models/vendorRole';
+import { ProjectUserRole } from 'src/app/models/projectUserRole';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,12 @@ export class ProfileService {
 
   fetchAdmin(): Observable<VendorRole> { // todo response[data] ???
     return this.http.get<VendorRole>(environment.auth + environment.adminProfile).pipe(
+      map(response => response['data'])
+    );
+  }
+
+  fetchProjectUser(): Observable<ProjectUserRole> {  // todo response[data] ???
+    return this.http.get<VendorRole>(environment.auth + environment.projectUserProfile).pipe(
       map(response => response['data'])
     );
   }

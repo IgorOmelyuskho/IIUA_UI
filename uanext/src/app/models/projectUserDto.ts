@@ -1,8 +1,9 @@
 // use for signUp
 
-export interface AdminDto {
+export interface ProjectUserDto {
   userName?: string;
   rePassword?: string;
   password: string;
   email: string;
+  projectId?: string;
 }

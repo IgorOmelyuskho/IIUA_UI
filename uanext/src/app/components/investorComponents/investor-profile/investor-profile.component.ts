@@ -61,7 +61,7 @@ export class InvestorProfileComponent implements OnInit {
         this.setFormValues();
       },
       err => {
-        console.log(err);
+        console.warn(err);
         this.authService.signOut();
       }
     );
@@ -84,7 +84,6 @@ export class InvestorProfileComponent implements OnInit {
 
     this.profileService.updateInvestorProfile(id, this.editProfileForm.value).subscribe(
       response => {
-        console.log(response);
         this.notify.show(response['data']);
       },
       err => {

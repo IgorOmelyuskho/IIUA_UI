@@ -17,10 +17,9 @@ import { FileUploaderComponent  } from './file-uploader/file-uploader.component'
 import { StepsComponent } from './steps/steps.component';
 import { VideosComponent } from './videos/videos.component';
 import { ViewProjectComponent } from './view-project/view-project.component';
-import { Object3dUploadComponent } from './projectUserComponents/object3d-upload/object3d-upload.component';
+import { Object3dUploadComponent } from './adminComponents/object3d-upload/object3d-upload.component';
 import { AdminPageComponent } from './adminComponents/admin-page/admin-page.component';
 import { AdminProfileComponent } from './adminComponents/admin-profile/admin-profile.component';
-import { AdminSigninComponent } from './adminComponents/admin-signin/admin-signin.component';
 import { AdminSignupComponent } from './adminComponents/admin-signup/admin-signup.component';
 import { FilterComponent } from './filter/filter.component';
 import { FilteredProjectComponent } from './filtered-project-card/filtered-project.component';
@@ -42,6 +41,10 @@ import { InvestorCommentsComponent } from './investorComponents/investor-comment
 import { InvestorUpdatesComponent } from './investorComponents/investor-updates/investor-updates.component';
 import { HoveredProjectCardComponent } from './hovered-project-card/hovered-project-card.component';
 import { InvestorFilterPageComponent } from './investorComponents/investor-filter-page/investor-filter-page.component';
+import { ProjectUserPageComponent } from './projectUserComponents/project-user-page/project-user-page.component';
+import { ProjectUserProfileComponent } from './projectUserComponents/project-user-profile/project-user-profile.component';
+import { ProjectUserSignupComponent } from './projectUserComponents/project-user-signup/project-user-signup.component';
+
 
 // this exports for app-routing.module.ts
 export {
@@ -68,7 +71,6 @@ export {
   Object3dUploadComponent,
   AdminPageComponent,
   AdminProfileComponent,
-  AdminSigninComponent,
   AdminSignupComponent,
   FilterComponent,
   FilteredProjectComponent,
@@ -86,7 +88,10 @@ export {
   InvestorIterativeInvestmentComponent,
   InvestorCommentsComponent,
   InvestorUpdatesComponent,
-  HoveredProjectCardComponent
+  HoveredProjectCardComponent,
+  ProjectUserPageComponent,
+  ProjectUserProfileComponent,
+  ProjectUserSignupComponent
 };
 
 export const components = [
@@ -113,7 +118,6 @@ export const components = [
   Object3dUploadComponent,
   AdminPageComponent,
   AdminProfileComponent,
-  AdminSigninComponent,
   AdminSignupComponent,
   FilterComponent,
   FilteredProjectComponent,
@@ -131,7 +135,10 @@ export const components = [
   InvestorIterativeInvestmentComponent,
   InvestorCommentsComponent,
   InvestorUpdatesComponent,
-  HoveredProjectCardComponent
+  HoveredProjectCardComponent,
+  ProjectUserPageComponent,
+  ProjectUserProfileComponent,
+  ProjectUserSignupComponent
 ];
 
 

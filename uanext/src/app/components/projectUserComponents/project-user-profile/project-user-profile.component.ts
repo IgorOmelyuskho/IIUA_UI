@@ -1,25 +1,25 @@
-import { StateService } from '../../../services/state/state.service';
-import { AuthorizationService } from '../../../services/http/authorization.service';
-import FormHelper from '../../../helperClasses/helperClass';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-
-import { VendorRole } from 'src/app/models';
 import { ProfileService } from 'src/app/services/http/profile.service';
+import { AuthorizationService } from '../../../services/http/authorization.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+
+import { StateService } from 'src/app/services/state/state.service';
+import FormHelper from '../../../helperClasses/helperClass';
 import { NotificationService } from 'src/app/services/http/notification.service';
+import { ProjectUserRole } from 'src/app/models/projectUserRole';
 
 @Component({
-  selector: 'app-vendor-profile',
-  templateUrl: './vendor-profile.component.html',
-  styleUrls: ['./vendor-profile.component.scss']
+  selector: 'app-project-user-profile',
+  templateUrl: './project-user-profile.component.html',
+  styleUrls: ['./project-user-profile.component.scss']
 })
-export class VendorProfileComponent implements OnInit {
-  vendor: VendorRole = null;
+export class ProjectUserProfileComponent implements OnInit {
+  projectUser: ProjectUserRole = null;
   editProfileForm: FormGroup;
   isLoaded = false;
-  FormHelper = FormHelper;
 
   @ViewChild('phone') phoneInput: ElementRef;
+  FormHelper = FormHelper;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,20 +30,20 @@ export class VendorProfileComponent implements OnInit {
   ) {
     this.editProfileForm = this.formBuilder.group({
       password: ['', Validators.minLength(6)],
-      itn: ['', Validators.required],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
+      projectId: ['', Validators.required],
     });
   }
 
   setFormValues(): void {
     this.editProfileForm.setValue({
       password: '',
-      itn: this.vendor.itn,
-      fullName: this.vendor.fullName,
-      email: this.vendor.email,
-      phone: this.vendor.phone
+      fullName: this.projectUser.fullName,
+      email: this.projectUser.email,
+      phone: this.projectUser.phone,
+      projectId: this.projectUser.projectId
     });
     // how its fix ??
     setTimeout(() => {
@@ -53,11 +53,11 @@ export class VendorProfileComponent implements OnInit {
 
   ngOnInit() {
     this.stateService.user$.asObservable().subscribe(
-      vendor => {
-        if (vendor == null) {
+      projectUser => {
+        if (projectUser == null) {
           return;
         }
-        this.vendor = vendor as VendorRole;
+        this.projectUser = projectUser as ProjectUserRole;
         this.isLoaded = true;
         this.setFormValues();
       },
@@ -83,12 +83,12 @@ export class VendorProfileComponent implements OnInit {
       return;
     }
 
-    this.profileService.updateVendorProfile(id, this.editProfileForm.value).subscribe(
+    this.profileService.updateAdminProfile(id, this.editProfileForm.value).subscribe(
       response => {
         this.notify.show(response['data']);
       },
       err => {
-       console.warn(err);
+        console.warn(err);
       }
     );
   }

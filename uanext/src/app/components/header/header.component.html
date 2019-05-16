@@ -3,9 +3,9 @@
     <span class="navbar-brand mb-0 h1">IIUA</span>
   </a>
   <div class='navbar-text'>Navbar for signin, signup and index</div>
-  <span class='d-flex'>
+  <span>
     <button (click)="home()">Home</button>
-    <a class="nav-link" routerLink="/signin">Sign in <span class="sr-only">(current)</span></a>
-    <a class="nav-link" routerLink="/signup">Sign up <span class="sr-only">(current)</span></a>
+    <button (click)="signIn()">Sign in</button>
+    <button (click)="signUp()">Sign up</button>
   </span>
 </nav>

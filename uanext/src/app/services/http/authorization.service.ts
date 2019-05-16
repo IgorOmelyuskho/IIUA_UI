@@ -10,6 +10,7 @@ import { VendorDto, InvestorDto, UserRole } from '../../models';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ProfileService } from './profile.service';
 import { AdminDto } from 'src/app/models/adminDto';
+import { ProjectUserDto } from 'src/app/models/projectUserDto';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class AuthorizationService {
       return;
     }
 
-    if (role !== UserRole.Admin && role !== UserRole.Investor && role !== UserRole.Vendor) {
+    if (role !== UserRole.Admin && role !== UserRole.ProjectUser && role !== UserRole.Investor && role !== UserRole.Vendor) {
       this.signOut();
       return;
     }
@@ -108,11 +109,28 @@ export class AuthorizationService {
         }
       );
     }
+
+    if (role === UserRole.ProjectUser) {
+      this.profileService.fetchProjectUser().subscribe(
+        projectUser => {
+          this.stateService.user$.next(projectUser);
+          this.stateService.authorized$.next(true);
+          if (pathName === '' || pathName === '/') {
+            this.router.navigate(['projectUser']);
+          } else {
+            this.router.navigateByUrl(pathName);
+          }
+        },
+        err => {
+          console.warn(err);
+          this.signOut();
+        }
+      );
+    }
   }
 
-  // any because api return empty or {"message": "User Email \"string4@gmail.com\" is already taken"}
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
-    return this.http.post<any>(environment.auth + environment.vendorRegister, vendorDto, /* httpOptions */{ observe: 'response' });
+    return this.http.post<any>(environment.auth + environment.vendorRegister, vendorDto, { observe: 'response' });
   }
 
   signUpAsInvestor(investorDto: InvestorDto): Observable<any> {
@@ -122,6 +140,11 @@ export class AuthorizationService {
   signUpAsAdmin(adminDto: AdminDto): Observable<any> { // todo
     // return of({});
     return this.http.post<any>(environment.auth + environment.adminRegister, adminDto, { observe: 'response' });
+  }
+
+  signUpAsProjectUser(projectUserDto: ProjectUserDto): Observable<any> { // todo
+    // return of({});
+    return this.http.post<any>(environment.auth + environment.projectUserRegister, projectUserDto, { observe: 'response' });
   }
 
   // any because api return different response

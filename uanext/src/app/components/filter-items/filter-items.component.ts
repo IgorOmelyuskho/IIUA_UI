@@ -52,8 +52,8 @@ export class FilterItemsComponent implements OnInit {
     if (filterParam.fieldOfActivity && filterParam.fieldOfActivity.length !== 0) {
       for (let i = 0; i < filterParam.fieldOfActivity.length; i++) {
         filterItems.push({
-          value: filterParam.fieldOfActivity[i],
-          text: filterParam.fieldOfActivity[i],
+          value: filterParam.fieldOfActivity[i].name,
+          text: filterParam.fieldOfActivity[i].name,
           name: FilterItemsName.FIELD_OF_ACTIVITY
         });
       }
@@ -89,25 +89,25 @@ export class FilterItemsComponent implements OnInit {
 
   setUpdateRateFields(filterParam, filterItems) {
     for (let i = 0; i < filterParam.updateRate.length; i++) {
-      if (filterParam.updateRate[i] === 'Часто') {
+      if (filterParam.updateRate[i].name === 'Часто') {
         filterItems.push({
-          value: filterParam.updateRate[i],
+          value: filterParam.updateRate[i].name,
           text: 'Частые обновления',
           name: FilterItemsName.UPDATE_RATE
         });
       }
 
-      if (filterParam.updateRate[i] === 'Средне') {
+      if (filterParam.updateRate[i].name === 'Средне') {
         filterItems.push({
-          value: filterParam.updateRate[i],
+          value: filterParam.updateRate[i].name,
           text: 'Средние обновления',
           name: FilterItemsName.UPDATE_RATE
         });
       }
 
-      if (filterParam.updateRate[i] === 'Редко') {
+      if (filterParam.updateRate[i].name === 'Редко') {
         filterItems.push({
-          value: filterParam.updateRate[i],
+          value: filterParam.updateRate[i].name,
           text: 'Редкие обновления',
           name: FilterItemsName.UPDATE_RATE
         });

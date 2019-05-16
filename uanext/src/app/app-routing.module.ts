@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IndexComponent } from './components';
+import { IndexComponent, ProjectUserPageComponent, ProjectUserProfileComponent, ProjectUserSignupComponent } from './components';
 import { VendorProjectsComponent } from './components';
 import { CreateVendorProjectComponent } from './components';
 import { SigninComponent } from './components';
@@ -18,7 +18,6 @@ import { AdminPageComponent } from './components';
 import { InvestorFilterPageComponent } from './components';
 import { AdminProfileComponent } from './components';
 import { AdminSignupComponent } from './components';
-import { AdminSigninComponent } from './components';
 import { MainScreenInvestorComponent } from './components';
 import { MainScreenVendorComponent } from './components';
 import { MapComponent } from './components';
@@ -26,8 +25,10 @@ import { MapComponent } from './components';
 import { AuthGuard, NoAuthGuard, AdminGuard } from './services/guards';
 import { InvestorGuard } from './services/guards';
 import { VendorGuard } from './services/guards';
+import { ProjectUserGuard } from './services/guards/project-user.guard';
 
 const childInvestorRoutes: Routes = [
+  { path: '', redirectTo: 'main-page', pathMatch: 'full' },
   { path: 'profile', component: InvestorProfileComponent },
   { path: 'viewProjects', component: InvestorFilterPageComponent },
   { path: 'project/:id', component: ViewProjectComponent },
@@ -35,6 +36,7 @@ const childInvestorRoutes: Routes = [
 ];
 
 const childVendorRoutes: Routes = [
+  { path: '', redirectTo: 'main-page', pathMatch: 'full' },
   { path: 'profile', component: VendorProfileComponent },
   { path: 'projects', component: VendorProjectsComponent },
   { path: 'newProject', component: CreateVendorProjectComponent },
@@ -43,10 +45,16 @@ const childVendorRoutes: Routes = [
 ];
 
 const childAdminRoutes: Routes = [
-  { path: 'upload3dModel', component: Object3dUploadComponent },
-  { path: 'profile', component: AdminProfileComponent },
-  // { path: 'signup', component: AdminSignupComponent }, // sign in single route
-  // { path: 'signin', component: AdminSigninComponent }, // sign in as user
+  { path: '', redirectTo: 'profile', pathMatch: 'full' },
+  { path: 'upload3dModel', component: Object3dUploadComponent, canActivate: [AdminGuard] },
+  { path: 'profile', component: AdminProfileComponent, canActivate: [AdminGuard] },
+  { path: 'signup', component: AdminSignupComponent },
+];
+
+const childProjectUserRoutes: Routes = [
+  { path: '', redirectTo: 'profile', pathMatch: 'full' },
+  { path: 'profile', component: ProjectUserProfileComponent, canActivate: [ProjectUserGuard] },
+  { path: 'signup', component: ProjectUserSignupComponent },
 ];
 
 const childHomeRoutes: Routes = [
@@ -58,15 +66,14 @@ const routes: Routes = [
   { path: 'investor_test', component: InvestorFilterPageComponent },
   { path: 'main-screen_test', component: MainScreenInvestorComponent },
   { path: 'map_test', component: MapComponent },
-  { path: 'upload_zip_test', component: Object3dUploadComponent },
 
 
   { path: '', component: IndexComponent, pathMatch: 'full' },
   { path: 'signin', component: SigninComponent, canActivate: [NoAuthGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
   { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminPageComponent, children: childAdminRoutes, canActivate: [AdminGuard] },
-  { path: 'adminSignup', component: AdminSignupComponent },
+  { path: 'admin', component: AdminPageComponent, children: childAdminRoutes },
+  { path: 'projectUser', component: ProjectUserPageComponent, children: childProjectUserRoutes },
   { path: '**', redirectTo: '' }
 ];
 

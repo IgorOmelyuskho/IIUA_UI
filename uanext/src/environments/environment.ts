@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  signalR: 'http://proxy.alexduxa.online/notifications/chatHub',
+  signalR: 'http://proxy.alexduxa.online/notifications/api/CoordinatesHub/',
   auth: 'http://proxy.alexduxa.online/auth',
   projects: 'http://proxy.alexduxa.online/projects',
   map: 'http://proxy.alexduxa.online/map',

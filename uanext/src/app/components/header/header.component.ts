@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
       return;
     }
 
-    if (role !== UserRole.Admin && role !== UserRole.Investor && role !== UserRole.Vendor) {
+    if (role !== UserRole.Admin && role !== UserRole.ProjectUser && role !== UserRole.Investor && role !== UserRole.Vendor) {
       this.authService.signOut();
       return;
     }
@@ -56,7 +56,19 @@ export class HeaderComponent implements OnInit {
     }
 
     if (role === UserRole.Admin) {
-      this.router.navigate(['home', 'admin']);
+      this.router.navigate(['admin']);
     }
+
+    if (role === UserRole.ProjectUser) {
+      this.router.navigate(['projectUser']);
+    }
+  }
+
+  signIn() {
+    this.router.navigate(['signin']);
+  }
+
+  signUp() {
+    this.router.navigate(['signup']);
   }
 }

@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 
 @Component({
-  selector: 'app-admin-page',
-  templateUrl: './admin-page.component.html',
-  styleUrls: ['./admin-page.component.scss']
+  selector: 'app-project-user-page',
+  templateUrl: './project-user-page.component.html',
+  styleUrls: ['./project-user-page.component.scss']
 })
-export class AdminPageComponent implements OnInit {
+export class ProjectUserPageComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthorizationService) { }
 
@@ -15,11 +15,7 @@ export class AdminPageComponent implements OnInit {
   }
 
   goToProfile() {
-    this.router.navigate(['admin', 'profile']);
-  }
-
-  uploadModel() {
-    this.router.navigate(['admin', 'upload3dModel']);
+    this.router.navigate(['projectUser', 'profile']);
   }
 
   signOut() {
