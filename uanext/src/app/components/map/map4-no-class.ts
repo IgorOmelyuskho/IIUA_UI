@@ -137,33 +137,33 @@ function initInfoWindow() {
 }
 
 function updateCoordsFromServer() {
-  const res = [];
-  for (let i = 0; i < objectsArr.length; i++) {
-    const newObj = {
-      geoObjectId: objectsArr[i].geoObjectId,
-      coords: {
-        x: objectsArr[i].coords.x + Math.random() * 0.001 - Math.random() * 0.001,
-        y: objectsArr[i].coords.y + Math.random() * 0.001 - Math.random() * 0.001,
-      },
-    };
-    res.push(newObj);
-  }
+  // const res = [];
+  // for (let i = 0; i < objectsArr.length; i++) {
+  //   const newObj = {
+  //     geoObjectId: objectsArr[i].geoObjectId,
+  //     coords: {
+  //       x: objectsArr[i].coords.x + Math.random() * 0.001 - Math.random() * 0.001,
+  //       y: objectsArr[i].coords.y + Math.random() * 0.001 - Math.random() * 0.001,
+  //     },
+  //   };
+  //   res.push(newObj);
+  // }
 
-  for (let i = 0; i < res.length; i++) {
-    for (let j = 0; j < objectsArr.length; j++) {
-      if (res[i].geoObjectId === objectsArr[j].geoObjectId) {
-        objectsArr[j].prevCoords.x = objectsArr[j].coords.x;
-        objectsArr[j].prevCoords.y = objectsArr[j].coords.y;
-        objectsArr[j].speedX = (res[i].coords.x - objectsArr[j].prevCoords.x) * drawInterval / updatedInterval;
-        objectsArr[j].speedY = (res[i].coords.y - objectsArr[j].prevCoords.y) * drawInterval / updatedInterval;
+  // for (let i = 0; i < res.length; i++) {
+  //   for (let j = 0; j < objectsArr.length; j++) {
+  //     if (res[i].geoObjectId === objectsArr[j].geoObjectId) {
+  //       objectsArr[j].prevCoords.x = objectsArr[j].coords.x;
+  //       objectsArr[j].prevCoords.y = objectsArr[j].coords.y;
+  //       objectsArr[j].speedX = (res[i].coords.x - objectsArr[j].prevCoords.x) * drawInterval / updatedInterval;
+  //       objectsArr[j].speedY = (res[i].coords.y - objectsArr[j].prevCoords.y) * drawInterval / updatedInterval;
 
-        const v = threeLayer.coordinateToVector3(new THREE.Vector3(res[i].coords.x, res[i].coords.y, 0.1));
-        objectsArr[j].pointForMove.position.x = v.x;
-        objectsArr[j].pointForMove.position.y = v.y;
-        // objectsArr[j].cube.position.z = v.z;
-      }
-    }
-  }
+  //       const v = threeLayer.coordinateToVector3(new THREE.Vector3(res[i].coords.x, res[i].coords.y, 0.1));
+  //       objectsArr[j].pointForMove.position.x = v.x;
+  //       objectsArr[j].pointForMove.position.y = v.y;
+  //       // objectsArr[j].cube.position.z = v.z;
+  //     }
+  //   }
+  // }
 }
 
 function animation() {
@@ -217,13 +217,13 @@ export function mapAddNewObjects(objects: GeoObject[]) {
   for (let i = 0; i < objects.length; i++) {
     const newObj: GeoObject = objects[i];
     newObj.marker = null,
-    newObj.object3D = null,
-    newObj.mouseUnder = false,
-    newObj.speedX = 0,
-    newObj.speedY = 0,
-    newObj.rotationZ = 0,
-    newObj.coords = map.getCenter().add(Math.random() * 0.008, Math.random() * 0.009), // todo remove
-    newObj.prevCoords = {};
+      newObj.object3D = null,
+      newObj.mouseUnder = false,
+      newObj.speedX = 0,
+      newObj.speedY = 0,
+      newObj.rotationZ = 0,
+      // newObj.coords = map.getCenter().add(Math.random() * 0.008, Math.random() * 0.009), // todo remove
+      newObj.prevCoords = {};
     newObj.prevCoords.x = newObj.coords.x;
     newObj.prevCoords.y = newObj.coords.y;
 
@@ -569,6 +569,25 @@ function createThreeLayer() {
 
 function customRedraw() {
   map.setCenter(new maptalks.Coordinate(map.getCenter()));
+}
+
+export function signalRMessage(message: { object3DId: string, positionX: number, positionY: number }) {
+  for (let i = 0; i < objectsArr.length; i++) {
+    if (message.object3DId === objectsArr[i].geoObjectId) {
+      objectsArr[i].prevCoords.x = objectsArr[i].coords.x;
+      objectsArr[i].prevCoords.y = objectsArr[i].coords.y;
+      objectsArr[i].speedX = (message.positionX - objectsArr[i].prevCoords.x) * drawInterval / updatedInterval;
+      objectsArr[i].speedY = (message.positionY - objectsArr[i].prevCoords.y) * drawInterval / updatedInterval;
+
+      if (objectsArr[i].pointForMove) {
+        const v = threeLayer.coordinateToVector3(new THREE.Vector3(message.positionX, message.positionY, 0.1));
+        objectsArr[i].pointForMove.position.x = v.x;
+        objectsArr[i].pointForMove.position.y = v.y;
+      }
+
+      return;
+    }
+  }
 }
 
 function updateCoordsForRedraw() {

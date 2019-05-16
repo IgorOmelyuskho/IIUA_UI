@@ -2,7 +2,7 @@ import { VendorProject } from './vendorProject';
 
 export interface GeoObject {
   geoObjectId: string;
-  coords: { x: 0, y: 0 };
+  coords: { x: number, y: number };
   projectName: string;
   pathToZip: string;
   project: VendorProject;

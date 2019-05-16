@@ -11,6 +11,7 @@ import {
   mapReplaceObjects,
   setObjectClickCallback,
   setObjectHoverCallback,
+  signalRMessage
 } from './map4-no-class';
 import { polygon1, polygon2, female, male, tractor, walt } from 'src/app/helperClasses/projects';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
@@ -45,8 +46,32 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   timeOut3: any;
   timeOut4: any;
   timeOut5: any;
+  timeOut6: any;
 
   hubConnection: HubConnection;
+
+  objectsArr: any[] = [ // todo - remove (use for emulate signalR)
+    {
+      object3DId: '0',
+      positionX: 13.417122340477,
+      positionY: 52.5281344784827
+    },
+    {
+      object3DId: '1',
+      positionX: 13.417222340477,
+      positionY: 52.5282344784827
+    },
+    {
+      object3DId: '2',
+      positionX: 13.417322340477,
+      positionY: 52.5283344784827
+    },
+    {
+      object3DId: '3',
+      positionX: 13.417422340477,
+      positionY: 52.5284344784827
+    }
+  ];
 
   // map: Map = null;
 
@@ -61,6 +86,44 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   mapFinishInitCallback: Function = () => {
     this.mapFinishInit.emit();
     this.signalRConnect();
+
+    this.timeOut1 = setTimeout(() => {
+      mapAddNewPolygons([polygon1]);
+    }, 1000);
+
+    this.timeOut2 = setTimeout(() => {
+      mapReplacePolygons([polygon1, polygon2]);
+    }, 1500);
+
+    this.timeOut3 = setTimeout(() => {
+      mapReplaceObjects([female, male, tractor, walt]);
+      // mapReplaceObjects([female, male]);
+      // mapAddNewObjects([female, male]);
+    }, 2500);
+
+    this.timeOut4 = setTimeout(() => {
+      // mapReplaceObjects([tractor, walt]);
+    }, 10000);
+
+    // this.timeOut5 = setTimeout(() => {
+    //   mapSetFullScreen();
+    // }, 5000);
+
+    // emulate signalR
+    this.timeOut6 = setInterval(() => {
+      for (let i = 0; i < this.objectsArr.length; i++) {
+        this.objectsArr[i].positionX = this.objectsArr[i].positionX + Math.random() * 0.001 - Math.random() * 0.001;
+        this.objectsArr[i].positionY = this.objectsArr[i].positionY + Math.random() * 0.001 - Math.random() * 0.001;
+
+        const message: { object3DId: string, positionX: number, positionY: number } = {
+          object3DId: this.objectsArr[i].object3DId,
+          positionX: this.objectsArr[i].positionX,
+          positionY: this.objectsArr[i].positionY
+        };
+
+        signalRMessage(message);
+      }
+    }, 3500);
   }
 
   constructor() { }
@@ -73,69 +136,31 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     mapInit(this.mapFinishInitCallback);
     setObjectClickCallback(this.clickObjectCallback);
     setObjectHoverCallback(this.hoverObjectCallback);
-
-    this.timeOut1 = setTimeout(() => {
-      mapAddNewPolygons([polygon1]);
-    }, 1000);
-
-    this.timeOut2 = setTimeout(() => {
-      mapReplacePolygons([polygon1, polygon2]);
-    }, 1500);
-
-    this.timeOut3 = setTimeout(() => {
-      mapReplaceObjects([female, male]);
-      // mapAddNewObjects([female, male]);
-    }, 1500);
-
-    this.timeOut4 = setTimeout(() => {
-      mapReplaceObjects([tractor, walt]);
-    }, 10000);
-
-    // this.timeOut5 = setTimeout(() => {
-    //   mapSetFullScreen();
-    // }, 5000);
   }
 
-  signalRConnect() {
+  signalRConnect() { // todo dispose
     const token = localStorage.getItem('token');
-    // this.hubConnection = new HubConnectionBuilder()
-    //   // .withUrl(environment.signalR)
-    //   .withUrl('http://proxy.alexduxa.online/notifications/chatHub', {
-    //     accessTokenFactory: () => token
-    //   })
-    //   .build();
-
-    // this.hubConnection
-    //   .start()
-    //   .then(() => console.log('Connection started!'))
-    //   .catch(err => console.warn(err));
-
-    // this.hubConnection.on('BroadcastMessage', (type: string, payload: string) => {
-    //   console.log('BroadcastMessage: ', type, payload);
-    // });
-
-    // this.hubConnection.on('ReceiveMessage', (message: string) => {
-    //   console.log('ReceiveMessage: ', message);
-    // });
-
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(
         environment.signalR,
         {
-          accessTokenFactory: () => token + ''
+          accessTokenFactory: () => token
         })
       .build();
 
-    this.hubConnection.on('ReceiveMessage', function (message) {
+    this.hubConnection.on('HistoryPositionSBEvent', function (message) {
       console.log(message);
     });
 
-    this.hubConnection.start().then(function () {
-      console.log('START');
-    }).catch(function (err) {
-      console.error(err.toString());
-      return;
-    });
+    // todo remove ?
+    this.hubConnection.start()
+      .then(function () {
+        console.log('START');
+      })
+      .catch(function (err) {
+        console.error(err.toString());
+        return;
+      });
   }
 
   signalRSendMsg() {
@@ -154,6 +179,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     clearTimeout(this.timeOut3);
     clearTimeout(this.timeOut4);
     clearTimeout(this.timeOut5);
+    clearTimeout(this.timeOut6);
 
     // this.map.mapDestroy();
     mapDestroy();

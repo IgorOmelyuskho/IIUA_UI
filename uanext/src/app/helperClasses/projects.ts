@@ -217,32 +217,32 @@ export const responseProject2: VendorProject = {
 };
 
 export const female: GeoObject = {
-  geoObjectId: 'projectsGeoObjects3D id-1',
-  coords: { x: 0, y: 0 },
+  geoObjectId: '0',
+  coords: { x: 13.417122340477, y: 52.5281344784827 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/female.zip',
   project: responseProject
 };
 
 export const male: GeoObject = {
-  geoObjectId: 'projectsGeoObjects3D id-2',
-  coords: { x: 0, y: 0 },
+  geoObjectId: '1',
+  coords: { x: 13.417222340477, y: 52.5282344784827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/male.zip',
   project: responseProject2
 };
 
 export const tractor: GeoObject = {
-  geoObjectId: 'projectsGeoObjects3D id-3',
-  coords: { x: 0, y: 0 },
+  geoObjectId: '2',
+  coords: { x: 13.417322340477, y: 52.5283344784827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/tractor.zip',
   project: responseProject2
 };
 
 export const walt: GeoObject = {
-  geoObjectId: 'projectsGeoObjects3D id-4',
-  coords: { x: 0, y: 0 },
+  geoObjectId: '3',
+  coords: { x: 13.417422340477, y: 52.5284344784827 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/walt.zip',
   project: responseProject
