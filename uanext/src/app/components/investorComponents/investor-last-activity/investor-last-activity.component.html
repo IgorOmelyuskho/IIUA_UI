@@ -1,6 +1,7 @@
 <div class="last-activity">
   <div *ngFor="let project of projects" class="project-wrapper">
     <div class="project">
+      <div class="red-circle"></div>
       <div class="avatar-wrapper">
         <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>
       </div>

@@ -3,16 +3,18 @@
     <div class="col-6">
       <div class="custom-file">
         <input accept="application/zip,application/x-zip,application/x-zip-compressed,application" 
-        (change)="filesChange($event)" multiple type="file" class="custom-file-input" id="3d-object-files" required>
+        (change)="filesChange($event)" type="file" class="custom-file-input" id="3d-object-files" required>
         <label class="custom-file-label" for="3d-object-files">Choose 3D object .zip file</label>
         <div *ngIf="file == null" class="invalid-feedback d-block">Choose file</div>
-      </div>
-
-      <div>
-        <h6 class="file-name">{{file.name}}</h6>
+        <div>UPLOADED FILE NAME</div>
       </div>
 
       <button (click)="uploadFile()" type="button" class="btn btn-success mt-1">Upload selected file</button>
+
+      <div *ngFor="let file of files">
+        <h6 class="file-name">{{file.name}}</h6>
+        <button (click)="removeFile(file)">Remove</button>
+      </div>
     </div>
 
   </div>

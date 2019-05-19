@@ -51,12 +51,16 @@ body {
   }
 }
 
-// use class="progress-bar-fixed" when page scrolled 
 .progress-bar-fixed {
   position: fixed !important;
   left: 0 !important;
   top: 0 !important;
   z-index: 100000000 !important;
+}
+
+mat-progress-bar {
+  transform: scaleY(0.5) !important;
+  transform-origin: top !important;
 }
 
 // noUi-slider
@@ -178,7 +182,7 @@ body {
   line-height: 1.0;
   border-radius: 6px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-  background-color: white;
+  background-color: rgba(white, 0.8);
 }
 
 .obj-label-selected {
@@ -188,7 +192,7 @@ body {
   line-height: 1.0;
   border-radius: 6px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-  background-color: $green
+  background-color: rgba($green, 0.8)
 }
 //#endregion
 
@@ -198,6 +202,6 @@ input:focus,
 select:focus,
 textarea:focus {
   border-color: $green !important;
-  box-shadow: 0 0 0 0.2rem rgba(117, 175, 39, 0.25) !important;
+  box-shadow: 0 0 0 0.2rem rgba($green, 0.25) !important;
   outline: none !important;
 }

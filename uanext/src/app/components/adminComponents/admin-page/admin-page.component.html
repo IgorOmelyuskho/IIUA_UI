@@ -4,8 +4,8 @@
     </a>
     <div class='navbar-text'>Navbar for Admin</div>
     <div>
-      <button (click)='goToProfile()' type="button">My profile</button>
-      <button (click)='uploadModel()' type="button">Upload 3d models</button>
+      <button #profile (click)='goToProfile()' type="button">My profile</button>
+      <button #upload (click)='uploadModel()' type="button">Upload 3d models</button>
       <button (click)="signOut()" type="button">Sign out</button>
     </div>
   </nav>

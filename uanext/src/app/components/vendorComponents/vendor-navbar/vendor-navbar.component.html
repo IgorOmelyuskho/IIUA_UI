@@ -4,9 +4,9 @@
   </a>
   <div class='navbar-text'>Navbar for Vendor</div>
   <div>
-    <button (click)='home()' type="button">Home</button>
-    <button (click)='goToProfile()' type="button">My profile</button>
-    <button (click)='goToProjects()' type="button">My projects</button>
-    <button (click)="signOut()" type="button">Sign out</button>
+    <button #home (click)='homeClick()' type="button">Home</button>
+    <button #profile (click)='profileClick()' type="button">My profile</button>
+    <button #myProjects (click)='projectsClick()' type="button">My projects</button>
+    <button (click)="signOutClick()" type="button">Sign out</button>
   </div>
 </nav>

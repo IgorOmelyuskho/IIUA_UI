@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MapService } from 'src/app/services/http/map.service';
 
 @Component({
   selector: 'app-object3d-upload',
@@ -9,32 +8,55 @@ import { MapService } from 'src/app/services/http/map.service';
 })
 export class Object3dUploadComponent implements OnInit {
   formData: FormData;
-  file: any;
+  fileForUpload: any;
+  files: any[];
 
-  constructor(private http: HttpClient, private mapService: MapService) { }
+  constructor(private http: HttpClient/* , private upload3dModelService: Upload3dModelService */) { }
 
   ngOnInit() {
+    // this.upload3dModelService.fetchAll3dModels().subscribe(
+    //   response => {
+    //     console.log(response);
+    //     // this.files = response.data;
+    //   },
+    //   err => {
+    //     console.warn(err);
+    //   }
+    // );
   }
 
   filesChange(e) {
-    this.file = e.target['files'][0];
+    this.fileForUpload = e.target['files'][0];
   }
 
-  uploadFile() {
-    if (this.file == null) {
+  uploadFiles() {
+    if (this.fileForUpload == null) {
       return;
     }
 
     this.formData = new FormData();
-    this.formData.append(this.file.name, this.file);
+    this.formData.append(this.fileForUpload.name, this.fileForUpload);
 
-    this.mapService.post3DObject(this.formData).subscribe(
-      response => {
-        console.log(response);
-      },
-      err => {
-        console.warn(err);
-      }
-    );
+    // this.upload3dModelService.upload3dModel(this.formData).subscribe(
+    //   response => {
+    //     console.log(response);
+    //     // add uploaded file in this.files
+    //   },
+    //   err => {
+    //     console.warn(err);
+    //   }
+    // );
   }
+
+  // removeFile(file) {
+  //   this.upload3dModelService.remove3dModel().subscribe(
+  //     response => {
+  //       console.log(response);
+  //       // remove file from this.files
+  //     },
+  //     err => {
+  //       console.warn(err);
+  //     }
+  //   );
+  // }
 }

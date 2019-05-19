@@ -1,3 +1,5 @@
+@import '../../../../styles-variables.scss';
+
 .navbar {
   background: #fcfcfc;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
@@ -10,7 +12,7 @@
   }
 
   button {
-    margin: 0 5px;
+    margin: 0 15px;
     background: transparent;
     border: none !important;
     outline: none !important;
@@ -18,5 +20,13 @@
     font-size: 16px;
     letter-spacing: 0.4px;
     cursor: pointer;
+    line-height: 1.1;
+    padding: 0;
+  }
+
+  .selected {
+    color: $darkGreen;
+    font-weight: bold;
+    border-bottom: 1px solid $darkGreen !important;
   }
 }
