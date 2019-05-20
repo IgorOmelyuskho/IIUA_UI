@@ -70,6 +70,33 @@
             line-height: 1.4;
             letter-spacing: 0.4px;
           }
+
+          .answer {
+            display: flex;
+            justify-content: space-between;
+            height: 32px;
+            margin-top: 16px;
+            margin-bottom: 16px;
+
+            input {
+              width: 100%;
+              border-radius: 6px;
+              border: solid 1px #dbdbdb;
+              padding-left: 8px;
+            }
+
+            button {
+              color: white;
+              border-radius: 6px;
+              background-color: $green;
+              margin-left: 8px;
+              border: none;
+              font-size: 12px;
+              font-weight: 600;
+              letter-spacing: 1.2px;
+              cursor: pointer;
+            }
+          }
         }
       }
 

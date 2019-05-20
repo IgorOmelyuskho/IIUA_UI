@@ -39,16 +39,16 @@ export class ViewProjectsService {
     if (filter.fieldOfActivity) {
       filter.activities = filter.fieldOfActivity;
     }
-    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
-      // return of(JSON.parse(JSON.stringify(responseProjects)))
-      .pipe(
-        map((response: any) => {
-          if (response['data'] == null) {
-            return emptyFilteredProjects;
-          }
-          return response['data'];
-        })
-      );
+    return of(JSON.parse(JSON.stringify(responseProjects)));
+    // return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
+    // .pipe(
+    //   map((response: any) => {
+    //     if (response['data'] == null) {
+    //       return emptyFilteredProjects;
+    //     }
+    //     return response['data'];
+    //   })
+    // );
   }
 
   // searchByProjectName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
@@ -84,20 +84,20 @@ export class ViewProjectsService {
   // }
 
   searchByKeyword(keyword: string, pageSize: number, page: number): Observable<FilteredProjects> {
-    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
-      projectName: keyword,
-      companyName: keyword,
-      pageSize,
-      page
-    })
-      // return of(JSON.parse(JSON.stringify(responseProjects)))
-      .pipe(
-        map(response => {
-          if (response['data'] == null) {
-            return emptyFilteredProjects;
-          }
-          return response['data'];
-        })
-      );
+    return of(JSON.parse(JSON.stringify(responseProjects)));
+    // return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
+    //   projectName: keyword,
+    //   companyName: keyword,
+    //   pageSize,
+    //   page
+    // })
+    //   .pipe(
+    //     map(response => {
+    //       if (response['data'] == null) {
+    //         return emptyFilteredProjects;
+    //       }
+    //       return response['data'];
+    //     })
+    //   );
   }
 }
