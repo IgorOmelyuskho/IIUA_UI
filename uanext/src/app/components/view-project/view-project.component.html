@@ -19,14 +19,7 @@
     </div>
     <div class="col-xl-6">
       <div class="map-wrapper">
-        <div id="map"></div>
-        <div id="info">
-          <div class="name"></div>
-          <div class="coords-x"></div>
-          <div class="coords-y"></div>
-        </div>
-        <div id="area-info"></div>
-        <img id="full-screen-img" src="../../../assets/img/full-screen.png" alt="full-screen">
+        <app-map (mapFinishInit)="onMapFinishInit()"></app-map>
       </div>
     </div>
   </div>

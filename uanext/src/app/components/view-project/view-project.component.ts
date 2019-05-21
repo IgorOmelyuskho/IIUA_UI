@@ -128,6 +128,10 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setGalleryImages(this.project.images);
   }
 
+  onMapFinishInit() {
+    console.log('map finish init');
+  }
+
   ngOnDestroy() {
   }
 
