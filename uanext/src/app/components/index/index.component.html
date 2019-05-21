@@ -2,10 +2,7 @@
 
 <div class="map-and-invest">
   <div class="map-video">
-    <div #play (click)="playVideo()" class="play">
-      <img src="../../../assets/img/play-circle.svg" alt="">
-    </div>
-    <video (click)="stopVideo()" #video crossorigin="anonymous">
+    <video autoplay crossorigin="anonymous">
       <source src="../../../assets/videos/cors.mp4">
     </video>
   </div>
@@ -81,18 +78,21 @@
 </div>
 
 <div class="subscribe">
-  <div class="email-icon">
-    <img src="../../../assets/img/email-2.png" alt="">
-  </div>
-  <h2>Будь в курсе всех обновлений</h2>
-  <div class="subscribe-wrapper">
-    <div class="inline-block">
-      <input type="text" placeholder="Enter your email address">
-      <button>Подписаться</button>
+  <div class="subscribe-background"></div>
+  <div class="subscribe-content">
+    <div class="email-icon">
+      <img src="../../../assets/img/email-2.png" alt="">
     </div>
-  </div>
-  <div class="email-security">
-    *Твой e-mail в безопастности с нами. Мы никогда и ни с кем не поделимся.
+    <h2>Будь в курсе всех обновлений</h2>
+    <div class="input-and-button">
+      <div class="inline-block">
+        <input type="text" placeholder="Enter your email address">
+        <button>Подписаться</button>
+      </div>
+    </div>
+    <div class="email-security">
+      *Твой e-mail в безопастности с нами. Мы никогда и ни с кем не поделимся.
+    </div>
   </div>
 </div>
 

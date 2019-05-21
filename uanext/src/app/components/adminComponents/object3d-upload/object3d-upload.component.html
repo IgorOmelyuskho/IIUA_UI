@@ -5,7 +5,7 @@
         <input accept="application/zip,application/x-zip,application/x-zip-compressed,application" 
         (change)="filesChange($event)" type="file" class="custom-file-input" id="3d-object-files" required>
         <label class="custom-file-label" for="3d-object-files">Choose 3D object .zip file</label>
-        <div *ngIf="file == null" class="invalid-feedback d-block">Choose file</div>
+        <div *ngIf="fileForUpload == null" class="invalid-feedback d-block">Choose file</div>
         <div>UPLOADED FILE NAME</div>
       </div>
 

@@ -18,30 +18,21 @@
     height: 100%;
     position: relative;
     // background: url('https://maptalks.org/resource/image/feature/3d.png');
-    background: red;
     background-size: cover;
     background-repeat: no-repeat;
+    overflow: hidden;
 
-    .play {
-      width: 180px;
-      height: 180px;
+    video {
       position: absolute;
       top: 50%;
       left: 50%;
-      margin-right: -50%;
-      transform: translate(-50%, -50%);
-      cursor: pointer;
-      z-index: 1;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    video {
-      width: 100%;
-      height: 100%;
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      overflow: hidden;
     }
   }
 
@@ -223,69 +214,88 @@
 .subscribe {
   height: 316px;
   margin-top: 40px;
-  background-image: url('../../../assets/img/background-map.png');
-  background-repeat: no-repeat;
-  background-size: cover;
+  position: relative;
 
-  .email-icon {
-    text-align: center;
-    padding-top: 41px;
-    padding-bottom: 20px;
-
-    img {
-      height: 32px;
-      width: 40px;
-    }
+  .subscribe-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../assets/img/background-map.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5;
   }
 
-  h2 {
-    font-size: 48px;
-    font-weight: bold;
-    line-height: 1.38;
-    text-align: center;
-    color: #444444;
-    margin-bottom: 35px;
-  }
+  .subscribe-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
 
-  .subscribe-wrapper {
-    text-align: center;
-
-    .inline-block {
-      display: inline-flex;
-      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
-
-      input {
-        padding: 5px;
-        height: 42px;
-        outline: none;
-        width: 403px;
-        border: solid 1px #cecece;
-        padding-left: 10px;
-        border-top-left-radius: 6px;
-        border-bottom-left-radius: 6px;
-      }
-
-      button {
-        text-transform: uppercase;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 1.3px;
-        color: #ffffff;
-        background: $green;
-        border: none;
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-        height: 42px;
+    .email-icon {
+      text-align: center;
+      padding-top: 41px;
+      padding-bottom: 20px;
+  
+      img {
+        height: 32px;
+        width: 40px;
       }
     }
-  }
-
-  .email-security {
-    font-size: 13px;
-    line-height: 1.85;
-    color: #444444;
-    text-align: center;
-    margin-top: 15px;
+  
+    h2 {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: 1.38;
+      text-align: center;
+      color: #444444;
+      margin-bottom: 35px;
+    }
+  
+    .input-and-button {
+      text-align: center;
+  
+      .inline-block {
+        display: inline-flex;
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+  
+        input {
+          padding: 5px;
+          height: 42px;
+          outline: none;
+          width: 403px;
+          border: solid 1px #cecece;
+          padding-left: 10px;
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+        }
+  
+        button {
+          text-transform: uppercase;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 1.3px;
+          color: #ffffff;
+          background: $green;
+          border: none;
+          border-top-right-radius: 6px;
+          border-bottom-right-radius: 6px;
+          height: 42px;
+          cursor: pointer;
+        }
+      }
+    }
+  
+    .email-security {
+      font-size: 13px;
+      line-height: 1.85;
+      color: #444444;
+      text-align: center;
+      margin-top: 15px;
+    }
   }
 }
 

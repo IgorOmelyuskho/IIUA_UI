@@ -29,7 +29,7 @@ export class Object3dUploadComponent implements OnInit {
     this.fileForUpload = e.target['files'][0];
   }
 
-  uploadFiles() {
+  uploadFile() {
     if (this.fileForUpload == null) {
       return;
     }

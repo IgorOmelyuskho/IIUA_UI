@@ -5,11 +5,11 @@
     <div class="col-md-6 offset-md-3">
       <div class="form-group">
         <label>Created</label>
-        <input disabled=true type="text" class="form-control" value={{admin?.created}} />
+        <input disabled=true type="text" class="form-control" value={{projectUser?.created}} />
       </div>
       <div class="form-group">
         <label>Last edited</label>
-        <input disabled=true type="text" class="form-control" value={{admin?.lastEdited}} />
+        <input disabled=true type="text" class="form-control" value={{projectUser?.lastEdited}} />
       </div>
       <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
