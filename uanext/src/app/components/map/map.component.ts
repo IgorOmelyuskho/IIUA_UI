@@ -1,21 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
-// import { Map } from './map4';
-import {
-  mapInit,
-  mapDestroy,
-  mapSetProject,
-  mapAddNewPolygons,
-  mapSetFullScreen,
-  mapReplacePolygons,
-  mapAddNewObjects,
-  mapReplaceObjects,
-  setObjectClickCallback,
-  setObjectHoverCallback,
-  signalRMessage
-} from './map4-no-class';
+import { MapManager } from './map4';
 import { polygon1, polygon2, female, male, tractor, walt } from 'src/app/helperClasses/projects';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { environment } from 'src/environments/environment';
+import { VendorProject } from 'src/app/models/vendorProject';
+import { GeoObject } from 'src/app/models';
 
 @Component({
   selector: 'app-map',
@@ -23,21 +12,24 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Output() objectClick = new EventEmitter<any>();
-  @Output() objectHover = new EventEmitter<any>();
-  @Output() mapFinishInit = new EventEmitter<any>();
+
+  @Output() objectClick = new EventEmitter<GeoObject>();
+  @Output() objectHover = new EventEmitter<GeoObject>();
+  @Output() mapFinishInit = new EventEmitter<void>();
+
+  mapManager: MapManager;
 
   @Input()
-  set changeSelectedProject(project: any) {
-    if (project != null) {
-      mapSetProject(project);
+  set changeSelectedProject(project: VendorProject) {
+    if (project != null && this.mapManager != null) {
+      this.mapManager.mapSetProject(project);
     }
   }
 
   @Input()
-  set replace3DObjects(objects: any[]) {
-    if (objects != null && objects.length > 0) {
-      mapReplaceObjects(objects);
+  set replace3DObjects(objects: GeoObject[]) {
+    if (objects != null && objects.length > 0 && this.mapManager != null) {
+      this.mapManager.mapReplaceObjects(objects);
     }
   }
 
@@ -73,13 +65,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   ];
 
-  // map: Map = null;
-
-  clickObjectCallback: Function = (object: any) => {
+  clickObjectCallback: Function = (object: GeoObject) => {
     this.objectClick.emit(object);
   }
 
-  hoverObjectCallback: Function = (object: any) => {
+  hoverObjectCallback: Function = (object: GeoObject) => {
     this.objectHover.emit(object);
   }
 
@@ -88,15 +78,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.signalRConnect();
 
     this.timeOut1 = setTimeout(() => {
-      mapAddNewPolygons([polygon1]);
+      this.mapManager.mapAddNewPolygons([polygon1]);
     }, 1000);
 
     this.timeOut2 = setTimeout(() => {
-      mapReplacePolygons([polygon1, polygon2]);
+      this.mapManager.mapReplacePolygons([polygon1, polygon2]);
     }, 1500);
 
     this.timeOut3 = setTimeout(() => {
-      mapReplaceObjects([female, male, tractor, walt]);
+      this.mapManager.mapReplaceObjects([female, male, tractor, walt]);
       // mapReplaceObjects([female, male]);
       // mapAddNewObjects([female, male]);
     }, 2500);
@@ -121,7 +111,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           positionY: this.objectsArr[i].positionY
         };
 
-        signalRMessage(message);
+        this.mapManager.signalRMessage(message);
       }
     }, 3500);
   }
@@ -132,10 +122,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    // this.map = new Map();
-    mapInit(this.mapFinishInitCallback);
-    setObjectClickCallback(this.clickObjectCallback);
-    setObjectHoverCallback(this.hoverObjectCallback);
+    this.mapManager = new MapManager(this.mapFinishInitCallback);
+    this.mapManager.setObjectClickCallback(this.clickObjectCallback);
+    this.mapManager.setObjectHoverCallback(this.hoverObjectCallback);
   }
 
   signalRConnect() { // todo dispose
@@ -164,7 +153,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   signalRSendMsg() {
-    // connection.invoke("SendMessage", message).catch(function (err) {
     this.hubConnection.invoke('SendMessage')
       .catch(function (err) {
         console.error(err.toString());
@@ -181,8 +169,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     clearTimeout(this.timeOut5);
     clearTimeout(this.timeOut6);
 
-    // this.map.mapDestroy();
-    mapDestroy();
+    this.mapManager.mapDestroy();
   }
 
 }
