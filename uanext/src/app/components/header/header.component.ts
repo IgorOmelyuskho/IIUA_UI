@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthorizationService } from 'src/app/services/http/authorization.service';
+import { Router } from '@angular/router';
+import { UserRole } from 'src/app/models';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +11,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthorizationService, private router: Router) { }
 
   ngOnInit() {
   }
 
+  home() {
+    const helper = new JwtHelperService();
+    const token = localStorage.getItem('token');
+    let decodedToken: any;
+    let isExpired: boolean;
+    let role: UserRole;
+
+    if (token == null || token === '') {
+      this.authService.signOut();
+      return;
+    }
+
+    try {
+      decodedToken = helper.decodeToken(token);
+      isExpired = helper.isTokenExpired(token);
+      role = decodedToken.role;
+    } catch {
+      this.authService.signOut();
+      return;
+    }
+
+    if (isExpired === true) {
+      this.authService.signOut();
+      return;
+    }
+
+    if (role !== UserRole.Admin && role !== UserRole.ProjectUser && role !== UserRole.Investor && role !== UserRole.Vendor) {
+      this.authService.signOut();
+      return;
+    }
+
+    if (role === UserRole.Vendor) {
+      this.router.navigate(['home', 'vendor']);
+    }
+
+    if (role === UserRole.Investor) {
+      this.router.navigate(['home', 'investor']);
+    }
+
+    if (role === UserRole.Admin) {
+      this.router.navigate(['admin']);
+    }
+
+    if (role === UserRole.ProjectUser) {
+      this.router.navigate(['projectUser']);
+    }
+  }
+
+  signIn() {
+    this.router.navigate(['signin']);
+  }
+
+  signUp() {
+    this.router.navigate(['signup']);
+  }
 }

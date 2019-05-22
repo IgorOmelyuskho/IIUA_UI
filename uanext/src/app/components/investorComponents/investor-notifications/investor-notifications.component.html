@@ -1,0 +1,34 @@
+<div class="notifications">
+  <div class="name">Уведомления</div>
+  <div class="projects-wrapper">
+    <div *ngFor="let project of projects" class="project">
+      <div class="top-part">
+        <div class="avatar-wrapper">
+          <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>
+        </div>
+        <div class="info">
+          <div class="project-name-and-date">
+            <div class="project-name">{{project.name}}</div>
+            <div class="date">12.12.2019</div>
+          </div>
+          <div class="company-name">{{project.legalEntityName}}</div>
+          <div class="bottom-info">
+            <div class="region">
+              <i class="fa fa-map-marker mr-1" aria-hidden="true"></i>
+              <span class="region">{{project.region}}</span>
+            </div>
+            <div class="d-flex ml-3">
+              <img src="../../../../assets/img/squares.png" alt="">
+              <div class="max-width">{{project.fieldOfActivity}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-info">
+        Aut possimus ea consequatur dignissimos cum et. Voluptas corrupti incidunt voluptatem repellendus id.
+        Quas nesciunt accusamus aut ut aut tenetur.
+      </div>
+    </div>
+  </div>
+</div>

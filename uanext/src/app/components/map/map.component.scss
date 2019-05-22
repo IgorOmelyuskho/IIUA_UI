@@ -1,0 +1,38 @@
+.map-wrapper-4-unique-3585349 {
+  position: relative;
+  width: 100%;
+  // height: 500px; // default value
+  height: 100%;
+  background: black;
+  overflow: hidden;
+
+  #map-4 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  #info-4,
+  #area-info-4 {
+    display: none;
+    position: absolute;
+    background-color: rgba(13, 13, 13, 0.5);
+    padding: 10px 10px 10px 10px;
+    font: 18px bold sans-serif;
+    color: #fff;
+    right: 20px;
+    top: 20px;
+    overflow: hidden
+  }
+
+  #area-info-4 {
+    top: 120px;
+  }
+
+  #label-renderer-4 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+}

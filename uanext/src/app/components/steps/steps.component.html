@@ -1,0 +1,38 @@
+<div class="form-group steps">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-12 mb-2">What steps are you planning to take?</div>
+      <div class="col-lg-8 col-md-7 col-12">
+        <textarea (input)="newItemOnInput()" type="text" [(ngModel)]="newItem" placeholder="Enter new step" class="form-control item-name"
+          [ngClass]="{ 'is-invalid': !newItemMinValid || !newItemMaxValid || !newItemNullValid }"></textarea>
+        <div *ngIf="!newItemMinValid || !newItemMaxValid || !newItemNullValid" class="invalid-feedback">
+          <div *ngIf="!newItemNullValid">Step cannot be empty</div>
+          <div *ngIf="!newItemMinValid">Minimal step length is 3 charset</div>
+          <div *ngIf="!newItemMaxValid">Maximal length is 256 charset</div>
+        </div>
+        <div class="invalid-item-count" *ngIf="showMinItemsCountErr()">Minimal steps count is {{minItemsCount}}</div>
+        <div class="invalid-item-count" *ngIf="showMaxItemsCountErr()">Maximal steps count is {{maxItemsCount}}</div>
+      </div>
+      <div class="col-lg-4 col-md-5 col-12 pr-0">
+        <button (click)="addNewItem()" type="button" class="btn btn-primary mb-2">Add to my steps</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 col-12">
+        <ngx-sortable (listSorted)="listOrderChanged($event)" [items]="items" [name]="'List'" [listStyle]="{dropZoneHeight: '50px'}">
+          <ng-template let-item>
+            <div class="sortable-list-item">
+              <div>{{item.data}}</div>
+              <button (click)="removeItem(item)" type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </ng-template>
+        </ngx-sortable>
+      </div>
+    </div>
+
+  </div>
+</div>

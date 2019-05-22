@@ -5,5 +5,209 @@
 
 @import "~primeicons/primeicons.css";
 @import "~primeng/resources/themes/nova-light/theme.css";
-@import "~primeng/resources/primeng.min.css";  
- 
+@import "~primeng/resources/primeng.min.css";
+
+@import "./styles-variables.scss";
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&subset=cyrillic,cyrillic-ext');
+
+@font-face {
+  font-family: Helvetica;
+  src: url('./assets/fonts/Helvetica.ttf');
+  font-weight: normal;
+}
+
+html,
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: black;
+}
+
+.sortable-header {
+  display: none;
+}
+
+.sortable-container {
+  border: none !important;
+}
+
+.sortable-list {
+  overflow: unset !important;
+}
+
+.sortable-list-item {
+  padding: 5px;
+  border: 1px solid rgba(128, 128, 128, 0.384);
+  border-radius: 5px;
+  margin: 0 0 -1px 0;
+  display: flex;
+  justify-content: space-between;
+  cursor: grab;
+}
+
+.mat-sidenav-container,
+.mat-sidenav-content,
+.mat-tab-body-content {
+  transform: none !important;
+}
+
+.paginator {
+  button:focus {
+    outline: none !important;
+  }
+}
+
+.progress-bar-fixed {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 100000000 !important;
+}
+
+mat-progress-bar {
+  transform: scaleY(0.5) !important;
+  transform-origin: top !important;
+}
+
+// noUi-slider
+//#region
+.noUi-origin {
+  left: -11px !important
+}
+
+.noUi-handle {
+  top: -6px !important;
+  background: $green !important;
+  width: 14px !important;
+  box-shadow: none !important;
+  height: 14px !important;
+  border-radius: 100% !important;
+  outline: none !important;
+  border: none !important;
+
+  &:before,
+  &:after {
+    content: none !important;
+    display: none !important;
+  }
+}
+
+.noUi-connects {
+  background: $green !important;
+
+  .noUi-connect {
+    background: $green !important;
+  }
+}
+//#endregion
+
+// mat expansion
+//#region
+.filter {
+  .mat-expansion-indicator {
+    position: relative !important;
+    right: 15px !important;
+    top: -9px !important;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0;
+  }
+
+  .mat-expansion-panel-content {
+    font: inherit;
+  }
+
+  .mat-expansion-panel-header {
+    font: inherit;
+  }
+}
+//#endregion
+
+// filtering projects gallery
+.detail-project-info {
+  .gallery {
+    .ngx-gallery-image {
+      border-radius: 5px !important;
+    }
+
+    .ngx-gallery-thumbnail {
+      border-radius: 5px !important;
+    }
+  }
+}
+
+// scrollbar
+//#region
+::-webkit-scrollbar-track {
+  // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(129, 129, 129);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgb(185, 185, 185);
+}
+//#endregion
+
+// custom radiogroup
+.radio-group {
+  .mat-radio-button.mat-primary .mat-radio-inner-circle {
+    background-color: $green;
+    height: 15px;
+    width: 15px;
+  }
+
+  .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $green;
+    height: 15px;
+    width: 15px;
+  }
+
+  .mat-radio-outer-circle {
+    height: 15px;
+    width: 15px;
+  }
+}
+
+// map
+//#region
+.obj-label {
+  color: $green;
+  font-size: 18px;
+  padding: 7px 10px;
+  line-height: 1.0;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgba(white, 0.8);
+}
+
+.obj-label-selected {
+  color: white;
+  font-size: 18px;
+  padding: 7px 10px;
+  line-height: 1.0;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgba($green, 0.8)
+}
+//#endregion
+
+// focus
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: $green !important;
+  box-shadow: 0 0 0 0.2rem rgba($green, 0.25) !important;
+  outline: none !important;
+}

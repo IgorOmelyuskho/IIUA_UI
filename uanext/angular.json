@@ -23,9 +23,24 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/font-awesome/css/font-awesome.css", 
+              "./node_modules/maptalks/dist/maptalks.css",
+              "./node_modules/nouislider/distribute/nouislider.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./src/js/three.min.js",
+              "./src/js/maptalks.min.js",
+              "./src/js/maptalks.three.min.js",
+              "./src/js/DDSLoader.js",
+              "./src/js/OBJLoader.js",
+              "./src/js/stats.min.js",
+              "./src/js/MTLLoader.js",
+              "./src/js/maptalks.markercluster.min.js",
+              "./src/js/CSS2DRenderer.js",
+              "./node_modules/nouislider/distribute/nouislider.min.js",
+              "./node_modules/three-ziploader/build/ziploader.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -72,9 +87,24 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/font-awesome/css/font-awesome.css", 
+              "./node_modules/maptalks/dist/maptalks.css",
+              "./node_modules/nouislider/distribute/nouislider.min.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./src/js/three.min.js",
+              "./src/js/maptalks.min.js",
+              "./src/js/maptalks.three.min.js",
+              "./src/js/DDSLoader.js",
+              "./src/js/OBJLoader.js",
+              "./src/js/stats.min.js",
+              "./src/js/MTLLoader.js",
+              "./src/js/maptalks.markercluster.min.js",
+              "./src/js/CSS2DRenderer.js",
+              "./node_modules/nouislider/distribute/nouislider.min.js",
+              "./node_modules/three-ziploader/build/ziploader.min.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

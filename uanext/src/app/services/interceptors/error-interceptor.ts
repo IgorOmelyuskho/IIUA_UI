@@ -4,8 +4,8 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
-import { AuthorizationService } from '../auth/authorization.service';
-import { NotificationService } from '../notification/notification.service';
+import { AuthorizationService } from '../http/authorization.service';
+import { NotificationService } from '../http/notification.service';
 
 @Injectable({
     providedIn: 'root'

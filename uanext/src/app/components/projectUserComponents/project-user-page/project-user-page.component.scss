@@ -1,0 +1,23 @@
+.navbar {
+  background: #fcfcfc;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+
+  .navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+  }
+
+  button {
+    margin: 0 5px;
+    background: transparent;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    font-size: 16px;
+    letter-spacing: 0.4px;
+    line-height: 1.1;
+    cursor: pointer;
+  }
+}

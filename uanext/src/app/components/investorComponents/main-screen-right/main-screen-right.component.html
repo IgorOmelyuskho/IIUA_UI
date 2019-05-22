@@ -1,0 +1,37 @@
+<div #mainScreenRight class="main-screen-right">
+  <div class="main-block">
+    <div class="last-activity-wrapper">
+      <app-investor-last-activity></app-investor-last-activity>
+    </div>
+    <div class="messages-wrapper" *ngIf="messages_show">
+      <app-investor-messages></app-investor-messages>
+    </div>
+    <div class="notifications-wrapper" *ngIf="notifications_show">
+      <app-investor-notifications></app-investor-notifications>
+    </div>
+    <div class="iterative-investment-wrapper" *ngIf="iterative_investment_show">
+      <app-investor-iterative-investment></app-investor-iterative-investment>
+    </div>
+  </div>
+
+  <div (click)="hideRightBlock()" class="close-btn">
+    <img src="../../../../assets/img/close-2.png" alt="close">
+  </div>
+</div>
+
+
+
+
+
+<!-- right menu -->
+<div class="right-menu">
+  <div (click)="showMessages()" class="message" [ngClass]="{ 'selected': messages_show }">
+    <div class="img-bg"></div>
+  </div>
+  <div (click)="showNotifications()" class="bell" [ngClass]="{ 'selected': notifications_show }">
+    <div class="img-bg"></div>
+  </div>
+  <div (click)="showIterativeInvestment()" class="approve" [ngClass]="{ 'selected': iterative_investment_show }">
+    <div class="img-bg"></div>
+  </div>
+</div>

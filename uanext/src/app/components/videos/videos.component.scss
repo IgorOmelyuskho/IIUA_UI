@@ -1,0 +1,35 @@
+.videos {
+  input {
+    margin-bottom: 5px;
+  }
+
+  .list-group {
+    margin-top: 5px;
+
+    .list-group-item {
+      padding: 0 10px;
+      margin-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+      min-height: 2em;
+
+      .video-url {
+        display: flex;
+        align-items : center;
+      }
+    }
+  }
+
+  .invalid-item-count {
+    color: #dc3545;
+    font-size: 80%;
+  }
+
+  .close {
+    outline: none;
+
+    &:hover {
+      color: red;
+    }
+  }
+}

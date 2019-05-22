@@ -1,0 +1,8 @@
+<div class="items-container">
+  <div (click)="itemOnClick(item)" class="item" *ngFor="let item of items">
+    <span>{{item.text}}</span>
+    <img src="../../../assets/img/close.png" alt="">
+  </div>
+
+  <div *ngIf="items?.length > 0" (click)="clearAll()" class="clear-all">Clear All</div>
+</div>

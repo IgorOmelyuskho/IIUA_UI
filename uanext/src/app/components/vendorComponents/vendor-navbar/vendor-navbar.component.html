@@ -1,0 +1,12 @@
+<nav class="navbar">
+  <a routerLink="">
+    <span class="navbar-brand mb-0 h1">IIUA</span>
+  </a>
+  <div class='navbar-text'>Navbar for Vendor</div>
+  <div>
+    <button #home (click)='homeClick()' type="button">Home</button>
+    <button #profile (click)='profileClick()' type="button">My profile</button>
+    <button #myProjects (click)='projectsClick()' type="button">My projects</button>
+    <button (click)="signOutClick()" type="button">Sign out</button>
+  </div>
+</nav>

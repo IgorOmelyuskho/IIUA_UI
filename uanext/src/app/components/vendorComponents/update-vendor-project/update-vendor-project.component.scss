@@ -1,0 +1,83 @@
+.steps {
+  padding: 5px;
+  border: 1px solid blueviolet;
+
+  .step-name {
+    margin-bottom: 5px;
+  }
+
+  .invalid-new-step {
+    color: #dc3545;
+    font-size: 80%;
+  }
+}
+
+.close {
+  outline: none;
+  margin: 5px;
+  &:hover {
+    color: red;
+  }
+}
+
+.avatar-img-wrapper {
+  display: inline-block;
+}
+
+.avatar {
+  .avatar-invalid-feedback {
+    color: #dc3545;
+    font-size: 80%;
+  }
+
+  .select-avatar-input {
+    position: relative;
+    overflow: hidden;
+    margin: 5px 0;
+    width: fit-content;
+
+    input[type=file] {
+      position: absolute;
+      left: -300px;
+      top: 0;
+      width: calc(100% + 300px);
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+}
+
+
+.project-photos,
+.project-files {
+  img {
+    height: 50px;
+  }
+  .min-files-count {
+    color: #dc3545;
+    font-size: 80%;
+    margin-bottom: 20px;
+  }
+  .extension {
+    font-size: 1.5em;
+    color: rgb(83, 23, 139);
+    padding-left: 5px;
+  }
+  .list-group-item {
+    padding: 4px 10px;
+  }  
+}
+
+.update-project-btn {
+  margin-top: 10px;
+}
+
+.photos-uploader,
+.files-uploader {
+  margin: 30px 0 20px 0;
+}
+
+hr {
+  border-top: 1px solid rgba(0, 0, 0, 0.7);
+}

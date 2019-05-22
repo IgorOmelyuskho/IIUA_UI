@@ -1,0 +1,18 @@
+.steps {
+  .item-name {
+    margin-bottom: 5px;
+  }
+
+  .invalid-item-count {
+    color: #dc3545;
+    font-size: 80%;
+  }
+
+  .close {
+    outline: none;
+    margin: 5px;
+    &:hover {
+      color: red;
+    }
+  }
+}

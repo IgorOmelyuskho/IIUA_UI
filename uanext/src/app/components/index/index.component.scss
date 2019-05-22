@@ -1,3 +1,5 @@
+@import '../../../styles-variables.scss';
+
 %icon {
   width: 42px;
   height: 42px;
@@ -7,33 +9,330 @@
   background-position: center;
 }
 
-.social-signin {
-  border: 1px solid blue;
-  color: rgb(144, 148, 150);
-  margin: 10px;
-  padding: 10px;
-  font-family: "jaf-facitweb","Helvetica Neue",Arial,sans-serif;
-  .social-signin-btn {
-    width: 350px;
-    text-align: center;
-    border-radius: 3px;
-    border: 2px solid #CDD2D4;
+.map-and-invest {
+  height: 741px;
+  display: flex;
+
+  .map-video {
+    width: 70%;
+    height: 100%;
+    position: relative;
+    // background: url('https://maptalks.org/resource/image/feature/3d.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+    video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      overflow: hidden;
+    }
+  }
+
+  .invest {
+    width: 30%;
+    height: 100%;
     display: flex;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 10px;
-    .google-icon {
-      @extend %icon;
-      background-image: url("../../../assets/img/sign-in-with-google.svg");
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    .start-invest {
+      display: flex;
+      flex-direction: column;
+      font-size: 46px;
+      font-weight: bold;
+      line-height: 1.13;
+
+      .start {
+        color: black;
+      }
+
+      .invest-text {
+        color: $darkGreen;
+      }
     }
-    .facebook-icon {
-      @extend %icon;
-      background-image: url("../../../assets/img/sign-in-with-facebook.svg");
+
+    .social {
+      background: #f4f4f4;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      height: 114px;
+
+      .text {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 11px;
+      }
+
+      .social-buttons {
+        display: flex;
+        justify-content: center;
+
+        .social-signin-btn {
+          width: 47px;
+          height: 47px;
+          border-radius: 30px;
+          margin: 0px 4px;
+          cursor: pointer;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
     }
-    .label {
-      line-height: 42px;
-      margin-left: 20px;
+
+    .bottom {
+      font-size: 28px;
+      line-height: 1.71;
+      letter-spacing: 0.8px;
+
+      .green {
+        color: $darkGreen;
+        font-weight: bold;
+      }
+
+      .commissions {}
+
+      .payments {}
     }
   }
 }
+
+.trust {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 25px;
+
+  .trust-text {
+    font-size: 48px;
+    font-weight: bold;
+  }
+
+  .invested-and-projects {
+    display: flex;
+
+    .flex {
+      display: flex;
+      flex-direction: column;
+      margin-left: 45px;
+      font-family: Helvetica;
+
+      .number {
+        font-size: 20px;
+        line-height: 1.5;
+        color: #505d6f;
+        margin-bottom: 5px;
+      }
+
+      .wrapper {
+        display: flex;
+        align-items: center;
+
+        .circle-1,
+        .circle-2 {
+          width: 10px;
+          height: 10px;
+          border-radius: 8px;
+          margin-right: 8px;
+        }
+
+        .circle-1 {
+          background-color: #568f0c;
+        }
+
+        .circle-2 {
+          background-color: #97de37;
+        }
+
+        .text {
+          font-family: Helvetica;
+          font-size: 12px;
+          line-height: 1.67;
+          color: #505d6f;
+        }
+      }
+    }
+
+  }
+}
+
+.numbers {
+  display: flex;
+  justify-content: space-between;
+  height: 498px;
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+
+    .invested-money,
+    .received-investment {
+      border-radius: 6px;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+      height: 45%;
+      text-align: center;
+
+      .text {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      .bold-text {
+        font-weight: bold;
+      }
+
+      .count {
+        font-size: 48px;
+        font-weight: bold;
+        color: $darkGreen;
+        padding-top: 35px;
+        padding-bottom: 15px;
+      }
+    }
+  }
+
+  .right {
+    width: 65%;
+    border-radius: 6px;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+  }
+}
+
+.subscribe {
+  height: 316px;
+  margin-top: 40px;
+  position: relative;
+
+  .subscribe-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../assets/img/background-map.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5;
+  }
+
+  .subscribe-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    .email-icon {
+      text-align: center;
+      padding-top: 41px;
+      padding-bottom: 20px;
+  
+      img {
+        height: 32px;
+        width: 40px;
+      }
+    }
+  
+    h2 {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: 1.38;
+      text-align: center;
+      color: #444444;
+      margin-bottom: 35px;
+    }
+  
+    .input-and-button {
+      text-align: center;
+  
+      .inline-block {
+        display: inline-flex;
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+  
+        input {
+          padding: 5px;
+          height: 42px;
+          outline: none;
+          width: 403px;
+          border: solid 1px #cecece;
+          padding-left: 10px;
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+        }
+  
+        button {
+          text-transform: uppercase;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 1.3px;
+          color: #ffffff;
+          background: $green;
+          border: none;
+          border-top-right-radius: 6px;
+          border-bottom-right-radius: 6px;
+          height: 42px;
+          cursor: pointer;
+        }
+      }
+    }
+  
+    .email-security {
+      font-size: 13px;
+      line-height: 1.85;
+      color: #444444;
+      text-align: center;
+      margin-top: 15px;
+    }
+  }
+}
+
+.footer {
+  height: 245px;
+  background: #fcfcfc;
+  text-align: center;
+
+  .iiua {
+    padding-top: 30px;
+    padding-bottom: 45px;
+    font-family: Helvetica;
+    line-height: 1.58;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .menu {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 48px;
+
+    .item {
+      margin: 0px 10px;
+      font-family: Helvetica;
+      font-size: 16px;
+      line-height: 1.58;
+    }
+  }
+
+  .year {
+    font-family: Helvetica;
+    font-size: 14px;
+    line-height: 1.58;
+    text-align: center;
+  }
+}
+
 

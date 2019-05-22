@@ -1,0 +1,60 @@
+<div class="messages-wrapper">
+  <div class="name">Общение</div>
+  <div class="messages">
+    <div *ngFor="let message of messages" class="message">
+
+      <div *ngIf="message.type === 'you'" class="you">
+        <div class="attachments">
+          <div *ngFor="let img of message.attachments" class="img-wrapper">
+            <div class="img" [ngStyle]="{ 'background-image': getImageUrl(img) }"></div>
+          </div>
+        </div>
+        <div class="message-text-wrapper">
+          <div class="text">
+            <div class="message-text">{{message.text}}</div>
+            <div class="time">{{message.time}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="message.type === 'their'" class="their">
+        <div class="attachments">
+          <div *ngFor="let img of message.attachments" class="img-wrapper">
+            <div class="img" [ngStyle]="{ 'background-image': getImageUrl(img) }"></div>
+          </div>
+        </div>
+        <div class="message-text-avatar-wrapper">
+          <div class="avatar-wrapper">
+            <img src={{message.avatar}} alt="">
+          </div>
+          <div class="text-and-sender">
+            <div class="sender">{{message.sender}}</div>
+            <div class="text">
+              <div class="message-text">{{message.text}}</div>
+              <div class="time">{{message.time}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="message.type === 'date'" class="date">
+        <hr>
+        <div class="text">{{message.date}}</div>
+        <hr>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="send-message">
+    <div class="attach">
+      <i class="fa fa-paperclip" aria-hidden="true"></i>
+    </div>
+    <input type="text" placeholder="Message">
+    <div class="send">
+      <img src="../../../../assets/img/send-message.png" alt="">
+    </div>
+  </div>
+</div>
+
+

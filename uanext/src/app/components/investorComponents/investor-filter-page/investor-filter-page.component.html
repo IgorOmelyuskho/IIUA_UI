@@ -1,0 +1,134 @@
+<mat-progress-bar class="progress-bar-fixed" *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
+<!-- use class="progress-bar-fixed" when page scrolled -->
+
+<div class="container-fluid" (dblclick)="scrollToElement($event)">
+
+  <!-- <h3>Projects</h3> -->
+  <!-- <div>Page size {{this.pageSize}}</div>
+  <div>Pages count {{this.pagesCount}}</div>
+  <div>Projects count {{this.projectsCount}}</div>
+  <div>Page number {{this.pageNumber}}</div> -->
+
+  <div class="row bg-color">
+    <!-- main -->
+    <div class="col-8 left-col">
+      <div class="search-by-name">
+        <div class="input-group mb-3 mt-3">
+          <div class="input-group-prepend">
+            <button (click)="searchByKeywordBtn($event)" class="btn btn-outline-secondary" type="button">
+              <span class="fa fa-search"></span>
+            </button>
+          </div>
+          <input #searchByKeyWordInput type="text" (keydown)="searchByKeywordKeyDown($event)" [(ngModel)]="searchWord"
+            class="form-control" placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
+            aria-describedby="basic-addon2">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-3 pl-0 pr-0">
+          <!-- filter -->
+          <app-filter [filterItemForRemove]="filterItemForRemove" (filterChange)="filterOnChange($event)"></app-filter>
+        </div>
+
+        <div class="col-9">
+          <div class="projects-wrapper">
+            <!-- filter-property -->
+            <div class="filter-properties">
+              <app-filter-items (filterItemRemove)="onFilterItemRemove($event)" [filter]="filter"></app-filter-items>
+            </div>
+            <!-- projects -->
+            <div class="projects search-results" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
+              [infiniteScrollThrottle]="500" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()">
+              <h5 *ngIf="projects?.length === 0 && showProgress === false">No projects found</h5>
+
+              <div *ngFor="let project of projects" class="project-wrapper">
+                <app-filtered-project [searchText]="searchWord" [project]="project"
+                  (selectProject)="selectProject($event)" (goToProject)="goToProject($event)"></app-filtered-project>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="col-4 pr-0 pl-0 right-col">
+      <div class="map-wrapper">
+        <app-map (mapFinishInit)="onMapFinishInit()" [replace3DObjects]="mapObjects"
+          [changeSelectedProject]="selectedProject" (objectClick)="onMapObjectClick($event)"></app-map>
+      </div>
+
+      <div class="detail-project-info">
+        <div class="project-info-menu">
+          <button [disabled]="!selectedProject" type="button"
+            [ngClass]="{selectedMenuItem: selectedMenuItem === 'shared'}"
+            (click)="selectedMenuItem = 'shared'">Общее</button>
+          <button [disabled]="!selectedProject" type="button"
+            [ngClass]="{selectedMenuItem: selectedMenuItem === 'gallery'}"
+            (click)="selectedMenuItem = 'gallery'">Галерея</button>
+          <button [disabled]="!selectedProject" type="button"
+            [ngClass]="{selectedMenuItem: selectedMenuItem === 'documents'}"
+            (click)="selectedMenuItem = 'documents'">Документы</button>
+        </div>
+        <div class="no-selected" *ngIf="selectedMenuItem == null">
+          <div class="iiua">IIUA</div>
+          <div>Начинай инвестировать в будущее.</div>
+          <div class="grey-text">Тут будет отображена информация по выбранному проекту.</div>
+        </div>
+        <div class="shared" *ngIf="selectedMenuItem === 'shared'">
+          <h5 class="mb-2">
+            <img src="../../../assets/img/notepad.png" alt="">
+            <span>Для чего нужны инвестиции</span>
+          </h5>
+          <div class="steps">
+            <div class="step" *ngFor="let step of selectedProject.steps">
+              {{step.data}}
+            </div>
+          </div>
+          <hr>
+          <div class="invest-and-chat">
+            <button class="invest">
+              <span>ИНВЕСТИРОВАТЬ</span>
+              <span class="big-font">$</span>
+            </button>
+            <button class="start-chat">
+              <span>ЧАТ</span>
+              <span class="img-bg"></span>
+            </button>
+          </div>
+          <hr>
+          <div>{{selectedProject.investmentDescription}}</div>
+        </div>
+        <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
+          <div class="images-gallery">
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+          </div>
+          <div class="videos">
+            <h5>
+              <img src="../../../assets/img/video.png" alt="">
+              <span>Videos</span>
+            </h5>
+            <div class="video-links-wrapper">
+              <div *ngFor="let video of selectedProject.videos" class="link">
+                <img src="../../../assets/img/video-link.png" alt="">
+                <a target="_blank" rel="noopener noreferrer" href="video.url">{{video.url}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="documents" *ngIf="selectedMenuItem === 'documents'">
+          <div class="documents-wrapper">
+            <div class="document" *ngFor="let document of selectedProject.files">
+              <img src="../../../assets/img/file.png" alt="file">
+              <span>{{document.url}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

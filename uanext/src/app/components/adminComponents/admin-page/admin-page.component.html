@@ -1,0 +1,13 @@
+<nav class="navbar">
+    <a routerLink="">
+      <span class="navbar-brand mb-0 h1">IIUA</span>
+    </a>
+    <div class='navbar-text'>Navbar for Admin</div>
+    <div>
+      <button #profile (click)='goToProfile()' type="button">My profile</button>
+      <button #upload (click)='uploadModel()' type="button">Upload 3d models</button>
+      <button (click)="signOut()" type="button">Sign out</button>
+    </div>
+  </nav>
+  
+  <router-outlet></router-outlet>

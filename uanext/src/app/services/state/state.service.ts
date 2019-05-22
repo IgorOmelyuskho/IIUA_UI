@@ -1,20 +1,21 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, } from 'rxjs';
 
-import { VendorRole } from './../../models';
+import { VendorRole, AdminRole, UserRole } from './../../models';
 import { InvestorRole } from './../../models';
-import { AuthorizationService } from '../auth/authorization.service';
-import { NotificationService } from '../notification/notification.service';
+import { NotificationService } from '../http/notification.service';
 import { Router } from '@angular/router';
+import { ProjectUserRole } from 'src/app/models/projectUserRole';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
   private helper = new JwtHelperService();
-  user$: BehaviorSubject<VendorRole | InvestorRole> = new BehaviorSubject(null);
+  user$: BehaviorSubject<VendorRole | InvestorRole | AdminRole | ProjectUserRole> = new BehaviorSubject(null);
   authorized$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private notify: NotificationService, private router: Router) { }
@@ -24,13 +25,13 @@ export class StateService {
     localStorage.removeItem('token');
     this.user$.next(null);
     this.authorized$.next(false);
-    this.router.navigate(['']);
+    this.router.navigate(['signin']);
   }
 
   /**
   * must call after localStorage.setItem(token)
   */
-  role(): string {
+  role(): UserRole {
     try {
       const token = localStorage.getItem('token');
       const decodedToken: any = this.helper.decodeToken(token);

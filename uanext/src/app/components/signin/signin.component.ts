@@ -2,13 +2,15 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
-import { AuthorizationService } from '../../services/auth/authorization.service';
+import { AuthorizationService } from '../../services/http/authorization.service';
 import { StateService } from './../../services/state/state.service';
-import { ProfileService } from 'src/app/services/profile/profile.service';
+import { ProfileService } from 'src/app/services/http/profile.service';
 import { Observable } from 'rxjs';
-import { VendorRole, InvestorRole } from 'src/app/models';
-import { NotificationService } from 'src/app/services/notification/notification.service';
-import { HelperService } from 'src/app/services/helperServices/helper.service';
+import { VendorRole, InvestorRole, AdminRole, UserRole } from 'src/app/models';
+import { NotificationService } from 'src/app/services/http/notification.service';
+import FormHelper from '../../helperClasses/helperClass';
+import { take, first, delay } from 'rxjs/operators';
+import { ProjectUserRole } from 'src/app/models/projectUserRole';
 
 @Component({
   selector: 'app-signin',
@@ -18,6 +20,8 @@ import { HelperService } from 'src/app/services/helperServices/helper.service';
 export class SigninComponent implements OnInit {
   signinForm: FormGroup;
   submitted = false;
+  FormHelper = FormHelper;
+  showProgressBar = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,10 +30,9 @@ export class SigninComponent implements OnInit {
     private stateService: StateService,
     private profileService: ProfileService,
     private notify: NotificationService,
-    private helperService: HelperService
   ) {
     this.signinForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(this.helperService.emailPattern)]],
+      email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -46,6 +49,7 @@ export class SigninComponent implements OnInit {
       (vendor: VendorRole) => {
         this.stateService.user$.next(vendor);
         this.stateService.authorized$.next(true);
+        this.router.navigate(['home', 'vendor']);
       },
       err => {
         console.warn(err);
@@ -59,6 +63,35 @@ export class SigninComponent implements OnInit {
       (investor: InvestorRole) => {
         this.stateService.user$.next(investor);
         this.stateService.authorized$.next(true);
+        this.router.navigate(['home', 'investor']);
+      },
+      err => {
+        console.warn(err);
+        this.authService.signOut();
+      }
+    );
+  }
+
+  fetchAdminSubscribe(observable: Observable<AdminRole>): void {
+    observable.subscribe(
+      (admin: AdminRole) => {
+        this.stateService.user$.next(admin);
+        this.stateService.authorized$.next(true);
+        this.router.navigate(['admin']);
+      },
+      err => {
+        console.warn(err);
+        this.authService.signOut();
+      }
+    );
+  }
+
+  fetchProjectUserSubscribe(observable: Observable<ProjectUserRole>): void {
+    observable.subscribe(
+      (projectUser: ProjectUserRole) => {
+        this.stateService.user$.next(projectUser);
+        this.stateService.authorized$.next(true);
+        this.router.navigate(['projectUser']);
       },
       err => {
         console.warn(err);
@@ -74,32 +107,32 @@ export class SigninComponent implements OnInit {
       return;
     }
 
+    this.showProgressBar = true;
+
     this.authService.signIn(this.signinForm.value).subscribe(
       response => {
-        console.log(response);
-        // not required, in this section status always === 200 ?
-        if (response.status !== 200 || response.body.isSuccess !== true) {
-          this.notify.show(response.body.error);
-          return;
-        }
+        this.showProgressBar = false;
 
         localStorage.setItem('token', response.body.data);
-        const role = this.stateService.role();
+        const role: UserRole = this.stateService.role();
 
-        if (role === 'Vendor') {
-          this.router.navigate(['home', 'vendor']);
+        if (role === UserRole.Vendor) {
           this.fetchVendorSubscribe( this.profileService.fetchVendor() );
         }
-
-        if (role === 'Investor') {
-          this.router.navigate(['home', 'investor']);
+        if (role === UserRole.Investor) {
           this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
+        }
+        if (role === UserRole.Admin) {
+          this.fetchAdminSubscribe( this.profileService.fetchAdmin() );
+        }
+        if (role === UserRole.ProjectUser) {
+          this.fetchProjectUserSubscribe( this.profileService.fetchProjectUser() );
         }
       },
       err => {
         console.warn(err);
+        this.showProgressBar = false;
         this.notify.show(err.error.error.errorMessage);
-        // this.authService.signOut();
       }
     );
   }
