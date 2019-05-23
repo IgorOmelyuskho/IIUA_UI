@@ -5,7 +5,7 @@ declare var THREE: any;
 declare var maptalks: any;
 
 export class MapManager {
-  // constans region
+  // constants region
   private readonly zoomWhenChangeVisible = 16;
   private readonly initZoom = 15;
   private readonly updatedInterval = 3500;
@@ -17,7 +17,6 @@ export class MapManager {
   private on_map_init: Function = null;
 
   // fields
-  private infoWindow = {};
   private canvasElem: HTMLElement = null;
   private stats: Stats = null;
   private scene = null;
@@ -26,8 +25,7 @@ export class MapManager {
   private selectedObject: GeoObject = null;
   private map = null;
   private objectsArr: GeoObject[] = [];
-  private timer1 = null;
-  private timer2 = null;
+  private timerForDraw = null;
   private animationFrame = null;
   private mapElement: HTMLElement = null;
   private mapWrapperElement: HTMLElement | any = null;
@@ -37,40 +35,16 @@ export class MapManager {
   private labelRenderer = null;
   private camera = null;
 
-  public constructor(cb: Function) {
+  // html elements id
+  private mapWrapperId: string;
+  private mapId: string;
+  private labelRendererId: string;
+
+  public constructor(cb: Function, htmlId: { mapWrapperId: string, mapId: string, labelRendererId: string }) {
+    this.mapWrapperId = htmlId.mapWrapperId;
+    this.mapId = htmlId.mapId;
+    this.labelRendererId = htmlId.labelRendererId;
     this.mapInit(cb);
-  }
-
-  mapInit(cb: Function) {
-    this.createMap();
-    this.createPolygonLayer();
-    this.createClusterLayer();
-    this.initInfoWindow();
-
-    this.mapElement = document.getElementById('map-4');
-    this.mapWrapperElement = document.getElementsByClassName('map-wrapper-4-unique-3585349')[0];
-    this.canvasElem = this.mapElement.querySelector('canvas');
-
-    this.stats = new Stats();
-    this.mapElement.appendChild(this.stats.dom);
-    this.raycaster = new THREE.Raycaster();
-    this.mouse = new THREE.Vector2();
-
-    this.createLabelRenderer();
-    this.animation();
-
-    window.addEventListener('resize', this.windowOnResize);
-
-    this.on_map_init = cb;
-    this.createThreeLayer(); // async
-
-    this.timer1 = setInterval(() => {
-      this.updateCoordsFromServer();
-    }, this.updatedInterval);
-
-    this.timer2 = setInterval(() => {
-      this.updateCoordsForRedraw();
-    }, this.drawInterval);
   }
 
   mapSetProject(project: VendorProject) {
@@ -82,12 +56,10 @@ export class MapManager {
   }
 
   mapDestroy() {
-    clearInterval(this.timer1);
-    clearInterval(this.timer2);
+    clearInterval(this.timerForDraw);
     cancelAnimationFrame(this.animationFrame);
     window.removeEventListener('resize', this.windowOnResize);
 
-    this.infoWindow = {};
     this.canvasElem = null;
     this.stats = null;
     this.scene = null;
@@ -97,8 +69,7 @@ export class MapManager {
     this.selectedObject = null;
     this.map = null;
     this.objectsArr = [];
-    this.timer1 = null;
-    this.timer2 = null;
+    this.timerForDraw = null;
     this.animationFrame = null;
     this.mapElement = null;
     this.mapWrapperElement = null;
@@ -123,81 +94,41 @@ export class MapManager {
     this.labelRenderer.setSize(this.mapElement.clientWidth, this.mapElement.clientHeight);
   }
 
-  private createLabelRenderer() {
-    this.labelRenderer = new THREE.CSS2DRenderer();
-    this.labelRenderer.setSize(this.mapElement.clientWidth, this.mapElement.clientHeight);
-    this.labelRenderer.domElement.id = 'label-renderer-4';
-    this.mapElement.appendChild(this.labelRenderer.domElement);
-  }
+  signalRMessage: Function = (message: { object3DId: string, positionX: number, positionY: number }) => {
+    for (let i = 0; i < this.objectsArr.length; i++) {
+      if (message.object3DId === this.objectsArr[i].geoObjectId) {
+        this.objectsArr[i].prevCoords.x = this.objectsArr[i].coords.x;
+        this.objectsArr[i].prevCoords.y = this.objectsArr[i].coords.y;
+        this.objectsArr[i].speedX = (message.positionX - this.objectsArr[i].prevCoords.x) * this.drawInterval / this.updatedInterval;
+        this.objectsArr[i].speedY = (message.positionY - this.objectsArr[i].prevCoords.y) * this.drawInterval / this.updatedInterval;
 
-  private windowOnResize(event) {
-    const x = this.mapWrapperElement.clientWidth; // offsetWidth
-    const y = this.mapWrapperElement.clientHeight; // offsetHeight
-    // mapElement width and height 100% in styles.scss
-    this.labelRenderer.setSize(x, y);
-  }
+        if (this.objectsArr[i].pointForMove) {
+          const v = this.threeLayer.coordinateToVector3(new THREE.Vector3(message.positionX, message.positionY, 0.1));
+          this.objectsArr[i].pointForMove.position.x = v.x;
+          this.objectsArr[i].pointForMove.position.y = v.y;
+        }
 
-  private initInfoWindow() {
-    this.infoWindow['infoElem'] = document.getElementById('info-4');
-    this.infoWindow['coordX'] = this.infoWindow['infoElem'].querySelector('.coords-x');
-    this.infoWindow['coordY'] = this.infoWindow['infoElem'].querySelector('.coords-y');
-    this.infoWindow['name'] = this.infoWindow['infoElem'].querySelector('.name');
-  }
-
-  private updateCoordsFromServer() {
-    // const res = [];
-    // for (private i = 0; i < objectsArr.length; i++) {
-    //   const newObj = {
-    //     geoObjectId: objectsArr[i].geoObjectId,
-    //     coords: {
-    //       x: objectsArr[i].coords.x + Math.random() * 0.001 - Math.random() * 0.001,
-    //       y: objectsArr[i].coords.y + Math.random() * 0.001 - Math.random() * 0.001,
-    //     },
-    //   };
-    //   res.push(newObj);
-    // }
-
-    // for (let i = 0; i < res.length; i++) {
-    //   for (let j = 0; j < objectsArr.length; j++) {
-    //     if (res[i].geoObjectId === objectsArr[j].geoObjectId) {
-    //       objectsArr[j].prevCoords.x = objectsArr[j].coords.x;
-    //       objectsArr[j].prevCoords.y = objectsArr[j].coords.y;
-    //       objectsArr[j].speedX = (res[i].coords.x - objectsArr[j].prevCoords.x) * drawInterval / updatedInterval;
-    //       objectsArr[j].speedY = (res[i].coords.y - objectsArr[j].prevCoords.y) * drawInterval / updatedInterval;
-
-    //       const v = threeLayer.coordinateToVector3(new THREE.Vector3(res[i].coords.x, res[i].coords.y, 0.1));
-    //       objectsArr[j].pointForMove.position.x = v.x;
-    //       objectsArr[j].pointForMove.position.y = v.y;
-    //       // objectsArr[j].cube.position.z = v.z;
-    //     }
-    //   }
-    // }
-  }
-
-  private animation = () => {
-    this.animationFrame = requestAnimationFrame(this.animation);
-    this.stats.update();
-    if (this.labelRenderer != null && this.scene != null && this.camera != null) {
-      this.labelRenderer.render(this.scene, this.camera);
+        return;
+      }
     }
   }
 
-  private remove3DObjectFromScene(object: any) { // any - not geoObject !
-    if (object.geometry) {
-      object.geometry.dispose();
-    }
-    if (object.material) {
-      object.material.dispose();
-    }
-    if (object.texture) {
-      object.texture.dispose();
-    }
-    this.scene.remove(object);
+  // set callbacks
+  //#region
+  setObjectClickCallback(cb: Function) {
+    this.on_click_object = cb;
   }
 
+  setObjectHoverCallback(cb: Function) {
+    this.on_hover_object = cb;
+  }
+  //#endregion
+
+
+  // add / replace / delete / change GeoObjects or polygons with map
+  //#region
   mapReplaceObjects(objects: GeoObject[]) {
-    clearInterval(this.timer1);
-    clearInterval(this.timer2);
+    clearInterval(this.timerForDraw);
     for (let i = 0; i < this.objectsArr.length; i++) {
       this.remove3DObjectFromScene(this.objectsArr[i].pointForMove);
       this.objectsArr[i].objectDivLabel.style.display = 'none';
@@ -213,10 +144,7 @@ export class MapManager {
     this.objectsArr = [];
     this.customRedraw();
     this.mapAddNewObjects(objects);
-    this.timer1 = setInterval(() => {
-      this.updateCoordsFromServer();
-    }, this.updatedInterval);
-    this.timer2 = setInterval(() => {
+    this.timerForDraw = setInterval(() => {
       this.updateCoordsForRedraw();
     }, this.drawInterval);
   }
@@ -239,151 +167,8 @@ export class MapManager {
       this.loadObject3D(newObj); // async
       this.objectsArr.push(newObj);
     }
-  }
-
-  // callbacks
-  setObjectClickCallback(cb: Function) {
-    this.on_click_object = cb;
-  }
-
-  setObjectHoverCallback(cb: Function) {
-    this.on_hover_object = cb;
-  }
-
-  private createMap() {
-    this.map = new maptalks.Map('map-4', { // DIV id
-      center: [13.41261, 52.529611],
-      // center: [0, 0],
-      zoom: this.initZoom,
-      // pitch: 60,
-      // bearing: 30,
-      pitch: 0,
-      bearing: 0,
-      centerCross: true,
-      scaleControl: {
-        'position': 'bottom-left',
-        'maxWidth': 100,
-        'metric': true,
-        'imperial': true
-      },
-      // overviewControl: true, // add overview control
-      baseLayer: new maptalks.TileLayer('tile', {
-        'urlTemplate': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-        'subdomains': ['a', 'b', 'c'],
-      })
-    });
-
-    this.map.on('mousemove', (event) => {
-      this.mouse.x = (event.containerPoint.x / event.target.width) * 2 - 1;
-      this.mouse.y = -(event.containerPoint.y / event.target.height) * 2 + 1;
-      this.selectObjects();
-    });
-
-    this.map.on('zooming', (event) => {
-      // const scale = calcInterpolationScale(map.getZoom());
-      for (let i = 0; i < this.objectsArr.length; i++) {
-        if (this.objectsArr[i].object3D == null || this.objectsArr[i].marker == null) {
-          continue; // objectsArr[i].marker uses in changeVisible
-        }
-        this.changeVisible(this.objectsArr[i], event.to);
-        // objectsArr[i].model.scale.set(scale, scale, scale);
-      }
-    });
-
-
-    this.map.on('click', (event) => {
-      for (let i = 0; i < this.objectsArr.length; i++) {
-        if (this.objectsArr[i].mouseUnder === true) {
-          if (this.selectedObject != null) {
-            this.selectedObject.objectDivLabel.className = 'obj-label';
-            this.setMarkerSymbolDefault(this.selectedObject.marker);
-          }
-          this.selectedObject = this.objectsArr[i];
-          this.selectedObject.objectDivLabel.className = 'obj-label-selected';
-          this.setMarkerSymbolSelected(this.selectedObject.marker);
-          if (this.on_click_object != null) {
-            this.on_click_object(this.selectedObject);
-          }
-          this.showInformation(this.selectedObject);
-        }
-      }
-    });
-  }
-
-  private setMarkerSymbolDefault(marker) {
-    marker.updateSymbol({
-      'markerWidth': 28,
-      'markerHeight': 40,
-      'textSize': 16,
-      'textFill': 'black',
-      'zIndex': 1
-    });
-    marker.setZIndex(1);
-  }
-
-  private setMarkerSymbolSelected(marker) {
-    marker.updateSymbol({
-      'markerWidth': 28 + 5,
-      'markerHeight': 40 + 5,
-      'textSize': 18,
-      'textFill': 'green',
-    });
-    marker.setZIndex(1000);
-  }
-
-  private createMarker(obj: GeoObject) {
-    const coords = new maptalks.Coordinate(obj.coords.x, obj.coords.y);
-    const marker = new maptalks.Marker(coords, {
-      visible: true,
-      cursor: 'pointer',
-      symbol: [{
-        'markerFile': '../../assets/img/marker.svg',
-        'markerWidth': 28,
-        'markerHeight': 40,
-      },
-      {
-        'textFaceName': 'sans-serif',
-        'textName': obj.projectName,
-        'textSize': 16,
-        'textDy': 10,
-        'textFill': 'black',
-        'textHaloColor': '#fff',
-        'textHaloRadius': 2,
-      }]
-    });
-
-    obj.marker = marker;
-    obj.marker.parent = obj;
-    this.clusterLayer.addGeometry(marker);
-    this.changeVisible(obj, this.map.getZoom());
-
-    marker.on('click', (e) => {
-      if (this.selectedObject != null) {
-        this.selectedObject.objectDivLabel.className = 'obj-label';
-        this.setMarkerSymbolDefault(this.selectedObject.marker);
-      }
-      this.selectedObject = e.target.parent;
-      this.selectedObject.objectDivLabel.className = 'obj-label-selected';
-      this.setMarkerSymbolSelected(this.selectedObject.marker);
-      if (this.on_click_object != null) {
-        this.on_click_object(this.selectedObject);
-      }
-      this.showInformation(this.selectedObject);
-    });
-
-    marker.on('mouseenter', (e) => {
-      this.setMarkerSymbolSelected(e.target); // e.target === marker
-      if (this.on_hover_object != null) {
-        this.on_hover_object(e.target.parent);
-      }
-    });
-
-    marker.on('mouseout', (e) => {
-      if (e.target.parent === this.selectedObject) {
-        return;
-      }
-      this.setMarkerSymbolDefault(e.target);
-    });
+    console.log(this.objectsArr);
+    window['OBJECTS_ARR'] = this.objectsArr;
   }
 
   mapAddNewPolygons(polygons: any[]) {
@@ -410,8 +195,7 @@ export class MapManager {
       });
 
       polygon.on('click', (e) => {
-        document.getElementById('area-info-4').innerHTML = e.target.options.customName;
-        document.getElementById('area-info-4').style.display = 'block';
+        // emit event or do something
       });
 
       polygon.on('mouseenter', (e) => {
@@ -429,6 +213,120 @@ export class MapManager {
   mapReplacePolygons(polygons: any[]) {
     this.polygonLayer.clear();
     this.mapAddNewPolygons(polygons);
+  }
+  //#endregion
+
+
+  // private methods
+  // init map
+  //#region
+  private mapInit(cb: Function) {
+    this.createMap();
+    this.createPolygonLayer();
+    this.createClusterLayer();
+
+    this.mapElement = document.getElementById(this.mapId);
+    this.mapWrapperElement = document.getElementById(this.mapWrapperId);
+    this.canvasElem = this.mapElement.querySelector('canvas');
+
+    this.stats = new Stats();
+    this.mapElement.appendChild(this.stats.dom);
+    this.raycaster = new THREE.Raycaster();
+    this.mouse = new THREE.Vector2();
+
+    this.createLabelRenderer();
+    this.animation();
+
+    window.addEventListener('resize', this.windowOnResize);
+
+    this.on_map_init = cb;
+    this.createThreeLayer(); // async
+
+    this.timerForDraw = setInterval(() => {
+      this.updateCoordsForRedraw();
+    }, this.drawInterval);
+  }
+
+  private createLabelRenderer() {
+    this.labelRenderer = new THREE.CSS2DRenderer();
+    this.labelRenderer.setSize(this.mapElement.clientWidth, this.mapElement.clientHeight);
+    this.labelRenderer.domElement.id = this.labelRendererId;
+    this.mapElement.appendChild(this.labelRenderer.domElement);
+  }
+
+  private windowOnResize(event) {
+    const x = this.mapWrapperElement.clientWidth; // offsetWidth
+    const y = this.mapWrapperElement.clientHeight; // offsetHeight
+    // mapElement width and height 100% in styles.scss
+    this.labelRenderer.setSize(x, y);
+  }
+
+  private animation = () => {
+    this.animationFrame = requestAnimationFrame(this.animation);
+    this.stats.update();
+    if (this.labelRenderer != null && this.scene != null && this.camera != null) {
+      this.labelRenderer.render(this.scene, this.camera);
+    }
+  }
+
+  private createMap() {
+    this.map = new maptalks.Map('map-html-element-id-495367235', { // DIV id
+      center: [13.41261, 52.529611],
+      zoom: this.initZoom,
+      // pitch: 60,
+      // bearing: 30,
+      pitch: 0,
+      bearing: 0,
+      centerCross: true,
+      scaleControl: {
+        'position': 'bottom-left',
+        'maxWidth': 100,
+        'metric': true,
+        'imperial': true
+      },
+      baseLayer: new maptalks.TileLayer('tile', {
+        'urlTemplate': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+        'subdomains': ['a', 'b', 'c'],
+      })
+    });
+
+    this.mapEventHandlers();
+  }
+
+  private mapEventHandlers() {
+    this.map.on('mousemove', (event) => {
+      this.mouse.x = (event.containerPoint.x / event.target.width) * 2 - 1;
+      this.mouse.y = -(event.containerPoint.y / event.target.height) * 2 + 1;
+      this.selectObjects();
+    });
+
+    this.map.on('zooming', (event) => {
+      // const scale = calcInterpolationScale(map.getZoom());
+      for (let i = 0; i < this.objectsArr.length; i++) {
+        if (this.objectsArr[i].object3D == null || this.objectsArr[i].marker == null) {
+          continue; // objectsArr[i].marker uses in changeVisible
+        }
+        this.changeVisible(this.objectsArr[i], event.to);
+        // objectsArr[i].model.scale.set(scale, scale, scale);
+      }
+    });
+
+    this.map.on('click', (event) => {
+      for (let i = 0; i < this.objectsArr.length; i++) {
+        if (this.objectsArr[i].mouseUnder === true) {
+          if (this.selectedObject != null) {
+            this.selectedObject.objectDivLabel.className = 'obj-label';
+            this.setMarkerSymbolDefault(this.selectedObject.marker);
+          }
+          this.selectedObject = this.objectsArr[i];
+          this.selectedObject.objectDivLabel.className = 'obj-label-selected';
+          this.setMarkerSymbolSelected(this.selectedObject.marker);
+          if (this.on_click_object != null) {
+            this.on_click_object(this.selectedObject);
+          }
+        }
+      }
+    });
   }
 
   private createClusterLayer() {
@@ -478,6 +376,45 @@ export class MapManager {
     });
 
     this.map.addLayer(this.clusterLayer);
+  }
+
+  private createPolygonLayer() {
+    this.polygonLayer = new maptalks.VectorLayer('polygonLayer');
+    this.polygonLayer.addTo(this.map);
+  }
+
+  private createThreeLayer() {
+    THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
+    this.threeLayer = new maptalks.ThreeLayer('threeLayer');
+    this.threeLayer.prepareToDraw = (gl, localScene, localCamera) => {
+      this.scene = localScene;
+      this.camera = localCamera;
+      this.scene.add(new THREE.AmbientLight(0xffffff, 1));
+      if (this.on_map_init != null) {
+        this.on_map_init();
+      }
+    };
+    this.threeLayer.addTo(this.map);
+  }
+  //#endregion
+
+  // init / remove 3D Object
+  //#region
+
+
+  // init / remove 3D Object
+  //#region
+  private remove3DObjectFromScene(object: any) { // any - not geoObject !
+    if (object.geometry) {
+      object.geometry.dispose();
+    }
+    if (object.material) {
+      object.material.dispose();
+    }
+    if (object.texture) {
+      object.texture.dispose();
+    }
+    this.scene.remove(object);
   }
 
   private init3dObject(geoObject: GeoObject, object3D: any) {
@@ -554,55 +491,101 @@ export class MapManager {
         });
       });
   }
+  //#endregion
 
-  private createPolygonLayer() {
-    this.polygonLayer = new maptalks.VectorLayer('polygonLayer');
-    this.polygonLayer.addTo(this.map);
+
+  // marker
+  //#region
+  private setMarkerSymbolDefault(marker) {
+    marker.updateSymbol({
+      'markerWidth': 28,
+      'markerHeight': 40,
+      'textSize': 16,
+      'textFill': 'black',
+      'zIndex': 1
+    });
+    marker.setZIndex(1);
   }
 
-  private createThreeLayer() {
-    THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
-    this.threeLayer = new maptalks.ThreeLayer('threeLayer');
-    this.threeLayer.prepareToDraw = (gl, localScene, localCamera) => {
-      this.scene = localScene;
-      this.camera = localCamera;
-      this.scene.add(new THREE.AmbientLight(0xffffff, 1));
-      if (this.on_map_init != null) {
-        this.on_map_init();
+  private setMarkerSymbolSelected(marker) {
+    marker.updateSymbol({
+      'markerWidth': 28 + 5,
+      'markerHeight': 40 + 5,
+      'textSize': 18,
+      'textFill': 'green',
+    });
+    marker.setZIndex(1000);
+  }
+
+  private createMarker(obj: GeoObject) {
+    const coords = new maptalks.Coordinate(obj.coords.x, obj.coords.y);
+    const marker = new maptalks.Marker(coords, {
+      visible: true,
+      cursor: 'pointer',
+      symbol: [{
+        'markerFile': '../../assets/img/marker.svg',
+        'markerWidth': 28,
+        'markerHeight': 40,
+      },
+      {
+        'textFaceName': 'sans-serif',
+        'textName': obj.projectName,
+        'textSize': 16,
+        'textDy': 10,
+        'textFill': 'black',
+        'textHaloColor': '#fff',
+        'textHaloRadius': 2,
+      }]
+    });
+
+    obj.marker = marker;
+    obj.marker.parent = obj;
+    this.clusterLayer.addGeometry(marker);
+    this.changeVisible(obj, this.map.getZoom());
+    this.markerEventHandlers(marker);
+  }
+
+  private markerEventHandlers(marker) {
+    marker.on('click', (e) => {
+      if (this.selectedObject != null) {
+        this.selectedObject.objectDivLabel.className = 'obj-label';
+        this.setMarkerSymbolDefault(this.selectedObject.marker);
       }
-    };
-    this.threeLayer.addTo(this.map);
-  }
+      this.selectedObject = e.target.parent;
+      this.selectedObject.objectDivLabel.className = 'obj-label-selected';
+      this.setMarkerSymbolSelected(this.selectedObject.marker);
+      if (this.on_click_object != null) {
+        this.on_click_object(this.selectedObject);
+      }
+    });
 
-  private customRedraw() {
-    this.map.setCenter(new maptalks.Coordinate(this.map.getCenter()));
-  }
+    marker.on('mouseenter', (e) => {
+      this.setMarkerSymbolSelected(e.target); // e.target === marker
+      if (this.on_hover_object != null) {
+        this.on_hover_object(e.target.parent);
+      }
+    });
 
-  signalRMessage(message: { object3DId: string, positionX: number, positionY: number }) {
-    for (let i = 0; i < this.objectsArr.length; i++) {
-      if (message.object3DId === this.objectsArr[i].geoObjectId) {
-        this.objectsArr[i].prevCoords.x = this.objectsArr[i].coords.x;
-        this.objectsArr[i].prevCoords.y = this.objectsArr[i].coords.y;
-        this.objectsArr[i].speedX = (message.positionX - this.objectsArr[i].prevCoords.x) * this.drawInterval / this.updatedInterval;
-        this.objectsArr[i].speedY = (message.positionY - this.objectsArr[i].prevCoords.y) * this.drawInterval / this.updatedInterval;
-
-        if (this.objectsArr[i].pointForMove) {
-          const v = this.threeLayer.coordinateToVector3(new THREE.Vector3(message.positionX, message.positionY, 0.1));
-          this.objectsArr[i].pointForMove.position.x = v.x;
-          this.objectsArr[i].pointForMove.position.y = v.y;
-        }
-
+    marker.on('mouseout', (e) => {
+      if (e.target.parent === this.selectedObject) {
         return;
       }
-    }
+      this.setMarkerSymbolDefault(e.target);
+    });
+  }
+  //#endregion
+
+
+  // draw depending coordinates
+  //#region
+  private customRedraw() {
+    this.map.setCenter(new maptalks.Coordinate(this.map.getCenter()));
   }
 
   private updateCoordsForRedraw() {
     for (let i = 0; i < this.objectsArr.length; i++) {
       this.updateCoordsForDraw(this.objectsArr[i]);
     }
-
-    this.showInformation(this.selectedObject);
 
     if (this.map.getZoom() < this.zoomWhenChangeVisible + 0.2 || this.map.getZoom() < this.zoomWhenChangeVisible - 0.2) {
       this.customRedraw(); // todo remove
@@ -628,7 +611,11 @@ export class MapManager {
     obj.object3D.position.z = v.z;
     obj.object3D.rotation.z = Math.atan2(prevY - obj.object3D.position.y, prevX - obj.object3D.position.x);
   }
+  //#endregion
 
+
+  // detect when mouse under object
+  //#region
   private selectObjects() {
     this.setCanvasCursor('inherit');
 
@@ -658,58 +645,68 @@ export class MapManager {
     const intersects = this.raycaster.intersectObjects(objects);
 
     if (intersects.length > 0) {
-      const prevMouseUnderObject_2 = obj.mouseUnder;
-      obj.mouseUnder = true;
-
-      // on hover event
-      if (prevMouseUnderObject_2 !== obj.mouseUnder) {
-        if (this.on_hover_object != null) {
-          this.on_hover_object(obj);
-        }
-      }
-
-      // set selected color
-      obj.object3D.traverse((child) => {
-        if (!(child instanceof THREE.Mesh)) {
-          return;
-        }
-        if (Array.isArray(child.material) === true) {
-          return;
-        } else {
-          const initColor = child.material.initColor;
-          child.material.color.setHex(initColor - 100);
-        }
-      });
-
-      this.customRedraw();
-      return true;
+      return this.intersections(obj);
     }
 
     if (intersects.length === 0) {
-      const prevMouseUnderObject = obj.mouseUnder;
-      obj.mouseUnder = false;
-
-      // set default color
-      obj.object3D.traverse((child) => {
-        if (!(child instanceof THREE.Mesh)) {
-          return;
-        }
-        if (Array.isArray(child.material) === true) {
-          return;
-        } else {
-          const initColor = child.material.initColor;
-          child.material.color.setHex(initColor);
-        }
-      });
-
-      // event when mouse move and mouse leave 3d object
-      if (prevMouseUnderObject !== obj.mouseUnder) {
-        this.customRedraw();
-      }
-
-      return false;
+      return this.noIntersections(obj);
     }
   }
+
+  private intersections(obj: GeoObject): true {
+    const prevMouseUnderObject_2 = obj.mouseUnder;
+    obj.mouseUnder = true;
+
+    // on hover event
+    if (prevMouseUnderObject_2 !== obj.mouseUnder) {
+      if (this.on_hover_object != null) {
+        this.on_hover_object(obj);
+      }
+    }
+
+    // set selected color
+    obj.object3D.traverse((child) => {
+      if (!(child instanceof THREE.Mesh)) {
+        return;
+      }
+      if (Array.isArray(child.material) === true) {
+        return;
+      } else {
+        const initColor = child.material.initColor;
+        child.material.color.setHex(initColor - 100);
+      }
+    });
+
+    this.customRedraw();
+    return true;
+  }
+
+  private noIntersections(obj: GeoObject): false {
+    const prevMouseUnderObject = obj.mouseUnder;
+    obj.mouseUnder = false;
+
+    // set default color
+    obj.object3D.traverse((child) => {
+      if (!(child instanceof THREE.Mesh)) {
+        return;
+      }
+      if (Array.isArray(child.material) === true) {
+        return;
+      } else {
+        const initColor = child.material.initColor;
+        child.material.color.setHex(initColor);
+      }
+    });
+
+    // event when mouse move and mouse leave 3d object
+    if (prevMouseUnderObject !== obj.mouseUnder) {
+      this.customRedraw();
+    }
+
+    return false;
+  }
+  //#endregion
+
 
   private setCanvasCursor(cursor) {
     this.canvasElem.style.cursor = cursor;
@@ -735,17 +732,9 @@ export class MapManager {
     }
   }
 
-  private showInformation(obj: GeoObject) {
-    if (obj == null) {
-      return;
-    }
 
-    this.infoWindow['infoElem'].style.display = 'block';
-    this.infoWindow['coordX'].innerHTML = 'X = ' + obj.coords.x.toFixed(8);
-    this.infoWindow['coordY'].innerHTML = 'Y = ' + obj.coords.y.toFixed(8);
-    this.infoWindow['name'].innerHTML = obj.projectName;
-  }
-
+  // change object scale
+  //#region
   private deltaToScale(delta: number) {
     let res = 1;
     for (let i = 1; i < delta; i++) {
@@ -782,6 +771,7 @@ export class MapManager {
     const y1 = this.calcScale(x1);
     return this.linearInterpolation(y0, y1, x0, x1, mapZoom);
   }
+  //#endregion
 
 }
 
