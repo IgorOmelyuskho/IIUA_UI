@@ -1,7 +1,80 @@
+@import '../../../styles-variables.scss';
 
-.text-center {
-  background-color: #e9ecef;
-  .select-role {
-    margin: 5px;
+.wrapper {
+  .sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  section {
+    flex-grow: 3;
+    background-image: url('../../../assets/img/background-map-2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .form {
+      background: white;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+      background-color: #ffffff;
+      overflow: auto;
+
+      .top-green-div {
+        height: 7px;
+        border-radius: 6px;
+        width: 100%;
+        background: $green;
+      }
+
+      .registration {
+        font-size: 46px;
+        font-weight: bold;
+        line-height: 1.13;
+        letter-spacing: 1.3px;
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 25px;
+      }
+
+      .text-center {
+        padding-bottom: 15px;
+
+        .select-role {
+          margin: 0;
+          border: 1px solid $green;
+          border-radius: 0px;
+          background: white;
+          color: black;
+          box-shadow: none !important;
+        }
+
+        .select-role.selected {
+          background: $green;
+          color: white;
+        }
+
+        .select-role.investor {
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+          border-right: none;
+        }
+
+        .select-role.vendor {
+          border-left: none;
+          border-top-right-radius: 6px;
+          border-bottom-right-radius: 6px;
+        }
+      }
+
+      .vendor-form,
+      .investor-form {
+        padding-left: 56px;
+        padding-right: 56px;
+      }
+    }
   }
 }

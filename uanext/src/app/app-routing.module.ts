@@ -66,6 +66,7 @@ const routes: Routes = [
   { path: 'investor_test', component: InvestorFilterPageComponent },
   { path: 'main-screen_test', component: MainScreenInvestorComponent },
   { path: 'map_test', component: MapComponent },
+  { path: 'main-screen_vendor_test', component: VendorComponent, children: childVendorRoutes},
 
 
   { path: '', component: IndexComponent, pathMatch: 'full' },

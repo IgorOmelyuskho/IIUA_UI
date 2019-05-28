@@ -13,16 +13,12 @@ import { responseProject } from 'src/app/helperClasses/projects';
 })
 export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('previewCardWrapper') previewCardWrapper: ElementRef;
-  @ViewChild('stepsElement') stepsElement: ElementRef;
 
   selectedProject: VendorProject = null;
   selectedProjectId: string  = null;
 
   filter: FilterFields;
   filterIsExpanded = false; // false - свернут
-
-  UserRole = UserRole;
-  role: UserRole;
 
   showPreviewCard = false;
   previewCardX = 0;
@@ -36,7 +32,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   windowClickHandler = (e) => {
-    console.log('CLICK');
+    console.log('CLICK'); // todo
     this.showPreviewCard = false;
   }
 
@@ -46,8 +42,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     new Image().src = '../../../assets/img/message-hover.png';
     new Image().src = '../../../assets/img/bell-hover.png';
     new Image().src = '../../../assets/img/approve-hover.png';
-
-    this.role = this.stateService.role();
   }
 
   ngAfterViewInit() {

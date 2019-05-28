@@ -1,0 +1,92 @@
+@import '../../../../styles-variables.scss';
+
+
+.full-screen-block {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .map-wrapper {
+    height: 100%;
+    background: black;
+  }
+
+  .filter-wrapper {
+    width: 35vw;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    z-index: 90;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+
+    .search-by-name {
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23);
+      border-radius: 6px;
+
+      button {
+        background: $green;
+
+        span {
+          color: white;
+        }
+      }
+    }
+
+    .filter-btn-wrapper {
+      .filter-btn {
+        border-radius: 6px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        outline: none;
+        border: none;
+        padding: 5px 20px;
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23) !important;
+        background-color: #ffffff;
+        cursor: pointer;
+      }
+
+      .filter-btn-expanded {
+        background-color: $green;
+        color: white;
+      }
+    }
+
+    .filter-width {
+      width: 80%;
+      border-radius: 6px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+      overflow: auto;
+      margin-bottom: 10px;
+      border-right: 4px solid white;
+    }
+  }
+
+  .project-card-wrapper {
+    font-weight: normal;
+  }
+
+  .right-component-wrapper {
+    font-weight: normal;
+  }
+}
+
+
+
+.preview-card-wrapper {
+  position: fixed;
+  z-index: 10;
+
+  .preview-card {
+    border-radius: 6px;
+    border: solid 1px #bfbfbf;
+    overflow: hidden;
+  }
+}
+
+.highlighted {
+  background: rgb(201, 181, 8);
+  color: red;
+}

@@ -1,3 +1,27 @@
-.bg-color {
-  background-color: #e9ecef;
+@import '../../../../styles-variables.scss';
+
+
+form {
+  .account {
+    text-align: right;
+
+    a {
+      font-size: 13px;
+      line-height: 1.23;
+      letter-spacing: 0.4px;
+      color: $green;
+    }
+  }
+
+  .registration-btn-wrapper {
+    text-align: center;
+    padding-top: 20px;
+    
+    .registration-btn {
+      border-radius: 6px;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+      background-color: $green;
+      color: white;
+    }
+  }
 }
