@@ -278,12 +278,12 @@ export class MapManager {
       pitch: 0,
       bearing: 0,
       centerCross: true,
-      scaleControl: {
-        'position': 'bottom-left',
-        'maxWidth': 100,
-        'metric': true,
-        'imperial': true
-      },
+      // scaleControl: {
+      //   'position': 'bottom-left',
+      //   'maxWidth': 100,
+      //   'metric': true,
+      //   'imperial': true
+      // },
       baseLayer: new maptalks.TileLayer('tile', {
         'urlTemplate': 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
         'subdomains': ['a', 'b', 'c'],
@@ -523,7 +523,7 @@ export class MapManager {
       visible: true,
       cursor: 'pointer',
       symbol: [{
-        'markerFile': '../../assets/img/marker.svg',
+        'markerFile': '../../../assets/img/marker.svg',
         'markerWidth': 28,
         'markerHeight': 40,
       },

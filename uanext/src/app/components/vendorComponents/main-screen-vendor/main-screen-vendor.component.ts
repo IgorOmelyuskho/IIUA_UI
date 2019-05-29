@@ -12,6 +12,8 @@ export class MainScreenVendorComponent implements OnInit {
   selectedProject: VendorProject = null;
   selectedProjectId: string  = null;
 
+  actionIsExpanded = false;
+
   constructor() { }
 
   ngOnInit() {

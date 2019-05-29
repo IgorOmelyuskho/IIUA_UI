@@ -14,7 +14,7 @@
     display: inline-flex;
     height: 99%;
 
-    .last-activity-wrapper {
+    .find-investor-wrapper {
       width: 18vw;
       overflow: auto;
       height: 100%;
@@ -25,13 +25,8 @@
       height: 100%;
     }
 
-    .notifications-wrapper {
-      width: 20vw;
-      height: 100%;
-    }
-
-    .iterative-investment-wrapper {
-      width: 20vw;
+    .investment-offer-wrapper {
+      width: 30vw;
       height: 100%;
     }
   }
@@ -64,8 +59,7 @@
   z-index: 100000;
 
   .message,
-  .bell,
-  .approve {
+  .investment-offer {
     width: 40px;
     height: 40px;
     border-radius: 100px;
@@ -99,23 +93,13 @@
     }
   }
 
-  .bell {
+  .investment-offer {
     .img-bg {
-      background-image: url('../../../../assets/img/bell.png');
+      background-image: url('../../../../assets/img/investment-offer.png');
     }
 
     &.selected .img-bg {
-      background-image: url('../../../../assets/img/bell-hover.png');
-    }
-  }
-
-  .approve {
-    .img-bg {
-      background-image: url('../../../../assets/img/approve.png');
-    }
-
-    &.selected .img-bg {
-      background-image: url('../../../../assets/img/approve-hover.png');
+      background-image: url('../../../../assets/img/investment-offer-hover.png');
     }
   }
 }

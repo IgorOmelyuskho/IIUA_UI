@@ -44,6 +44,10 @@ import { InvestorFilterPageComponent } from './investorComponents/investor-filte
 import { ProjectUserPageComponent } from './projectUserComponents/project-user-page/project-user-page.component';
 import { ProjectUserProfileComponent } from './projectUserComponents/project-user-profile/project-user-profile.component';
 import { ProjectUserSignupComponent } from './projectUserComponents/project-user-signup/project-user-signup.component';
+import { VendorInvestmentOfferComponent } from './vendorComponents/vendor-investment-offer/vendor-investment-offer.component';
+import { VendorMainScreenRightComponent } from './vendorComponents/vendor-main-screen-right/vendor-main-screen-right.component';
+import { VendorMessagesComponent } from './vendorComponents/vendor-messages/vendor-messages.component';
+import { VendorFindInvestorComponent } from './vendorComponents/vendor-find-investor/vendor-find-investor.component';
 
 
 // this exports for app-routing.module.ts
@@ -91,7 +95,11 @@ export {
   HoveredProjectCardComponent,
   ProjectUserPageComponent,
   ProjectUserProfileComponent,
-  ProjectUserSignupComponent
+  ProjectUserSignupComponent,
+  VendorInvestmentOfferComponent,
+  VendorMainScreenRightComponent,
+  VendorMessagesComponent,
+  VendorFindInvestorComponent
 };
 
 export const components = [
@@ -138,7 +146,11 @@ export const components = [
   HoveredProjectCardComponent,
   ProjectUserPageComponent,
   ProjectUserProfileComponent,
-  ProjectUserSignupComponent
+  ProjectUserSignupComponent,
+  VendorInvestmentOfferComponent,
+  VendorMainScreenRightComponent,
+  VendorMessagesComponent,
+  VendorFindInvestorComponent
 ];
 
 

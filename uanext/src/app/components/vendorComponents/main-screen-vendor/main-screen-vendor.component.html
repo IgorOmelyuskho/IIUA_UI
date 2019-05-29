@@ -4,33 +4,18 @@
       (objectHover)="onMapObjectHover($event)"></app-map>
   </div>
 
-  <div class="filter-wrapper">
-    <div>
-      <div class="search-by-name">
-        <div class="input-group mb-3 mt-3">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button">
-              <span class="fa fa-search"></span>
-            </button>
-          </div>
-          <input #searchByKeyWordInput type="text" class="form-control"
-            placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
-            aria-describedby="basic-addon2">
-        </div>
-      </div>
-    </div>
-
-    <div class="filter-btn-wrapper">
-      <button (click)="filterIsExpanded = !filterIsExpanded" type="button" class="filter-btn"
-        [ngClass]="{ 'filter-btn-expanded': filterIsExpanded }">
-        <span>Фильтры</span>
-        <i *ngIf="filterIsExpanded" class="fa fa-angle-up ml-2"></i>
-        <i *ngIf="!filterIsExpanded" class="fa fa-angle-down ml-2"></i>
+  <div class="quick-action-wrapper">
+    <div class="action-btn-wrapper">
+      <button (click)="actionIsExpanded = !actionIsExpanded" type="button" class="action-btn"
+        [ngClass]="{ 'action-btn-expanded': actionIsExpanded }">
+        <span>Быстрые действия</span>
+        <i *ngIf="actionIsExpanded" class="fa fa-angle-up ml-2"></i>
+        <i *ngIf="!actionIsExpanded" class="fa fa-angle-down ml-2"></i>
       </button>
     </div>
 
-    <div *ngIf="filterIsExpanded" class="filter-width">
-      <app-filter (filterChange)="filterOnChange($event)"></app-filter>
+    <div *ngIf="actionIsExpanded" class="quick-action-width">
+      <div>SOME CONTENT/COMPONENT THERE</div>
     </div>
   </div>
 
@@ -39,7 +24,7 @@
   </div>
 
   <div class="right-component-wrapper">
-    <app-main-screen-right></app-main-screen-right>
+    <app-vendor-main-screen-right></app-vendor-main-screen-right>
   </div>
 </div>
 

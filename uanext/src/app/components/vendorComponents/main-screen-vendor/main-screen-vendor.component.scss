@@ -11,7 +11,7 @@
     background: black;
   }
 
-  .filter-wrapper {
+  .quick-action-wrapper {
     width: 35vw;
     max-height: 100%;
     position: absolute;
@@ -35,8 +35,8 @@
       }
     }
 
-    .filter-btn-wrapper {
-      .filter-btn {
+    .action-btn-wrapper {
+      .action-btn {
         border-radius: 6px;
         margin-top: 10px;
         margin-bottom: 20px;
@@ -48,13 +48,13 @@
         cursor: pointer;
       }
 
-      .filter-btn-expanded {
+      .action-btn-expanded {
         background-color: $green;
         color: white;
       }
     }
 
-    .filter-width {
+    .action-width {
       width: 80%;
       border-radius: 6px;
       box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);

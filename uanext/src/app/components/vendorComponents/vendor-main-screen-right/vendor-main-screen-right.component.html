@@ -1,0 +1,31 @@
+<div #mainScreenRight class="main-screen-right">
+  <div class="main-block">
+    <div class="find-investor-wrapper" *ngIf="find_investor_show">
+      <app-vendor-find-investor></app-vendor-find-investor>
+    </div>
+    <div class="messages-wrapper" *ngIf="messages_show">
+      <app-vendor-messages></app-vendor-messages>
+    </div>
+    <div class="investment-offer-wrapper" *ngIf="investment_offer_show">
+      <app-vendor-investment-offer [selectedProject]="selectedProject"></app-vendor-investment-offer>
+    </div>
+  </div>
+
+  <div (click)="hideRightBlock()" class="close-btn">
+    <img src="../../../../assets/img/close-2.png" alt="close">
+  </div>
+</div>
+
+
+
+
+
+<!-- right menu -->
+<div class="right-menu">
+  <div (click)="showMessages()" class="message" [ngClass]="{ 'selected': messages_show }">
+    <div class="img-bg"></div>
+  </div>
+  <div (click)="showInvestmentOffer()" class="investment-offer" [ngClass]="{ 'selected': investment_offer_show }">
+    <div class="img-bg"></div>
+  </div>
+</div>
