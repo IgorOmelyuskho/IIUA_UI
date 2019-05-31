@@ -44,8 +44,9 @@
                   <div *ngIf="formControls.password.errors.minlength">Пароль должен содержать не менее 6 символов</div>
                 </div>
               </div>
-              <div class="text-align-right">
-                <a class="restore-password" href="">Восстановить пароль</a>
+              <div class="links">
+                <a href="">Восстановить пароль</a>
+                <a href="">Зарегистрироваться</a>
               </div>
               <div class="form-group btn-wrapper">
                 <button [disabled]="submitted && !signinForm.valid" class="btn sign-in-btn">ВОЙТИ</button>

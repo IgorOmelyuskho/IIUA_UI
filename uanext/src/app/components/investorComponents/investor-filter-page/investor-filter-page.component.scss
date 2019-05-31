@@ -212,6 +212,8 @@
 
     .documents {
       padding-right: 10px;
+      padding-top: 20px;
+      display: flex;
 
       .documents-wrapper {
         overflow: hidden;
@@ -224,6 +226,28 @@
             margin-right: 10px;
             height: 20px;
           }
+
+          span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+
+      .button-wrapper {
+        margin-left: 10px;
+
+        button {
+          width: 142px;
+          height: 32px;
+          border-radius: 6px;
+          background-color: $green;
+          font-size: 13px;
+          letter-spacing: 1.3px;
+          border: none;
+          color: white;
+          cursor: pointer;
         }
       }
     }

@@ -10,22 +10,43 @@
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="form">
-              <div class="top-green-div"></div>
+            <div class="top-green-div"></div>
 
-              <div class="registration">Регистрация</div>
+            <div class="registration">Регистрация</div>
 
-              <div class="text-center">
-                <button [ngClass]="{ 'selected': userRole === 'Investor' }" (click)="asInvestor()" class="btn btn-primary select-role investor">Инвестор</button>
-                <button [ngClass]="{ 'selected': userRole === 'Vendor' }" (click)="asVendor()" class="btn btn-primary select-role vendor">Вендор</button>
+            <div class="text-center">
+              <button [ngClass]="{ 'selected': userRole === 'Investor' }" (click)="asInvestor()"
+                class="btn btn-primary select-role investor">Инвестор</button>
+              <button [ngClass]="{ 'selected': userRole === 'Vendor' }" (click)="asVendor()"
+                class="btn btn-primary select-role vendor">Вендор</button>
+            </div>
+
+            <div class="social">
+              <div class="text">Войти с помощью социальных сетей: </div>
+              <div class="social-buttons">
+                <div class="social-signin-btn">
+                  <img src="../../../assets/img/facebook.png" alt="">
+                </div>
+                <div class="social-signin-btn">
+                  <img src="../../../assets/img/linkedin.png" alt="">
+                </div>
+                <div class="social-signin-btn">
+                  <img src="../../../assets/img/google.png" alt="">
+                </div>
               </div>
-    
-              <div class="vendor-form" *ngIf="userRole === 'Vendor'">
-                <app-signup-vendor (showProgress)="showProgressBar($event)"></app-signup-vendor>
-              </div>
-    
-              <div class="investor-form" *ngIf="userRole === 'Investor'">
-                <app-signup-investor (showProgress)="showProgressBar($event)"></app-signup-investor>
-              </div>
+            </div>
+
+            <div class="use-email">
+              <a href="">Использовать почту для регистрации</a>
+            </div>
+
+            <div class="vendor-form" *ngIf="userRole === 'Vendor'">
+              <app-signup-vendor (showProgress)="showProgressBar($event)"></app-signup-vendor>
+            </div>
+
+            <div class="investor-form" *ngIf="userRole === 'Investor'">
+              <app-signup-investor (showProgress)="showProgressBar($event)"></app-signup-investor>
+            </div>
           </div>
         </div>
       </div>

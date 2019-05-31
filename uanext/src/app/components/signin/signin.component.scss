@@ -1,6 +1,9 @@
 @import '../../../styles-variables.scss';
 
 .wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   .sticky {
     position: sticky;
@@ -13,6 +16,7 @@
     background-image: url('../../../assets/img/background-map-2.png');
     background-repeat: no-repeat;
     background-size: cover;
+    flex-grow: 3;
 
 
     .form {
@@ -77,11 +81,14 @@
       form {
         padding-left: 57px;
         padding-right: 57px;
+        padding-top: 10px;
 
-        .text-align-right {
-          text-align: right;
+        .links {
+          display: flex;
+          justify-content: space-between;
+          padding-top: 10px;
 
-          .restore-password {
+          a {
             font-size: 13px;
             line-height: 1.23;
             letter-spacing: 0.4px;

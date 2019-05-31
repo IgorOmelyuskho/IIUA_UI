@@ -464,6 +464,27 @@ export const responseProjects: FilteredProjects = {
             '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
           'name': 'string',
           'accessFile': 0
+        },
+        {
+          'id': 1,
+          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 2,
+          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 3,
+          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+          'name': 'string',
+          'accessFile': 0
         }
       ]
     },
@@ -538,6 +559,42 @@ export const responseProjects: FilteredProjects = {
           'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
           'name': 'string',
           'accessFile': 0
+        },
+        {
+          'id': 1,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 2,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 3,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 4,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 4,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 6,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
         }
       ],
       'files': [
@@ -608,7 +665,25 @@ export const responseProjects: FilteredProjects = {
             'ey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
           'name': 'string',
           'accessFile': 0
-        }
+        },
+        {
+          'id': 1,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 2,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
+        {
+          'id': 3,
+          'url': 'https://i.ytimg.com/vi/DgpcC83LjhQ/maxresdefault.jpg',
+          'name': 'string',
+          'accessFile': 0
+        },
       ],
       'files': [
         {

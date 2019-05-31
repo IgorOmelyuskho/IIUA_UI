@@ -13,7 +13,7 @@ import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { CreateVendorProjectComponent } from './vendorComponents/create-vendor-project/create-vendor-project.component';
 import { UpdateVendorProjectComponent } from './vendorComponents/update-vendor-project/update-vendor-project.component';
 import { VendorProjectsComponent } from './vendorComponents/vendor-projects/vendor-projects.component';
-import { FileUploaderComponent  } from './file-uploader/file-uploader.component';
+import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { StepsComponent } from './steps/steps.component';
 import { VideosComponent } from './videos/videos.component';
 import { ViewProjectComponent } from './view-project/view-project.component';
@@ -52,6 +52,9 @@ import { VendorCreateUpdateComponent } from './vendorComponents/vendor-create-up
 import {
   InvestorInteractiveInvestmentCardComponent
 } from './investorComponents/investor-interactive-investment-card/investor-interactive-investment-card.component';
+import {
+  InteractiveInvestmentMinCardComponent
+} from './investorComponents/interactive-investment-min-card/interactive-investment-min-card.component';
 
 
 // this exports for app-routing.module.ts
@@ -105,7 +108,8 @@ export {
   VendorMessagesComponent,
   VendorFindInvestorComponent,
   VendorCreateUpdateComponent,
-  InvestorInteractiveInvestmentCardComponent
+  InvestorInteractiveInvestmentCardComponent,
+  InteractiveInvestmentMinCardComponent
 };
 
 export const components = [
@@ -158,7 +162,8 @@ export const components = [
   VendorMessagesComponent,
   VendorFindInvestorComponent,
   VendorCreateUpdateComponent,
-  InvestorInteractiveInvestmentCardComponent
+  InvestorInteractiveInvestmentCardComponent,
+  InteractiveInvestmentMinCardComponent
 ];
 
 

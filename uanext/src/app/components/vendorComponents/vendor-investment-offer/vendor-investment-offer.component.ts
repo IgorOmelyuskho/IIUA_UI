@@ -19,6 +19,8 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
     }
   }
 
+  region = 'ALL';
+
   dropArea;
   uploadProgress = [];
   progressBar;
