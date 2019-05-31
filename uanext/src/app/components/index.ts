@@ -48,6 +48,10 @@ import { VendorInvestmentOfferComponent } from './vendorComponents/vendor-invest
 import { VendorMainScreenRightComponent } from './vendorComponents/vendor-main-screen-right/vendor-main-screen-right.component';
 import { VendorMessagesComponent } from './vendorComponents/vendor-messages/vendor-messages.component';
 import { VendorFindInvestorComponent } from './vendorComponents/vendor-find-investor/vendor-find-investor.component';
+import { VendorCreateUpdateComponent } from './vendorComponents/vendor-create-update/vendor-create-update.component';
+import {
+  InvestorInteractiveInvestmentCardComponent
+} from './investorComponents/investor-interactive-investment-card/investor-interactive-investment-card.component';
 
 
 // this exports for app-routing.module.ts
@@ -99,7 +103,9 @@ export {
   VendorInvestmentOfferComponent,
   VendorMainScreenRightComponent,
   VendorMessagesComponent,
-  VendorFindInvestorComponent
+  VendorFindInvestorComponent,
+  VendorCreateUpdateComponent,
+  InvestorInteractiveInvestmentCardComponent
 };
 
 export const components = [
@@ -150,7 +156,9 @@ export const components = [
   VendorInvestmentOfferComponent,
   VendorMainScreenRightComponent,
   VendorMessagesComponent,
-  VendorFindInvestorComponent
+  VendorFindInvestorComponent,
+  VendorCreateUpdateComponent,
+  InvestorInteractiveInvestmentCardComponent
 ];
 
 

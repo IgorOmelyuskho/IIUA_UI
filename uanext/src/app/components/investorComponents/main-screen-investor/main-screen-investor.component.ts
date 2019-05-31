@@ -13,6 +13,7 @@ import { responseProject } from 'src/app/helperClasses/projects';
 })
 export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('previewCardWrapper') previewCardWrapper: ElementRef;
+  @ViewChild('interactiveInvestmentCard') interactiveInvestmentCard: ElementRef;
 
   selectedProject: VendorProject = null;
   selectedProjectId: string  = null;
@@ -47,6 +48,17 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   ngAfterViewInit() {
     window.addEventListener('mousemove', this.windowMouseMoveHandler);
     window.addEventListener('mousedown', this.windowClickHandler);
+
+    this.stateService.interactiveInvestmentProject$
+    .subscribe(
+      (project: VendorProject) => {
+        if (project == null) {
+          this.interactiveInvestmentCard.nativeElement.style.display = 'none';
+        } else {
+          this.interactiveInvestmentCard.nativeElement.style.display = 'block';
+        }
+      }
+    );
   }
 
   filterOnChange(filterParam: FilterFields) {

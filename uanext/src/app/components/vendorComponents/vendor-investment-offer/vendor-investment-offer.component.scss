@@ -6,7 +6,6 @@
   flex-direction: column;
   height: 100%;
   border-left: 1px solid #d3d3d3;
-  margin-left: 4px;
   padding: 0px;
 
   .grey {
@@ -73,6 +72,10 @@
         padding-top: 15px;
         padding-bottom: 15px;
         border-bottom: 1px solid #d3d3d3;
+
+        &:last-child {
+          border-bottom: none;
+        }
 
         .block-name {
           font-size: 16px;
@@ -190,23 +193,25 @@
           }
         }
       }
+    }
 
-      .send {
-        background: #f8f8f8;
-        height: 57px;
-        text-align: right;
+    .send {
+      border-top: 1px solid #d3d3d3;
+      background: #f8f8f8;
+      height: 57px;
+      text-align: right;
 
-        button {
-          color: white;
-          background: $darkGreen;
-          margin-right: 20px;
-          margin-top: 15px;
-          border: none;
-          border-radius: 6px;
-          font-size: 10px;
-          letter-spacing: 1px;
-          height: 24px;
-        }
+      button {
+        color: white;
+        background: $darkGreen;
+        margin-right: 20px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 6px;
+        font-size: 10px;
+        letter-spacing: 1px;
+        height: 24px;
+        cursor: pointer;
       }
     }
   }

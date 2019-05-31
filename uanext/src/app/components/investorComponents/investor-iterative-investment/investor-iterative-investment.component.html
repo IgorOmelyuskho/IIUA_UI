@@ -1,5 +1,5 @@
 <div class="iterative-investment-wrapper">
-    <div class="name">Действия</div>
+  <div class="name">Действия</div>
   <div class="iterative-investment">
     <div *ngFor="let project of projects" class="project">
       <div class="top-part">
@@ -8,7 +8,7 @@
         </div>
         <div class="info">
           <div class="project-name-and-date">
-            <div class="project-name">{{project.name}}</div>
+            <div (click)="showDetailedCard(project)" class="project-name">{{project.name}}</div>
             <div class="date">12.12.2019</div>
           </div>
           <div class="company-name">{{project.legalEntityName}}</div>

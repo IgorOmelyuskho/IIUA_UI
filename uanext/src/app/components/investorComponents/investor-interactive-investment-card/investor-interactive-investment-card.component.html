@@ -1,0 +1,66 @@
+<div *ngIf="project" class="project-card-wrapper">
+  <div class="project-card">
+    <div class="header">
+      <div class="header-text">{{project.name}}</div>
+      <div (click)="closeCard()" class="close-card">
+        <img src="../../../../assets/img/close.png" alt="">
+      </div>
+    </div>
+
+    <div class="block-wrapper">
+      <div class="block">
+        <div class="top-part">
+          <div class="avatar-wrapper">
+            <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>
+          </div>
+          <div class="info">
+            <div class="project-name-and-date">
+              <div (click)="showDetailedCard(project)" class="project-name">{{project.name}}</div>
+            </div>
+            <div class="company-name">{{project.legalEntityName}}</div>
+            <div class="bottom-info">
+              <div class="region">
+                <i class="fa fa-map-marker mr-1" aria-hidden="true"></i>
+                <span class="region">{{project.region}}</span>
+              </div>
+              <div class="d-flex ml-3">
+                <img src="../../../../assets/img/squares.png" alt="">
+                <div class="max-width">{{project.fieldOfActivity}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="description">{{project.description}}</div>
+      </div>
+
+      <div class="block">
+        <div class="investment-description">{{project.investmentDescription}}</div>
+      </div>
+
+      <div class="block">
+        <div class="steps">
+          <div class="step" *ngFor="let step of project.steps">
+            {{step.data}}
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="images-wrapper">
+          <figure *ngFor="let image of project.images">
+            <img src={{image.url}} alt="">
+          </figure>
+        </div>
+      </div>
+
+    </div>
+    <div class="bottom-part">
+      <button class="reject" type="button">Отклонить</button>
+      <button class="discuss" type="button">Обсудить</button>
+      <button class="approve" type="button">Утвердить</button>
+    </div>
+  </div>
+</div>

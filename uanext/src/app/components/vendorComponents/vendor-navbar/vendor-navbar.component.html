@@ -8,9 +8,15 @@
     <button #profile (click)='profileClick()' type="button">My profile</button>
     <button #myProjects (click)='projectsClick()' type="button">My projects</button>
     <div class="profile-wrapper">
-      <div (click)="openProfileMenu()"  class="profile">
-        <div class="text">My Profile</div>
-        <img src="../../../../assets/img/empty-profile.jpg" alt="">
+      <div (click)="openProfileMenu()" class="profile">
+        <div class="text">
+          <span *ngIf="!profileSelectedProject">Select project</span>
+          <span *ngIf="profileSelectedProject">{{profileSelectedProject?.name}}</span>
+        </div>
+        <figure>
+          <img *ngIf="profileSelectedProject" src={{profileSelectedProject?.avatara.url}} alt="">
+          <img *ngIf="!profileSelectedProject" src="../../../../assets/img/empty-profile.jpg" alt="">
+        </figure>
       </div>
 
       <div [style.display]="profileMenuOpen === true ? 'block' : 'none'" class="profile-menu">
@@ -21,7 +27,7 @@
               <img src={{project.avatara.url}} alt="">
             </figure>
             <div class="project-name">{{project.name}}</div>
-            <div [ngClass]= "{'rotate-arrow':  profileSelectedProject?.id === project.id}" class="arrow">
+            <div [ngClass]="{'rotate-arrow':  profileSelectedProject?.id === project.id}" class="arrow">
               <i class="fa fa-chevron-right"></i>
             </div>
           </div>

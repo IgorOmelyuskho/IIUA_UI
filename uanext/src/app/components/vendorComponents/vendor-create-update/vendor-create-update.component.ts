@@ -1,13 +1,12 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { MatProgressBar } from '@angular/material';
 
 @Component({
-  selector: 'app-vendor-investment-offer',
-  templateUrl: './vendor-investment-offer.component.html',
-  styleUrls: ['./vendor-investment-offer.component.scss']
+  selector: 'app-vendor-create-update',
+  templateUrl: './vendor-create-update.component.html',
+  styleUrls: ['./vendor-create-update.component.scss']
 })
-export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
+export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
   @Input()
   set selectedProject(project: VendorProject) {
     if (project != null) {
@@ -25,7 +24,6 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
 
   projectSteps: any[] = [];
   tieSteps: any[] = [];
-  action = 'CreateInvestmentOffer'; // CreateInvestmentOffer - default, ShowHistory
 
   constructor() { }
 
@@ -50,14 +48,6 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
     });
 
     this.dropArea.addEventListener('drop', this.handleDrop.bind(this), false);
-  }
-
-  createInvestmentOffer() {
-    this.action = 'CreateInvestmentOffer';
-  }
-
-  showHistory() {
-    this.action = 'ShowHistory';
   }
 
   tieToStep(step: any) {
@@ -153,11 +143,6 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
   }
 
   send() {
-    console.log('SEND');
+    console.log('SEND-2');
   }
 }
-
-
-
-
-

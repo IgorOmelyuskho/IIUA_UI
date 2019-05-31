@@ -1,7 +1,7 @@
 <div class="full-screen-block">
   <div class="map-wrapper">
-    <app-map (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)"
-      (objectHover)="onMapObjectHover($event)"></app-map>
+    <!-- <app-map (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)"
+      (objectHover)="onMapObjectHover($event)"></app-map> -->
   </div>
 
   <div class="quick-action-wrapper">
@@ -19,8 +19,12 @@
     </div>
   </div>
 
-  <div *ngIf="selectedProject" class="project-card-wrapper">
+  <!-- <div *ngIf="selectedProject" class="project-card-wrapper">
     <app-main-screen-project-card [selectedProject]="selectedProject"></app-main-screen-project-card>
+  </div> -->
+
+  <div class="create-update-wrapper">
+    <app-vendor-create-update [selectedProject]="selectedProject"></app-vendor-create-update>
   </div>
 
   <div class="right-component-wrapper">

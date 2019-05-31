@@ -71,6 +71,13 @@
   .right-component-wrapper {
     font-weight: normal;
   }
+
+  .create-update-wrapper {
+    position: fixed;
+    top: 110px;
+    left: 100px;
+    z-index: 10;
+  }
 }
 
 
