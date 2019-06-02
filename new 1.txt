@@ -1,0 +1,3 @@
+#!/bin/bash
+
+bash ./../tc-build.sh "%teamcity.build.branch%" "%build.counter%" "%env.TEAMCITY_BUILDCONF_NAME%"
