@@ -10,7 +10,7 @@ FROM node:10-alpine as builder
 RUN mkdir /ng-app
 WORKDIR /ng-app
 COPY . .
-
+WORKDIR /ng-app/uanext
 RUN npm ci 
 
 
