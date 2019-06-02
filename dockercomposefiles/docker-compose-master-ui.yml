@@ -1,0 +1,19 @@
+version: "3.2"
+
+services:
+  iiua-master-ui:
+    container_name: iiua-master-ui
+    image: registry.iiua.com.ua:5000/iiua:master-ui-latest
+    volumes:
+      - /opt/docker/hostfiles/iiua/ui/logs:/app/logs
+    restart: always
+    environment:      
+      - ASPNETCORE_ENVIRONMENT=MASTER
+      - Projects__Auth__MySQL
+      - Projects__Projects__MySQL
+      - Projects__Files__MySQL
+      - Projects__Maps__MongoDB__ConnectionString
+      - Projects__Maps__MongoDB__MongoDatabase 
+    network_mode: bridge
+
+
