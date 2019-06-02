@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
+import { VendorProject } from 'src/app/models/vendorProject';
+import { responseProject, responseProject2 } from '../../../helperClasses/projects';
 
 @Component({
   selector: 'app-vendor-navbar',
@@ -11,6 +13,16 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit {
   @ViewChild('home') homeTab: ElementRef;
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('myProjects') myProjectsTab: ElementRef;
+
+  projects: VendorProject[] = [
+    {...responseProject},
+    {...responseProject},
+    {...responseProject2},
+    {...responseProject2},
+  ];
+
+  profileSelectedProject: VendorProject;
+  profileMenuOpen = false;
 
   constructor(private router: Router, private authService: AuthorizationService) { }
 
@@ -54,6 +66,14 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit {
 
   signOutClick() {
     this.authService.signOut();
+  }
+
+  changeProject(project: VendorProject) {
+    this.profileSelectedProject = project;
+  }
+
+  openProfileMenu() {
+    this.profileMenuOpen = !this.profileMenuOpen;
   }
 
 }

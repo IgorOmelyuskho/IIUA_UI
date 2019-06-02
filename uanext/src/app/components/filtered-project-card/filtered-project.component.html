@@ -12,8 +12,7 @@
     <div class="bottom-info">
       <div class="d-flex">
         <h5 (click)="goToProjectClick()" class="project-name" [innerHTML]="project.legalEntityName | highlight: searchText"></h5>
-        <img class="flame" src="../../../assets/img/flame1.png" alt="">
-        <img class="flame" src="../../../assets/img/flame2.png" alt="">
+        <img class="flame" src="../../../assets/img/flame.png" alt="">
       </div>
       <div>
         <img class="right-img" src="../../../assets/img/car.png" alt="">
@@ -29,11 +28,11 @@
       </div>
     </div>
 
-    <div class="d-flex justify-content-between mb-1">
+    <div class="money-and-field">
       <h5>$ {{project.moneyRequired}}</h5>
       <div class="field-activity">
         <img src="../../../assets/img/squares.png" alt="">
-        <div>{{project.fieldOfActivity}}</div>
+        <div class="field-activity-text">{{project.fieldOfActivity}}</div>
       </div>
     </div>
 

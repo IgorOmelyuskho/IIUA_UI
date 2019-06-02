@@ -5,25 +5,29 @@
     transform: scale(1);
     animation-timing-function: ease-out;
   }
+
   25% {
     transform: scale(0.9);
     animation-timing-function: ease-in;
   }
+
   50% {
     transform: scale(1);
     animation-timing-function: ease-out;
   }
+
   75% {
     transform: scale(0.95);
     animation-timing-function: ease-in;
   }
+
   to {
     transform: scale(1);
   }
 }
 
 .animation-class {
-  animation: bounce  0.5s 1 ease-in-out;
+  animation: bounce 0.5s 1 ease-in-out;
 }
 
 .project {
@@ -103,23 +107,41 @@
       }
     }
 
-    .field-activity {
+    .money-and-field {
       display: flex;
-      font-size: 15px;
-      letter-spacing: 0.5px;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      align-items: center;
 
-      img {
-        position: relative;
-        top: 6px;
-        margin-right: 10px;
-        height: 12px;
+      h5 {
+        margin: 0;
+      }
+
+      .field-activity {
+        display: flex;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+
+        img {
+          position: relative;
+          top: 10px;
+          margin-right: 10px;
+          height: 12px;
+        }
+
+        .field-activity-text {
+          white-space: nowrap;
+          overflow: hidden;
+          padding: 5px;
+          text-overflow: ellipsis;
+        }
       }
     }
 
     .filtered-project-steps {
       display: flex;
       flex-wrap: wrap;
-      padding: 7px 0px 5px 0px;
+      padding: 5px 0px 5px 0px;
       position: relative;
       height: 80px;
     }

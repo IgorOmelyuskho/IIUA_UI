@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { VendorProject } from 'src/app/models/vendorProject';
 
 @Component({
   selector: 'app-main-screen-right',
@@ -11,6 +12,7 @@ export class MainScreenRightComponent implements OnInit {
   messages_show = false;
   notifications_show = false;
   iterative_investment_show = false;
+  detailedProjectCard: VendorProject;
 
   constructor() { }
 

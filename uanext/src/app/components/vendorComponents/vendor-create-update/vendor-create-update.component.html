@@ -1,0 +1,35 @@
+<div class="create-update">
+  <div class="header">Создать обновление</div>
+  <div class="blocks-container">
+    <div class="block">
+      <div class="block-name">Добавить комментарий</div>
+      <textarea placeholder="Коротко опишите для чего вам нужны инвестиции" rows="4"></textarea>
+    </div>
+
+    <div class="block">
+      <div class="block-name">Привязать к цели</div>
+      <div class="goals">
+        <div [ngClass]="{'selected-goal': step.selected}" (click)="tieToStep(step)" *ngFor="let step of projectSteps"
+          class="goal">{{step.data}}</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-name">Загрузите медиа-файлы</div>
+      <div class="drop-file-zone">
+        <div id="drop-area">
+          <progress id="progress-bar" max=100 value=0></progress>
+          <div id="gallery">
+            <div class="drag-files">
+              <img src="../../../../assets/img/download.png" alt="">
+              <div class="text">Перетащите файлы сюда</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="send">
+    <button (click)="send()">ОТПРАВИТЬ</button>
+  </div>
+</div>

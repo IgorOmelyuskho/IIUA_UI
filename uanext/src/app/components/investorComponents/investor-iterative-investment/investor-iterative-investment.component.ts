@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { responseProjects } from '../../../helperClasses/projects';
+import { VendorProject } from 'src/app/models/vendorProject';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-investor-iterative-investment',
@@ -13,10 +15,4 @@ export class InvestorIterativeInvestmentComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  getAvatarUrl(project) {
-    const url = project.avatara.url;
-    return 'url("' + url + '")';
-  }
-
 }
