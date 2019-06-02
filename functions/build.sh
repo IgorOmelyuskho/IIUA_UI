@@ -56,7 +56,7 @@ else
   docker push "$IMAGE_VERSION_LATEST"
 
   print_info "Clear images with <none> tag & build $BRAND"
-  docker images | grep "none" | awk '{ print $3 }' | xargs docker rmi -f || EXIT_CODE=$? && true
+  #docker images | grep "none" | awk '{ print $3 }' | xargs docker rmi -f || EXIT_CODE=$? && true
   docker images | grep -v "$BRANCH-$NAME-$VERSION" | awk '{ print $3 }' | xargs docker rmi -f || EXIT_CODE=$? && true
   docker ps -a | grep "Exited" | awk '{print $1}' | xargs docker rm -f || EXIT_CODE=$? && true
 fi
