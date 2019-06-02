@@ -1,6 +1,6 @@
 <div class="full-screen-block">
   <div class="map-wrapper">
-    <app-map (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)" (objectHover)="onMapObjectHover($event)"></app-map>
+    <!-- <app-map (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)" (objectHover)="onMapObjectHover($event)"></app-map> -->
   </div>
 
   <div class="filter-wrapper">
@@ -51,7 +51,9 @@
 </div>
 
 
-
+<div #interactiveInvestmentCard class="interactive-investment-card-wrapper">
+  <app-investor-interactive-investment-card></app-investor-interactive-investment-card>
+</div>
 
 <div class='upload-advance' style="background: '../../../../assets/img/message-hover.png'"></div>
 <div class='upload-advance' style="background: '../../../../assets/img/bell-hover.png'"></div>

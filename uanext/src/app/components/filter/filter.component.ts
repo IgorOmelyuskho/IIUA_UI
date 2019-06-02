@@ -43,18 +43,21 @@ export class FilterComponent implements OnInit, AfterViewInit {
   ageToElement: any;
   ageMin = 0;
   ageMax = 100;
+  ageTouched = 0;
 
   employeesElement: any;
   employeesFromElement: any;
   employeesToElement: any;
   employeesMin = 0;
   employeesMax = 1000;
+  employeesTouched = 0;
 
   avgCheckElement: any;
   avgCheckFromElement: any;
   avgCheckToElement: any;
   avgCheckMin = 0;
   avgCheckMax = 10000;
+  avgCheckTouched = 0;
 
   fieldActivityOptions = JSON.parse(JSON.stringify(fieldActivityOptions));
 
@@ -343,6 +346,7 @@ export class FilterComponent implements OnInit, AfterViewInit {
     });
 
     this.ageElement.noUiSlider.on('update', (values, handle) => {
+      this.ageTouched += 1;
       const value = values[handle];
       if (handle) {
         this.ageToElement.value = Math.round(value);
@@ -354,10 +358,12 @@ export class FilterComponent implements OnInit, AfterViewInit {
     });
 
     this.ageFromElement.addEventListener('input', () => {
+      this.ageTouched += 1;
       this.ageElement.noUiSlider.set([this.ageFromElement.value, null]);
     });
 
     this.ageToElement.addEventListener('input', () => {
+      this.ageTouched += 1;
       this.ageElement.noUiSlider.set([null, this.ageToElement.value]);
     });
   }
@@ -377,6 +383,7 @@ export class FilterComponent implements OnInit, AfterViewInit {
     });
 
     this.employeesElement.noUiSlider.on('update', (values, handle) => {
+      this.employeesTouched += 1;
       const value = values[handle];
       if (handle) {
         this.employeesToElement.value = Math.round(value);
@@ -388,10 +395,12 @@ export class FilterComponent implements OnInit, AfterViewInit {
     });
 
     this.employeesFromElement.addEventListener('input', () => {
+      this.employeesTouched += 1;
       this.employeesElement.noUiSlider.set([this.employeesFromElement.value, null]);
     });
 
     this.employeesToElement.addEventListener('input', () => {
+      this.employeesTouched += 1;
       this.employeesElement.noUiSlider.set([null, this.employeesToElement.value]);
     });
   }
@@ -412,6 +421,7 @@ export class FilterComponent implements OnInit, AfterViewInit {
 
     this.avgCheckElement.noUiSlider.on('update', (values, handle) => {
       const value = values[handle];
+      this.avgCheckTouched += 1;
       if (handle) {
         this.avgCheckToElement.value = Math.round(value);
       } else {
@@ -422,10 +432,12 @@ export class FilterComponent implements OnInit, AfterViewInit {
     });
 
     this.avgCheckFromElement.addEventListener('input', () => {
+      this.avgCheckTouched += 1;
       this.avgCheckElement.noUiSlider.set([this.avgCheckFromElement.value, null]);
     });
 
     this.avgCheckToElement.addEventListener('input', () => {
+      this.avgCheckTouched += 1;
       this.avgCheckElement.noUiSlider.set([null, this.avgCheckToElement.value]);
     });
   }

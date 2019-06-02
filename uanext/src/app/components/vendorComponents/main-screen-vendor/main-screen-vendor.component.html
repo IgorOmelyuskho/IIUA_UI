@@ -1,3 +1,33 @@
-<p>
-  main-screen-vendor works!
-</p>
+<div class="full-screen-block">
+  <div class="map-wrapper">
+    <!-- <app-map (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)"
+      (objectHover)="onMapObjectHover($event)"></app-map> -->
+  </div>
+
+  <div class="quick-action-wrapper">
+    <div class="action-btn-wrapper">
+      <button (click)="actionIsExpanded = !actionIsExpanded" type="button" class="action-btn"
+        [ngClass]="{ 'action-btn-expanded': actionIsExpanded }">
+        <span>Быстрые действия</span>
+        <i *ngIf="actionIsExpanded" class="fa fa-angle-up ml-2"></i>
+        <i *ngIf="!actionIsExpanded" class="fa fa-angle-down ml-2"></i>
+      </button>
+    </div>
+
+    <div *ngIf="actionIsExpanded" class="quick-action-width">
+      <div>SOME CONTENT/COMPONENT THERE</div>
+    </div>
+  </div>
+
+  <!-- <div *ngIf="selectedProject" class="project-card-wrapper">
+    <app-main-screen-project-card [selectedProject]="selectedProject"></app-main-screen-project-card>
+  </div> -->
+
+  <div class="create-update-wrapper">
+    <app-vendor-create-update [selectedProject]="selectedProject"></app-vendor-create-update>
+  </div>
+
+  <div class="right-component-wrapper">
+    <app-vendor-main-screen-right></app-vendor-main-screen-right>
+  </div>
+</div>

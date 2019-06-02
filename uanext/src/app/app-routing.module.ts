@@ -64,8 +64,9 @@ const childHomeRoutes: Routes = [
 
 const routes: Routes = [
   { path: 'investor_test', component: InvestorFilterPageComponent },
-  { path: 'main-screen_test', component: MainScreenInvestorComponent },
+  { path: 'main-screen_test', component: InvestorComponent, children: childInvestorRoutes },
   { path: 'map_test', component: MapComponent },
+  { path: 'main-screen_vendor_test', component: VendorComponent, children: childVendorRoutes},
 
 
   { path: '', component: IndexComponent, pathMatch: 'full' },

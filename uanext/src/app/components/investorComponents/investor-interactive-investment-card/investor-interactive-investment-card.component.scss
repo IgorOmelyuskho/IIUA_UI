@@ -1,0 +1,225 @@
+@import '../../../../styles-variables.scss';
+
+.project-card-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+
+  .project-card {
+    border-radius: 6px;
+    box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.26), 0 14px 28px 0 rgba(0, 0, 0, 0.25);
+    background-color: white;
+    overflow: hidden;
+    width: 30vw;
+    margin: auto;
+    transform: translateY(100px);
+    height: calc(100vh - 100px - 10px);
+    /* translateY, margin-bottom */
+
+    .header {
+      background: $darkGreen;
+      height: 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      .header-text {
+        color: white;
+        font-size: 13px;
+      }
+
+      .close-card {
+        cursor: pointer;
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .block-wrapper {
+      overflow: auto;
+      height: calc(100% - 34px - 57px);
+      /* .header height, bottom-part height */
+
+      .block {
+        border-bottom: solid 1px #d3d3d3;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 8px;
+        padding-top: 10px;
+      }
+
+      .top-part {
+        margin-top: 15px;
+        display: flex;
+
+        .avatar-wrapper {
+          min-width: 64px;
+          height: 64px;
+          border-radius: 6px;
+          margin-right: 15px;
+
+          .avatar {
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            border-radius: 6px;
+          }
+        }
+
+        .info {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+
+          .project-name-and-date {
+            display: flex;
+            justify-content: space-between;
+
+            .project-name {
+              font-size: 13px;
+              font-weight: bold;
+              color: $darkGreen;
+              line-height: 1;
+              cursor: pointer;
+            }
+
+            .date {
+              font-size: 10px;
+              letter-spacing: 0.3px;
+              color: rgba(50, 50, 50, 0.75);
+              margin-right: 5px;
+            }
+          }
+
+          .company-name {
+            font-size: 10px;
+            font-weight: bold;
+          }
+
+          .bottom-info {
+            font-size: 10px;
+            letter-spacing: 0.2px;
+            display: flex;
+            justify-content: start;
+            align-items: baseline;
+
+            .region {
+              font-size: 10px;
+              letter-spacing: 0.2px;
+              justify-content: space-between;
+              line-height: 1;
+
+              i {
+                color: $green;
+                font-size: 12px;
+              }
+            }
+
+            .max-width {
+              max-width: 80px;
+              overflow: hidden;
+              line-height: 1;
+            }
+
+            img {
+              margin-right: 5px;
+              height: 8px;
+            }
+          }
+        }
+      }
+
+      .description {
+        font-size: 12px;
+        line-height: 1.33;
+        letter-spacing: 0.3px;
+      }
+
+      .investment-description {
+        font-size: 12px;
+        line-height: 1.33;
+        letter-spacing: 0.3px;
+      }
+
+      .steps {
+        display: flex;
+        flex-wrap: wrap;
+
+        .step {
+          border-radius: 6px;
+          border: solid 1px #75af27;
+          color: #75af27;
+          font-size: 15px;
+          margin: 0px 5px 5px 0px;
+          padding: 3px 9px;
+        }
+      }
+
+      .images-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+
+        figure {
+          width: 40px;
+          height: 40px;
+          margin: 0px 8px 8px 0px;
+
+          img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+          }
+        }
+      }
+    }
+
+    .bottom-part {
+      height: 57px;
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 30px;
+      background: #f8f8f8;
+
+      button {
+        text-transform: uppercase;
+        height: 24px;
+        font-size: 11px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      button.approve {
+        color: white;
+        background: $darkGreen;
+        border: 1px solid $darkGreen;
+      }
+
+      button.discuss {
+        color: $green;
+        background: transparent;
+        border: 1px solid $green;
+      }
+
+      button.reject {
+        color: #ee3949;
+        background: transparent;
+        border: 1px solid #ee3949;
+
+        &:focus {
+          border-color: #ee3949 !important;
+          box-shadow: 0 0 0 0.2rem rgba(245, 39, 62, 0.25) !important;
+          outline: none !important;
+        }
+      }
+    }
+  }
+}

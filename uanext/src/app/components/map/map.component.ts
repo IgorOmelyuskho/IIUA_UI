@@ -1,21 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
-// import { Map } from './map4';
-import {
-  mapInit,
-  mapDestroy,
-  mapSetProject,
-  mapAddNewPolygons,
-  mapSetFullScreen,
-  mapReplacePolygons,
-  mapAddNewObjects,
-  mapReplaceObjects,
-  setObjectClickCallback,
-  setObjectHoverCallback,
-  signalRMessage
-} from './map4-no-class';
+import { MapManager } from './mapManager';
 import { polygon1, polygon2, female, male, tractor, walt } from 'src/app/helperClasses/projects';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { environment } from 'src/environments/environment';
+import { VendorProject } from 'src/app/models/vendorProject';
+import { GeoObject } from 'src/app/models';
+import { SignalRService } from 'src/app/services/signal-r.service';
 
 @Component({
   selector: 'app-map',
@@ -23,21 +12,24 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Output() objectClick = new EventEmitter<any>();
-  @Output() objectHover = new EventEmitter<any>();
-  @Output() mapFinishInit = new EventEmitter<any>();
+
+  @Output() objectClick = new EventEmitter<GeoObject>();
+  @Output() objectHover = new EventEmitter<GeoObject>();
+  @Output() mapFinishInit = new EventEmitter<void>();
+
+  mapManager: MapManager;
 
   @Input()
-  set changeSelectedProject(project: any) {
-    if (project != null) {
-      mapSetProject(project);
+  set changeSelectedProject(project: VendorProject) {
+    if (project != null && this.mapManager != null) {
+      this.mapManager.mapSetProject(project);
     }
   }
 
   @Input()
-  set replace3DObjects(objects: any[]) {
-    if (objects != null && objects.length > 0) {
-      mapReplaceObjects(objects);
+  set replace3DObjects(objects: GeoObject[]) {
+    if (objects != null && this.mapManager != null) {
+      this.mapManager.mapReplaceObjects(objects);
     }
   }
 
@@ -48,55 +40,28 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   timeOut5: any;
   timeOut6: any;
 
-  hubConnection: HubConnection;
-
-  objectsArr: any[] = [ // todo - remove (use for emulate signalR)
-    {
-      object3DId: '0',
-      positionX: 13.417122340477,
-      positionY: 52.5281344784827
-    },
-    {
-      object3DId: '1',
-      positionX: 13.417222340477,
-      positionY: 52.5282344784827
-    },
-    {
-      object3DId: '2',
-      positionX: 13.417322340477,
-      positionY: 52.5283344784827
-    },
-    {
-      object3DId: '3',
-      positionX: 13.417422340477,
-      positionY: 52.5284344784827
-    }
-  ];
-
-  // map: Map = null;
-
-  clickObjectCallback: Function = (object: any) => {
+  clickObjectCallback: Function = (object: GeoObject) => {
     this.objectClick.emit(object);
   }
 
-  hoverObjectCallback: Function = (object: any) => {
+  hoverObjectCallback: Function = (object: GeoObject) => {
     this.objectHover.emit(object);
   }
 
   mapFinishInitCallback: Function = () => {
     this.mapFinishInit.emit();
-    this.signalRConnect();
+    this.signalRService.signalRConnect(this.mapManager.signalRMessage); // or connect when sign in ?
 
     this.timeOut1 = setTimeout(() => {
-      mapAddNewPolygons([polygon1]);
+      this.mapManager.mapAddNewPolygons([polygon1]);
     }, 1000);
 
     this.timeOut2 = setTimeout(() => {
-      mapReplacePolygons([polygon1, polygon2]);
+      this.mapManager.mapReplacePolygons([polygon1, polygon2]);
     }, 1500);
 
     this.timeOut3 = setTimeout(() => {
-      mapReplaceObjects([female, male, tractor, walt]);
+      this.mapManager.mapReplaceObjects([female, male, tractor, walt]);
       // mapReplaceObjects([female, male]);
       // mapAddNewObjects([female, male]);
     }, 2500);
@@ -108,68 +73,25 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.timeOut5 = setTimeout(() => {
     //   mapSetFullScreen();
     // }, 5000);
-
-    // emulate signalR
-    this.timeOut6 = setInterval(() => {
-      for (let i = 0; i < this.objectsArr.length; i++) {
-        this.objectsArr[i].positionX = this.objectsArr[i].positionX + Math.random() * 0.001 - Math.random() * 0.001;
-        this.objectsArr[i].positionY = this.objectsArr[i].positionY + Math.random() * 0.001 - Math.random() * 0.001;
-
-        const message: { object3DId: string, positionX: number, positionY: number } = {
-          object3DId: this.objectsArr[i].object3DId,
-          positionX: this.objectsArr[i].positionX,
-          positionY: this.objectsArr[i].positionY
-        };
-
-        signalRMessage(message);
-      }
-    }, 3500);
   }
 
-  constructor() { }
+  constructor(private signalRService: SignalRService) { }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    // this.map = new Map();
-    mapInit(this.mapFinishInitCallback);
-    setObjectClickCallback(this.clickObjectCallback);
-    setObjectHoverCallback(this.hoverObjectCallback);
-  }
+    this.mapManager = new MapManager(
+      this.mapFinishInitCallback,
+      {
+        mapWrapperId: 'map-wrapper-html-element-id-3585349',
+        mapId: 'map-html-element-id-495367235',
+        labelRendererId: 'label-renderer-843744329'
+      }
+    );
 
-  signalRConnect() { // todo dispose
-    const token = localStorage.getItem('token');
-    this.hubConnection = new HubConnectionBuilder()
-      .withUrl(
-        environment.signalR,
-        {
-          accessTokenFactory: () => token
-        })
-      .build();
-
-    this.hubConnection.on('HistoryPositionSBEvent', function (message) {
-      console.log(message);
-    });
-
-    // todo remove ?
-    this.hubConnection.start()
-      .then(function () {
-        console.log('START');
-      })
-      .catch(function (err) {
-        console.error(err.toString());
-        return;
-      });
-  }
-
-  signalRSendMsg() {
-    // connection.invoke("SendMessage", message).catch(function (err) {
-    this.hubConnection.invoke('SendMessage')
-      .catch(function (err) {
-        console.error(err.toString());
-        return;
-      });
+    this.mapManager.setObjectClickCallback(this.clickObjectCallback);
+    this.mapManager.setObjectHoverCallback(this.hoverObjectCallback);
   }
 
   ngOnDestroy() {
@@ -181,8 +103,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     clearTimeout(this.timeOut5);
     clearTimeout(this.timeOut6);
 
-    // this.map.mapDestroy();
-    mapDestroy();
+    this.mapManager.mapDestroy();
   }
 
 }

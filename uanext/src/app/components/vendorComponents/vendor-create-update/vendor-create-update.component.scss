@@ -1,0 +1,171 @@
+@import '../../../../styles-variables.scss';
+
+
+.create-update {
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+  width: 30vw;
+
+  .header {
+    font-size: 13px;
+    line-height: 24px;
+    letter-spacing: 0.4px;
+    color: rgba(0, 0, 0, 0.8);
+    background-color: #fcfcfc;
+    box-shadow: 0 0.5px 0 0 rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    height: 24px;
+  }
+
+  .blocks-container {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    .block {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #d3d3d3;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .block-name {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.13;
+        letter-spacing: 0.4px;
+        padding-bottom: 15px;
+      }
+
+      .form-control {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        height: 32px;
+      }
+
+      input,
+      select {
+        border: 1px solid $green;
+      }
+
+      .budget-input-wrapper {
+        margin-right: 150px;
+        display: flex;
+        align-items: center;
+      }
+
+      .region-input-wrapper {
+        margin-right: 20px;
+      }
+
+      .goals {
+        display: flex;
+        flex-wrap: wrap;
+
+        .goal {
+          border-radius: 6px;
+          border: solid 1px #4b7512;
+          background-color: #ffffff;
+          margin-top: 9px;
+          margin-right: 9px;
+          padding: 4px 8px 7px 8px;
+          line-height: 1.2;
+          font-size: 15px;
+          letter-spacing: 0.5px;
+          cursor: pointer;
+        }
+
+        .selected-goal {
+          color: #ffffff;
+          background: $darkGreen;
+        }
+      }
+
+      textarea {
+        padding: 5px;
+        border-radius: 6px;
+        resize: none;
+        width: 100%;
+        line-height: 1.2;
+      }
+
+      .drop-file-zone {
+        #drop-area {
+          border: 2px solid rgba(204, 204, 204, 0.2);
+          border-radius: 6px;
+          width: 100%;
+          padding: 10px;
+        }
+
+        #drop-area.highlight {
+          border-color: rgba(128, 0, 128, 0.2);
+        }
+
+        #gallery {
+          margin-top: 10px;
+          display: flex;
+          flex-wrap: wrap;
+
+          .drag-files {
+            width: 80px;
+            height: 80px;
+            border: 1px dashed $darkGreen;
+            border-radius: 6px;
+            margin-right: 10px;
+            text-align: center;
+
+            img {
+              width: 14px;
+              height: 16px;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            }
+
+            .text {
+              font-size: 10px;
+              letter-spacing: 0.3px;
+              text-align: center;
+              color: #6a8347;
+              line-height: 1.2;
+            }
+          }
+
+          ::ng-deep figure {
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+
+            img {
+              object-fit: cover;
+              height: 100%;
+              width: 100%;
+              border-radius: 6px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .send {
+    background: #f8f8f8;
+    height: 57px;
+    text-align: right;
+    border-top: 1px solid #d3d3d3;
+
+    button {
+      color: white;
+      background: $darkGreen;
+      margin-right: 20px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 6px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      height: 24px;
+      cursor: pointer;
+    }
+  }
+}

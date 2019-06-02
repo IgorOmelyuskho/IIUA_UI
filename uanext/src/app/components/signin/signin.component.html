@@ -1,34 +1,60 @@
-<app-header></app-header>
-
 <mat-progress-bar *ngIf="showProgressBar" class="progress-bar-fixed" mode="indeterminate"></mat-progress-bar>
 
-<section class="bg-color-signin">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <h2>Sign in</h2>
-        <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }" />
-            <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback">
-              <div *ngIf="formControls.email.errors.required">Email is required</div>
-              <div *ngIf="formControls.email.errors.pattern">Email must be a valid email address</div>
+<div class="wrapper">
+  <div class="sticky">
+    <app-header></app-header>
+  </div>
+
+  <section class="bg-color-signin">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="form">
+            <div class="top-green-div"></div>
+            <h2>Вход</h2>
+            <div class="social">
+              <div class="text">Войти с помощью социальных сетей: </div>
+              <div class="social-buttons">
+                <div class="social-signin-btn">
+                  <img src="../../../assets/img/facebook.png" alt="">
+                </div>
+                <div class="social-signin-btn">
+                  <img src="../../../assets/img/linkedin.png" alt="">
+                </div>
+                <div class="social-signin-btn">
+                  <img src="../../../assets/img/google.png" alt="">
+                </div>
+              </div>
             </div>
+            <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <input placeholder="Email" type="email" formControlName="email" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }" />
+                <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback">
+                  <div *ngIf="formControls.email.errors.required">Требуется электронная почта</div>
+                  <div *ngIf="formControls.email.errors.pattern">Адрес электронной почты должен быть действительным
+                    адресом электронной почты</div>
+                </div>
+              </div>
+              <div class="form-group mb-0">
+                <input placeholder="Пароль" autocomplete="on" type="password" formControlName="password"
+                  class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.password.errors }" />
+                <div *ngIf="submitted && formControls.password.errors" class="invalid-feedback">
+                  <div *ngIf="formControls.password.errors.required">Требуется пароль</div>
+                  <div *ngIf="formControls.password.errors.minlength">Пароль должен содержать не менее 6 символов</div>
+                </div>
+              </div>
+              <div class="links">
+                <a href="">Восстановить пароль</a>
+                <a href="">Зарегистрироваться</a>
+              </div>
+              <div class="form-group btn-wrapper">
+                <button [disabled]="submitted && !signinForm.valid" class="btn sign-in-btn">ВОЙТИ</button>
+              </div>
+            </form>
           </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input autocomplete="on" type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.password.errors }" />
-            <div *ngIf="submitted && formControls.password.errors" class="invalid-feedback">
-              <div *ngIf="formControls.password.errors.required">Password is required</div>
-              <div *ngIf="formControls.password.errors.minlength">Password must be at least 6 characters</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <button [disabled]="submitted && !signinForm.valid" class="btn btn-primary w-100">SignIn</button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
