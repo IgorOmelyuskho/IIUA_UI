@@ -44,7 +44,7 @@ fi
 # Build & push & clear old data images
 IMAGE_VERSION="$REPO/$BRAND:$BRANCH-$NAME-$VERSION"
 IMAGE_VERSION_LATEST="$REPO/$BRAND:$BRANCH-$NAME-latest"
-docker build -f Dockerfile -t "$IMAGE_VERSION" ./..
+docker build -f Dockerfile -t "$IMAGE_VERSION" .
 
 ## check if docker build is failed
 if [[ $? -ne 0 ]]; then
