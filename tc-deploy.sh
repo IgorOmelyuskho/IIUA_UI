@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source ./../functions/utils/output.sh
-source ./../functions/deploy.sh
+source ./functions/utils/output.sh
+source ./functions/deploy.sh
 
 BRANCH=$1
 VERSION=$2
