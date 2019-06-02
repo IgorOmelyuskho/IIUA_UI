@@ -3,15 +3,17 @@
 # We label our stage as ‘builder’
 FROM node:10-alpine as builder
 
-COPY ./uanext/package.json ./uanext/package-lock.json ./
+#COPY ./uanext/package.json ./uanext/package-lock.json ./
 
 ## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
 
-RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app
-
+RUN mkdir /ng-app
 WORKDIR /ng-app
-
 COPY ./uanext .
+
+RUN npm ci 
+
+
 
 RUN npm run ng build -- --prod --output-path=dist
 
