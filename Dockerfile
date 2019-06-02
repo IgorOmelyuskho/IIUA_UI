@@ -13,8 +13,6 @@ COPY . .
 WORKDIR /ng-app/uanext
 RUN npm ci 
 
-
-
 RUN npm run ng build -- --prod --output-path=dist
 
 ### STAGE 2: Setup ###
@@ -28,7 +26,7 @@ COPY nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
 
 ## From ‘builder’ stage copy over the artifacts in dist folder to default nginx public folder
-COPY --from=builder /ng-app/dist /usr/share/nginx/html
+COPY --from=builder /ng-app/uanext/dist /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
 
