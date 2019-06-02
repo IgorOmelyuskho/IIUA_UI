@@ -49,7 +49,7 @@ fi
 
 # Deploy app
 docker-compose stop "$BRAND-$BRANCH-$NAME" || EXIT_CODE=$? && true
-docker-compose -f ./../dockercomposefiles/docker-compose-$BRANCH-$NAME.yml up -d --quiet-pull --force-recreate
+docker-compose -f ./dockercomposefiles/docker-compose-$BRANCH-$NAME.yml up -d --quiet-pull --force-recreate
 
 # Pull deployed images for local save command
 docker pull "$REPO/$BRAND:$BRANCH-$NAME-$VERSION"
