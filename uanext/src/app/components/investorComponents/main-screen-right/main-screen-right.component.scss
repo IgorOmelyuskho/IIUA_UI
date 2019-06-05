@@ -79,7 +79,7 @@
     }
 
     &.selected {
-      background: $darkGreen;
+      background: $middleGreen !important;
     }
   }
 
@@ -88,14 +88,30 @@
       background-image: url('../../../../assets/img/message.png');
     }
 
+    &:hover {
+      background: $green;
+    }
+
+    &:hover .img-bg  {
+      background-image: url('../../../../assets/img/message-3.png');
+    }
+
     &.selected .img-bg {
-      background-image: url('../../../../assets/img/message-hover.png');
+      background-image: url('../../../../assets/img/message-3.png');
     }
   }
 
   .bell {
     .img-bg {
       background-image: url('../../../../assets/img/bell.png');
+    }
+
+    &:hover {
+      background: $green;
+    }
+
+    &:hover .img-bg  {
+      background-image: url('../../../../assets/img/bell-hover.png');
     }
 
     &.selected .img-bg {
@@ -106,6 +122,14 @@
   .approve {
     .img-bg {
       background-image: url('../../../../assets/img/approve.png');
+    }
+
+    &:hover {
+      background: $green;
+    }
+
+    &:hover .img-bg  {
+      background-image: url('../../../../assets/img/approve-hover.png');
     }
 
     &.selected .img-bg {

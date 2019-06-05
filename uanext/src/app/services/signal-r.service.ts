@@ -77,7 +77,7 @@ export class SignalRService {
   // }
 
   signalRDisconnect() {
-    this.hubConnection.stop();
+    // this.hubConnection.stop();
     clearInterval(this.timeOut1);
   }
 

@@ -47,11 +47,15 @@
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23) !important;
         background-color: #ffffff;
         cursor: pointer;
+
+        &:hover {
+          background-color: #ebf3df;
+        }
       }
 
       .filter-btn-expanded {
-        background-color: $green;
-        color: white;
+        background-color: $green !important;
+        color: white !important;
       }
     }
 

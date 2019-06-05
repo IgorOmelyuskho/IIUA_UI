@@ -5,10 +5,11 @@
 export const environment = {
   production: false,
   signalR: 'http://proxy.alexduxa.online/notifications/api/CoordinatesHub',
-  auth: 'http://proxy.alexduxa.online/auth',
-  projects: 'http://proxy.alexduxa.online/projects',
-  map: 'http://proxy.alexduxa.online/map',
-  notifications: 'http://proxy.alexduxa.online/notifications',
+  auth: 'http://master.iiua.com.ua/auth',
+  projects: 'http://master.iiua.com.ua/projects',
+  map: 'http://master.iiua.com.ua/map',
+  notifications: 'http://master.iiua.com.ua/notifications',
+  files: 'http://todo',
 
   authenticate: '/api/Auth/authenticate',
   vendorRegister: '/api/Vendor/register',
@@ -20,6 +21,7 @@ export const environment = {
   adminRegister: '/api/todo/register',
   adminProfile: '/api/todo/',
 
+  // todo add rout for files
   vendorProject: '/api/Projects/',
   uploadImages: '/api/Image/',
   uploadFiles: '/api/File/',

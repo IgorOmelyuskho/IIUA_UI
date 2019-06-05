@@ -1,4 +1,4 @@
-<div #mainScreenRight class="main-screen-right">
+<div #mainScreenRight id="investor-main-screen-right-component" class="main-screen-right">
   <div class="main-block">
     <div class="last-activity-wrapper">
       <app-investor-last-activity></app-investor-last-activity>
@@ -20,7 +20,7 @@
 </div>
 
 <!-- right menu -->
-<div class="right-menu">
+<div class="right-menu" id="investor-main-screen-right-menu">
   <div (click)="showMessages()" class="message" [ngClass]="{ 'selected': messages_show }">
     <div class="img-bg"></div>
   </div>

@@ -3,7 +3,7 @@
 .project-card {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
   background: white;
-  width: 46vw;
+  width: 48vw;
   height: 100%;
   overflow: auto;
   position: absolute;
@@ -74,52 +74,93 @@
       margin-bottom: 15px;
     }
 
-    button {
-      width: 205px;
-      height: 36px;
-      border-radius: 6px;
-      border: 1px solid $darkGreen;
-      outline: none;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 1.4px;
-      cursor: pointer;
-    }
-
-    button.start-chat {
-      background: transparent;
-      color: $darkGreen;
-
-      &:hover {
-        background: $darkGreen;
-        color: white;
+    .investment-sum {
+      .sum {
+        opacity: 0.95;
+        font-size: 13px;
+        line-height: 1.23;
+        letter-spacing: 0.4px;
+        color: $green;
+        margin-bottom: 10px;
       }
 
-      &:hover .img-bg {
-        background-image: url('../../../../assets/img/message-hover.png');
-      }
-
-      .img-bg {
-        padding-left: 35px;
-        margin-left: 10px;
-        background-image: url('../../../../assets/img/message.png');
-        background-size: contain;
-        background-repeat: no-repeat;
+      .sum-value {
+        opacity: 0.95;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 1.07;
+        letter-spacing: 0.5px;
       }
     }
 
-    button.invest {
-      background: transparent;
-      color: $darkGreen;
+    .btn-wrapper {
+      display: flex;
 
-      &:hover {
-        background: $darkGreen;
-        color: white;
+      button {
+        width: 205px;
+        height: 36px;
+        border-radius: 6px;
+        border: 1px solid $middleGreen;
+        outline: none;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 1.4px;
+        cursor: pointer;
       }
 
-      .big-font {
-        font-size: 20px;
-        padding-left: 10px;
+      button.start-chat {
+        background: transparent;
+        color: $middleGreen;
+        border: 1px solid $middleGreen !important;
+        width: 105px;
+
+        &:hover {
+          color: $green;
+          border: 1px solid $green !important;;
+        }
+
+        &:hover .img-bg {
+          background-image: url('../../../../assets/img/message-2.png');
+        }
+
+        &:active {
+          background: $middleGreen;
+          border: 1p solid $middleGreen !important;
+          color: white;
+        }
+
+        &:active .img-bg {
+          background-image: url('../../../../assets/img/message-3.png');
+        }
+
+        .img-bg {
+          padding-left: 35px;
+          margin-left: 10px;
+          background-image: url('../../../../assets/img/message.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+      }
+
+      button.invest {
+        margin-right: 7px;
+        background: $middleGreen;
+        color: white;
+
+        &:hover {
+          background: $green;
+          border: 1px solid $green;
+        }
+
+        &:active {
+          background: $darkGreen;
+          border-color: $green;
+        }
+
+        .big-font {
+          font-size: 20px;
+          padding-left: 10px;
+        }
       }
     }
   }

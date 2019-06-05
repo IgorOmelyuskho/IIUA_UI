@@ -19,14 +19,20 @@
         <div class="wrapper-1">
           <h5 class="project-name">{{_selectedProject.name}}</h5>
           <div class="company-name">{{_selectedProject.legalEntityName}}</div>
-          <button class="start-chat">
-            <span>НАЧАТЬ ЧАТ</span>
-            <span class="img-bg"></span>
-          </button>
-          <button class="invest">
-            <span>ИНВЕСТИРОВАТЬ</span>
-            <span class="big-font">$</span>
-          </button>
+          <div class="investment-sum">
+            <div class="sum">Сумма инвестирования</div>
+            <div class="sum-value">$ {{_selectedProject.moneyRequired}}</div>
+          </div>
+          <div class="btn-wrapper">
+            <button class="invest">
+              <span>ИНВЕСТИРОВАТЬ</span>
+              <span class="big-font">$</span>
+            </button>
+            <button class="start-chat">
+              <span>ЧАТ</span>
+              <span class="img-bg"></span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   @ViewChild('interactiveInvestmentCard') interactiveInvestmentCard: ElementRef;
 
   selectedProject: VendorProject = null;
-  selectedProjectId: string  = null;
+  selectedProjectId: string = null;
 
   filter: FilterFields;
   filterIsExpanded = false; // false - свернут
@@ -40,7 +40,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   constructor(private stateService: StateService, private renderer: Renderer2) { }
 
   ngOnInit() {
-    new Image().src = '../../../assets/img/message-hover.png';
+    new Image().src = '../../../assets/img/message-3.png';
     new Image().src = '../../../assets/img/bell-hover.png';
     new Image().src = '../../../assets/img/approve-hover.png';
   }
@@ -50,15 +50,15 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     window.addEventListener('mousedown', this.windowClickHandler);
 
     this.stateService.interactiveInvestmentProject$
-    .subscribe(
-      (project: VendorProject) => {
-        if (project == null) {
-          this.interactiveInvestmentCard.nativeElement.style.display = 'none';
-        } else {
-          this.interactiveInvestmentCard.nativeElement.style.display = 'block';
+      .subscribe(
+        (project: VendorProject) => {
+          if (project == null) {
+            this.interactiveInvestmentCard.nativeElement.style.display = 'none';
+          } else {
+            this.interactiveInvestmentCard.nativeElement.style.display = 'block';
+          }
         }
-      }
-    );
+      );
   }
 
   filterOnChange(filterParam: FilterFields) {
@@ -72,10 +72,35 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   onMapObjectHover(mapObject: GeoObject) {
+    const cardWidth = 578;
+    const cardHeight = 178;
+    const deltaY = 30;
+
+    const rightMenu = document.getElementById('investor-main-screen-right-menu');
+    const rightMenuOffset = rightMenu.offsetWidth + parseInt(window.getComputedStyle(rightMenu).right, 10);
+
+    const rightComponent = document.getElementById('investor-main-screen-right-component');
+    let rightComponentOffset = 0;
+    if (rightComponent != null) {
+      rightComponentOffset = rightComponent.offsetWidth + parseInt(window.getComputedStyle(rightComponent).right, 10);
+    }
+
+    let resultX = this.previewCardX;
+    let resultY = this.previewCardY + deltaY;
+
+    if ( this.previewCardX > window.innerWidth - cardWidth - rightMenuOffset) {
+      resultX = window.innerWidth - cardWidth - rightMenuOffset - 5;
+    }
+    if (rightComponentOffset !== 0 && this.previewCardX > window.innerWidth - cardWidth - rightComponentOffset) {
+      resultX = window.innerWidth - cardWidth - rightComponentOffset - 5;
+    }
+    if (this.previewCardY + deltaY > window.innerHeight - cardHeight) {
+      resultY = this.previewCardY - deltaY - cardHeight;
+    }
+    this.previewCardWrapper.nativeElement.style.left = resultX + 'px';
+    this.previewCardWrapper.nativeElement.style.top = resultY + 'px';
     this.hoveredProject = mapObject.project;
     this.showPreviewCard = true;
-    this.previewCardWrapper.nativeElement.style.left = this.previewCardX + 'px';
-    this.previewCardWrapper.nativeElement.style.top = this.previewCardY + 30 + 'px';
   }
 
   onMapFinishInit() {
