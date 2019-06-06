@@ -1,14 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRole } from 'src/app/models';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
+
+declare const slidePage;
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent implements OnInit, AfterViewInit {
   userRole: UserRole;
 
   constructor(private authService: AuthorizationService) { }
@@ -49,5 +51,10 @@ export class IndexComponent implements OnInit {
     if (role === UserRole.ProjectUser) {
       this.userRole = UserRole.ProjectUser;
     }
+  }
+
+  ngAfterViewInit() {
+    const slide = new slidePage();
+    // console.log(slide);
   }
 }
