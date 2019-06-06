@@ -79,7 +79,7 @@
     }
 
     &.selected {
-      background: $darkGreen;
+      background: $middleGreen !important;
     }
   }
 
@@ -88,14 +88,30 @@
       background-image: url('../../../../assets/img/message.png');
     }
 
+    &:hover {
+      background: $green;
+    }
+
+    &:hover .img-bg  {
+      background-image: url('../../../../assets/img/message-3.png');
+    }
+
     &.selected .img-bg {
-      background-image: url('../../../../assets/img/message-hover.png');
+      background-image: url('../../../../assets/img/message-3.png');
     }
   }
 
   .investment-offer {
     .img-bg {
       background-image: url('../../../../assets/img/investment-offer.png');
+    }
+
+    &:hover {
+      background: $green;
+    }
+
+    &:hover .img-bg  {
+      background-image: url('../../../../assets/img/investment-offer-hover.png');
     }
 
     &.selected .img-bg {

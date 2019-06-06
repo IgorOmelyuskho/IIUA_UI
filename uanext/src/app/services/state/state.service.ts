@@ -40,7 +40,6 @@ export class StateService {
       const decodedToken: any = this.helper.decodeToken(token);
       return decodedToken.role;
     } catch {
-      this.signOut();
       this.notify.show('Some problem with token');
     }
   }

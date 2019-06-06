@@ -102,6 +102,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     clearTimeout(this.timeOut4);
     clearTimeout(this.timeOut5);
     clearTimeout(this.timeOut6);
+    this.signalRService.signalRDisconnect();
 
     this.mapManager.mapDestroy();
   }

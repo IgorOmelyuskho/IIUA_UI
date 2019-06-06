@@ -3,6 +3,13 @@
   flex-direction: column;
   height: 100vh;
 
+  .sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1000000;
+  }
+
   .h100 {
     flex-grow: 3;
   }

@@ -1,111 +1,116 @@
-<div class="sticky">
-  <app-header></app-header>
-</div>
-
-<div class="map-and-invest">
-  <div class="map-video">
-    <video autoplay crossorigin="anonymous">
-      <source src="../../../assets/videos/cors.mp4">
-    </video>
-  </div>
-  <div class="invest">
-    <div class="start-invest">
-      <div class="start">Начни</div>
-      <div class="invest-text">Инвестировать</div>
-    </div>
-    <div class="social">
-      <div class="text">Войти через социальные сети: </div>
-      <div class="social-buttons">
-        <div class="social-signin-btn">
-          <img src="../../../assets/img/facebook.png" alt="">
-        </div>
-        <div class="social-signin-btn">
-          <img src="../../../assets/img/linkedin.png" alt="">
-        </div>
-        <div class="social-signin-btn">
-          <img src="../../../assets/img/google.png" alt="">
-        </div>
-        <div class="social-signin-btn">
-          <img src="../../../assets/img/mail.png" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="bottom">
-      <div class="commissions">
-        <span class="green">0% </span>
-        <span>комиссий</span>
-      </div>
-      <div class="payments">
-        <span class="green">Без скрытых </span>
-        <span>платежей</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid pl-5 pr-5">
-  <div class="trust">
-    <div class="trust-text">Нам доверяют</div>
-    <div class="invested-and-projects">
-      <div class="flex">
-        <div class="number">$5,382</div>
-        <div class="wrapper">
-          <div class="circle-1"></div>
-          <div class="text">Инвестировано</div>
-        </div>
-      </div>
-      <div class="flex">
-        <div class="number">$8,256</div>
-        <div class="wrapper">
-          <div class="circle-2"></div>
-          <div class="text">Проекты</div>
-        </div>
-      </div>
-    </div>
+<div class="wrapper">
+  <div class="sticky">
+    <app-header *ngIf="!userRole"></app-header>
+    <app-investor-navbar *ngIf="userRole === 'Investor'"></app-investor-navbar>
+    <app-vendor-navbar *ngIf="userRole === 'Vendor'"></app-vendor-navbar>
   </div>
 
-  <div class="numbers">
-    <div class="left">
-      <div class="invested-money">
-        <div class="count">128+</div>
-        <div class="text">Инвесторов <span class="bold-text">уже вложили деньги</span> в успешные проекты</div>
+  <div class="map-and-invest">
+    <div class="map-video">
+      <video autoplay crossorigin="anonymous">
+        <source src="../../../assets/videos/cors.mp4">
+      </video>
+      <div class="convex"></div>
+    </div>
+    <div class="invest">
+      <div class="start-invest">
+        <div class="start">Начни</div>
+        <div class="invest-text">Инвестировать</div>
       </div>
-      <div class="received-investment">
-        <div class="count">514+</div>
-        <div class="text">Проектов <span class="bold-text">получили инвестиции</span> для развития своего бизнеса</div>
+      <div class="social">
+        <div class="text">Войти через социальные сети: </div>
+        <div class="social-buttons">
+          <div class="social-signin-btn">
+            <img src="../../../assets/img/facebook.png" alt="">
+          </div>
+          <div class="social-signin-btn">
+            <img src="../../../assets/img/linkedin.png" alt="">
+          </div>
+          <div class="social-signin-btn">
+            <img src="../../../assets/img/google.png" alt="">
+          </div>
+          <div class="social-signin-btn">
+            <img src="../../../assets/img/mail.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="commissions">
+          <span class="green">0% </span>
+          <span>комиссий</span>
+        </div>
+        <div class="payments">
+          <span class="green">Без скрытых </span>
+          <span>платежей</span>
+        </div>
       </div>
     </div>
-    <div class="right"></div>
   </div>
-</div>
-
-<div class="subscribe">
-  <div class="subscribe-background"></div>
-  <div class="subscribe-content">
-    <div class="email-icon">
-      <img src="../../../assets/img/email-2.png" alt="">
-    </div>
-    <h2>Будь в курсе всех обновлений</h2>
-    <div class="input-and-button">
-      <div class="inline-block">
-        <input type="text" placeholder="Enter your email address">
-        <button>Подписаться</button>
+  <!-- 
+  <div class="container-fluid pl-5 pr-5">
+    <div class="trust">
+      <div class="trust-text">Нам доверяют</div>
+      <div class="invested-and-projects">
+        <div class="flex">
+          <div class="number">$5,382</div>
+          <div class="wrapper">
+            <div class="circle-1"></div>
+            <div class="text">Инвестировано</div>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="number">$8,256</div>
+          <div class="wrapper">
+            <div class="circle-2"></div>
+            <div class="text">Проекты</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="email-security">
-      *Твой e-mail в безопастности с нами. Мы никогда и ни с кем не поделимся.
+  
+    <div class="numbers">
+      <div class="left">
+        <div class="invested-money">
+          <div class="count">128+</div>
+          <div class="text">Инвесторов <span class="bold-text">уже вложили деньги</span> в успешные проекты</div>
+        </div>
+        <div class="received-investment">
+          <div class="count">514+</div>
+          <div class="text">Проектов <span class="bold-text">получили инвестиции</span> для развития своего бизнеса</div>
+        </div>
+      </div>
+      <div class="right"></div>
     </div>
   </div>
-</div>
-
-<div class="footer">
-  <div class="iiua">IIUA</div>
-  <div class="menu">
-    <div class="item">Home</div>
-    <div class="item">Features</div>
-    <div class="item">Privacy Policy</div>
-    <div class="item">Terms</div>
-    <div class="item">About</div>
+  
+  <div class="subscribe">
+    <div class="subscribe-background"></div>
+    <div class="subscribe-content">
+      <div class="email-icon">
+        <img src="../../../assets/img/email-2.png" alt="">
+      </div>
+      <h2>Будь в курсе всех обновлений</h2>
+      <div class="input-and-button">
+        <div class="inline-block">
+          <input type="text" placeholder="Enter your email address">
+          <button>Подписаться</button>
+        </div>
+      </div>
+      <div class="email-security">
+        *Твой e-mail в безопастности с нами. Мы никогда и ни с кем не поделимся.
+      </div>
+    </div>
   </div>
-  <div class="year">© 2019 IIUA</div>
+  
+  <div class="footer">
+    <div class="iiua">IIUA</div>
+    <div class="menu">
+      <div class="item">Home</div>
+      <div class="item">Features</div>
+      <div class="item">Privacy Policy</div>
+      <div class="item">Terms</div>
+      <div class="item">About</div>
+    </div>
+    <div class="year">© 2019 IIUA</div>
+  </div> -->
 </div>

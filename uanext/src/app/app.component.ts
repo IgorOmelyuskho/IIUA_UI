@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   constructor(private authService: AuthorizationService, private router: Router) {
-    // this.authService.init(); // todo
+    this.authService.init();
   }
 
   title = 'uanext';

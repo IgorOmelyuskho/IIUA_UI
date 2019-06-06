@@ -230,6 +230,7 @@ export class MapManager {
     this.canvasElem = this.mapElement.querySelector('canvas');
 
     this.stats = new Stats();
+    this.stats.dom.style.left = '80px';
     this.mapElement.appendChild(this.stats.dom);
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
@@ -523,7 +524,7 @@ export class MapManager {
       visible: true,
       cursor: 'pointer',
       symbol: [{
-        'markerFile': '../../../assets/img/marker.svg',
+        'markerFile': '../../assets/img/marker.svg',
         'markerWidth': 28,
         'markerHeight': 40,
       },

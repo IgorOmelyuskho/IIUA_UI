@@ -111,54 +111,75 @@
       }
 
       .invest-and-chat {
-        button {
-          height: 36px;
-          padding: 0px 15px;
-          border-radius: 6px;
-          border: 1px solid $darkGreen;
-          outline: none;
-          font-size: 15px;
-          font-weight: 600;
-          letter-spacing: 1.4px;
-          cursor: pointer;
-        }
+        .btn-wrapper {
+          display: flex;
 
-        button.start-chat {
-          background: transparent;
-          color: $darkGreen;
-          padding-right: 0px;
+          button {
+            width: 205px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid $middleGreen;
+            outline: none;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            cursor: pointer;
+          }
 
-          &:hover {
-            background: $darkGreen;
+          button.start-chat {
+            background: transparent;
+            color: $middleGreen;
+            border: 1px solid $middleGreen !important;
+            width: 105px;
+
+            &:hover {
+              color: $green;
+              border: 1px solid $green !important;
+              ;
+            }
+
+            &:hover .img-bg {
+              background-image: url('../../../../assets/img/message-2.png');
+            }
+
+            &:active {
+              background: $middleGreen;
+              border: 1p solid $middleGreen !important;
+              color: white;
+            }
+
+            &:active .img-bg {
+              background-image: url('../../../../assets/img/message-3.png');
+            }
+
+            .img-bg {
+              padding-left: 35px;
+              margin-left: 10px;
+              background-image: url('../../../../assets/img/message.png');
+              background-size: contain;
+              background-repeat: no-repeat;
+            }
+          }
+
+          button.invest {
+            margin-right: 7px;
+            background: $middleGreen;
             color: white;
-          }
 
-          &:hover .img-bg {
-            background-image: url('../../../../assets/img/message-hover.png');
-          }
+            &:hover {
+              background: $green;
+              border: 1px solid $green;
+            }
 
-          .img-bg {
-            padding-left: 35px;
-            margin-left: 10px;
-            background-image: url('../../../../assets/img/message.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-          }
-        }
+            &:active {
+              background: $darkGreen;
+              border-color: $green;
+            }
 
-        button.invest {
-          background: transparent;
-          color: $darkGreen;
-          margin-right: 7px;
-
-          &:hover {
-            background: $darkGreen;
-            color: white;
-          }
-
-          .big-font {
-            font-size: 20px;
-            padding-left: 10px;
+            .big-font {
+              font-size: 20px;
+              padding-left: 10px;
+            }
           }
         }
       }

@@ -92,18 +92,18 @@
       }
 
       .drop-file-zone {
-        #drop-area {
+        .drop-area {
           border: 2px solid rgba(204, 204, 204, 0.2);
           border-radius: 6px;
           width: 100%;
           padding: 10px;
         }
 
-        #drop-area.highlight {
+        .drop-area.highlight {
           border-color: rgba(128, 0, 128, 0.2);
         }
 
-        #gallery {
+        .gallery {
           margin-top: 10px;
           display: flex;
           flex-wrap: wrap;

@@ -28,7 +28,7 @@
 
     .btn-wrapper {
       padding-bottom: 15px;
-      margin-left: 10%;
+      margin-left: 5%;
 
       button {
         margin: 0;
@@ -138,18 +138,18 @@
         }
 
         .drop-file-zone {
-          #drop-area {
+          .drop-area {
             border: 2px solid rgba(204, 204, 204, 0.2);
             border-radius: 6px;
             width: 100%;
             padding: 10px;
           }
 
-          #drop-area.highlight {
+          .drop-area.highlight {
             border-color: rgba(128, 0, 128, 0.2);
           }
 
-          #gallery {
+          .gallery {
             margin-top: 10px;
             display: flex;
             flex-wrap: wrap;
@@ -194,25 +194,25 @@
         }
       }
     }
+  }
 
-    .send {
-      border-top: 1px solid #d3d3d3;
-      background: #f8f8f8;
-      height: 57px;
-      text-align: right;
+  .send {
+    border-top: 1px solid #d3d3d3;
+    background: #f8f8f8;
+    height: 57px;
+    text-align: right;
 
-      button {
-        color: white;
-        background: $darkGreen;
-        margin-right: 20px;
-        margin-top: 15px;
-        border: none;
-        border-radius: 6px;
-        font-size: 10px;
-        letter-spacing: 1px;
-        height: 24px;
-        cursor: pointer;
-      }
+    button {
+      color: white;
+      background: $darkGreen;
+      margin-right: 20px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 6px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      height: 24px;
+      cursor: pointer;
     }
   }
 }

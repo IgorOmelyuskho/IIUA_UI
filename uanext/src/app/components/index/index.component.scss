@@ -1,45 +1,64 @@
 @import '../../../styles-variables.scss';
 
-%icon {
-  width: 42px;
-  height: 42px;
-  margin-left: 50px;
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.sticky {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.map-and-invest {
-  height: 741px;
+.wrapper {
+  height: 100vh;
   display: flex;
+  flex-direction: column;
 
-  .map-video {
-    width: 70%;
-    height: 100%;
-    position: relative;
-    // background: url('https://maptalks.org/resource/image/feature/3d.png');
-    background-size: cover;
+  %icon {
+    width: 42px;
+    height: 42px;
+    margin-left: 50px;
+    background-size: 50%;
     background-repeat: no-repeat;
-    overflow: hidden;
+    background-position: center;
+  }
 
-    video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -webkit-transform: translateX(-50%) translateY(-50%);
-      transform: translateX(-50%) translateY(-50%);
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
+  .sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1000000;
+  }
+
+  .map-and-invest {
+    height: 100vh;
+    display: flex;
+
+    .map-video {
+      width: 70%;
+      height: 100%;
+      position: relative;
+      // background: url('https://maptalks.org/resource/image/feature/3d.png');
+      background-size: cover;
+      background-repeat: no-repeat;
       overflow: hidden;
+      display: flex;
+
+      video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        overflow: hidden;
+      }
+
+      .convex {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-image: url('../../../assets/img/convex.png');
+        width: 70px;
+        height: 100%;
+        background-size: 100% 100%;
+        background-origin: 50% 50%;
+        z-index: 1;
+      }
     }
   }
 
@@ -50,6 +69,8 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    z-index: 1;
+    transform: translateX(-70px);
 
     .start-invest {
       display: flex;
@@ -57,6 +78,7 @@
       font-size: 46px;
       font-weight: bold;
       line-height: 1.13;
+      width: calc(100% + 70px);
 
       .start {
         color: black;
@@ -72,6 +94,7 @@
       margin-top: 40px;
       margin-bottom: 40px;
       height: 114px;
+      width: calc(100% + 70px);
 
       .text {
         text-align: center;
@@ -102,6 +125,7 @@
       font-size: 28px;
       line-height: 1.71;
       letter-spacing: 0.8px;
+      width: calc(100% + 70px);
 
       .green {
         color: $darkGreen;
@@ -246,13 +270,13 @@
       text-align: center;
       padding-top: 41px;
       padding-bottom: 20px;
-  
+
       img {
         height: 32px;
         width: 40px;
       }
     }
-  
+
     h2 {
       font-size: 48px;
       font-weight: bold;
@@ -261,14 +285,14 @@
       color: #444444;
       margin-bottom: 35px;
     }
-  
+
     .input-and-button {
       text-align: center;
-  
+
       .inline-block {
         display: inline-flex;
         box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
-  
+
         input {
           padding: 5px;
           height: 42px;
@@ -279,7 +303,7 @@
           border-top-left-radius: 6px;
           border-bottom-left-radius: 6px;
         }
-  
+
         button {
           text-transform: uppercase;
           font-size: 13px;
@@ -295,7 +319,7 @@
         }
       }
     }
-  
+
     .email-security {
       font-size: 13px;
       line-height: 1.85;
@@ -341,5 +365,3 @@
     text-align: center;
   }
 }
-
-

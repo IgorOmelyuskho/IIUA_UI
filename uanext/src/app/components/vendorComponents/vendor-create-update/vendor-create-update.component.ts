@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 
 @Component({
@@ -18,9 +18,10 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
     }
   }
 
-  dropArea;
-  uploadProgress = [];
-  progressBar;
+
+  @ViewChild('dropArea') dropArea: ElementRef;
+  @ViewChild('gallery') gallery: ElementRef;
+  // @ViewChild('progressBar') progressBar: ElementRef;
 
   projectSteps: any[] = [];
   tieSteps: any[] = [];
@@ -31,23 +32,20 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dropArea = document.getElementById('drop-area');
-    this.progressBar = document.getElementById('progress-bar');
-
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      this.dropArea.addEventListener(eventName, this.preventDefaults.bind(this), false);
+      this.dropArea.nativeElement.addEventListener(eventName, this.preventDefaults.bind(this), false);
       document.body.addEventListener(eventName, this.preventDefaults.bind(this), false);
     });
 
     ['dragenter', 'dragover'].forEach(eventName => {
-      this.dropArea.addEventListener(eventName, this.highlight.bind(this), false);
+      this.dropArea.nativeElement.addEventListener(eventName, this.highlight.bind(this), false);
     });
 
     ['dragleave', 'drop'].forEach(eventName => {
-      this.dropArea.addEventListener(eventName, this.unhighlight.bind(this), false);
+      this.dropArea.nativeElement.addEventListener(eventName, this.unhighlight.bind(this), false);
     });
 
-    this.dropArea.addEventListener('drop', this.handleDrop.bind(this), false);
+    this.dropArea.nativeElement.addEventListener('drop', this.handleDrop.bind(this), false);
   }
 
   tieToStep(step: any) {
@@ -68,11 +66,11 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
   }
 
   highlight(e) {
-    this.dropArea.classList.add('highlight');
+    this.dropArea.nativeElement.classList.add('highlight');
   }
 
   unhighlight(e) {
-    this.dropArea.classList.remove('active');
+    this.dropArea.nativeElement.classList.remove('active');
   }
 
   handleDrop(e) {
@@ -82,27 +80,27 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
     this.handleFiles(files);
   }
 
-  initializeProgress(numFiles) {
-    this.progressBar.value = 0;
-    this.uploadProgress = [];
+  // initializeProgress(numFiles) {
+  //   this.progressBar.value = 0;
+  //   this.uploadProgress = [];
 
-    for (let i = numFiles; i > 0; i--) {
-      this.uploadProgress.push(0);
-    }
-  }
+  //   for (let i = numFiles; i > 0; i--) {
+  //     this.uploadProgress.push(0);
+  //   }
+  // }
 
-  updateProgress(fileNumber, percent) {
-    this.uploadProgress[fileNumber] = percent;
-    const total = this.uploadProgress.reduce((tot, curr) => tot + curr, 0) / this.uploadProgress.length;
-    this.progressBar.value = total;
-  }
+  // updateProgress(fileNumber, percent) {
+  //   this.uploadProgress[fileNumber] = percent;
+  //   const total = this.uploadProgress.reduce((tot, curr) => tot + curr, 0) / this.uploadProgress.length;
+  //   this.progressBar.value = total;
+  // }
 
   handleFiles(files) {
     for (let i = 0; i < files.length; i++) {
       this.uploadFile(files[i], i);
       this.previewFile(files[i]);
     }
-    this.initializeProgress(files.length);
+    // this.initializeProgress(files.length);
   }
 
   previewFile(file) {
@@ -113,7 +111,7 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
       const img = document.createElement('img');
       img.src = reader.result as string;
       figure.appendChild(img);
-      document.getElementById('gallery').appendChild(figure);
+      this.gallery.nativeElement.appendChild(figure);
     };
   }
 
@@ -125,17 +123,17 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
     // Update progress (can be used to show progress indicator)
-    xhr.upload.addEventListener('progress', (e) => {
-      this.updateProgress(i, (e.loaded * 100.0 / e.total) || 100);
-    });
+    // xhr.upload.addEventListener('progress', (e) => {
+    //   this.updateProgress(i, (e.loaded * 100.0 / e.total) || 100);
+    // });
 
-    xhr.addEventListener('readystatechange', (e) => {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        this.updateProgress(i, 100); // <- Add this
-      } else if (xhr.readyState === 4 && xhr.status !== 200) {
-        // Error. Inform the user
-      }
-    });
+    // xhr.addEventListener('readystatechange', (e) => {
+    //   if (xhr.readyState === 4 && xhr.status === 200) {
+    //     this.updateProgress(i, 100); // <- Add this
+    //   } else if (xhr.readyState === 4 && xhr.status !== 200) {
+    //     // Error. Inform the user
+    //   }
+    // });
 
     formData.append('upload_preset', 'ujpu6gyk');
     formData.append('file', file);
