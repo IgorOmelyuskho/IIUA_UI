@@ -57,7 +57,6 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
         this.tieSteps.push(this.projectSteps[i]);
       }
     }
-    console.log(this.tieSteps);
   }
 
   preventDefaults(e) {
@@ -141,6 +140,6 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
   }
 
   send() {
-    console.log('SEND-2');
+    // todo
   }
 }

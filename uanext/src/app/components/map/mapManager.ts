@@ -167,7 +167,6 @@ export class MapManager {
       this.loadObject3D(newObj); // async
       this.objectsArr.push(newObj);
     }
-    console.log(this.objectsArr);
     window['OBJECTS_ARR'] = this.objectsArr;
   }
 

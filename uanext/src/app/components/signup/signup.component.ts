@@ -8,6 +8,7 @@ import { UserRole } from 'src/app/models';
 export class SignupComponent implements OnInit {
   userRole = 'Vendor'; // DEFAULT
   showProgress = false;
+  useEmail = false;
 
   constructor() { }
 
@@ -27,6 +28,10 @@ export class SignupComponent implements OnInit {
     } else {
       this.showProgress = false;
     }
+  }
+
+  useEmailForSignUp() {
+    this.useEmail = true;
   }
 
 }

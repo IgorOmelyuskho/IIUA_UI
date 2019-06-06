@@ -10,13 +10,13 @@
   height: 100%;
 
   .main-block {
-    padding-right: 70px;
+    margin-right: 70px;
     display: inline-flex;
     height: 99%;
+    border-right: 1px solid #d3d3d3;
 
     .find-investor-wrapper {
       width: 18vw;
-      overflow: auto;
       height: 100%;
     }
 

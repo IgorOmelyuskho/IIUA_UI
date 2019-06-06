@@ -49,6 +49,5 @@ export class IndexComponent implements OnInit {
     if (role === UserRole.ProjectUser) {
       this.userRole = UserRole.ProjectUser;
     }
-    console.log(this.userRole);
   }
 }

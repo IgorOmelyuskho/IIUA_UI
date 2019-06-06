@@ -28,7 +28,7 @@ export class MainScreenVendorComponent implements OnInit {
   }
 
   onMapFinishInit() {
-    console.log('load obj model after this log');
+    // todo 'load obj model after this log'
   }
 
 }
