@@ -129,7 +129,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onMapFinishInit() {
-    console.log('map finish init');
+    // todo 'load objects model after map init'
   }
 
   ngOnDestroy() {

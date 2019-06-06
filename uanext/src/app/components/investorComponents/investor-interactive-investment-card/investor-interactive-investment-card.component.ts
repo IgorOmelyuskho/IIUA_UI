@@ -17,7 +17,6 @@ export class InvestorInteractiveInvestmentCardComponent implements OnInit {
     .subscribe(
       (project: VendorProject) => {
         this.project = project;
-        console.log(this.project);
       }
     );
   }

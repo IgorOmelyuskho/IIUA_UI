@@ -1,8 +1,9 @@
 @import '../../../../styles-variables.scss';
 
 .last-activity {
-  border-right: 1px solid #d3d3d3;
-  margin-right: 4px;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 
   .find {
     display: flex;
@@ -46,7 +47,7 @@
     button {
       width: 33%;
       height: 16px;
-      border: solid 1px  $green;
+      border: solid 1px $green;
       border-radius: 100px;
       background: white;
       font-size: 10px;
@@ -73,91 +74,100 @@
     }
   }
 
-  .project-wrapper {
-    .project {
-      height: 58px;
-      border-radius: 6px;
-      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-      margin: 6px 8px 0px 8px;
-      display: flex;
-      justify-content: space-between;
-      position: relative;
+  .projects {
+    overflow: auto;
 
-      .red-circle {
-        position: absolute;
-        top: -3px;
-        right: -3px;
-        width: 8px;
-        height: 8px;
-        background-color: #ee3949;
-        border-radius: 10px;
-      }
+    .wrapper-for-border {
+      border-right: 1px solid #d3d3d3;
+      margin-right: 4px;
 
-      .avatar-wrapper {
-        min-width: 60px;
-        max-width: 60px;
-        margin-right: 5px;
-        height: 100%;
-
-        .avatar {
-          width: 100%;
-          height: 100%;
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: cover;
+      .project-wrapper {
+        .project {
+          height: 58px;
           border-radius: 6px;
-        }
-      }
-
-      .info {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-
-        .project-name {
-          font-size: 10px;
-          font-weight: bold;
-          color: $darkGreen;
-        }
-
-        .region {
-          font-size: 10px;
-          letter-spacing: 0.2px;
-          display: flex;
-          line-height: 1;
-
-          i {
-            color: $green;
-            font-size: 12px;
-          }
-        }
-
-        .field-activity {
-          font-size: 10px;
-          letter-spacing: 0.2px;
+          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+          margin: 6px 8px 0px 8px;
           display: flex;
           justify-content: space-between;
+          position: relative;
 
-          .max-width {
-            max-width: 80px;
-            overflow: hidden;
-            line-height: 1;
+          .red-circle {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 8px;
+            height: 8px;
+            background-color: #ee3949;
+            border-radius: 10px;
           }
 
-          img {
+          .avatar-wrapper {
+            min-width: 60px;
+            max-width: 60px;
             margin-right: 5px;
-            height: 8px;
+            height: 100%;
+
+            .avatar {
+              width: 100%;
+              height: 100%;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: cover;
+              border-radius: 6px;
+            }
+          }
+
+          .info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            .project-name {
+              font-size: 10px;
+              font-weight: bold;
+              color: $darkGreen;
+            }
+
+            .region {
+              font-size: 10px;
+              letter-spacing: 0.2px;
+              display: flex;
+              line-height: 1;
+
+              i {
+                color: $green;
+                font-size: 12px;
+              }
+            }
+
+            .field-activity {
+              font-size: 10px;
+              letter-spacing: 0.2px;
+              display: flex;
+              justify-content: space-between;
+
+              .max-width {
+                max-width: 80px;
+                overflow: hidden;
+                line-height: 1;
+              }
+
+              img {
+                margin-right: 5px;
+                height: 8px;
+              }
+            }
           }
         }
-      }
-    }
 
-    hr {
-      height: 1px;
-      border-top: 1px solid #d3d3d3;
-      margin-top: 10px;
-      margin-bottom: 10px;
+        hr {
+          height: 1px;
+          border-top: 1px solid #d3d3d3;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+      }
     }
   }
 }

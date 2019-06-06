@@ -33,7 +33,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   windowClickHandler = (e) => {
-    console.log('CLICK'); // todo
     this.showPreviewCard = false;
   }
 
@@ -63,7 +62,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
 
   filterOnChange(filterParam: FilterFields) {
     this.filter = filterParam;
-    console.log(this.filter);
   }
 
   onMapObjectClick(mapObject: GeoObject) {
@@ -104,7 +102,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   onMapFinishInit() {
-    console.log('load obj model after this log');
+    // todo 'load obj model after this log'
   }
 
   ngOnDestroy() {

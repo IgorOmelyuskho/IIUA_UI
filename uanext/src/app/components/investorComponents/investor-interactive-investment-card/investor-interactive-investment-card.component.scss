@@ -13,7 +13,7 @@
     width: 30vw;
     margin: auto;
     transform: translateY(100px);
-    height: calc(100vh - 100px - 10px);
+    max-height: calc(100vh - 100px - 10px);
     /* translateY, margin-bottom */
 
     .header {

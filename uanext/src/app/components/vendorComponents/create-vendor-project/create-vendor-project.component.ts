@@ -154,7 +154,6 @@ export class CreateVendorProjectComponent implements OnInit {
   photosUploaded(event) {
     if (event.error === false) {
       const photosData: any[] = event.files;
-      console.log(photosData);
       for (let i = 0; i < photosData.length; i++) {
         this.vendorProject.images.push(photosData[i]);
       }
@@ -227,7 +226,6 @@ export class CreateVendorProjectComponent implements OnInit {
 
     this.projectsService.createVendorProject(newVendorProject).subscribe(
       response => {
-        console.log(response);
         this.showProgressBar = false;
         this.notify.show(response['data']);
       },

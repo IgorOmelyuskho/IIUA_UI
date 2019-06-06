@@ -38,6 +38,7 @@
               "./src/js/MTLLoader.js",
               "./src/js/maptalks.markercluster.min.js",
               "./src/js/CSS2DRenderer.js",
+              "./src/js/slidePage.min.js",
               "./node_modules/nouislider/distribute/nouislider.min.js",
               "./node_modules/three-ziploader/build/ziploader.min.js"
             ]
@@ -102,6 +103,7 @@
               "./src/js/MTLLoader.js",
               "./src/js/maptalks.markercluster.min.js",
               "./src/js/CSS2DRenderer.js",
+              "./src/js/slidePage.min.js",
               "./node_modules/nouislider/distribute/nouislider.min.js",
               "./node_modules/three-ziploader/build/ziploader.min.js"
             ],

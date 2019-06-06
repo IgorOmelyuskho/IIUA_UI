@@ -226,7 +226,6 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   onScroll() {
-    console.log('scrolled!!');
     this.pageNumber += 1;
     this.searchByScroll = true;
 
@@ -241,16 +240,15 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   onScrollUp() {
-    console.log('scroll UP');
     // this.pageNumber -= 1;
   }
 
   onMapObjectClick(mapProject: GeoObject) {
-    console.log(mapProject);
+   // todo
   }
 
   onMapFinishInit() {
-    console.log('load obj model after this log');
+    // todo 'load obj model after this log'
   }
 
   scrollToElement(id) {

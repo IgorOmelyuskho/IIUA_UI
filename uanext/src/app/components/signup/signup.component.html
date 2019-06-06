@@ -37,14 +37,14 @@
             </div>
 
             <div class="use-email">
-              <a href="">Использовать почту для регистрации</a>
+              <a routerLink="/signup" (click)="useEmailForSignUp()">Использовать почту для регистрации</a>
             </div>
 
-            <div class="vendor-form" *ngIf="userRole === 'Vendor'">
+            <div class="vendor-form" *ngIf="userRole === 'Vendor' && useEmail">
               <app-signup-vendor (showProgress)="showProgressBar($event)"></app-signup-vendor>
             </div>
 
-            <div class="investor-form" *ngIf="userRole === 'Investor'">
+            <div class="investor-form" *ngIf="userRole === 'Investor' && useEmail">
               <app-signup-investor (showProgress)="showProgressBar($event)"></app-signup-investor>
             </div>
           </div>
