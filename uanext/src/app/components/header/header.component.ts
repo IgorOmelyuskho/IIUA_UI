@@ -1,8 +1,5 @@
-import { Component, OnInit, ApplicationRef } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { AuthorizationService } from 'src/app/services/http/authorization.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserRole } from 'src/app/models';
 import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
@@ -13,21 +10,17 @@ import { TranslateService } from 'src/app/services/translate.service';
 export class HeaderComponent implements OnInit {
   userRole: string;
 
-  constructor(private router: Router, private translateService: TranslateService, private ref: ApplicationRef) { }
+  constructor(private router: Router, private translateService: TranslateService) { }
 
   ngOnInit() {
   }
 
   ru() {
-    this.translateService.use('ru').then(() => {
-      this.ref.tick();
-    });
+    this.translateService.use('ru').then(() => {});
   }
 
   en() {
-    this.translateService.use('en').then(() => {
-      this.ref.tick();
-    });
+    this.translateService.use('en').then(() => {});
   }
 
   signIn() {
