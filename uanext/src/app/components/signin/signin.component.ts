@@ -22,6 +22,7 @@ export class SigninComponent implements OnInit {
   submitted = false;
   FormHelper = FormHelper;
   showProgressBar = false;
+  self: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +32,7 @@ export class SigninComponent implements OnInit {
     private profileService: ProfileService,
     private notify: NotificationService,
   ) {
+    this.self = this.constructor.name;
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
