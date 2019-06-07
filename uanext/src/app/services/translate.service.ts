@@ -1,4 +1,4 @@
-import { Injectable, ApplicationRef, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class TranslateService {
   data: any = {};
 
-  constructor(private http: HttpClient/* , private ref: ApplicationRef *//* , private injector: Injector */) {}
+  constructor(private http: HttpClient) {}
 
   use(lang: string): Promise<{}> {
     return new Promise<{}>((resolve, reject) => {
@@ -16,7 +16,6 @@ export class TranslateService {
         translation => {
           this.data = Object.assign({}, translation || {});
           resolve(this.data);
-          // this.ref.tick();
         },
         error => {
           this.data = {};
