@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { components } from './components';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -20,12 +20,19 @@ import { NgxSortableModule } from 'ngx-sortable';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HighlightPipe } from './services/pipes/highlight.pipe';
+import { TranslatePipe } from './services/pipes/translate.pipe';
+import { TranslateService } from './services/translate.service';
+
+export function setupTranslateFactory(service: TranslateService): Function {
+  return () => service.use('ru');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     ...components,
     HighlightPipe,
+    TranslatePipe,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +58,13 @@ import { HighlightPipe } from './services/pipes/highlight.pipe';
     VendorGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    TranslateService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setupTranslateFactory,
+      deps: [ TranslateService ],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

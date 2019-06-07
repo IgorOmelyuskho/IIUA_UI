@@ -1,0 +1,60 @@
+{
+    "SigninComponent": {
+        "logIn": "Вход",
+        "social": "Войти с помощью социальных сетей:",
+        "email": "Емайл",
+        "password": "Пароль",
+        "emailRequired": "Требуется электронная почта    ",
+        "passwordRequired": "Требуется пароль",
+        "restorePassword": "Восстановить пароль",
+        "validEmail": "Адрес электронной почты должен быть действительным адресом электронной почты",
+        "passwordMinLength": "Пароль должен содержать не менее 6 символов",
+        "register": "Зарегистрироваться",
+        "logInBtn": "ВОЙТИ"
+    },
+    "SignupComponent": {
+        "regisration": "Регистрация",
+        "investor": "Инвестор",
+        "vendor": "Вендор",
+        "social": "Войти с помощью социальных сетей:",
+        "useEmail": "Использовать почту для регистрации"
+    },
+    "SignupInvestorComponent": {
+        "name": "Полное Имя",
+        "nameRequired": "Требуется полное имя",
+        "phone": "Телефон",
+        "phoneRequired": "Требуется телефон",
+        "validPhone": "Введите действующий телефон",
+        "email": "Емайл",
+        "emailRequired": "Требуется электронная почта",
+        "validEmail": "Адрес электронной почты должен быть действительным адресом электронной почты",
+        "password": "Пароль",
+        "passwordRequired": "Необходим пароль",
+        "passwordLength": "Пароль должен содержать не менее 6 символов",
+        "repeatPassword": "Повторите пароль",
+        "repeatPasswordRequired": "Это поле обязательно к заполнению",
+        "passwordsNotMatch": "Пароли не совпадают",
+        "haveAccount": "Уже есть аккаунт?",
+        "register": "ЗАРЕГИСТРИРОВАТЬСЯ"
+    },
+    "SignupVendorComponent": {
+        "name": "Полное Имя",
+        "nameRequired": "Требуется полное имя",
+        "ITN": "ITN",
+        "ITNRequired": "Требуется ITN",
+        "phone": "Телефон",
+        "phoneRequired": "Требуется телефон",
+        "validPhone": "Введите действующий телефон",
+        "email": "Емайл",
+        "emailRequired": "Требуется электронная почта",
+        "validEmail": "Адрес электронной почты должен быть действительным адресом электронной почты",
+        "password": "Пароль",
+        "passwordRequired": "Необходим пароль",
+        "passwordLength": "Пароль должен содержать не менее 6 символов",
+        "repeatPassword": "Повторите пароль",
+        "repeatPasswordRequired": "Это поле обязательно к заполнению",
+        "passwordsNotMatch": "Пароли не совпадают",
+        "haveAccount": "Уже есть аккаунт?",
+        "register": "ЗАРЕГИСТРИРОВАТЬСЯ"
+    }
+}

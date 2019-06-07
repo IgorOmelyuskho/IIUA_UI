@@ -9,8 +9,11 @@ export class SignupComponent implements OnInit {
   userRole = 'Vendor'; // DEFAULT
   showProgress = false;
   useEmail = false;
+  self: string;
 
-  constructor() { }
+  constructor() {
+    this.self = this.constructor.name;
+   }
 
   ngOnInit() { }
 
@@ -33,5 +36,4 @@ export class SignupComponent implements OnInit {
   useEmailForSignUp() {
     this.useEmail = true;
   }
-
 }

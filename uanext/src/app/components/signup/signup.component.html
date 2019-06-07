@@ -12,17 +12,17 @@
           <div class="form">
             <div class="top-green-div"></div>
 
-            <div class="registration">Регистрация</div>
+            <div class="registration">{{ 'regisration' | translate:self }}</div>
 
             <div class="text-center">
               <button [ngClass]="{ 'selected': userRole === 'Investor' }" (click)="asInvestor()"
-                class="btn btn-primary select-role investor">Инвестор</button>
+                class="btn btn-primary select-role investor">{{ 'investor' | translate:self }}</button>
               <button [ngClass]="{ 'selected': userRole === 'Vendor' }" (click)="asVendor()"
-                class="btn btn-primary select-role vendor">Вендор</button>
+                class="btn btn-primary select-role vendor">{{ 'vendor' | translate:self }}</button>
             </div>
 
             <div class="social">
-              <div class="text">Войти с помощью социальных сетей: </div>
+              <div class="text">{{ 'social' | translate:self }}</div>
               <div class="social-buttons">
                 <div class="social-signin-btn">
                   <img src="../../../assets/img/facebook.png" alt="">
@@ -37,7 +37,7 @@
             </div>
 
             <div class="use-email">
-              <a routerLink="/signup" (click)="useEmailForSignUp()">Использовать почту для регистрации</a>
+              <a routerLink="/signup" (click)="useEmailForSignUp()">{{ 'useEmail' | translate:self }}</a>
             </div>
 
             <div class="vendor-form" *ngIf="userRole === 'Vendor' && useEmail">

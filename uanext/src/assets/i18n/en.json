@@ -1,0 +1,60 @@
+{
+    "SigninComponent": {
+        "logIn": "Log In",
+        "social": "Login using social networks:",
+        "email": "Email",
+        "password": "Password",
+        "emailRequired": "Email Required",
+        "passwordRequired": "Password is required",
+        "restorePassword": "Restore password",
+        "validEmail": "Email address must be a valid email address",
+        "passwordMinLength": "Password must be at least 6 characters",
+        "register": "To register",
+        "logInBtn": "LOG IN"
+    },
+    "SignupComponent": {
+        "regisration": "Registration",
+        "investor": "Investor",
+        "vendor": "Vendor",
+        "social": "Login using social networks:",
+        "useEmail": "Use mail for registration"
+    },
+    "SignupInvestorComponent": {
+        "name": "Full Name",
+        "nameRequired": "FullName is required",
+        "phone": "Phone",
+        "phoneRequired": "Phone is required",
+        "validPhone": "Enter valid phone",
+        "email": "Email",
+        "emailRequired": "Email is required",
+        "validEmail": "Email must be a valid email address",
+        "password": "Password",
+        "passwordRequired": "Password is required",
+        "passwordLength": "Password must be at least 6 characters",
+        "repeatPassword": "Repeat password",
+        "repeatPasswordRequired": "This field is required",
+        "passwordsNotMatch": "Passwords not match",
+        "haveAccount": "Already have an account?",
+        "register": "REGISTER"
+    },
+    "SignupVendorComponent": {
+        "name": "Full Name",
+        "nameRequired": "FullName is required",
+        "ITN": "ITN",
+        "ITNRequired": "ITN is required",
+        "phone": "Phone",
+        "phoneRequired": "Phone is required",
+        "validPhone": "Enter valid phone",
+        "email": "Email",
+        "emailRequired": "Email is required",
+        "validEmail": "Email must be a valid email address",
+        "password": "Password",
+        "passwordRequired": "Password is required",
+        "passwordLength": "Password must be at least 6 characters",
+        "repeatPassword": "Repeat password",
+        "repeatPasswordRequired": "This field is required",
+        "passwordsNotMatch": "Passwords not match",
+        "haveAccount": "Already have an account?",
+        "register": "REGISTER"
+    }
+}
