@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="">
+  <div class="header">
     <app-header *ngIf="!userRole"></app-header>
     <app-investor-navbar *ngIf="userRole === 'Investor'"></app-investor-navbar>
     <app-vendor-navbar *ngIf="userRole === 'Vendor'"></app-vendor-navbar>
@@ -31,6 +31,9 @@
 
 
   <div class="slide-wrapper">
+    <img (click)="slideUp()" src="../../../assets/img/slide-arrow.png" alt="" class="slide-up">
+    <img (click)="slideDown()" src="../../../assets/img/slide-arrow.png" alt="" class="slide-down">
+
     <div class="slide-container">
       <section class="slide-page transition" style="transform: translate3d(0px, 0px, 0px);">
         <div class="map-and-invest">
