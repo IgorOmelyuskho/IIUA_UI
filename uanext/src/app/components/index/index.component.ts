@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRole } from 'src/app/models';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
@@ -10,8 +10,9 @@ declare const slidePage;
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnInit, AfterViewInit {
+export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   userRole: UserRole;
+  slide: any;
 
   constructor(private authService: AuthorizationService) { }
 
@@ -54,7 +55,18 @@ export class IndexComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const slide = new slidePage();
-    // console.log(slide);
+     this.slide = new slidePage();
+  }
+
+  slideUp() {
+    this.slide.slidePrev();
+  }
+
+  slideDown() {
+    this.slide.slideNext();
+  }
+
+  ngOnDestroy() {
+    this.slide.destroy();
   }
 }

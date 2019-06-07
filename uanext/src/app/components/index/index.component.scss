@@ -14,361 +14,407 @@
     background-position: center;
   }
 
-  .map-and-invest {
+  .header {
+    background: salmon;
+    height: 50px;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1000000;
+  }
+
+  .slide-wrapper {
+    width: 100%;
     height: 100%;
-    display: flex;
+    overflow: hidden;
+    position: relative;
 
-    .map-video {
-      width: 70%;
-      height: 100%;
-      position: relative;
-      // background: url('https://maptalks.org/resource/image/feature/3d.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      overflow: hidden;
-      display: flex;
+    .slide-up,
+    .slide-down {
+      position: absolute;
+      left: calc(50% - 25px);
+      width: 60px;
+      height: 35px;
+      z-index: 10;
+      cursor: pointer;
+      opacity: 0.2;
+    }
 
-      video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translateX(-50%) translateY(-50%);
-        transform: translateX(-50%) translateY(-50%);
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        overflow: hidden;
-      }
-
-      .convex {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-image: url('../../../assets/img/convex.png');
-        width: 70px;
-        height: 100%;
-        background-size: 100% 100%;
-        background-origin: 50% 50%;
-        z-index: 1;
+    .slide-up {
+      top: 20px;
+      transform: rotate(180deg);
+      &:hover {
+        opacity: 0.3;
+        transform: rotate(180deg) scaleX(0.9);
       }
     }
 
-    .invest {
-      width: 30%;
+    .slide-down {
+      bottom: 10px;
+      left: calc(50% - 25px);
+      &:hover {
+        opacity: 0.3;
+        transform: scaleX(0.9);
+      }
+    }
+
+
+    .map-and-invest {
+      height: 100%;
+      display: flex;
+
+      .map-video {
+        width: 70%;
+        height: 100%;
+        position: relative;
+        // background: url('https://maptalks.org/resource/image/feature/3d.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        display: flex;
+
+        video {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+          min-width: 100%;
+          min-height: 100%;
+          width: auto;
+          height: auto;
+          overflow: hidden;
+        }
+
+        .convex {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background-image: url('../../../assets/img/convex.png');
+          width: 70px;
+          height: 100%;
+          background-size: 100% 100%;
+          background-origin: 50% 50%;
+          z-index: 1;
+        }
+      }
+
+      .invest {
+        width: 30%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        z-index: 1;
+        transform: translateX(-70px);
+
+        .start-invest {
+          display: flex;
+          flex-direction: column;
+          font-size: 46px;
+          font-weight: bold;
+          line-height: 1.13;
+          width: calc(100% + 70px);
+
+          .start {
+            color: black;
+          }
+
+          .invest-text {
+            color: $darkGreen;
+          }
+        }
+
+        .social {
+          background: #f4f4f4;
+          margin-top: 40px;
+          margin-bottom: 40px;
+          height: 114px;
+          width: calc(100% + 70px);
+
+          .text {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 11px;
+          }
+
+          .social-buttons {
+            display: flex;
+            justify-content: center;
+
+            .social-signin-btn {
+              width: 47px;
+              height: 47px;
+              border-radius: 30px;
+              margin: 0px 4px;
+              cursor: pointer;
+
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
+        }
+
+        .bottom {
+          font-size: 28px;
+          line-height: 1.71;
+          letter-spacing: 0.8px;
+          width: calc(100% + 70px);
+
+          .green {
+            color: $darkGreen;
+            font-weight: bold;
+          }
+
+          .commissions {}
+
+          .payments {}
+        }
+      }
+    }
+
+    .info {
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      z-index: 1;
-      transform: translateX(-70px);
+      padding-right: 50px;
+      padding-left: 51px;
 
-      .start-invest {
+      .trust {
         display: flex;
-        flex-direction: column;
-        font-size: 46px;
-        font-weight: bold;
-        line-height: 1.13;
-        width: calc(100% + 70px);
-
-        .start {
-          color: black;
-        }
-
-        .invest-text {
-          color: $darkGreen;
-        }
-      }
-
-      .social {
-        background: #f4f4f4;
-        margin-top: 40px;
-        margin-bottom: 40px;
-        height: 114px;
-        width: calc(100% + 70px);
-
-        .text {
-          text-align: center;
-          margin-top: 10px;
-          margin-bottom: 11px;
-        }
-
-        .social-buttons {
-          display: flex;
-          justify-content: center;
-
-          .social-signin-btn {
-            width: 47px;
-            height: 47px;
-            border-radius: 30px;
-            margin: 0px 4px;
-            cursor: pointer;
-
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-        }
-      }
-
-      .bottom {
-        font-size: 28px;
-        line-height: 1.71;
-        letter-spacing: 0.8px;
-        width: calc(100% + 70px);
-
-        .green {
-          color: $darkGreen;
-          font-weight: bold;
-        }
-
-        .commissions {}
-
-        .payments {}
-      }
-    }
-  }
-
-  .info {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding-right: 50px;
-    padding-left: 51px;
-
-    .trust {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-      margin-bottom: 25px;
-      height: 10%;
-      align-items: center;
-
-      .trust-text {
-        font-size: 48px;
-        font-weight: bold;
-      }
-
-      .invested-and-projects {
-        display: flex;
-
-        .flex {
-          display: flex;
-          flex-direction: column;
-          margin-left: 45px;
-          font-family: Helvetica;
-
-          .number {
-            font-size: 20px;
-            line-height: 1.5;
-            color: #505d6f;
-            margin-bottom: 5px;
-          }
-
-          .wrapper-2 {
-            display: flex;
-            align-items: center;
-
-            .circle-1,
-            .circle-2 {
-              width: 10px;
-              height: 10px;
-              border-radius: 8px;
-              margin-right: 8px;
-            }
-
-            .circle-1 {
-              background-color: #568f0c;
-            }
-
-            .circle-2 {
-              background-color: #97de37;
-            }
-
-            .text {
-              font-family: Helvetica;
-              font-size: 12px;
-              line-height: 1.67;
-              color: #505d6f;
-            }
-          }
-        }
-
-      }
-    }
-
-    .numbers {
-      display: flex;
-      justify-content: space-between;
-      height: 80%;
-
-      .left {
-        display: flex;
-        flex-direction: column;
         justify-content: space-between;
-        width: 30%;
+        margin-top: 20px;
+        margin-bottom: 25px;
+        height: 10%;
+        align-items: center;
 
-        .invested-money,
-        .received-investment {
-          border-radius: 6px;
-          box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
-          height: 45%;
-          text-align: center;
-
-          .text {
-            padding-left: 40px;
-            padding-right: 40px;
-          }
-
-          .bold-text {
-            font-weight: bold;
-          }
-
-          .count {
-            font-size: 48px;
-            font-weight: bold;
-            color: $darkGreen;
-            padding-top: 35px;
-            padding-bottom: 15px;
-          }
-        }
-      }
-
-      .right {
-        width: 65%;
-        border-radius: 6px;
-        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
-      }
-    }
-  }
-
-  .subscribe-and-footer {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    .subscribe {
-      height: 65%;
-      position: relative;
-
-      .subscribe-background {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('../../../assets/img/background-map.png');
-        background-repeat: no-repeat;
-        background-size: cover;
-        opacity: 0.5;
-      }
-
-      .subscribe-content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-
-        .email-icon {
-          text-align: center;
-          padding-top: 15vh;
-          padding-bottom: 20px;
-
-          img {
-            height: 32px;
-            width: 40px;
-          }
-        }
-
-        .stay-updated {
+        .trust-text {
           font-size: 48px;
           font-weight: bold;
-          line-height: 1.38;
-          text-align: center;
-          color: #444444;
-          margin-bottom: 35px;
         }
 
-        .input-and-button {
-          text-align: center;
+        .invested-and-projects {
+          display: flex;
 
-          .inline-block {
-            display: inline-flex;
-            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+          .flex {
+            display: flex;
+            flex-direction: column;
+            margin-left: 45px;
+            font-family: Helvetica;
 
-            input {
-              padding: 5px;
-              height: 42px;
-              outline: none;
-              width: 403px;
-              border: solid 1px #cecece;
-              padding-left: 10px;
-              border-top-left-radius: 6px;
-              border-bottom-left-radius: 6px;
+            .number {
+              font-size: 20px;
+              line-height: 1.5;
+              color: #505d6f;
+              margin-bottom: 5px;
             }
 
-            button {
-              text-transform: uppercase;
-              font-size: 13px;
-              font-weight: 600;
-              letter-spacing: 1.3px;
-              color: #ffffff;
-              background: $green;
-              border: none;
-              border-top-right-radius: 6px;
-              border-bottom-right-radius: 6px;
-              height: 42px;
-              cursor: pointer;
+            .wrapper-2 {
+              display: flex;
+              align-items: center;
+
+              .circle-1,
+              .circle-2 {
+                width: 10px;
+                height: 10px;
+                border-radius: 8px;
+                margin-right: 8px;
+              }
+
+              .circle-1 {
+                background-color: #568f0c;
+              }
+
+              .circle-2 {
+                background-color: #97de37;
+              }
+
+              .text {
+                font-family: Helvetica;
+                font-size: 12px;
+                line-height: 1.67;
+                color: #505d6f;
+              }
+            }
+          }
+
+        }
+      }
+
+      .numbers {
+        display: flex;
+        justify-content: space-between;
+        height: 80%;
+
+        .left {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 30%;
+
+          .invested-money,
+          .received-investment {
+            border-radius: 6px;
+            box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+            height: 45%;
+            text-align: center;
+
+            .text {
+              padding-left: 40px;
+              padding-right: 40px;
+            }
+
+            .bold-text {
+              font-weight: bold;
+            }
+
+            .count {
+              font-size: 48px;
+              font-weight: bold;
+              color: $darkGreen;
+              padding-top: 35px;
+              padding-bottom: 15px;
             }
           }
         }
 
-        .email-security {
-          font-size: 13px;
-          line-height: 1.85;
-          color: #444444;
-          text-align: center;
-          margin-top: 15px;
+        .right {
+          width: 65%;
+          border-radius: 6px;
+          box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
         }
       }
     }
 
-    .footer {
-      height: 35%;
-      background: #fcfcfc;
-      text-align: center;
+    .subscribe-and-footer {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
 
-      .iiua {
-        padding-top: 30px;
-        padding-bottom: 45px;
-        font-family: Helvetica;
-        line-height: 1.58;
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-      }
+      .subscribe {
+        height: 65%;
+        position: relative;
 
-      .menu {
-        display: flex;
-        justify-content: center;
-        padding-bottom: 48px;
+        .subscribe-background {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url('../../../assets/img/background-map.png');
+          background-repeat: no-repeat;
+          background-size: cover;
+          opacity: 0.5;
+        }
 
-        .item {
-          margin: 0px 10px;
-          font-family: Helvetica;
-          font-size: 16px;
-          line-height: 1.58;
+        .subscribe-content {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+
+          .email-icon {
+            text-align: center;
+            padding-top: 15vh;
+            padding-bottom: 20px;
+
+            img {
+              height: 32px;
+              width: 40px;
+            }
+          }
+
+          .stay-updated {
+            font-size: 48px;
+            font-weight: bold;
+            line-height: 1.38;
+            text-align: center;
+            color: #444444;
+            margin-bottom: 35px;
+          }
+
+          .input-and-button {
+            text-align: center;
+
+            .inline-block {
+              display: inline-flex;
+              box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+
+              input {
+                padding: 5px;
+                height: 42px;
+                outline: none;
+                width: 403px;
+                border: solid 1px #cecece;
+                padding-left: 10px;
+                border-top-left-radius: 6px;
+                border-bottom-left-radius: 6px;
+              }
+
+              button {
+                text-transform: uppercase;
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: 1.3px;
+                color: #ffffff;
+                background: $green;
+                border: none;
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+                height: 42px;
+                cursor: pointer;
+              }
+            }
+          }
+
+          .email-security {
+            font-size: 13px;
+            line-height: 1.85;
+            color: #444444;
+            text-align: center;
+            margin-top: 15px;
+          }
         }
       }
 
-      .year {
-        font-family: Helvetica;
-        font-size: 14px;
-        line-height: 1.58;
+      .footer {
+        height: 35%;
+        background: #fcfcfc;
         text-align: center;
+
+        .iiua {
+          padding-top: 30px;
+          padding-bottom: 45px;
+          font-family: Helvetica;
+          line-height: 1.58;
+          text-align: center;
+          font-size: 24px;
+          font-weight: bold;
+        }
+
+        .menu {
+          display: flex;
+          justify-content: center;
+          padding-bottom: 48px;
+
+          .item {
+            margin: 0px 10px;
+            font-family: Helvetica;
+            font-size: 16px;
+            line-height: 1.58;
+          }
+        }
+
+        .year {
+          font-family: Helvetica;
+          font-size: 14px;
+          line-height: 1.58;
+          text-align: center;
+        }
       }
     }
   }
@@ -391,15 +437,6 @@
 // }
 
 
-section {
-  // border: 3px solid red;
-  height: 100%;
-}
-
-.slide-wrapper {
-  width: 100%;
-  height: 100%;
-}
 
 // h2 {
 //   text-align: center;
@@ -408,14 +445,14 @@ section {
 //   top: 30%;
 // }
 
-.page1 {
-  background-color: rgb(130, 51, 204);
-}
+// .page1 {
+//   background-color: rgb(130, 51, 204);
+// }
 
-.page2 {
-  background-color: #99CCCC;
-}
+// .page2 {
+//   background-color: #99CCCC;
+// }
 
-.page3 {
-  background-color: rgb(15, 129, 49);
-}
+// .page3 {
+//   background-color: rgb(15, 129, 49);
+// }
