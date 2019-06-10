@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from '../../../helperClasses/projects';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-vendor-navbar',
@@ -24,7 +25,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit {
   profileSelectedProject: VendorProject;
   profileMenuOpen = false;
 
-  constructor(private router: Router, private authService: AuthorizationService) { }
+  constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) { }
 
   ngOnInit() {
   }
@@ -76,4 +77,12 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit {
     this.profileMenuOpen = !this.profileMenuOpen;
   }
 
+  languageChange(e) {
+    if (e.target.value === 'ru') {
+      this.translateService.use('ru').then(() => {});
+    }
+    if (e.target.value === 'en') {
+      this.translateService.use('en').then(() => {});
+    }
+  }
 }

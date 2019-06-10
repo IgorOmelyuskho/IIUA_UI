@@ -4,6 +4,12 @@
   </a>
   <div class='navbar-text'>Navbar for Vendor</div>
   <div class="right-part">
+    <div class="language">
+      <select (change)="languageChange($event)" class="custom-select">
+        <option selected>ru</option>
+        <option>en</option>
+      </select>
+    </div>
     <button #home (click)='homeClick()' type="button">Home</button>
     <button #profile (click)='profileClick()' type="button">My profile</button>
     <button #myProjects (click)='projectsClick()' type="button">My projects</button>

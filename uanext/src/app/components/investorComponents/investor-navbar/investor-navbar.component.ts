@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-investor-navbar',
@@ -12,7 +13,7 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit {
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('vieProjects') vieProjectsTab: ElementRef;
 
-  constructor(private router: Router, private authService: AuthorizationService) { }
+  constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) { }
 
   ngOnInit() {
   }
@@ -56,4 +57,12 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit {
     this.router.navigate(['home', 'investor', 'viewProjects']);
   }
 
+  languageChange(e) {
+    if (e.target.value === 'ru') {
+      this.translateService.use('ru').then(() => {});
+    }
+    if (e.target.value === 'en') {
+      this.translateService.use('en').then(() => {});
+    }
+  }
 }

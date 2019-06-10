@@ -15,12 +15,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  ru() {
-    this.translateService.use('ru').then(() => {});
-  }
-
-  en() {
-    this.translateService.use('en').then(() => {});
+  languageChange(e) {
+    if (e.target.value === 'ru') {
+      this.translateService.use('ru').then(() => {});
+    }
+    if (e.target.value === 'en') {
+      this.translateService.use('en').then(() => {});
+    }
   }
 
   signIn() {
