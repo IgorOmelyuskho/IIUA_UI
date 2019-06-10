@@ -16,7 +16,7 @@ export class SignupVendorComponent implements OnInit {
   submitted = false;
   FormHelper = FormHelper;
   @Output() showProgress = new EventEmitter<boolean>();
-  self: string;
+  self = 'SignupVendorComponent';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,7 +24,6 @@ export class SignupVendorComponent implements OnInit {
     private router: Router,
     private notify: NotificationService,
   ) {
-    this.self = this.constructor.name;
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
