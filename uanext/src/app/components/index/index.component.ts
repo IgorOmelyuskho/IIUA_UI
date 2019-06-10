@@ -15,8 +15,11 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   slide: any;
   canScrollUp = false;
   canScrollDown = true;
+  self: string;
 
-  constructor(private authService: AuthorizationService) { }
+  constructor(private authService: AuthorizationService) {
+    this.self = this.constructor.name;
+  }
 
   ngOnInit() {
     const helper = new JwtHelperService();
