@@ -17,27 +17,40 @@
       color: black;
     }
 
-    button {
-      margin: 0 15px;
-      background: transparent;
-      border: none !important;
-      outline: none !important;
-      box-shadow: none !important;
-      font-size: 16px;
-      letter-spacing: 0.4px;
-      cursor: pointer;
-      line-height: 1.1;
-      padding: 0;
+    .right-part {
+      display: flex;
+      align-items: center;
 
-      &:hover {
-        color: $green;
+      .language {
+        select {
+          padding-bottom: 0px;
+          padding-top: 0px;
+          height: 30px;
+        }
       }
-    }
 
-    .selected {
-      color: $darkGreen;
-      font-weight: bold;
-      border-bottom: 1px solid $darkGreen !important;
+      button {
+        margin: 0 15px;
+        background: transparent;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        font-size: 16px;
+        letter-spacing: 0.4px;
+        cursor: pointer;
+        line-height: 1.1;
+        padding: 0;
+
+        &:hover {
+          color: $green;
+        }
+      }
+
+      .selected {
+        color: $darkGreen;
+        font-weight: bold;
+        border-bottom: 1px solid $darkGreen !important;
+      }
     }
   }
 }

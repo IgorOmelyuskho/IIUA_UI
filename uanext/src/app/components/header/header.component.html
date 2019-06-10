@@ -3,10 +3,14 @@
     <span class="navbar-brand mb-0 h1">IIUA</span>
   </a>
   <div class='navbar-text'>Navbar for signin, signup and index</div>
-  <span>
-    <button (click)="ru()">ru</button>
-    <button (click)="en()">en</button>
+  <div class="right-part">
+    <div class="language">
+      <select (change)="languageChange($event)" class="custom-select">
+        <option value="ru" selected>ru</option>
+        <option value="en">en</option>
+      </select>
+    </div>
     <button (click)="signIn()">Sign in</button>
     <button (click)="signUp()">Sign up</button>
-  </span>
+  </div>
 </nav>

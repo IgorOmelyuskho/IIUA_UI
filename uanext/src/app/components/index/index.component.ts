@@ -13,6 +13,8 @@ declare const slidePage;
 export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   userRole: UserRole;
   slide: any;
+  canScrollUp = false;
+  canScrollDown = true;
 
   constructor(private authService: AuthorizationService) { }
 
@@ -55,7 +57,18 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-     this.slide = new slidePage();
+     this.slide = new slidePage({
+      before: (origin, direction, target) => {
+        this.canScrollDown = true;
+        this.canScrollUp = true;
+        if (target === 1) {
+          this.canScrollUp = false;
+        }
+        if (target === 4) {
+          this.canScrollDown = false;
+        }
+      }
+     });
   }
 
   slideUp() {

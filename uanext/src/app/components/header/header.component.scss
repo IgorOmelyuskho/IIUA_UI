@@ -12,18 +12,30 @@
     color: black;
   }
 
-  button {
-    margin: 0 5px;
-    background: transparent;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    font-size: 16px;
-    letter-spacing: 0.4px;
-    cursor: pointer;
+  .right-part {
+    display: flex;
 
-    &:hover {
-      color: $green;
+    .language {
+      select {
+        padding-bottom: 0px;
+        padding-top: 0px;
+        height: 30px;
+      }
+    }
+
+    button {
+      margin: 0 5px;
+      background: transparent;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      font-size: 16px;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+
+      &:hover {
+        color: $green;
+      }
     }
   }
 }
