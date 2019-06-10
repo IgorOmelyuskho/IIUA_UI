@@ -9,11 +9,9 @@ export class SignupComponent implements OnInit {
   userRole = 'Vendor'; // DEFAULT
   showProgress = false;
   useEmail = false;
-  self: string;
+  self = 'SignupComponent';
 
-  constructor() {
-    this.self = this.constructor.name;
-   }
+  constructor() {}
 
   ngOnInit() { }
 
