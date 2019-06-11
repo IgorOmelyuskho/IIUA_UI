@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } fr
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRole } from 'src/app/models';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
+declare const gapi: any;
 
 declare const slidePage;
 
@@ -16,6 +17,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   canScrollUp = false;
   canScrollDown = true;
   self = 'IndexComponent';
+  auth2: any;
 
   constructor(private authService: AuthorizationService) { }
 
@@ -58,18 +60,20 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-     this.slide = new slidePage({
+    this.googleInit();
+
+    this.slide = new slidePage({
       before: (origin, direction, target) => {
         this.canScrollDown = true;
         this.canScrollUp = true;
         if (target === 1) {
           this.canScrollUp = false;
         }
-        if (target === 4) {
+        if (target === 5) {
           this.canScrollDown = false;
         }
       }
-     });
+    });
   }
 
   slideUp() {
@@ -83,4 +87,31 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.slide.destroy();
   }
+
+  googleInit() {
+    gapi.load('auth2', () => {
+      this.auth2 = gapi.auth2.init({
+        client_id: '881274996713-i4d6ucdff7ljsga7vji3np737g1r63dn.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email'
+      });
+      this.attachSignin(document.getElementById('googleBtn'));
+    });
+  }
+
+  attachSignin(element) {
+    this.auth2.attachClickHandler(element, {},
+      (googleUser) => {
+        const profile = googleUser.getBasicProfile();
+        console.log(profile);
+        console.log('Token || ' + googleUser.getAuthResponse().id_token);
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+      }, (error) => {
+        alert(JSON.stringify(error, undefined, 2));
+      });
+  }
+
 }

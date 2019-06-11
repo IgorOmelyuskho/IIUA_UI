@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   constructor(private authService: AuthorizationService, private router: Router) {
-    // const slide = new slidePage();
     this.authService.init();
   }
 

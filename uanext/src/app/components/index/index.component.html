@@ -37,9 +37,16 @@
                   <img src="../../../assets/img/google.png" alt="">
                 </div>
                 <div class="social-signin-btn">
-                  <img src="../../../assets/img/mail.png" alt="">
+                  <button id="googleBtn">Google</button>
+                </div>
+                <div class="social-signin-btn">
+                  <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 </div>
               </div>
+            </div>
+            <div class="use-email">
+              <img src="../../../assets/img/email-3.png" alt="">
+              <a routerLink="signin">Войти с помощью почты</a>
             </div>
             <div class="bottom">
               <div class="commissions">
@@ -56,7 +63,7 @@
       </section>
 
       <section class="slide-page transition" style="transform: translate3d(0px, 100%, 0px);">
-        <div class="curve-line">
+        <div class="investor-curve-line">
           <div class="circle c1"></div>
           <div class="circle c2"></div>
           <div class="circle c3"></div>
@@ -65,25 +72,16 @@
           <div class="circle c6"></div>
           <div class="circle c7"></div>
           <div class="circle c8"></div>
-          <div class="circle c9"></div>
-          <div class="circle c10"></div>
-          <div class="circle c11"></div>
-          <div class="circle c12"></div>
-          <div class="circle c13"></div>
 
-          <div class="investor">
+          <div class="investor-header">
             <img src="../../../assets/img/index-page-img/investor.png" alt="">
             <div>{{ 'investor' | translate:self }}</div>
-          </div>
-          <div class="vendor">
-            <div>{{ 'vendor' | translate:self }}</div>
-            <img src="../../../assets/img/index-page-img/vendor.png" alt="">
           </div>
 
           <div class="block b1">
             <div class="name-and-text">
               <div class="name">{{ 'security' | translate:self }}</div>
-              <div class="text">{{ 'sequrityText' | translate:self }}</div>
+              <div class="text">{{ 'securityText' | translate:self }}</div>
             </div>
             <figure>
               <img src="../../../assets/img/index-page-img/1.png" alt="">
@@ -152,7 +150,23 @@
               <img src="../../../assets/img/index-page-img/8.png" alt="">
             </figure>
           </div>
-          <div class="block b9 reverse">
+        </div>
+      </section>
+
+      <section class="slide-page transition" style="transform: translate3d(0px, 100%, 0px);">
+        <div class="vendor-curve-line">
+          <div class="circle c1"></div>
+          <div class="circle c2"></div>
+          <div class="circle c3"></div>
+          <div class="circle c4"></div>
+          <div class="circle c5"></div>
+
+          <div class="vendor-header">
+            <div>{{ 'vendor' | translate:self }}</div>
+            <img src="../../../assets/img/index-page-img/vendor.png" alt="">
+          </div>
+
+          <div class="block b1 reverse">
             <div class="name-and-text">
               <div class="name">{{ 'financing' | translate:self }}</div>
               <div class="text">{{ 'financingText' | translate:self }}</div>
@@ -161,7 +175,7 @@
               <img src="../../../assets/img/index-page-img/9.png" alt="">
             </figure>
           </div>
-          <div class="block b10 reverse">
+          <div class="block b2 reverse">
             <div class="name-and-text">
               <div class="name">{{ 'board' | translate:self }}</div>
               <div class="text">{{ 'boardText' | translate:self }}</div>
@@ -170,7 +184,7 @@
               <img src="../../../assets/img/index-page-img/10.png" alt="">
             </figure>
           </div>
-          <div class="block b11">
+          <div class="block b3">
             <div class="name-and-text">
               <div class="name">{{ 'selection' | translate:self }}</div>
               <div class="text">{{ 'selectionText' | translate:self }}</div>
@@ -179,7 +193,7 @@
               <img src="../../../assets/img/index-page-img/11.png" alt="">
             </figure>
           </div>
-          <div class="block b12 reverse">
+          <div class="block b4 reverse">
             <div class="name-and-text">
               <div class="name">{{ 'place' | translate:self }}</div>
               <div class="text">{{ 'placeText' | translate:self }}</div>
@@ -188,7 +202,7 @@
               <img src="../../../assets/img/index-page-img/12.png" alt="">
             </figure>
           </div>
-          <div class="block b13">
+          <div class="block b5">
             <div class="name-and-text">
               <div class="name">{{ 'advertising' | translate:self }}</div>
               <div class="text">{{ 'advertisingText' | translate:self }}</div>
@@ -226,11 +240,15 @@
             <div class="left">
               <div class="invested-money">
                 <div class="count">128+</div>
-                <div class="text">{{ 'investors' | translate:self }} <span class="bold-text">{{ 'investedMoney' | translate:self }}</span> {{ 'successfulProjects' | translate:self }}</div>
+                <div class="text">{{ 'investors' | translate:self }} <span
+                    class="bold-text">{{ 'investedMoney' | translate:self }}</span>
+                  {{ 'successfulProjects' | translate:self }}</div>
               </div>
               <div class="received-investment">
                 <div class="count">514+</div>
-                <div class="text">{{ 'projects2' | translate:self }} <span class="bold-text">{{ 'receivedInvestment' | translate:self }}</span> {{ 'forBusiness' | translate:self }}
+                <div class="text">{{ 'projects2' | translate:self }} <span
+                    class="bold-text">{{ 'receivedInvestment' | translate:self }}</span>
+                  {{ 'forBusiness' | translate:self }}
                 </div>
               </div>
             </div>
@@ -250,12 +268,12 @@
               <div class="stay-updated">{{ 'keepUpdates' | translate:self }}</div>
               <div class="input-and-button">
                 <div class="inline-block">
-                  <input type="text" placeholder="{{ 'enterEmail' | translate:self }}" >
+                  <input type="text" placeholder="{{ 'enterEmail' | translate:self }}">
                   <button>{{ 'subscribe' | translate:self }}</button>
                 </div>
               </div>
               <div class="email-security">
-                  {{ 'emailIsSafe' | translate:self }}
+                {{ 'emailIsSafe' | translate:self }}
               </div>
             </div>
           </div>
