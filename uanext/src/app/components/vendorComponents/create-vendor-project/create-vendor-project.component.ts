@@ -5,6 +5,7 @@ import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ProjectsService } from 'src/app/services/http/projects.service';
 import { fieldActivityOptions } from 'src/app/helperClasses/fieldOfActivity';
+import { FilesService } from 'src/app/services/http/files.service';
 
 @Component({
   selector: 'app-create-vendor-project',
@@ -33,6 +34,7 @@ export class CreateVendorProjectComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notify: NotificationService,
     private projectsService: ProjectsService,
+    private filesService: FilesService
   ) {
     this.vendorProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -135,7 +137,7 @@ export class CreateVendorProjectComponent implements OnInit {
 
     this.showAvatarProgressBar(true);
 
-    this.projectsService.uploadImages(this.avatarFormData)
+    this.filesService.uploadFiles(this.avatarFormData)
       .subscribe(
         res => {
           this.avatarData = res[0];

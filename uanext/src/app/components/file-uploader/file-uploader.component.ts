@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProjectsService } from 'src/app/services/http/projects.service';
+import { FilesService } from 'src/app/services/http/files.service';
 
 @Component({
   selector: 'app-file-uploader',
@@ -22,7 +22,7 @@ export class FileUploaderComponent implements OnInit {
   @Input() parentSubmitted = false;
   @Input() accept = '*';
 
-  constructor(private projectsService: ProjectsService) { }
+  constructor(private filesService: FilesService) { }
 
   ngOnInit() { }
 
@@ -134,10 +134,10 @@ export class FileUploaderComponent implements OnInit {
     this.showProgressBar(true);
 
     if (this.content === 'photos') {
-      this.subscriber(this.projectsService.uploadImages(this.formData));
+      this.subscriber(this.filesService.uploadFiles(this.formData));
     }
     if (this.content === 'files') {
-      this.subscriber(this.projectsService.uploadFiles(this.formData));
+      this.subscriber(this.filesService.uploadFiles(this.formData));
     }
   }
 

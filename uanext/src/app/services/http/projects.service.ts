@@ -65,22 +65,4 @@ export class ProjectsService {
   updateVendorProject(projectId: string, updatedVendorProject: VendorProject): Observable<any> {
     return this.http.put<any>(environment.projects + environment.vendorProject + projectId, updatedVendorProject);
   }
-
-  uploadImages(formData: FormData): Observable<any> {
-    return this.http.post<any>(environment.projects + environment.uploadImages, formData)
-      .pipe(
-        map(response => {
-          return response.data;
-        })
-      );
-  }
-
-  uploadFiles(formData: FormData): Observable<any> {
-    return this.http.post<any>(environment.projects + environment.uploadFiles, formData)
-      .pipe(
-        map(response => {
-          return response.data;
-        })
-      );
-  }
 }

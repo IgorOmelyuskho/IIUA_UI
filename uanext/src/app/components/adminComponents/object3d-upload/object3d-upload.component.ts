@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FilesService } from 'src/app/services/http/files.service';
 
 @Component({
   selector: 'app-object3d-upload',
@@ -10,8 +11,9 @@ export class Object3dUploadComponent implements OnInit {
   formData: FormData;
   fileForUpload: any;
   files: any[];
+  showProgressBar = false;
 
-  constructor(private http: HttpClient/* , private upload3dModelService: Upload3dModelService */) { }
+  constructor(private http: HttpClient, private filesService: FilesService) { }
 
   ngOnInit() {
     // this.upload3dModelService.fetchAll3dModels().subscribe(
@@ -30,6 +32,8 @@ export class Object3dUploadComponent implements OnInit {
   }
 
   uploadFile() {
+    this.showProgressBar = true;
+
     if (this.fileForUpload == null) {
       return;
     }
@@ -37,15 +41,17 @@ export class Object3dUploadComponent implements OnInit {
     this.formData = new FormData();
     this.formData.append(this.fileForUpload.name, this.fileForUpload);
 
-    // this.upload3dModelService.upload3dModel(this.formData).subscribe(
-    //   response => {
-    //     console.log(response);
-    //     // add uploaded file in this.files
-    //   },
-    //   err => {
-    //     console.warn(err);
-    //   }
-    // );
+    this.filesService.uploadFiles(this.formData).subscribe(
+      response => {
+        console.log(response);
+        // add uploaded file in this.files
+        this.showProgressBar = false;
+      },
+      err => {
+        console.warn(err);
+        this.showProgressBar = false;
+      }
+    );
   }
 
   // removeFile(file) {

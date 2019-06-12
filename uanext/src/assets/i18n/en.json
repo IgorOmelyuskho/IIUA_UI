@@ -104,6 +104,7 @@
         "keepUpdates": "Keep up to date with all updates.",
         "enterEmail": "Enter your email address",
         "subscribe": "Subscribe",
-        "emailIsSafe": "* Your e-mail is safe with us. We will never share with anyone."
+        "emailIsSafe": "* Your e-mail is safe with us. We will never share with anyone.",
+        "useEmail": "Sign in with mail"
     }
 }
