@@ -106,5 +106,95 @@
         "subscribe": "Подписаться",
         "emailIsSafe": "*Твой e-mail в безопастности с нами. Мы никогда и ни с кем не поделимся.",
         "useEmail": "Войти с помощью почты"
+    },
+    "InteractiveInvestmentMinCardComponent": {
+        "confirm": "Утвердить",
+        "discuss": "Обсудить",
+        "reject": "Отклонить"
+    },
+    "InvestorCommentsComponent": {
+        "send": "ОТПРАВИТЬ",
+        "reply": "Ответить •",
+        "replyBtn": "Ответить",
+        "reply2": "Ответить •",
+        "investor": "Инвестор",
+        "leaveComment": "Оставьте свой комментарий"
+    },
+    "InvestorFilterPageComponent": {
+        "findProject": "Найти проект или компанию по ключевым словам",
+        "noProjects": "Проекты не найдены",
+        "shared": "Общее",
+        "gallery": "Галерея",
+        "documents": "Документы",
+        "startInvest": "Начинай инвестировать в будущее.",
+        "displayProjectInfo": "Тут будет отображена информация по выбранному проекту.",
+        "investmentsFor": "Для чего нужны инвестиции",
+        "invest": "ИНВЕСТИРОВАТЬ",
+        "chat": "ЧАТ",
+        "videos": "Видео",
+        "downloadAll": "СКАЧАТЬ ВСЕ"
+    },
+    "InvestorInteractiveInvestmentCardComponent": {
+        "confirm": "Утвердить",
+        "discuss": "Обсудить",
+        "reject": "Отклонить"
+    },
+    "InvestorIterativeInvestmentComponent": {
+        "actions": "Действия"
+    },
+    "InvestorMessagesComponent": {
+        "communication": "Общение",
+        "message": "Сообщение"
+    },
+    "InvestorNavbarComponent": {
+        "home": "Домой",
+        "myProfile": "Мой профиль",
+        "findProjects": "Найти проект",
+        "signOut": "Выйти"
+    },
+    "InvestorNotificationsComponent": {
+        "notifications": "Уведомления"
+    },
+    "InvestorProfileComponent": {
+        "created": "Созданный",
+        "lastEdited": "Последний раз редактировалось",
+        "fullName": "Полное имя",
+        "fullNameEmpty": "Это поле не может быть пустым",
+        "email": "Емайл",
+        "emailEmpty": "Email не может быть пустым",
+        "emailValid": "Адрес электронной почты должен быть действительным адресом электронной почты",
+        "phone": "Телефон",
+        "phoneEmpty": "Телефон не может быть пустым",
+        "phoneValid": "Введите действующий телефон",
+        "newPassword": "Новый пароль",
+        "passwordLength": "Пароль должен содержать не менее 6 символов",
+        "updateProfile": "Update profile settings"
+    },
+    "MainScreenInvestorComponent": {
+        "findProject": "Найти проект или компанию по ключевым словам",
+        "filters": "Фильтры"
+    },
+    "MainScreenProjectCardComponent": {
+        "investSum": "Сумма инвестирования",
+        "invest": "ИНВЕСТИРОВАТЬ",
+        "chat": "ЧАТ",
+        "avgCheck": "Средний чек",
+        "clientsPerMount": "Клиентов в месяц",
+        "avgPrice": "Средняя цена",
+        "grossIncome": "Валовой доход",
+        "companyAge": "Возрас компании",
+        "employees": "Сотрудники",
+        "fieldActivity": "Сфера деятельности",
+        "region": "Регион",
+        "employeesToHire": "Планируется нанять",
+        "shared": "Общее",
+        "gallery": "Галерея",
+        "documents": "Документы",
+        "updates": "Обновления",
+        "comments": "Комментарии",
+        "investingFuture": "Начинай инвестировать в будущее.",
+        "projectInfo": "Тут будет отображена информация по выбранному проекту.",
+        "investmentFor": "Для чего нужны инвестиции",
+        "videos": "Видео"
     }
 }

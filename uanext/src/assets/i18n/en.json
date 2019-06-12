@@ -106,5 +106,95 @@
         "subscribe": "Subscribe",
         "emailIsSafe": "* Your e-mail is safe with us. We will never share with anyone.",
         "useEmail": "Sign in with mail"
+    },
+    "InteractiveInvestmentMinCardComponent": {
+        "confirm": "Confirm",
+        "discuss": "Discuss",
+        "reject": "Reject"
+    },
+    "InvestorCommentsComponent": {
+        "send": "SEND",
+        "reply": "Reply • ",
+        "replyBtn": "Reply",
+        "reply2": "Reply • ",
+        "investor": "Investor",
+        "leaveComment": "Leave your comment"
+    },
+    "InvestorFilterPageComponent": {
+        "findProject": "Find a project or company by keywords",
+        "noProjects": "No projects found",
+        "shared": "Shared",
+        "gallery": "Gallery",
+        "documents": "Documents",
+        "startInvest": "Start investing in the future.",
+        "displayProjectInfo": "Information on the selected project will be displayed here.",
+        "investmentsFor": "What are investments for",
+        "invest": "INVEST",
+        "chat": "CHAT",
+        "videos": "Videos",
+        "downloadAll": "DOWNLOAD ALL"
+    },
+    "InvestorInteractiveInvestmentCardComponent": {
+        "confirm": "Confirm",
+        "discuss": "Discuss",
+        "reject": "Reject"
+    },
+    "InvestorIterativeInvestmentComponent": {
+        "actions": "Actions"
+    },
+    "InvestorMessagesComponent": {
+        "communication": "Communication",
+        "message": "Message"
+    },
+    "InvestorNavbarComponent": {
+        "home": "Home",
+        "myProfile": "My profile",
+        "findProjects": "Аштв projects",
+        "signOut": "Sign out"
+    },
+    "InvestorNotificationsComponent": {
+        "notifications": "Notifications"
+    },
+    "InvestorProfileComponent": {
+        "created": "Created",
+        "lastEdited": "Last edited",
+        "fullName": "Full name",
+        "fullNameEmpty": "This field cannot be empty",
+        "email": "Email",
+        "emailEmpty": "Email cannot be empty",
+        "emailValid": "Email must be a valid email address",
+        "phone": "Phone",
+        "phoneEmpty": "Phone cannot be empty",
+        "phoneValid": "Enter valid phone",
+        "newPassword": "New password",
+        "passwordLength": "Password must be at least 6 characters",
+        "updateProfile": "Update profile settings"
+    },
+    "MainScreenInvestorComponent": {
+        "findProject": "Find a project or company by keywords",
+        "filters": "Filters"
+    },
+    "MainScreenProjectCardComponent": {
+        "investSum": "Investment amount",
+        "invest": "INVEST",
+        "chat": "CHAT",
+        "avgCheck": "Average check",
+        "clientsPerMount": "Customers per month",
+        "avgPrice": "Average price",
+        "grossIncome": "Gross income",
+        "companyAge": "Company age",
+        "employees": "Employees",
+        "fieldActivity": "Field of activity",
+        "region": "Region",
+        "employeesToHire": "Planned to hire",
+        "shared": "Shared",
+        "gallery": "Gallery",
+        "documents": "Documents",
+        "updates": "Updates",
+        "comments": "Comments",
+        "investingFuture": "Start investing in the future.",
+        "projectInfo": "Information on the selected project will be displayed here.",
+        "investmentFor": "What are investments for",
+        "videos": "Video"
     }
 }

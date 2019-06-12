@@ -13,7 +13,7 @@
             </button>
           </div>
           <input #searchByKeyWordInput type="text"
-            class="form-control" placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
+            class="form-control" placeholder="{{ 'findProject' | translate:self }}" aria-label="Project name"
             aria-describedby="basic-addon2">
         </div>
       </div>
@@ -22,7 +22,7 @@
     <div class="filter-btn-wrapper">
       <button (click)="filterIsExpanded = !filterIsExpanded" type="button" class="filter-btn"
         [ngClass]="{ 'filter-btn-expanded': filterIsExpanded }">
-        <span>Фильтры</span>
+        <span>{{ 'filters' | translate:self }}</span>
         <i *ngIf="filterIsExpanded" class="fa fa-angle-up ml-2"></i>
         <i *ngIf="!filterIsExpanded" class="fa fa-angle-down ml-2"></i>
       </button>

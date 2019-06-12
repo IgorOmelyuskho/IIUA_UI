@@ -12,6 +12,7 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit {
   @ViewChild('home') homeTab: ElementRef;
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('vieProjects') vieProjectsTab: ElementRef;
+  self = 'InvestorNavbarComponent';
 
   constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) { }
 

@@ -7,6 +7,7 @@ import { responseProjects } from '../../../helperClasses/projects';
   styleUrls: ['./investor-notifications.component.scss']
 })
 export class InvestorNotificationsComponent implements OnInit {
+  self = 'InvestorNotificationsComponent';
   projects: any[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
 
   constructor() { }

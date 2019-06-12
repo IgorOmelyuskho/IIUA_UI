@@ -9,6 +9,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
 })
 export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
   _selectedProject: VendorProject;
+  self = 'MainScreenProjectCardComponent';
 
   @ViewChild('projectCard') projectCard: ElementRef;
 

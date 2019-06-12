@@ -1,5 +1,5 @@
 <div class="iterative-investment-wrapper">
-  <div class="name">Действия</div>
+  <div class="name">{{ 'actions' | translate:self }}</div>
   <div class="iterative-investment">
     <div *ngFor="let project of projects" class="project-wrapper">
       <app-interactive-investment-min-card [project]="project"></app-interactive-investment-min-card>

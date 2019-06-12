@@ -17,6 +17,7 @@ export class InvestorProfileComponent implements OnInit {
   investor: InvestorRole = null;
   editProfileForm: FormGroup;
   isLoaded = false;
+  self = 'InvestorProfileComponent';
 
   @ViewChild('phone') phoneInput: ElementRef;
   // @ViewChild('cardNumber') carNumberInput: ElementRef;

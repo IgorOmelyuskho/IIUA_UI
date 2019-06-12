@@ -10,6 +10,7 @@ import { StateService } from 'src/app/services/state/state.service';
 export class InteractiveInvestmentMinCardComponent implements OnInit, AfterViewInit {
   @Input() project: VendorProject;
   @ViewChild('imagesWrapper') imagesWrapper: ElementRef;
+  self = 'InteractiveInvestmentMinCardComponent';
 
   constructor(private renderer: Renderer2, private stateService: StateService) { }
 

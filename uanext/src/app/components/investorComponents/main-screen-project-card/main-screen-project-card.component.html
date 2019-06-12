@@ -20,16 +20,16 @@
           <h5 class="project-name">{{_selectedProject.name}}</h5>
           <div class="company-name">{{_selectedProject.legalEntityName}}</div>
           <div class="investment-sum">
-            <div class="sum">Сумма инвестирования</div>
+            <div class="sum">{{ 'investSum' | translate:self }}</div>
             <div class="sum-value">$ {{_selectedProject.moneyRequired}}</div>
           </div>
           <div class="btn-wrapper">
             <button class="invest">
-              <span>ИНВЕСТИРОВАТЬ</span>
+              <span>{{ 'invest' | translate:self }}</span>
               <span class="big-font">$</span>
             </button>
             <button class="start-chat">
-              <span>ЧАТ</span>
+              <span>{{ 'chat' | translate:self }}</span>
               <span class="img-bg"></span>
             </button>
           </div>
@@ -41,19 +41,19 @@
       <div class="row">
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Средний чек</div>
+            <div class="name">{{ 'avgCheck' | translate:self }}</div>
             <div class="value">{{_selectedProject.averageCheck}} грн</div>
           </div>
         </div>
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Клиентов в месяц</div>
+            <div class="name">{{ 'clientsPerMount' | translate:self }}</div>
             <div class="value">{{_selectedProject.mounthlyClients}}</div>
           </div>
         </div>
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Средняя цена</div>
+            <div class="name">{{ 'avgPrice' | translate:self }}</div>
             <div class="value">{{_selectedProject.averagePrice}} грн</div>
           </div>
         </div>
@@ -62,19 +62,19 @@
       <div class="row">
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Валовой доход</div>
+            <div class="name">{{ 'grossIncome' | translate:self }}</div>
             <div class="value">{{_selectedProject.grossIncome}} грн</div>
           </div>
         </div>
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Возрас компании</div>
+            <div class="name">{{ 'companyAge' | translate:self }}</div>
             <div class="value">{{_selectedProject.companyAge}}</div>
           </div>
         </div>
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Сотрудники</div>
+            <div class="name">{{ 'employees' | translate:self }}</div>
             <div class="value">{{_selectedProject.employeesNumber}}</div>
           </div>
         </div>
@@ -83,19 +83,19 @@
       <div class="row">
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Сфера деятельности</div>
+            <div class="name">{{ 'fieldActivity' | translate:self }}</div>
             <div class="value">{{_selectedProject.fieldOfActivity}}</div>
           </div>
         </div>
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Регион</div>
+            <div class="name">{{ 'region' | translate:self }}</div>
             <div class="value">{{_selectedProject.region}}</div>
           </div>
         </div>
         <div class="col-4">
           <div class="info-item">
-            <div class="name">Планируется нанять</div>
+            <div class="name">{{ 'employeesToHire' | translate:self }}</div>
             <div class="value">{{_selectedProject.employeesToHire}}</div>
           </div>
         </div>
@@ -105,25 +105,25 @@
     <div class="detail-project-info">
       <div class="project-info-menu">
         <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'shared'}"
-          (click)="selectedMenuItem = 'shared'">Общее</button>
+          (click)="selectedMenuItem = 'shared'">{{ 'shared' | translate:self }}</button>
         <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'gallery'}"
-          (click)="selectedMenuItem = 'gallery'">Галерея</button>
+          (click)="selectedMenuItem = 'gallery'">{{ 'gallery' | translate:self }}</button>
         <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'documents'}"
-          (click)="selectedMenuItem = 'documents'">Документы</button>
+          (click)="selectedMenuItem = 'documents'">{{ 'documents' | translate:self }}</button>
         <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'updates'}"
-          (click)="selectedMenuItem = 'updates'">Обновления</button>
+          (click)="selectedMenuItem = 'updates'">{{ 'updates' | translate:self }}</button>
         <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'comments'}"
-          (click)="selectedMenuItem = 'comments'">Комментарии</button>
+          (click)="selectedMenuItem = 'comments'">{{ 'comments' | translate:self }}</button>
       </div>
       <div class="no-selected" *ngIf="selectedMenuItem == null">
         <div class="iiua">IIUA</div>
-        <div>Начинай инвестировать в будущее.</div>
-        <div class="grey-text">Тут будет отображена информация по выбранному проекту.</div>
+        <div>{{ 'investingFuture' | translate:self }}</div>
+        <div class="grey-text">{{ 'projectInfo' | translate:self }}</div>
       </div>
       <div class="shared" *ngIf="selectedMenuItem === 'shared'">
         <h5 class="mb-2">
           <img src="../../../assets/img/notepad.png" alt="">
-          <span>Для чего нужны инвестиции</span>
+          <span>{{ 'investmentFor' | translate:self }}</span>
         </h5>
         <div class="steps">
           <div class="step" *ngFor="let step of _selectedProject.steps">
@@ -140,7 +140,7 @@
         <div class="videos">
           <h5>
             <img src="../../../assets/img/video.png" alt="">
-            <span>Videos</span>
+            <span>{{ 'videos' | translate:self }}</span>
           </h5>
           <div class="video-links-wrapper">
             <div *ngFor="let video of _selectedProject.videos" class="link">

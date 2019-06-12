@@ -10,6 +10,7 @@ import { StateService } from 'src/app/services/state/state.service';
 })
 export class InvestorIterativeInvestmentComponent implements OnInit {
   projects: any[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
+  self = 'InvestorIterativeInvestmentComponent';
 
   constructor() { }
 
