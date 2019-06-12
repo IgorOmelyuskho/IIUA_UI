@@ -5,7 +5,7 @@ export const environment = {
   projects: 'http://master.iiua.com.ua/projects',
   map: 'http://master.iiua.com.ua/map',
   notifications: 'http://master.iiua.com.ua/notifications',
-  files: 'http://todo',
+  files: 'http://master.iiua.com.ua/files',
 
   authenticate: '/api/Auth/authenticate',
   vendorRegister: '/api/Vendor/register',
@@ -17,11 +17,10 @@ export const environment = {
   adminRegister: '/api/todo/register',
   adminProfile: '/api/todo/',
 
-  // todo add rout for files
   vendorProject: '/api/Projects/',
-  uploadImages: '/api/Image/',
-  uploadFiles: '/api/File/',
-  uploadVideos: '/api/Videos',
+  // uploadImages: '/api/Image/',
+  uploadFiles: '/api/Upload',
+  // uploadVideos: '/api/Videos',
   filteringProjects: '/api/FilteringProjects',
 
   get3DObject: '/api/Map/Get3DObject',

@@ -15,7 +15,6 @@ export class TranslateService {
       this.http.get<{}>(langPath).subscribe(
         translation => {
           this.data = Object.assign({}, translation || {});
-          console.log(this.data);
           resolve(this.data);
         },
         error => {

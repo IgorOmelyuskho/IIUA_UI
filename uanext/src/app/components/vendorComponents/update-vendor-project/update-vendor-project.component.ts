@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ProjectsService } from 'src/app/services/http/projects.service';
+import { FilesService } from 'src/app/services/http/files.service';
 
 @Component({
   selector: 'app-update-vendor-project',
@@ -32,7 +33,8 @@ export class UpdateVendorProjectComponent implements OnInit {
     private formBuilder: FormBuilder,
     private notify: NotificationService,
     private projectsService: ProjectsService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private filesService: FilesService
   ) {
     this.vendorProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -178,7 +180,7 @@ export class UpdateVendorProjectComponent implements OnInit {
 
     this.showAvatarProgressBar(true);
 
-    this.projectsService.uploadImages(this.avatarFormData)
+    this.filesService.uploadFiles(this.avatarFormData)
       .subscribe(
         res => {
           this.vendorProject.avatar = res[0];
