@@ -14,6 +14,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit {
   @ViewChild('home') homeTab: ElementRef;
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('myProjects') myProjectsTab: ElementRef;
+  self = 'VendorNavbarComponent';
 
   projects: VendorProject[] = [
     {...responseProject},

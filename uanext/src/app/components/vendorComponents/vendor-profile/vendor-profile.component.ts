@@ -18,6 +18,7 @@ export class VendorProfileComponent implements OnInit {
   editProfileForm: FormGroup;
   isLoaded = false;
   FormHelper = FormHelper;
+  self = 'VendorProfileComponent';
 
   @ViewChild('phone') phoneInput: ElementRef;
 

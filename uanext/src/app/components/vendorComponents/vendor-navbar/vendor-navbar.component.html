@@ -10,13 +10,13 @@
         <option>en</option>
       </select>
     </div>
-    <button #home (click)='homeClick()' type="button">Home</button>
-    <button #profile (click)='profileClick()' type="button">My profile</button>
-    <button #myProjects (click)='projectsClick()' type="button">My projects</button>
+    <button #home (click)='homeClick()' type="button">{{ 'home' | translate:self }}</button>
+    <button #profile (click)='profileClick()' type="button">{{ 'profile' | translate:self }}</button>
+    <button #myProjects (click)='projectsClick()' type="button">{{ 'projects' | translate:self }}</button>
     <div class="profile-wrapper">
       <div (click)="openProfileMenu()" class="profile">
         <div class="text">
-          <span *ngIf="!profileSelectedProject">Select project</span>
+          <span *ngIf="!profileSelectedProject">{{ 'selectProject' | translate:self }}</span>
           <span *ngIf="profileSelectedProject">{{profileSelectedProject?.name}}</span>
         </div>
         <figure>
@@ -26,7 +26,7 @@
       </div>
 
       <div [style.display]="profileMenuOpen === true ? 'block' : 'none'" class="profile-menu">
-        <div class="change-project">Сменить проект:</div>
+        <div class="change-project">{{ 'changeProject' | translate:self }}</div>
         <div class="projects">
           <div (click)="changeProject(project)" *ngFor="let project of projects" class="project">
             <figure>
@@ -40,7 +40,7 @@
         </div>
         <div (click)="signOutClick()" class="sign-out">
           <img src="../../../../assets/img/sign-out.png" alt="">
-          <div>Выйти</div>
+          <div>{{ 'signOut' | translate:self }}</div>
         </div>
       </div>
     </div>

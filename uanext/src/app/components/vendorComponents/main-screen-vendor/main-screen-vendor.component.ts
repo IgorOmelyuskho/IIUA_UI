@@ -8,7 +8,7 @@ import { VendorProject } from 'src/app/models/vendorProject';
   styleUrls: ['./main-screen-vendor.component.scss']
 })
 export class MainScreenVendorComponent implements OnInit {
-
+  self = 'MainScreenVendorComponent';
   selectedProject: VendorProject = null;
   selectedProjectId: string  = null;
 

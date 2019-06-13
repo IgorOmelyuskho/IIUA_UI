@@ -2,21 +2,21 @@
   <div class="container">
 
     <div class="row">
-      <div class="col-12 mb-2">Link to video</div>
+      <div class="col-12 mb-2">{{ 'linkToVideo' | translate:self }}</div>
       <div class="col-lg-8 col-md-7 col-12">
         <input (input)="newItemOnInput()" type="text" placeholder="http://..." [(ngModel)]="newItem" class="form-control item-name"
           [ngClass]="{ 'is-invalid': !newItemMinValid || !newItemMaxValid || !newItemNullValid }">
         <div *ngIf="!newItemMinValid || !newItemMaxValid || !newItemNullValid" class="invalid-feedback">
-          <div *ngIf="!newItemNullValid">Videos cannot be empty</div>
-          <div *ngIf="!newItemMinValid">Minimal videos length is 3 charset</div>
-          <div *ngIf="!newItemMaxValid">Maximal length is 256 charset</div>
+          <div *ngIf="!newItemNullValid">{{ 'videosEmpty' | translate:self }}</div>
+          <div *ngIf="!newItemMinValid">{{ 'videoMinLength' | translate:self }}</div>
+          <div *ngIf="!newItemMaxValid">{{ 'maxVideoLength' | translate:self }}</div>
         </div>
 
-        <div class="invalid-item-count" *ngIf="showMinItemsCountErr()">Minimal videos count is {{minItemsCount}}</div>
-        <div class="invalid-item-count" *ngIf="showMaxItemsCountErr()">Maximal videos count is {{maxItemsCount}}</div>
+        <div class="invalid-item-count" *ngIf="showMinItemsCountErr()">{{ 'videoMinCount' | translate:self }} {{minItemsCount}}</div>
+        <div class="invalid-item-count" *ngIf="showMaxItemsCountErr()">{{ 'videoMaxCount' | translate:self }} {{maxItemsCount}}</div>
       </div>
       <div class="col-lg-4 col-md-5 col-12 pr-0">
-        <button (click)="addNewItem()" type="button" class="btn btn-primary mb-2">Add to my videos</button>
+        <button (click)="addNewItem()" type="button" class="btn btn-primary mb-2">{{ 'addVideo' | translate:self }}</button>
       </div>
     </div>
 

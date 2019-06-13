@@ -4,7 +4,7 @@
 <div class="container">
 
   <form [formGroup]="vendorProjectForm" (ngSubmit)="onSubmit()">
-    <h2>Update you project settings</h2>
+    <h2>{{ 'updateProjectHeader' | translate:self }}</h2>
 
     <div class="row">
       <div class="col-12 col-md-4 form-group avatar">
@@ -14,37 +14,37 @@
         </div>
 
         <div *ngIf="formControls.avatar.errors || avatarIsTouched" class="avatar-invalid-feedback">
-          <div *ngIf="formControls.avatar.errors?.required">Avatar cannot be empty</div>
-          <div *ngIf="formControls.avatar.errors?.maxAvatarSizeErr">Max avatar size is 5Mb</div>
-          <div *ngIf="formControls.avatar.errors?.avatarNotUploaded">Upload selected avatar</div>
+          <div *ngIf="formControls.avatar.errors?.required">{{ 'avatarEmpty' | translate:self }}</div>
+          <div *ngIf="formControls.avatar.errors?.maxAvatarSizeErr">{{ 'avatarSize' | translate:self }}</div>
+          <div *ngIf="formControls.avatar.errors?.avatarNotUploaded">{{ 'avatarNotUploaded' | translate:self }}</div>
         </div>
 
         <div class="select-avatar-input">
-          <button type="button" class="btn btn-primary">Choose avatar</button>
+          <button type="button" class="btn btn-primary">{{ 'chooseAvatar' | translate:self }}</button>
           <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar"
             class="form-control" [ngClass]="{ 'is-invalid': avatarIsTouched && formControls.avatar.errors}">
         </div>
 
-        <button type="button" (click)="uploadAvatar()" class="btn btn-primary">Upload avatar</button>
+        <button type="button" (click)="uploadAvatar()" class="btn btn-primary">{{ 'uploadAvatarBtn' | translate:self }}</button>
       </div>
 
       <div class="col-lg-4 col-md-6">
         <div class="form-group">
-          <label>Project name</label>
+          <label>{{ 'projectName' | translate:self }}</label>
           <input type="text" formControlName="name" class="form-control"
-            [ngClass]="{ 'is-invalid': isLoaded && formControls.name.errors }" placeholder="Enter project name" />
-          <div *ngIf="formControls.name.errors" class="invalid-feedback" placeholder="Enter project name">
-            <div *ngIf="formControls.name.errors.required">Name cannot be empty</div>
+            [ngClass]="{ 'is-invalid': isLoaded && formControls.name.errors }" placeholder="{{ 'projectNamePlaceholder' | translate:self }}" />
+          <div *ngIf="formControls.name.errors" class="invalid-feedback">
+            <div *ngIf="formControls.name.errors.required">{{ 'projectNameEmpty' | translate:self }}</div>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Company name</label>
+          <label>{{ 'companyName' | translate:self }}</label>
           <input type="text" formControlName="legalEntityName" class="form-control"
             [ngClass]="{ 'is-invalid': isLoaded && formControls.legalEntityName.errors }"
-            placeholder="Enter company name" />
+            placeholder="{{ 'companyNamePlaceholder' | translate:self }}" />
           <div *ngIf="formControls.legalEntityName.errors" class="invalid-feedback">
-            <div *ngIf="formControls.legalEntityName.errors.required">Company name cannot be empty</div>
+            <div *ngIf="formControls.legalEntityName.errors.required">{{ 'companyNameEmpty' | translate:self }}</div>
           </div>
         </div>
       </div>
@@ -52,14 +52,14 @@
 
     <div class="row">
       <div class="form-group col-md-10 col-12">
-        <label for="vendor-goal-textarea2">Describe why you need investments</label>
+        <label for="vendor-goal-textarea2">{{ 'goal' | translate:self }}</label>
         <textarea id="vendor-goal-textarea2" rows="3" formControlName="goal" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.goal.errors }"
-          placeholder="What do you want to realize through investment?"></textarea>
+          placeholder="{{ 'goalPlaceholder' | translate:self }}"></textarea>
         <div *ngIf="formControls.goal.errors" class="invalid-feedback">
-          <div *ngIf="formControls.goal.errors.required">Goal cannot be empty</div>
-          <div *ngIf="formControls.goal.errors.minlength">Minimal length is 200 charset</div>
-          <div *ngIf="formControls.goal.errors.maxlength">Maximal length is 1024 charset</div>
+          <div *ngIf="formControls.goal.errors.required">{{ 'goalEmpty' | translate:self }}</div>
+          <div *ngIf="formControls.goal.errors.minlength">{{ 'goalMinLength' | translate:self }}</div>
+          <div *ngIf="formControls.goal.errors.maxlength">{{ 'goalMaxLength' | translate:self }}</div>
         </div>
       </div>
       <div class="col-12 pl-0 pr-0">
@@ -71,18 +71,18 @@
     <hr>
 
     <div class="row">
-      <h6 class="col-12">Address</h6>
+      <h6 class="col-12">{{ 'address' | translate:self }}</h6>
       <div class="form-group col-lg-4 col-md-6 col-12">
-        <label>Address</label>
+        <label>{{ 'addressLabel' | translate:self }}</label>
         <input type="text" formControlName="address" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.address.errors }" />
         <div *ngIf="formControls.address.errors" class="invalid-feedback">
-          <div *ngIf="formControls.address.errors.required">Address cannot be empty</div>
+          <div *ngIf="formControls.address.errors.required">{{ 'addressEmpty' | translate:self }}</div>
         </div>
       </div>
 
       <div class="form-group col-lg-4 col-md-6 col-12">
-        <label>Region</label>
+        <label>{{ 'region' | translate:self }}</label>
         <!-- <input type="text" formControlName="region" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.region.errors }" /> -->
         <select type="text" formControlName="region" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.region.errors }">
@@ -113,7 +113,7 @@
           <option value="Zhytomyr oblast">Zhytomyr oblast</option>
         </select>
         <div *ngIf="formControls.region.errors" class="invalid-feedback">
-          <div *ngIf="formControls.region.errors.required">Region cannot be empty</div>
+          <div *ngIf="formControls.region.errors.required">{{ 'regionEmpty' | translate:self }}</div>
         </div>
       </div>
     </div>
@@ -121,9 +121,9 @@
     <hr>
 
     <div class="row">
-      <h6 class="col-12">About company</h6>
+      <h6 class="col-12">{{ 'aboutCompany' | translate:self }}</h6>
       <div class="form-group col-lg-3 col-md-6">
-        <label>Employees number</label>
+        <label>{{ 'employeesNumber' | translate:self }}</label>
         <select type="number" min=0 formControlName="employeesNumber" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.employeesNumber.errors }">
           <option value="1">0-1</option>
@@ -135,19 +135,19 @@
           <option value="101">100+</option>
         </select>
         <div *ngIf="formControls.employeesNumber.errors" class="invalid-feedback">
-          <div *ngIf="formControls.employeesNumber.errors.required">Specify employees number</div>
+          <div *ngIf="formControls.employeesNumber.errors.required">{{ 'employeesNumberEmpty' | translate:self }}</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
-        <label>Employees to hire</label>
+        <label>{{ 'employeesHire' | translate:self }}</label>
         <input type="number" min=0 formControlName="employeesToHire" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.employeesToHire.errors }" />
         <div *ngIf="formControls.employeesToHire.errors" class="invalid-feedback">
-          <div *ngIf="formControls.employeesToHire.errors.required">Specify count employees to hire</div>
+          <div *ngIf="formControls.employeesToHire.errors.required">{{ 'employeesHireEmpty' | translate:self }}</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
-        <label>Field of activity</label>
+        <label>{{ 'fieldActivity' | translate:self }}</label>
         <!-- <input type="text" formControlName="fieldOfActivity" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.fieldOfActivity.errors }" /> -->
         <select type="text" formControlName="fieldOfActivity" class="form-control"
@@ -168,49 +168,49 @@
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
-        <label>Company age</label>
+        <label>{{ 'companyAge' | translate:self }}</label>
         <input type="number" min=0 max=100 formControlName="companyAge" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.companyAge.errors }" />
         <div *ngIf="formControls.companyAge.errors" class="invalid-feedback">
-          <div *ngIf="formControls.companyAge.errors.required">Company age cannot be empty</div>
+          <div *ngIf="formControls.companyAge.errors.required">{{ 'companyAgeEmpty' | translate:self }}</div>
         </div>
       </div>
     </div>
 
     <div class="row">
       <div class="form-group col-lg-3 col-md-6">
-        <label>Average check</label>
+        <label>{{ 'avgCheck' | translate:self }}</label>
         <input type="number" min=0 formControlName="averageCheck" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.averageCheck.errors }" />
         <div *ngIf="formControls.averageCheck.errors" class="invalid-feedback">
-          <div *ngIf="formControls.averageCheck.errors.required">Average check cannot be empty</div>
+          <div *ngIf="formControls.averageCheck.errors.required">{{ 'avgCheckEmpty' | translate:self }}</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
-        <label>Clients count per month</label>
+        <label>{{ 'clientsMonth' | translate:self }}</label>
         <input type="number" min=0 formControlName="mounthlyClients" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.mounthlyClients.errors }" />
         <div *ngIf="formControls.mounthlyClients.errors" class="invalid-feedback">
-          <div *ngIf="formControls.mounthlyClients.errors.required">Clients count per month cannot be empty</div>
+          <div *ngIf="formControls.mounthlyClients.errors.required">{{ 'clientsMonthEmpty' | translate:self }}</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
-        <label>Average price</label>
+        <label>{{ 'avgPrice' | translate:self }}</label>
         <input type="number" min=0 formControlName="averagePrice" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.averagePrice.errors }" />
         <div *ngIf="formControls.averagePrice.errors" class="invalid-feedback">
-          <div *ngIf="formControls.averagePrice.errors.required">Average price cannot be empty</div>
+          <div *ngIf="formControls.averagePrice.errors.required">{{ 'avgPriceEmpty' | translate:self }}</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
-        <label>Gross income</label>
+        <label>{{ 'grossIncome' | translate:self }}</label>
         <select type="number" min=0 formControlName="grossIncome" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.grossIncome.errors }">
           <option value="0">0</option>
           <option value="100">100</option>
         </select>
         <div *ngIf="formControls.grossIncome.errors" class="invalid-feedback">
-          <div *ngIf="formControls.grossIncome.errors.required">Specify gross income</div>
+          <div *ngIf="formControls.grossIncome.errors.required">{{ 'grossIncomeEmpty' | translate:self }}</div>
         </div>
       </div>
     </div>
@@ -218,33 +218,31 @@
     <hr>
 
     <div class="row">
-      <h6 class="col-12">Investments</h6>
+      <h6 class="col-12">{{ 'investments' | translate:self }}</h6>
       <div class="form-group col-md-10 col-12">
-        <label>Describe your business</label>
+        <label>{{ 'businessDescription' | translate:self }}</label>
         <textarea type="text" rows=3 formControlName="description" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.description.errors }"></textarea>
         <div *ngIf="formControls.description.errors" class="invalid-feedback">
-          <div *ngIf="formControls.description.errors.required">Business description cannot be empty</div>
-          <div *ngIf="formControls.description.errors.maxlength">Business description length cannot be
-            largest than 1024 chars</div>
+          <div *ngIf="formControls.description.errors.required">{{ 'businessDescriptionEmpty' | translate:self }}</div>
+          <div *ngIf="formControls.description.errors.maxlength">{{ 'businessDescriptionLength' | translate:self }}</div>
         </div>
       </div>
       <div class="form-group col-md-6 col-xl-4 col-12">
-        <label>How much money required</label>
+        <label>{{ 'moneyRequired' | translate:self }}</label>
         <input type="number" formControlName="moneyRequired" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.moneyRequired.errors }" />
         <div *ngIf="formControls.moneyRequired.errors" class="invalid-feedback">
-          <div *ngIf="formControls.moneyRequired.errors.required">Specify how much money required</div>
+          <div *ngIf="formControls.moneyRequired.errors.required">{{ 'moneyRequiredEmpty' | translate:self }}</div>
         </div>
       </div>
       <div class="form-group col-md-10 col-12">
-        <label>Describe in detail how, for what and in what period you plan to spend money</label>
+        <label>{{ 'investmentDescription' | translate:self }}</label>
         <textarea rows=3 formControlName="investmentDescription" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.investmentDescription.errors }"></textarea>
         <div *ngIf="formControls.investmentDescription.errors" class="invalid-feedback">
-          <div *ngIf="formControls.investmentDescription.errors.required">Investment description cannot be empty</div>
-          <div *ngIf="formControls.investmentDescription.errors.maxlength">Investment description length cannot be
-            largest than 4096 chars</div>
+          <div *ngIf="formControls.investmentDescription.errors.required">{{ 'investmentDescriptionEmpty' | translate:self }}</div>
+          <div *ngIf="formControls.investmentDescription.errors.maxlength">{{ 'investmentDescriptionLength' | translate:self }}</div>
         </div>
       </div>
     </div>
@@ -252,7 +250,7 @@
     <hr>
 
     <div class="row">
-      <h6 class="col-12">Media</h6>
+      <h6 class="col-12">{{ 'media' | translate:self }}</h6>
       <div class="col-12 pl-0 pr-0">
         <app-videos [parentSubmitted]="true" [items]="vendorProject.videos" [minItemsCount]=1 [maxItemsCount]=10
           (itemsEvent)="videosEventHandler($event)"></app-videos>
@@ -260,7 +258,7 @@
 
       <div class="form-group col-lg-6 col-12">
         <div class="project-photos">
-          <div class="mb-2">Uploaded photos</div>
+          <div class="mb-2">{{ 'uploadPhotos' | translate:self }}</div>
           <ul class="list-group">
             <li *ngFor="let photo of vendorProject.images" class="list-group-item">
               <div class="d-flex justify-content-between">
@@ -276,8 +274,7 @@
               </div>
             </li>
           </ul>
-          <div *ngIf="vendorProject.images.length < minPhotosCount" class="min-files-count">Minimal photos count is
-            {{minPhotosCount}}</div>
+          <div *ngIf="vendorProject.images.length < minPhotosCount" class="min-files-count">{{ 'minPhotosCount' | translate:self }} {{minPhotosCount}}</div>
         </div>
         <div class="photos-uploader">
           <app-file-uploader [parentSubmitted]="true" accept="image/*" content="photos"
@@ -288,7 +285,7 @@
 
       <div class="form-group col-lg-6 col-12">
         <div class="project-files">
-          <div class="mb-2">Uploaded files</div>
+          <div class="mb-2">{{ 'uploadedFiles' | translate:self }}</div>
           <ul class="list-group">
             <li *ngFor="let file of vendorProject.files" class="list-group-item">
               <div class="d-flex justify-content-between">
@@ -315,8 +312,7 @@
     </div>
 
     <div class="form-group">
-      <button [disabled]="!isLoaded || !vendorProjectForm.valid" class="btn btn-success update-project-btn">Update
-        data</button>
+      <button [disabled]="!isLoaded || !vendorProjectForm.valid" class="btn btn-success update-project-btn">{{ 'updateProject' | translate:self }}</button>
     </div>
   </form>
 

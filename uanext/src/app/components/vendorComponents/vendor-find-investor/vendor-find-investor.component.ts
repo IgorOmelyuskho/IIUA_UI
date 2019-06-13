@@ -8,7 +8,7 @@ import { responseProjects } from 'src/app/helperClasses/projects';
 })
 export class VendorFindInvestorComponent implements OnInit {
   projects: any[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
-
+  self = 'VendorFindInvestorComponent';
   selected = 'all'; // investor/vendor
 
   constructor() {

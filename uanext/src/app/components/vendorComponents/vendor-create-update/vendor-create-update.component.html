@@ -1,13 +1,13 @@
 <div class="create-update">
-  <div class="header">Создать обновление</div>
+  <div class="header">{{ 'createUpdate' | translate:self }}</div>
   <div class="blocks-container">
     <div class="block">
-      <div class="block-name">Добавить комментарий</div>
-      <textarea placeholder="Коротко опишите для чего вам нужны инвестиции" rows="4"></textarea>
+      <div class="block-name">{{ 'addComment' | translate:self }}</div>
+      <textarea placeholder="{{ 'addCommentPlaceholder' | translate:self }}" rows="4"></textarea>
     </div>
 
     <div class="block">
-      <div class="block-name">Привязать к цели</div>
+      <div class="block-name">{{ 'tieToGoal' | translate:self }}</div>
       <div class="goals">
         <div [ngClass]="{'selected-goal': step.selected}" (click)="tieToStep(step)" *ngFor="let step of projectSteps"
           class="goal">{{step.data}}</div>
@@ -15,14 +15,14 @@
     </div>
 
     <div class="block">
-      <div class="block-name">Загрузите медиа-файлы</div>
+      <div class="block-name">{{ 'uploadMediaFiles' | translate:self }}</div>
       <div class="drop-file-zone">
         <div #dropArea class="drop-area">
           <!-- <progress #progressBar class="progress-bar" max=100 value=0></progress> -->
           <div #gallery class="gallery">
             <div class="drag-files">
               <img src="../../../../assets/img/download.png" alt="">
-              <div class="text">Перетащите файлы сюда</div>
+              <div class="text">{{ 'dragFiles' | translate:self }}</div>
             </div>
           </div>
         </div>
@@ -30,6 +30,6 @@
     </div>
   </div>
   <div class="send">
-    <button (click)="send()">ОТПРАВИТЬ</button>
+    <button (click)="send()">{{ 'send' | translate:self }}</button>
   </div>
 </div>

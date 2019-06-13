@@ -19,6 +19,7 @@ export class CreateVendorProjectComponent implements OnInit {
   showProgressBar = false;
   @ViewChild('avatar2') avatarImg: ElementRef;
   FormHelper = FormHelper;
+  self = 'CreateVendorProjectComponent';
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;

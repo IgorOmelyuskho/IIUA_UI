@@ -20,6 +20,7 @@ export class UpdateVendorProjectComponent implements OnInit {
   @ViewChild('avatar') avatarImg: ElementRef;
   projectId: string;
   FormHelper = FormHelper;
+  self = 'UpdateVendorProjectComponent';
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;

@@ -10,7 +10,15 @@ export class TranslatePipe implements PipeTransform {
   }
 
   transform(key: any, constructorName: any): any {
-    return this.translateService.data[constructorName][key] || key;
+    // return this.translateService.data[constructorName][key] || key;
+
+    // use in dev
+    const res = this.translateService.data[constructorName][key];
+    if (res == null) {
+      throw  new Error('Error in translate pipe');
+    } else {
+      return res;
+    }
   }
 
 }

@@ -21,6 +21,7 @@ export class FileUploaderComponent implements OnInit {
   @Input() maxSize = 5 * 1024 * 1024;
   @Input() parentSubmitted = false;
   @Input() accept = '*';
+  self = 'FileUploaderComponent';
 
   constructor(private filesService: FilesService) { }
 

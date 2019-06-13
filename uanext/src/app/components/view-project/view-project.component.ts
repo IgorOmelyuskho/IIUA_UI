@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment.js';
 export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   project: VendorProject = null;
   projectId: string;
+  self = 'ViewProjectComponent';
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];

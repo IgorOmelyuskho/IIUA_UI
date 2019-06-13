@@ -11,6 +11,7 @@ export class VideosComponent implements OnInit {
   newItemMaxValid = true;
   newItemNullValid = true;
   isTouched = false;
+  self = 'VideosComponent';
 
   @Output() itemsEvent = new EventEmitter<any>();
   @Input() maxItemsCount = 1000;
