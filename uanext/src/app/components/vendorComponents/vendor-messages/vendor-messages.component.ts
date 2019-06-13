@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vendor-messages.component.scss']
 })
 export class VendorMessagesComponent implements OnInit {
+  self = 'VendorMessagesComponent';
   messages: any[] = [
     {
       avatar: 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png',

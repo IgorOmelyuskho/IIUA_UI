@@ -1,12 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FilterFields, FilterItemsName } from 'src/app/models';
+import { TranslateService } from 'src/app/services/translate.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-filter-items',
   templateUrl: './filter-items.component.html',
   styleUrls: ['./filter-items.component.scss']
 })
-export class FilterItemsComponent implements OnInit {
+export class FilterItemsComponent implements OnInit, OnDestroy {
   @Output() filterItemRemove = new EventEmitter<any>();
 
   @Input()
@@ -16,12 +18,19 @@ export class FilterItemsComponent implements OnInit {
     }
     this.setFilterItems(filter);
   }
-
+  self = 'FilterItemsComponent';
   items: any[];
+  translateItems: any;
+  subscription: Subscription;
 
-  constructor() { }
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
+    this.subscription = this.translateService.filterItems.subscribe(
+      val => {
+        this.translateItems = val;
+      }
+    );
   }
 
   itemOnClick(item) {
@@ -37,7 +46,7 @@ export class FilterItemsComponent implements OnInit {
 
     if (filterParam.moneyRequiredFrom && filterParam.moneyRequiredTo) {
       filterItems.push({
-        text: 'бюджет ' + filterParam.moneyRequiredFrom + ' - ' + filterParam.moneyRequiredTo + ' грн',
+        text: this.translateItems.budget + ' ' + filterParam.moneyRequiredFrom + ' - ' + filterParam.moneyRequiredTo + ' грн',
         name: FilterItemsName.MONEY_REQUIRED
       });
     }
@@ -61,21 +70,21 @@ export class FilterItemsComponent implements OnInit {
 
     if (filterParam.employeesFrom && filterParam.employeesTo) {
       filterItems.push({
-        text: filterParam.employeesFrom + ' - ' + filterParam.employeesTo + ' сотрудника',
+        text: filterParam.employeesFrom + ' - ' + filterParam.employeesTo + ' ' + this.translateItems.employees,
         name: FilterItemsName.EMPLOYEES
       });
     }
 
     if (filterParam.avgCheckFrom && filterParam.avgCheckTo) {
       filterItems.push({
-        text: 'средний чек ' + filterParam.avgCheckFrom + ' - ' + filterParam.avgCheckTo + ' грн',
+        text: this.translateItems.avgCheck + ' ' + filterParam.avgCheckFrom + ' - ' + filterParam.avgCheckTo + ' грн',
         name: FilterItemsName.AVG_CHECK
       });
     }
 
     if (filterParam.companyAgeFrom && filterParam.companyAgeTo) {
       filterItems.push({
-        text: filterParam.companyAgeFrom + ' - ' + filterParam.companyAgeTo + ' лет',
+        text: filterParam.companyAgeFrom + ' - ' + filterParam.companyAgeTo + ' ' + this.translateItems.year,
         name: FilterItemsName.COMPANY_AGE
       });
     }
@@ -89,30 +98,34 @@ export class FilterItemsComponent implements OnInit {
 
   setUpdateRateFields(filterParam, filterItems) {
     for (let i = 0; i < filterParam.updateRate.length; i++) {
-      if (filterParam.updateRate[i].name === 'Часто') {
+      if (filterParam.updateRate[i].id === '1') {
         filterItems.push({
           value: filterParam.updateRate[i].name,
-          text: 'Частые обновления',
+          text: filterParam.updateRate[i].name2,
           name: FilterItemsName.UPDATE_RATE
         });
       }
 
-      if (filterParam.updateRate[i].name === 'Средне') {
+      if (filterParam.updateRate[i].id === '2') {
         filterItems.push({
           value: filterParam.updateRate[i].name,
-          text: 'Средние обновления',
+          text: filterParam.updateRate[i].name2,
           name: FilterItemsName.UPDATE_RATE
         });
       }
 
-      if (filterParam.updateRate[i].name === 'Редко') {
+      if (filterParam.updateRate[i].id === '3') {
         filterItems.push({
           value: filterParam.updateRate[i].name,
-          text: 'Редкие обновления',
+          text: filterParam.updateRate[i].name2,
           name: FilterItemsName.UPDATE_RATE
         });
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

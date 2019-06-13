@@ -9,6 +9,7 @@ import { TranslateService } from 'src/app/services/translate.service';
 })
 export class HeaderComponent implements OnInit {
   userRole: string;
+  self = 'HeaderComponent';
 
   constructor(private router: Router, private translateService: TranslateService) { }
 

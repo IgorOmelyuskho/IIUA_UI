@@ -1,16 +1,16 @@
 <div class="investment-offer-wrapper">
-  <div class="name">Предложение инвестиций</div>
+  <div class="name">{{ 'investmentOffer' | translate:self }}</div>
 
   <div class="wrapper">
     <div class="btn-wrapper">
       <button [ngClass]="{ 'selected': action === 'CreateInvestmentOffer' }" (click)="createInvestmentOffer()"
-        class="btn btn-primary create-investment-offer">Создать</button>
+        class="btn btn-primary create-investment-offer">{{ 'create' | translate:self }}</button>
       <button [ngClass]="{ 'selected': action === 'ShowHistory' }" (click)="viewHistory()"
-        class="btn btn-primary show-history">Посмотреть историю</button>
+        class="btn btn-primary show-history">{{ 'showHistory' | translate:self }}</button>
     </div>
     <div class="blocks-container">
       <div class="block">
-        <div class="block-name">Бюджет Инвестиций</div>
+        <div class="block-name">{{ 'budget' | translate:self }}</div>
         <div class="budget-input-wrapper">
           <input type="number" class="form-control">
           <div class="grey ml-2">грн</div>
@@ -18,11 +18,11 @@
       </div>
 
       <div class="block">
-        <div class="block-name">Регион</div>
+        <div class="block-name">{{ 'region' | translate:self }}</div>
         <div class="region-input-wrapper">
           <select class="form-control" [(ngModel)]="region" type="text">
             <!-- use only (change) -->
-            <option selected value="ALL">ALL</option>
+            <option selected value="ALL">Choose all</option>
             <option value="Autonomous Republic of Crimea">Autonomous Republic of Crimea</option>
             <option value="Cherkasy oblast">Cherkasy oblast</option>
             <option value="Chernihiv oblast">Chernihiv oblast</option>
@@ -53,7 +53,7 @@
       </div>
 
       <div class="block">
-        <div class="block-name">Привязать к цели</div>
+        <div class="block-name">{{ 'tieToGoal' | translate:self }}</div>
         <div class="goals">
           <div [ngClass]="{'selected-goal': step.selected}" (click)="tieToStep(step)" *ngFor="let step of projectSteps"
             class="goal">{{step.data}}</div>
@@ -61,24 +61,24 @@
       </div>
 
       <div class="block">
-        <div class="block-name">Короткое описание</div>
-        <textarea placeholder="Коротко опишите для чего вам нужны инвестиции" rows="4"></textarea>
+        <div class="block-name">{{ 'shortDescription' | translate:self }}</div>
+        <textarea placeholder="{{ 'shortDescriptionPlaceholder' | translate:self }}" rows="4"></textarea>
       </div>
 
       <div class="block">
-        <div class="block-name">Подробное описание</div>
-        <textarea placeholder="Детально опишите для чего вам нужны инвестиции" rows="4"></textarea>
+        <div class="block-name">{{ 'detailedDescription' | translate:self }}</div>
+        <textarea placeholder="{{ 'detailedDescriptionPlaceholder' | translate:self }}" rows="4"></textarea>
       </div>
 
       <div class="block">
-        <div class="block-name">Загрузите медиа-файлы</div>
+        <div class="block-name">{{ 'uploadMediaFiles' | translate:self }}</div>
         <div class="drop-file-zone">
           <div #dropArea class="drop-area">
             <!-- <progress #progressBar class="progress-bar" max=100 value=0></progress> -->
             <div #gallery class="gallery">
               <div class="drag-files">
                 <img src="../../../../assets/img/download.png" alt="">
-                <div class="text">Перетащите файлы сюда</div>
+                <div class="text">{{ 'dragFiles' | translate:self }}</div>
               </div>
             </div>
           </div>
@@ -88,6 +88,6 @@
   </div>
 
   <div class="send">
-    <button (click)="send()">ОТПРАВИТЬ</button>
+    <button (click)="send()">{{ 'send' | translate:self }}</button>
   </div>
 </div>

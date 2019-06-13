@@ -14,6 +14,7 @@ import { responseProject } from 'src/app/helperClasses/projects';
 export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('previewCardWrapper') previewCardWrapper: ElementRef;
   @ViewChild('interactiveInvestmentCard') interactiveInvestmentCard: ElementRef;
+  self = 'MainScreenInvestorComponent';
 
   selectedProject: VendorProject = null;
   selectedProjectId: string = null;

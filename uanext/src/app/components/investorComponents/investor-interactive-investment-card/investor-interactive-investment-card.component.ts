@@ -9,6 +9,7 @@ import { StateService } from 'src/app/services/state/state.service';
 })
 export class InvestorInteractiveInvestmentCardComponent implements OnInit {
   project: VendorProject;
+  self = 'InvestorInteractiveInvestmentCardComponent';
 
   constructor(private stateService: StateService) { }
 

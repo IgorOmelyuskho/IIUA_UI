@@ -20,6 +20,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   @ViewChild('searchByKeyWordInput') searchByKeyWordInput: ElementRef;
 
   FormHelper = FormHelper;
+  self = 'InvestorFilterPageComponent';
 
   projects: VendorProject[] = [];
   selectedProject: VendorProject;

@@ -12,6 +12,7 @@ import { ProjectsService } from 'src/app/services/http/projects.service';
 export class VendorProjectsComponent implements OnInit {
   projects: VendorProject[] = [];
   isLoaded = false;
+  self = 'VendorProjectsComponent';
 
   constructor(private router: Router, private projectsService: ProjectsService) { }
 

@@ -8,14 +8,14 @@
     <div class="action-btn-wrapper">
       <button (click)="actionIsExpanded = !actionIsExpanded" type="button" class="action-btn"
         [ngClass]="{ 'action-btn-expanded': actionIsExpanded }">
-        <span>Быстрые действия</span>
+        <span>{{ 'quickAction' | translate:self }}</span>
         <i *ngIf="actionIsExpanded" class="fa fa-angle-up ml-2"></i>
         <i *ngIf="!actionIsExpanded" class="fa fa-angle-down ml-2"></i>
       </button>
     </div>
 
     <div *ngIf="actionIsExpanded" class="quick-action-width">
-      <div>SOME CONTENT/COMPONENT THERE</div>
+      <div>app-vendor-create-update component ?</div>
     </div>
   </div>
 

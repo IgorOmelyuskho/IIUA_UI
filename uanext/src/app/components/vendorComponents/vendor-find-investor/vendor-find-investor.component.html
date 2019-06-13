@@ -1,12 +1,12 @@
 <div class="last-activity">
   <div class="find">
     <button><i class="fa fa-search"></i></button>
-    <input placeholder="Найти проект или инвестора" type="text">
+    <input placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
   </div>
   <div class="param">
-    <button [ngClass]="{'selected': selected === 'all'}" (click)="all()" class="left-btn">Все</button>
-    <button [ngClass]="{'selected': selected === 'investor'}" (click)="investor()" class="center-btn">Инвестор</button>
-    <button [ngClass]="{'selected': selected === 'vendor'}" (click)="vendor()" class="right-btn">Вендор</button>
+    <button [ngClass]="{'selected': selected === 'all'}" (click)="all()" class="left-btn">{{ 'all' | translate:self }}</button>
+    <button [ngClass]="{'selected': selected === 'investor'}" (click)="investor()" class="center-btn">{{ 'investor' | translate:self }}</button>
+    <button [ngClass]="{'selected': selected === 'vendor'}" (click)="vendor()" class="right-btn">{{ 'vendor' | translate:self }}</button>
   </div>
 
   <div class="projects">

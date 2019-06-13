@@ -11,6 +11,7 @@ export class StepsComponent implements OnInit, OnChanges {
   newItemMaxValid = true;
   newItemNullValid = true;
   isTouched = false;
+  self = 'StepsComponent';
 
   @Output() itemsEvent = new EventEmitter<any>();
   @Input() maxItemsCount = 1000;

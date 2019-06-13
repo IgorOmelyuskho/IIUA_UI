@@ -8,6 +8,7 @@ import { VendorProject } from 'src/app/models/vendorProject';
 })
 export class InvestorCommentsComponent implements OnInit {
   @Input() project: VendorProject;
+  self = 'InvestorCommentsComponent';
   comments = [
     {
       type: 'their',

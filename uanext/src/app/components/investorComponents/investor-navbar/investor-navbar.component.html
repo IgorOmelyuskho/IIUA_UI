@@ -12,10 +12,10 @@
         </select>
       </div>
       <div>
-        <button #home (click)="homeClick()" type="button">Home</button>
-        <button #profile (click)="profileClick()" type="button">My profile</button>
-        <button #vieProjects (click)="viewProjectsClick()" type="button">View projects</button>
-        <button (click)="signOutClick()" type="button">Sign out</button>
+        <button #home (click)="homeClick()" type="button">{{ 'home' | translate:self }}</button>
+        <button #profile (click)="profileClick()" type="button">{{ 'myProfile' | translate:self }}</button>
+        <button #vieProjects (click)="viewProjectsClick()" type="button">{{ 'findProjects' | translate:self }}</button>
+        <button (click)="signOutClick()" type="button">{{ 'signOut' | translate:self }}</button>
       </div>
     </div>
   </nav>

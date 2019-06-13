@@ -19,7 +19,7 @@
             </button>
           </div>
           <input #searchByKeyWordInput type="text" (keydown)="searchByKeywordKeyDown($event)" [(ngModel)]="searchWord"
-            class="form-control" placeholder="Найти проект или компанию по ключевым словам" aria-label="Project name"
+            class="form-control" placeholder="{{ 'findProject' | translate:self }}" aria-label="Project name"
             aria-describedby="basic-addon2">
         </div>
       </div>
@@ -39,7 +39,7 @@
             <!-- projects -->
             <div class="projects search-results" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
               [infiniteScrollThrottle]="500" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()">
-              <h5 *ngIf="projects?.length === 0 && showProgress === false">No projects found</h5>
+              <h5 *ngIf="projects?.length === 0 && showProgress === false">{{ 'noProjects' | translate:self }}</h5>
 
               <div *ngFor="let project of projects" class="project-wrapper">
                 <app-filtered-project [searchText]="searchWord" [project]="project"
@@ -63,23 +63,23 @@
         <div class="project-info-menu">
           <button [disabled]="!selectedProject" type="button"
             [ngClass]="{selectedMenuItem: selectedMenuItem === 'shared'}"
-            (click)="selectedMenuItem = 'shared'">Общее</button>
+            (click)="selectedMenuItem = 'shared'">{{ 'shared' | translate:self }}</button>
           <button [disabled]="!selectedProject" type="button"
             [ngClass]="{selectedMenuItem: selectedMenuItem === 'gallery'}"
-            (click)="selectedMenuItem = 'gallery'">Галерея</button>
+            (click)="selectedMenuItem = 'gallery'">{{ 'gallery' | translate:self }}</button>
           <button [disabled]="!selectedProject" type="button"
             [ngClass]="{selectedMenuItem: selectedMenuItem === 'documents'}"
-            (click)="selectedMenuItem = 'documents'">Документы</button>
+            (click)="selectedMenuItem = 'documents'">{{ 'documents' | translate:self }}</button>
         </div>
         <div class="no-selected" *ngIf="selectedMenuItem == null">
           <div class="iiua">IIUA</div>
-          <div>Начинай инвестировать в будущее.</div>
-          <div class="grey-text">Тут будет отображена информация по выбранному проекту.</div>
+          <div>{{ 'startInvest' | translate:self }}</div>
+          <div class="grey-text">{{ 'displayProjectInfo' | translate:self }}</div>
         </div>
         <div class="shared" *ngIf="selectedMenuItem === 'shared'">
           <h5 class="mb-2">
             <img src="../../../assets/img/notepad.png" alt="">
-            <span>Для чего нужны инвестиции</span>
+            <span>{{ 'investmentsFor' | translate:self }}</span>
           </h5>
           <div class="steps">
             <div class="step" *ngFor="let step of selectedProject.steps">
@@ -90,11 +90,11 @@
           <div class="invest-and-chat">
             <div class="btn-wrapper">
               <button class="invest">
-                <span>ИНВЕСТИРОВАТЬ</span>
+                <span>{{ 'invest' | translate:self }}</span>
                 <span class="big-font">$</span>
               </button>
               <button class="start-chat">
-                <span>ЧАТ</span>
+                <span>{{ 'chat' | translate:self }}</span>
                 <span class="img-bg"></span>
               </button>
             </div>
@@ -109,7 +109,7 @@
           <div class="videos">
             <h5>
               <img src="../../../assets/img/video.png" alt="">
-              <span>Videos</span>
+              <span>{{ 'videos' | translate:self }}</span>
             </h5>
             <div class="video-links-wrapper">
               <div *ngFor="let video of selectedProject.videos" class="link">
@@ -127,7 +127,7 @@
             </div>
           </div>
           <div class="button-wrapper">
-            <button>DOWNLOAD ALL</button>
+            <button>{{ 'downloadAll' | translate:self }}</button>
           </div>
         </div>
       </div>

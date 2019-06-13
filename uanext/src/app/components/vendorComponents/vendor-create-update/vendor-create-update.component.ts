@@ -25,6 +25,7 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
 
   projectSteps: any[] = [];
   tieSteps: any[] = [];
+  self = 'VendorCreateUpdateComponent';
 
   constructor() { }
 

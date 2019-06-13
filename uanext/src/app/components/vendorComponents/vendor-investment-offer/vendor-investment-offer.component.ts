@@ -22,6 +22,7 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
   @ViewChild('dropArea') dropArea: ElementRef;
   @ViewChild('gallery') gallery: ElementRef;
   // @ViewChild('progressBar') progressBar: ElementRef;
+  self = 'VendorInvestmentOfferComponent';
 
   region = 'ALL';
   action = 'CreateInvestmentOffer'; // CreateInvestmentOffer - default, ShowHistory

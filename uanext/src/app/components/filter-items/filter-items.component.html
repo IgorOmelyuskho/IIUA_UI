@@ -4,5 +4,5 @@
     <img src="../../../assets/img/close.png" alt="">
   </div>
 
-  <div *ngIf="items?.length > 0" (click)="clearAll()" class="clear-all">Clear All</div>
+  <div *ngIf="items?.length > 0" (click)="clearAll()" class="clear-all">{{ 'clearAll' | translate:self }}</div>
 </div>

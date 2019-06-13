@@ -10,6 +10,7 @@ import { AuthorizationService } from 'src/app/services/http/authorization.servic
 export class AdminPageComponent implements OnInit, AfterViewInit {
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('upload') uploadTab: ElementRef;
+  self = 'AdminPageComponent';
 
   constructor(private router: Router, private authService: AuthorizationService) { }
 

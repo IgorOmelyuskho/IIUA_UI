@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/http/notification.service';
 import { ActivatedRoute } from '@angular/router';
@@ -6,13 +6,15 @@ import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ProjectsService } from 'src/app/services/http/projects.service';
 import { FilesService } from 'src/app/services/http/files.service';
+import { FieldActivityInterface, TranslateService } from 'src/app/services/translate.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-update-vendor-project',
   templateUrl: './update-vendor-project.component.html',
   styleUrls: ['./update-vendor-project.component.scss']
 })
-export class UpdateVendorProjectComponent implements OnInit {
+export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   vendorProject: VendorProject = this.projectsService.emptyVendorProject;
   vendorProjectForm: FormGroup;
   isLoaded = false;
@@ -20,6 +22,8 @@ export class UpdateVendorProjectComponent implements OnInit {
   @ViewChild('avatar') avatarImg: ElementRef;
   projectId: string;
   FormHelper = FormHelper;
+  self = 'UpdateVendorProjectComponent';
+  fieldActivityOptions: FieldActivityInterface[];
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
@@ -29,12 +33,15 @@ export class UpdateVendorProjectComponent implements OnInit {
 
   minPhotosCount = 5;
 
+  fieldOfActivitySubscription: Subscription;
+
   constructor(
     private formBuilder: FormBuilder,
     private notify: NotificationService,
     private projectsService: ProjectsService,
     private activateRoute: ActivatedRoute,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private translateService: TranslateService
   ) {
     this.vendorProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -98,6 +105,12 @@ export class UpdateVendorProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
+      (val) => {
+        this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
+      }
+    );
+
     if (
       this.projectsService.projectForUpdate == null ||
       this.projectsService.projectForUpdate === this.projectsService.emptyVendorProject
@@ -298,5 +311,9 @@ export class UpdateVendorProjectComponent implements OnInit {
           this.showProgressBar = false;
         }
       );
+  }
+
+  ngOnDestroy() {
+    this.fieldOfActivitySubscription.unsubscribe();
   }
 }

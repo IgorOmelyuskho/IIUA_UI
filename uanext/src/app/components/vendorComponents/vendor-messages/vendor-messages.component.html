@@ -1,5 +1,5 @@
 <div class="messages-wrapper">
-    <div class="name">Общение</div>
+    <div class="name">{{ 'communication' | translate:self }}</div>
     <div class="messages">
       <div *ngFor="let message of messages" class="message">
   
@@ -50,7 +50,7 @@
       <div class="attach">
         <i class="fa fa-paperclip" aria-hidden="true"></i>
       </div>
-      <input type="text" placeholder="Message">
+      <input type="text" placeholder="{{ 'message' | translate:self }}">
       <div class="send">
         <img src="../../../../assets/img/send-message.png" alt="">
       </div>

@@ -8,6 +8,7 @@ import { AuthorizationService } from 'src/app/services/http/authorization.servic
   styleUrls: ['./project-user-page.component.scss']
 })
 export class ProjectUserPageComponent implements OnInit {
+  self = 'ProjectUserPageComponent';
 
   constructor(private router: Router, private authService: AuthorizationService) { }
 

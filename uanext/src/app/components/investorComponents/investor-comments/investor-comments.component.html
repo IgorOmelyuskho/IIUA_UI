@@ -1,7 +1,7 @@
 <div class="comments">
   <div class="send-comment">
-    <input type="text" placeholder="Оставте свой комментарий…">
-    <button type="button">ОТПРАВИТЬ</button>
+    <input type="text" placeholder="{{ 'leaveComment' | translate:self }}">
+    <button type="button">{{ 'send' | translate:self}}</button>
   </div>
 
   <div class="comments-wrapper">
@@ -15,14 +15,14 @@
           <div class="data-and-name">
             <div class="name">{{project.legalEntityName}}</div>
             <div class="data">
-              <span>Ответить • </span>
+              <span>{{ 'reply' | translate:self}}</span>
               <span>{{comment.date}}</span>
             </div>
           </div>
           <div class="text">{{comment.text}}</div>
           <div class="answer">
-            <input type="text" placeholder="Оставте свой комментарий…">
-            <button type="button">Ответить</button>
+            <input type="text" placeholder="{{ 'leaveComment' | translate:self }}">
+            <button type="button">{{ 'replyBtn' | translate:self}}</button>
           </div>
         </div>
       </div>
@@ -34,9 +34,9 @@
           </div>
           <div class="right-part">
             <div class="data-and-name">
-              <div class="name">Инвестор</div>
+              <div class="name">{{ 'investor' | translate:self}}</div>
               <div class="data">
-                <span>Ответить • </span>
+                <span>{{ 'reply2' | translate:self}}</span>
                 <span>{{comment.date}}</span>
               </div>
             </div>
