@@ -18,6 +18,10 @@
     letter-spacing: 0.5px;
     cursor: pointer;
 
+    &:hover {
+      background: $middleGreen;
+    }
+
     img {
       height: 18px;
       display: inline;
@@ -32,5 +36,9 @@
     padding: 5px 8px;
     color: $green;
     cursor: pointer;
+
+    &:hover {
+      color: $middleGreen;
+    }
   }
 }

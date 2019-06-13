@@ -2,15 +2,15 @@
   <!-- <input [textMask]="{mask: FormHelper.bigNumberMask}" type="text" /> -->
 
   <div class="border-bottom">
-    <h5 class="filter-item-name pt-3">Бюджет Инвестиций</h5>
+    <h5 class="filter-item-name pt-3">{{ 'budget' | translate:self }}</h5>
     <div class="slider">
       <div class="input-group input-group-sm mb-2">
-        <div class="mr-2 grey">От</div>
+        <div class="mr-2 grey from-to">{{ 'from' | translate:self }}</div>
         <input id="budget-from" type="number" class="form-control">
         <div class="grey ml-2">грн</div>
       </div>
       <div class="input-group input-group-sm mb-2">
-        <div class="mr-2 grey">До</div>
+        <div class="mr-2 grey from-to">{{ 'to' | translate:self }}</div>
         <input id="budget-to" type="number" class="form-control">
         <div class="grey ml-2">грн</div>
       </div>
@@ -19,11 +19,11 @@
   </div>
 
   <div class="border-bottom pb-3">
-    <h5 class="filter-item-name pt-3">Регион</h5>
+    <h5 class="filter-item-name pt-3">{{ 'region' | translate:self }}</h5>
     <div class="slider">
       <select [(ngModel)]="region" (change)="filterOnChange()" type="text">
         <!-- use only (change) -->
-        <option selected value="ALL">ALL</option>
+        <option selected value="ALL">Choose all</option>
         <option value="Autonomous Republic of Crimea">Autonomous Republic of Crimea</option>
         <option value="Cherkasy oblast">Cherkasy oblast</option>
         <option value="Chernihiv oblast">Chernihiv oblast</option>
@@ -57,7 +57,7 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">
-          <span>Сфера Деятельности</span>
+          <span>{{ 'fieldActivity' | translate:self }}</span>
           <span *ngIf="fieldOfActivity?.length > 0" class="dot">{{fieldOfActivity?.length}}</span>
         </h5>
       </mat-expansion-panel-header>
@@ -81,17 +81,17 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">
-          <span>Сотрудники</span>
+          <span>{{ 'employees' | translate:self }}</span>
           <span *ngIf="employeesTouched < 3" class="dot">•</span>
         </h5>
       </mat-expansion-panel-header>
       <div class="slider">
         <div class="input-group input-group-sm mb-2">
-          <div class="mr-2 grey">От</div>
+          <div class="mr-2 grey from-to">{{ 'from' | translate:self }}</div>
           <input id="employees-from" type="number" class="form-control">
         </div>
         <div class="input-group input-group-sm mb-2">
-          <div class="mr-2 grey">До</div>
+          <div class="mr-2 grey from-to">{{ 'to' | translate:self }}</div>
           <input id="employees-to" type="number" class="form-control">
         </div>
         <div id="employees-range" class="mt-3 mb-3"></div>
@@ -103,18 +103,18 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">
-          <span> Средний Чек</span>
+          <span>{{ 'avgCheck' | translate:self }}</span>
           <span *ngIf="avgCheckTouched < 3" class="dot">•</span>
         </h5>
       </mat-expansion-panel-header>
       <div class="slider">
         <div class="input-group input-group-sm mb-2">
-          <div class="mr-2 grey">От</div>
+          <div class="mr-2 grey from-to">{{ 'from' | translate:self }}</div>
           <input id="avg-check-from" type="number" class="form-control">
           <div class="grey ml-2">грн</div>
         </div>
         <div class="input-group input-group-sm mb-2">
-          <div class="mr-2 grey">До</div>
+          <div class="mr-2 grey from-to">{{ 'to' | translate:self }}</div>
           <input id="avg-check-to" type="number" class="form-control">
           <div class="grey ml-2">грн</div>
         </div>
@@ -127,17 +127,17 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">
-          <span>Возраст Компании</span>
+          <span>{{ 'companyAge' | translate:self }}</span>
           <span *ngIf="ageTouched < 3" class="dot">•</span>
         </h5>
       </mat-expansion-panel-header>
       <div class="slider">
         <div class="input-group input-group-sm mb-2">
-          <div class="mr-2 grey">От</div>
+          <div class="mr-2 grey from-to">{{ 'from' | translate:self }}</div>
           <input id="age-from" type="number" class="form-control">
         </div>
         <div class="input-group input-group-sm mb-2">
-          <div class="mr-2 grey">До</div>
+          <div class="mr-2 grey from-to">{{ 'to' | translate:self }}</div>
           <input id="age-to" type="number" class="form-control">
         </div>
         <div id="age-range" class="mt-3 mb-3"></div>
@@ -148,7 +148,7 @@
   <div class="border-bottom">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <h5 class="filter-item-name pt-3">Обновление Данных</h5>
+        <h5 class="filter-item-name">{{ 'dataUpdate' | translate:self }}</h5>
       </mat-expansion-panel-header>
       <div class="slider">
         <div class="form-group">

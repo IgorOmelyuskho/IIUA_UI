@@ -10,7 +10,7 @@
         <option value="en">en</option>
       </select>
     </div>
-    <button (click)="signIn()">Sign in</button>
-    <button (click)="signUp()">Sign up</button>
+    <button (click)="signIn()">{{ 'signIn' | translate:self }}</button>
+    <button (click)="signUp()">{{ 'signUp' | translate:self }}</button>
   </div>
 </nav>

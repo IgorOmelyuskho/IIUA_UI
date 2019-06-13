@@ -1,18 +1,19 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/http/notification.service';
 import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ProjectsService } from 'src/app/services/http/projects.service';
-import { fieldActivityOptions } from 'src/app/helperClasses/fieldOfActivity';
 import { FilesService } from 'src/app/services/http/files.service';
+import { FieldActivityInterface, TranslateService } from 'src/app/services/translate.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-vendor-project',
   templateUrl: './create-vendor-project.component.html',
   styleUrls: ['./create-vendor-project.component.scss']
 })
-export class CreateVendorProjectComponent implements OnInit {
+export class CreateVendorProjectComponent implements OnInit, OnDestroy {
   vendorProject: VendorProject = this.projectsService.emptyVendorProject;
   vendorProjectForm: FormGroup;
   submitted = false;
@@ -29,13 +30,16 @@ export class CreateVendorProjectComponent implements OnInit {
   avatarData: any;
 
   minPhotosCount = 5;
-  fieldActivityOptions = JSON.parse(JSON.stringify(fieldActivityOptions));
+  fieldActivityOptions: FieldActivityInterface[];
+
+  fieldOfActivitySubscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
     private notify: NotificationService,
     private projectsService: ProjectsService,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private translateService: TranslateService
   ) {
     this.vendorProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -63,9 +67,15 @@ export class CreateVendorProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
+      (val) => {
+        this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
+      }
+    );
+
     this.vendorProject.images = [];
     this.vendorProject.files = [];
-   }
+  }
 
   get formControls() {
     return this.vendorProjectForm.controls;
@@ -237,6 +247,10 @@ export class CreateVendorProjectComponent implements OnInit {
         this.showProgressBar = false;
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.fieldOfActivitySubscription.unsubscribe();
   }
 }
 

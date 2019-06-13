@@ -4,8 +4,8 @@
   </a>
   <div class='navbar-text'>Navbar for ProjectUser</div>
   <div>
-    <button (click)='goToProfile()' type="button">My profile</button>
-    <button (click)="signOut()" type="button">Sign out</button>
+    <button (click)='goToProfile()' type="button">{{ 'profile' | translate:self }}</button>
+    <button (click)="signOut()" type="button">{{ 'signOut' | translate:self }}</button>
   </div>
 </nav>
 

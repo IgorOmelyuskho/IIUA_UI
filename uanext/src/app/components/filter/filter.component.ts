@@ -1,17 +1,16 @@
-import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import FormHelper from '../../helperClasses/helperClass';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { debounceTime, throttleTime, distinctUntilChanged } from 'rxjs/operators';
 import { FilterFields, FilterItemsName } from 'src/app/models';
-import { fieldActivityOptions, FieldActivityInterface } from 'src/app/helperClasses/fieldOfActivity';
-import { updateRateOptions, UpdateRateInterface } from 'src/app/helperClasses/updateRateOptions';
+import { FieldActivityInterface, TranslateService, UpdateRateInterface } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent implements OnInit, AfterViewInit {
+export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() filterChange = new EventEmitter<any>();
 
   @Input()
@@ -20,10 +19,9 @@ export class FilterComponent implements OnInit, AfterViewInit {
   }
 
   FormHelper = FormHelper;
-  updateRateOptions: UpdateRateInterface[] = JSON.parse(JSON.stringify(updateRateOptions));
-
+  updateRateOptions: UpdateRateInterface[];
   noUiSlider: any;
-
+  self = 'FilterComponent';
   filter$: BehaviorSubject<FilterFields> = new BehaviorSubject(null);
 
   budgetElement: any;
@@ -59,11 +57,25 @@ export class FilterComponent implements OnInit, AfterViewInit {
   avgCheckMax = 10000;
   avgCheckTouched = 0;
 
-  fieldActivityOptions = JSON.parse(JSON.stringify(fieldActivityOptions));
+  fieldActivityOptions: FieldActivityInterface[];
 
-  constructor() { }
+  fieldOfActivitySubscription: Subscription;
+  updateRateSubscription: Subscription;
+
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
+    this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
+      (val) => {
+        this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
+      }
+    );
+
+    this.updateRateSubscription = this.translateService.updateRateOptions.subscribe(
+      (val) => {
+        this.updateRateOptions = JSON.parse(JSON.stringify(val));
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -260,7 +272,8 @@ export class FilterComponent implements OnInit, AfterViewInit {
       .map(opt => {
         return {
           id: opt.id,
-          name: opt.name
+          name: opt.name,
+          name2: opt.name2
         };
       });
   }
@@ -510,6 +523,11 @@ export class FilterComponent implements OnInit, AfterViewInit {
       // this.filterChange.emit(filter);
       this.filter$.next(filter);
     }
+  }
+
+  ngOnDestroy() {
+    this.fieldOfActivitySubscription.unsubscribe();
+    this.updateRateSubscription.unsubscribe();
   }
 
 }

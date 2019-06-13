@@ -13,7 +13,7 @@
         "logInBtn": "ВОЙТИ"
     },
     "SignupComponent": {
-        "regisration": "Регистрация",
+        "registration": "Регистрация",
         "investor": "Инвестор",
         "vendor": "Вендор",
         "social": "Войти с помощью социальных сетей:",
@@ -349,7 +349,8 @@
         "send": "ОТПРАВИТЬ"
     },    
     "VendorMessagesComponent": {
-        "communication": "Общение"
+        "communication": "Общение",
+        "message": "Сообщение"
     },
     "VendorNavbarComponent": {
         "home": "Домой",
@@ -417,5 +418,68 @@
         "size": "Размер:",
         "contentFiles": "файлы",
         "contentPhotos": "фото"
-    }
+    },
+    "FilterComponent": {
+        "budget": "Бюджет Инвестиций",
+        "from": "От",
+        "to": "До",
+        "region": "Регион",
+        "fieldActivity": "Сфера Деятельности",
+        "employees": "Сотрудники",
+        "avgCheck": "Средний Чек",
+        "companyAge": "Возраст Компании",
+        "dataUpdate": "Обновление Данных"
+    },
+    "FilterItemsComponent": {
+        "clearAll": "Очистить все",
+        "budget": "бюджет",
+        "employees": "сотрудника",
+        "avgCheck": "средний чек",
+        "year": "лет"
+    },
+    "HeaderComponent": {
+        "signIn": "Войти",
+        "signUp": "Зарегистрироваться"
+    },
+    "SnackBarComponent": {
+        "close": "Закрыть"
+    },
+    "StepsComponent": {
+        "whatSteps": "Какие шаги вы планируете предпринять?",
+        "stepPlaceholder": "Введите новый шаг",
+        "stepEmpty": "Шаг не может быть пустым",
+        "stepMinLength": "Минимальная длина шага 3 символа",
+        "stepMaxLength": "Максимальная длина 256 символов",
+        "minStepsCount": "Минимальное количество шагов",
+        "maxStepsCount": "Максимальное количество шагов",
+        "addStep": "Добавить шаг"
+    },
+    "AdminPageComponent": {
+        "profile": "Профиль",
+        "upload3DModels": "Загузить 3Д модели",
+        "signOut": "Выйти"
+    },
+    "ProjectUserPageComponent": {
+        "profile": "Профиль",
+        "signOut": "Выйти"
+    },
+    "fieldOfActivity": [
+        { "id": "0", "name": "Выбрать все", "checked": false },
+        { "id": "1", "name": "Сельское, лесное и рыбное хозяйство", "checked": false },
+        { "id": "2", "name": "Добыча полезных ископаемых", "checked": false },
+        { "id": "3", "name": "Промышленность", "checked": false },
+        { "id": "4", "name": "Поставка электроэнергии, газа, пара и кондиционирование воздуха", "checked": false },
+        { "id": "5", "name": "Водоснабжение; канализация, управление отходами", "checked": false },
+        { "id": "6", "name": "Строительство", "checked": false },
+        { "id": "7", "name": "Оптовая и розничная торговля; ремонт автомобилей и мотоциклов", "checked": false },
+        { "id": "8", "name": "Транспортная, складская, почтовая и курьерская деятельность", "checked": false },
+        { "id": "9", "name": "Временное размещение и организация питания", "checked": false },
+        { "id": "10", "name": "Информация и телекоммуникации", "checked": false }
+      ],
+      "updateRateOptions": [
+        { "id": "0", "name": "Выбрать все", "checked": false },
+        { "id": "1", "name": "Часто", "checked": false, "name2": "Частые обновления" },
+        { "id": "2", "name": "Средне", "checked": false, "name2": "Средние обновления" },
+        { "id": "3", "name": "Редко", "checked": false, "name2": "Редкие обновления" }
+      ]
 }

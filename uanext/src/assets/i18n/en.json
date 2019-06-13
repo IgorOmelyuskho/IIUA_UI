@@ -13,7 +13,7 @@
         "logInBtn": "LOG IN"
     },
     "SignupComponent": {
-        "regisration": "Registration",
+        "registration": "Registration",
         "investor": "Investor",
         "vendor": "Vendor",
         "social": "Login using social networks:",
@@ -349,7 +349,8 @@
         "send": "SEND"
     },
     "VendorMessagesComponent": {
-        "communication": "Communication"
+        "communication": "Communication",
+        "message": "Message"
     },
     "VendorNavbarComponent": {
         "home": "Home",
@@ -417,5 +418,68 @@
         "size": "size:",
         "contentFiles": "files",
         "contentPhotos": "photos"
-    }
+    },
+    "FilterComponent": {
+        "budget": "Investment Budget",
+        "from": "From",
+        "to": "To",
+        "region": "Region",
+        "fieldActivity": "Field of activity",
+        "employees": "Employees",
+        "avgCheck": "Average check",
+        "companyAge": "Company Age",
+        "dataUpdate": "Data Update"
+    },
+    "FilterItemsComponent": {
+        "clearAll": "Clear all",
+        "budget": "budget",
+        "employees": "employees",
+        "avgCheck": "average check",
+        "year": "year"
+    },
+    "HeaderComponent": {
+        "signIn": "Sign in",
+        "signUp": "Sign up"
+    },
+    "SnackBarComponent": {
+        "close": "Close"
+    },
+    "StepsComponent": {
+        "whatSteps": "What steps are you planning to take?",
+        "stepPlaceholder": "Enter new step",
+        "stepEmpty": "Step cannot be empty",
+        "stepMinLength": "Minimum step length is 3 charset",
+        "stepMaxLength": "Maximal length is 256 charset",
+        "minStepsCount": "Minimal steps count is",
+        "maxStepsCount": "Maximal steps count is",
+        "addStep": "Add step"
+    },
+    "AdminPageComponent": {
+        "profile": "Profile",
+        "upload3DModels": "Upload 3d models",
+        "signOut": "Sign out"
+    },
+    "ProjectUserPageComponent": {
+        "profile": "Profile",
+        "signOut": "Sign out"
+    },
+    "fieldOfActivity": [
+        { "id": "0", "name": "Select all", "checked": false },
+        { "id": "1", "name": "Agriculture, Forestry and Fisheries", "checked": false },
+        { "id": "2", "name": "Mining and quarrying", "checked": false },
+        { "id": "3", "name": "Manufacturing industry", "checked": false },
+        { "id": "4", "name": "Supply of electricity, gas, steam and air conditioning", "checked": false },
+        { "id": "5", "name": "Water supply, sewerage, waste management", "checked": false },
+        { "id": "6", "name": "Construction", "checked": false },
+        { "id": "7", "name": "Wholesale and retail trade; repair of motor vehicles and motorcycles", "checked": false },
+        { "id": "8", "name": "Transport, warehousing, postal and courier activities", "checked": false },
+        { "id": "9", "name": "Temporary placement and organization of food", "checked": false },
+        { "id": "10", "name": "Information and telecommunications", "checked": false }
+      ],
+      "updateRateOptions": [
+        { "id": "0", "name": "Select all", "checked": false },
+        { "id": "1", "name": "Often", "checked": false, "name2": "Frequent updates" },
+        { "id": "2", "name": "Average", "checked": false, "name2": "Average updates" },
+        { "id": "3", "name": "Seldom", "checked": false, "name2": "Rare updates" }
+      ]
 }

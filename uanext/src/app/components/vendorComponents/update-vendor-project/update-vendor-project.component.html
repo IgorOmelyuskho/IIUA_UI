@@ -25,14 +25,16 @@
             class="form-control" [ngClass]="{ 'is-invalid': avatarIsTouched && formControls.avatar.errors}">
         </div>
 
-        <button type="button" (click)="uploadAvatar()" class="btn btn-primary">{{ 'uploadAvatarBtn' | translate:self }}</button>
+        <button type="button" (click)="uploadAvatar()"
+          class="btn btn-primary">{{ 'uploadAvatarBtn' | translate:self }}</button>
       </div>
 
       <div class="col-lg-4 col-md-6">
         <div class="form-group">
           <label>{{ 'projectName' | translate:self }}</label>
           <input type="text" formControlName="name" class="form-control"
-            [ngClass]="{ 'is-invalid': isLoaded && formControls.name.errors }" placeholder="{{ 'projectNamePlaceholder' | translate:self }}" />
+            [ngClass]="{ 'is-invalid': isLoaded && formControls.name.errors }"
+            placeholder="{{ 'projectNamePlaceholder' | translate:self }}" />
           <div *ngIf="formControls.name.errors" class="invalid-feedback">
             <div *ngIf="formControls.name.errors.required">{{ 'projectNameEmpty' | translate:self }}</div>
           </div>
@@ -152,16 +154,9 @@
           [ngClass]="{ 'is-invalid': isLoaded && formControls.fieldOfActivity.errors }" /> -->
         <select type="text" formControlName="fieldOfActivity" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.fieldOfActivity.errors }">
-          <option value="Agriculture, Forestry and Fisheries">Agriculture, Forestry and Fisheries</option>
-          <option value="Mining and quarrying">Mining and quarrying</option>
-          <option value="Manufacturing industry">Manufacturing industry</option>
-          <option value="Supply of electricity, gas, steam and air conditioning">Supply of electricity, gas, steam and air conditioning</option>
-          <option value="Water supply; sewage, waste management">Water supply; sewage, waste management</option>
-          <option value="Construction">Construction</option>
-          <option value="Wholesale and retail trade; repair of motor vehicles and motorcycles">Wholesale and retail trade; repair of motor vehicles and motorcycles</option>
-          <option value="Transport, warehousing, postal and courier activities">Transport, warehousing, postal and courier activities</option>
-          <option value="Temporary placement and organization of food">Temporary placement and organization of food</option>
-          <option value="Information and telecommunications">Information and telecommunications</option>
+          <ng-container *ngFor="let option of fieldActivityOptions; let i = index">
+            <option *ngIf="i !== 0" value="option.name">{{option.name}}</option>
+          </ng-container>
         </select>
         <div *ngIf="formControls.fieldOfActivity.errors" class="invalid-feedback">
           <div *ngIf="formControls.fieldOfActivity.errors.required">Field of activity cannot be empty</div>
@@ -225,7 +220,8 @@
           [ngClass]="{ 'is-invalid': isLoaded && formControls.description.errors }"></textarea>
         <div *ngIf="formControls.description.errors" class="invalid-feedback">
           <div *ngIf="formControls.description.errors.required">{{ 'businessDescriptionEmpty' | translate:self }}</div>
-          <div *ngIf="formControls.description.errors.maxlength">{{ 'businessDescriptionLength' | translate:self }}</div>
+          <div *ngIf="formControls.description.errors.maxlength">{{ 'businessDescriptionLength' | translate:self }}
+          </div>
         </div>
       </div>
       <div class="form-group col-md-6 col-xl-4 col-12">
@@ -241,8 +237,10 @@
         <textarea rows=3 formControlName="investmentDescription" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.investmentDescription.errors }"></textarea>
         <div *ngIf="formControls.investmentDescription.errors" class="invalid-feedback">
-          <div *ngIf="formControls.investmentDescription.errors.required">{{ 'investmentDescriptionEmpty' | translate:self }}</div>
-          <div *ngIf="formControls.investmentDescription.errors.maxlength">{{ 'investmentDescriptionLength' | translate:self }}</div>
+          <div *ngIf="formControls.investmentDescription.errors.required">
+            {{ 'investmentDescriptionEmpty' | translate:self }}</div>
+          <div *ngIf="formControls.investmentDescription.errors.maxlength">
+            {{ 'investmentDescriptionLength' | translate:self }}</div>
         </div>
       </div>
     </div>
@@ -274,7 +272,8 @@
               </div>
             </li>
           </ul>
-          <div *ngIf="vendorProject.images.length < minPhotosCount" class="min-files-count">{{ 'minPhotosCount' | translate:self }} {{minPhotosCount}}</div>
+          <div *ngIf="vendorProject.images.length < minPhotosCount" class="min-files-count">
+            {{ 'minPhotosCount' | translate:self }} {{minPhotosCount}}</div>
         </div>
         <div class="photos-uploader">
           <app-file-uploader [parentSubmitted]="true" accept="image/*" content="photos"
@@ -312,7 +311,8 @@
     </div>
 
     <div class="form-group">
-      <button [disabled]="!isLoaded || !vendorProjectForm.valid" class="btn btn-success update-project-btn">{{ 'updateProject' | translate:self }}</button>
+      <button [disabled]="!isLoaded || !vendorProjectForm.valid"
+        class="btn btn-success update-project-btn">{{ 'updateProject' | translate:self }}</button>
     </div>
   </form>
 
