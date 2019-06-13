@@ -33,6 +33,10 @@
     mat-expansion-panel-header {
       padding: 15px 0px 8px 0px;
       height: auto !important;
+
+      .mat-content {
+        overflow: visible !important;
+      }
     }
   }
 
@@ -68,6 +72,10 @@
       min-width: 20px;
       line-height: 1.9;
     }
+
+    .from-to {
+      min-width: 39px;
+    }
   }
 
   .custom-checkbox {
@@ -86,7 +94,7 @@
 
       .field-activity {
         position: relative;
-        top: -3px;
+        top: -1px;
         line-height: 1.1;
       }
     }

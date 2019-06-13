@@ -120,6 +120,10 @@ mat-progress-bar {
 
   .mat-expansion-panel-header {
     font: inherit;
+
+    .mat-content {
+      overflow: visible !important;
+    }
   }
 }
 //#endregion

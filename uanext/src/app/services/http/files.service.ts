@@ -12,10 +12,7 @@ export class FilesService {
   constructor(private http: HttpClient) { }
 
   uploadFiles(formData: FormData): Observable<any> {
-    let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'multipart/form-data');
-
-    return this.http.post<any>(environment.files + environment.uploadFiles, formData, {headers: headers})
+    return this.http.post<any>(environment.files + '/api/upload/upload', formData)
       .pipe(
         map(response => {
           return response.data;
@@ -24,10 +21,7 @@ export class FilesService {
   }
 
   getFile(fileId: any): Observable<any> {
-    let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'multipart/form-data');
-
-    return this.http.get<any>(environment.files + environment.uploadFiles + '/' + fileId, {headers: headers})
+    return this.http.get<any>(environment.files + environment.uploadFiles + '/' + fileId)
       .pipe(
         map(response => {
           return response.data;

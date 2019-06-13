@@ -16,6 +16,7 @@ export class ProjectUserSignupComponent implements OnInit {
   submitted = false;
   FormHelper = FormHelper;
   showProgress = false;
+  self = 'ProjectUserSignupComponent';
 
   constructor(
     private formBuilder: FormBuilder,
