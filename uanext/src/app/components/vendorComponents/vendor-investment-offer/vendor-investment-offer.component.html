@@ -22,32 +22,9 @@
         <div class="region-input-wrapper">
           <select class="form-control" [(ngModel)]="region" type="text">
             <!-- use only (change) -->
-            <option selected value="ALL">Choose all</option>
-            <option value="Autonomous Republic of Crimea">Autonomous Republic of Crimea</option>
-            <option value="Cherkasy oblast">Cherkasy oblast</option>
-            <option value="Chernihiv oblast">Chernihiv oblast</option>
-            <option value="Chernivtsi oblast">Chernivtsi oblast</option>
-            <option value="Dnipropetrovsk oblast">Dnipropetrovsk oblast</option>
-            <option value="Donetsk oblast">Donetsk oblast</option>
-            <option value="Ivano-Frankivsk oblast">Ivano-Frankivsk oblast</option>
-            <option value="Kharkiv oblast">Kharkiv oblast</option>
-            <option value="Kherson oblast">Kherson oblast</option>
-            <option value="Khmelnytsk oblast">Khmelnytsk oblast</option>
-            <option value="Kirovohrad oblast">Kirovohrad oblast</option>
-            <option value="Kyiv oblast">Kyiv oblast</option>
-            <option value="Luhansk oblast">Luhansk oblast</option>
-            <option value="Lviv oblast">Lviv oblast</option>
-            <option value="Mykolaiv oblast">Mykolaiv oblast</option>
-            <option value="Odesa oblast">Odesa oblast</option>
-            <option value="Poltava oblast">Poltava oblast</option>
-            <option value="Rivne oblast">Rivne oblast</option>
-            <option value="Sumy oblast">Sumy oblast</option>
-            <option value="Ternopil oblast">Ternopil oblast</option>
-            <option value="Vinnytsia oblast">Vinnytsia oblast</option>
-            <option value="Volyn oblast">Volyn oblast</option>
-            <option value="Zakarpattia oblast">Zakarpattia oblast</option>
-            <option value="Zaporizhzhia oblast">Zaporizhzhia oblast</option>
-            <option value="Zhytomyr oblast">Zhytomyr oblast</option>
+            <ng-container *ngFor="let option of regionOptions; let i = index">
+              <option *ngIf="i !== 0" value="{{option.value}}">{{option.text}}</option>
+            </ng-container>
           </select>
         </div>
       </div>

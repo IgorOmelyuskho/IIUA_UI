@@ -523,7 +523,7 @@ export class MapManager {
       visible: true,
       cursor: 'pointer',
       symbol: [{
-        'markerFile': '../../assets/img/marker.svg',
+        'markerFile': window.location.origin + '/assets/img/marker.svg',
         'markerWidth': 28,
         'markerHeight': 40,
       },

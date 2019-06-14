@@ -19,7 +19,6 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   FormHelper = FormHelper;
-  updateRateOptions: UpdateRateInterface[];
   noUiSlider: any;
   self = 'FilterComponent';
   filter$: BehaviorSubject<FilterFields> = new BehaviorSubject(null);
@@ -58,22 +57,30 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   avgCheckTouched = 0;
 
   fieldActivityOptions: FieldActivityInterface[];
-
+  updateRateOptions: UpdateRateInterface[];
+  regionOptions;
   fieldOfActivitySubscription: Subscription;
   updateRateSubscription: Subscription;
+  regionSubscription: Subscription;
 
   constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
     this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
-      (val) => {
+      (val: FieldActivityInterface[]) => {
         this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
       }
     );
 
     this.updateRateSubscription = this.translateService.updateRateOptions.subscribe(
-      (val) => {
+      (val: UpdateRateInterface[]) => {
         this.updateRateOptions = JSON.parse(JSON.stringify(val));
+      }
+    );
+
+    this.regionSubscription = this.translateService.region.subscribe(
+      val => {
+        this.regionOptions = JSON.parse(JSON.stringify(val));
       }
     );
   }
@@ -528,6 +535,7 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.fieldOfActivitySubscription.unsubscribe();
     this.updateRateSubscription.unsubscribe();
+    this.regionSubscription.unsubscribe();
   }
 
 }

@@ -24,6 +24,7 @@ export class TranslateService {
   fieldOfActivityOptions: BehaviorSubject<FieldActivityInterface[]> = new BehaviorSubject(null);
   updateRateOptions: BehaviorSubject<UpdateRateInterface[]> = new BehaviorSubject(null);
   filterItems: BehaviorSubject<any> = new BehaviorSubject(null);
+  region: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) {}
 
@@ -35,6 +36,7 @@ export class TranslateService {
           this.fieldOfActivityOptions.next(translation['fieldOfActivity']);
           this.updateRateOptions.next(translation['updateRateOptions']);
           this.filterItems.next(translation['FilterItemsComponent']);
+          this.region.next(translation['region']);
           this.data = Object.assign({}, translation || {});
           resolve(this.data);
         },

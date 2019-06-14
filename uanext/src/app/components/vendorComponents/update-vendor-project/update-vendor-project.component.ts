@@ -23,7 +23,6 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   projectId: string;
   FormHelper = FormHelper;
   self = 'UpdateVendorProjectComponent';
-  fieldActivityOptions: FieldActivityInterface[];
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
@@ -33,7 +32,10 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
   minPhotosCount = 5;
 
+  fieldActivityOptions: FieldActivityInterface[];
   fieldOfActivitySubscription: Subscription;
+  regionOptions;
+  regionSubscription: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -106,8 +108,14 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
-      (val) => {
+      (val: FieldActivityInterface[]) => {
         this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
+      }
+    );
+
+    this.regionSubscription = this.translateService.region.subscribe(
+      val => {
+        this.regionOptions = JSON.parse(JSON.stringify(val));
       }
     );
 
@@ -315,5 +323,6 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.fieldOfActivitySubscription.unsubscribe();
+    this.regionSubscription.unsubscribe();
   }
 }
