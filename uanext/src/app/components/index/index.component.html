@@ -27,21 +27,22 @@
             <div class="social">
               <div class="text">{{ 'social' | translate:self }} </div>
               <div class="social-buttons">
-                <div class="social-signin-btn">
+                <div (click)="signInWithFB()" class="social-signin-btn">
                   <img src="../../../assets/img/facebook.png" alt="">
                 </div>
                 <div class="social-signin-btn">
                   <img src="../../../assets/img/linkedin.png" alt="">
                 </div>
-                <div class="social-signin-btn">
+                <div (click)="signInWithGoogle()" class="social-signin-btn">
                   <img src="../../../assets/img/google.png" alt="">
                 </div>
-                <div class="social-signin-btn">
+                <!-- <div class="social-signin-btn">
                   <button id="googleBtn">Google</button>
-                </div>
-                <div class="social-signin-btn">
+                </div> -->
+                <!-- <div class="social-signin-btn">
                   <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                </div>
+                </div> -->
+                <button (click)="signOut()">Sign Out</button>
               </div>
             </div>
             <div class="use-email">

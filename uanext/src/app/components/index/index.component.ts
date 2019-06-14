@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRole } from 'src/app/models';
-import { AuthorizationService } from 'src/app/services/http/authorization.service';
-declare const gapi: any;
+import { AuthService } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
+
+// declare const gapi: any;
 
 declare const slidePage;
 
@@ -19,7 +22,10 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   self = 'IndexComponent';
   auth2: any;
 
-  constructor(private authService: AuthorizationService) { }
+  user: SocialUser;
+  loggedIn: boolean;
+
+  constructor(private socialAuthService: AuthService) { }
 
   ngOnInit() {
     const helper = new JwtHelperService();
@@ -60,7 +66,12 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.googleInit();
+    // this.googleInit();
+    this.socialAuthService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = (user != null);
+      console.log(this.user);
+    });
 
     this.slide = new slidePage({
       before: (origin, direction, target) => {
@@ -88,30 +99,42 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.slide.destroy();
   }
 
-  googleInit() {
-    gapi.load('auth2', () => {
-      this.auth2 = gapi.auth2.init({
-        client_id: '881274996713-i4d6ucdff7ljsga7vji3np737g1r63dn.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-        scope: 'profile email'
-      });
-      this.attachSignin(document.getElementById('googleBtn'));
-    });
+  // googleInit() {
+  //   gapi.load('auth2', () => {
+  //     this.auth2 = gapi.auth2.init({
+  //       client_id: '881274996713-i4d6ucdff7ljsga7vji3np737g1r63dn.apps.googleusercontent.com',
+  //       cookiepolicy: 'single_host_origin',
+  //       scope: 'profile email'
+  //     });
+  //     this.attachSignin(document.getElementById('googleBtn'));
+  //   });
+  // }
+
+  // attachSignin(element) {
+  //   this.auth2.attachClickHandler(element, {},
+  //     (googleUser) => {
+  //       const profile = googleUser.getBasicProfile();
+  //       console.log(profile);
+  //       console.log('Token || ' + googleUser.getAuthResponse().id_token);
+  //       console.log('ID: ' + profile.getId());
+  //       console.log('Name: ' + profile.getName());
+  //       console.log('Image URL: ' + profile.getImageUrl());
+  //       console.log('Email: ' + profile.getEmail());
+  //     }, (error) => {
+  //       alert(JSON.stringify(error, undefined, 2));
+  //     });
+  // }
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
-  attachSignin(element) {
-    this.auth2.attachClickHandler(element, {},
-      (googleUser) => {
-        const profile = googleUser.getBasicProfile();
-        console.log(profile);
-        console.log('Token || ' + googleUser.getAuthResponse().id_token);
-        console.log('ID: ' + profile.getId());
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
-      }, (error) => {
-        alert(JSON.stringify(error, undefined, 2));
-      });
+  signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
+  signOut(): void {
+    this.socialAuthService.signOut();
   }
 
 }
