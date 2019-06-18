@@ -131,7 +131,7 @@ export const responseProject2: VendorProject = {
   'id': '1',
   'rating': '9.3',
   'userId': 0,
-  'name': 'project name',
+  'name': 'project name 2',
   'legalEntityName': 'company name',
   'goal': 'goal',
   'region': 'region',
@@ -242,15 +242,23 @@ export const responseProject2: VendorProject = {
 };
 
 export const female: GeoObject = {
-  geoObjectId: '0',
+  geoObjectId: '0', // only unique
   coords: { x: 13.417122340477, y: 52.5281344784827 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/female.zip',
   project: responseProject
 };
 
+export const female2: GeoObject = {
+  geoObjectId: '4',  // only unique
+  coords: { x: 13.417522340477, y: 52.5281444184827 },
+  projectName: responseProject2.name,
+  pathToZip: '../../../assets/objects/female.zip',
+  project: responseProject2
+};
+
 export const male: GeoObject = {
-  geoObjectId: '1',
+  geoObjectId: '1',  // only unique
   coords: { x: 13.417222340477, y: 52.5282344784827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/male.zip',
@@ -258,7 +266,7 @@ export const male: GeoObject = {
 };
 
 export const tractor: GeoObject = {
-  geoObjectId: '2',
+  geoObjectId: '2',  // only unique
   coords: { x: 13.417322340477, y: 52.5283344784827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/tractor.zip',
@@ -266,7 +274,7 @@ export const tractor: GeoObject = {
 };
 
 export const walt: GeoObject = {
-  geoObjectId: '3',
+  geoObjectId: '3',  // only unique
   coords: { x: 13.417422340477, y: 52.5284344784827 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/walt.zip',
@@ -281,7 +289,7 @@ export const responseProjects: FilteredProjects = {
       'id': '0',
       'rating': '9.3',
       'userId': 0,
-      'name': 'project name',
+      'name': 'project name 3',
       'legalEntityName': 'company name',
       'goal': 'goal',
       'region': 'region',
@@ -492,7 +500,7 @@ export const responseProjects: FilteredProjects = {
       'id': '1',
       'rating': '9.3',
       'userId': 0,
-      'name': 'project name',
+      'name': 'project name 4',
       'legalEntityName': 'company name',
       'goal': 'goal',
       'region': 'region',
@@ -611,7 +619,7 @@ export const responseProjects: FilteredProjects = {
       'id': '2',
       'rating': '9.3',
       'userId': 0,
-      'name': 'project name',
+      'name': 'project name 5',
       'legalEntityName': 'company name',
       'goal': 'goal',
       'region': 'region',
@@ -699,7 +707,7 @@ export const responseProjects: FilteredProjects = {
       'id': '3',
       'rating': '9.3',
       'userId': 0,
-      'name': 'project name',
+      'name': 'project name 6',
       'legalEntityName': 'company name',
       'goal': 'goal',
       'region': 'region',
@@ -769,7 +777,7 @@ export const responseProjects: FilteredProjects = {
       'id': '4',
       'rating': '9.3',
       'userId': 0,
-      'name': 'project name',
+      'name': 'project name 7',
       'legalEntityName': 'company name',
       'goal': 'goal',
       'region': 'region',
@@ -847,7 +855,7 @@ export const responseProjects: FilteredProjects = {
       'id': '5',
       'rating': '9.3',
       'userId': 0,
-      'name': 'project name',
+      'name': 'project name 8',
       'legalEntityName': 'company name',
       'goal': 'goal',
       'region': 'region',
@@ -925,7 +933,7 @@ export const responseProjects: FilteredProjects = {
       'id': '6',
       'rating': '9.3',
       'userId': 0,
-      'name': 'project name',
+      'name': 'project name 9',
       'legalEntityName': 'company name',
       'goal': 'goal',
       'region': 'region',
@@ -1003,7 +1011,7 @@ export const responseProjects: FilteredProjects = {
       'id': '7',
       'rating': '9.3',
       'userId': 0,
-      'name': 'project name',
+      'name': 'project name 10',
       'legalEntityName': 'company name',
       'goal': 'goal',
       'region': 'region',

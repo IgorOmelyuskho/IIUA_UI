@@ -32,6 +32,11 @@ export class SignalRService {
       object3DId: '3',
       positionX: 13.417422340477,
       positionY: 52.5284344784827
+    },
+    {
+      object3DId: '4',
+      positionX: 13.417522340477,
+      positionY: 52.5281444184827
     }
   ];
 

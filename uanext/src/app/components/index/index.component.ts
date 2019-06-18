@@ -67,11 +67,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     // this.googleInit();
-    this.socialAuthService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = (user != null);
-      console.log(this.user);
-    });
 
     this.slide = new slidePage({
       before: (origin, direction, target) => {

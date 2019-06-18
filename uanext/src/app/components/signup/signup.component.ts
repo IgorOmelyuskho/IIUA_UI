@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRole } from 'src/app/models';
+import { AuthService } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -11,7 +13,7 @@ export class SignupComponent implements OnInit {
   useEmail = false;
   self = 'SignupComponent';
 
-  constructor() {}
+  constructor(private socialAuthService: AuthService) {}
 
   ngOnInit() { }
 
@@ -34,4 +36,13 @@ export class SignupComponent implements OnInit {
   useEmailForSignUp() {
     this.useEmail = true;
   }
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+
 }
