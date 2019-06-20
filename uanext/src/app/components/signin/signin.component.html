@@ -15,13 +15,13 @@
             <div class="social">
               <div class="text">{{ 'social' | translate:self }}</div>
               <div class="social-buttons">
-                <div class="social-signin-btn">
+                <div (click)="signInWithFB()" class="social-signin-btn">
                   <img src="../../../assets/img/facebook.png" alt="">
                 </div>
                 <div class="social-signin-btn">
                   <img src="../../../assets/img/linkedin.png" alt="">
                 </div>
-                <div class="social-signin-btn">
+                <div (click)="signInWithGoogle()" class="social-signin-btn">
                   <img src="../../../assets/img/google.png" alt="">
                 </div>
               </div>

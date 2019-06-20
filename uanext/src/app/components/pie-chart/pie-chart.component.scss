@@ -1,0 +1,45 @@
+.chart-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    .svg-pie-chart {
+        width: 100%;
+        height: 100%;
+
+        ::ng-deep .arc .header {
+            font: 16px sans-serif;
+            text-anchor: middle;
+        }
+    
+        ::ng-deep .arc text {
+            font: 14px sans-serif;
+            text-anchor: middle;
+        }
+
+        ::ng-deep .arc .text-center {
+            fill: #505d6f;
+            font: 30px sans-serif;
+            text-anchor: middle;
+            font-family: Helvetica;
+            transform: translateY(-15px);
+        }
+
+        ::ng-deep .arc .total {
+            fill: #9aa1a9;
+            letter-spacing: 3px;
+            font: 16px sans-serif;
+            text-anchor: middle;
+            font-family: Helvetica;
+            transform: translateY(15px);
+        }
+    
+        ::ng-deep .arc path {
+            stroke: #fff;
+        }
+
+        ::ng-deep .arc path:hover {
+            opacity: 0.9;
+        }
+    }
+}

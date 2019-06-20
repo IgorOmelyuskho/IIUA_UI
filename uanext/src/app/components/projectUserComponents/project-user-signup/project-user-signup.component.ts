@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import FormHelper from 'src/app/helperClasses/helperClass';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/http/notification.service';
 import { matchOtherValidator } from 'src/app/validators/validators';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-project-user-signup',
@@ -16,12 +17,13 @@ export class ProjectUserSignupComponent implements OnInit {
   submitted = false;
   FormHelper = FormHelper;
   showProgress = false;
+  self = 'ProjectUserSignupComponent';
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
     private router: Router,
-    private notify: NotificationService
+    private notify: NotificationService,
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
@@ -33,8 +35,7 @@ export class ProjectUserSignupComponent implements OnInit {
     });
    }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   get formControls() {
     return this.signupForm.controls;

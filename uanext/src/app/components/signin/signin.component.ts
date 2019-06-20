@@ -11,6 +11,8 @@ import { NotificationService } from 'src/app/services/http/notification.service'
 import FormHelper from '../../helperClasses/helperClass';
 import { take, first, delay } from 'rxjs/operators';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
+import { AuthService } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 
 @Component({
   selector: 'app-signin',
@@ -31,6 +33,7 @@ export class SigninComponent implements OnInit {
     private stateService: StateService,
     private profileService: ProfileService,
     private notify: NotificationService,
+    private socialAuthService: AuthService
   ) {
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
@@ -136,6 +139,14 @@ export class SigninComponent implements OnInit {
         this.notify.show(err.error.error.errorMessage);
       }
     );
+  }
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
 }

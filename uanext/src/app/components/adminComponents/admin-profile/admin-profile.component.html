@@ -13,7 +13,7 @@
       </div>
       <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-          <label>Full name</label>
+          <label>Full Name</label>
           <input type="text" formControlName="fullName" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.fullName.errors }" />
           <div *ngIf="formControls.fullName.errors" class="invalid-feedback">
             <div *ngIf="formControls.fullName.errors.required">This field cannot be empty</div>

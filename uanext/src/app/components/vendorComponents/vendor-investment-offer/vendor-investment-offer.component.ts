@@ -1,13 +1,15 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { MatProgressBar } from '@angular/material';
+import { Subscription } from 'rxjs';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-vendor-investment-offer',
   templateUrl: './vendor-investment-offer.component.html',
   styleUrls: ['./vendor-investment-offer.component.scss']
 })
-export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
+export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   set selectedProject(project: VendorProject) {
     if (project != null) {
@@ -33,9 +35,17 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
   projectSteps: any[] = [];
   tieSteps: any[] = [];
 
-  constructor() { }
+  regionOptions;
+  regionSubscription: Subscription;
+
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
+    this.regionSubscription = this.translateService.region.subscribe(
+      val => {
+        this.regionOptions = JSON.parse(JSON.stringify(val));
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -156,6 +166,10 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit {
 
   viewHistory() {
     // todo
+  }
+
+  ngOnDestroy() {
+    this.regionSubscription.unsubscribe();
   }
 }
 

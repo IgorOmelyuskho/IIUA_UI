@@ -55,7 +55,9 @@ import {
 import {
   InteractiveInvestmentMinCardComponent
 } from './investorComponents/interactive-investment-min-card/interactive-investment-min-card.component';
-
+import { LineChartComponent } from './line-chart/line-chart.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { HistogramChartComponent } from './histogram-chart/histogram-chart.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -109,7 +111,10 @@ export {
   VendorFindInvestorComponent,
   VendorCreateUpdateComponent,
   InvestorInteractiveInvestmentCardComponent,
-  InteractiveInvestmentMinCardComponent
+  InteractiveInvestmentMinCardComponent,
+  LineChartComponent,
+  PieChartComponent,
+  HistogramChartComponent
 };
 
 export const components = [
@@ -163,7 +168,10 @@ export const components = [
   VendorFindInvestorComponent,
   VendorCreateUpdateComponent,
   InvestorInteractiveInvestmentCardComponent,
-  InteractiveInvestmentMinCardComponent
+  InteractiveInvestmentMinCardComponent,
+  LineChartComponent,
+  PieChartComponent,
+  HistogramChartComponent
 ];
 
 

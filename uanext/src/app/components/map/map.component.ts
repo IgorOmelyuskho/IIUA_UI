@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { MapManager } from './mapManager';
-import { polygon1, polygon2, female, male, tractor, walt } from 'src/app/helperClasses/projects';
+import { polygon1, polygon2, female, male, tractor, walt, female2 } from 'src/app/helperClasses/projects';
 import { environment } from 'src/environments/environment';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { GeoObject } from 'src/app/models';
@@ -54,17 +54,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.timeOut1 = setTimeout(() => {
       this.mapManager.mapAddNewPolygons([polygon1]);
-    }, 1000);
+    }, 10);
 
     this.timeOut2 = setTimeout(() => {
       this.mapManager.mapReplacePolygons([polygon1, polygon2]);
-    }, 1500);
+    }, 15);
 
     this.timeOut3 = setTimeout(() => {
-      this.mapManager.mapReplaceObjects([female, male, tractor, walt]);
+      this.mapManager.mapReplaceObjects([female, female2, male, tractor, walt]); // if add object - add new object in signalRService
       // mapReplaceObjects([female, male]);
       // mapAddNewObjects([female, male]);
-    }, 2500);
+    }, 25);
 
     this.timeOut4 = setTimeout(() => {
       // mapReplaceObjects([tractor, walt]);

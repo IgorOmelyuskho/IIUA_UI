@@ -23,6 +23,24 @@ import { HighlightPipe } from './services/pipes/highlight.pipe';
 import { TranslatePipe } from './services/pipes/translate.pipe';
 import { TranslateService } from './services/translate.service';
 
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+
+const config = new AuthServiceConfig([
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider('881274996713-i4d6ucdff7ljsga7vji3np737g1r63dn.apps.googleusercontent.com')
+  },
+  {
+    id: FacebookLoginProvider.PROVIDER_ID,
+    provider: new FacebookLoginProvider('676419632818073')
+  }
+]);
+
+export function provideConfig() {
+  return config;
+}
+
 export function setupTranslateFactory(service: TranslateService): Function {
   return () => service.use('ru');
 }
@@ -46,7 +64,8 @@ export function setupTranslateFactory(service: TranslateService): Function {
     FormsModule,
     NgxSortableModule,
     NgxGalleryModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    SocialLoginModule
   ],
   entryComponents: [
     SnackBarComponent
@@ -64,6 +83,10 @@ export function setupTranslateFactory(service: TranslateService): Function {
       useFactory: setupTranslateFactory,
       deps: [ TranslateService ],
       multi: true
+    },
+    {
+      provide: AuthServiceConfig,
+      useFactory: provideConfig
     }
   ],
   bootstrap: [AppComponent]

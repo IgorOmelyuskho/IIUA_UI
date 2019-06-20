@@ -17,6 +17,7 @@ export class ProjectUserProfileComponent implements OnInit {
   projectUser: ProjectUserRole = null;
   editProfileForm: FormGroup;
   isLoaded = false;
+  self = 'ProjectUserProfileComponent';
 
   @ViewChild('phone') phoneInput: ElementRef;
   FormHelper = FormHelper;
@@ -26,7 +27,7 @@ export class ProjectUserProfileComponent implements OnInit {
     private stateService: StateService,
     private authService: AuthorizationService,
     private profileService: ProfileService,
-    private notify: NotificationService
+    private notify: NotificationService,
   ) {
     this.editProfileForm = this.formBuilder.group({
       password: ['', Validators.minLength(6)],

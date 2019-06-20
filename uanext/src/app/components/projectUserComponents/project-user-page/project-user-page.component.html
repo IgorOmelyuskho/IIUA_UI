@@ -3,7 +3,13 @@
     <span class="navbar-brand mb-0 h1">IIUA</span>
   </a>
   <div class='navbar-text'>Navbar for ProjectUser</div>
-  <div>
+  <div class="right-part">
+    <div class="language">
+      <select (change)="languageChange($event)" class="custom-select">
+        <option value="ru" selected>ru</option>
+        <option value="en">en</option>
+      </select>
+    </div>
     <button (click)='goToProfile()' type="button">{{ 'profile' | translate:self }}</button>
     <button (click)="signOut()" type="button">{{ 'signOut' | translate:self }}</button>
   </div>

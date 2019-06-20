@@ -11,19 +11,27 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ProfileService } from './profile.service';
 import { AdminDto } from 'src/app/models/adminDto';
 import { ProjectUserDto } from 'src/app/models/projectUserDto';
+import { AuthService } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
+  socialNetworkUser: any;
 
   constructor(
     private http: HttpClient,
     private stateService: StateService,
     private router: Router,
-    private profileService: ProfileService) { }
+    private profileService: ProfileService,
+    private socialAuthService: AuthService) { }
 
   init() {
+    this.socialAuthService.authState.subscribe((user) => {
+      this.socialNetworkUser = user;
+      console.log(this.socialNetworkUser);
+    });
+
     const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     let decodedToken: any;

@@ -540,6 +540,24 @@
           width: 65%;
           border-radius: 6px;
           box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+
+          .line-chart {
+            height: 50%;
+            width: 50%;
+          }
+
+          .histogram-chart {
+            height: 50%;
+            width: 50%;
+          }
+
+          .pie-chart {
+            height: 50%;
+            width: 50%;
+          }
         }
       }
     }
