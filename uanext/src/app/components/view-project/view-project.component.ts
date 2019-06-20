@@ -43,6 +43,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.galleryOptions = [
       {
+        preview: false,
         width: '600px',
         height: '400px',
         thumbnailsColumns: 4,

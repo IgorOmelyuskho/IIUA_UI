@@ -34,6 +34,7 @@ export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.galleryOptions = [
       {
+        preview: false,
         width: '100%',
         height: '400px',
         thumbnailsColumns: 4,

@@ -51,6 +51,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   ngOnInit() {
     this.galleryOptions = [
       {
+        preview: false,
         width: '100%',
         height: '400px',
         thumbnailsColumns: 4,

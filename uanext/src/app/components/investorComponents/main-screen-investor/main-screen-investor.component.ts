@@ -34,7 +34,9 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   windowClickHandler = (e) => {
-    this.showPreviewCard = false;
+    setTimeout(() => {
+      this.showPreviewCard = false;
+    }, 100);
   }
 
   constructor(private stateService: StateService, private renderer: Renderer2) { }
@@ -114,5 +116,10 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   getAvatarUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
+  }
+
+  onCardClick(project: VendorProject) {
+    this.selectedProject = { ...project };
+    this.selectedProjectId = project.id;
   }
 }

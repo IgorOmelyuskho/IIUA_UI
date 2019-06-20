@@ -12,14 +12,14 @@ export class FilesService {
   constructor(private http: HttpClient) { }
 
   uploadFiles(formData: FormData): Observable<any> {
-    return this.http.post<any>(environment.files + '/api/upload/upload', formData)
+    return this.http.post<any>(environment.files + environment.uploadFiles, formData)
       .pipe(
         map(response => {
-          for (let i = 0; i < response.data.length; i++) { // todo remove
-            if (!response.data[i].name) {
-              response.data[i].name = 'TEST_NAME.file';
-            }
-          }
+          // for (let i = 0; i < response.data.length; i++) { // todo remove
+          //   if (!response.data[i].name) {
+          //     response.data[i].name = 'TEST_NAME.file';
+          //   }
+          // }
           return response.data;
         })
       );
@@ -29,11 +29,11 @@ export class FilesService {
     return this.http.get<any>(environment.files + environment.uploadFiles + '/' + fileId)
       .pipe(
         map(response => {
-          for (let i = 0; i < response.data.length; i++) { // todo remove
-            if (!response.data[i].name) {
-              response.data[i].name = 'TEST_NAME.file';
-            }
-          }
+          // for (let i = 0; i < response.data.length; i++) { // todo remove
+          //   if (!response.data[i].name) {
+          //     response.data[i].name = 'TEST_NAME.file';
+          //   }
+          // }
           return response.data;
         })
       );
