@@ -23,6 +23,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   projectId: string;
   FormHelper = FormHelper;
   self = 'UpdateVendorProjectComponent';
+  fieldActivityOptions: FieldActivityInterface[];
 
   avatarSize = 0;
   maxAvatarSize = 1024 * 1024 * 5;
