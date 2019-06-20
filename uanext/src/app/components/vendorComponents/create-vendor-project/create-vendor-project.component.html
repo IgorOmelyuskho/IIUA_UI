@@ -251,7 +251,7 @@
                 <div class="d-flex align-items-end">
                   <img src={{photo.url}} alt="photo">
                   <div class="position-relative">
-                    <div class="extension">{{ photo.name.split('.').pop() }}</div>
+                    <div class="extension">{{ photo.originalName.split('.').pop() }}</div>
                   </div>
                 </div>
                 <button (click)="removePhotoItem(photo)" type="button" class="close" aria-label="Close">
@@ -279,7 +279,7 @@
                 <div class="d-flex align-items-end">
                   <img src="../../../../assets/img/file.png" alt="">
                   <div class="position-relative">
-                    <div class="extension">{{ file.name.split('.').pop() }}</div>
+                    <div class="extension">{{ file.originalName.split('.').pop() }}</div>
                   </div>
                 </div>
                 <button (click)="removeFileItem(file)" type="button" class="close" aria-label="Close">

@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit, Renderer2, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer2, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { VendorProject } from 'src/app/models/vendorProject';
 
 @Component({
   selector: 'app-hovered-project-card',
@@ -7,10 +8,10 @@ import { Component, OnInit, AfterViewInit, Renderer2, ElementRef, ViewChild, Inp
 })
 export class HoveredProjectCardComponent implements OnInit, AfterViewInit {
   @ViewChild('stepsElement') stepsElement: ElementRef;
-  project: any;
-
+  project: VendorProject;
+  @Output() clickOnCardEvent = new EventEmitter<VendorProject>();
   @Input()
-  set hoveredProject(project: any) { // project id
+  set hoveredProject(project: VendorProject) { // project id
     this.fetchProject(project);
   }
 
@@ -67,6 +68,10 @@ export class HoveredProjectCardComponent implements OnInit, AfterViewInit {
   getAvatarUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
+  }
+
+  clickOnCard(project: VendorProject) {
+    this.clickOnCardEvent.emit(project);
   }
 
 }

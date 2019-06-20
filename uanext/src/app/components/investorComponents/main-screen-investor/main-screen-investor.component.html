@@ -46,7 +46,7 @@
 
 <div #previewCardWrapper class="preview-card-wrapper">
   <div *ngIf="showPreviewCard && hoveredProject" class="preview-card">
-    <app-hovered-project-card [hoveredProject]="hoveredProject"></app-hovered-project-card>
+    <app-hovered-project-card (clickOnCardEvent)="onCardClick($event)" [hoveredProject]="hoveredProject"></app-hovered-project-card>
   </div>
 </div>
 

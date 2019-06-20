@@ -1,4 +1,4 @@
-<div *ngIf="projectUploaded" class="project">
+<div (click)="clickOnCard(project)" *ngIf="projectUploaded" class="project">
   <div class="avatar-wrapper">
     <div class="avatar" [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>
     <div class="rating">
