@@ -9,86 +9,14 @@ declare const d3;
   styleUrls: ['./pie-chart.component.scss']
 })
 export class PieChartComponent implements OnInit, AfterViewInit {
-  // @ViewChild('chartWrapper') chartWrapper: ElementRef;
-  // data = [10, 20, 100];
-  // svg;
-  // width;
-  // height;
-  // radius;
-  // color;
-  // arc;
-  // labelArc;
-  // pie;
-  // g;
 
   constructor() { }
 
   ngOnInit() { }
 
   ngAfterViewInit() {
-    // pieChartInit();
     this.pieChartInit();
-
-    // this.width = this.chartWrapper.nativeElement.clientWidth;
-    // this.height = this.chartWrapper.nativeElement.clientHeight;
-
-    // this.color = d3.scaleOrdinal()
-    //   .range(['#98abc5', '#8a89a6', '#7b6888']);
-
-    // this.arc = d3.arc()
-    //   .outerRadius(this.radius - 10)
-    //   .innerRadius(this.radius / 1.7);
-
-    // this.labelArc = d3.arc()
-    //   .outerRadius(this.radius - 50)
-    //   .innerRadius(this.radius - 50);
-
-    // this.pie = d3.pie()
-    //   .sort(null)
-    //   .value((d) => {
-    //     return d;
-    //   });
-
-    // this.svg = d3.select('.svg-pie-chart')
-    //   .attr('width', this.width)
-    //   .attr('height', this.height)
-    //   .append('g')
-    //   .attr('transform', 'translate(' + this.width / 2 + ',' + this.height / 2 + ')');
-
-    // this.g = this.svg.selectAll('.arc')
-    //   .data(this.pie(this.data))
-    //   .enter().append('g')
-    //   .attr('class', 'arc');
-
-    // this.g.append('path')
-    //   .attr('d', this.arc)
-    //   .style('fill', (d) => {
-    //     return this.color(d.data);
-    //   });
-
-    // this.g.append('text')
-    //   .attr('class', 'header')
-    //   .attr('transform', (d) => {
-    //     console.log(d);
-    //     console.log('translate(' + this.labelArc.centroid(d) + ')'); // NaN ?
-    //     return 'translate(' + this.labelArc.centroid(d) + ')';
-    //   })
-    //   .attr('dy', '.35em')
-    //   .text((d) => {
-    //     // return d.data;
-    //     return 'HEADER';
-    //   });
-
-    // this.g.append('text')
-    //   .attr('transform', (d) => {
-    //     return 'translate(' + this.labelArc.centroid(d) + ')';
-    //   })
-    //   .attr('dy', '1.5em')
-    //   .text((d) => {
-    //     return d.data;
-    //   });
   }
-
 
   pieChartInit() {
     const data = [10, 20, 100];

@@ -14,18 +14,14 @@
       </button>
     </div>
 
-    <div *ngIf="actionIsExpanded" class="quick-action-width">
-      <div>app-vendor-create-update component ?</div>
+    <div *ngIf="actionIsExpanded" class="create-update-wrapper">
+      <app-vendor-create-update [selectedProject]="selectedProject"></app-vendor-create-update>
     </div>
   </div>
 
   <!-- <div *ngIf="selectedProject" class="project-card-wrapper">
     <app-main-screen-project-card [selectedProject]="selectedProject"></app-main-screen-project-card>
   </div> -->
-
-  <div class="create-update-wrapper">
-    <app-vendor-create-update [selectedProject]="selectedProject"></app-vendor-create-update>
-  </div>
 
   <div class="right-component-wrapper">
     <app-vendor-main-screen-right></app-vendor-main-screen-right>

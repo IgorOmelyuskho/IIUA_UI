@@ -544,16 +544,9 @@
           flex-direction: column;
           flex-wrap: wrap;
 
-          .line-chart {
-            height: 50%;
-            width: 50%;
-          }
-
-          .histogram-chart {
-            height: 50%;
-            width: 50%;
-          }
-
+          .line-chart,
+          .stacked-area-chart,
+          .histogram-chart,
           .pie-chart {
             height: 50%;
             width: 50%;

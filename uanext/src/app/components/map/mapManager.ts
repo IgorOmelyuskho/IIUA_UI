@@ -131,9 +131,14 @@ export class MapManager {
     clearInterval(this.timerForDraw);
     for (let i = 0; i < this.objectsArr.length; i++) {
       this.remove3DObjectFromScene(this.objectsArr[i].pointForMove);
-      this.objectsArr[i].objectDivLabel.style.display = 'none';
-      this.objectsArr[i].objectDivLabel.parentNode.removeChild(this.objectsArr[i].objectDivLabel); // not work
       this.remove3DObjectFromScene(this.objectsArr[i].object3D);
+      if (this.objectsArr[i].objectDivLabel != null) {
+        objects[i].objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
+        objects[i].objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
+        objects[i].objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
+        this.objectsArr[i].objectDivLabel.style.display = 'none';
+        this.objectsArr[i].objectDivLabel.parentNode.removeChild(this.objectsArr[i].objectDivLabel); // not work
+      }
     }
     // while (scene.children.length > 0) {
     //   scene.remove(scene.children[0]);
@@ -167,7 +172,6 @@ export class MapManager {
       this.loadObject3D(newObj); // async
       this.objectsArr.push(newObj);
     }
-    window['OBJECTS_ARR'] = this.objectsArr;
   }
 
   mapAddNewPolygons(polygons: any[]) {
@@ -217,7 +221,6 @@ export class MapManager {
 
 
   // private methods
-  // init map
   //#region
   private mapInit(cb: Function) {
     this.createMap();
@@ -254,7 +257,7 @@ export class MapManager {
     this.mapElement.appendChild(this.labelRenderer.domElement);
   }
 
-  private windowOnResize(event) {
+  private windowOnResize = (event) => {
     const x = this.mapWrapperElement.clientWidth; // offsetWidth
     const y = this.mapWrapperElement.clientHeight; // offsetHeight
     // mapElement width and height 100% in styles.scss
@@ -390,6 +393,7 @@ export class MapManager {
       this.scene = localScene;
       this.camera = localCamera;
       this.scene.add(new THREE.AmbientLight(0xffffff, 1));
+      this.labelRenderer.setSize(this.mapElement.clientWidth, this.mapElement.clientHeight);
       if (this.on_map_init != null) {
         this.on_map_init();
       }
@@ -405,6 +409,9 @@ export class MapManager {
   // init / remove 3D Object
   //#region
   private remove3DObjectFromScene(object: any) { // any - not geoObject !
+    if (object == null) {
+      return; // null when object model did not have time to boot
+    }
     if (object.geometry) {
       object.geometry.dispose();
     }
@@ -448,6 +455,11 @@ export class MapManager {
     this.scene.add(geoObject.pointForMove);
 
     const objectDivLabel = document.createElement('div');
+    objectDivLabel['geoObject'] = geoObject;
+    objectDivLabel.addEventListener('mouseenter', this.labelMouseEnterHandler);
+    objectDivLabel.addEventListener('mouseleave', this.labelMouseLeaveHandler);
+    objectDivLabel.addEventListener('click', this.labelMouseClickHandler);
+    console.log(objectDivLabel);
     objectDivLabel.className = 'obj-label';
     objectDivLabel.textContent = geoObject.projectName;
     objectDivLabel.style.marginTop = '-1em';
@@ -461,6 +473,32 @@ export class MapManager {
     this.changeVisible(geoObject, this.map.getZoom());
     this.scene.add(object3D);
     this.threeLayer.renderScene();
+  }
+
+  private labelMouseEnterHandler = (event) => {
+    event.target['geoObject'].objectDivLabel.className = 'obj-label-selected';
+    if (this.on_hover_object != null) {
+      this.on_hover_object(event.target['geoObject']);
+    }
+  }
+
+  private labelMouseClickHandler = (event) => {
+    if (this.selectedObject != null) {
+      this.selectedObject.objectDivLabel.className = 'obj-label';
+      this.setMarkerSymbolDefault(this.selectedObject.marker);
+    }
+    this.selectedObject = event.target['geoObject'];
+    this.selectedObject.objectDivLabel.className = 'obj-label-selected';
+    this.setMarkerSymbolSelected(this.selectedObject.marker);
+    if (this.on_click_object != null) {
+      this.on_click_object(this.selectedObject);
+    }
+  }
+
+  private labelMouseLeaveHandler = (event) => {
+    if (event.target['geoObject'] !== this.selectedObject) {
+      event.target['geoObject'].objectDivLabel.className = 'obj-label';
+    }
   }
 
   private loadObject3D(obj: GeoObject) {
@@ -567,10 +605,9 @@ export class MapManager {
     });
 
     marker.on('mouseout', (e) => {
-      if (e.target.parent === this.selectedObject) {
-        return;
+      if (e.target.parent !== this.selectedObject) {
+        this.setMarkerSymbolDefault(e.target);
       }
-      this.setMarkerSymbolDefault(e.target);
     });
   }
   //#endregion
@@ -659,6 +696,7 @@ export class MapManager {
 
     // on hover event
     if (prevMouseUnderObject_2 !== obj.mouseUnder) {
+      obj.objectDivLabel.className = 'obj-label-selected';
       if (this.on_hover_object != null) {
         this.on_hover_object(obj);
       }
@@ -701,6 +739,9 @@ export class MapManager {
     // event when mouse move and mouse leave 3d object
     if (prevMouseUnderObject !== obj.mouseUnder) {
       this.customRedraw();
+      if (obj !== this.selectedObject) {
+        obj.objectDivLabel.className = 'obj-label';
+      }
     }
 
     return false;
