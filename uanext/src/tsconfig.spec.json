@@ -13,14 +13,6 @@
   ],
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts",
-  ],
-  "exclude": [
-    "node_modules",
-    "typings",
-    "./node_modules",
-    "./typings",
-    "../node_modules",
-    "../typings"
+    "**/*.d.ts"
   ]
 }
