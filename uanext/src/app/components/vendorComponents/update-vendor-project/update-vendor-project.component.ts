@@ -33,7 +33,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
   minPhotosCount = 5;
 
-  fieldActivityOptions: FieldActivityInterface[];
+  fieldActivityOptions_2: FieldActivityInterface[];
   fieldOfActivitySubscription: Subscription;
   regionOptions;
   regionSubscription: Subscription;
@@ -110,7 +110,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
       (val: FieldActivityInterface[]) => {
-        this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
+        this.fieldActivityOptions_2 = JSON.parse(JSON.stringify(val));
       }
     );
 

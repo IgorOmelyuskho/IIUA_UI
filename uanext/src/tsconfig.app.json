@@ -11,12 +11,6 @@
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts",
-    "node_modules",
-    "typings",
-    "./node_modules",
-    "./typings",
-    "../node_modules",
-    "../typings"
+    "**/*.spec.ts"
   ]
 }
