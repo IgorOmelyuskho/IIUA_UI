@@ -222,17 +222,17 @@
     .vendor-header {
       display: flex;
       position: absolute;
-      font-size: 45px;
+      font-size: calc(20px + 1.5vw);
       font-weight: bold;
       z-index: 1;
       align-items: baseline;
-      top: 45px;
+      top: calc(30px + 3vh);
       left: 50%;
       transform: translateX(-50%);
 
       img {
-        width: 45px;
-        height: 45px;
+        width: calc(20px + 2vw);
+        height: calc(20px + 2vw);
         margin-left: 8px;
         margin-right: 8px;
       }
@@ -245,10 +245,10 @@
       position: absolute;
 
       .name-and-text {
-        max-width: 205px;
+        max-width: calc(100px + 8vw);
 
         .name {
-          font-size: 18px;
+          font-size: calc(8px + 0.7vw);
           font-weight: bold;
           text-align: right;
           line-height: 1.2;
@@ -256,7 +256,7 @@
         }
 
         .text {
-          font-size: 16px;
+          font-size: calc(8px + 0.5vw);
           line-height: 1.13;
           letter-spacing: 0.4px;
           color: #323232;
@@ -265,8 +265,8 @@
       }
 
       figure {
-        width: 90px;
-        height: 90px;
+        width: calc(20px + 5vw);
+        height: calc(20px + 5vw);
         margin: 0;
         margin-right: 10px;
         margin-left: 10px;
@@ -294,62 +294,48 @@
       }
     }
 
+    ::ng-deep .investor-curve-line,
+    ::ng-deep .vendor-curve-line {
+      svg {
+        width: 100%;
+        height: 100%;
+        vertical-align: top;
+        background: #efefef;
+
+        path {
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-width: 0.5%;
+          stroke: $middleGreen;
+          fill: transparent;
+        }
+
+        .circle {
+          fill: url(#linear-gradient-for-circle);
+        }
+
+        .arrow-path {
+          marker-end: url(#markerArrow);
+          stroke-width: 3;
+          stroke: #4b7512;
+        }
+      }
+    }
+
     .investor-curve-line {
-      background-image: url('../../../assets/img/index-page-img/investor-curve-line.png');
-
-      .c1 {
-        top: 13.9%;
-        right: 8.6%;
-      }
-
-      .c2 {
-        top: 68.4%;
-        left: 87.8%;
-      }
-
-      .c3 {
-        top: 60.7%;
-        left: 68.4%;
-      }
-
-      .c4 {
-        top: 34.9%;
-        left: 57.1%;
-      }
-
-      .c5 {
-        top: 73%;
-        left: 45.1%;
-      }
-
-      .c6 {
-        top: 49.8%;
-        left: 37.3%;
-      }
-
-      .c7 {
-        top: 79.1%;
-        left: 18.4%;
-      }
-
-      .c8 {
-        top: 42.9%;
-        left: 11.3%;
-      }
-
       .b1 {
-        top: 9.9%;
+        top: 10.9%;
         right: 10.4%;
       }
 
       .b2 {
-        top: 75.7%;
-        left: 76%;
+        top: 73.7%;
+        right: 3%;
       }
 
       .b3 {
-        bottom: 42%;
-        left: 67.3%;
+        bottom: 40%;
+        left: 65.3%;
       }
 
       .b4 {
@@ -358,77 +344,50 @@
       }
 
       .b5 {
-        top: 79.1%;
-        left: 43.5%
+        top: 78.1%;
+        left: 36.5%;
       }
 
       .b6 {
-        bottom: 52.9%;
-        right: 56.4%;
+        bottom: 50.9%;
+        right: 51.4%;
       }
 
       .b7 {
         top: 84.4%;
-        left: 17.3%;
+        left: 11.3%;
       }
 
       .b8 {
-        bottom: 59.4%;
-        left: 7.3%;
+        bottom: 58.4%;
+        left: 4.3%;
       }
     }
 
     .vendor-curve-line {
-      background-image: url('../../../assets/img/index-page-img/vendor-curve-line.png');
-
-      .c1 {
-        top: 19.5%;
-        left: 15.3%;
-      }
-
-      .c2 {
-        bottom: 27.8%;
-        left: 24.1%;
-      }
-
-      .c3 {
-        bottom: 27.8%;
-        left: 45.5%;
-      }
-
-      .c4 {
-        top: 50%;
-        left: 58.5%;
-      }
-
-      .c5 {
-        top: 34%;
-        right: 6.4%;
-      }
-
       .b1 {
         top: 16.9%;
-        left: 21.4%;
+        left: 19.4%;
       }
 
       .b2 {
-        top: 75.7%;
-        left: 21%;
+        top: 73.7%;
+        left: 16%;
       }
 
       .b3 {
         bottom: 35%;
-        right: 50.3%;
+        right: 48.3%;
       }
 
       .b4 {
-        bottom: 49.3%;
-        left: 60.2%;
+        bottom: 49.5%;
+        left: 59.1%;
       }
 
       .b5 {
-        bottom: 67.1%;
-        right: 4.5%;
+        bottom: 66.1%;
+    right: 2.5%;
       }
     }
 
