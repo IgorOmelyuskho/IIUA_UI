@@ -14,9 +14,11 @@
   "include": [
     "**/*.spec.ts",
     "**/*.d.ts",
-    "./node_modules",
-    "./typings",
     "node_modules",
     "typings",
+    "./node_modules",
+    "./typings",
+    "../node_modules",
+    "../typings"
   ]
 }
