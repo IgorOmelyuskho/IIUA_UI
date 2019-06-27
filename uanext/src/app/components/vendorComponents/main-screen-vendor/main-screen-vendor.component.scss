@@ -77,10 +77,12 @@
   }
 
   .create-update-wrapper {
-    position: fixed;
-    top: 110px;
-    left: 100px;
     z-index: 10;
+    overflow: auto;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
   }
 }
 
@@ -89,11 +91,16 @@
 .preview-card-wrapper {
   position: fixed;
   z-index: 10;
+  cursor: pointer;
 
   .preview-card {
     border-radius: 6px;
     border: solid 1px #bfbfbf;
     overflow: hidden;
+
+    &:hover {
+      box-shadow: 0 0 0 2px rgba($green, 0.5);
+    }
   }
 }
 

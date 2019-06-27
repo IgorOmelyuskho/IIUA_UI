@@ -47,14 +47,12 @@ export class HistogramChartComponent implements OnInit, AfterViewInit {
     }
     ];
 
-    const svg = d3.select('svg');
+    const svg = d3.select('.histogram-chart-svg');
     const svgContainer = document.getElementById('histogram-chart-container');
 
     const margin = 80;
     const width = svgContainer.clientWidth - 2 * margin;
     const height = svgContainer.clientHeight - 2 * margin;
-    console.log(width);
-    console.log(height);
 
     const chart = svg.append('g')
       .attr('transform', `translate(${margin}, ${margin})`);

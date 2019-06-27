@@ -65,14 +65,17 @@
 
       <section class="slide-page transition" style="transform: translate3d(0px, 100%, 0px);">
         <div class="investor-curve-line">
-          <div class="circle c1"></div>
-          <div class="circle c2"></div>
-          <div class="circle c3"></div>
-          <div class="circle c4"></div>
-          <div class="circle c5"></div>
-          <div class="circle c6"></div>
-          <div class="circle c7"></div>
-          <div class="circle c8"></div>
+
+          <svg id='svg-id-1' xmlns='http://www.w3.org/2000/svg'>
+            <linearGradient id='linear-gradient-for-circle'>
+              <stop offset='0%' stop-color='#4b7512' />
+              <stop offset='100%' stop-color='#82ae28' />
+            </linearGradient>
+            <marker id="markerArrow" viewBox="0 0 40 40" refX="0" refY="10" markerUnits="userSpaceOnUse" orient="auto"
+              markerWidth="20" markerHeight="20">
+              <polyline id="markerPoly1" points="0,0 20,10 0,20 0,10" fill="#4b7512" />
+            </marker>
+          </svg>
 
           <div class="investor-header">
             <img src="../../../assets/img/index-page-img/investor.png" alt="">
@@ -156,11 +159,9 @@
 
       <section class="slide-page transition" style="transform: translate3d(0px, 100%, 0px);">
         <div class="vendor-curve-line">
-          <div class="circle c1"></div>
-          <div class="circle c2"></div>
-          <div class="circle c3"></div>
-          <div class="circle c4"></div>
-          <div class="circle c5"></div>
+
+          <svg id='svg-id-2' xmlns='http://www.w3.org/2000/svg'>
+          </svg>
 
           <div class="vendor-header">
             <div>{{ 'vendor' | translate:self }}</div>
@@ -262,6 +263,9 @@
               </div>
               <div class="line-chart">
                 <app-line-chart></app-line-chart>
+              </div>
+              <div class="stacked-area-chart">
+                <app-stacked-area-chart></app-stacked-area-chart>
               </div>
             </div>
           </div>

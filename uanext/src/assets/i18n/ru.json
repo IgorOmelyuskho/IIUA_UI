@@ -161,14 +161,14 @@
         "fullName": "Полное Имя",
         "fullNameEmpty": "Это поле не может быть пустым",
         "email": "Емайл",
-        "emailEmpty": "Email не может быть пустым",
+        "emailEmpty": "Емайл не может быть пустым",
         "emailValid": "Адрес электронной почты должен быть действительным адресом электронной почты",
         "phone": "Телефон",
         "phoneEmpty": "Телефон не может быть пустым",
         "phoneValid": "Введите действующий телефон",
         "newPassword": "Новый пароль",
         "passwordLength": "Пароль должен содержать не менее 6 символов",
-        "updateProfile": "Update profile settings"
+        "updateProfile": "Обновить настройки профиля"
     },
     "MainScreenInvestorComponent": {
         "findProject": "Найти проект или компанию по ключевым словам",

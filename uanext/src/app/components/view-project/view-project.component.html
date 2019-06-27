@@ -108,7 +108,7 @@
     <div class="d-flex">
       <div (click)="downloadFile(file)" class="file" *ngFor="let file of project.files">
         <img height=100 src="../../../assets/img/file.png" alt="file">
-        <div class="extension">{{ file.originalName.split('.').pop().toUpperCase() }}</div>
+        <div class="extension">{{ file.originalName?.split('.').pop().toUpperCase() }}</div>
       </div>
     </div>
   </div>

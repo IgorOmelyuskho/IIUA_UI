@@ -58,6 +58,7 @@ import {
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { HistogramChartComponent } from './histogram-chart/histogram-chart.component';
+import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-chart.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -114,7 +115,8 @@ export {
   InteractiveInvestmentMinCardComponent,
   LineChartComponent,
   PieChartComponent,
-  HistogramChartComponent
+  HistogramChartComponent,
+  StackedAreaChartComponent
 };
 
 export const components = [
@@ -171,7 +173,8 @@ export const components = [
   InteractiveInvestmentMinCardComponent,
   LineChartComponent,
   PieChartComponent,
-  HistogramChartComponent
+  HistogramChartComponent,
+  StackedAreaChartComponent
 ];
 
 

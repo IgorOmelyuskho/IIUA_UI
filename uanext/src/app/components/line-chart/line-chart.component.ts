@@ -49,7 +49,7 @@ export class LineChartComponent implements OnInit, AfterViewInit {
 
     this.svg.append('g').call(this.yAxis);
     this.svg.append('g').attr('transform', 'translate(0,' + this.height + ')').call(this.xAxis);
-    this.svg.append('text').html('State Population Over Time').attr('x', 200);
+    this.svg.append('text').html('State Population Over Time').attr('x', 100);
 
     // Load the data and draw a chart
     d3.json(window.location.origin + '/assets/charts-data/state-populations.json', data => {

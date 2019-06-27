@@ -22,16 +22,15 @@
             font: 30px sans-serif;
             text-anchor: middle;
             font-family: Helvetica;
-            transform: translateY(-15px);
         }
 
         ::ng-deep .arc .total {
             fill: #9aa1a9;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             font: 16px sans-serif;
             text-anchor: middle;
             font-family: Helvetica;
-            transform: translateY(15px);
+            transform: translateY(20px);
         }
     
         ::ng-deep .arc path {

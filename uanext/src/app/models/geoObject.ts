@@ -1,6 +1,6 @@
 import { VendorProject } from './vendorProject';
 
-export interface GeoObject {
+export class GeoObject {
   geoObjectId: string;
   coords: { x: number, y: number };
   projectName: string;

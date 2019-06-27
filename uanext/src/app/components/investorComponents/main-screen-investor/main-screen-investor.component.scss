@@ -83,11 +83,16 @@
 .preview-card-wrapper {
   position: fixed;
   z-index: 10;
+  cursor: pointer;
 
   .preview-card {
     border-radius: 6px;
     border: solid 1px #bfbfbf;
     overflow: hidden;
+
+    &:hover {
+      box-shadow: 0 0 0 2px rgba($green, 0.5);
+    }
   }
 }
 
