@@ -19,10 +19,11 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   canScrollUp = false;
   canScrollDown = true;
   self = 'IndexComponent';
-  auth2: any;
 
-  user: SocialUser;
-  loggedIn: boolean;
+  animationInterval_1: any;
+  animationInterval_2: any;
+
+  slidePageDelay = 900; // wait for slidePage
 
   constructor(private socialAuthService: AuthService) { }
 
@@ -75,6 +76,31 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         if (target === 1) {
           this.canScrollUp = false;
         }
+
+        if (target === 2) {
+          this.startAnimation1();
+          this.startCircleAnimation1();
+
+          this.animationInterval_1 = setInterval(() => {
+            this.startAnimation1();
+            this.startCircleAnimation1();
+          }, 8000 + 2000); // + so that the animation will end
+        } else {
+          clearInterval(this.animationInterval_1);
+        }
+
+        if (target === 3) {
+          this.startAnimation2();
+          this.startCircleAnimation2();
+
+          this.animationInterval_2 = setInterval(() => {
+            this.startAnimation2();
+            this.startCircleAnimation2();
+          }, 8000 + 2000); // + so that the animation will end
+        } else {
+          clearInterval(this.animationInterval_2);
+        }
+
         if (target === 5) {
           this.canScrollDown = false;
         }
@@ -82,6 +108,44 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     window.addEventListener('resize', this.windowResizeHandler);
+  }
+
+  startAnimation1() {
+    const elements = document.querySelectorAll('.investor-curve-line .animation-element');
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].classList.remove('restart-animation');
+      setTimeout(() => {
+        elements[i].classList.add('restart-animation');
+      }, this.slidePageDelay); // wait slidePage and rewrite class (delay 0 not work)
+    }
+  }
+
+  startAnimation2() {
+    const elements = document.querySelectorAll('.vendor-curve-line .animation-element');
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].classList.remove('restart-animation');
+      setTimeout(() => {
+        elements[i].classList.add('restart-animation');
+      }, this.slidePageDelay); // wait slidePage and rewrite class (delay 0 not work)
+    }
+  }
+
+  startCircleAnimation1() {
+    const circleAnimation: any = document.getElementById('circle-animation-1');
+    circleAnimation.endElement();
+    setTimeout(() => {
+      const circleAnimation_2: any = document.getElementById('circle-animation-1');
+      circleAnimation_2.beginElement();
+    }, this.slidePageDelay);
+  }
+
+  startCircleAnimation2() {
+    const circleAnimation: any = document.getElementById('circle-animation-2');
+    circleAnimation.endElement();
+    setTimeout(() => {
+      const circleAnimation_2: any = document.getElementById('circle-animation-2');
+      circleAnimation_2.beginElement();
+    }, this.slidePageDelay);
   }
 
   windowResizeHandler = () => {
@@ -100,6 +164,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.slide.destroy();
     window.removeEventListener('resize', this.windowResizeHandler);
+    clearInterval(this.animationInterval_1);
+    clearInterval(this.animationInterval_2);
   }
 
   signInWithGoogle(): void {
@@ -121,10 +187,10 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     const strArr = str.split(' ');
     const re = /\d{1,} \d{1,} C|\d{1,} \d{1,}$/gim;
     const arrowData = [
-      [1303, 171],
-      [1320, 206],
-      [1327, 236],
-      [1327, 285]
+      [1293, 171],
+      [1310, 206],
+      [1317, 236],
+      [1317, 285]
     ];
     const width = 1440;
     const height = 745;
@@ -167,6 +233,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     newStr = this.createPathString(strArr, scaleX, scaleY);
+    path.setAttributeNS(null, 'id', 'wire-path-1');
     path.setAttributeNS(null, 'd', newStr);
     g.appendChild(path);
 
@@ -182,6 +249,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       circle.setAttribute('r', '1.2%');
       g.appendChild(circle);
     }
+
+    const circleForAnimation: any = document.getElementById('circle-for-animation-1').cloneNode(true);
+    g.appendChild(circleForAnimation);
   }
 
   init2() {
@@ -209,6 +279,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     svg.appendChild(g);
 
     newStr = this.createPathString(strArr, scaleX, scaleY);
+    path.setAttributeNS(null, 'id', 'wire-path-2');
     path.setAttributeNS(null, 'd', newStr);
     g.appendChild(path);
 
@@ -224,6 +295,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       circle.setAttribute('r', '1.2%');
       g.appendChild(circle);
     }
+
+    const circleForAnimation: any = document.getElementById('circle-for-animation-2').cloneNode(true);
+    g.appendChild(circleForAnimation);
   }
 
   createPathString(strArr: string[], scaleX: number, scaleY: number): string {

@@ -459,7 +459,6 @@ export class MapManager {
     objectDivLabel.addEventListener('mouseenter', this.labelMouseEnterHandler);
     objectDivLabel.addEventListener('mouseleave', this.labelMouseLeaveHandler);
     objectDivLabel.addEventListener('click', this.labelMouseClickHandler);
-    console.log(objectDivLabel);
     objectDivLabel.className = 'obj-label';
     objectDivLabel.textContent = geoObject.projectName;
     objectDivLabel.style.marginTop = '-1em';

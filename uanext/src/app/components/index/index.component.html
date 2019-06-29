@@ -14,8 +14,8 @@
       <section class="slide-page transition" style="transform: translate3d(0px, 0px, 0px);">
         <div class="map-and-invest">
           <div class="map-video">
-            <video autoplay crossorigin="anonymous">
-              <source src="../../../assets/videos/cors.mp4">
+            <video autoplay crossorigin="anonymous" loop="loop">
+              <source src="../../../assets/videos/main-screen-video.mp4">
             </video>
             <div class="convex"></div>
           </div>
@@ -71,6 +71,11 @@
               <stop offset='0%' stop-color='#4b7512' />
               <stop offset='100%' stop-color='#82ae28' />
             </linearGradient>
+            <linearGradient id="linear-gradient-for-path">
+              <stop offset='0%' stop-color='#4f7a14' />
+              <stop offset='50%' stop-color='#8fd333' />
+              <stop offset='100%' stop-color='#4f7a14' />
+            </linearGradient>
             <marker id="markerArrow" viewBox="0 0 40 40" refX="0" refY="10" markerUnits="userSpaceOnUse" orient="auto"
               markerWidth="20" markerHeight="20">
               <polyline id="markerPoly1" points="0,0 20,10 0,20 0,10" fill="#4b7512" />
@@ -88,7 +93,7 @@
               <div class="text">{{ 'securityText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/1.png" alt="">
+              <img class="animation-1 animation-element" src="../../../assets/img/index-page-img/1.png" alt="">
             </figure>
           </div>
           <div class="block b2">
@@ -97,7 +102,7 @@
               <div class="text">{{ 'simplicityText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/2.png" alt="">
+              <img class="animation-2 animation-element" src="../../../assets/img/index-page-img/2.png" alt="">
             </figure>
           </div>
           <div class="block b3 reverse">
@@ -106,7 +111,7 @@
               <div class="text">{{ 'transparencyText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/3.png" alt="">
+              <img class="animation-3 animation-element" src="../../../assets/img/index-page-img/3.png" alt="">
             </figure>
           </div>
           <div class="block b4 reverse">
@@ -115,7 +120,7 @@
               <div class="text">{{ 'ratingText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/4.png" alt="">
+              <img class="animation-4 animation-element" src="../../../assets/img/index-page-img/4.png" alt="">
             </figure>
           </div>
           <div class="block b5 reverse">
@@ -124,7 +129,7 @@
               <div class="text">{{ 'auditText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/5.png" alt="">
+              <img class="animation-5 animation-element" src="../../../assets/img/index-page-img/5.png" alt="">
             </figure>
           </div>
           <div class="block b6">
@@ -133,7 +138,7 @@
               <div class="text">{{ 'stayInTouchText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/6.png" alt="">
+              <img class="animation-6 animation-element" src="../../../assets/img/index-page-img/6.png" alt="">
             </figure>
           </div>
           <div class="block b7 reverse">
@@ -142,7 +147,7 @@
               <div class="text">{{ 'withoutCommissionText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/7.png" alt="">
+              <img class="animation-7 animation-element" src="../../../assets/img/index-page-img/7.png" alt="">
             </figure>
           </div>
           <div class="block b8 reverse">
@@ -151,7 +156,7 @@
               <div class="text">{{ 'displayText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/8.png" alt="">
+              <img class="animation-8 animation-element" src="../../../assets/img/index-page-img/8.png" alt="">
             </figure>
           </div>
         </div>
@@ -174,7 +179,7 @@
               <div class="text">{{ 'financingText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/9.png" alt="">
+              <img class="animation-1 animation-element" src="../../../assets/img/index-page-img/9.png" alt="">
             </figure>
           </div>
           <div class="block b2 reverse">
@@ -183,7 +188,7 @@
               <div class="text">{{ 'boardText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/10.png" alt="">
+              <img class="animation-2 animation-element" src="../../../assets/img/index-page-img/10.png" alt="">
             </figure>
           </div>
           <div class="block b3">
@@ -192,7 +197,7 @@
               <div class="text">{{ 'selectionText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/11.png" alt="">
+              <img class="animation-3 animation-element" src="../../../assets/img/index-page-img/11.png" alt="">
             </figure>
           </div>
           <div class="block b4 reverse">
@@ -201,7 +206,7 @@
               <div class="text">{{ 'placeText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/12.png" alt="">
+              <img class="animation-4 animation-element" src="../../../assets/img/index-page-img/12.png" alt="">
             </figure>
           </div>
           <div class="block b5">
@@ -210,7 +215,7 @@
               <div class="text">{{ 'advertisingText' | translate:self }}</div>
             </div>
             <figure>
-              <img src="../../../assets/img/index-page-img/13.png" alt="">
+              <img class="animation-5 animation-element" src="../../../assets/img/index-page-img/13.png" alt="">
             </figure>
           </div>
         </div>
@@ -310,3 +315,18 @@
   </div>
 
 </div>
+
+
+<svg style="display: none">
+  <circle id="circle-for-animation-1" cx="0" cy="0" r="8" fill="#2962ff">
+    <animateMotion id="circle-animation-1" dur="8s" repeatCount="1" begin="indefinite">
+      <mpath xlink:href="#wire-path-1"></mpath>
+    </animateMotion>
+  </circle>
+
+  <circle id="circle-for-animation-2" cx="0" cy="0" r="8" fill="#2962ff">
+    <animateMotion id="circle-animation-2" dur="8s" repeatCount="1" begin="indefinite">
+      <mpath xlink:href="#wire-path-2"></mpath>
+    </animateMotion>
+  </circle>
+</svg>

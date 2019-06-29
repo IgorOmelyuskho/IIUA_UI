@@ -113,7 +113,7 @@
         .start-invest {
           display: flex;
           flex-direction: column;
-          font-size: 46px;
+          font-size: calc(15px + 2vw);
           font-weight: bold;
           line-height: 1.13;
           width: calc(100% + 70px);
@@ -129,7 +129,7 @@
 
         .social {
           background: #f4f4f4;
-          margin-top: 40px;
+          margin-top: calc(10px + 1vh);
           margin-bottom: 10px;
           height: 114px;
           width: calc(100% + 70px);
@@ -164,7 +164,7 @@
         }
 
         .use-email {
-          margin-bottom: 40px;
+          margin-bottom: calc(5px + 1vh);
           width: calc(100% + 70px);
           display: flex;
           justify-content: center;
@@ -182,7 +182,7 @@
         }
 
         .bottom {
-          font-size: 28px;
+          font-size: calc(12px + 0.8vw);
           line-height: 1.71;
           letter-spacing: 0.8px;
           width: calc(100% + 70px);
@@ -191,22 +191,33 @@
             color: $darkGreen;
             font-weight: bold;
           }
-
-          .commissions {}
-
-          .payments {}
         }
       }
-    }
 
-    .investor-curve-line .circle,
-    .vendor-curve-line .circle {
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      border-radius: 30px;
-      background: linear-gradient(#4b7512, #82ae28);
-      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 6px 11px 0 rgba(0, 0, 0, 0.16);
+      @media screen and (max-width: 460px),
+      screen and (max-height: 650px),
+      screen and (max-aspect-ratio: 10/12) {
+        .map-video {
+          display: none;
+        }
+
+        .invest {
+          width: 100%;
+          transform: none;
+        }
+
+        .start-invest {
+          width: auto !important;
+        }
+
+        .bottom {
+          width: auto !important;
+        }
+
+        .social {
+          width: auto !important;
+        }
+      }
     }
 
     .investor-curve-line,
@@ -216,80 +227,127 @@
       background-color: #f9f9f9;
       background-repeat: round;
       position: relative;
-    }
 
-    .investor-header,
-    .vendor-header {
-      display: flex;
-      position: absolute;
-      font-size: calc(20px + 1.5vw);
-      font-weight: bold;
-      z-index: 1;
-      align-items: baseline;
-      top: calc(30px + 3vh);
-      left: 50%;
-      transform: translateX(-50%);
-
-      img {
-        width: calc(20px + 2vw);
-        height: calc(20px + 2vw);
-        margin-left: 8px;
-        margin-right: 8px;
+      .restart-animation {
+        animation: pulse 1s 1 ease-in-out;
       }
-    }
 
-    .investor-curve-line .block,
-    .vendor-curve-line .block {
-      display: flex;
-      align-items: center;
-      position: absolute;
-
-      .name-and-text {
-        max-width: calc(100px + 8vw);
-
-        .name {
-          font-size: calc(8px + 0.7vw);
-          font-weight: bold;
-          text-align: right;
-          line-height: 1.2;
-          margin-bottom: 5px;
+      @keyframes pulse {
+        from {
+          transform: scale(1);
         }
 
-        .text {
-          font-size: calc(8px + 0.5vw);
-          line-height: 1.13;
-          letter-spacing: 0.4px;
-          color: #323232;
-          text-align: right;
+        50% {
+          transform: scale(1.1);
+        }
+
+        to {
+          transform: scale(1);
         }
       }
 
-      figure {
-        width: calc(20px + 5vw);
-        height: calc(20px + 5vw);
-        margin: 0;
-        margin-right: 10px;
-        margin-left: 10px;
+      .investor-header,
+      .vendor-header {
+        display: flex;
+        position: absolute;
+        font-size: calc(10px + 1vw + 2vh);
+        font-weight: bold;
+        z-index: 1;
+        align-items: baseline;
+        top: calc(10px + 5vh);
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
 
         img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+          width: calc(20px + 2vw);
+          height: calc(20px + 2vw);
+          margin-left: 8px;
+          margin-right: 8px;
         }
       }
-    }
 
-    .investor-curve-line .block.reverse,
-    .vendor-curve-line .block.reverse {
-      flex-direction: row-reverse;
+      .circle {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        background: linear-gradient(#4b7512, #82ae28);
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 6px 11px 0 rgba(0, 0, 0, 0.16);
+      }
 
-      .name-and-text {
-        .name {
-          text-align: left;
+      .block {
+        display: flex;
+        align-items: center;
+        position: absolute;
+
+        &:hover {
+          z-index: 2;
         }
 
-        .text {
-          text-align: left;
+        &:hover .name-and-text {
+          display: block;
+          background: #80cbc4;
+        }
+
+        .name-and-text {
+          max-width: calc(100px + 8vw);
+          padding: calc(2px + 0.3vw);
+          border-radius: 6px;
+          z-index: 1;
+
+          .name {
+            font-size: calc(8px + 0.7vw);
+            font-weight: bold;
+            text-align: right;
+            line-height: 1.2;
+            margin-bottom: 5px;
+          }
+
+          .text {
+            font-size: calc(8px + 0.5vw);
+            line-height: 1.13;
+            letter-spacing: 0.4px;
+            color: #323232;
+            text-align: right;
+          }
+        }
+
+        @media screen and (max-width: 460px),
+        screen and (max-height: 650px) {
+          .name-and-text {
+            display: none;
+          }
+        }
+
+        figure {
+          width: calc(10px + 3vw + 3vh);
+          height: calc(10px + 3vw + 3vh);
+          margin: 0;
+          margin-right: calc(5px + 0.7vw);
+          margin-left: calc(5px + 0.7vw);
+          flex-shrink: 0.01;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.09s ease-out 0.0s;
+          }
+        }
+      }
+
+      .block.reverse {
+        flex-direction: row-reverse;
+
+        .name-and-text {
+          .name {
+            text-align: left;
+          }
+
+          .text {
+            text-align: left;
+          }
         }
       }
     }
@@ -305,8 +363,8 @@
         path {
           stroke-linecap: round;
           stroke-linejoin: round;
-          stroke-width: 0.5%;
-          stroke: $middleGreen;
+          stroke-width: 0.7%;
+          stroke: url(#linear-gradient-for-path);
           fill: transparent;
         }
 
@@ -323,6 +381,22 @@
     }
 
     .investor-curve-line {
+      @media screen and (max-width: 460px) {
+        .block.b3:hover {
+          .name-and-text {
+            transform: translateX(calc(-20px + -3.6vw + -3vh - 100%));
+
+            .name {
+              text-align: right;
+            }
+
+            .text {
+              text-align: right;
+            }
+          }
+        }
+      }
+
       .b1 {
         top: 10.9%;
         right: 10.4%;
@@ -362,6 +436,38 @@
         bottom: 58.4%;
         left: 4.3%;
       }
+
+      .animation-1 {
+        animation-delay: 0s;
+      }
+
+      .animation-2 {
+        animation-delay: 1.27s;
+      }
+
+      .animation-3 {
+        animation-delay: 2.05s;
+      }
+
+      .animation-4 {
+        animation-delay: 2.88s;
+      }
+
+      .animation-5 {
+        animation-delay: 3.95s;
+      }
+
+      .animation-6 {
+        animation-delay: 4.64s;
+      }
+
+      .animation-7 {
+        animation-delay: 5.67s;
+      }
+
+      .animation-8 {
+        animation-delay: 6.58s;
+      }
     }
 
     .vendor-curve-line {
@@ -381,13 +487,33 @@
       }
 
       .b4 {
-        bottom: 49.5%;
-        left: 59.1%;
+        bottom: 50.5%;
+        left: 60.1%;
       }
 
       .b5 {
         bottom: 66.1%;
-    right: 2.5%;
+        right: 2.5%;
+      }
+
+      .animation-1 {
+        animation-delay: 0.79s;
+      }
+
+      .animation-2 {
+        animation-delay: 3.03s;
+      }
+
+      .animation-3 {
+        animation-delay: 4.27s;
+      }
+
+      .animation-4 {
+        animation-delay: 5.34s;
+      }
+
+      .animation-5 {
+        animation-delay: 8.0s;
       }
     }
 
@@ -407,8 +533,9 @@
         align-items: center;
 
         .trust-text {
-          font-size: 48px;
+          font-size: calc(20px + 2vw);
           font-weight: bold;
+          line-height: 1.2;
         }
 
         .invested-and-projects {
@@ -477,8 +604,8 @@
             text-align: center;
 
             .text {
-              padding-left: 40px;
-              padding-right: 40px;
+              padding-right: calc(5px + 1vw);
+              padding-left: calc(5px + 1vw);
             }
 
             .bold-text {
@@ -489,8 +616,9 @@
               font-size: 48px;
               font-weight: bold;
               color: $darkGreen;
-              padding-top: 35px;
-              padding-bottom: 15px;
+              padding-top: calc(10px + 1vh);
+              padding-bottom: calc(5px + 1vh);
+              line-height: 1;
             }
           }
         }
@@ -502,6 +630,8 @@
           display: flex;
           flex-direction: column;
           flex-wrap: wrap;
+          justify-content: center;
+          overflow: auto;
 
           .line-chart,
           .stacked-area-chart,
@@ -509,6 +639,8 @@
           .pie-chart {
             height: 50%;
             width: 50%;
+            min-width: 400px;
+            min-height: 250px;
           }
         }
       }
@@ -520,7 +652,7 @@
       flex-direction: column;
 
       .subscribe {
-        height: 65%;
+        height: 70%;
         position: relative;
 
         .subscribe-background {
@@ -554,7 +686,7 @@
           }
 
           .stay-updated {
-            font-size: 48px;
+            font-size: calc(30px + 1.2vw);
             font-weight: bold;
             line-height: 1.38;
             text-align: center;
@@ -568,6 +700,7 @@
             .inline-block {
               display: inline-flex;
               box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+              max-width: 90%;
 
               input {
                 padding: 5px;
@@ -607,13 +740,14 @@
       }
 
       .footer {
-        height: 35%;
+        height: 30%;
         background: #fcfcfc;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
 
         .iiua {
-          padding-top: 30px;
-          padding-bottom: 45px;
           font-family: Helvetica;
           line-height: 1.58;
           text-align: center;
@@ -624,7 +758,6 @@
         .menu {
           display: flex;
           justify-content: center;
-          padding-bottom: 48px;
 
           .item {
             margin: 0px 10px;

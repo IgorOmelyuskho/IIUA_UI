@@ -49,6 +49,7 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit {
 
   signOutClick() {
     this.authService.signOut();
+    this.router.navigate(['signin']);
   }
 
   viewProjectsClick() {
