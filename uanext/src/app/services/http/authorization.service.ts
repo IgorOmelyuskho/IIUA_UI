@@ -164,7 +164,7 @@ export class AuthorizationService {
     localStorage.removeItem('token');
     this.stateService.user$.next(null);
     this.stateService.authorized$.next(false);
-    this.router.navigate(['signin']);
+    this.router.navigate(['']);
   }
 
   userIsAuthorized(): boolean {

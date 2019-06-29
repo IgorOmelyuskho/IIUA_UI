@@ -68,6 +68,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit {
 
   signOutClick() {
     this.authService.signOut();
+    this.router.navigate(['signin']);
   }
 
   changeProject(project: VendorProject) {

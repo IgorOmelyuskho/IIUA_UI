@@ -50,7 +50,7 @@ export class HistogramChartComponent implements OnInit, AfterViewInit {
     const svg = d3.select('.histogram-chart-svg');
     const svgContainer = document.getElementById('histogram-chart-container');
 
-    const margin = 80;
+    const margin = 60;
     const width = svgContainer.clientWidth - 2 * margin;
     const height = svgContainer.clientHeight - 2 * margin;
 
@@ -66,10 +66,6 @@ export class HistogramChartComponent implements OnInit, AfterViewInit {
       .range([height, 0])
       .domain([0, 100]);
 
-    // vertical grid lines
-    // const makeXLines = () => d3.axisBottom()
-    //   .scale(xScale)
-
     const makeYLines = () => d3.axisLeft()
       .scale(yScale);
 
@@ -79,15 +75,6 @@ export class HistogramChartComponent implements OnInit, AfterViewInit {
 
     chart.append('g')
       .call(d3.axisLeft(yScale));
-
-    // vertical grid lines
-    // chart.append('g')
-    //   .attr('class', 'grid')
-    //   .attr('transform', `translate(0, ${height})`)
-    //   .call(makeXLines()
-    //     .tickSize(-height, 0, 0)
-    //     .tickFormat('')
-    //   )
 
     chart.append('g')
       .attr('class', 'grid')

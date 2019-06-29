@@ -107,6 +107,5 @@ export class PieChartComponent implements OnInit, AfterViewInit {
       });
   }
 
-
 }
 
