@@ -446,27 +446,27 @@
       }
 
       .animation-3 {
-        animation-delay: 2.05s;
+        animation-delay: 2.0s;
       }
 
       .animation-4 {
-        animation-delay: 2.88s;
+        animation-delay: 2.83s;
       }
 
       .animation-5 {
-        animation-delay: 3.95s;
+        animation-delay: 3.9s;
       }
 
       .animation-6 {
-        animation-delay: 4.64s;
+        animation-delay: 4.59s;
       }
 
       .animation-7 {
-        animation-delay: 5.67s;
+        animation-delay: 5.62s;
       }
 
       .animation-8 {
-        animation-delay: 6.58s;
+        animation-delay: 6.53s;
       }
     }
 
@@ -497,11 +497,11 @@
       }
 
       .animation-1 {
-        animation-delay: 0.79s;
+        animation-delay: 0.83s;
       }
 
       .animation-2 {
-        animation-delay: 3.03s;
+        animation-delay: 3.21s;
       }
 
       .animation-3 {
@@ -746,6 +746,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
+        justify-content: space-around; // if not support space-evenly;
 
         .iiua {
           font-family: Helvetica;

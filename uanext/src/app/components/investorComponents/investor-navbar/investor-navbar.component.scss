@@ -29,20 +29,84 @@
         }
       }
 
-      button {
-        margin: 0 15px;
-        background: transparent;
-        border: none !important;
-        outline: none !important;
-        box-shadow: none !important;
-        font-size: 16px;
-        letter-spacing: 0.4px;
-        cursor: pointer;
-        line-height: 1.1;
-        padding: 0;
+      .adaptive-menu {
+        .menu-text {
+          display: none;
+        }
 
-        &:hover {
-          color: $green;
+        .btn-wrapper {
+          display: flex;
+
+          button {
+            margin: 0 15px;
+            background: transparent;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            font-size: 16px;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            line-height: 1.1;
+            padding: 0;
+
+            &:hover {
+              color: $green;
+            }
+          }
+
+          button.selected {
+            color: $darkGreen;
+            font-weight: bold;
+            border-bottom: 1px solid $darkGreen !important;
+          }
+        }
+      }
+
+      // also used in .ts - matchMedia
+      @media screen and (max-width: 760px) {
+        .adaptive-menu {
+          .menu-text {
+            display: block;
+            margin-right: 5px;
+            padding-right: 15px;
+            padding-left: 10px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            margin-left: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            font-size: 16px;
+            cursor: pointer;
+
+            &:after {
+              display: inline-block;
+              width: 0;
+              height: 0;
+              margin-left: .255em;
+              vertical-align: middle;
+              content: "";
+              border-top: .3em solid;
+              border-right: .3em solid transparent;
+              border-bottom: 0;
+              border-left: .3em solid transparent;
+            }
+          }
+
+          .btn-wrapper {
+            position: absolute;
+            flex-direction: column;
+            align-items: flex-start;
+            top: 90%;
+            padding-bottom: 8px;
+            border: 1px solid rgba(0, 0, 0, .15);
+            border-radius: 6px;
+            background: white;
+            right: 2px;
+
+            button {
+              padding-top: 8px;
+            }
+          }
         }
       }
 

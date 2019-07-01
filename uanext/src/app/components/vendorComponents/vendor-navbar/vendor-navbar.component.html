@@ -9,9 +9,14 @@
         <option>en</option>
       </select>
     </div>
-    <button #home (click)='homeClick()' type="button">{{ 'home' | translate:self }}</button>
-    <button #profile (click)='profileClick()' type="button">{{ 'profile' | translate:self }}</button>
-    <button #myProjects (click)='projectsClick()' type="button">{{ 'projects' | translate:self }}</button>
+    <div class="adaptive-menu">
+      <div (click)="menuIsOpen = !menuIsOpen" class="menu-text">{{ 'menu' | translate:self }}</div>
+      <div (click)="menuIsOpen = false" [style.display]="menuIsOpen === true || matchesMediaQuery === false ? 'flex' : 'none'" class="btn-wrapper">
+        <button #home (click)='homeClick()' type="button">{{ 'home' | translate:self }}</button>
+        <button #profile (click)='profileClick()' type="button">{{ 'profile' | translate:self }}</button>
+        <button #myProjects (click)='projectsClick()' type="button">{{ 'projects' | translate:self }}</button>
+      </div>
+    </div>
     <div class="profile-wrapper">
       <div (click)="openProfileMenu()" class="profile">
         <div class="text">

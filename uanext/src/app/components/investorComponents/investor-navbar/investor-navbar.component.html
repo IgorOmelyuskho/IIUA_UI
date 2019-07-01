@@ -10,11 +10,15 @@
           <option>en</option>
         </select>
       </div>
-      <div>
-        <button #home (click)="homeClick()" type="button">{{ 'home' | translate:self }}</button>
-        <button #profile (click)="profileClick()" type="button">{{ 'myProfile' | translate:self }}</button>
-        <button #vieProjects (click)="viewProjectsClick()" type="button">{{ 'findProjects' | translate:self }}</button>
-        <button (click)="signOutClick()" type="button">{{ 'signOut' | translate:self }}</button>
+      <div class="adaptive-menu">
+        <div (click)="menuIsOpen = !menuIsOpen" class="menu-text">{{ 'menu' | translate:self }}</div>
+        <div (click)="menuIsOpen = false" [style.display]="menuIsOpen === true || matchesMediaQuery === false ? 'flex' : 'none'" class="btn-wrapper">
+          <button #home (click)="homeClick()" type="button">{{ 'home' | translate:self }}</button>
+          <button #profile (click)="profileClick()" type="button">{{ 'myProfile' | translate:self }}</button>
+          <button #vieProjects (click)="viewProjectsClick()"
+            type="button">{{ 'findProjects' | translate:self }}</button>
+          <button (click)="signOutClick()" type="button">{{ 'signOut' | translate:self }}</button>
+        </div>
       </div>
     </div>
   </nav>

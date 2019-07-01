@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from 'src/app/services/translate.service';
 
@@ -7,13 +7,36 @@ import { TranslateService } from 'src/app/services/translate.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   userRole: string;
   self = 'HeaderComponent';
+  mq = window.matchMedia('screen and (max-width: 560px)'); // also used in .scss
+  matchesMediaQuery = false;
+  menuIsOpen = false;
 
   constructor(private router: Router, private translateService: TranslateService) { }
 
   ngOnInit() {
+    this.initMenu();
+    this.mq.addListener(this.matchMediaHandler);
+  }
+
+  initMenu() {
+    this.matchesMediaQuery = window.matchMedia('screen and (max-width: 760px)').matches;
+    if (this.matchesMediaQuery === true) {
+      this.menuIsOpen = false;
+    } else {
+      this.menuIsOpen = true;
+    }
+  }
+
+  matchMediaHandler = (data) => {
+    this.matchesMediaQuery = data.matches;
+    if (this.matchesMediaQuery === true) {
+      this.menuIsOpen = false;
+    } else {
+      this.menuIsOpen = true;
+    }
   }
 
   languageChange(e) {
@@ -31,5 +54,9 @@ export class HeaderComponent implements OnInit {
 
   signUp() {
     this.router.navigate(['signup']);
+  }
+
+  ngOnDestroy() {
+    this.mq.removeListener(this.matchMediaHandler);
   }
 }

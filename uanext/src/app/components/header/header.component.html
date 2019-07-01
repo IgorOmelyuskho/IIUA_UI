@@ -9,7 +9,13 @@
         <option value="en">en</option>
       </select>
     </div>
-    <button (click)="signIn()">{{ 'signIn' | translate:self }}</button>
-    <button (click)="signUp()">{{ 'signUp' | translate:self }}</button>
+    <div class="adaptive-menu">
+      <div (click)="menuIsOpen = !menuIsOpen" class="menu-text">{{ 'menu' | translate:self }}</div>
+      <div (click)="menuIsOpen = false"
+        [style.display]="menuIsOpen === true || matchesMediaQuery === false ? 'flex' : 'none'" class="btn-wrapper">
+        <button (click)="signIn()">{{ 'signIn' | translate:self }}</button>
+        <button (click)="signUp()">{{ 'signUp' | translate:self }}</button>
+      </div>
+    </div>
   </div>
 </nav>

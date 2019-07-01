@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { VendorProject } from 'src/app/models/vendorProject';
@@ -10,25 +10,30 @@ import { TranslateService } from 'src/app/services/translate.service';
   templateUrl: './vendor-navbar.component.html',
   styleUrls: ['./vendor-navbar.component.scss']
 })
-export class VendorNavbarComponent implements OnInit, AfterViewInit {
+export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('home') homeTab: ElementRef;
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('myProjects') myProjectsTab: ElementRef;
   self = 'VendorNavbarComponent';
+  mq = window.matchMedia('screen and (max-width: 760px)'); // also used in .scss
+  matchesMediaQuery = false;
+  menuIsOpen = false;
 
   projects: VendorProject[] = [
-    {...responseProject},
-    {...responseProject},
-    {...responseProject2},
-    {...responseProject2},
+    { ...responseProject },
+    { ...responseProject },
+    { ...responseProject2 },
+    { ...responseProject2 },
   ];
 
   profileSelectedProject: VendorProject;
   profileMenuOpen = false;
 
-  constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) { }
+  constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) {}
 
   ngOnInit() {
+    this.initMenu();
+    this.mq.addListener(this.matchMediaHandler);
   }
 
   ngAfterViewInit() {
@@ -42,6 +47,24 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit {
     }
     if (tab === 'main-page') {
       this.homeTab.nativeElement.classList.add('selected');
+    }
+  }
+
+  initMenu() {
+    this.matchesMediaQuery = window.matchMedia('screen and (max-width: 760px)').matches;
+    if (this.matchesMediaQuery === true) {
+      this.menuIsOpen = false;
+    } else {
+      this.menuIsOpen = true;
+    }
+  }
+
+  matchMediaHandler = (data) => {
+    this.matchesMediaQuery = data.matches;
+    if (this.matchesMediaQuery === true) {
+      this.menuIsOpen = false;
+    } else {
+      this.menuIsOpen = true;
     }
   }
 
@@ -81,10 +104,14 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit {
 
   languageChange(e) {
     if (e.target.value === 'ru') {
-      this.translateService.use('ru').then(() => {});
+      this.translateService.use('ru').then(() => { });
     }
     if (e.target.value === 'en') {
-      this.translateService.use('en').then(() => {});
+      this.translateService.use('en').then(() => { });
     }
+  }
+
+  ngOnDestroy() {
+    this.mq.removeListener(this.matchMediaHandler);
   }
 }
