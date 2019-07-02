@@ -13,7 +13,8 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit, OnDestroy
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('vieProjects') vieProjectsTab: ElementRef;
   self = 'InvestorNavbarComponent';
-  mq = window.matchMedia('screen and (max-width: 760px)'); // also used in .scss
+  mediaQueryString = 'screen and (max-width: 760px)'; // also used in .scss
+  mq = window.matchMedia(this.mediaQueryString);
   matchesMediaQuery = false;
   menuIsOpen = false;
 
@@ -39,7 +40,7 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   initMenu() {
-    this.matchesMediaQuery = window.matchMedia('screen and (max-width: 760px)').matches;
+    this.matchesMediaQuery = window.matchMedia(this.mediaQueryString).matches;
     if (this.matchesMediaQuery === true) {
       this.menuIsOpen = false;
     } else {

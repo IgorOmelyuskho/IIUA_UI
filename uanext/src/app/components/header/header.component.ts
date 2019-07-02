@@ -10,7 +10,8 @@ import { TranslateService } from 'src/app/services/translate.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   userRole: string;
   self = 'HeaderComponent';
-  mq = window.matchMedia('screen and (max-width: 560px)'); // also used in .scss
+  mediaQueryString = 'screen and (max-width: 460px)'; // also used in .scss
+  mq = window.matchMedia(this.mediaQueryString);
   matchesMediaQuery = false;
   menuIsOpen = false;
 
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   initMenu() {
-    this.matchesMediaQuery = window.matchMedia('screen and (max-width: 760px)').matches;
+    this.matchesMediaQuery = window.matchMedia(this.mediaQueryString).matches;
     if (this.matchesMediaQuery === true) {
       this.menuIsOpen = false;
     } else {

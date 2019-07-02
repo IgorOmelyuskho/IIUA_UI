@@ -46,8 +46,8 @@ export class PieChartComponent implements OnInit, AfterViewInit {
       .innerRadius(radius / 1.9);
 
     const labelArc = d3.arc()
-      .outerRadius(radius - 50)
-      .innerRadius(radius - 50);
+      .outerRadius(radius * 0.7)
+      .innerRadius(radius * 0.7);
 
     const pie = d3.pie()
       .sort(null)

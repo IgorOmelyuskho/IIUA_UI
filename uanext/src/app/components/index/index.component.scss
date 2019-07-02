@@ -358,7 +358,7 @@
         width: 100%;
         height: 100%;
         vertical-align: top;
-        background: #efefef;
+        background: white;
 
         path {
           stroke-linecap: round;
@@ -522,7 +522,7 @@
       display: flex;
       flex-direction: column;
       padding-right: 50px;
-      padding-left: 51px;
+      padding-left: 50px;
 
       .trust {
         display: flex;
@@ -641,6 +641,47 @@
             width: 50%;
             min-width: 400px;
             min-height: 250px;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 700px) {
+      .info {
+        padding-left: calc(5px + 1vw);
+        padding-right: calc(5px + 1vw);
+
+        .trust {
+          margin-top: 30px;
+          margin-bottom: 10px;
+
+          .trust-text {
+            font-size: calc(15px + 1vw);
+          }
+
+          .invested-and-projects {
+            .flex {
+              margin-left: 15px;
+            }
+          }
+        }
+
+        .numbers {
+          flex-direction: column;
+
+          .left {
+            display: block;
+            width: 100%;
+
+            .invested-money,
+            .received-investment {
+              height: auto;
+              margin-bottom: 10px;
+            }
+          }
+
+          .right {
+            width: auto;
           }
         }
       }

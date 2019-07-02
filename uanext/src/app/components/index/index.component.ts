@@ -131,21 +131,34 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startCircleAnimation1() {
+    this.setMovingCircleDisplay('circle-for-animation-1', 'none');
     const circleAnimation: any = document.getElementById('circle-animation-1');
     circleAnimation.endElement();
     setTimeout(() => {
+      this.setMovingCircleDisplay('circle-for-animation-1', 'block');
+
       const circleAnimation_2: any = document.getElementById('circle-animation-1');
       circleAnimation_2.beginElement();
     }, this.slidePageDelay);
   }
 
   startCircleAnimation2() {
+    this.setMovingCircleDisplay('circle-for-animation-2', 'none');
     const circleAnimation: any = document.getElementById('circle-animation-2');
     circleAnimation.endElement();
     setTimeout(() => {
+      this.setMovingCircleDisplay('circle-for-animation-2', 'block');
+
       const circleAnimation_2: any = document.getElementById('circle-animation-2');
       circleAnimation_2.beginElement();
     }, this.slidePageDelay);
+  }
+
+  setMovingCircleDisplay(id, display) {
+    const circlesForAnimation = document.querySelectorAll('#' + id);
+    for (let i = 0; i < circlesForAnimation.length; i++) {
+      circlesForAnimation[i].setAttributeNS(null, 'style', 'display:' + display);
+    }
   }
 
   windowResizeHandler = () => {
@@ -194,8 +207,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
     const width = 1440;
     const height = 745;
-    const svgW = svg.clientWidth || svg.parentNode['clientWidth'];
-    const svgH = svg.clientHeight || svg.parentNode['clientHeight'];
+    const box = svg.getBoundingClientRect();
+    const svgW = box.right - box.left;
+    const svgH = box.bottom - box.top;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const oldG = document.getElementById('svg-1-g');
@@ -262,8 +276,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     const re = /\d{1,} \d{1,} C|\d{1,} \d{1,}$/gim;
     const width = 1440;
     const height = 640;
-    const svgW = svg.clientWidth || svg.parentNode['clientWidth'];
-    const svgH = svg.clientHeight || svg.parentNode['clientHeight'];
+    const box = svg.getBoundingClientRect();
+    const svgW = box.right - box.left;
+    const svgH = box.bottom - box.top;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const oldG = document.getElementById('svg-2-g');
     if (oldG != null) {

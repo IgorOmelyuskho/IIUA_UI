@@ -16,11 +16,6 @@ export class StackedAreaChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.chartInit();
-
-    // todo remove
-    // setInterval(() => {
-    //   this.chartInit();
-    // }, 150);
   }
 
   chartInit() {

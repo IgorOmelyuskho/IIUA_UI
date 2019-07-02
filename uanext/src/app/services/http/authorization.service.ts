@@ -145,12 +145,12 @@ export class AuthorizationService {
     return this.http.post<any>(environment.auth + environment.investorRegister, investorDto, { observe: 'response' });
   }
 
-  signUpAsAdmin(adminDto: AdminDto): Observable<any> { // todo
+  signUpAsAdmin(adminDto: AdminDto): Observable<any> {
     // return of({});
     return this.http.post<any>(environment.auth + environment.adminRegister, adminDto, { observe: 'response' });
   }
 
-  signUpAsProjectUser(projectUserDto: ProjectUserDto): Observable<any> { // todo
+  signUpAsProjectUser(projectUserDto: ProjectUserDto): Observable<any> {
     // return of({});
     return this.http.post<any>(environment.auth + environment.projectUserRegister, projectUserDto, { observe: 'response' });
   }
