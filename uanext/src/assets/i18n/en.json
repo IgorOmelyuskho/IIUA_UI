@@ -17,7 +17,7 @@
         "investor": "Investor",
         "vendor": "Vendor",
         "social": "Login using social networks:",
-        "useEmail": "Use mail for registration"
+        "useEmail": "Use email for registration"
     },
     "SignupInvestorComponent": {
         "name": "Full Name",
@@ -38,7 +38,8 @@
         "repeatPasswordRequired": "This field is required",
         "passwordsNotMatch": "Passwords not match",
         "haveAccount": "Already have an account?",
-        "register": "REGISTER"
+        "register": "REGISTER",
+        "checkEmail": "You received a message in the email"
     },
     "SignupVendorComponent": {
         "name": "Full Name",
@@ -58,7 +59,8 @@
         "repeatPasswordRequired": "This field is required",
         "passwordsNotMatch": "Passwords not match",
         "haveAccount": "Already have an account?",
-        "register": "REGISTER"
+        "register": "REGISTER",
+        "checkEmail": "You received a message in the email"
     },
     "IndexComponent": {
         "start": "Start",
@@ -108,7 +110,7 @@
         "enterEmail": "Enter your email address",
         "subscribe": "Subscribe",
         "emailIsSafe": "* Your e-mail is safe with us. We will never share with anyone.",
-        "useEmail": "Sign In with mail"
+        "useEmail": "Sign In with email"
     },
     "InteractiveInvestmentMinCardComponent": {
         "confirm": "Confirm",
@@ -550,7 +552,8 @@
           "repeatPassword": "Repeat password",
           "repeatPasswordEmpty": "This field is required",
           "passwordNotMatch": "Passwords not match",
-          "signUp": "Sign Up"
+          "signUp": "Sign Up",
+          "checkEmail": "You received a message in the email"
       },
       "EmailValidateComponent": {
           "text": "You have successfully registered",
@@ -559,6 +562,17 @@
       },
       "PasswordRecoveryComponent": {
         "text": "To reset your password enter your email",
-        "recovery": "RECOVERY"
+        "recovery": "RECOVERY",
+        "email": "Email",
+        "emailRequired": "Email is required",
+        "validEmail": "Email must be a valid email address",
+        "checkEmail": "You received a message in the email"
+      },
+      "ConfirmPasswordRecoveryComponent": {
+          "text": "Create a new password",
+          "recover": "RECOVER",
+          "password": "Password",
+          "passwordRequired": "Password is required",
+          "passwordMinLength": "Password must be at least 6 characters"
       }
 }

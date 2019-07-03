@@ -24,6 +24,7 @@ export class ProjectUserSignupComponent implements OnInit {
     private authService: AuthorizationService,
     private router: Router,
     private notify: NotificationService,
+    private translate: TranslateService
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
@@ -52,10 +53,14 @@ export class ProjectUserSignupComponent implements OnInit {
 
     this.authService.signUpAsProjectUser(this.signupForm.value).subscribe(
       response => {
+        console.log(response);
         this.showProgress = false;
         if (response.status === 200) {
-          this.notify.show(response.body.data);
-          this.router.navigate(['signin']);
+          if (response.body == null) {
+            this.notify.show(this.translate.data['ProjectUserSignupComponent'].checkEmail);
+          } else {
+            this.notify.show(response.body.data);
+          }
         } else {
           this.notify.show(response.body.error);
         }
@@ -63,7 +68,7 @@ export class ProjectUserSignupComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgress = false;
-        this.notify.show(err.message);
+        this.notify.show(err.error.error.errorMessage[0]);
       }
     );
   }

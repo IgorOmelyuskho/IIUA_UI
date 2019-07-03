@@ -115,10 +115,8 @@ export class SigninComponent implements OnInit {
 
     this.authService.signIn(this.signinForm.value).subscribe(
       response => {
-        console.log(response);
         this.showProgressBar = false;
 
-        console.log(response.body);
         localStorage.setItem('token', response.body);
         const role: UserRole = this.stateService.role();
 
@@ -138,7 +136,7 @@ export class SigninComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgressBar = false;
-        this.notify.show(err.message);
+        this.notify.show(err.error.error.errorMessage[0]);
       }
     );
   }

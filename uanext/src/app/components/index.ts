@@ -61,6 +61,7 @@ import { HistogramChartComponent } from './histogram-chart/histogram-chart.compo
 import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-chart.component';
 import { EmailValidateComponent } from './email-validate/email-validate.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { ConfirmPasswordRecoveryComponent } from './confirm-password-recovery/confirm-password-recovery.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -120,7 +121,8 @@ export {
   HistogramChartComponent,
   StackedAreaChartComponent,
   EmailValidateComponent,
-  PasswordRecoveryComponent
+  PasswordRecoveryComponent,
+  ConfirmPasswordRecoveryComponent
 };
 
 export const components = [
@@ -180,7 +182,8 @@ export const components = [
   HistogramChartComponent,
   StackedAreaChartComponent,
   EmailValidateComponent,
-  PasswordRecoveryComponent
+  PasswordRecoveryComponent,
+  ConfirmPasswordRecoveryComponent
 ];
 
 

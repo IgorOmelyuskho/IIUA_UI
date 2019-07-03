@@ -14,6 +14,9 @@ export const environment = {
   vendorProfile: '/api/Vendor/',
   projectUserRegister: '/api/ProjectUser/register',
   projectUserProfile: '/api/ProjectUser/',
+  emailValidate: '/validate/',
+  passwordRecovery: '/api/PasswordRecovery/',
+  passwordRecovery_2: '/api/PasswordRecovery/recovery/',
   adminRegister: '/api/todo/register',
   adminProfile: '/api/todo/',
 

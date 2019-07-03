@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import FormHelper from 'src/app/helperClasses/helperClass';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
-import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/http/notification.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-password-recovery',
@@ -11,15 +12,17 @@ import { Router } from '@angular/router';
 })
 export class PasswordRecoveryComponent implements OnInit {
   self = 'PasswordRecoveryComponent';
-  signinForm: FormGroup;
+  recoveryForm: FormGroup;
   FormHelper = FormHelper;
+  submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
-    private router: Router,
+    private notify: NotificationService,
+    private translate: TranslateService
   ) {
-    this.signinForm = this.formBuilder.group({
+    this.recoveryForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
     });
   }
@@ -28,17 +31,20 @@ export class PasswordRecoveryComponent implements OnInit {
   }
 
   get formControls() {
-    return this.signinForm.controls;
+    return this.recoveryForm.controls;
   }
 
   onSubmit() {
-    if (this.signinForm.invalid) {
+    this.submitted = true;
+
+    if (this.recoveryForm.invalid) {
       return;
     }
 
-    this.authService.signIn(this.signinForm.value).subscribe(
+    this.authService.passwordRecovery(this.recoveryForm.value.email).subscribe(
       response => {
         console.log(response);
+        this.notify.show(this.translate.data['PasswordRecoveryComponent'].checkEmail);
       },
       err => {
         console.warn(err);

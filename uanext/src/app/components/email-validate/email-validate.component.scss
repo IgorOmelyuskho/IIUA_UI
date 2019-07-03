@@ -48,13 +48,15 @@
         }
 
         .iiua {
-          font-size:  calc(20px + 2vw);
+          font-size: calc(20px + 2vw);
           font-weight: bold;
         }
 
         .text {
           font-size: calc(20px + 1vw);
           padding: calc(5px + 1vw);
+          padding-left: calc(10px + 3vw);
+          padding-right: calc(10px + 3vw);
         }
 
         button {

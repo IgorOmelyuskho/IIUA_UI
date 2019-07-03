@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IndexComponent, ProjectUserPageComponent, ProjectUserProfileComponent, ProjectUserSignupComponent,
-  EmailValidateComponent, PasswordRecoveryComponent } from './components';
+  EmailValidateComponent, PasswordRecoveryComponent, ConfirmPasswordRecoveryComponent } from './components';
 import { VendorProjectsComponent } from './components';
 import { CreateVendorProjectComponent } from './components';
 import { SigninComponent } from './components';
@@ -78,6 +78,7 @@ const routes: Routes = [
   { path: 'projectUser', component: ProjectUserPageComponent, children: childProjectUserRoutes },
   { path: 'email-validate/:code', component: EmailValidateComponent },
   { path: 'password-recovery', component: PasswordRecoveryComponent },
+  { path: 'password-recovery/:code', component: ConfirmPasswordRecoveryComponent },
   { path: '**', redirectTo: '' }
 ];
 
