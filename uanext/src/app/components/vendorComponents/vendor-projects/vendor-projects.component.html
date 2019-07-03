@@ -1,7 +1,7 @@
 <mat-progress-bar *ngIf="isLoaded === false" mode="indeterminate" class="progress-bar-fixed"></mat-progress-bar>
 
 <div class="container">
-  <button class="btn btn-success m-1" (click)="createNewProject()">{{ 'newProject' | translate:self }}</button>
+  <button class="btn btn-success mt-3" (click)="createNewProject()">{{ 'newProject' | translate:self }}</button>
 
   <div *ngIf="projects?.length !== 0 && isLoaded === true" class="projects">
     <div *ngFor="let project of projects" class="project">

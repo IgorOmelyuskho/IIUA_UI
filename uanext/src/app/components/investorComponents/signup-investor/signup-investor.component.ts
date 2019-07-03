@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { matchOtherValidator } from '../../../validators/validators';
 import { NotificationService } from 'src/app/services/http/notification.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-signup-investor',
@@ -22,10 +23,12 @@ export class SignupInvestorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
     private router: Router,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private translate: TranslateService
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
+      creditCardNumber: ['', [Validators.required, Validators.pattern(FormHelper.creditCardPattern)]],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -51,10 +54,14 @@ export class SignupInvestorComponent implements OnInit {
 
     this.authService.signUpAsInvestor(this.signupForm.value).subscribe(
       response => {
+        console.log(response);
         this.showProgress.emit(false);
-        if (response.body.isSuccess === true && response.status === 200) {
-          this.notify.show(response.body.data);
-          this.router.navigate(['signin']);
+        if (response.status === 200) {
+          if (response.body == null) {
+            this.notify.show(this.translate.data['SignupInvestorComponent'].checkEmail);
+          } else {
+            this.notify.show(response.body.data);
+          }
         } else {
           this.notify.show(response.body.error);
         }
@@ -62,7 +69,7 @@ export class SignupInvestorComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgress.emit(false);
-        this.notify.show(err.error.error.errorMessage);
+        this.notify.show(err.error.error.errorMessage[0]);
       }
     );
   }

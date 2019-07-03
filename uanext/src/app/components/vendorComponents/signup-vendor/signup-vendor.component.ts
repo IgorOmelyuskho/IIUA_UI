@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { matchOtherValidator } from '../../../validators/validators';
 import { NotificationService } from 'src/app/services/http/notification.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-signup-vendor',
@@ -23,6 +24,7 @@ export class SignupVendorComponent implements OnInit {
     private authService: AuthorizationService,
     private router: Router,
     private notify: NotificationService,
+    private translate: TranslateService
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
@@ -52,10 +54,14 @@ export class SignupVendorComponent implements OnInit {
 
     this.authService.signUpAsVendor(this.signupForm.value).subscribe(
       response => {
+        console.log(response);
         this.showProgress.emit(false);
-        if (response.body.isSuccess === true && response.status === 200) {
-          this.notify.show(response.body.data);
-          this.router.navigate(['signin']);
+        if (response.status === 200) {
+          if (response.body == null) {
+            this.notify.show(this.translate.data['SignupVendorComponent'].checkEmail);
+          } else {
+            this.notify.show(response.body.data);
+          }
         } else {
           this.notify.show(response.body.error);
         }
@@ -63,7 +69,7 @@ export class SignupVendorComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgress.emit(false);
-        this.notify.show(err.error.error.errorMessage);
+        this.notify.show(err.error.error.errorMessage[0]);
       }
     );
   }

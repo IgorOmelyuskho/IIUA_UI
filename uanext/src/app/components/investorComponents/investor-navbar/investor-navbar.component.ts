@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { TranslateService } from 'src/app/services/translate.service';
@@ -8,15 +8,21 @@ import { TranslateService } from 'src/app/services/translate.service';
   templateUrl: './investor-navbar.component.html',
   styleUrls: ['./investor-navbar.component.scss']
 })
-export class InvestorNavbarComponent implements OnInit, AfterViewInit {
+export class InvestorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('home') homeTab: ElementRef;
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('vieProjects') vieProjectsTab: ElementRef;
   self = 'InvestorNavbarComponent';
+  mediaQueryString = 'screen and (max-width: 760px)'; // also used in .scss
+  mq = window.matchMedia(this.mediaQueryString);
+  matchesMediaQuery = false;
+  menuIsOpen = false;
 
   constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) { }
 
   ngOnInit() {
+    this.initMenu();
+    this.mq.addListener(this.matchMediaHandler);
   }
 
   ngAfterViewInit() {
@@ -30,6 +36,24 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit {
     }
     if (tab === 'main-page') {
       this.homeTab.nativeElement.classList.add('selected');
+    }
+  }
+
+  initMenu() {
+    this.matchesMediaQuery = window.matchMedia(this.mediaQueryString).matches;
+    if (this.matchesMediaQuery === true) {
+      this.menuIsOpen = false;
+    } else {
+      this.menuIsOpen = true;
+    }
+  }
+
+  matchMediaHandler = (data) => {
+    this.matchesMediaQuery = data.matches;
+    if (this.matchesMediaQuery === true) {
+      this.menuIsOpen = false;
+    } else {
+      this.menuIsOpen = true;
     }
   }
 
@@ -66,5 +90,9 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit {
     if (e.target.value === 'en') {
       this.translateService.use('en').then(() => {});
     }
+  }
+
+  ngOnDestroy() {
+    this.mq.removeListener(this.matchMediaHandler);
   }
 }

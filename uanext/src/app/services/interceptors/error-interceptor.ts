@@ -8,28 +8,30 @@ import { AuthorizationService } from '../http/authorization.service';
 import { NotificationService } from '../http/notification.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class ErrorInterceptor  implements HttpInterceptor {
+export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(private authService: AuthorizationService, private notify: NotificationService) { }
+  constructor(private authService: AuthorizationService, private notify: NotificationService) { }
 
-    intercept(
-        request: HttpRequest<any>,
-        next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler): Observable<HttpEvent<any>> {
 
-        return next.handle(request)
-          .pipe(
-            catchError(
-              (error: any) => {
-                if (error.status === 401) {
-                  console.log(error);
-                  this.notify.show(error.statusText);
-                  this.authService.signOut();
-                }
+    return next.handle(request)
+      .pipe(
+        catchError(
+          (error: any) => {
+            if (error.status === 401) {
+              console.log(error);
+              this.notify.show(error.statusText);
+              if (window.location.href.includes('signin') === false && window.location.href.includes('signup') === false) {
+                this.authService.signOut();
+              }
+            }
 
-                return throwError(error);
-              })
-          );
-      }
+            return throwError(error);
+          })
+      );
+  }
 }

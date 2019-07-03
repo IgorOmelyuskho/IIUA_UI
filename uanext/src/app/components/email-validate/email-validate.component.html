@@ -1,0 +1,17 @@
+<div class="wrapper">
+  <div class="sticky">
+    <app-header></app-header>
+  </div>
+
+  <section>
+    <div class="form-wrapper">
+      <div class="form">
+        <div class="top-green-div"></div>
+        <div class="iiua">IIUA</div>
+        <div class="text">{{ 'text' | translate:self }}</div>
+        <div class="text">{{ 'text2' | translate:self }}</div>
+        <button (click)="confirmEmail()">{{ 'confirm' | translate:self }}</button>
+      </div>
+    </div>
+  </section>
+</div>

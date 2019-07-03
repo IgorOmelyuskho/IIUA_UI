@@ -25,10 +25,6 @@ export class VendorProjectsComponent implements OnInit {
       },
       err => {
         console.warn(err);
-        // user no have projects
-        // if (err.error.error.code === 2) {
-        //   this.projects = [];
-        // }
         this.projects = [];
         this.isLoaded = true;
       }

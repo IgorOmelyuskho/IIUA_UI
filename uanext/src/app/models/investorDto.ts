@@ -4,4 +4,5 @@ export interface InvestorDto {
   rePassword?: string;
   password: string;
   email: string;
+  creditCardNumber?: string;
 }

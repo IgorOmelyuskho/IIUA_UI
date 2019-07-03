@@ -1,4 +1,4 @@
-export interface AdminRole { // todo fields
+export interface AdminRole {
   fullName: string;
   email: string;
   phone: string;

@@ -16,7 +16,6 @@
 
   .header {
     background: salmon;
-    height: 50px;
     position: sticky;
     position: -webkit-sticky;
     top: 0;
@@ -41,7 +40,7 @@
     }
 
     .slide-up {
-      top: 20px;
+      top: 10px;
       transform: rotate(180deg);
 
       &:hover {
@@ -232,6 +231,10 @@
         animation: pulse 1s 1 ease-in-out;
       }
 
+      .restart-color-animation {
+        animation: colorAnimation 1s 1 ease-in-out;
+      }
+
       @keyframes pulse {
         from {
           transform: scale(1);
@@ -246,6 +249,20 @@
         }
       }
 
+      @keyframes colorAnimation {
+        from {
+          color: black;
+        }
+
+        50% {
+          color: #75af27;
+        }
+
+        to {
+          color: black;
+        }
+      }
+
       .investor-header,
       .vendor-header {
         display: flex;
@@ -254,7 +271,7 @@
         font-weight: bold;
         z-index: 1;
         align-items: baseline;
-        top: calc(10px + 5vh);
+        top: calc(10px + 3vh);
         left: 50%;
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
@@ -295,6 +312,7 @@
           padding: calc(2px + 0.3vw);
           border-radius: 6px;
           z-index: 1;
+          color: black;
 
           .name {
             font-size: calc(8px + 0.7vw);
@@ -308,7 +326,7 @@
             font-size: calc(8px + 0.5vw);
             line-height: 1.13;
             letter-spacing: 0.4px;
-            color: #323232;
+            opacity: 0.9;
             text-align: right;
           }
         }
@@ -358,7 +376,7 @@
         width: 100%;
         height: 100%;
         vertical-align: top;
-        background: #efefef;
+        background: white;
 
         path {
           stroke-linecap: round;
@@ -446,27 +464,27 @@
       }
 
       .animation-3 {
-        animation-delay: 2.05s;
+        animation-delay: 2.0s;
       }
 
       .animation-4 {
-        animation-delay: 2.88s;
+        animation-delay: 2.83s;
       }
 
       .animation-5 {
-        animation-delay: 3.95s;
+        animation-delay: 3.9s;
       }
 
       .animation-6 {
-        animation-delay: 4.64s;
+        animation-delay: 4.59s;
       }
 
       .animation-7 {
-        animation-delay: 5.67s;
+        animation-delay: 5.62s;
       }
 
       .animation-8 {
-        animation-delay: 6.58s;
+        animation-delay: 6.53s;
       }
     }
 
@@ -497,11 +515,11 @@
       }
 
       .animation-1 {
-        animation-delay: 0.79s;
+        animation-delay: 0.83s;
       }
 
       .animation-2 {
-        animation-delay: 3.03s;
+        animation-delay: 3.0s;
       }
 
       .animation-3 {
@@ -522,7 +540,7 @@
       display: flex;
       flex-direction: column;
       padding-right: 50px;
-      padding-left: 51px;
+      padding-left: 50px;
 
       .trust {
         display: flex;
@@ -646,6 +664,47 @@
       }
     }
 
+    @media screen and (max-width: 700px) {
+      .info {
+        padding-left: calc(5px + 1vw);
+        padding-right: calc(5px + 1vw);
+
+        .trust {
+          margin-top: 30px;
+          margin-bottom: 10px;
+
+          .trust-text {
+            font-size: calc(15px + 1vw);
+          }
+
+          .invested-and-projects {
+            .flex {
+              margin-left: 15px;
+            }
+          }
+        }
+
+        .numbers {
+          flex-direction: column;
+
+          .left {
+            display: block;
+            width: 100%;
+
+            .invested-money,
+            .received-investment {
+              height: auto;
+              margin-bottom: 10px;
+            }
+          }
+
+          .right {
+            width: auto;
+          }
+        }
+      }
+    }
+
     .subscribe-and-footer {
       height: 100%;
       display: flex;
@@ -746,6 +805,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
+        justify-content: space-around; // if not support space-evenly;
 
         .iiua {
           font-family: Helvetica;
@@ -758,6 +818,7 @@
         .menu {
           display: flex;
           justify-content: center;
+          flex-wrap: wrap;
 
           .item {
             margin: 0px 10px;

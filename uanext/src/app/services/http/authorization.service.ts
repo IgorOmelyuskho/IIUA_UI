@@ -38,6 +38,14 @@ export class AuthorizationService {
     let isExpired: boolean;
     let role: string;
 
+    if (window.location.href.includes('email-validate')) {
+      return;
+    }
+
+    if (window.location.href.includes('password-recovery')) {
+      return;
+    }
+
     if (token == null || token === '') {
       this.signOut();
       return;
@@ -145,12 +153,12 @@ export class AuthorizationService {
     return this.http.post<any>(environment.auth + environment.investorRegister, investorDto, { observe: 'response' });
   }
 
-  signUpAsAdmin(adminDto: AdminDto): Observable<any> { // todo
+  signUpAsAdmin(adminDto: AdminDto): Observable<any> {
     // return of({});
     return this.http.post<any>(environment.auth + environment.adminRegister, adminDto, { observe: 'response' });
   }
 
-  signUpAsProjectUser(projectUserDto: ProjectUserDto): Observable<any> { // todo
+  signUpAsProjectUser(projectUserDto: ProjectUserDto): Observable<any> {
     // return of({});
     return this.http.post<any>(environment.auth + environment.projectUserRegister, projectUserDto, { observe: 'response' });
   }
@@ -160,11 +168,24 @@ export class AuthorizationService {
     return this.http.post<any>(environment.auth + environment.authenticate, investorOrVendor, { observe: 'response' });
   }
 
+  emailValidate(code: string): Observable<any> {
+    return this.http.get<any>(environment.auth + environment.emailValidate + code);
+  }
+
+  passwordRecovery(email: string): Observable<any> {
+    return this.http.get<any>(environment.auth + environment.passwordRecovery + email);
+  }
+
+  passwordRecoveryCode(code: string, password: string): Observable<any> {
+    return this.http.put<any>(environment.auth + environment.passwordRecovery_2 + code, password, { observe: 'response' });
+  }
+
   signOut(): void {
     localStorage.removeItem('token');
     this.stateService.user$.next(null);
     this.stateService.authorized$.next(false);
     this.router.navigate(['']);
+    this.socialAuthService.signOut();
   }
 
   userIsAuthorized(): boolean {

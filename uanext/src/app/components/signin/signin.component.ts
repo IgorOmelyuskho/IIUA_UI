@@ -117,7 +117,7 @@ export class SigninComponent implements OnInit {
       response => {
         this.showProgressBar = false;
 
-        localStorage.setItem('token', response.body.data);
+        localStorage.setItem('token', response.body);
         const role: UserRole = this.stateService.role();
 
         if (role === UserRole.Vendor) {
@@ -136,7 +136,7 @@ export class SigninComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgressBar = false;
-        this.notify.show(err.error.error.errorMessage);
+        this.notify.show(err.error.error.errorMessage[0]);
       }
     );
   }

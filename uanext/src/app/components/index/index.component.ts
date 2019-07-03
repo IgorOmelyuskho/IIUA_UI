@@ -19,9 +19,12 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   canScrollUp = false;
   canScrollDown = true;
   self = 'IndexComponent';
+  currentPage = 1;
 
   animationInterval_1: any;
   animationInterval_2: any;
+  timeOut1: any;
+  timeOut2: any;
 
   slidePageDelay = 900; // wait for slidePage
 
@@ -71,8 +74,18 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.slide = new slidePage({
       before: (origin, direction, target) => {
+        this.currentPage = target;
         this.canScrollDown = true;
         this.canScrollUp = true;
+
+        clearTimeout(this.timeOut1);
+        clearTimeout(this.timeOut2);
+
+        requestAnimationFrame(() => {
+          this.init1();
+          this.init2();
+        });
+
         if (target === 1) {
           this.canScrollUp = false;
         }
@@ -112,40 +125,67 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   startAnimation1() {
     const elements = document.querySelectorAll('.investor-curve-line .animation-element');
+    const elements_2 = document.querySelectorAll('.investor-curve-line .block .name-and-text');
     for (let i = 0; i < elements.length; i++) {
       elements[i].classList.remove('restart-animation');
+      elements_2[i].classList.remove('restart-color-animation');
       setTimeout(() => {
         elements[i].classList.add('restart-animation');
+        elements_2[i].classList.add('restart-color-animation');
       }, this.slidePageDelay); // wait slidePage and rewrite class (delay 0 not work)
     }
   }
 
   startAnimation2() {
     const elements = document.querySelectorAll('.vendor-curve-line .animation-element');
+    const elements_2 = document.querySelectorAll('.vendor-curve-line .block .name-and-text');
     for (let i = 0; i < elements.length; i++) {
       elements[i].classList.remove('restart-animation');
+      elements_2[i].classList.remove('restart-color-animation');
       setTimeout(() => {
         elements[i].classList.add('restart-animation');
+        elements_2[i].classList.add('restart-color-animation');
       }, this.slidePageDelay); // wait slidePage and rewrite class (delay 0 not work)
     }
   }
 
   startCircleAnimation1() {
+    this.setMovingCircleDisplay('circle-for-animation-1', 'none');
     const circleAnimation: any = document.getElementById('circle-animation-1');
     circleAnimation.endElement();
     setTimeout(() => {
+      this.setMovingCircleDisplay('circle-for-animation-1', 'block');
       const circleAnimation_2: any = document.getElementById('circle-animation-1');
       circleAnimation_2.beginElement();
     }, this.slidePageDelay);
+    this.timeOut1 = setTimeout(this.hideCircle1, 8000 + this.slidePageDelay);
   }
 
   startCircleAnimation2() {
+    this.setMovingCircleDisplay('circle-for-animation-2', 'none');
     const circleAnimation: any = document.getElementById('circle-animation-2');
     circleAnimation.endElement();
     setTimeout(() => {
+      this.setMovingCircleDisplay('circle-for-animation-2', 'block');
       const circleAnimation_2: any = document.getElementById('circle-animation-2');
       circleAnimation_2.beginElement();
     }, this.slidePageDelay);
+    this.timeOut2 = setTimeout(this.hideCircle2, 8000 + this.slidePageDelay);
+  }
+
+  hideCircle1 = () => {
+    this.setMovingCircleDisplay('circle-for-animation-1', 'none');
+  }
+
+  hideCircle2 = () => {
+    this.setMovingCircleDisplay('circle-for-animation-2', 'none');
+  }
+
+  setMovingCircleDisplay(id, display) {
+    const circlesForAnimation = document.querySelectorAll('#' + id);
+    for (let i = 0; i < circlesForAnimation.length; i++) {
+      circlesForAnimation[i].setAttributeNS(null, 'style', 'display:' + display);
+    }
   }
 
   windowResizeHandler = () => {
@@ -176,10 +216,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
-  signOut(): void {
-    this.socialAuthService.signOut();
-  }
-
   init1() {
     const svg = document.getElementById('svg-id-1');
     const str = 'M 1304 120 C 1365 209 1373 414 1276 524 C 1211 606 1065 423 996 468 C 884 511 970 268 832 273 ' +
@@ -194,8 +230,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
     const width = 1440;
     const height = 745;
-    const svgW = svg.clientWidth || svg.parentNode['clientWidth'];
-    const svgH = svg.clientHeight || svg.parentNode['clientHeight'];
+    const box = svg.getBoundingClientRect();
+    const svgW = box.right - box.left;
+    const svgH = box.bottom - box.top;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const oldG = document.getElementById('svg-1-g');
@@ -262,8 +299,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     const re = /\d{1,} \d{1,} C|\d{1,} \d{1,}$/gim;
     const width = 1440;
     const height = 640;
-    const svgW = svg.clientWidth || svg.parentNode['clientWidth'];
-    const svgH = svg.clientHeight || svg.parentNode['clientHeight'];
+    const box = svg.getBoundingClientRect();
+    const svgW = box.right - box.left;
+    const svgH = box.bottom - box.top;
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     const oldG = document.getElementById('svg-2-g');
     if (oldG != null) {

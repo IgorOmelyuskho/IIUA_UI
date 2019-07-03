@@ -29,13 +29,14 @@
 
       .top-green-div {
         height: 7px;
-        border-radius: 6px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
         width: 100%;
         background: $green;
       }
 
       .registration {
-        font-size: 46px;
+        font-size: calc(30px + 1vw);
         font-weight: bold;
         line-height: 1.13;
         letter-spacing: 1.3px;
@@ -128,8 +129,8 @@
 
       .vendor-form,
       .investor-form {
-        padding-left: 56px;
-        padding-right: 56px;
+        padding-left: calc(15px + 2vw);
+        padding-right: calc(15px + 2vw);
         padding-bottom: 8px;
       }
     }
