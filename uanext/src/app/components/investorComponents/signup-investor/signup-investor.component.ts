@@ -26,6 +26,7 @@ export class SignupInvestorComponent implements OnInit {
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
+      creditCardNumber: ['', [Validators.required, Validators.pattern(FormHelper.creditCardPattern)]],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -52,7 +53,7 @@ export class SignupInvestorComponent implements OnInit {
     this.authService.signUpAsInvestor(this.signupForm.value).subscribe(
       response => {
         this.showProgress.emit(false);
-        if (response.body.isSuccess === true && response.status === 200) {
+        if (response.status === 200) {
           this.notify.show(response.body.data);
           this.router.navigate(['signin']);
         } else {
@@ -62,7 +63,7 @@ export class SignupInvestorComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgress.emit(false);
-        this.notify.show(err.error.error.errorMessage);
+        this.notify.show(err.message);
       }
     );
   }

@@ -51,7 +51,7 @@ export class AdminSignupComponent implements OnInit {
     this.authService.signUpAsAdmin(this.signupForm.value).subscribe(
       response => {
         this.showProgress = false;
-        if (response.body.isSuccess === true && response.status === 200) {
+        if (response.status === 200) {
           this.notify.show(response.body.data);
           this.router.navigate(['signin']);
         } else {
@@ -61,7 +61,7 @@ export class AdminSignupComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgress = false;
-        this.notify.show(err.error.error.errorMessage);
+        this.notify.show(err.message);
       }
     );
   }

@@ -22,6 +22,9 @@
     "SignupInvestorComponent": {
         "name": "Полное Имя",
         "nameRequired": "Требуется полное имя",
+        "creditCardNumber": "Номер кредитной карты",
+        "creditCardNumberRequired": "Требуется номер кредитной карты",
+        "creditCardNumberValid": "Введите действительный номер кредитной карты",
         "phone": "Телефон",
         "phoneRequired": "Требуется телефон",
         "validPhone": "Введите действующий телефон",
@@ -80,7 +83,7 @@
         "stayInTouchText": "Получай новости, общайся с вендором",
         "withoutCommission": "Без комисиий площадки",
         "withoutCommissionText": "Нет скрытых платежей",
-        "display": "3Д отображение бизнеса на карте",
+        "display": "3D отображение бизнеса на карте",
         "displayText": "Следи за изменением вендора онйлайн",
         "financing": "Финансирование",
         "financingText": "Получение средств для развития бизнеса",
@@ -459,7 +462,7 @@
     },
     "AdminPageComponent": {
         "profile": "Профиль",
-        "upload3DModels": "Загузить 3Д модели",
+        "upload3DModels": "Загузить 3D модели",
         "signOut": "Выйти"
     },
     "ProjectUserPageComponent": {
@@ -548,5 +551,14 @@
         "repeatPasswordEmpty": "Это поле обязательно к заполнению",
         "passwordNotMatch": "Пароли не совпадают",
         "signUp": "Зарегистрироватся"
-    }
+    },
+    "EmailValidateComponent": {
+        "text": "Вы успешно зарегистрировались",
+        "text2": "Осталось подтвердить емайл",
+        "confirm": "ПОДТВЕРДИТЬ"
+    },
+    "PasswordRecoveryComponent": {
+        "text": "Чтобы восстановить пароль введите свой емайл",
+        "recovery": "ВОССТАНОВИТЬ"
+      }
 }

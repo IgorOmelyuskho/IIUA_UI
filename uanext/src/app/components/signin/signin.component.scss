@@ -35,18 +35,18 @@
       }
 
       h2 {
-        margin-top: 30px;
-        font-size: 46px;
+        font-size: calc(30px + 1vw);
         font-weight: bold;
         line-height: 1.13;
         letter-spacing: 1.3px;
         text-align: center;
         color: #000000;
+        padding-top: 20px;
+        padding-bottom: 25px;
       }
 
       .social {
         background: #f4f4f4;
-        margin-top: 40px;
         margin-bottom: 40px;
         height: 114px;
 
@@ -84,8 +84,8 @@
       }
 
       form {
-        padding-left: 57px;
-        padding-right: 57px;
+        padding-left: calc(15px + 2vw);
+        padding-right: calc(15px + 2vw);
         padding-top: 10px;
 
         .links {
@@ -98,6 +98,16 @@
             line-height: 1.23;
             letter-spacing: 0.4px;
             color: $green;
+          }
+        }
+
+        @media screen and (max-width: 460px) {
+          .links {
+            flex-direction: column;
+
+            a {
+              padding-bottom: 10px;
+            }
           }
         }
 

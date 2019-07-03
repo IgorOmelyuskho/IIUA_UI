@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IndexComponent, ProjectUserPageComponent, ProjectUserProfileComponent, ProjectUserSignupComponent } from './components';
+import { IndexComponent, ProjectUserPageComponent, ProjectUserProfileComponent, ProjectUserSignupComponent,
+  EmailValidateComponent, PasswordRecoveryComponent } from './components';
 import { VendorProjectsComponent } from './components';
 import { CreateVendorProjectComponent } from './components';
 import { SigninComponent } from './components';
@@ -75,6 +76,8 @@ const routes: Routes = [
   { path: 'home', component: HomePageComponent, children: childHomeRoutes, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminPageComponent, children: childAdminRoutes },
   { path: 'projectUser', component: ProjectUserPageComponent, children: childProjectUserRoutes },
+  { path: 'email-validate/:code', component: EmailValidateComponent },
+  { path: 'password-recovery', component: PasswordRecoveryComponent },
   { path: '**', redirectTo: '' }
 ];
 

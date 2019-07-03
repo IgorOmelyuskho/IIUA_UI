@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div class="header">
+  <div *ngIf="currentPage === 1" class="header">
     <app-header *ngIf="!userRole"></app-header>
     <app-investor-navbar *ngIf="userRole === 'Investor'"></app-investor-navbar>
     <app-vendor-navbar *ngIf="userRole === 'Vendor'"></app-vendor-navbar>
@@ -42,7 +42,6 @@
                 <!-- <div class="social-signin-btn">
                   <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 </div> -->
-                <button (click)="signOut()">Sign Out</button>
               </div>
             </div>
             <div class="use-email">
@@ -88,7 +87,7 @@
           </div>
 
           <div class="block b1">
-            <div class="name-and-text">
+            <div class="name-and-text animation-1">
               <div class="name">{{ 'security' | translate:self }}</div>
               <div class="text">{{ 'securityText' | translate:self }}</div>
             </div>
@@ -97,7 +96,7 @@
             </figure>
           </div>
           <div class="block b2">
-            <div class="name-and-text">
+            <div class="name-and-text animation-2">
               <div class="name">{{ 'simplicity' | translate:self }}</div>
               <div class="text">{{ 'simplicityText' | translate:self }}</div>
             </div>
@@ -106,7 +105,7 @@
             </figure>
           </div>
           <div class="block b3 reverse">
-            <div class="name-and-text">
+            <div class="name-and-text animation-3">
               <div class="name">{{ 'transparency' | translate:self }}</div>
               <div class="text">{{ 'transparencyText' | translate:self }}</div>
             </div>
@@ -115,7 +114,7 @@
             </figure>
           </div>
           <div class="block b4 reverse">
-            <div class="name-and-text">
+            <div class="name-and-text animation-4">
               <div class="name">{{ 'rating' | translate:self }}</div>
               <div class="text">{{ 'ratingText' | translate:self }}</div>
             </div>
@@ -124,7 +123,7 @@
             </figure>
           </div>
           <div class="block b5 reverse">
-            <div class="name-and-text">
+            <div class="name-and-text animation-5">
               <div class="name">{{ 'audit' | translate:self }}</div>
               <div class="text">{{ 'auditText' | translate:self }}</div>
             </div>
@@ -133,7 +132,7 @@
             </figure>
           </div>
           <div class="block b6">
-            <div class="name-and-text">
+            <div class="name-and-text animation-6">
               <div class="name">{{ 'stayInTouch' | translate:self }}</div>
               <div class="text">{{ 'stayInTouchText' | translate:self }}</div>
             </div>
@@ -142,7 +141,7 @@
             </figure>
           </div>
           <div class="block b7 reverse">
-            <div class="name-and-text">
+            <div class="name-and-text animation-7">
               <div class="name">{{ 'withoutCommission' | translate:self }}</div>
               <div class="text">{{ 'withoutCommissionText' | translate:self }}</div>
             </div>
@@ -151,7 +150,7 @@
             </figure>
           </div>
           <div class="block b8 reverse">
-            <div class="name-and-text">
+            <div class="name-and-text animation-8">
               <div class="name">{{ 'display' | translate:self }}</div>
               <div class="text">{{ 'displayText' | translate:self }}</div>
             </div>
@@ -174,7 +173,7 @@
           </div>
 
           <div class="block b1 reverse">
-            <div class="name-and-text">
+            <div class="name-and-text animation-1">
               <div class="name">{{ 'financing' | translate:self }}</div>
               <div class="text">{{ 'financingText' | translate:self }}</div>
             </div>
@@ -183,7 +182,7 @@
             </figure>
           </div>
           <div class="block b2 reverse">
-            <div class="name-and-text">
+            <div class="name-and-text animation-2">
               <div class="name">{{ 'board' | translate:self }}</div>
               <div class="text">{{ 'boardText' | translate:self }}</div>
             </div>
@@ -192,7 +191,7 @@
             </figure>
           </div>
           <div class="block b3">
-            <div class="name-and-text">
+            <div class="name-and-text animation-3">
               <div class="name">{{ 'selection' | translate:self }}</div>
               <div class="text">{{ 'selectionText' | translate:self }}</div>
             </div>
@@ -201,7 +200,7 @@
             </figure>
           </div>
           <div class="block b4 reverse">
-            <div class="name-and-text">
+            <div class="name-and-text animation-4">
               <div class="name">{{ 'place' | translate:self }}</div>
               <div class="text">{{ 'placeText' | translate:self }}</div>
             </div>
@@ -210,7 +209,7 @@
             </figure>
           </div>
           <div class="block b5">
-            <div class="name-and-text">
+            <div class="name-and-text animation-5">
               <div class="name">{{ 'advertising' | translate:self }}</div>
               <div class="text">{{ 'advertisingText' | translate:self }}</div>
             </div>

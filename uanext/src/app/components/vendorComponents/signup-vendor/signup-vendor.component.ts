@@ -53,7 +53,7 @@ export class SignupVendorComponent implements OnInit {
     this.authService.signUpAsVendor(this.signupForm.value).subscribe(
       response => {
         this.showProgress.emit(false);
-        if (response.body.isSuccess === true && response.status === 200) {
+        if (response.status === 200) {
           this.notify.show(response.body.data);
           this.router.navigate(['signin']);
         } else {
@@ -63,7 +63,7 @@ export class SignupVendorComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgress.emit(false);
-        this.notify.show(err.error.error.errorMessage);
+        this.notify.show(err.message);
       }
     );
   }

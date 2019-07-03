@@ -16,7 +16,6 @@
 
   .header {
     background: salmon;
-    height: 50px;
     position: sticky;
     position: -webkit-sticky;
     top: 0;
@@ -41,7 +40,7 @@
     }
 
     .slide-up {
-      top: 20px;
+      top: 10px;
       transform: rotate(180deg);
 
       &:hover {
@@ -232,6 +231,10 @@
         animation: pulse 1s 1 ease-in-out;
       }
 
+      .restart-color-animation {
+        animation: colorAnimation 1s 1 ease-in-out;
+      }
+
       @keyframes pulse {
         from {
           transform: scale(1);
@@ -246,6 +249,20 @@
         }
       }
 
+      @keyframes colorAnimation {
+        from {
+          color: black;
+        }
+
+        50% {
+          color: #75af27;
+        }
+
+        to {
+          color: black;
+        }
+      }
+
       .investor-header,
       .vendor-header {
         display: flex;
@@ -254,7 +271,7 @@
         font-weight: bold;
         z-index: 1;
         align-items: baseline;
-        top: calc(10px + 5vh);
+        top: calc(10px + 3vh);
         left: 50%;
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
@@ -295,6 +312,7 @@
           padding: calc(2px + 0.3vw);
           border-radius: 6px;
           z-index: 1;
+          color: black;
 
           .name {
             font-size: calc(8px + 0.7vw);
@@ -308,7 +326,7 @@
             font-size: calc(8px + 0.5vw);
             line-height: 1.13;
             letter-spacing: 0.4px;
-            color: #323232;
+            opacity: 0.9;
             text-align: right;
           }
         }
@@ -501,7 +519,7 @@
       }
 
       .animation-2 {
-        animation-delay: 3.21s;
+        animation-delay: 3.0s;
       }
 
       .animation-3 {
@@ -800,6 +818,7 @@
         .menu {
           display: flex;
           justify-content: center;
+          flex-wrap: wrap;
 
           .item {
             margin: 0px 10px;

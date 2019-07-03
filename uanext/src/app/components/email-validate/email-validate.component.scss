@@ -1,0 +1,86 @@
+@import '../../../styles-variables.scss';
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1000000;
+  }
+
+  section {
+    flex-grow: 3;
+    background-image: url('../../../assets/img/background-map-2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+    .form-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+
+      .form {
+        background: white;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+        background-color: #ffffff;
+        overflow: auto;
+        text-align: center;
+        max-width: 500px;
+        margin-left: 1vw;
+        margin-right: 1vw;
+
+        .top-green-div {
+          height: 7px;
+          border-top-left-radius: 6px;
+          border-top-right-radius: 6px;
+          width: 100%;
+          background: $green;
+          margin-bottom: 30px;
+        }
+
+        .iiua {
+          font-size:  calc(20px + 2vw);
+          font-weight: bold;
+        }
+
+        .text {
+          font-size: calc(20px + 1vw);
+          padding: calc(5px + 1vw);
+        }
+
+        button {
+          font-size: 13px;
+          height: 42px;
+          border-radius: 6px;
+          box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+          background-color: $green;
+          letter-spacing: 1.3px;
+          color: #ffffff;
+          margin-top: 35px;
+          margin-bottom: 30px;
+          border: none;
+          cursor: pointer;
+          padding-left: 15px;
+          padding-right: 15px;
+
+          &:hover {
+            background: $middleGreen;
+          }
+
+          &:active {
+            background: $darkGreen;
+          }
+        }
+      }
+    }
+  }
+}

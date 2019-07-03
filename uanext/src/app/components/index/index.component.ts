@@ -19,9 +19,12 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   canScrollUp = false;
   canScrollDown = true;
   self = 'IndexComponent';
+  currentPage = 1;
 
   animationInterval_1: any;
   animationInterval_2: any;
+  timeOut1: any;
+  timeOut2: any;
 
   slidePageDelay = 900; // wait for slidePage
 
@@ -71,8 +74,18 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.slide = new slidePage({
       before: (origin, direction, target) => {
+        this.currentPage = target;
         this.canScrollDown = true;
         this.canScrollUp = true;
+
+        clearTimeout(this.timeOut1);
+        clearTimeout(this.timeOut2);
+
+        requestAnimationFrame(() => {
+          this.init1();
+          this.init2();
+        });
+
         if (target === 1) {
           this.canScrollUp = false;
         }
@@ -112,20 +125,26 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   startAnimation1() {
     const elements = document.querySelectorAll('.investor-curve-line .animation-element');
+    const elements_2 = document.querySelectorAll('.investor-curve-line .block .name-and-text');
     for (let i = 0; i < elements.length; i++) {
       elements[i].classList.remove('restart-animation');
+      elements_2[i].classList.remove('restart-color-animation');
       setTimeout(() => {
         elements[i].classList.add('restart-animation');
+        elements_2[i].classList.add('restart-color-animation');
       }, this.slidePageDelay); // wait slidePage and rewrite class (delay 0 not work)
     }
   }
 
   startAnimation2() {
     const elements = document.querySelectorAll('.vendor-curve-line .animation-element');
+    const elements_2 = document.querySelectorAll('.vendor-curve-line .block .name-and-text');
     for (let i = 0; i < elements.length; i++) {
       elements[i].classList.remove('restart-animation');
+      elements_2[i].classList.remove('restart-color-animation');
       setTimeout(() => {
         elements[i].classList.add('restart-animation');
+        elements_2[i].classList.add('restart-color-animation');
       }, this.slidePageDelay); // wait slidePage and rewrite class (delay 0 not work)
     }
   }
@@ -136,10 +155,10 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     circleAnimation.endElement();
     setTimeout(() => {
       this.setMovingCircleDisplay('circle-for-animation-1', 'block');
-
       const circleAnimation_2: any = document.getElementById('circle-animation-1');
       circleAnimation_2.beginElement();
     }, this.slidePageDelay);
+    this.timeOut1 = setTimeout(this.hideCircle1, 8000 + this.slidePageDelay);
   }
 
   startCircleAnimation2() {
@@ -148,10 +167,18 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     circleAnimation.endElement();
     setTimeout(() => {
       this.setMovingCircleDisplay('circle-for-animation-2', 'block');
-
       const circleAnimation_2: any = document.getElementById('circle-animation-2');
       circleAnimation_2.beginElement();
     }, this.slidePageDelay);
+    this.timeOut2 = setTimeout(this.hideCircle2, 8000 + this.slidePageDelay);
+  }
+
+  hideCircle1 = () => {
+    this.setMovingCircleDisplay('circle-for-animation-1', 'none');
+  }
+
+  hideCircle2 = () => {
+    this.setMovingCircleDisplay('circle-for-animation-2', 'none');
   }
 
   setMovingCircleDisplay(id, display) {
@@ -187,10 +214,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   signInWithFB(): void {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
-  }
-
-  signOut(): void {
-    this.socialAuthService.signOut();
   }
 
   init1() {

@@ -59,6 +59,8 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { HistogramChartComponent } from './histogram-chart/histogram-chart.component';
 import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-chart.component';
+import { EmailValidateComponent } from './email-validate/email-validate.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -116,7 +118,9 @@ export {
   LineChartComponent,
   PieChartComponent,
   HistogramChartComponent,
-  StackedAreaChartComponent
+  StackedAreaChartComponent,
+  EmailValidateComponent,
+  PasswordRecoveryComponent
 };
 
 export const components = [
@@ -174,7 +178,9 @@ export const components = [
   LineChartComponent,
   PieChartComponent,
   HistogramChartComponent,
-  StackedAreaChartComponent
+  StackedAreaChartComponent,
+  EmailValidateComponent,
+  PasswordRecoveryComponent
 ];
 
 

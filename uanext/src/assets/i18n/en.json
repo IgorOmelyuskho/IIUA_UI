@@ -21,7 +21,10 @@
     },
     "SignupInvestorComponent": {
         "name": "Full Name",
-        "nameRequired": "  is required",
+        "nameRequired": "Full Name is required",
+        "creditCardNumber": "Credit card number",
+        "creditCardNumberRequired": "Credit card number is required",
+        "creditCardNumberValid": "Enter valid credit card number",
         "phone": "Phone",
         "phoneRequired": "Phone is required",
         "validPhone": "Enter valid phone",
@@ -548,5 +551,14 @@
           "repeatPasswordEmpty": "This field is required",
           "passwordNotMatch": "Passwords not match",
           "signUp": "Sign Up"
+      },
+      "EmailValidateComponent": {
+          "text": "You have successfully registered",
+          "text2": "Remains to confirm your email",
+          "confirm": "CONFIRM"
+      },
+      "PasswordRecoveryComponent": {
+        "text": "To reset your password enter your email",
+        "recovery": "RECOVERY"
       }
 }

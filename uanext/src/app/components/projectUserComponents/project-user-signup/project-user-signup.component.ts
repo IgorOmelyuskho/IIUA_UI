@@ -53,7 +53,7 @@ export class ProjectUserSignupComponent implements OnInit {
     this.authService.signUpAsProjectUser(this.signupForm.value).subscribe(
       response => {
         this.showProgress = false;
-        if (response.body.isSuccess === true && response.status === 200) {
+        if (response.status === 200) {
           this.notify.show(response.body.data);
           this.router.navigate(['signin']);
         } else {
@@ -63,7 +63,7 @@ export class ProjectUserSignupComponent implements OnInit {
       err => {
         console.warn(err);
         this.showProgress = false;
-        this.notify.show(err.error.error.errorMessage);
+        this.notify.show(err.message);
       }
     );
   }
