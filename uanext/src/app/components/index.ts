@@ -62,6 +62,7 @@ import { StackedAreaChartComponent } from './stacked-area-chart/stacked-area-cha
 import { EmailValidateComponent } from './email-validate/email-validate.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { ConfirmPasswordRecoveryComponent } from './confirm-password-recovery/confirm-password-recovery.component';
+import { SocialLoginEmailComponent } from './social-login-email/social-login-email.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -122,7 +123,8 @@ export {
   StackedAreaChartComponent,
   EmailValidateComponent,
   PasswordRecoveryComponent,
-  ConfirmPasswordRecoveryComponent
+  ConfirmPasswordRecoveryComponent,
+  SocialLoginEmailComponent
 };
 
 export const components = [
@@ -183,7 +185,8 @@ export const components = [
   StackedAreaChartComponent,
   EmailValidateComponent,
   PasswordRecoveryComponent,
-  ConfirmPasswordRecoveryComponent
+  ConfirmPasswordRecoveryComponent,
+  SocialLoginEmailComponent
 ];
 
 

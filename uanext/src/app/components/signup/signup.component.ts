@@ -2,27 +2,33 @@ import { Component, OnInit } from '@angular/core';
 import { UserRole } from 'src/app/models';
 import { AuthService } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { AuthorizationService } from 'src/app/services/http/authorization.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  userRole = 'Vendor'; // DEFAULT
+  userRole: UserRole = UserRole.Vendor; // DEFAULT
   showProgress = false;
   useEmail = false;
   self = 'SignupComponent';
 
-  constructor(private socialAuthService: AuthService) {}
+  constructor(private socialAuthService: AuthService, private authService: AuthorizationService) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.userRole = this.userRole;
+    console.log(this.authService.userRole);
+   }
 
-  asVendor() { // use for button
-    this.userRole = UserRole.Vendor; // use only  for HTML
+  asVendor() {
+    this.userRole = UserRole.Vendor;
+    this.authService.userRole = this.userRole;
   }
 
-  asInvestor() { // use for button
-    this.userRole = UserRole.Investor; // use only  for HTML
+  asInvestor() {
+    this.userRole = UserRole.Investor;
+    this.authService.userRole = this.userRole;
   }
 
   showProgressBar(show: boolean) {

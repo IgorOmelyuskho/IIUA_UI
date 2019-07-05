@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NotificationService } from 'src/app/services/http/notification.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { ActivatedRoute } from '@angular/router';
 import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';

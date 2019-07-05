@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import FormHelper from 'src/app/helperClasses/helperClass';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { Router } from '@angular/router';
-import { NotificationService } from 'src/app/services/http/notification.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { matchOtherValidator } from 'src/app/validators/validators';
 import { TranslateService } from 'src/app/services/translate.service';
 

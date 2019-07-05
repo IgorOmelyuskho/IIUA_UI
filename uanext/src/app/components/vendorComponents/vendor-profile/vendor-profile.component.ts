@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { VendorRole } from 'src/app/models';
 import { ProfileService } from 'src/app/services/http/profile.service';
-import { NotificationService } from 'src/app/services/http/notification.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-vendor-profile',

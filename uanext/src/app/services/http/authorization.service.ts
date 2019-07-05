@@ -11,13 +11,16 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ProfileService } from './profile.service';
 import { AdminDto } from 'src/app/models/adminDto';
 import { ProjectUserDto } from 'src/app/models/projectUserDto';
-import { AuthService } from 'angularx-social-login';
+import { AuthService, SocialUser } from 'angularx-social-login';
+import { SocialUserDto } from 'src/app/models/socialUserDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
   socialNetworkUser: any;
+  userRole: UserRole;
+  needEmailForSocialLogin = false;
 
   constructor(
     private http: HttpClient,
@@ -30,13 +33,31 @@ export class AuthorizationService {
     this.socialAuthService.authState.subscribe((user) => {
       this.socialNetworkUser = user;
       console.log(this.socialNetworkUser);
+      const userForLogin: SocialUserDto = {
+        token: user.authToken,
+        provider: user.provider,
+        role: this.userRole
+      };
+      console.log(userForLogin);
+      this.socialUserLogin(userForLogin).subscribe(
+        val => {
+          console.log(val);
+          if (true) { // todo if 400 and TEXT
+            this.needEmailForSocialLogin = true;
+          }
+        },
+        err => {
+          this.needEmailForSocialLogin = false;
+          console.log(err);
+        }
+      );
     });
 
     const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     let decodedToken: any;
     let isExpired: boolean;
-    let role: string;
+    let role: UserRole;
 
     if (window.location.href.includes('email-validate')) {
       return;
@@ -178,6 +199,11 @@ export class AuthorizationService {
 
   passwordRecoveryCode(code: string, password: string): Observable<any> {
     return this.http.put<any>(environment.auth + environment.passwordRecovery_2 + code, password, { observe: 'response' });
+  }
+
+  socialUserLogin(user: SocialUserDto): Observable<any>  {
+   // todo
+   return of({});
   }
 
   signOut(): void {

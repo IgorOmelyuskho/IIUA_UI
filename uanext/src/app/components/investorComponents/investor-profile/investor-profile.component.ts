@@ -6,7 +6,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { InvestorRole } from 'src/app/models';
 import { StateService } from 'src/app/services/state/state.service';
 import FormHelper from '../../../helperClasses/helperClass';
-import { NotificationService } from 'src/app/services/http/notification.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-investor-profile',
