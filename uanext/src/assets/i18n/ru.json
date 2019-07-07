@@ -698,8 +698,8 @@
     },
     "EmailValidateComponent": {
         "text": "Вы успешно зарегистрировались",
-        "text2": "Осталось подтвердить емайл",
-        "confirm": "ПОДТВЕРДИТЬ"
+        "emailBeingVerified": "Пожалуйста подождите, ваш емайл проверяется...",
+        "failedConfirmEmail": "Не удалось подтвердить емайл"
     },
     "PasswordRecoveryComponent": {
         "text": "Чтобы восстановить пароль введите свой емайл",
