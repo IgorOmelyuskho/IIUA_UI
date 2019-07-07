@@ -4,6 +4,7 @@ import { UserRole } from 'src/app/models';
 import { AuthService } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
+import { AuthorizationService } from 'src/app/services/http/authorization.service';
 
 
 declare const slidePage;
@@ -14,7 +15,6 @@ declare const slidePage;
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
-  userRole: UserRole;
   slide: any;
   canScrollUp = false;
   canScrollDown = true;
@@ -28,44 +28,10 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   slidePageDelay = 900; // wait for slidePage
 
-  constructor(private socialAuthService: AuthService) { }
+  constructor(private socialAuthService: AuthService, private authService: AuthorizationService) { }
 
   ngOnInit() {
-    const helper = new JwtHelperService();
-    const token = localStorage.getItem('token');
-    let decodedToken: any;
-    let role: UserRole;
-
-    if (token == null || token === '') {
-      return;
-    }
-
-    try {
-      decodedToken = helper.decodeToken(token);
-      role = decodedToken.role;
-    } catch {
-      return;
-    }
-
-    if (role !== UserRole.Admin && role !== UserRole.ProjectUser && role !== UserRole.Investor && role !== UserRole.Vendor) {
-      this.userRole = null;
-    }
-
-    if (role === UserRole.Vendor) {
-      this.userRole = UserRole.Vendor;
-    }
-
-    if (role === UserRole.Investor) {
-      this.userRole = UserRole.Investor;
-    }
-
-    if (role === UserRole.Admin) {
-      this.userRole = UserRole.Admin;
-    }
-
-    if (role === UserRole.ProjectUser) {
-      this.userRole = UserRole.ProjectUser;
-    }
+    this.authService.userRole = undefined;
   }
 
   ngAfterViewInit() {

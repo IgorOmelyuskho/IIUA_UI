@@ -13,6 +13,7 @@ import { AdminDto } from 'src/app/models/adminDto';
 import { ProjectUserDto } from 'src/app/models/projectUserDto';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { SocialUserDto } from 'src/app/models/socialUserDto';
+import { NotificationService } from '../notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class AuthorizationService {
     private stateService: StateService,
     private router: Router,
     private profileService: ProfileService,
-    private socialAuthService: AuthService) { }
+    private socialAuthService: AuthService,
+    private notify: NotificationService) { }
 
   init() {
     this.socialAuthService.authState.subscribe((user) => {
@@ -43,34 +45,82 @@ export class AuthorizationService {
       const userForLogin: SocialUserDto = {
         token: resultToken,
         provider: user.provider,
-        // email: user.email
+        email: user.email // todo uncomment
       };
       console.log(userForLogin);
       console.log('UserRole = ', this.userRole);
 
       if (this.userRole == null) {
-        this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin));
-      }
-      if (this.userRole === UserRole.Vendor) {
-        this.socialAuthVendorSubscribe(this.socialAuthVendor(userForLogin));
-      }
-      if (this.userRole === UserRole.Investor) {
-        this.socialAuthInvestorSubscribe(this.socialAuthInvestor(userForLogin));
+        this.socialUserLogin(userForLogin).subscribe(
+          response => {
+            console.log(response);
+            if (response.status === 200) {
+              if (response.body == null) {
+                this.notify.show('Вам пришло сообщение на почту');
+              } else {
+                this.notify.show(response.body.data);
+              }
+            } else {
+              this.notify.show(response.body.error);
+            }
+          },
+          err => {
+            if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
+              console.log('UNE');
+              this.router.navigate(['signup']);
+            }
+          }
+        );
       }
 
-      // this.socialUserLogin(userForLogin).subscribe(
-      //   val => {
-      //     console.log(val);
-      //     if (true) { // todo if 400 and TEXT
-      //       this.needEmailForSocialLogin = true;
-      //     }
-      //   },
-      //   err => {
-      //     this.needEmailForSocialLogin = false;
-      //     console.log(err);
-      //   }
-      // );
+      if (this.userRole === UserRole.Vendor) {
+        this.socialRegisterVendor(userForLogin).subscribe(
+          response => {
+            console.log(response);
+            if (response.status === 200) {
+              if (response.body == null) {
+                this.notify.show('Вам пришло сообщение на почту');
+              } else {
+                this.notify.show(response.body.data);
+              }
+            } else {
+              this.notify.show(response.body.error);
+            }
+          },
+          err => {
+            if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
+              console.log('UNE');
+              this.router.navigate(['signup']);
+            }
+          }
+        );
+      }
+
+      if (this.userRole === UserRole.Investor) {
+        this.socialRegisterInvestor(userForLogin).subscribe(
+          response => {
+            console.log(response);
+            if (response.status === 200) {
+              if (response.body == null) {
+                this.notify.show('Вам пришло сообщение на почту');
+              } else {
+                this.notify.show(response.body.data);
+              }
+            } else {
+              this.notify.show(response.body.error);
+            }
+          },
+          err => {
+            if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
+              console.log('UNE');
+              this.router.navigate(['signup']);
+            }
+          }
+        );
+      }
     });
+
+
 
 
 
@@ -236,40 +286,16 @@ export class AuthorizationService {
     return this.http.put<any>(environment.auth + environment.passwordRecovery_2 + code, { password: password }, { observe: 'response' });
   }
 
-  socialAuthVendor(user: SocialUserDto): Observable<any> {
+  socialRegisterVendor(user: SocialUserDto): Observable<any> {
     return this.http.post<any>(environment.auth + environment.socialAuthVendor, user, { observe: 'response' });
   }
 
-  socialAuthInvestor(user: SocialUserDto): Observable<any> {
+  socialRegisterInvestor(user: SocialUserDto): Observable<any> {
     return this.http.post<any>(environment.auth + environment.socialAuthInvestor, user, { observe: 'response' });
   }
 
   socialUserLogin(user: SocialUserDto): Observable<any> {
     return this.http.post<any>(environment.auth + environment.socialAuth, user, { observe: 'response' });
-  }
-
-  socialAuthVendorSubscribe(observable: Observable<any>) {
-    observable.subscribe(
-      val => {
-        console.log(val);
-      }
-    );
-  }
-
-  socialAuthInvestorSubscribe(observable: Observable<any>) {
-    observable.subscribe(
-      val => {
-        console.log(val);
-      }
-    );
-  }
-
-  socialUserLoginSubscribe(observable: Observable<any>) {
-    observable.subscribe(
-      val => {
-        console.log(val.body);
-      }
-    );
   }
 
   signOut(): void {
