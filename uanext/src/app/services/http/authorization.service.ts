@@ -33,8 +33,15 @@ export class AuthorizationService {
     this.socialAuthService.authState.subscribe((user) => {
       this.socialNetworkUser = user;
       console.log(this.socialNetworkUser);
+      let resultToken: string = user.idToken;
+      if (user.provider === 'FACEBOOK') {
+        resultToken = user.authToken;
+      }
+      if (user.provider === 'GOOGLE') {
+        resultToken = user.idToken;
+      }
       const userForLogin: SocialUserDto = {
-        token: user.idToken,
+        token: resultToken,
         provider: user.provider,
         email: user.email
       };
@@ -76,8 +83,13 @@ export class AuthorizationService {
     if (window.location.href.includes('email-validate')) {
       return;
     }
-
     if (window.location.href.includes('password-recovery')) {
+      return;
+    }
+    if (window.location.href.includes('privacy-policy')) {
+      return;
+    }
+    if (window.location.href.includes('user-agreement')) {
       return;
     }
 
@@ -214,7 +226,7 @@ export class AuthorizationService {
   }
 
   passwordRecoveryCode(code: string, password: string): Observable<any> {
-    return this.http.put<any>(environment.auth + environment.passwordRecovery_2 + code, password, { observe: 'response' });
+    return this.http.put<any>(environment.auth + environment.passwordRecovery_2 + code, { password: password }, { observe: 'response' });
   }
 
   socialAuthVendor(user: SocialUserDto): Observable<any> {

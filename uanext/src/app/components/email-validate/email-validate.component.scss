@@ -37,6 +37,7 @@
         max-width: 500px;
         margin-left: 1vw;
         margin-right: 1vw;
+        padding-bottom: 30px;
 
         .top-green-div {
           height: 7px;
@@ -58,6 +59,10 @@
           padding-left: calc(10px + 3vw);
           padding-right: calc(10px + 3vw);
           line-height: 1.1;
+        }
+
+        .red {
+          color: red;
         }
 
         button {

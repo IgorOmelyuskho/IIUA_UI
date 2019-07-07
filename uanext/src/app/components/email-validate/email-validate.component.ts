@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 export class EmailValidateComponent implements OnInit, AfterViewInit {
   self = 'EmailValidateComponent';
   code: string;
+  emailBeingVerified = true;
+  failedConfirmEmail = false;
 
   constructor(private authService: AuthorizationService, private router: Router) { }
 
@@ -23,17 +25,21 @@ export class EmailValidateComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       const urlArr = window.location.href.split('/');
       this.code = urlArr[urlArr.length - 1];
-      console.log(this.code);
       this.authService.emailValidate(this.code).subscribe(
-        (val) => {
-          console.log(val);
-          // todo - true in JSON?
-          if (val === true) {
+        val => {
+          this.emailBeingVerified = false;
+          if (val.mailIsVerified === true) {
             this.router.navigate(['signin']);
+          } else {
+            this.failedConfirmEmail = true;
           }
+        },
+        err => {
+          this.failedConfirmEmail = true;
+          this.emailBeingVerified = false;
         }
       );
-    }, 7000);
+    }, 5000);
   }
 
 }

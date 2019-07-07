@@ -9,8 +9,8 @@
         <div class="top-green-div"></div>
         <div class="iiua">IIUA</div>
         <div class="text">{{ 'text' | translate:self }}</div>
-        <div class="text">{{ 'text2' | translate:self }}</div>
-        <button>{{ 'confirm' | translate:self }}</button>
+        <div *ngIf="emailBeingVerified" class="text">{{ 'emailBeingVerified' | translate:self }}</div>
+        <div *ngIf="failedConfirmEmail" class="text red">{{ 'failedConfirmEmail' | translate:self }}</div>
       </div>
     </div>
   </section>

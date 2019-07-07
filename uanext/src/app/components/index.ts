@@ -63,6 +63,8 @@ import { EmailValidateComponent } from './email-validate/email-validate.componen
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { ConfirmPasswordRecoveryComponent } from './confirm-password-recovery/confirm-password-recovery.component';
 import { SocialLoginEmailComponent } from './social-login-email/social-login-email.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { UserAgreementComponent } from './user-agreement/user-agreement.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -124,7 +126,9 @@ export {
   EmailValidateComponent,
   PasswordRecoveryComponent,
   ConfirmPasswordRecoveryComponent,
-  SocialLoginEmailComponent
+  SocialLoginEmailComponent,
+  PrivacyPolicyComponent,
+  UserAgreementComponent
 };
 
 export const components = [
@@ -186,7 +190,9 @@ export const components = [
   EmailValidateComponent,
   PasswordRecoveryComponent,
   ConfirmPasswordRecoveryComponent,
-  SocialLoginEmailComponent
+  SocialLoginEmailComponent,
+  PrivacyPolicyComponent,
+  UserAgreementComponent
 ];
 
 

@@ -698,8 +698,8 @@
     },
     "EmailValidateComponent": {
         "text": "You have successfully registered",
-        "text2": "Remains to confirm your email",
-        "confirm": "CONFIRM"
+        "emailBeingVerified": "Please wait, your email is being verified ...",
+        "failedConfirmEmail": "Failed to confirm email"
     },
     "PasswordRecoveryComponent": {
         "text": "To reset your password enter your email",
