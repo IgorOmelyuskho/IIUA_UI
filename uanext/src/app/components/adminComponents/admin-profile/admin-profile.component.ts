@@ -5,7 +5,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { StateService } from 'src/app/services/state/state.service';
 import FormHelper from '../../../helperClasses/helperClass';
-import { NotificationService } from 'src/app/services/http/notification.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { AdminRole } from 'src/app/models';
 @Component({
   selector: 'app-admin-profile',

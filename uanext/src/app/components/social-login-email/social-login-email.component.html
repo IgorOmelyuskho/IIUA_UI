@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <form [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+      <div class="top-green-div"></div>
+    <div class="iiua">IIUA</div>
+    <div class="text">{{ 'text' | translate:self }}</div>
+    <div class="form-group">
+      <input placeholder="{{ 'email' | translate:self }}" type="email" formControlName="email" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }" />
+      <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback">
+        <div *ngIf="formControls.email.errors.required">{{ 'emailRequired' | translate:self }}</div>
+        <div *ngIf="formControls.email.errors.pattern">{{ 'validEmail' | translate:self }}</div>
+      </div>
+    </div>
+    <button [disabled]="submitted && !emailForm.valid" class="btn send-btn">{{ 'sendBtn' | translate:self }}</button>
+  </form>
+</div>

@@ -20,6 +20,10 @@ export const environment = {
   adminRegister: '/api/todo/register',
   adminProfile: '/api/todo/',
 
+  socialAuthVendor: '/api/SocialAuth/social-vendor',
+  socialAuthInvestor: '/api/SocialAuth/social-investor',
+  socialAuth: '/api/SocialAuth/social-auth',
+
   vendorProject: '/api/Projects/',
   // uploadImages: '/api/Image/',
   uploadFiles: '/api/Upload',

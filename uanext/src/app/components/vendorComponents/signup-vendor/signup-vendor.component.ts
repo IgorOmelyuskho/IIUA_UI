@@ -4,7 +4,7 @@ import { AuthorizationService } from '../../../services/http/authorization.servi
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { matchOtherValidator } from '../../../validators/validators';
-import { NotificationService } from 'src/app/services/http/notification.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({

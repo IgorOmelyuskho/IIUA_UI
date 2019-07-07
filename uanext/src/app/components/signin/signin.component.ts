@@ -7,7 +7,7 @@ import { StateService } from './../../services/state/state.service';
 import { ProfileService } from 'src/app/services/http/profile.service';
 import { Observable } from 'rxjs';
 import { VendorRole, InvestorRole, AdminRole, UserRole } from 'src/app/models';
-import { NotificationService } from 'src/app/services/http/notification.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import FormHelper from '../../helperClasses/helperClass';
 import { take, first, delay } from 'rxjs/operators';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';

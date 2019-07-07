@@ -1,0 +1,66 @@
+@import '../../../styles-variables.scss';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000000;
+
+  form {
+    padding: 20px 0px;
+    padding-top: 0;
+    width: calc(300px + 20vw);
+    border-radius: 6px;
+    box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.26), 0 14px 28px 0 rgba(0, 0, 0, 0.25);
+    background: white;
+    text-align: center;
+
+    .top-green-div {
+      height: 7px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      width: 100%;
+      background: $green;
+      margin-bottom: 30px;
+    }
+
+    .iiua {
+      font-size: calc(20px + 2vw);
+      font-weight: bold;
+      padding-bottom: 15px;
+    }
+
+    .text {
+      font-size: calc(20px + 1vw);
+      padding: 20px 0px;
+      padding-right: calc(15px + 2vw);
+      padding-left: calc(15px + 2vw);
+      background: #f4f4f4;
+    }
+
+    .form-group {
+      margin-right: calc(5px + 2vw);
+      margin-left: calc(5px + 2vw);
+      margin-top: 30px;
+      margin-bottom: 0;
+    }
+
+    .send-btn {
+      font-size: 13px;
+      height: 42px;
+      border-radius: 6px;
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+      background-color: $green;
+      letter-spacing: 1.3px;
+      color: #ffffff;
+      margin-top: 35px;
+      min-width: 100px;
+    }
+  }
+}

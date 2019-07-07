@@ -392,7 +392,7 @@
         "goToProject": "Go to project",
         "haveNoProjects": "You have no projects yet"
     },
-    "VideosComponent" : {
+    "VideosComponent": {
         "linkToVideo": "Link to video",
         "videosEmpty": "Videos cannot be empty",
         "videoMinLength": "Minimal videos length is 3 charset",
@@ -472,107 +472,255 @@
         "signOut": "Sign out"
     },
     "fieldOfActivity": [
-        { "id": "0", "name": "Select all", "checked": false },
-        { "id": "1", "name": "Agriculture, Forestry and Fisheries", "checked": false },
-        { "id": "2", "name": "Mining and quarrying", "checked": false },
-        { "id": "3", "name": "Manufacturing industry", "checked": false },
-        { "id": "4", "name": "Supply of electricity, gas, steam and air conditioning", "checked": false },
-        { "id": "5", "name": "Water supply, sewerage, waste management", "checked": false },
-        { "id": "6", "name": "Construction", "checked": false },
-        { "id": "7", "name": "Wholesale and retail trade; repair of motor vehicles and motorcycles", "checked": false },
-        { "id": "8", "name": "Transport, warehousing, postal and courier activities", "checked": false },
-        { "id": "9", "name": "Temporary placement and organization of food", "checked": false },
-        { "id": "10", "name": "Information and telecommunications", "checked": false }
-      ],
-      "updateRateOptions": [
-        { "id": "0", "name": "Select all", "checked": false },
-        { "id": "1", "name": "Often", "checked": false, "name2": "Frequent updates" },
-        { "id": "2", "name": "Average", "checked": false, "name2": "Average updates" },
-        { "id": "3", "name": "Seldom", "checked": false, "name2": "Rare updates" }
-      ],
-      "region": [
-          { "value": "ALL", "text": "Choose all" },
-          { "value": "Autonomous Republic of Crimea", "text": "Autonomous Republic of Crimea" },
-          { "value": "Cherkasy oblast", "text": "Cherkasy oblas" },
-          { "value": "Chernihiv oblast", "text": "Chernihiv oblas" },
-          { "value": "Chernivtsi oblast", "text": "Chernivtsi oblast" },
-          { "value": "Dnipropetrovsk oblast", "text": "Dnipropetrovsk oblast" },
-          { "value": "Donetsk oblast", "text": "Donetsk oblast" },
-          { "value": "Ivano-Frankivsk oblast", "text": "Ivano-Frankivsk oblast" },
-          { "value": "Kharkiv oblast", "text": "Kharkiv oblast" },
-          { "value": "Kherson oblast", "text": "Kherson oblast" },
-          { "value": "Khmelnytsky oblast", "text": "Khmelnytsky oblast" },
-          { "value": "Kirovohrad oblast", "text": "Kirovohrad oblast" },
-          { "value": "Kyiv oblast", "text": "Kyiv oblast" },
-          { "value": "Luhansk oblast", "text": "Luhansk oblast" },
-          { "value": "Lviv oblast", "text": "Lviv oblast" },
-          { "value": "Mykolaiv oblast", "text": "Mykolaiv oblast" },
-          { "value": "Odessa oblast", "text": "Odessa oblast" },
-          { "value": "Poltava oblast", "text": "Poltava oblast" },
-          { "value": "Rivne oblast", "text": "Rivne oblast" },
-          { "value": "Sumy oblast", "text": "Sumy oblast" },
-          { "value": "Ternopil oblast", "text": "Ternopil oblast" },
-          { "value": "Vinnytsia oblast", "text": "Vinnytsia oblast" },
-          { "value": "Volyn oblast", "text": "Volyn oblast" },
-          { "value": "Zakarpattia oblast", "text": "Zakarpattia oblast" },
-          { "value": "Zaporizhzhia oblast", "text": "Zaporizhzhia oblast" },
-          { "value": "Zhytomyr oblast", "text": "Zhytomyr oblast" }
-      ],
-      "ProjectUserProfileComponent": {
-          "created": "Created",
-          "lastEdited": "Last edited",
-          "fullName": "Full Name",
-          "fullNameEmpty": "Full Name cannot be empty",
-          "email": "Email",
-          "emailEmpty": "Email cannot be empty",
-          "emailValid": "Email must be a valid email address",
-          "phone": "Phone",
-          "phoneEmpty": "Phone cannot be empty",
-          "phoneValid": "Enter valid phone",
-          "projectId": "Project id",
-          "projectIdEmpty": "Project id cannot be empty",
-          "newPassword": "New password",
-          "updateProfile": "Update profile"
-      },
-      "ProjectUserSignupComponent": {
-          "createAccount": "Create account as Project User",
-          "fullName": "Full Name",
-          "fullNameEmpty": "Full Name is required",
-          "phone": "Phone",
-          "phoneEmpty": "Phone is required",
-          "phoneValid": "Enter valid phone",
-          "email": "Email",
-          "emailEmpty": "Email is required",
-          "emailValid": "Email must be a valid email address",
-          "projectId": "Project id",
-          "projectIdEmpty": "Project Id is required",
-          "password": "Password",
-          "passwordEmpty": "Password is required",
-          "passwordLength": "Password must be at least 6 characters",
-          "repeatPassword": "Repeat password",
-          "repeatPasswordEmpty": "This field is required",
-          "passwordNotMatch": "Passwords not match",
-          "signUp": "Sign Up",
-          "checkEmail": "You received a message in the email"
-      },
-      "EmailValidateComponent": {
-          "text": "You have successfully registered",
-          "text2": "Remains to confirm your email",
-          "confirm": "CONFIRM"
-      },
-      "PasswordRecoveryComponent": {
+        {
+            "id": "0",
+            "name": "Select all",
+            "checked": false
+        },
+        {
+            "id": "1",
+            "name": "Agriculture, Forestry and Fisheries",
+            "checked": false
+        },
+        {
+            "id": "2",
+            "name": "Mining and quarrying",
+            "checked": false
+        },
+        {
+            "id": "3",
+            "name": "Manufacturing industry",
+            "checked": false
+        },
+        {
+            "id": "4",
+            "name": "Supply of electricity, gas, steam and air conditioning",
+            "checked": false
+        },
+        {
+            "id": "5",
+            "name": "Water supply, sewerage, waste management",
+            "checked": false
+        },
+        {
+            "id": "6",
+            "name": "Construction",
+            "checked": false
+        },
+        {
+            "id": "7",
+            "name": "Wholesale and retail trade; repair of motor vehicles and motorcycles",
+            "checked": false
+        },
+        {
+            "id": "8",
+            "name": "Transport, warehousing, postal and courier activities",
+            "checked": false
+        },
+        {
+            "id": "9",
+            "name": "Temporary placement and organization of food",
+            "checked": false
+        },
+        {
+            "id": "10",
+            "name": "Information and telecommunications",
+            "checked": false
+        }
+    ],
+    "updateRateOptions": [
+        {
+            "id": "0",
+            "name": "Select all",
+            "checked": false
+        },
+        {
+            "id": "1",
+            "name": "Often",
+            "checked": false,
+            "name2": "Frequent updates"
+        },
+        {
+            "id": "2",
+            "name": "Average",
+            "checked": false,
+            "name2": "Average updates"
+        },
+        {
+            "id": "3",
+            "name": "Seldom",
+            "checked": false,
+            "name2": "Rare updates"
+        }
+    ],
+    "region": [
+        {
+            "value": "ALL",
+            "text": "Choose all"
+        },
+        {
+            "value": "Autonomous Republic of Crimea",
+            "text": "Autonomous Republic of Crimea"
+        },
+        {
+            "value": "Cherkasy oblast",
+            "text": "Cherkasy oblas"
+        },
+        {
+            "value": "Chernihiv oblast",
+            "text": "Chernihiv oblas"
+        },
+        {
+            "value": "Chernivtsi oblast",
+            "text": "Chernivtsi oblast"
+        },
+        {
+            "value": "Dnipropetrovsk oblast",
+            "text": "Dnipropetrovsk oblast"
+        },
+        {
+            "value": "Donetsk oblast",
+            "text": "Donetsk oblast"
+        },
+        {
+            "value": "Ivano-Frankivsk oblast",
+            "text": "Ivano-Frankivsk oblast"
+        },
+        {
+            "value": "Kharkiv oblast",
+            "text": "Kharkiv oblast"
+        },
+        {
+            "value": "Kherson oblast",
+            "text": "Kherson oblast"
+        },
+        {
+            "value": "Khmelnytsky oblast",
+            "text": "Khmelnytsky oblast"
+        },
+        {
+            "value": "Kirovohrad oblast",
+            "text": "Kirovohrad oblast"
+        },
+        {
+            "value": "Kyiv oblast",
+            "text": "Kyiv oblast"
+        },
+        {
+            "value": "Luhansk oblast",
+            "text": "Luhansk oblast"
+        },
+        {
+            "value": "Lviv oblast",
+            "text": "Lviv oblast"
+        },
+        {
+            "value": "Mykolaiv oblast",
+            "text": "Mykolaiv oblast"
+        },
+        {
+            "value": "Odessa oblast",
+            "text": "Odessa oblast"
+        },
+        {
+            "value": "Poltava oblast",
+            "text": "Poltava oblast"
+        },
+        {
+            "value": "Rivne oblast",
+            "text": "Rivne oblast"
+        },
+        {
+            "value": "Sumy oblast",
+            "text": "Sumy oblast"
+        },
+        {
+            "value": "Ternopil oblast",
+            "text": "Ternopil oblast"
+        },
+        {
+            "value": "Vinnytsia oblast",
+            "text": "Vinnytsia oblast"
+        },
+        {
+            "value": "Volyn oblast",
+            "text": "Volyn oblast"
+        },
+        {
+            "value": "Zakarpattia oblast",
+            "text": "Zakarpattia oblast"
+        },
+        {
+            "value": "Zaporizhzhia oblast",
+            "text": "Zaporizhzhia oblast"
+        },
+        {
+            "value": "Zhytomyr oblast",
+            "text": "Zhytomyr oblast"
+        }
+    ],
+    "ProjectUserProfileComponent": {
+        "created": "Created",
+        "lastEdited": "Last edited",
+        "fullName": "Full Name",
+        "fullNameEmpty": "Full Name cannot be empty",
+        "email": "Email",
+        "emailEmpty": "Email cannot be empty",
+        "emailValid": "Email must be a valid email address",
+        "phone": "Phone",
+        "phoneEmpty": "Phone cannot be empty",
+        "phoneValid": "Enter valid phone",
+        "projectId": "Project id",
+        "projectIdEmpty": "Project id cannot be empty",
+        "newPassword": "New password",
+        "updateProfile": "Update profile"
+    },
+    "ProjectUserSignupComponent": {
+        "createAccount": "Create account as Project User",
+        "fullName": "Full Name",
+        "fullNameEmpty": "Full Name is required",
+        "phone": "Phone",
+        "phoneEmpty": "Phone is required",
+        "phoneValid": "Enter valid phone",
+        "email": "Email",
+        "emailEmpty": "Email is required",
+        "emailValid": "Email must be a valid email address",
+        "projectId": "Project id",
+        "projectIdEmpty": "Project Id is required",
+        "password": "Password",
+        "passwordEmpty": "Password is required",
+        "passwordLength": "Password must be at least 6 characters",
+        "repeatPassword": "Repeat password",
+        "repeatPasswordEmpty": "This field is required",
+        "passwordNotMatch": "Passwords not match",
+        "signUp": "Sign Up",
+        "checkEmail": "You received a message in the email"
+    },
+    "EmailValidateComponent": {
+        "text": "You have successfully registered",
+        "text2": "Remains to confirm your email",
+        "confirm": "CONFIRM"
+    },
+    "PasswordRecoveryComponent": {
         "text": "To reset your password enter your email",
         "recovery": "RECOVERY",
         "email": "Email",
         "emailRequired": "Email is required",
         "validEmail": "Email must be a valid email address",
         "checkEmail": "You received a message in the email"
-      },
-      "ConfirmPasswordRecoveryComponent": {
-          "text": "Create a new password",
-          "recover": "RECOVER",
-          "password": "Password",
-          "passwordRequired": "Password is required",
-          "passwordMinLength": "Password must be at least 6 characters"
-      }
+    },
+    "ConfirmPasswordRecoveryComponent": {
+        "text": "Create a new password",
+        "recover": "RECOVER",
+        "password": "Password",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 6 characters"
+    },
+    "SocialLoginEmailComponent": {
+        "text": "For registration we need your email",
+        "email": "Email",
+        "emailRequired": "Email is required",
+        "validEmail": "Email address must be a valid email address",
+        "sendBtn": "SEND"
+    }
 }
