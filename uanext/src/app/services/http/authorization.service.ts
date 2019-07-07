@@ -43,7 +43,7 @@ export class AuthorizationService {
       const userForLogin: SocialUserDto = {
         token: resultToken,
         provider: user.provider,
-        email: user.email
+        // email: user.email
       };
       console.log(userForLogin);
       console.log('UserRole = ', this.userRole);
@@ -92,6 +92,8 @@ export class AuthorizationService {
     if (window.location.href.includes('user-agreement')) {
       return;
     }
+
+
 
     if (token == null || token === '') {
       this.signOut();
@@ -196,6 +198,11 @@ export class AuthorizationService {
     }
   }
 
+
+  checkToken() {
+
+  }
+
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
     return this.http.post<any>(environment.auth + environment.vendorRegister, vendorDto, { observe: 'response' });
   }
@@ -260,7 +267,7 @@ export class AuthorizationService {
   socialUserLoginSubscribe(observable: Observable<any>) {
     observable.subscribe(
       val => {
-        console.log(val);
+        console.log(val.body);
       }
     );
   }
