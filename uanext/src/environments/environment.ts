@@ -4,12 +4,12 @@
 
 export const environment = {
   production: false,
-  signalR: 'http://proxy.alexduxa.online/notifications/api/CoordinatesHub',
-  auth: 'http://master.iiua.com.ua/auth',
-  projects: 'http://master.iiua.com.ua/projects',
-  map: 'http://master.iiua.com.ua/map',
-  notifications: 'http://master.iiua.com.ua/notifications',
-  files: 'http://master.iiua.com.ua/files',
+  signalR: 'https://proxy.alexduxa.online/notifications/api/CoordinatesHub',
+  auth: 'https://master.iiua.com.ua/auth',
+  projects: 'https://master.iiua.com.ua/projects',
+  map: 'https://master.iiua.com.ua/map',
+  notifications: 'https://master.iiua.com.ua/notifications',
+  files: 'https://master.iiua.com.ua/files',
 
   authenticate: '/api/Auth/authenticate',
   vendorRegister: '/api/Vendor/register',

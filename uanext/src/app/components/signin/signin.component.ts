@@ -42,6 +42,7 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.userRole = undefined;
   }
 
   get formControls() {
