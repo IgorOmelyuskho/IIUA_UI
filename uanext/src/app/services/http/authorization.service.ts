@@ -34,24 +34,38 @@ export class AuthorizationService {
       this.socialNetworkUser = user;
       console.log(this.socialNetworkUser);
       const userForLogin: SocialUserDto = {
-        token: user.authToken,
+        token: user.idToken,
         provider: user.provider,
-        role: this.userRole
+        email: user.email
       };
       console.log(userForLogin);
-      this.socialUserLogin(userForLogin).subscribe(
-        val => {
-          console.log(val);
-          if (true) { // todo if 400 and TEXT
-            this.needEmailForSocialLogin = true;
-          }
-        },
-        err => {
-          this.needEmailForSocialLogin = false;
-          console.log(err);
-        }
-      );
+      console.log('UserRole = ', this.userRole);
+
+      if (this.userRole == null) {
+        this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin));
+      }
+      if (this.userRole === UserRole.Vendor) {
+        this.socialAuthVendorSubscribe(this.socialAuthVendor(userForLogin));
+      }
+      if (this.userRole === UserRole.Investor) {
+        this.socialAuthInvestorSubscribe(this.socialAuthInvestor(userForLogin));
+      }
+
+      // this.socialUserLogin(userForLogin).subscribe(
+      //   val => {
+      //     console.log(val);
+      //     if (true) { // todo if 400 and TEXT
+      //       this.needEmailForSocialLogin = true;
+      //     }
+      //   },
+      //   err => {
+      //     this.needEmailForSocialLogin = false;
+      //     console.log(err);
+      //   }
+      // );
     });
+
+
 
     const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
@@ -86,12 +100,16 @@ export class AuthorizationService {
       return;
     }
 
+    this.checkRole(role);
+  }
+
+  checkRole(role: UserRole) {
+    const pathName = window.location.pathname.slice();
+
     if (role !== UserRole.Admin && role !== UserRole.ProjectUser && role !== UserRole.Investor && role !== UserRole.Vendor) {
       this.signOut();
       return;
     }
-
-    const pathName = window.location.pathname.slice();
 
     if (role === UserRole.Vendor) {
       this.profileService.fetchVendor().subscribe(
@@ -175,12 +193,10 @@ export class AuthorizationService {
   }
 
   signUpAsAdmin(adminDto: AdminDto): Observable<any> {
-    // return of({});
     return this.http.post<any>(environment.auth + environment.adminRegister, adminDto, { observe: 'response' });
   }
 
   signUpAsProjectUser(projectUserDto: ProjectUserDto): Observable<any> {
-    // return of({});
     return this.http.post<any>(environment.auth + environment.projectUserRegister, projectUserDto, { observe: 'response' });
   }
 
@@ -201,9 +217,40 @@ export class AuthorizationService {
     return this.http.put<any>(environment.auth + environment.passwordRecovery_2 + code, password, { observe: 'response' });
   }
 
-  socialUserLogin(user: SocialUserDto): Observable<any>  {
-   // todo
-   return of({});
+  socialAuthVendor(user: SocialUserDto): Observable<any> {
+    return this.http.post<any>(environment.auth + environment.socialAuthVendor, user, { observe: 'response' });
+  }
+
+  socialAuthInvestor(user: SocialUserDto): Observable<any> {
+    return this.http.post<any>(environment.auth + environment.socialAuthInvestor, user, { observe: 'response' });
+  }
+
+  socialUserLogin(user: SocialUserDto): Observable<any> {
+    return this.http.post<any>(environment.auth + environment.socialAuth, user, { observe: 'response' });
+  }
+
+  socialAuthVendorSubscribe(observable: Observable<any>) {
+    observable.subscribe(
+      val => {
+        console.log(val);
+      }
+    );
+  }
+
+  socialAuthInvestorSubscribe(observable: Observable<any>) {
+    observable.subscribe(
+      val => {
+        console.log(val);
+      }
+    );
+  }
+
+  socialUserLoginSubscribe(observable: Observable<any>) {
+    observable.subscribe(
+      val => {
+        console.log(val);
+      }
+    );
   }
 
   signOut(): void {
