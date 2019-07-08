@@ -50,62 +50,6 @@ export class SigninComponent implements OnInit {
     return this.signinForm.controls;
   }
 
-  fetchVendorSubscribe(observable: Observable<VendorRole>): void {
-    observable.subscribe(
-      (vendor: VendorRole) => {
-        this.stateService.user$.next(vendor);
-        this.stateService.authorized$.next(true);
-        this.router.navigate(['home', 'vendor']);
-      },
-      err => {
-        console.warn(err);
-        this.authService.signOut();
-      }
-    );
-  }
-
-  fetchInvestorSubscribe(observable: Observable<InvestorRole>): void {
-    observable.subscribe(
-      (investor: InvestorRole) => {
-        this.stateService.user$.next(investor);
-        this.stateService.authorized$.next(true);
-        this.router.navigate(['home', 'investor']);
-      },
-      err => {
-        console.warn(err);
-        this.authService.signOut();
-      }
-    );
-  }
-
-  fetchAdminSubscribe(observable: Observable<AdminRole>): void {
-    observable.subscribe(
-      (admin: AdminRole) => {
-        this.stateService.user$.next(admin);
-        this.stateService.authorized$.next(true);
-        this.router.navigate(['admin']);
-      },
-      err => {
-        console.warn(err);
-        this.authService.signOut();
-      }
-    );
-  }
-
-  fetchProjectUserSubscribe(observable: Observable<ProjectUserRole>): void {
-    observable.subscribe(
-      (projectUser: ProjectUserRole) => {
-        this.stateService.user$.next(projectUser);
-        this.stateService.authorized$.next(true);
-        this.router.navigate(['projectUser']);
-      },
-      err => {
-        console.warn(err);
-        this.authService.signOut();
-      }
-    );
-  }
-
   onSubmit() {
     this.submitted = true;
 
@@ -118,22 +62,7 @@ export class SigninComponent implements OnInit {
     this.authService.signIn(this.signinForm.value).subscribe(
       response => {
         this.showProgressBar = false;
-
-        localStorage.setItem('token', response.body);
-        const role: UserRole = this.stateService.role();
-
-        if (role === UserRole.Vendor) {
-          this.fetchVendorSubscribe( this.profileService.fetchVendor() );
-        }
-        if (role === UserRole.Investor) {
-          this.fetchInvestorSubscribe( this.profileService.fetchInvestor() );
-        }
-        if (role === UserRole.Admin) {
-          this.fetchAdminSubscribe( this.profileService.fetchAdmin() );
-        }
-        if (role === UserRole.ProjectUser) {
-          this.fetchProjectUserSubscribe( this.profileService.fetchProjectUser() );
-        }
+        this.authService.successSocialOrEmailLogin(response);
       },
       err => {
         console.warn(err);

@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 
 import { StateService } from '../state/state.service';
 import { environment } from '../../../environments/environment';
-import { VendorDto, InvestorDto, UserRole } from '../../models';
+import { VendorDto, InvestorDto, UserRole, VendorRole, InvestorRole, AdminRole } from '../../models';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ProfileService } from './profile.service';
 import { AdminDto } from 'src/app/models/adminDto';
@@ -17,6 +17,7 @@ import { NotificationService } from '../notification.service';
 import { MethodWhenEmailIsEmpty } from 'src/app/models/socialMethodName';
 import { TranslateService } from '../translate.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { ProjectUserRole } from 'src/app/models/projectUserRole';
 
 @Injectable({
   providedIn: 'root'
@@ -260,7 +261,7 @@ export class AuthorizationService {
           if (response.body == null) {
             this.notify.show(this.translate.data.checkEmailShared);
           } else {
-            this.notify.show(response.body.data);
+            this.successSocialOrEmailLogin(response); // response.body === token ?
           }
         } else {
           this.notify.show(response.body.error);
@@ -289,13 +290,13 @@ export class AuthorizationService {
 
         if (this.userRoleForRegister === UserRole.Vendor) {
           this.socialUserRegisterSubscribe(this.socialRegisterVendor(userForLogin),
-              MethodWhenEmailIsEmpty.socialRegisterVendor
-            );
+            MethodWhenEmailIsEmpty.socialRegisterVendor
+          );
         }
         if (this.userRoleForRegister === UserRole.Investor) {
           this.socialUserRegisterSubscribe(this.socialRegisterInvestor(userForLogin),
-              MethodWhenEmailIsEmpty.socialRegisterInvestor
-            );
+            MethodWhenEmailIsEmpty.socialRegisterInvestor
+          );
         }
       },
       (err: any) => {
@@ -354,6 +355,90 @@ export class AuthorizationService {
         }
       }
     );
+  }
+
+
+
+
+
+  fetchVendorSubscribe(observable: Observable<VendorRole>): void {
+    observable.subscribe(
+      (vendor: VendorRole) => {
+        this.stateService.user$.next(vendor);
+        this.stateService.authorized$.next(true);
+        this.router.navigate(['home', 'vendor']);
+      },
+      err => {
+        console.warn(err);
+        this.signOut();
+      }
+    );
+  }
+
+  fetchInvestorSubscribe(observable: Observable<InvestorRole>): void {
+    observable.subscribe(
+      (investor: InvestorRole) => {
+        this.stateService.user$.next(investor);
+        this.stateService.authorized$.next(true);
+        this.router.navigate(['home', 'investor']);
+      },
+      err => {
+        console.warn(err);
+        this.signOut();
+      }
+    );
+  }
+
+  fetchAdminSubscribe(observable: Observable<AdminRole>): void {
+    observable.subscribe(
+      (admin: AdminRole) => {
+        this.stateService.user$.next(admin);
+        this.stateService.authorized$.next(true);
+        this.router.navigate(['admin']);
+      },
+      err => {
+        console.warn(err);
+        this.signOut();
+      }
+    );
+  }
+
+  fetchProjectUserSubscribe(observable: Observable<ProjectUserRole>): void {
+    observable.subscribe(
+      (projectUser: ProjectUserRole) => {
+        this.stateService.user$.next(projectUser);
+        this.stateService.authorized$.next(true);
+        this.router.navigate(['projectUser']);
+      },
+      err => {
+        console.warn(err);
+        this.signOut();
+      }
+    );
+  }
+
+
+
+
+
+  successSocialOrEmailLogin(response: any) {
+    console.log(response);
+
+    localStorage.setItem('token', response.body);  // response.body === token ?
+    const role: UserRole = this.stateService.role();
+
+    if (role === UserRole.Vendor) {
+      this.fetchVendorSubscribe(this.profileService.fetchVendor());
+    }
+    if (role === UserRole.Investor) {
+      this.fetchInvestorSubscribe(this.profileService.fetchInvestor());
+    }
+    if (role === UserRole.Admin) {
+      this.fetchAdminSubscribe(this.profileService.fetchAdmin());
+    }
+    if (role === UserRole.ProjectUser) {
+      this.fetchProjectUserSubscribe(this.profileService.fetchProjectUser());
+    }
   }
 
 
