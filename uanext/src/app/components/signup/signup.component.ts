@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UserRole } from 'src/app/models';
-import { AuthService } from 'angularx-social-login';
+import { AuthService, SocialUser } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
+import { SocialUserDto } from 'src/app/models/socialUserDto';
+import { Observable } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
+import { Router } from '@angular/router';
+import { TranslateService } from 'src/app/services/translate.service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -14,21 +19,20 @@ export class SignupComponent implements OnInit {
   useEmail = false;
   self = 'SignupComponent';
 
-  constructor(private socialAuthService: AuthService, private authService: AuthorizationService) {}
+  constructor(private socialAuthService: AuthService,
+    private authService: AuthorizationService,
+    private notify: NotificationService,
+    private router: Router,
+    private translate: TranslateService) { }
 
-  ngOnInit() {
-    this.authService.userRole = this.userRole;
-    console.log(this.authService.userRole);
-   }
+  ngOnInit() { }
 
   asVendor() {
     this.userRole = UserRole.Vendor;
-    this.authService.userRole = this.userRole;
   }
 
   asInvestor() {
     this.userRole = UserRole.Investor;
-    this.authService.userRole = this.userRole;
   }
 
   showProgressBar(show: boolean) {
@@ -43,12 +47,63 @@ export class SignupComponent implements OnInit {
     this.useEmail = true;
   }
 
-  signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  signUpWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (socialUser: SocialUser) => {
+        const userForLogin: SocialUserDto = this.authService.createSocialUserDto(socialUser);
+
+        if (this.userRole === UserRole.Vendor) {
+          this.socialUserLoginSubscribe(this.authService.socialRegisterVendor(userForLogin));
+        }
+        if (this.userRole === UserRole.Investor) {
+          this.socialUserLoginSubscribe(this.authService.socialRegisterInvestor(userForLogin));
+        }
+      },
+      (err: any) => {
+        console.warn(err);
+      }
+    );
   }
 
-  signInWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  signUpWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
+      (socialUser: SocialUser) => {
+        const userForLogin: SocialUserDto = this.authService.createSocialUserDto(socialUser);
+
+        if (this.userRole === UserRole.Vendor) {
+          this.socialUserLoginSubscribe(this.authService.socialRegisterVendor(userForLogin));
+        }
+        if (this.userRole === UserRole.Investor) {
+          this.socialUserLoginSubscribe(this.authService.socialRegisterInvestor(userForLogin));
+        }
+      },
+      (err: any) => {
+        console.warn(err);
+      }
+    );
+  }
+
+  socialUserLoginSubscribe(observable: Observable<any>) {
+    observable.subscribe(
+      response => {
+        console.log(response);
+        if (response.status === 200) {
+          if (response.body == null) {
+            this.notify.show(this.translate.data.checkEmailShared);
+          } else {
+            this.notify.show(response.body.data);
+          }
+        } else {
+          this.notify.show(response.body.error);
+        }
+      },
+      err => {
+        if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
+          this.notify.show(this.translate.data.firstNeedRegister);
+          this.router.navigate(['signup']);
+        }
+      }
+    );
   }
 
 }

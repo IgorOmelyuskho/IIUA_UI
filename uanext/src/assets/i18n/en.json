@@ -16,7 +16,7 @@
         "registration": "Registration",
         "investor": "Investor",
         "vendor": "Vendor",
-        "social": "Login using social networks:",
+        "social": "Sign up using social networks:",
         "useEmail": "Use email for registration"
     },
     "SignupInvestorComponent": {
@@ -722,5 +722,7 @@
         "emailRequired": "Email is required",
         "validEmail": "Email address must be a valid email address",
         "sendBtn": "SEND"
-    }
+    },
+    "checkEmailShared": "You received a message in the email",
+    "firstNeedRegister": "First you need to register as Vendor or Investor"
 }

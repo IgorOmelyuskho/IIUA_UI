@@ -5,8 +5,8 @@
   <div class="right-part">
     <div class="language">
       <select (change)="languageChange($event)" class="custom-select">
-        <option value="ru" selected>ru</option>
-        <option value="en">en</option>
+        <option value="ru" [selected]="translateService.lang === 'ru'">ru</option>
+        <option value="en" [selected]="translateService.lang === 'en'">en</option>
       </select>
     </div>
     <button (click)='goToProfile()' type="button">{{ 'profile' | translate:self }}</button>

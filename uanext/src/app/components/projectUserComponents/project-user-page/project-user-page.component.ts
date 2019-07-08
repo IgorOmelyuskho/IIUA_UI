@@ -11,7 +11,7 @@ import { TranslateService } from 'src/app/services/translate.service';
 export class ProjectUserPageComponent implements OnInit {
   self = 'ProjectUserPageComponent';
 
-  constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) { }
+  constructor(private router: Router, private authService: AuthorizationService, public translateService: TranslateService) { }
 
   ngOnInit() {
   }

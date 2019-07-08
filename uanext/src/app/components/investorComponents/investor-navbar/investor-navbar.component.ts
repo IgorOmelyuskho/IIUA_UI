@@ -18,7 +18,7 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit, OnDestroy
   matchesMediaQuery = false;
   menuIsOpen = false;
 
-  constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) { }
+  constructor(private router: Router, private authService: AuthorizationService, public translateService: TranslateService) { }
 
   ngOnInit() {
     this.initMenu();

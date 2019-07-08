@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   matchesMediaQuery = false;
   menuIsOpen = false;
 
-  constructor(private router: Router, private translateService: TranslateService) { }
+  constructor(private router: Router, public translateService: TranslateService) { }
 
   ngOnInit() {
     this.initMenu();
