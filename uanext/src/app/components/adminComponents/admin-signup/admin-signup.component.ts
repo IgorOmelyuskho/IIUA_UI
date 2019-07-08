@@ -54,7 +54,7 @@ export class AdminSignupComponent implements OnInit {
         this.showProgress = false;
         if (response.status === 200) {
           if (response.body == null) {
-            this.notify.show('Вам пришло сообщение на почту');
+            this.notify.show('You received a message in the email');
           } else {
             this.notify.show(response.body.data);
           }

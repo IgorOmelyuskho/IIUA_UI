@@ -20,6 +20,7 @@ export interface UpdateRateInterface {
 })
 export class TranslateService {
   data: any = {};
+  lang: string;
 
   fieldOfActivityOptions: BehaviorSubject<FieldActivityInterface[]> = new BehaviorSubject(null);
   updateRateOptions: BehaviorSubject<UpdateRateInterface[]> = new BehaviorSubject(null);
@@ -33,6 +34,7 @@ export class TranslateService {
       const langPath = `../../assets/i18n/${lang || 'ru'}.json`;
       this.http.get<{}>(langPath).subscribe(
         translation => {
+          this.lang = lang;
           this.fieldOfActivityOptions.next(translation['fieldOfActivity']);
           this.updateRateOptions.next(translation['updateRateOptions']);
           this.filterItems.next(translation['FilterItemsComponent']);

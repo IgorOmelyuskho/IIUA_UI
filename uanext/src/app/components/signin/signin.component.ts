@@ -11,8 +11,10 @@ import { NotificationService } from 'src/app/services/notification.service';
 import FormHelper from '../../helperClasses/helperClass';
 import { take, first, delay } from 'rxjs/operators';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
-import { AuthService } from 'angularx-social-login';
+import { AuthService, SocialUser } from 'angularx-social-login';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { SocialUserDto } from 'src/app/models/socialUserDto';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-signin',
@@ -33,7 +35,8 @@ export class SigninComponent implements OnInit {
     private stateService: StateService,
     private profileService: ProfileService,
     private notify: NotificationService,
-    private socialAuthService: AuthService
+    private socialAuthService: AuthService,
+    private translate: TranslateService
   ) {
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
@@ -41,9 +44,7 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.authService.userRole = undefined;
-  }
+  ngOnInit() { }
 
   get formControls() {
     return this.signinForm.controls;
@@ -143,11 +144,50 @@ export class SigninComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (socialUser: SocialUser) => {
+        const userForLogin: SocialUserDto = this.authService.createSocialUserDto(socialUser);
+        this.socialUserLoginSubscribe( this.authService.socialUserLogin(userForLogin) );
+      },
+      (err: any) => {
+        console.warn(err);
+      }
+    );
   }
 
   signInWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
+      (socialUser: SocialUser) => {
+        const userForLogin: SocialUserDto = this.authService.createSocialUserDto(socialUser);
+        this.socialUserLoginSubscribe( this.authService.socialUserLogin(userForLogin) );
+      },
+      (err: any) => {
+        console.warn(err);
+      }
+    );
+  }
+
+  socialUserLoginSubscribe(observable: Observable<any>) {
+    observable.subscribe(
+      response => {
+        console.log(response);
+        if (response.status === 200) {
+          if (response.body == null) {
+            this.notify.show(this.translate.data.checkEmailShared);
+          } else {
+            this.notify.show(response.body.data);
+          }
+        } else {
+          this.notify.show(response.body.error);
+        }
+      },
+      err => {
+        if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
+          this.notify.show(this.translate.data.firstNeedRegister);
+          this.router.navigate(['signup']);
+        }
+      }
+    );
   }
 
 }

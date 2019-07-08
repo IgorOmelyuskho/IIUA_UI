@@ -19,8 +19,6 @@ import { NotificationService } from '../notification.service';
   providedIn: 'root'
 })
 export class AuthorizationService {
-  socialNetworkUser: any;
-  userRole: UserRole;
   needEmailForSocialLogin = false;
 
   constructor(
@@ -32,98 +30,6 @@ export class AuthorizationService {
     private notify: NotificationService) { }
 
   init() {
-    this.socialAuthService.authState.subscribe((user) => {
-      this.socialNetworkUser = user;
-      console.log(this.socialNetworkUser);
-      let resultToken: string = user.idToken;
-      if (user.provider === 'FACEBOOK') {
-        resultToken = user.authToken;
-      }
-      if (user.provider === 'GOOGLE') {
-        resultToken = user.idToken;
-      }
-      const userForLogin: SocialUserDto = {
-        token: resultToken,
-        provider: user.provider,
-        email: user.email // todo uncomment
-      };
-      console.log(userForLogin);
-      console.log('UserRole = ', this.userRole);
-
-      if (this.userRole == null) {
-        this.socialUserLogin(userForLogin).subscribe(
-          response => {
-            console.log(response);
-            if (response.status === 200) {
-              if (response.body == null) {
-                this.notify.show('Вам пришло сообщение на почту');
-              } else {
-                this.notify.show(response.body.data);
-              }
-            } else {
-              this.notify.show(response.body.error);
-            }
-          },
-          err => {
-            if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
-              console.log('UNE');
-              this.router.navigate(['signup']);
-            }
-          }
-        );
-      }
-
-      if (this.userRole === UserRole.Vendor) {
-        this.socialRegisterVendor(userForLogin).subscribe(
-          response => {
-            console.log(response);
-            if (response.status === 200) {
-              if (response.body == null) {
-                this.notify.show('Вам пришло сообщение на почту');
-              } else {
-                this.notify.show(response.body.data);
-              }
-            } else {
-              this.notify.show(response.body.error);
-            }
-          },
-          err => {
-            if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
-              console.log('UNE');
-              this.router.navigate(['signup']);
-            }
-          }
-        );
-      }
-
-      if (this.userRole === UserRole.Investor) {
-        this.socialRegisterInvestor(userForLogin).subscribe(
-          response => {
-            console.log(response);
-            if (response.status === 200) {
-              if (response.body == null) {
-                this.notify.show('Вам пришло сообщение на почту');
-              } else {
-                this.notify.show(response.body.data);
-              }
-            } else {
-              this.notify.show(response.body.error);
-            }
-          },
-          err => {
-            if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
-              console.log('UNE');
-              this.router.navigate(['signup']);
-            }
-          }
-        );
-      }
-    });
-
-
-
-
-
     const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     let decodedToken: any;
@@ -142,8 +48,6 @@ export class AuthorizationService {
     if (window.location.href.includes('user-agreement')) {
       return;
     }
-
-
 
     if (token == null || token === '') {
       this.signOut();
@@ -165,6 +69,26 @@ export class AuthorizationService {
     }
 
     this.checkRole(role);
+  }
+
+  createSocialUserDto(user: SocialUser): SocialUserDto {
+    console.log(user);
+    let resultToken = '';
+    if (user.provider === 'FACEBOOK') {
+      resultToken = user.authToken;
+    }
+    if (user.provider === 'GOOGLE') {
+      resultToken = user.idToken;
+    }
+
+    const result = {
+      token: resultToken,
+      provider: user.provider,
+      email: user.email // todo uncomment
+    };
+    console.log(result);
+
+    return result;
   }
 
   checkRole(role: UserRole) {
@@ -248,10 +172,6 @@ export class AuthorizationService {
     }
   }
 
-
-  checkToken() {
-
-  }
 
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
     return this.http.post<any>(environment.auth + environment.vendorRegister, vendorDto, { observe: 'response' });

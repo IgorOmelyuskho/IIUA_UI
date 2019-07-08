@@ -30,7 +30,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   profileSelectedProject: VendorProject;
   profileMenuOpen = false;
 
-  constructor(private router: Router, private authService: AuthorizationService, private translateService: TranslateService) {}
+  constructor(private router: Router, private authService: AuthorizationService, public translateService: TranslateService) {}
 
   ngOnInit() {
     this.initMenu();
