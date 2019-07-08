@@ -14,12 +14,17 @@ import { ProjectUserDto } from 'src/app/models/projectUserDto';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { SocialUserDto } from 'src/app/models/socialUserDto';
 import { NotificationService } from '../notification.service';
+import { MethodWhenEmailIsEmpty } from 'src/app/models/socialMethodName';
+import { TranslateService } from '../translate.service';
+import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
   needEmailForSocialLogin = false;
+  methodWhenEmailIsEmpty: MethodWhenEmailIsEmpty;
+  userRoleForRegister: UserRole;
 
   constructor(
     private http: HttpClient,
@@ -27,14 +32,15 @@ export class AuthorizationService {
     private router: Router,
     private profileService: ProfileService,
     private socialAuthService: AuthService,
-    private notify: NotificationService) { }
+    private notify: NotificationService,
+    private translate: TranslateService) { }
 
   init() {
     const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     let decodedToken: any;
     let isExpired: boolean;
-    let role: UserRole;
+    let roleInToken: UserRole;
 
     if (window.location.href.includes('email-validate')) {
       return;
@@ -57,7 +63,7 @@ export class AuthorizationService {
     try {
       decodedToken = helper.decodeToken(token);
       isExpired = helper.isTokenExpired(token);
-      role = decodedToken.role;
+      roleInToken = decodedToken.role;
     } catch {
       this.signOut();
       return;
@@ -68,7 +74,7 @@ export class AuthorizationService {
       return;
     }
 
-    this.checkRole(role);
+    this.checkRole(roleInToken);
   }
 
   createSocialUserDto(user: SocialUser): SocialUserDto {
@@ -217,6 +223,141 @@ export class AuthorizationService {
   socialUserLogin(user: SocialUserDto): Observable<any> {
     return this.http.post<any>(environment.auth + environment.socialAuth, user, { observe: 'response' });
   }
+
+
+
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (socialUser: SocialUser) => {
+        const userForLogin: SocialUserDto = this.createSocialUserDto(socialUser);
+        this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin));
+      },
+      (err: any) => {
+        console.warn(err);
+      }
+    );
+  }
+
+  signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
+      (socialUser: SocialUser) => {
+        const userForLogin: SocialUserDto = this.createSocialUserDto(socialUser);
+        this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin));
+      },
+      (err: any) => {
+        console.warn(err);
+      }
+    );
+  }
+
+  socialUserLoginSubscribe(observable: Observable<any>) {
+    observable.subscribe(
+      response => {
+        console.log(response);
+        this.needEmailForSocialLogin = false;
+        if (response.status === 200) {
+          if (response.body == null) {
+            this.notify.show(this.translate.data.checkEmailShared);
+          } else {
+            this.notify.show(response.body.data);
+          }
+        } else {
+          this.notify.show(response.body.error);
+        }
+      },
+      err => {
+        if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
+          this.notify.show(this.translate.data.firstNeedRegister);
+          this.router.navigate(['signup']);
+        }
+        if (err.error.error.errorMessage[0] === 'Email is empty' && err.error.error.code === 8) {
+          this.methodWhenEmailIsEmpty = MethodWhenEmailIsEmpty.socialUserLogin;
+          this.needEmailForSocialLogin = true;
+        }
+      }
+    );
+  }
+
+
+
+
+  signUpWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (socialUser: SocialUser) => {
+        const userForLogin: SocialUserDto = this.createSocialUserDto(socialUser);
+
+        if (this.userRoleForRegister === UserRole.Vendor) {
+          this.socialUserRegisterSubscribe(this.socialRegisterVendor(userForLogin),
+              MethodWhenEmailIsEmpty.socialRegisterVendor
+            );
+        }
+        if (this.userRoleForRegister === UserRole.Investor) {
+          this.socialUserRegisterSubscribe(this.socialRegisterInvestor(userForLogin),
+              MethodWhenEmailIsEmpty.socialRegisterInvestor
+            );
+        }
+      },
+      (err: any) => {
+        console.warn(err);
+      }
+    );
+  }
+
+  signUpWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
+      (socialUser: SocialUser) => {
+        const userForLogin: SocialUserDto = this.createSocialUserDto(socialUser);
+
+        if (this.userRoleForRegister === UserRole.Vendor) {
+          this.socialUserRegisterSubscribe(
+            this.socialRegisterVendor(userForLogin),
+            MethodWhenEmailIsEmpty.socialRegisterVendor
+          );
+        }
+        if (this.userRoleForRegister === UserRole.Investor) {
+          this.socialUserRegisterSubscribe(
+            this.socialRegisterInvestor(userForLogin),
+            MethodWhenEmailIsEmpty.socialRegisterInvestor
+          );
+        }
+      },
+      (err: any) => {
+        console.warn(err);
+      }
+    );
+  }
+
+  socialUserRegisterSubscribe(observable: Observable<any>, socialMethodName: MethodWhenEmailIsEmpty) {
+    observable.subscribe(
+      response => {
+        console.log(response);
+        this.needEmailForSocialLogin = false;
+        if (response.status === 200) {
+          if (response.body == null) {
+            this.notify.show(this.translate.data.checkEmailShared);
+          } else {
+            this.notify.show(response.body.data);
+          }
+        } else {
+          this.notify.show(response.body.error);
+        }
+      },
+      err => {
+        if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
+          this.notify.show(this.translate.data.firstNeedRegister);
+          this.router.navigate(['signup']);
+        }
+        if (err.error.error.errorMessage[0] === 'Email is empty' && err.error.error.code === 8) {
+          this.methodWhenEmailIsEmpty = socialMethodName;
+          this.needEmailForSocialLogin = true;
+        }
+      }
+    );
+  }
+
+
+
 
   signOut(): void {
     localStorage.removeItem('token');
