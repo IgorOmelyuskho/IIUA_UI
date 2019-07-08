@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
 import { TranslateService } from 'src/app/services/translate.service';
+import { MethodWhenEmailIsEmpty } from 'src/app/models/socialMethodName';
 
 
 declare const slidePage;
@@ -182,50 +183,11 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
-      (socialUser: SocialUser) => {
-        const userForLogin: SocialUserDto = this.authService.createSocialUserDto(socialUser);
-        this.socialUserLoginSubscribe( this.authService.socialUserLogin(userForLogin) );
-      },
-      (err: any) => {
-        console.warn(err);
-      }
-    );
+    this.authService.signInWithGoogle();
   }
 
   signInWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
-      (socialUser: SocialUser) => {
-        const userForLogin: SocialUserDto = this.authService.createSocialUserDto(socialUser);
-        this.socialUserLoginSubscribe( this.authService.socialUserLogin(userForLogin) );
-      },
-      (err: any) => {
-        console.warn(err);
-      }
-    );
-  }
-
-  socialUserLoginSubscribe(observable: Observable<any>) {
-    observable.subscribe(
-      response => {
-        console.log(response);
-        if (response.status === 200) {
-          if (response.body == null) {
-            this.notify.show(this.translate.data.checkEmailShared);
-          } else {
-            this.notify.show(response.body.data);
-          }
-        } else {
-          this.notify.show(response.body.error);
-        }
-      },
-      err => {
-        if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
-          this.notify.show(this.translate.data.firstNeedRegister);
-          this.router.navigate(['signup']);
-        }
-      }
-    );
+    this.authService.signInWithFB();
   }
 
   init1() {

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
 import { TranslateService } from 'src/app/services/translate.service';
+import { MethodWhenEmailIsEmpty } from 'src/app/models/socialMethodName';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -25,14 +26,18 @@ export class SignupComponent implements OnInit {
     private router: Router,
     private translate: TranslateService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authService.userRoleForRegister = this.userRole;
+  }
 
   asVendor() {
     this.userRole = UserRole.Vendor;
+    this.authService.userRoleForRegister = this.userRole;
   }
 
   asInvestor() {
     this.userRole = UserRole.Investor;
+    this.authService.userRoleForRegister = this.userRole;
   }
 
   showProgressBar(show: boolean) {
@@ -48,62 +53,12 @@ export class SignupComponent implements OnInit {
   }
 
   signUpWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
-      (socialUser: SocialUser) => {
-        const userForLogin: SocialUserDto = this.authService.createSocialUserDto(socialUser);
-
-        if (this.userRole === UserRole.Vendor) {
-          this.socialUserLoginSubscribe(this.authService.socialRegisterVendor(userForLogin));
-        }
-        if (this.userRole === UserRole.Investor) {
-          this.socialUserLoginSubscribe(this.authService.socialRegisterInvestor(userForLogin));
-        }
-      },
-      (err: any) => {
-        console.warn(err);
-      }
-    );
+    this.authService.signUpWithGoogle(); // userRole in this.authService.userRoleForRegister
   }
 
   signUpWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
-      (socialUser: SocialUser) => {
-        const userForLogin: SocialUserDto = this.authService.createSocialUserDto(socialUser);
-
-        if (this.userRole === UserRole.Vendor) {
-          this.socialUserLoginSubscribe(this.authService.socialRegisterVendor(userForLogin));
-        }
-        if (this.userRole === UserRole.Investor) {
-          this.socialUserLoginSubscribe(this.authService.socialRegisterInvestor(userForLogin));
-        }
-      },
-      (err: any) => {
-        console.warn(err);
-      }
-    );
+    this.authService.signUpWithFB(); // userRole in this.authService.userRoleForRegister
   }
 
-  socialUserLoginSubscribe(observable: Observable<any>) {
-    observable.subscribe(
-      response => {
-        console.log(response);
-        if (response.status === 200) {
-          if (response.body == null) {
-            this.notify.show(this.translate.data.checkEmailShared);
-          } else {
-            this.notify.show(response.body.data);
-          }
-        } else {
-          this.notify.show(response.body.error);
-        }
-      },
-      err => {
-        if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
-          this.notify.show(this.translate.data.firstNeedRegister);
-          this.router.navigate(['signup']);
-        }
-      }
-    );
-  }
 
 }
