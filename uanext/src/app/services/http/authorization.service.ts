@@ -261,7 +261,7 @@ export class AuthorizationService {
           if (response.body == null) {
             this.notify.show(this.translate.data.checkEmailShared);
           } else {
-            this.successSocialOrEmailLogin(response); // response.body === token ?
+            this.successSocialOrEmailLogin(response);
           }
         } else {
           this.notify.show(response.body.error);
@@ -424,7 +424,7 @@ export class AuthorizationService {
   successSocialOrEmailLogin(response: any) {
     console.log(response);
 
-    localStorage.setItem('token', response.body);  // response.body === token ?
+    localStorage.setItem('token', response.body.token);
     const role: UserRole = this.stateService.role();
 
     if (role === UserRole.Vendor) {
