@@ -26,6 +26,7 @@ export class AuthorizationService {
   needEmailForSocialLogin = false;
   methodWhenEmailIsEmpty: MethodWhenEmailIsEmpty;
   userRoleForRegister: UserRole;
+  provider: string; // GOOGLE FACEBOOK
 
   constructor(
     private http: HttpClient,
@@ -272,6 +273,7 @@ export class AuthorizationService {
           this.notify.show(this.translate.data.firstNeedRegister);
           this.router.navigate(['signup']);
         }
+        // maybe remove because  social login controller cant return Email is empty
         if (err.error.error.errorMessage[0] === 'Email is empty' && err.error.error.code === 8) {
           this.methodWhenEmailIsEmpty = MethodWhenEmailIsEmpty.socialUserLogin;
           this.needEmailForSocialLogin = true;
@@ -305,10 +307,13 @@ export class AuthorizationService {
     );
   }
 
-  signUpWithFB(): void {
+  signUpWithFB(email?: string): void { // use email when in facebook not exist email
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
       (socialUser: SocialUser) => {
         const userForLogin: SocialUserDto = this.createSocialUserDto(socialUser);
+        if (email != null) {
+          userForLogin.email = email;
+        }
 
         if (this.userRoleForRegister === UserRole.Vendor) {
           this.socialUserRegisterSubscribe(
@@ -335,7 +340,7 @@ export class AuthorizationService {
         console.log(response);
         this.needEmailForSocialLogin = false;
         if (response.status === 200) {
-          if (response.body == null) {
+          if (response.body == null) { 
             this.notify.show(this.translate.data.checkEmailShared);
           } else {
             this.notify.show(response.body.data);
@@ -444,10 +449,11 @@ export class AuthorizationService {
 
 
 
-  signOut(): void {
+  signOut(): void { // duplicated
     localStorage.removeItem('token');
     this.stateService.user$.next(null);
     this.stateService.authorized$.next(false);
+    this.stateService.interactiveInvestmentProject$.next(null);
     this.router.navigate(['']);
     this.socialAuthService.signOut();
   }

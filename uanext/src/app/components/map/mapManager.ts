@@ -276,6 +276,7 @@ export class MapManager {
     this.map = new maptalks.Map('map-html-element-id-495367235', { // DIV id
       center: [13.41261, 52.529611],
       zoom: this.initZoom,
+      minZoom : 3,
       // pitch: 60,
       // bearing: 30,
       pitch: 0,
