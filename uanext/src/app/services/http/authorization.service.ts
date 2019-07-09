@@ -14,7 +14,6 @@ import { ProjectUserDto } from 'src/app/models/projectUserDto';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { SocialUserDto } from 'src/app/models/socialUserDto';
 import { NotificationService } from '../notification.service';
-import { MethodWhenEmailIsEmpty } from 'src/app/models/socialMethodName';
 import { TranslateService } from '../translate.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
@@ -24,7 +23,6 @@ import { ProjectUserRole } from 'src/app/models/projectUserRole';
 })
 export class AuthorizationService {
   needEmailForSocialLogin = false;
-  methodWhenEmailIsEmpty: MethodWhenEmailIsEmpty;
   userRoleForRegister: UserRole;
   provider: string; // GOOGLE FACEBOOK
 
@@ -80,7 +78,6 @@ export class AuthorizationService {
   }
 
   createSocialUserDto(user: SocialUser): SocialUserDto {
-    console.log(user);
     let resultToken = '';
     if (user.provider === 'FACEBOOK') {
       resultToken = user.authToken;
@@ -92,9 +89,8 @@ export class AuthorizationService {
     const result = {
       token: resultToken,
       provider: user.provider,
-      email: user.email // todo uncomment
+      email: user.email
     };
-    console.log(result);
 
     return result;
   }
@@ -180,7 +176,6 @@ export class AuthorizationService {
     }
   }
 
-
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
     return this.http.post<any>(environment.auth + environment.vendorRegister, vendorDto, { observe: 'response' });
   }
@@ -197,7 +192,6 @@ export class AuthorizationService {
     return this.http.post<any>(environment.auth + environment.projectUserRegister, projectUserDto, { observe: 'response' });
   }
 
-  // any because api return different response
   signIn(investorOrVendor: { password: string, email: string }): Observable<any> {
     return this.http.post<any>(environment.auth + environment.authenticate, investorOrVendor, { observe: 'response' });
   }
@@ -241,10 +235,14 @@ export class AuthorizationService {
     );
   }
 
-  signInWithFB(): void {
+  signInWithFB(email?: string): void {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
       (socialUser: SocialUser) => {
         const userForLogin: SocialUserDto = this.createSocialUserDto(socialUser);
+        if (email != null) {
+          userForLogin.email = email;
+        }
+
         this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin));
       },
       (err: any) => {
@@ -256,27 +254,21 @@ export class AuthorizationService {
   socialUserLoginSubscribe(observable: Observable<any>) {
     observable.subscribe(
       response => {
-        console.log(response);
         this.needEmailForSocialLogin = false;
-        if (response.status === 200) {
-          if (response.body == null) {
-            this.notify.show(this.translate.data.checkEmailShared);
-          } else {
-            this.successSocialOrEmailLogin(response);
-          }
+        if (response.body == null) {
+          this.notify.show(this.translate.data.checkEmailShared);
         } else {
-          this.notify.show(response.body.error);
+          this.successSocialOrEmailLogin(response);
         }
       },
       err => {
+        console.log(err);
         if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
           this.notify.show(this.translate.data.firstNeedRegister);
           this.router.navigate(['signup']);
         }
-        // maybe remove because  social login controller cant return Email is empty
-        if (err.error.error.errorMessage[0] === 'Email is empty' && err.error.error.code === 8) {
-          this.methodWhenEmailIsEmpty = MethodWhenEmailIsEmpty.socialUserLogin;
-          this.needEmailForSocialLogin = true;
+        if (err.error.error.errorMessage[0] === 'User email not verified' && err.error.error.code === 8) {
+          this.notify.show('User email not verified');
         }
       }
     );
@@ -291,13 +283,15 @@ export class AuthorizationService {
         const userForLogin: SocialUserDto = this.createSocialUserDto(socialUser);
 
         if (this.userRoleForRegister === UserRole.Vendor) {
-          this.socialUserRegisterSubscribe(this.socialRegisterVendor(userForLogin),
-            MethodWhenEmailIsEmpty.socialRegisterVendor
+          this.socialUserRegisterSubscribe(
+            this.socialRegisterVendor(userForLogin),
+            'GOOGLE'
           );
         }
         if (this.userRoleForRegister === UserRole.Investor) {
-          this.socialUserRegisterSubscribe(this.socialRegisterInvestor(userForLogin),
-            MethodWhenEmailIsEmpty.socialRegisterInvestor
+          this.socialUserRegisterSubscribe(
+            this.socialRegisterInvestor(userForLogin),
+            'GOOGLE'
           );
         }
       },
@@ -318,13 +312,13 @@ export class AuthorizationService {
         if (this.userRoleForRegister === UserRole.Vendor) {
           this.socialUserRegisterSubscribe(
             this.socialRegisterVendor(userForLogin),
-            MethodWhenEmailIsEmpty.socialRegisterVendor
+            'FACEBOOK'
           );
         }
         if (this.userRoleForRegister === UserRole.Investor) {
           this.socialUserRegisterSubscribe(
             this.socialRegisterInvestor(userForLogin),
-            MethodWhenEmailIsEmpty.socialRegisterInvestor
+            'FACEBOOK'
           );
         }
       },
@@ -334,29 +328,30 @@ export class AuthorizationService {
     );
   }
 
-  socialUserRegisterSubscribe(observable: Observable<any>, socialMethodName: MethodWhenEmailIsEmpty) {
+  socialUserRegisterSubscribe(observable: Observable<any>, provider: string) {
     observable.subscribe(
       response => {
-        console.log(response);
         this.needEmailForSocialLogin = false;
-        if (response.status === 200) {
-          if (response.body == null) { 
+        if (response.body == null) {
+          if (provider === 'FACEBOOK') {
             this.notify.show(this.translate.data.checkEmailShared);
-          } else {
-            this.notify.show(response.body.data);
           }
-        } else {
-          this.notify.show(response.body.error);
+          if (provider === 'GOOGLE') {
+            this.router.navigate(['signin']);
+          }
         }
       },
       err => {
+        console.log(err);
         if (err.error.error.errorMessage[0] === 'User not exist' && err.error.error.code === 8) {
           this.notify.show(this.translate.data.firstNeedRegister);
           this.router.navigate(['signup']);
         }
-        if (err.error.error.errorMessage[0] === 'Email is empty' && err.error.error.code === 8) {
-          this.methodWhenEmailIsEmpty = socialMethodName;
+        if (err.error.error.errorMessage[0] === 'Email is empty' && err.error.error.code === 8 && provider === 'FACEBOOK') {
           this.needEmailForSocialLogin = true;
+        }
+        if (err.error.error.errorMessage[0].includes('already taken') && err.error.error.code === 8) {
+          this.notify.show(err.error.error.errorMessage[0]);
         }
       }
     );

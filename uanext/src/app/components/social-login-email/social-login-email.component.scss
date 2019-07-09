@@ -27,7 +27,15 @@
       border-top-right-radius: 6px;
       width: 100%;
       background: $green;
-      margin-bottom: 30px;
+    }
+
+    .close-btn-wrapper {
+      text-align: right;
+
+      img {
+        height: 30px;
+        cursor: pointer;
+      }
     }
 
     .iiua {

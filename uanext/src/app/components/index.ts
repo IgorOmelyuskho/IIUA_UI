@@ -65,6 +65,7 @@ import { ConfirmPasswordRecoveryComponent } from './confirm-password-recovery/co
 import { SocialLoginEmailComponent } from './social-login-email/social-login-email.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { UserAgreementComponent } from './user-agreement/user-agreement.component';
+import { VendorProjectCardComponent } from './vendorComponents/vendor-project-card/vendor-project-card.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -128,7 +129,8 @@ export {
   ConfirmPasswordRecoveryComponent,
   SocialLoginEmailComponent,
   PrivacyPolicyComponent,
-  UserAgreementComponent
+  UserAgreementComponent,
+  VendorProjectCardComponent
 };
 
 export const components = [
@@ -192,7 +194,8 @@ export const components = [
   ConfirmPasswordRecoveryComponent,
   SocialLoginEmailComponent,
   PrivacyPolicyComponent,
-  UserAgreementComponent
+  UserAgreementComponent,
+  VendorProjectCardComponent
 ];
 
 

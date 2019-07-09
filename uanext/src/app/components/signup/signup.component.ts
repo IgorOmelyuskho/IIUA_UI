@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
 import { TranslateService } from 'src/app/services/translate.service';
-import { MethodWhenEmailIsEmpty } from 'src/app/models/socialMethodName';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',

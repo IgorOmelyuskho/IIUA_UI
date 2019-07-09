@@ -40,4 +40,8 @@ export class VendorProjectsComponent implements OnInit {
     this.router.navigate(['home', 'vendor', 'project', project.id]);
   }
 
+  onCardClick(project: VendorProject) {
+    this.goToProject(project);
+  }
+
 }

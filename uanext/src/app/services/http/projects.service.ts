@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map, tap } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
+import { responseProject, responseProject2 } from 'src/app/helperClasses/projects';
 
 const emptyVendorProject: VendorProject = {
   name: '',
@@ -41,21 +42,30 @@ export class ProjectsService {
   constructor(private http: HttpClient) { }
 
   fetchVendorProjects(): Observable<VendorProject[]> {
-    return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
-      .pipe(
-        map((response: any) => {
-          return response['data'];
-        }),
+    // return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
+    //   .pipe(
+    //     map((response: any) => {
+    //       return response['data'];
+    //     }),
 
-        // replace avatara to avatar
-        map((projects: VendorProject[]) => {
-          for (let i = 0; i < projects.length; i++) {
-            projects[i].avatar = projects[i].avatara;
-            delete projects[i].avatara;
-          }
-          return projects;
-        }),
-      );
+    //     // replace avatara to avatar
+    //     map((projects: VendorProject[]) => {
+    //       for (let i = 0; i < projects.length; i++) {
+    //         projects[i].avatar = projects[i].avatara;
+    //         delete projects[i].avatara;
+    //       }
+    //       return projects;
+    //     }),
+    //   );
+    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2]).pipe(
+      // map((projects: VendorProject[]) => {
+      //   for (let i = 0; i < projects.length; i++) {
+      //     projects[i].avatar = projects[i].avatara;
+      //     delete projects[i].avatara;
+      //   }
+      //   return projects;
+      // }),
+    );
   }
 
   createVendorProject(newVendorProject: VendorProject): Observable<any> {
