@@ -3,9 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import FormHelper from 'src/app/helperClasses/helperClass';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { Router } from '@angular/router';
-import { MethodWhenEmailIsEmpty } from 'src/app/models/socialMethodName';
-import { SocialUser } from 'angularx-social-login';
-import { SocialUserDto } from 'src/app/models/socialUserDto';
 
 @Component({
   selector: 'app-social-login-email',
@@ -21,7 +18,6 @@ export class SocialLoginEmailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
-    private router: Router,
   ) {
     this.emailForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
@@ -35,6 +31,9 @@ export class SocialLoginEmailComponent implements OnInit {
     return this.emailForm.controls;
   }
 
+  close() {
+    this.authService.needEmailForSocialLogin = false;
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -44,19 +43,6 @@ export class SocialLoginEmailComponent implements OnInit {
     }
 
     // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
-    if (this.authService.methodWhenEmailIsEmpty === MethodWhenEmailIsEmpty.socialUserLogin) {
-      this.authService.signInWithFB(this.emailForm.value.email);
-    }
-
-    // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
-    if (this.authService.methodWhenEmailIsEmpty === MethodWhenEmailIsEmpty.socialRegisterInvestor) {
-      this.authService.signUpWithFB(this.emailForm.value.email);
-    }
-
-    // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
-    if (this.authService.methodWhenEmailIsEmpty === MethodWhenEmailIsEmpty.socialRegisterVendor) {
-      this.authService.signUpWithFB(this.emailForm.value.email);
-    }
+    this.authService.signUpWithFB(this.emailForm.value.email);
   }
-
 }

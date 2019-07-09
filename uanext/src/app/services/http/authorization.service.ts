@@ -14,7 +14,6 @@ import { ProjectUserDto } from 'src/app/models/projectUserDto';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { SocialUserDto } from 'src/app/models/socialUserDto';
 import { NotificationService } from '../notification.service';
-import { MethodWhenEmailIsEmpty } from 'src/app/models/socialMethodName';
 import { TranslateService } from '../translate.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
@@ -24,7 +23,6 @@ import { ProjectUserRole } from 'src/app/models/projectUserRole';
 })
 export class AuthorizationService {
   needEmailForSocialLogin = false;
-  methodWhenEmailIsEmpty: MethodWhenEmailIsEmpty;
   userRoleForRegister: UserRole;
   provider: string; // GOOGLE FACEBOOK
 
@@ -80,7 +78,6 @@ export class AuthorizationService {
   }
 
   createSocialUserDto(user: SocialUser): SocialUserDto {
-    console.log(user);
     let resultToken = '';
     if (user.provider === 'FACEBOOK') {
       resultToken = user.authToken;
@@ -92,9 +89,8 @@ export class AuthorizationService {
     const result = {
       token: resultToken,
       provider: user.provider,
-      email: user.email // todo uncomment
+      email: user.email
     };
-    console.log(result);
 
     return result;
   }
@@ -180,7 +176,6 @@ export class AuthorizationService {
     }
   }
 
-
   signUpAsVendor(vendorDto: VendorDto): Observable<any> {
     return this.http.post<any>(environment.auth + environment.vendorRegister, vendorDto, { observe: 'response' });
   }
@@ -197,7 +192,6 @@ export class AuthorizationService {
     return this.http.post<any>(environment.auth + environment.projectUserRegister, projectUserDto, { observe: 'response' });
   }
 
-  // any because api return different response
   signIn(investorOrVendor: { password: string, email: string }): Observable<any> {
     return this.http.post<any>(environment.auth + environment.authenticate, investorOrVendor, { observe: 'response' });
   }
@@ -233,7 +227,7 @@ export class AuthorizationService {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (socialUser: SocialUser) => {
         const userForLogin: SocialUserDto = this.createSocialUserDto(socialUser);
-        this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin), 'GOOGLE');
+        this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin));
       },
       (err: any) => {
         console.warn(err);
@@ -249,7 +243,7 @@ export class AuthorizationService {
           userForLogin.email = email;
         }
 
-        this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin), 'FACEBOOK');
+        this.socialUserLoginSubscribe(this.socialUserLogin(userForLogin));
       },
       (err: any) => {
         console.warn(err);
@@ -257,10 +251,9 @@ export class AuthorizationService {
     );
   }
 
-  socialUserLoginSubscribe(observable: Observable<any>, provider: string) {
+  socialUserLoginSubscribe(observable: Observable<any>) {
     observable.subscribe(
       response => {
-        console.log(response);
         this.needEmailForSocialLogin = false;
         if (response.body == null) {
           this.notify.show(this.translate.data.checkEmailShared);
@@ -274,12 +267,8 @@ export class AuthorizationService {
           this.notify.show(this.translate.data.firstNeedRegister);
           this.router.navigate(['signup']);
         }
-        // maybe remove because  social login controller cant return Email is empty
-        if (err.error.error.errorMessage[0] === 'Email is empty' && err.error.error.code === 8 && provider === 'FACEBOOK') {
-          // this.methodWhenEmailIsEmpty = MethodWhenEmailIsEmpty.socialUserLogin;
-          // this.needEmailForSocialLogin = true;
-          this.notify.show(this.translate.data.firstNeedRegister);
-          this.router.navigate(['signup']);
+        if (err.error.error.errorMessage[0] === 'User email not verified' && err.error.error.code === 8) {
+          this.notify.show('User email not verified');
         }
       }
     );
@@ -296,14 +285,12 @@ export class AuthorizationService {
         if (this.userRoleForRegister === UserRole.Vendor) {
           this.socialUserRegisterSubscribe(
             this.socialRegisterVendor(userForLogin),
-            MethodWhenEmailIsEmpty.socialRegisterVendor,
             'GOOGLE'
           );
         }
         if (this.userRoleForRegister === UserRole.Investor) {
           this.socialUserRegisterSubscribe(
             this.socialRegisterInvestor(userForLogin),
-            MethodWhenEmailIsEmpty.socialRegisterInvestor,
             'GOOGLE'
           );
         }
@@ -325,14 +312,12 @@ export class AuthorizationService {
         if (this.userRoleForRegister === UserRole.Vendor) {
           this.socialUserRegisterSubscribe(
             this.socialRegisterVendor(userForLogin),
-            MethodWhenEmailIsEmpty.socialRegisterVendor,
             'FACEBOOK'
           );
         }
         if (this.userRoleForRegister === UserRole.Investor) {
           this.socialUserRegisterSubscribe(
             this.socialRegisterInvestor(userForLogin),
-            MethodWhenEmailIsEmpty.socialRegisterInvestor,
             'FACEBOOK'
           );
         }
@@ -343,10 +328,9 @@ export class AuthorizationService {
     );
   }
 
-  socialUserRegisterSubscribe(observable: Observable<any>, socialMethodName: MethodWhenEmailIsEmpty, provider: string) {
+  socialUserRegisterSubscribe(observable: Observable<any>, provider: string) {
     observable.subscribe(
       response => {
-        console.log(response);
         this.needEmailForSocialLogin = false;
         if (response.body == null) {
           if (provider === 'FACEBOOK') {
@@ -364,11 +348,9 @@ export class AuthorizationService {
           this.router.navigate(['signup']);
         }
         if (err.error.error.errorMessage[0] === 'Email is empty' && err.error.error.code === 8 && provider === 'FACEBOOK') {
-          this.methodWhenEmailIsEmpty = socialMethodName;
           this.needEmailForSocialLogin = true;
         }
         if (err.error.error.errorMessage[0].includes('already taken') && err.error.error.code === 8) {
-          this.methodWhenEmailIsEmpty = MethodWhenEmailIsEmpty.socialUserLogin;
           this.notify.show(err.error.error.errorMessage[0]);
         }
       }
