@@ -43,16 +43,19 @@ export class SocialLoginEmailComponent implements OnInit {
       return;
     }
 
+    // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
     if (this.authService.methodWhenEmailIsEmpty === MethodWhenEmailIsEmpty.socialUserLogin) {
-      this.authService.signInWithFB(); // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
+      this.authService.signInWithFB(this.emailForm.value.email);
     }
 
+    // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
     if (this.authService.methodWhenEmailIsEmpty === MethodWhenEmailIsEmpty.socialRegisterInvestor) {
-      this.authService.signUpWithFB(); // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
+      this.authService.signUpWithFB(this.emailForm.value.email);
     }
 
+    // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
     if (this.authService.methodWhenEmailIsEmpty === MethodWhenEmailIsEmpty.socialRegisterVendor) {
-      this.authService.signUpWithFB(); // userRole in this.authService.userRoleForRegister, maybe LinkedIn too not have email
+      this.authService.signUpWithFB(this.emailForm.value.email);
     }
   }
 
