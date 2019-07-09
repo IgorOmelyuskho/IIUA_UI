@@ -223,9 +223,16 @@
     .vendor-curve-line {
       height: 100%;
       display: flex;
-      background-color: #f9f9f9;
       background-repeat: round;
       position: relative;
+
+      .top-left-cover-div {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: white;
+        z-index: 10;
+      }
 
       .restart-animation {
         animation: pulse 1s 1 ease-in-out;
@@ -381,7 +388,9 @@
         width: 100%;
         height: 100%;
         vertical-align: top;
-        background: white;
+        background: transparent;
+        z-index: 2;
+        pointer-events: none;
 
         path {
           stroke-linecap: round;

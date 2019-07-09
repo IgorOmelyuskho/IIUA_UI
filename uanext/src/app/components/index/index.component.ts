@@ -30,8 +30,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   animationInterval_1: any;
   animationInterval_2: any;
-  timeOut1: any;
-  timeOut2: any;
 
   slidePageDelay = 900; // wait for slidePage
 
@@ -89,9 +87,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentPage = target;
         this.canScrollDown = true;
         this.canScrollUp = true;
-
-        clearTimeout(this.timeOut1);
-        clearTimeout(this.timeOut2);
 
         requestAnimationFrame(() => {
           this.init1();
@@ -162,35 +157,21 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startCircleAnimation1() {
-    this.setMovingCircleDisplay('circle-for-animation-1', 'none');
     const circleAnimation: any = document.getElementById('circle-animation-1');
     circleAnimation.endElement();
     setTimeout(() => {
-      this.setMovingCircleDisplay('circle-for-animation-1', 'block');
       const circleAnimation_2: any = document.getElementById('circle-animation-1');
       circleAnimation_2.beginElement();
     }, this.slidePageDelay);
-    this.timeOut1 = setTimeout(this.hideCircle1, 8000 + this.slidePageDelay);
   }
 
   startCircleAnimation2() {
-    this.setMovingCircleDisplay('circle-for-animation-2', 'none');
     const circleAnimation: any = document.getElementById('circle-animation-2');
     circleAnimation.endElement();
     setTimeout(() => {
-      this.setMovingCircleDisplay('circle-for-animation-2', 'block');
       const circleAnimation_2: any = document.getElementById('circle-animation-2');
       circleAnimation_2.beginElement();
     }, this.slidePageDelay);
-    this.timeOut2 = setTimeout(this.hideCircle2, 8000 + this.slidePageDelay);
-  }
-
-  hideCircle1 = () => {
-    this.setMovingCircleDisplay('circle-for-animation-1', 'none');
-  }
-
-  hideCircle2 = () => {
-    this.setMovingCircleDisplay('circle-for-animation-2', 'none');
   }
 
   setMovingCircleDisplay(id, display) {
@@ -299,7 +280,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       g.appendChild(circle);
     }
 
-    const circleForAnimation: any = document.getElementById('circle-for-animation-1').cloneNode(true);
+    const circleForAnimation: any = document.getElementById('g-for-animation-1').cloneNode(true);
     g.appendChild(circleForAnimation);
   }
 
@@ -346,7 +327,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       g.appendChild(circle);
     }
 
-    const circleForAnimation: any = document.getElementById('circle-for-animation-2').cloneNode(true);
+    const circleForAnimation: any = document.getElementById('g-for-animation-2').cloneNode(true);
     g.appendChild(circleForAnimation);
   }
 
