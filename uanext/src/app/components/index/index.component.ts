@@ -21,6 +21,7 @@ declare const slidePage;
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
+  userRole: UserRole;
   slide: any;
   canScrollUp = false;
   canScrollDown = true;
@@ -40,7 +41,44 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private translate: TranslateService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    const helper = new JwtHelperService();
+    const token = localStorage.getItem('token');
+    let decodedToken: any;
+    let role: UserRole;
+
+    if (token == null || token === '') {
+      return;
+    }
+
+    try {
+      decodedToken = helper.decodeToken(token);
+      role = decodedToken.role;
+    } catch {
+      return;
+    }
+
+    if (role !== UserRole.Admin && role !== UserRole.ProjectUser && role !== UserRole.Investor && role !== UserRole.Vendor) {
+      this.userRole = null;
+    }
+
+    if (role === UserRole.Vendor) {
+      this.userRole = UserRole.Vendor;
+    }
+
+    if (role === UserRole.Investor) {
+      this.userRole = UserRole.Investor;
+    }
+
+    if (role === UserRole.Admin) {
+      this.userRole = UserRole.Admin;
+    }
+
+    if (role === UserRole.ProjectUser) {
+      this.userRole = UserRole.ProjectUser;
+    }
+
+  }
 
   ngAfterViewInit() {
     this.init1();

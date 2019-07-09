@@ -9,6 +9,7 @@ import { NotificationService } from '../notification.service';
 import { Router } from '@angular/router';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
 import { VendorProject } from 'src/app/models/vendorProject';
+import { AuthService } from 'angularx-social-login';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class StateService {
   authorized$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   interactiveInvestmentProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
 
-  constructor(private notify: NotificationService, private router: Router) { }
+  constructor(private notify: NotificationService, private router: Router, private socialAuthService: AuthService) { }
 
   // duplicate AuthorizationService method because circular dependency
   signOut(): void {
@@ -28,7 +29,8 @@ export class StateService {
     this.user$.next(null);
     this.authorized$.next(false);
     this.interactiveInvestmentProject$.next(null);
-    this.router.navigate(['signin']);
+    this.router.navigate(['']);
+    this.socialAuthService.signOut();
   }
 
   /**
