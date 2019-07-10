@@ -8,7 +8,7 @@ import { responseProject, responseProject2 } from 'src/app/helperClasses/project
 
 const emptyVendorProject: VendorProject = {
   name: '',
-  avatar: '',
+  avatara: '',
   legalEntityName: '',
   goal: '',
   region: '',
@@ -46,26 +46,11 @@ export class ProjectsService {
     //   .pipe(
     //     map((response: any) => {
     //       return response['data'];
-    //     }),
-
-    //     // replace avatara to avatar
-    //     map((projects: VendorProject[]) => {
-    //       for (let i = 0; i < projects.length; i++) {
-    //         projects[i].avatar = projects[i].avatara;
-    //         delete projects[i].avatara;
-    //       }
-    //       return projects;
-    //     }),
+    //     })
     //   );
-    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2]).pipe(
-      // map((projects: VendorProject[]) => {
-      //   for (let i = 0; i < projects.length; i++) {
-      //     projects[i].avatar = projects[i].avatara;
-      //     delete projects[i].avatara;
-      //   }
-      //   return projects;
-      // }),
-    );
+
+
+    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2]);
   }
 
   createVendorProject(newVendorProject: VendorProject): Observable<any> {

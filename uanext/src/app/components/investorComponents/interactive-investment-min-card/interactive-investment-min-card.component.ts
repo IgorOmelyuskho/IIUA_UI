@@ -49,7 +49,7 @@ export class InteractiveInvestmentMinCardComponent implements OnInit, AfterViewI
     this.imagesWrapper.nativeElement.insertBefore(newDiv, stepInsertBefore);
   }
 
-  getAvatarUrl(project) {
+  getAvataraUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
   }

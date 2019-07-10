@@ -15,7 +15,7 @@ export class InvestorNotificationsComponent implements OnInit {
   ngOnInit() {
   }
 
-  getAvatarUrl(project) {
+  getAvataraUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
   }

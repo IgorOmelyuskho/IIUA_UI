@@ -73,7 +73,7 @@ export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
     this.galleryImages = imagesArr;
   }
 
-  getAvatarUrl(project) {
+  getAvataraUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
   }

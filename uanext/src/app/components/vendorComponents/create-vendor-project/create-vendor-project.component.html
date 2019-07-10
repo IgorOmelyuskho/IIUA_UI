@@ -5,28 +5,28 @@
   <form [formGroup]="vendorProjectForm" (ngSubmit)="onSubmit()">
     <h2>{{ 'newProject' | translate:self }}</h2>
     <div class="row">
-      <div class="col-6 col-md-4 form-group avatar">
-        <div class="avatar-img-wrapper">
-          <img #avatar2 height=100 src={{FormHelper.emptyAvatar}} alt="avatar">
-          <mat-progress-bar *ngIf="showAvatarProgress === true" mode="indeterminate"></mat-progress-bar>
+      <div class="col-6 col-md-4 form-group avatara">
+        <div class="avatara-img-wrapper">
+          <img #avatara2 height=100 src={{FormHelper.emptyAvatara}} alt="avatara">
+          <mat-progress-bar *ngIf="showAvataraProgress === true" mode="indeterminate"></mat-progress-bar>
         </div>
 
-        <div *ngIf="(submitted && formControls.avatar.errors) || (avatarIsTouched && formControls.avatar.errors)"
-          class="avatar-invalid-feedback">
-          <div *ngIf="formControls.avatar.errors.required">{{ 'avatarEmpty' | translate:self }}</div>
-          <div *ngIf="formControls.avatar.errors.maxAvatarSizeErr">{{ 'avatarSize' | translate:self }}</div>
-          <div *ngIf="formControls.avatar.errors.avatarNotUploaded">{{ 'uploadAvatar' | translate:self }}</div>
+        <div *ngIf="(submitted && formControls.avatara.errors) || (avataraIsTouched && formControls.avatara.errors)"
+          class="avatara-invalid-feedback">
+          <div *ngIf="formControls.avatara.errors.required">{{ 'avataraEmpty' | translate:self }}</div>
+          <div *ngIf="formControls.avatara.errors.maxAvataraSizeErr">{{ 'avataraSize' | translate:self }}</div>
+          <div *ngIf="formControls.avatara.errors.avataraNotUploaded">{{ 'uploadAvatara' | translate:self }}</div>
         </div>
 
-        <div class="select-avatar-input">
-          <button type="button" class="btn btn-primary">{{ 'chooseAvatar' | translate:self }}</button>
-          <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar"
+        <div class="select-avatara-input">
+          <button type="button" class="btn btn-primary">{{ 'chooseAvatara' | translate:self }}</button>
+          <input (change)="handleAvataraSelect($event)" type="file" accept="image/*" formControlName="avatara"
             class="form-control"
-            [ngClass]="{ 'is-invalid': (submitted && formControls.avatar.errors) || (avatarIsTouched && formControls.avatar.errors)}">
+            [ngClass]="{ 'is-invalid': (submitted && formControls.avatara.errors) || (avataraIsTouched && formControls.avatara.errors)}">
         </div>
 
-        <button type="button" (click)="uploadAvatar()"
-          class="btn btn-primary">{{ 'uploadAvatarBtn' | translate:self }}</button>
+        <button type="button" (click)="uploadAvatara()"
+          class="btn btn-primary">{{ 'uploadAvataraBtn' | translate:self }}</button>
       </div>
 
       <div class="col-lg-4 col-md-6">

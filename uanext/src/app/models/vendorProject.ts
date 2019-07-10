@@ -2,7 +2,6 @@ export interface VendorProject {
   id?: string;
   userId?: number;
   name: string;
-  avatar?: any;
   avatara?: any;
   legalEntityName: string;
   goal: string;
