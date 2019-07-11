@@ -5,6 +5,7 @@ export interface InvestorRole {
   phone?: string;
   phoneVerified?: boolean;
   creditCardNumber?: string;
+  creditCardNumberVerified?: boolean;
   created?: string;
   lastEdited?: string;
   userRole?: string;
