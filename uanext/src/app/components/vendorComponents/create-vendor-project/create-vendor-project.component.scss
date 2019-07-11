@@ -23,11 +23,17 @@
 
 .photos-uploader,
 .files-uploader {
-  margin: 30px 0 20px 0;
+  margin-top: 20px;
 }
 
 .avatara-img-wrapper {
   display: inline-block;
+}
+
+.wrapper {
+  border: 2px solid #e0e0e0;
+  padding: 10px;
+  border-radius: 6px;
 }
 
 hr {

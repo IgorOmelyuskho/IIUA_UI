@@ -243,57 +243,61 @@
       </div>
 
       <div class="form-group col-lg-6 col-12">
-        <div class="project-photos">
-          <div class="mb-2">{{ 'uploadPhotos' | translate:self }}</div>
-          <ul class="list-group">
-            <li *ngFor="let photo of vendorProject.images" class="list-group-item">
-              <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-end">
-                  <img src={{photo.url}} alt="photo">
-                  <div class="position-relative">
-                    <div class="extension">{{ photo.originalName.split('.').pop() }}</div>
+        <div class="wrapper">
+          <div class="project-photos">
+            <div class="mb-2">{{ 'uploadPhotos' | translate:self }}</div>
+            <ul class="list-group">
+              <li *ngFor="let photo of vendorProject.images" class="list-group-item">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-end">
+                    <img src={{photo.url}} alt="photo">
+                    <div class="position-relative">
+                      <div class="extension">{{ photo.originalName.split('.').pop() }}</div>
+                    </div>
                   </div>
+                  <button (click)="removePhotoItem(photo)" type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <button (click)="removePhotoItem(photo)" type="button" class="close" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </li>
-          </ul>
-          <div *ngIf="submitted && (vendorProject.images.length < minPhotosCount)" class="min-files-count">
-            {{ 'minPhotosCount' | translate:self }} {{minPhotosCount}}</div>
+              </li>
+            </ul>
+            <div *ngIf="submitted && (vendorProject.images.length < minPhotosCount)" class="min-files-count">
+              {{ 'minPhotosCount' | translate:self }} {{minPhotosCount}}</div>
+          </div>
+          <div class="photos-uploader">
+            <app-file-uploader [parentSubmitted]="submitted" accept="image/*" content="photos"
+              (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader>
+          </div>
+          <input style="display:none" type="text" formControlName="forPhotos" />
         </div>
-        <div class="photos-uploader">
-          <app-file-uploader [parentSubmitted]="submitted" accept="image/*" content="photos"
-            (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader>
-        </div>
-        <input style="display:none" type="text" formControlName="forPhotos" />
       </div>
 
       <div class="form-group col-lg-6 col-12">
-        <div class="project-files">
-          <div class="mb-2">{{ 'uploadedFiles' | translate:self }}</div>
-          <ul class="list-group">
-            <li *ngFor="let file of vendorProject.files" class="list-group-item">
-              <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-end">
-                  <img src="../../../../assets/img/file.png" alt="">
-                  <div class="position-relative">
-                    <div class="extension">{{ file.originalName.split('.').pop() }}</div>
+        <div class="wrapper">
+          <div class="project-files">
+            <div class="mb-2">{{ 'uploadedFiles' | translate:self }}</div>
+            <ul class="list-group">
+              <li *ngFor="let file of vendorProject.files" class="list-group-item">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-end">
+                    <img src="../../../../assets/img/file.png" alt="">
+                    <div class="position-relative">
+                      <div class="extension">{{ file.originalName.split('.').pop() }}</div>
+                    </div>
                   </div>
+                  <button (click)="removeFileItem(file)" type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <button (click)="removeFileItem(file)" type="button" class="close" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="files-uploader">
+            <app-file-uploader [parentSubmitted]="submitted" accept="{{FormHelper.acceptFilesTypes}}" content="files"
+              (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader>
+          </div>
+          <input style="display:none" type="text" formControlName="forFiles" />
         </div>
-        <div class="files-uploader">
-          <app-file-uploader [parentSubmitted]="submitted" accept="{{FormHelper.acceptFilesTypes}}" content="files"
-            (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader>
-        </div>
-        <input style="display:none" type="text" formControlName="forFiles" />
       </div>
     </div>
 

@@ -1,8 +1,8 @@
 <div class="files-uploader">
-  <div class="input-group mb-3">
+  <div class="input-group">
     <div class="container-fluid">
-      <div class="row">
-        <div class="custom-file col-lg-10 col-8">
+      <div class="row flex-nowrap">
+        <div class="custom-file col-9">
           <input multiple (change)="handleFilesSelect($event)" accept={{accept}} type="file" class="custom-file-input">
           <label class="custom-file-label">{{ 'choose' | translate:self }} 
             <span *ngIf="content === 'files'">{{ 'contentFiles' | translate:self }}</span>
