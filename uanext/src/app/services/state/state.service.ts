@@ -46,17 +46,7 @@ export class StateService {
     }
   }
 
-  /**
-  * must call after localStorage.setItem(token)
-  */
   userId(): string {
-    try {
-      const token = localStorage.getItem('token');
-      const decodedToken: any = this.helper.decodeToken(token);
-      return decodedToken.unique_name;
-    } catch {
-      this.signOut();
-      this.notify.show('Some problem with token');
-    }
+    return this.user$.value.id;
   }
 }

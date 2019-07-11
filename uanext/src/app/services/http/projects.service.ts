@@ -50,7 +50,7 @@ export class ProjectsService {
     //   );
 
 
-    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2]);
+    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2]); // todo comment
   }
 
   createVendorProject(newVendorProject: VendorProject): Observable<any> {

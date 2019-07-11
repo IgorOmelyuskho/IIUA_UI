@@ -164,17 +164,24 @@
     "InvestorProfileComponent": {
         "created": "Созданный",
         "lastEdited": "Последний раз редактировалось",
+        "phoneVerified": "Телефон подтвержден",
+        "emailVerified": "Email подтвержден",
+        "creditCardNumberVerified": "Номер кредитной карты подтвержден",
+        "creditCardNumber": "Номер кредитной карты",
+        "creditCardNumberEmpty": "Номер кредитной карты не может быть пустым",
+        "creditCardNumberValid": "Введите действительный номер кредитной карты",
         "fullName": "Полное Имя",
-        "fullNameEmpty": "Это поле не может быть пустым",
+        "fullNameEmpty": "Полное Имя cannot be empty",
         "email": "Емайл",
-        "emailEmpty": "Емайл не может быть пустым",
+        "emailEmpty": "Email не может быть пустым",
         "emailValid": "Адрес электронной почты должен быть действительным адресом электронной почты",
         "phone": "Телефон",
         "phoneEmpty": "Телефон не может быть пустым",
         "phoneValid": "Введите действующий телефон",
         "newPassword": "Новый пароль",
         "passwordLength": "Пароль должен содержать не менее 6 символов",
-        "updateProfile": "Обновить настройки профиля"
+        "updateProfile": "Обновить профиль",
+        "removeAccountBtn": "Удалить учетную запись"
     },
     "MainScreenInvestorComponent": {
         "findProject": "Найти проект или компанию по ключевым словам",
@@ -385,7 +392,8 @@
         "phoneValid": "Введите действующий телефон",
         "newPassword": "Новый пароль",
         "passwordLength": "Пароль должен содержать не менее 6 символов",
-        "updateProfile": "Обновить профиль"
+        "updateProfile": "Обновить профиль",
+        "removeAccountBtn": "Удалить учетную запись"
     },
     "VendorProjectsComponent": {
         "newProject": "Создать новый проект",
@@ -724,5 +732,6 @@
         "sendBtn": "ОТПРАВИТЬ"
     },
     "checkEmailShared": "Вы получили сообщение по электронной почте",
-    "firstNeedRegister": "Сначала нужно зарегистрироваться как Вендор или как Инвестор"
+    "firstNeedRegister": "Сначала нужно зарегистрироваться как Вендор или как Инвестор",
+    "reallyRemoveAccount": "Действительно удалить аккаунт?"
 }

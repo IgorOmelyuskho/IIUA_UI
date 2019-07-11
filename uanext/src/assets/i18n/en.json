@@ -164,8 +164,14 @@
     "InvestorProfileComponent": {
         "created": "Created",
         "lastEdited": "Last edited",
+        "phoneVerified": "Phone verified",
+        "emailVerified": "Email verified",
+        "creditCardNumberVerified": "Credit card number verified",
+        "creditCardNumber": "Credit card number",
+        "creditCardNumberEmpty": "Credit card number cannot be empty",
+        "creditCardNumberValid": "Enter a valid credit card number",
         "fullName": "Full Name",
-        "fullNameEmpty": "This field cannot be empty",
+        "fullNameEmpty": "Full Name cannot be empty",
         "email": "Email",
         "emailEmpty": "Email cannot be empty",
         "emailValid": "Email must be a valid email address",
@@ -174,7 +180,8 @@
         "phoneValid": "Enter valid phone",
         "newPassword": "New password",
         "passwordLength": "Password must be at least 6 characters",
-        "updateProfile": "Update profile settings"
+        "updateProfile": "Update profile",
+        "removeAccountBtn": "Remove account"
     },
     "MainScreenInvestorComponent": {
         "findProject": "Find a project or company by keywords",
@@ -385,7 +392,8 @@
         "phoneValid": "Enter valid phone",
         "newPassword": "New password",
         "passwordLength": "Password must be at least 6 characters",
-        "updateProfile": "Update profile"
+        "updateProfile": "Update profile",
+        "removeAccountBtn": "Remove account"
     },
     "VendorProjectsComponent": {
         "newProject": "Create new project",
@@ -724,5 +732,6 @@
         "sendBtn": "SEND"
     },
     "checkEmailShared": "You received a message in the email",
-    "firstNeedRegister": "First you need to register as Vendor or Investor"
+    "firstNeedRegister": "First you need to register as Vendor or Investor",
+    "reallyRemoveAccount": "Really remove account?"
 }

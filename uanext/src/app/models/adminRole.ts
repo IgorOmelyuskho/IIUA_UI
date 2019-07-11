@@ -1,7 +1,11 @@
 export interface AdminRole {
   fullName: string;
   email: string;
-  phone: string;
-  created: string;
-  lastEdited: string;
+  emailVerified?: boolean;
+  phone?: string;
+  phoneVerified?: boolean;
+  created?: string;
+  lastEdited?: string;
+  userRole?: string;
+  id?: string;
 }

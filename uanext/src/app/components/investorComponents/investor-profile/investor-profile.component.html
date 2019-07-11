@@ -1,7 +1,7 @@
 <mat-progress-bar *ngIf="isLoaded === false" class="progress-bar-fixed" mode="indeterminate"></mat-progress-bar>
 
 <div class="container">
-  <div class="row pt-5">
+  <div class="row">
     <div class="col-md-6 offset-md-3">
       <div class="form-group">
         <label>{{ 'created' | translate:self }}</label>
@@ -11,23 +11,39 @@
         <label>{{ 'lastEdited' | translate:self }}</label>
         <input disabled=true type="text" class="form-control" value={{investor?.lastEdited}} />
       </div>
+      <div class="form-group">
+        <label>{{ 'phoneVerified' | translate:self }}</label>
+        <input disabled=true type="text" class="form-control" value={{investor?.phoneVerified}} />
+      </div>
+      <div class="form-group">
+        <label>{{ 'emailVerified' | translate:self }}</label>
+        <input disabled=true type="text" class="form-control" value={{investor?.emailVerified}} />
+      </div>
+      <div class="form-group">
+        <label>{{ 'creditCardNumberVerified' | translate:self }}</label>
+        <input disabled=true type="text" class="form-control" value={{investor?.creditCardNumberVerified}} />
+      </div>
+      <div class="form-group">
+        <label>{{ 'email' | translate:self }}</label>
+        <input disabled=true type="text" class="form-control" value={{investor?.email}} />
+      </div>
+
       <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>{{ 'creditCardNumber' | translate:self }}</label>
+          <input [textMask]="{mask: FormHelper.creditCardMask}" type="text" formControlName="creditCardNumber" class="form-control"
+            [ngClass]="{ 'is-invalid': isLoaded && formControls.creditCardNumber.errors }" />
+          <div *ngIf="formControls.creditCardNumber.errors" class="invalid-feedback">
+            <div *ngIf="formControls.creditCardNumber.errors.required">{{ 'creditCardNumberEmpty' | translate:self }}</div>
+            <div *ngIf="formControls.creditCardNumber.errors.pattern">{{ 'creditCardNumberValid' | translate:self }}</div>
+          </div>
+        </div>
         <div class="form-group">
           <label>{{ 'fullName' | translate:self }}</label>
           <input type="text" formControlName="fullName" class="form-control"
             [ngClass]="{ 'is-invalid': isLoaded && formControls.fullName.errors }" />
           <div *ngIf="formControls.fullName.errors" class="invalid-feedback">
-            <div *ngIf="formControls.fullName.errors.required">This field cannot be empty</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>{{ 'email' | translate:self }}</label>
-          <input type="email" formControlName="email" class="form-control"
-            [ngClass]="{ 'is-invalid': isLoaded && formControls.email.errors }" />
-          <div *ngIf="formControls.email.errors" class="invalid-feedback">
-            <div *ngIf="formControls.email.errors.required">{{ 'emailEmpty' | translate:self }}/div>
-              <div *ngIf="formControls.email.errors.pattern">{{ 'emailValid' | translate:self }}</div>
-            </div>
+            <div *ngIf="formControls.fullName.errors.required">{{ 'fullNameEmpty' | translate:self }}</div>
           </div>
         </div>
         <div class="form-group">
@@ -47,11 +63,18 @@
             <div *ngIf="formControls.password.errors.minlength">{{ 'passwordLength' | translate:self }}</div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group text-center">
           <button [disabled]="!isLoaded || !editProfileForm.valid"
             class="btn btn-success">{{ 'updateProfile' | translate:self }}</button>
         </div>
       </form>
+
+      <hr>
+
+      <div class="remove-section">
+        <button (click)="removeAccount()" class="btn btn-danger">{{ 'removeAccountBtn' | translate:self }}</button>
+      </div>
+
     </div>
   </div>
 </div>
