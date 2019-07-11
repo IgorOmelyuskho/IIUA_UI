@@ -17,9 +17,7 @@ export class ProfileService {
   constructor(private http: HttpClient) { }
 
   fetchInvestor(): Observable<InvestorRole> {
-    return this.http.get<any>(environment.auth + environment.investorProfile).pipe(
-      map(val => val.result) // todo remove
-    );
+    return this.http.get<any>(environment.auth + environment.investorProfile);
   }
 
   fetchVendor(): Observable<VendorRole> {
