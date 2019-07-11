@@ -70,13 +70,9 @@ export class AdminProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.editProfileForm.valid === false) {
-      return;
-    }
-
     const id = this.stateService.userId();
 
-    if (id == null) {
+    if (this.editProfileForm.valid === false || id == null) {
       return;
     }
 

@@ -23,24 +23,30 @@
 
 .photos-uploader,
 .files-uploader {
-  margin: 30px 0 20px 0;
+  margin-top: 20px;
 }
 
-.avatar-img-wrapper {
+.avatara-img-wrapper {
   display: inline-block;
+}
+
+.wrapper {
+  border: 2px solid #e0e0e0;
+  padding: 10px;
+  border-radius: 6px;
 }
 
 hr {
   border-top: 1px solid rgba(0, 0, 0, 0.7);
 }
 
-.avatar {
-  .avatar-invalid-feedback {
+.avatara {
+  .avatara-invalid-feedback {
     color: #dc3545;
     font-size: 80%;
   }
 
-  .select-avatar-input {
+  .select-avatara-input {
     position: relative;
     overflow: hidden;
     margin: 5px 0;

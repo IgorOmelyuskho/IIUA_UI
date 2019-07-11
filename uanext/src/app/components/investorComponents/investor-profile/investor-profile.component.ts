@@ -7,6 +7,7 @@ import { InvestorRole } from 'src/app/models';
 import { StateService } from 'src/app/services/state/state.service';
 import FormHelper from '../../../helperClasses/helperClass';
 import { NotificationService } from 'src/app/services/notification.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-investor-profile',
@@ -17,23 +18,23 @@ export class InvestorProfileComponent implements OnInit {
   investor: InvestorRole = null;
   editProfileForm: FormGroup;
   isLoaded = false;
+  FormHelper = FormHelper;
   self = 'InvestorProfileComponent';
 
   @ViewChild('phone') phoneInput: ElementRef;
-  // @ViewChild('cardNumber') carNumberInput: ElementRef;
-  FormHelper = FormHelper;
 
   constructor(
     private formBuilder: FormBuilder,
     private stateService: StateService,
     private authService: AuthorizationService,
     private profileService: ProfileService,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private translate: TranslateService,
   ) {
     this.editProfileForm = this.formBuilder.group({
       password: ['', Validators.minLength(6)],
+      creditCardNumber: ['', [Validators.required, Validators.pattern(FormHelper.creditCardPattern)]],
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
     });
   }
@@ -41,8 +42,8 @@ export class InvestorProfileComponent implements OnInit {
   setFormValues(): void {
     this.editProfileForm.setValue({
       password: '',
+      creditCardNumber: this.investor.creditCardNumber,
       fullName: this.investor.fullName,
-      email: this.investor.email,
       phone: this.investor.phone
     });
     // how its fix ??
@@ -72,14 +73,25 @@ export class InvestorProfileComponent implements OnInit {
     return this.editProfileForm.controls;
   }
 
-  onSubmit() {
-    if (this.editProfileForm.valid === false) {
-      return;
-    }
+  removeAccount() {
+    const remove = confirm(this.translate.data.reallyRemoveAccount);
 
+    if (remove === true) {
+      this.profileService.removeInvestorProfile().subscribe(
+        val => {
+          this.authService.signOut();
+        },
+        err => {
+          console.warn(err);
+        }
+      );
+    }
+  }
+
+  onSubmit() {
     const id = this.stateService.userId();
 
-    if (id == null) {
+    if (this.editProfileForm.valid === false || id == null) {
       return;
     }
 

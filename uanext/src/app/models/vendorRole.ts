@@ -1,11 +1,13 @@
 export interface VendorRole {
   fullName: string;
   email: string;
-  phone: string;
-  created: string;
-  lastEdited: string;
-  itn: string;
-  phoneVerified: boolean;
-  emailVerified: boolean;
-  itnVerified: boolean;
+  emailVerified?: boolean;
+  phone?: string;
+  phoneVerified?: boolean;
+  created?: string;
+  lastEdited?: string;
+  itn?: string;
+  itnVerified?: boolean;
+  userRole?: string;
+  id?: string;
 }

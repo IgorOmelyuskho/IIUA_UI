@@ -23,36 +23,32 @@
         <label>{{ 'itnVerified' | translate:self }}</label>
         <input disabled=true type="text" class="form-control" value={{vendor?.itnVerified}} />
       </div>
-
-
+      <div class="form-group">
+        <label>{{ 'email' | translate:self }}</label>
+        <input disabled=true type="text" class="form-control" value={{vendor?.email}} />
+      </div>
 
       <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label>{{ 'itn' | translate:self }}</label>
-          <input type="text" formControlName="itn" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.itn.errors }" />
+          <input type="text" formControlName="itn" class="form-control"
+            [ngClass]="{ 'is-invalid': isLoaded && formControls.itn.errors }" />
           <div *ngIf="formControls.itn.errors" class="invalid-feedback">
             <div *ngIf="formControls.itn.errors.required">{{ 'itnEmpty' | translate:self }}</div>
           </div>
         </div>
         <div class="form-group">
           <label>{{ 'fullName' | translate:self }}</label>
-          <input type="text" formControlName="fullName" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.fullName.errors }" />
+          <input type="text" formControlName="fullName" class="form-control"
+            [ngClass]="{ 'is-invalid': isLoaded && formControls.fullName.errors }" />
           <div *ngIf="formControls.fullName.errors" class="invalid-feedback">
             <div *ngIf="formControls.fullName.errors.required">{{ 'fullNameEmpty' | translate:self }}</div>
           </div>
         </div>
         <div class="form-group">
-          <label>{{ 'email' | translate:self }}</label>
-          <input type="email" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.email.errors }" />
-          <div *ngIf="formControls.email.errors" class="invalid-feedback">
-            <div *ngIf="formControls.email.errors.required">{{ 'emailEmpty' | translate:self }}</div>
-            <div *ngIf="formControls.email.errors.pattern">{{ 'emailValid' | translate:self }}</div>
-          </div>
-        </div>
-        <div class="form-group">
           <label>{{ 'phone' | translate:self }}</label>
-          <input autocomplete="off" #phone [textMask]="{mask: FormHelper.phoneMask}" type="text" formControlName="phone" class="form-control"
-            [ngClass]="{ 'is-invalid': isLoaded && formControls.phone.errors }" />
+          <input autocomplete="off" #phone [textMask]="{mask: FormHelper.phoneMask}" type="text" formControlName="phone"
+            class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.phone.errors }" />
           <div *ngIf="formControls.phone.errors" class="invalid-feedback">
             <div *ngIf="formControls.phone.errors.required">{{ 'phoneEmpty' | translate:self }}</div>
             <div *ngIf="formControls.phone.errors.pattern">{{ 'phoneValid' | translate:self }}</div>
@@ -60,15 +56,23 @@
         </div>
         <div class="form-group">
           <label>{{ 'newPassword' | translate:self }}</label>
-          <input autocomplete="new-password" type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': isLoaded && formControls.password.errors }" />
+          <input autocomplete="new-password" type="password" formControlName="password" class="form-control"
+            [ngClass]="{ 'is-invalid': isLoaded && formControls.password.errors }" />
           <div *ngIf="formControls.password.errors" class="invalid-feedback">
             <div *ngIf="formControls.password.errors.minlength">{{ 'passwordLength' | translate:self }}</div>
           </div>
         </div>
-        <div class="form-group">
-          <button [disabled]="!isLoaded || !editProfileForm.valid" class="btn btn-success">{{ 'updateProfile' | translate:self }}</button>
+        <div class="form-group text-center">
+          <button [disabled]="!isLoaded || !editProfileForm.valid"
+            class="btn btn-success">{{ 'updateProfile' | translate:self }}</button>
         </div>
       </form>
+
+      <hr>
+
+      <div class="remove-section">
+        <button (click)="removeAccount()" class="btn btn-danger">{{ 'removeAccountBtn' | translate:self }}</button>
+      </div>
 
     </div>
   </div>

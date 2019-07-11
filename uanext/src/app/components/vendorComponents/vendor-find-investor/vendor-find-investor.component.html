@@ -15,9 +15,9 @@
         <div [style.borderBottomLeftRadius]="project.owner === 'Investor' ? '50px' : ''"
           [style.borderTopLeftRadius]="project.owner === 'Investor' ? '50px' : ''" class="project">
           <div class="red-circle"></div>
-          <div class="avatar-wrapper">
-            <div class="avatar" [style.borderRadius]="project.owner === 'Investor' ? '50px' : '6px'"
-              [ngStyle]="{ 'background-image': getAvatarUrl(project) }"></div>
+          <div class="avatara-wrapper">
+            <div class="avatara" [style.borderRadius]="project.owner === 'Investor' ? '50px' : '6px'"
+              [ngStyle]="{ 'background-image': getAvataraUrl(project) }"></div>
           </div>
           <div class="info">
             <div class="project-name">{{project.name}}</div>

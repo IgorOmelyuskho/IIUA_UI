@@ -7,6 +7,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { VendorRole } from 'src/app/models';
 import { ProfileService } from 'src/app/services/http/profile.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-vendor-profile',
@@ -27,13 +28,13 @@ export class VendorProfileComponent implements OnInit {
     private stateService: StateService,
     private authService: AuthorizationService,
     private profileService: ProfileService,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private translate: TranslateService,
   ) {
     this.editProfileForm = this.formBuilder.group({
       password: ['', Validators.minLength(6)],
       itn: ['', Validators.required],
       fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
       phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
     });
   }
@@ -43,13 +44,12 @@ export class VendorProfileComponent implements OnInit {
       password: '',
       itn: this.vendor.itn,
       fullName: this.vendor.fullName,
-      email: this.vendor.email,
       phone: this.vendor.phone
     });
     // how its fix ??
     setTimeout(() => {
       this.phoneInput.nativeElement.dispatchEvent(new Event('input')); // fix possible bug
-    }, 0);
+    }, 50);
   }
 
   ngOnInit() {
@@ -73,14 +73,25 @@ export class VendorProfileComponent implements OnInit {
     return this.editProfileForm.controls;
   }
 
-  onSubmit() {
-    if (this.editProfileForm.valid === false) {
-      return;
-    }
+  removeAccount() {
+    const remove = confirm(this.translate.data.reallyRemoveAccount);
 
+    if (remove === true) {
+      this.profileService.removeVendorProfile().subscribe(
+        val => {
+          this.authService.signOut();
+        },
+        err => {
+          console.warn(err);
+        }
+      );
+    }
+  }
+
+  onSubmit() {
     const id = this.stateService.userId();
 
-    if (id == null) {
+    if (this.editProfileForm.valid === false || id == null) {
       return;
     }
 
@@ -89,7 +100,7 @@ export class VendorProfileComponent implements OnInit {
         this.notify.show(response['data']);
       },
       err => {
-       console.warn(err);
+        console.warn(err);
       }
     );
   }

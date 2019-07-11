@@ -19,17 +19,17 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   vendorProjectForm: FormGroup;
   isLoaded = false;
   showProgressBar = false;
-  @ViewChild('avatar') avatarImg: ElementRef;
+  @ViewChild('avatara') avataraImg: ElementRef;
   projectId: string;
   FormHelper = FormHelper;
   self = 'UpdateVendorProjectComponent';
   fieldActivityOptions: FieldActivityInterface[];
 
-  avatarSize = 0;
-  maxAvatarSize = 1024 * 1024 * 5;
-  avatarFormData: FormData = new FormData();
-  showAvatarProgress = false;
-  avatarIsTouched = false;
+  avataraSize = 0;
+  maxAvataraSize = 1024 * 1024 * 5;
+  avataraFormData: FormData = new FormData();
+  showAvataraProgress = false;
+  avataraIsTouched = false;
 
   minPhotosCount = 5;
 
@@ -48,7 +48,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   ) {
     this.vendorProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
-      avatar: ['', Validators.required],
+      avatara: ['', Validators.required],
       legalEntityName: ['', Validators.required],
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['', Validators.required],
@@ -74,7 +74,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   whenProjectIsLoaded() {
     this.isLoaded = true;
     this.setFormValues();
-    this.avatarImg.nativeElement['src'] = this.vendorProject.avatar.url;
+    this.avataraImg.nativeElement['src'] = this.vendorProject.avatara.url;
   }
 
   getCompanyFromService() {
@@ -156,64 +156,64 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     this.vendorProjectForm.controls['forVideos'].setErrors(null);
   }
 
-  handleAvatarSelect(event) {
-    this.avatarIsTouched = true;
+  handleAvataraSelect(event) {
+    this.avataraIsTouched = true;
 
     if (event.target.files == null || event.target.files.length === 0) {
-      this.avatarImg.nativeElement['src'] = this.FormHelper.emptyAvatar;
+      this.avataraImg.nativeElement['src'] = this.FormHelper.emptyAvatara;
       return;
     }
 
-    this.avatarSize = event.target.files[0].size;
-    if (this.avatarSize > this.maxAvatarSize) {
-      this.vendorProjectForm.controls['avatar'].setErrors({ 'maxAvatarSizeErr': true });
-      this.avatarImg.nativeElement['src'] = this.FormHelper.emptyAvatar;
+    this.avataraSize = event.target.files[0].size;
+    if (this.avataraSize > this.maxAvataraSize) {
+      this.vendorProjectForm.controls['avatara'].setErrors({ 'maxAvataraSizeErr': true });
+      this.avataraImg.nativeElement['src'] = this.FormHelper.emptyAvatara;
       return;
     }
 
-    this.vendorProjectForm.controls['avatar'].setErrors({ 'avatarNotUploaded': true });
+    this.vendorProjectForm.controls['avatara'].setErrors({ 'avataraNotUploaded': true });
 
-    // for show avatar miniature
-    const avatarReader = new FileReader();
-    avatarReader.onload = (avatar) => {
-      this.avatarImg.nativeElement['src'] = avatar.target['result'];
+    // for show avatara miniature
+    const avataraReader = new FileReader();
+    avataraReader.onload = (avatara) => {
+      this.avataraImg.nativeElement['src'] = avatara.target['result'];
     };
-    avatarReader.readAsDataURL(event.target['files'][0]);
+    avataraReader.readAsDataURL(event.target['files'][0]);
     // ....................... //
 
-    const avatarFile = event.target['files'][0];
-    this.avatarFormData.append('AVATAR', avatarFile, avatarFile.name);
+    const avataraFile = event.target['files'][0];
+    this.avataraFormData.append('AVATAR', avataraFile, avataraFile.name);
   }
 
-  showAvatarProgressBar(show: boolean) {
+  showAvataraProgressBar(show: boolean) {
     if (show === true) {
-      this.showAvatarProgress = true;
+      this.showAvataraProgress = true;
     } else {
-      this.showAvatarProgress = false;
+      this.showAvataraProgress = false;
     }
   }
 
-  uploadAvatar() {
-    this.avatarIsTouched = true;
+  uploadAvatara() {
+    this.avataraIsTouched = true;
 
-    if (this.avatarFormData.getAll('AVATAR').length < 1) {
+    if (this.avataraFormData.getAll('AVATAR').length < 1) {
       return;
     }
 
-    this.showAvatarProgressBar(true);
+    this.showAvataraProgressBar(true);
 
-    this.filesService.uploadFiles(this.avatarFormData)
+    this.filesService.uploadFiles(this.avataraFormData)
       .subscribe(
         res => {
-          this.vendorProject.avatar = res[0];
-          this.vendorProjectForm.controls['avatar'].setErrors(null);
-          this.avatarFormData.delete('AVATAR');
-          this.showAvatarProgressBar(false);
+          this.vendorProject.avatara = res[0];
+          this.vendorProjectForm.controls['avatara'].setErrors(null);
+          this.avataraFormData.delete('AVATAR');
+          this.showAvataraProgressBar(false);
         },
         err => {
           console.warn(err);
-          this.avatarFormData.delete('AVATAR');
-          this.showAvatarProgressBar(false);
+          this.avataraFormData.delete('AVATAR');
+          this.showAvataraProgressBar(false);
         }
       );
   }
@@ -221,7 +221,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   setFormValues(): void {
     this.vendorProjectForm.setValue({
       name: this.vendorProject.name,
-      avatar: '',
+      avatara: '',
       legalEntityName: this.vendorProject.legalEntityName,
       goal: this.vendorProject.goal,
       region: this.vendorProject.region,
@@ -243,7 +243,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       forFiles: '',
     });
 
-    this.vendorProjectForm.controls['avatar'].setErrors(null);
+    this.vendorProjectForm.controls['avatara'].setErrors(null);
   }
 
   photosUploaded(event) {
@@ -302,7 +302,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
     updatedVendorCompany.steps = this.vendorProject.steps;
     updatedVendorCompany.videos = this.vendorProject.videos;
-    updatedVendorCompany.avatara = this.vendorProject.avatar;
+    updatedVendorCompany.avatara = this.vendorProject.avatara;
     updatedVendorCompany.images = this.vendorProject.images;
     updatedVendorCompany.files = this.vendorProject.files;
 

@@ -9,7 +9,7 @@ export class VendorMessagesComponent implements OnInit {
   self = 'VendorMessagesComponent';
   messages: any[] = [
     {
-      avatar: 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png',
+      avatara: 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png',
       type: 'their',
       sender: 'Sender Name',
       text: 'Far from the countries Vokalia and Consoia, texts Far from the countries Vokalia and Consoia, texts',
@@ -17,7 +17,7 @@ export class VendorMessagesComponent implements OnInit {
       time: '12:03'
     },
     {
-      avatar: 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png',
+      avatara: 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png',
       type: 'their',
       sender: 'Sender Name',
       text: 'Far from the countries Vokalia and Consoexts',
@@ -58,7 +58,7 @@ export class VendorMessagesComponent implements OnInit {
       date: 'Ср 24 Апрель'
     },
     {
-      avatar: 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png',
+      avatara: 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png',
       type: 'their',
       sender: 'Sender Name',
       text: 'Far from the countries Vokalia and Consoexts',

@@ -20,17 +20,23 @@
   }
 }
 
-.avatar-img-wrapper {
+.avatara-img-wrapper {
   display: inline-block;
 }
 
-.avatar {
-  .avatar-invalid-feedback {
+.wrapper {
+  border: 2px solid #e0e0e0;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.avatara {
+  .avatara-invalid-feedback {
     color: #dc3545;
     font-size: 80%;
   }
 
-  .select-avatar-input {
+  .select-avatara-input {
     position: relative;
     overflow: hidden;
     margin: 5px 0;
@@ -75,7 +81,7 @@
 
 .photos-uploader,
 .files-uploader {
-  margin: 30px 0 20px 0;
+  margin-top: 20px;
 }
 
 hr {

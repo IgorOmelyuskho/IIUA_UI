@@ -5,28 +5,28 @@
   <form [formGroup]="vendorProjectForm" (ngSubmit)="onSubmit()">
     <h2>{{ 'newProject' | translate:self }}</h2>
     <div class="row">
-      <div class="col-6 col-md-4 form-group avatar">
-        <div class="avatar-img-wrapper">
-          <img #avatar2 height=100 src={{FormHelper.emptyAvatar}} alt="avatar">
-          <mat-progress-bar *ngIf="showAvatarProgress === true" mode="indeterminate"></mat-progress-bar>
+      <div class="col-6 col-md-4 form-group avatara">
+        <div class="avatara-img-wrapper">
+          <img #avatara2 height=100 src={{FormHelper.emptyAvatara}} alt="avatara">
+          <mat-progress-bar *ngIf="showAvataraProgress === true" mode="indeterminate"></mat-progress-bar>
         </div>
 
-        <div *ngIf="(submitted && formControls.avatar.errors) || (avatarIsTouched && formControls.avatar.errors)"
-          class="avatar-invalid-feedback">
-          <div *ngIf="formControls.avatar.errors.required">{{ 'avatarEmpty' | translate:self }}</div>
-          <div *ngIf="formControls.avatar.errors.maxAvatarSizeErr">{{ 'avatarSize' | translate:self }}</div>
-          <div *ngIf="formControls.avatar.errors.avatarNotUploaded">{{ 'uploadAvatar' | translate:self }}</div>
+        <div *ngIf="(submitted && formControls.avatara.errors) || (avataraIsTouched && formControls.avatara.errors)"
+          class="avatara-invalid-feedback">
+          <div *ngIf="formControls.avatara.errors.required">{{ 'avataraEmpty' | translate:self }}</div>
+          <div *ngIf="formControls.avatara.errors.maxAvataraSizeErr">{{ 'avataraSize' | translate:self }}</div>
+          <div *ngIf="formControls.avatara.errors.avataraNotUploaded">{{ 'uploadAvatara' | translate:self }}</div>
         </div>
 
-        <div class="select-avatar-input">
-          <button type="button" class="btn btn-primary">{{ 'chooseAvatar' | translate:self }}</button>
-          <input (change)="handleAvatarSelect($event)" type="file" accept="image/*" formControlName="avatar"
+        <div class="select-avatara-input">
+          <button type="button" class="btn btn-primary">{{ 'chooseAvatara' | translate:self }}</button>
+          <input (change)="handleAvataraSelect($event)" type="file" accept="image/*" formControlName="avatara"
             class="form-control"
-            [ngClass]="{ 'is-invalid': (submitted && formControls.avatar.errors) || (avatarIsTouched && formControls.avatar.errors)}">
+            [ngClass]="{ 'is-invalid': (submitted && formControls.avatara.errors) || (avataraIsTouched && formControls.avatara.errors)}">
         </div>
 
-        <button type="button" (click)="uploadAvatar()"
-          class="btn btn-primary">{{ 'uploadAvatarBtn' | translate:self }}</button>
+        <button type="button" (click)="uploadAvatara()"
+          class="btn btn-primary">{{ 'uploadAvataraBtn' | translate:self }}</button>
       </div>
 
       <div class="col-lg-4 col-md-6">
@@ -243,57 +243,61 @@
       </div>
 
       <div class="form-group col-lg-6 col-12">
-        <div class="project-photos">
-          <div class="mb-2">{{ 'uploadPhotos' | translate:self }}</div>
-          <ul class="list-group">
-            <li *ngFor="let photo of vendorProject.images" class="list-group-item">
-              <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-end">
-                  <img src={{photo.url}} alt="photo">
-                  <div class="position-relative">
-                    <div class="extension">{{ photo.originalName.split('.').pop() }}</div>
+        <div class="wrapper">
+          <div class="project-photos">
+            <div class="mb-2">{{ 'uploadPhotos' | translate:self }}</div>
+            <ul class="list-group">
+              <li *ngFor="let photo of vendorProject.images" class="list-group-item">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-end">
+                    <img src={{photo.url}} alt="photo">
+                    <div class="position-relative">
+                      <div class="extension">{{ photo.originalName.split('.').pop() }}</div>
+                    </div>
                   </div>
+                  <button (click)="removePhotoItem(photo)" type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <button (click)="removePhotoItem(photo)" type="button" class="close" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </li>
-          </ul>
-          <div *ngIf="submitted && (vendorProject.images.length < minPhotosCount)" class="min-files-count">
-            {{ 'minPhotosCount' | translate:self }} {{minPhotosCount}}</div>
+              </li>
+            </ul>
+            <div *ngIf="submitted && (vendorProject.images.length < minPhotosCount)" class="min-files-count">
+              {{ 'minPhotosCount' | translate:self }} {{minPhotosCount}}</div>
+          </div>
+          <div class="photos-uploader">
+            <app-file-uploader [parentSubmitted]="submitted" accept="image/*" content="photos"
+              (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader>
+          </div>
+          <input style="display:none" type="text" formControlName="forPhotos" />
         </div>
-        <div class="photos-uploader">
-          <app-file-uploader [parentSubmitted]="submitted" accept="image/*" content="photos"
-            (filesUploadedEvent)="photosUploaded($event)"></app-file-uploader>
-        </div>
-        <input style="display:none" type="text" formControlName="forPhotos" />
       </div>
 
       <div class="form-group col-lg-6 col-12">
-        <div class="project-files">
-          <div class="mb-2">{{ 'uploadedFiles' | translate:self }}</div>
-          <ul class="list-group">
-            <li *ngFor="let file of vendorProject.files" class="list-group-item">
-              <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-end">
-                  <img src="../../../../assets/img/file.png" alt="">
-                  <div class="position-relative">
-                    <div class="extension">{{ file.originalName.split('.').pop() }}</div>
+        <div class="wrapper">
+          <div class="project-files">
+            <div class="mb-2">{{ 'uploadedFiles' | translate:self }}</div>
+            <ul class="list-group">
+              <li *ngFor="let file of vendorProject.files" class="list-group-item">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-end">
+                    <img src="../../../../assets/img/file.png" alt="">
+                    <div class="position-relative">
+                      <div class="extension">{{ file.originalName.split('.').pop() }}</div>
+                    </div>
                   </div>
+                  <button (click)="removeFileItem(file)" type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <button (click)="removeFileItem(file)" type="button" class="close" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="files-uploader">
+            <app-file-uploader [parentSubmitted]="submitted" accept="{{FormHelper.acceptFilesTypes}}" content="files"
+              (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader>
+          </div>
+          <input style="display:none" type="text" formControlName="forFiles" />
         </div>
-        <div class="files-uploader">
-          <app-file-uploader [parentSubmitted]="submitted" accept="{{FormHelper.acceptFilesTypes}}" content="files"
-            (filesUploadedEvent)="filesUploaded($event)"></app-file-uploader>
-        </div>
-        <input style="display:none" type="text" formControlName="forFiles" />
       </div>
     </div>
 

@@ -65,7 +65,7 @@ export class HoveredProjectCardComponent implements OnInit, AfterViewInit {
     this.stepsElement.nativeElement.insertBefore(newP, stepInsertBefore);
   }
 
-  getAvatarUrl(project) {
+  getAvataraUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
   }

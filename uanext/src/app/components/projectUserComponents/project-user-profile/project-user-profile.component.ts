@@ -49,7 +49,7 @@ export class ProjectUserProfileComponent implements OnInit {
     // how its fix ??
     setTimeout(() => {
       this.phoneInput.nativeElement.dispatchEvent(new Event('input')); // fix possible bug
-    }, 0);
+    }, 50);
   }
 
   ngOnInit() {
@@ -74,13 +74,9 @@ export class ProjectUserProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.editProfileForm.valid === false) {
-      return;
-    }
-
     const id = this.stateService.userId();
 
-    if (id == null) {
+    if (this.editProfileForm.valid === false || id == null) {
       return;
     }
 
