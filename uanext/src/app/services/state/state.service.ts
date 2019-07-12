@@ -23,16 +23,6 @@ export class StateService {
 
   constructor(private notify: NotificationService, private router: Router, private socialAuthService: AuthService) { }
 
-  // duplicate AuthorizationService method because circular dependency
-  signOut(): void {
-    localStorage.removeItem('token');
-    this.user$.next(null);
-    this.authorized$.next(false);
-    this.interactiveInvestmentProject$.next(null);
-    this.router.navigate(['']);
-    this.socialAuthService.signOut();
-  }
-
   /**
   * must call after localStorage.setItem(token)
   */

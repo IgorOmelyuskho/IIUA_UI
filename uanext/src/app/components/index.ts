@@ -66,6 +66,7 @@ import { SocialLoginEmailComponent } from './social-login-email/social-login-ema
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { UserAgreementComponent } from './user-agreement/user-agreement.component';
 import { VendorProjectCardComponent } from './vendorComponents/vendor-project-card/vendor-project-card.component';
+import { RotatingLoadIndicatorComponent } from './rotating-load-indicator/rotating-load-indicator.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -130,7 +131,8 @@ export {
   SocialLoginEmailComponent,
   PrivacyPolicyComponent,
   UserAgreementComponent,
-  VendorProjectCardComponent
+  VendorProjectCardComponent,
+  RotatingLoadIndicatorComponent
 };
 
 export const components = [
@@ -195,7 +197,8 @@ export const components = [
   SocialLoginEmailComponent,
   PrivacyPolicyComponent,
   UserAgreementComponent,
-  VendorProjectCardComponent
+  VendorProjectCardComponent,
+  RotatingLoadIndicatorComponent
 ];
 
 
