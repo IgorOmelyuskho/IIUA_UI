@@ -1,45 +1,45 @@
 <div class="messages-wrapper">
     <div class="name">{{ 'communication' | translate:self }}</div>
-    <div class="messages">
+    <div #messagesElem class="messages">
       <div *ngFor="let message of messages" class="message">
   
-        <div *ngIf="message.type === 'you'" class="you">
+        <div *ngIf="message.isYou === true" class="you">
           <div class="attachments">
-            <div *ngFor="let img of message.attachments" class="img-wrapper">
-              <div class="img" [ngStyle]="{ 'background-image': getImageUrl(img) }"></div>
+            <div class="img-wrapper">
+              <div class="img" [ngStyle]="{ 'background-image': getImageUrl(message.attachmentUrl) }"></div>
             </div>
           </div>
           <div class="message-text-wrapper">
             <div class="text">
               <div class="message-text">{{message.text}}</div>
-              <div class="time">{{message.time}}</div>
+              <div class="time">{{message.lastUpdatedDate}}</div>
             </div>
           </div>
         </div>
   
-        <div *ngIf="message.type === 'their'" class="their">
+        <div *ngIf="message.isYou === false || message.isYou == null" class="their">
           <div class="attachments">
-            <div *ngFor="let img of message.attachments" class="img-wrapper">
-              <div class="img" [ngStyle]="{ 'background-image': getImageUrl(img) }"></div>
+            <div class="img-wrapper">
+              <div class="img" [ngStyle]="{ 'background-image': getImageUrl(message.attachmentUrl) }"></div>
             </div>
           </div>
           <div class="message-text-avatara-wrapper">
             <div class="avatara-wrapper">
-              <img src={{message.avatara}} alt="">
+              <img src={{chatParticipantAvatara}} alt="avatara get from id?">
             </div>
             <div class="text-and-sender">
-              <div class="sender">{{message.sender}}</div>
+              <div class="sender">{{message.participantId}}</div>
               <div class="text">
                 <div class="message-text">{{message.text}}</div>
-                <div class="time">{{message.time}}</div>
+                <div class="time">{{message.lastUpdatedDate}}</div>
               </div>
             </div>
           </div>
         </div>
   
-        <div *ngIf="message.type === 'date'" class="date">
+        <div class="date">
           <hr>
-          <div class="text">{{message.date}}</div>
+          <div class="text">Ср 24 Апрель</div>
           <hr>
         </div>
   
@@ -49,9 +49,10 @@
     <div class="send-message">
       <div class="attach">
         <i class="fa fa-paperclip" aria-hidden="true"></i>
+        <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">
       </div>
-      <input type="text" placeholder="{{ 'message' | translate:self }}">
-      <div class="send">
+      <input class="input-text" [(ngModel)]="textFromInput" type="text" placeholder="{{ 'message' | translate:self }}">
+      <div (click)="sendMessage()" class="send">
         <img src="../../../../assets/img/send-message.png" alt="">
       </div>
     </div>
