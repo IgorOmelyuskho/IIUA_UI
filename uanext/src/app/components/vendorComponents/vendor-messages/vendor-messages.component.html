@@ -1,62 +1,117 @@
 <div class="messages-wrapper">
+  <div class="name-adn-progress-bar">
     <div class="name">{{ 'communication' | translate:self }}</div>
-    <div #messagesElem class="messages">
-      <div *ngFor="let message of messages" class="message">
-  
-        <div *ngIf="message.isYou === true" class="you">
-          <div class="attachments">
-            <div class="img-wrapper">
-              <div class="img" [ngStyle]="{ 'background-image': getImageUrl(message.attachmentUrl) }"></div>
+    <mat-progress-bar *ngIf="messagesLoading === true" mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div #messagesElem class="messages">
+    <div *ngFor="let message of messages" class="message">
+
+      <div *ngIf="message.isYou === true" class="you">
+        <div class="attachments">
+          <div *ngIf="defineFileType(message.attachmentOriginalName) === 'image'" class="img-wrapper">
+            <div class="img" [ngStyle]="{ 'background-image': getImageUrl(message.attachmentUrl) }"></div>
+          </div>
+          <div *ngIf="defineFileType(message.attachmentOriginalName) === 'video'" class="video-wrapper">
+            <div class="video">
+              <video controls>
+                <source src="../../../assets/videos/main-screen-video.mp4">
+              </video>
             </div>
           </div>
-          <div class="message-text-wrapper">
-            <div class="text">
+          <div *ngIf="defineFileType(message.attachmentOriginalName) === 'file'" class="file-wrapper">
+            <div class="file">
+              <img src="../../../assets/img/file.png" alt="">
+              <div class="file-name">{{message.attachmentOriginalName}}</div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="message.text" class="message-text-wrapper">
+          <div class="text">
+            <div class="message-text">{{message.text}}</div>
+            <div class="time">{{message.lastUpdatedDate}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="message.isYou === false || message.isYou == null" class="their">
+        <div class="attachments">
+          <div *ngIf="defineFileType(message.attachmentOriginalName) === 'image'" class="img-wrapper">
+            <div class="img" [ngStyle]="{ 'background-image': getImageUrl(message.attachmentUrl) }"></div>
+          </div>
+          <div *ngIf="defineFileType(message.attachmentOriginalName) === 'video'" class="video-wrapper">
+            <div class="video">
+              <video controls>
+                <source src="../../../assets/videos/main-screen-video.mp4">
+              </video>
+            </div>
+          </div>
+          <div *ngIf="defineFileType(message.attachmentOriginalName) === 'file'" class="file-wrapper">
+            <div class="file">
+              <img src="../../../assets/img/file.png" alt="">
+              <div class="file-name">{{message.attachmentOriginalName}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="message-text-avatara-wrapper">
+          <div class="avatara-wrapper">
+            <img src={{chatParticipantAvatara}} alt="avatara get from id?">
+          </div>
+          <div class="text-and-sender">
+            <div class="sender">{{message.participantId}}</div>
+            <div *ngIf="message.text" class="text">
               <div class="message-text">{{message.text}}</div>
               <div class="time">{{message.lastUpdatedDate}}</div>
             </div>
           </div>
         </div>
-  
-        <div *ngIf="message.isYou === false || message.isYou == null" class="their">
-          <div class="attachments">
-            <div class="img-wrapper">
-              <div class="img" [ngStyle]="{ 'background-image': getImageUrl(message.attachmentUrl) }"></div>
-            </div>
-          </div>
-          <div class="message-text-avatara-wrapper">
-            <div class="avatara-wrapper">
-              <img src={{chatParticipantAvatara}} alt="avatara get from id?">
-            </div>
-            <div class="text-and-sender">
-              <div class="sender">{{message.participantId}}</div>
-              <div class="text">
-                <div class="message-text">{{message.text}}</div>
-                <div class="time">{{message.lastUpdatedDate}}</div>
-              </div>
-            </div>
+      </div>
+
+      <div class="date">
+        <hr>
+        <div class="text">Ср 24 Апрель</div>
+        <hr>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="send-message">
+    <div *ngIf="previewAttachment" class="attachment-wrapper">
+      <div class="attachments">
+        <div *ngIf="defineFileType(previewAttachment.name) === 'image'" class="img-wrapper">
+          <img (click)="removeAttachment()" class="close-img" src="../../../../assets/img/close-2.png" alt="close">
+          <figure>
+            <img src={{previewAttachment.binaryData}} alt="">
+          </figure>
+        </div>
+        <div *ngIf="defineFileType(previewAttachment.name) === 'video'" class="video-wrapper">
+          <img (click)="removeAttachment()" class="close-img" src="../../../../assets/img/close-2.png" alt="close">
+          <div class="video">
+            <figure>
+              <video controls>
+                <source src={{previewAttachment.binaryData}}>
+              </video>
+            </figure>
           </div>
         </div>
-  
-        <div class="date">
-          <hr>
-          <div class="text">Ср 24 Апрель</div>
-          <hr>
+        <div *ngIf="defineFileType(previewAttachment.name) === 'file'" class="file-wrapper">
+          <img (click)="removeAttachment()" class="close-img" src="../../../../assets/img/close-2.png" alt="close">
+          <div class="file">
+            <img src="../../../assets/img/file.png" alt="">
+            <div class="file-name">{{previewAttachment.name}}</div>
+          </div>
         </div>
-  
       </div>
     </div>
-  
-    <div class="send-message">
+    <div class="bottom-wrapper">
       <div class="attach">
         <i class="fa fa-paperclip" aria-hidden="true"></i>
         <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">
       </div>
       <input class="input-text" [(ngModel)]="textFromInput" type="text" placeholder="{{ 'message' | translate:self }}">
-      <div (click)="sendMessage()" class="send">
+      <div (click)="sendMessage()" [ngClass]="{'send-disabled': attachmentReady === false}" class="send">
         <img src="../../../../assets/img/send-message.png" alt="">
       </div>
     </div>
   </div>
-  
-  
-  
+</div>

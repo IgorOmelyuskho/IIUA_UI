@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
+declare const mime: any;
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class FilesService {
     return this.http.post<any>(environment.files + environment.uploadFiles, formData)
       .pipe(
         map(response => {
-          return response.data;
+          // return response.data;
+          return response;
         })
       );
   }
@@ -25,18 +27,23 @@ export class FilesService {
     return this.http.get<any>(environment.files + environment.uploadFiles + '/' + fileId)
       .pipe(
         map(response => {
-          return response.data;
+          // return response.data;
+          return response;
         })
       );
   }
 
   defineFileType(originalFileName: string): string { // image / file / video
-    const splitArr = originalFileName.split('.');
-    const ext = splitArr[splitArr.length - 1];
-    // if (ext === 'image') {
-    //   return 'i'
-    // }
-
-    return '1';
+    const mimeType = mime.getType(originalFileName);
+    if (mimeType == null) {
+      return '';
+    }
+    if (mimeType.includes('image')) {
+      return 'image';
+    } else if (mimeType.includes('video')) {
+      return 'video';
+    } else {
+      return 'file';
+    }
   }
 }
