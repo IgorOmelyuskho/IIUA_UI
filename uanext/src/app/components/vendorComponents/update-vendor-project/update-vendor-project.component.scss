@@ -15,6 +15,7 @@
 .close {
   outline: none;
   margin: 5px;
+
   &:hover {
     color: red;
   }
@@ -60,19 +61,22 @@
   img {
     height: 50px;
   }
+
   .min-files-count {
     color: #dc3545;
     font-size: 80%;
     margin-bottom: 20px;
   }
+
   .extension {
     font-size: 1.5em;
     color: rgb(83, 23, 139);
     padding-left: 5px;
   }
+
   .list-group-item {
     padding: 4px 10px;
-  }  
+  }
 }
 
 .update-project-btn {
@@ -86,4 +90,11 @@
 
 hr {
   border-top: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+:host ::ng-deep .mat-select-arrow {
+  transform: scale(0.5, 1.2);
+  color: black;
+  position: relative;
+  left: 13.4px;
 }

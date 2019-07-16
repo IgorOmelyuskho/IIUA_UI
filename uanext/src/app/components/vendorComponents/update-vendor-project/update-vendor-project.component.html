@@ -128,16 +128,14 @@
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'fieldActivity' | translate:self }}</label>
-        <!-- <input type="text" formControlName="fieldOfActivity" class="form-control"
-          [ngClass]="{ 'is-invalid': isLoaded && formControls.fieldOfActivity.errors }" /> -->
-        <select type="text" formControlName="fieldOfActivity" class="form-control"
-          [ngClass]="{ 'is-invalid': isLoaded && formControls.fieldOfActivity.errors }">
+        <mat-select multiple formControlName="activities" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.activities.errors }">
           <ng-container *ngFor="let option of fieldActivityOptions_2; let i = index">
-            <option *ngIf="i !== 0" value="{{option.name}}">{{option.name}}</option>
+            <mat-option *ngIf="i !== 0" value="{{option.id}}">{{option.name}}</mat-option>
           </ng-container>
-        </select>
-        <div *ngIf="formControls.fieldOfActivity.errors" class="invalid-feedback">
-          <div *ngIf="formControls.fieldOfActivity.errors.required">Field of activity cannot be empty</div>
+        </mat-select>
+        <div *ngIf="formControls.activities.errors" class="invalid-feedback">
+          <div *ngIf="formControls.activities.errors.required">Field of activity cannot be empty</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">

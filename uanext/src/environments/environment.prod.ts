@@ -6,6 +6,7 @@ export const environment = {
   map: 'https://master.iiua.com.ua/map',
   notifications: 'https://master.iiua.com.ua/notifications',
   files: 'https://master.iiua.com.ua/files',
+  chat: 'https://master.iiua.com.ua/conversations',
 
   authenticate: '/api/Auth/authenticate',
   vendorRegister: '/api/Vendor/register',
@@ -25,9 +26,7 @@ export const environment = {
   socialAuth: '/api/SocialAuth/social-auth',
 
   vendorProject: '/api/Projects/',
-  // uploadImages: '/api/Image/',
   uploadFiles: '/api/Upload',
-  // uploadVideos: '/api/Videos',
   filteringProjects: '/api/FilteringProjects',
 
   get3DObject: '/api/Map/Get3DObject',
@@ -36,5 +35,9 @@ export const environment = {
   getLastHistoryCoordinates: '/api/Map/GetLastHistoryCoordinates',
   search3DObject: '/api/Map/Search3DObject',
 
-  Notification: '/api/Notification'
+  Notification: '/api/Notification',
+
+  getOrCreateChat: 'api/Conversations/GetOrCreateP2P',
+  createMessage: '/api/Messages/CreateMessage',
+  getAllMessages: '/api/Conversations/GetAll'
 };

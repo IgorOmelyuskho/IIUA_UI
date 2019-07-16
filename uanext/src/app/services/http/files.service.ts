@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { FileResponseDto } from 'src/app/models/fileResponseDto';
+declare const mime: any;
 
 @Injectable({
   providedIn: 'root'
@@ -11,31 +13,37 @@ export class FilesService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFiles(formData: FormData): Observable<any> {
+  uploadFiles(formData: FormData): Observable<FileResponseDto[]> {
     return this.http.post<any>(environment.files + environment.uploadFiles, formData)
       .pipe(
         map(response => {
-          // for (let i = 0; i < response.data.length; i++) { // todo remove
-          //   if (!response.data[i].name) {
-          //     response.data[i].name = 'TEST_NAME.file';
-          //   }
-          // }
-          return response.data;
+          // return response.data;
+          return response;
         })
       );
   }
 
-  getFile(fileId: any): Observable<any> {
+  getFile(fileId: any): Observable<FileResponseDto[]> {
     return this.http.get<any>(environment.files + environment.uploadFiles + '/' + fileId)
       .pipe(
         map(response => {
-          // for (let i = 0; i < response.data.length; i++) { // todo remove
-          //   if (!response.data[i].name) {
-          //     response.data[i].name = 'TEST_NAME.file';
-          //   }
-          // }
-          return response.data;
+          // return response.data;
+          return response;
         })
       );
+  }
+
+  defineFileType(originalFileName: string): string { // image / file / video
+    const mimeType = mime.getType(originalFileName);
+    if (mimeType == null) {
+      return '';
+    }
+    if (mimeType.includes('image')) {
+      return 'image';
+    } else if (mimeType.includes('video')) {
+      return 'video';
+    } else {
+      return 'file';
+    }
   }
 }

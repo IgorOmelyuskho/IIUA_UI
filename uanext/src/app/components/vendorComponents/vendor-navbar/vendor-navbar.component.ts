@@ -4,6 +4,7 @@ import { AuthorizationService } from 'src/app/services/http/authorization.servic
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from '../../../helperClasses/projects';
 import { TranslateService } from 'src/app/services/translate.service';
+import { ProjectsService } from 'src/app/services/http/projects.service';
 
 @Component({
   selector: 'app-vendor-navbar',
@@ -20,17 +21,18 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   matchesMediaQuery = false;
   menuIsOpen = false;
 
-  projects: VendorProject[] = [
-    { ...responseProject },
-    { ...responseProject },
-    { ...responseProject2 },
-    { ...responseProject2 },
-  ];
+  projects: VendorProject[];
 
   profileSelectedProject: VendorProject;
   profileMenuOpen = false;
+  showProfileProgress = false;
 
-  constructor(private router: Router, private authService: AuthorizationService, public translateService: TranslateService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthorizationService,
+    public translateService: TranslateService,
+    private projectsService: ProjectsService
+  ) { }
 
   ngOnInit() {
     this.initMenu();
@@ -100,7 +102,23 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openProfileMenu() {
-    this.profileMenuOpen = !this.profileMenuOpen;
+    if (this.profileMenuOpen === true) {
+      this.profileMenuOpen = false;
+      return;
+    }
+
+    this.showProfileProgress = true;
+    this.projectsService.fetchVendorProjects().subscribe(
+      val => {
+        this.profileMenuOpen = true;
+        this.projects = val;
+        this.showProfileProgress = false;
+      },
+      err => {
+        console.warn(err);
+        this.showProfileProgress = false;
+      }
+    );
   }
 
   languageChange(e) {

@@ -363,7 +363,8 @@
     },
     "VendorMessagesComponent": {
         "communication": "Communication",
-        "message": "Message"
+        "message": "Message",
+        "download": "Download"
     },
     "VendorNavbarComponent": {
         "home": "Home",

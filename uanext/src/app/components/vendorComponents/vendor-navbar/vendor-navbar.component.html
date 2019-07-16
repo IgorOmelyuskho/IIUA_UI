@@ -27,6 +27,9 @@
           <img *ngIf="profileSelectedProject" src={{profileSelectedProject?.avatara.url}} alt="">
           <img *ngIf="!profileSelectedProject" src="../../../../assets/img/empty-profile-2.png" alt="">
         </figure>
+        <div *ngIf="showProfileProgress" class="circle-progress">
+          <app-rotating-load-indicator></app-rotating-load-indicator>
+        </div>
       </div>
 
       <div [style.display]="profileMenuOpen === true ? 'block' : 'none'" class="profile-menu">

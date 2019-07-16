@@ -26,6 +26,7 @@ import { TranslateService } from './services/translate.service';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { VendorProjectCardComponent } from './components/vendorComponents/vendor-project-card/vendor-project-card.component';
+import { RotatingLoadIndicatorComponent } from './components/rotating-load-indicator/rotating-load-indicator.component';
 
 const config = new AuthServiceConfig([
   {
@@ -53,6 +54,7 @@ export function setupTranslateFactory(service: TranslateService): Function {
     HighlightPipe,
     TranslatePipe,
     VendorProjectCardComponent,
+    RotatingLoadIndicatorComponent,
   ],
   imports: [
     BrowserModule,

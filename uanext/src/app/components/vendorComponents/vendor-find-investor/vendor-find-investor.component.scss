@@ -118,7 +118,7 @@
           }
 
           .info {
-            width: 100%;
+            width: calc(100% - 60px - 5px);
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -127,6 +127,9 @@
               font-size: 10px;
               font-weight: bold;
               color: $darkGreen;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
             .region {
@@ -146,11 +149,24 @@
               letter-spacing: 0.2px;
               display: flex;
               justify-content: space-between;
+              width: 100%;
 
-              .max-width {
-                max-width: 80px;
-                overflow: hidden;
-                line-height: 1;
+              .field-activity-left {
+                display: flex;
+                width: calc(100% - 28px);
+                justify-content: flex-end;
+                align-items: center;
+
+                .field-activity-text {
+                  width: calc(100% - 14px);
+
+                  .ellipsis {
+                    line-height: 1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+                }
               }
 
               img {

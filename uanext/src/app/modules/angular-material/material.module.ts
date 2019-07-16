@@ -12,6 +12,7 @@ import {
   MatExpansionModule,
   MatCheckboxModule,
   MatRadioModule,
+  MatSelectModule,
 } from '@angular/material';
 
 @NgModule({
@@ -29,6 +30,7 @@ import {
     MatExpansionModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatSelectModule,
   ]
 })
 export class MaterialModule { }

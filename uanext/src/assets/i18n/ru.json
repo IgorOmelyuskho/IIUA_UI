@@ -363,7 +363,8 @@
     },
     "VendorMessagesComponent": {
         "communication": "Общение",
-        "message": "Сообщение"
+        "message": "Сообщение",
+        "download": "Скачать"
     },
     "VendorNavbarComponent": {
         "home": "Домой",

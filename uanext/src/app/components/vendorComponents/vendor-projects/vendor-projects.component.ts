@@ -13,6 +13,7 @@ export class VendorProjectsComponent implements OnInit {
   projects: VendorProject[] = [];
   isLoaded = false;
   self = 'VendorProjectsComponent';
+  selfUserId: string;
 
   constructor(private router: Router, private projectsService: ProjectsService) { }
 

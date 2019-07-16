@@ -53,7 +53,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['', Validators.required],
       address: ['', Validators.required],
-      fieldOfActivity: ['', Validators.required],
+      activities: ['', Validators.required],
       companyAge: ['', Validators.required],
       employeesNumber: ['', Validators.required],
       employeesToHire: ['', Validators.required],
@@ -226,7 +226,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       goal: this.vendorProject.goal,
       region: this.vendorProject.region,
       address: this.vendorProject.address,
-      fieldOfActivity: this.vendorProject.fieldOfActivity,
+      activities: this.vendorProject.activities,
       companyAge: this.vendorProject.companyAge,
       employeesNumber: this.vendorProject.employeesNumber,
       employeesToHire: this.vendorProject.employeesToHire,

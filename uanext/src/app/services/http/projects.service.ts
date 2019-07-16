@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, delay } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from 'src/app/helperClasses/projects';
 
@@ -13,7 +13,7 @@ const emptyVendorProject: VendorProject = {
   goal: '',
   region: '',
   address: '',
-  fieldOfActivity: '',
+  activities: [{id: 1, name: 'string'}],
   companyAge: 0,
   employeesNumber: '',
   employeesToHire: 0,
@@ -50,7 +50,18 @@ export class ProjectsService {
     //   );
 
 
-    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2]); // todo comment
+    // todo comment
+    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
+      .pipe(
+        map(val => {
+          const res = JSON.parse(JSON.stringify(val));
+          for (let i = 0; i < res.length; i++) {
+            res[i].id = 'ID' + Math.random();
+          }
+          return res;
+        }),
+        delay(1000)
+      );
   }
 
   createVendorProject(newVendorProject: VendorProject): Observable<any> {
