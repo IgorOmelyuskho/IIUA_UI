@@ -3,7 +3,7 @@ import { ChatService } from 'src/app/services/http/chat.service';
 import { Message } from 'src/app/models/chat/message';
 import { FilesService } from 'src/app/services/http/files.service';
 import { StateService } from 'src/app/services/state/state.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 
 @Component({
@@ -22,6 +22,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   messages: Message[] = [];
   messagesLoading = false;
   attachmentReady = true;
+  uploadFilesSubscribe: Subscription;
 
   constructor(private chatService: ChatService, private fileService: FilesService, private stateService: StateService) { }
 
@@ -36,6 +37,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
         for (let i = 0; i < messages.length; i++) {
           messages[i].isYou = this.messageIsYou(messages[i]);
           this.messages.push(messages[i]);
+          this.chatService.sortMessages(this.messages);
         }
         console.log(messages);
         this.messagesLoading = false;
@@ -64,10 +66,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   ngAfterViewInit() {
     this.messagesElement.nativeElement.addEventListener('scroll', this.whenScrollTop);
     this.scrollToBottom(this.messagesElement.nativeElement);
-  }
-
-  getImageUrl(url) {
-    return 'url("' + url + '")';
   }
 
   whenScrollBottom = (event) => {
@@ -112,7 +110,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
       attachmentId: this.attachmentData.id,
       attachmentUrl: this.attachmentData.url,
       attachmentOriginalName: this.attachmentData.originalName,
-      lastUpdatedDate: '12:00',
+      lastUpdatedDate: 'string',
     };
 
     this.attachmentData = {};
@@ -124,6 +122,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
         console.log(msg);
         msg.isYou = true;
         this.messages.push(msg);
+        this.chatService.sortMessages(this.messages);
         requestAnimationFrame(() => {
           this.scrollToBottom(this.messagesElement.nativeElement);
         });
@@ -135,6 +134,9 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   handleAttachmentChange(event) {
+    if (this.uploadFilesSubscribe != null) {
+      this.uploadFilesSubscribe.unsubscribe();
+    }
     this.previewAttachment = null;
     this.attachmentData = {};
 
@@ -153,7 +155,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     fileReader.readAsDataURL(event.target['files'][0]);
 
     this.attachmentReady = false;
-    this.fileService.uploadFiles(formData).subscribe(
+    this.uploadFilesSubscribe = this.fileService.uploadFiles(formData).subscribe(
       (val: FileResponseDto[]) => {
         console.log(val);
         this.attachmentData = val[0];
@@ -167,6 +169,9 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   removeAttachment() {
+    if (this.uploadFilesSubscribe != null) {
+      this.uploadFilesSubscribe.unsubscribe();
+    }
     this.previewAttachment = null;
     this.attachmentData = {};
     this.attachmentReady = true;
