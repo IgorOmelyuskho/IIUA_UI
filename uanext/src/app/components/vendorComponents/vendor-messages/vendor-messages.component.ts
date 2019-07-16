@@ -64,23 +64,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
-    this.messagesElement.nativeElement.addEventListener('scroll', this.whenScrollTop);
     this.scrollToBottom(this.messagesElement.nativeElement);
-  }
-
-  whenScrollBottom = (event) => {
-    const element = event.target;
-    if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-      console.log('scrolled bottom');
-    }
-  }
-
-  whenScrollTop = (event) => {
-    const element = event.target;
-    if (element.scrollTop === 0) {
-      console.log('scrolled top');
-      this.getAllMessagesSubscribe(this.chatService.getAllMessages());
-    }
   }
 
   scrollToBottom(element: HTMLElement) {
@@ -177,7 +161,10 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.attachmentReady = true;
   }
 
+  onScrollUp() {
+    this.getAllMessagesSubscribe(this.chatService.getAllMessages());
+  }
+
   ngOnDestroy() {
-    this.messagesElement.nativeElement.removeEventListener('scroll', this.whenScrollTop);
   }
 }

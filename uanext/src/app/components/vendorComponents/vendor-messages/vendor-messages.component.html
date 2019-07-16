@@ -3,7 +3,8 @@
     <div class="name">{{ 'communication' | translate:self }}</div>
     <mat-progress-bar *ngIf="messagesLoading === true" mode="indeterminate"></mat-progress-bar>
   </div>
-  <div #messagesElem class="messages">
+  <div #messagesElem class="messages" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
+    [infiniteScrollThrottle]="100" (scrolledUp)="onScrollUp()">
     <div *ngFor="let message of messages" class="message">
 
       <div *ngIf="message.isYou === true" class="you">
