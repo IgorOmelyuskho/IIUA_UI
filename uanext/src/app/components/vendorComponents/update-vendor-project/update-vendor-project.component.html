@@ -129,7 +129,7 @@
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'fieldActivity' | translate:self }}</label>
         <mat-select multiple formControlName="activities" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && formControls.activities.errors }">
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.activities.errors }">
           <ng-container *ngFor="let option of fieldActivityOptions_2; let i = index">
             <mat-option *ngIf="i !== 0" value="{{option.id}}">{{option.name}}</mat-option>
           </ng-container>

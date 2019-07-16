@@ -14,20 +14,26 @@ export class VendorMainScreenRightComponent implements OnInit, OnDestroy {
   find_investor_show = false;
   messages_show = false;
   investment_offer_show = false;
-  mediaQueryString = 'screen and (max-width: 460px)';
-  mq = window.matchMedia(this.mediaQueryString );
+  mq = window.matchMedia('screen and (max-width: 460px)');
   matchesMediaQuery = false;
 
   constructor() { }
 
   ngOnInit() {
     this.rightBlock.nativeElement.style.display = 'none';
-    this.matchesMediaQuery = window.matchMedia(this.mediaQueryString).matches;
+    this.matchesMediaQuery = this.mq.matches;
     this.mq.addListener(this.matchMediaHandler);
   }
 
-  matchMediaHandler = (data) => {
-    this.matchesMediaQuery = data.matches;
+  matchMediaHandler() {
+    // todo
+  }
+
+  hideRightBlock() {
+    this.rightBlock.nativeElement.style.display = 'none';
+    this.find_investor_show = false;
+    this.messages_show = false;
+    this.investment_offer_show = false;
   }
 
   showMessages() {

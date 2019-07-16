@@ -13,7 +13,7 @@ const emptyVendorProject: VendorProject = {
   goal: '',
   region: '',
   address: '',
-  fieldOfActivity: '',
+  activities: [{id: 1, name: 'string'}],
   companyAge: 0,
   employeesNumber: '',
   employeesToHire: 0,

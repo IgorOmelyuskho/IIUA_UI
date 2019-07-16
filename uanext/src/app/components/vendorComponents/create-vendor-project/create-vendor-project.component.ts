@@ -242,6 +242,16 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     newVendorProject.avatara = this.avataraData;
     newVendorProject.images = this.vendorProject.images;
     newVendorProject.files = this.vendorProject.files;
+    const newActivities = [];
+    for (let i = 0; i < newVendorProject.activities.length; i++) {
+      newActivities.push( {
+        // id: parseInt(newVendorProject.activities[i], 10),
+        id: 1,
+        class: '1.1',
+        name: 'TestName1'
+      } );
+    }
+    newVendorProject.activities = newActivities;
 
     this.showProgressBar = true;
 
