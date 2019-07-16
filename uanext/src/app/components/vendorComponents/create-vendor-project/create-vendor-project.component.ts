@@ -50,7 +50,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['Kyiv oblast', Validators.required],
       address: ['', Validators.required],
-      fieldOfActivity: ['', Validators.required],
+      activities: ['', Validators.required],
       companyAge: ['', Validators.required],
       employeesNumber: ['1', Validators.required],
       employeesToHire: ['', Validators.required],

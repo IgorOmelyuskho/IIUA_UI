@@ -10,7 +10,7 @@ export interface FilterFields {
 
   region?: string;
 
-  fieldOfActivity?: { id: string, name: string }[];
+  fieldOfActivity?: { id: string, name: string }[]; // todo maybe rename in activities ?
   activities?: { id: string, name: string }[];
 
   companyAgeFrom?: string;
