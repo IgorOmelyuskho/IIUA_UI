@@ -31,7 +31,7 @@ export class ChatService {
       );
   }
 
-  getAllMessages(): Observable<Message[]> {
+  getAllMessages(chatId: string): Observable<Message[]> {
     // return this.http.post<any>(environment.chat + environment.getAllMessages, message);
     this.counter += 1;
     return of(JSON.parse(JSON.stringify([testMessagePhoto, testMessageFile, testMessageVideo, testMessageFile, testMessagePhoto])))

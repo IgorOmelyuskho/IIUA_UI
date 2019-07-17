@@ -43,9 +43,18 @@ export class ProjectsService {
 
   fetchVendorProjects(): Observable<VendorProject[]> {
     return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
-      .pipe(
-        map((response: any) => {
-          return response['data'];
+      .pipe( // todo comment all pipe
+        map((response: VendorProject[]) => {
+          for (let i = 0; i < response.length; i++) {
+            response[i].avatara = {
+              id: Math.random(),
+              url: 'http://minio.iiua.com.ua/iiua.files.public/571369312.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-' +
+              'Credential=root%2F20190717%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190717T195002Z&X-Amz-Expires=1000&X' +
+              '-Amz-SignedHeaders=host&&X-Amz-Signature=2ed8ecad7a03620a73914b33b8e663b160216823549be6bdeb3f1b92a8d5e4a5',
+              originalName: 'originalName'
+            };
+          }
+          return response;
         })
       );
 

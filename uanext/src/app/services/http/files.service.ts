@@ -36,7 +36,7 @@ export class FilesService {
   defineFileType(originalFileName: string): string { // image / file / video
     const mimeType = mime.getType(originalFileName);
     if (mimeType == null) {
-      return '';
+      return 'file';
     }
     if (mimeType.includes('image')) {
       return 'image';

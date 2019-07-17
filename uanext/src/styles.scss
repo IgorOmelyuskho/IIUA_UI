@@ -99,6 +99,7 @@ mat-progress-bar {
     background: $green !important;
   }
 }
+
 //#endregion
 
 // mat expansion
@@ -126,6 +127,7 @@ mat-progress-bar {
     }
   }
 }
+
 //#endregion
 
 // filtering projects gallery
@@ -161,6 +163,7 @@ mat-progress-bar {
   border-radius: 3px;
   background-color: rgb(185, 185, 185);
 }
+
 //#endregion
 
 // custom radiogroup
@@ -206,6 +209,7 @@ mat-progress-bar {
   background-color: rgba($green, 0.8);
   cursor: pointer;
 }
+
 //#endregion
 
 // focus
@@ -253,4 +257,19 @@ textarea:focus {
   transition: transform .7s cubic-bezier(.55, .085, 0, .99);
   -webkit-transition: transform .7s cubic-bezier(.55, .085, 0, .99)
 }
+
 //#endregion
+
+mat-pseudo-checkbox.mat-pseudo-checkbox-checked {
+  background: #2196f3 !important;
+
+  &:after {
+    top: 4px;
+    left: 2px;
+  }
+}
+
+mat-select.form-control:focus {
+  box-shadow: none;
+  border-color: $green;
+}
