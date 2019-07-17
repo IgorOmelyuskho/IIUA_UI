@@ -734,5 +734,9 @@
     },
     "checkEmailShared": "You received a message in the email",
     "firstNeedRegister": "First you need to register as Vendor or Investor",
-    "reallyRemoveAccount": "Really remove account?"
+    "reallyRemoveAccount": "Really remove account?",
+    "projectSuccessfullyCreated": "You have successfully created project",
+    "projectNotCreated": "Project not created",
+    "projectUpdated": "Project successfully updated",
+    "projectNotUpdated": "Project not updated"
 }

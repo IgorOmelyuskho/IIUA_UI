@@ -31,6 +31,22 @@
     }
   }
 
+  @media screen and (max-width: 1250px) { /* also used in .ts */
+    .main-block {
+      .find-investor-wrapper {
+        width: 35vw; 
+      }
+  
+      .messages-wrapper {
+        width: calc(65vw - 70px); /* 70 - .main-block margin-right: 70px; */
+      }
+  
+      .investment-offer-wrapper {
+        width: calc(100vw - 70px);
+      }
+    }
+  }
+
   .close-btn {
     position: absolute;
     top: 15px;

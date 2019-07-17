@@ -734,5 +734,9 @@
     },
     "checkEmailShared": "Вы получили сообщение по электронной почте",
     "firstNeedRegister": "Сначала нужно зарегистрироваться как Вендор или как Инвестор",
-    "reallyRemoveAccount": "Действительно удалить аккаунт?"
+    "reallyRemoveAccount": "Действительно удалить аккаунт?",
+    "projectSuccessfullyCreated": "Вы успешно создали проект",
+    "projectNotCreated": "Проект не создан",
+    "projectUpdated": "Проект успешно обновлен",
+    "projectNotUpdated": "Проект не обновлен"
 }

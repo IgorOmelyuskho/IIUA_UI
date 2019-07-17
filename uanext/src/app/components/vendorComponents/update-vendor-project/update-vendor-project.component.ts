@@ -313,11 +313,12 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
         response => {
           console.log(response);
           this.showProgressBar = false;
-          this.notify.show(response['data']);
+          this.notify.show(this.translateService.data.projectUpdated);
         },
         err => {
           console.warn(err);
           this.showProgressBar = false;
+          this.notify.show(this.translateService.data.projectNotUpdated);
         }
       );
   }

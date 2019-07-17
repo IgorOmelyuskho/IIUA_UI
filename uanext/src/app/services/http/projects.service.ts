@@ -13,7 +13,7 @@ const emptyVendorProject: VendorProject = {
   goal: '',
   region: '',
   address: '',
-  activities: [{id: 1, name: 'string'}],
+  activities: [{ id: 1, name: 'string' }],
   companyAge: 0,
   employeesNumber: '',
   employeesToHire: 0,
@@ -42,26 +42,25 @@ export class ProjectsService {
   constructor(private http: HttpClient) { }
 
   fetchVendorProjects(): Observable<VendorProject[]> {
-    // return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
-    //   .pipe(
-    //     map((response: any) => {
-    //       return response['data'];
-    //     })
-    //   );
-
+    return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
+      .pipe(
+        map((response: any) => {
+          return response['data'];
+        })
+      );
 
     // todo comment
-    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
-      .pipe(
-        map(val => {
-          const res = JSON.parse(JSON.stringify(val));
-          for (let i = 0; i < res.length; i++) {
-            res[i].id = 'ID' + Math.random();
-          }
-          return res;
-        }),
-        delay(1000)
-      );
+    // return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
+    //   .pipe(
+    //     map(val => {
+    //       const res = JSON.parse(JSON.stringify(val));
+    //       for (let i = 0; i < res.length; i++) {
+    //         res[i].id = 'ID' + Math.random();
+    //       }
+    //       return res;
+    //     }),
+    //     delay(1000)
+    //   );
   }
 
   createVendorProject(newVendorProject: VendorProject): Observable<any> {
