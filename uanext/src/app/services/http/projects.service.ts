@@ -43,22 +43,32 @@ export class ProjectsService {
 
   fetchVendorProjects(): Observable<VendorProject[]> {
     return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
-      .pipe( // todo comment all pipe
+      .pipe(
         map((response: VendorProject[]) => {
+          for (let i = 0; i < response.length; i++) {
+            response[i].rating = '9.5';
+          }
+          return response;
+        }),
+
+        map((response: VendorProject[]) => { // todo remove
           for (let i = 0; i < response.length; i++) {
             response[i].avatara = {
               id: Math.random(),
-              url: 'http://minio.iiua.com.ua/iiua.files.public/571369312.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-' +
-              'Credential=root%2F20190717%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190717T195002Z&X-Amz-Expires=1000&X' +
-              '-Amz-SignedHeaders=host&&X-Amz-Signature=2ed8ecad7a03620a73914b33b8e663b160216823549be6bdeb3f1b92a8d5e4a5',
+              url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW2Jc5MRcTd3SO3-Pjq_O7CJICQRkTbLYkBiaNy2iuOv4jDUM',
               originalName: 'originalName'
             };
+            response[i].activities = [{
+              id: 1,
+              class: '1.1',
+              name: 'TestName1'
+            }];
           }
           return response;
         })
       );
 
-    // todo comment
+    // todo remove
     // return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
     //   .pipe(
     //     map(val => {
@@ -78,5 +88,13 @@ export class ProjectsService {
 
   updateVendorProject(projectId: string, updatedVendorProject: VendorProject): Observable<any> {
     return this.http.put<any>(environment.projects + environment.vendorProject + projectId, updatedVendorProject);
+  }
+
+  getSphereActivity(): Observable<any> {
+    return this.http.get<any>(environment.projects + environment.sphereActivity);
+  }
+
+  postSphereActivity(sphereActivity): Observable<any> {
+    return this.http.post<any>(environment.projects + environment.sphereActivity, sphereActivity);
   }
 }

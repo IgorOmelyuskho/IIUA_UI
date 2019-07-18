@@ -9,7 +9,9 @@
     <div class="row">
       <div class="col-12 col-md-4 form-group avatara">
         <div class="avatara-img-wrapper">
-          <img #avatara height=100 src={{FormHelper.emptyAvatara}} alt="avatara">
+          <figure>
+            <img #avatara height=100 src={{FormHelper.emptyAvatara}} alt="avatara">
+          </figure>
           <mat-progress-bar *ngIf="showAvataraProgress === true" mode="indeterminate"></mat-progress-bar>
         </div>
 

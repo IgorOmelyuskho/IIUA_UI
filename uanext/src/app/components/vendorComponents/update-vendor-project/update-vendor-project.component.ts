@@ -23,7 +23,6 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   projectId: string;
   FormHelper = FormHelper;
   self = 'UpdateVendorProjectComponent';
-  fieldActivityOptions: FieldActivityInterface[];
 
   avataraSize = 0;
   maxAvataraSize = 1024 * 1024 * 5;
@@ -296,22 +295,26 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const updatedVendorCompany: VendorProject = {
+    const updatedVendorProject: VendorProject = {
       ...this.vendorProjectForm.value,
     };
 
-    updatedVendorCompany.steps = this.vendorProject.steps;
-    updatedVendorCompany.videos = this.vendorProject.videos;
-    updatedVendorCompany.avatara = this.vendorProject.avatara;
-    updatedVendorCompany.images = this.vendorProject.images;
-    updatedVendorCompany.files = this.vendorProject.files;
+    updatedVendorProject.steps = this.vendorProject.steps;
+    updatedVendorProject.videos = this.vendorProject.videos;
+    updatedVendorProject.avatara = this.vendorProject.avatara;
+    updatedVendorProject.images = this.vendorProject.images;
+    updatedVendorProject.files = this.vendorProject.files;
+    for (let i = 0; i < updatedVendorProject.activities.length; i++) {
+      updatedVendorProject.activities[i] = {
+        id: updatedVendorProject.activities[i]
+      };
+    }
 
     this.showProgressBar = true;
 
-    this.projectsService.updateVendorProject(this.vendorProject.id, updatedVendorCompany)
+    this.projectsService.updateVendorProject(this.vendorProject.id, updatedVendorProject)
       .subscribe(
         response => {
-          console.log(response);
           this.showProgressBar = false;
           this.notify.show(this.translateService.data.projectUpdated);
         },

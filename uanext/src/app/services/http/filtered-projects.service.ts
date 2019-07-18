@@ -39,16 +39,39 @@ export class ViewProjectsService {
     if (filter.fieldOfActivity) {
       filter.activities = filter.fieldOfActivity;
     }
-    return of(JSON.parse(JSON.stringify(responseProjects)));
-    // return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
-    // .pipe(
-    //   map((response: any) => {
-    //     if (response['data'] == null) {
-    //       return emptyFilteredProjects;
-    //     }
-    //     return response['data'];
-    //   })
-    // );
+
+    // return of(JSON.parse(JSON.stringify(responseProjects)));
+    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
+      .pipe(
+        map((response: FilteredProjects) => {
+          if (response == null) {
+            return emptyFilteredProjects;
+          }
+          return response;
+        }),
+        map((response: FilteredProjects) => {
+          for (let i = 0; i < response.projectsList.length; i++) {
+            response.projectsList[i].rating = '9.5';
+          }
+          return response;
+        }),
+
+        map((response: FilteredProjects) => { // todo remove
+          for (let i = 0; i < response.projectsList.length; i++) {
+            response.projectsList[i].avatara = {
+              id: Math.random(),
+              url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW2Jc5MRcTd3SO3-Pjq_O7CJICQRkTbLYkBiaNy2iuOv4jDUM',
+              originalName: 'originalName'
+            };
+            response.projectsList[i].activities = [{
+              id: 1,
+              class: '1.1',
+              name: 'TestName1'
+            }];
+          }
+          return response;
+        })
+      );
   }
 
   // searchByProjectName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
