@@ -273,3 +273,10 @@ mat-select.form-control:focus {
   box-shadow: none;
   border-color: $green;
 }
+
+mat-select {
+  span.mat-select-placeholder {
+    color: #495057;
+    font-family: "Open Sans", sans-serif;
+  }
+}

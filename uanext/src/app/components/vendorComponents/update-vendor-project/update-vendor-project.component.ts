@@ -218,6 +218,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   }
 
   setFormValues(): void {
+    console.log(this.vendorProject.region);
     const selectedActivities = [];
     for (let i = 0; i < this.vendorProject.sphereActivities.length; i++) {
       selectedActivities.push(this.vendorProject.sphereActivities[i].id.toString());
