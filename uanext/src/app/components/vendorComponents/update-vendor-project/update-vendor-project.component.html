@@ -130,14 +130,14 @@
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'fieldActivity' | translate:self }}</label>
-        <mat-select multiple formControlName="activities" class="form-control"
-          [ngClass]="{ 'is-invalid': isLoaded && formControls.activities.errors }">
+        <mat-select placeholder="placeholder" multiple formControlName="sphereActivities" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.sphereActivities.errors }">
           <ng-container *ngFor="let option of fieldActivityOptions_2; let i = index">
             <mat-option *ngIf="i !== 0" value="{{option.id}}">{{option.name}}</mat-option>
           </ng-container>
         </mat-select>
-        <div *ngIf="formControls.activities.errors" class="invalid-feedback">
-          <div *ngIf="formControls.activities.errors.required">Field of activity cannot be empty</div>
+        <div *ngIf="formControls.sphereActivities.errors" class="invalid-feedback">
+          <div *ngIf="formControls.sphereActivities.errors.required">Field of activity cannot be empty</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">

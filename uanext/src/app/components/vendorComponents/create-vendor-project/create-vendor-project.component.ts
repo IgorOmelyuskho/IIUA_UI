@@ -50,7 +50,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['Kyiv oblast', Validators.required],
       address: ['', Validators.required],
-      activities: ['', Validators.required],
+      sphereActivities: ['', Validators.required],
       companyAge: ['', Validators.required],
       employeesNumber: ['1', Validators.required],
       employeesToHire: ['', Validators.required],
@@ -240,11 +240,13 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     newVendorProject.steps = this.vendorProject.steps;
     newVendorProject.videos = this.vendorProject.videos;
     newVendorProject.avatara = this.avataraData;
+    newVendorProject.avatara.isAvatara = true;
     newVendorProject.images = this.vendorProject.images;
+    newVendorProject.images.push(newVendorProject.avatara);
     newVendorProject.files = this.vendorProject.files;
-    for (let i = 0; i < newVendorProject.activities.length; i++) {
-      newVendorProject.activities[i] = {
-        id: newVendorProject.activities[i]
+    for (let i = 0; i < newVendorProject.sphereActivities.length; i++) {
+      newVendorProject.sphereActivities[i] = {
+        id: newVendorProject.sphereActivities[i],
       };
     }
 

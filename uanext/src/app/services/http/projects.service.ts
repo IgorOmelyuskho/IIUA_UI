@@ -13,7 +13,7 @@ const emptyVendorProject: VendorProject = {
   goal: '',
   region: '',
   address: '',
-  activities: [{ id: 1, name: 'string' }],
+  sphereActivities: [{ id: 1, name: 'string' }],
   companyAge: 0,
   employeesNumber: '',
   employeesToHire: 0,
@@ -50,22 +50,6 @@ export class ProjectsService {
           }
           return response;
         }),
-
-        map((response: VendorProject[]) => { // todo remove
-          for (let i = 0; i < response.length; i++) {
-            response[i].avatara = {
-              id: Math.random(),
-              url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW2Jc5MRcTd3SO3-Pjq_O7CJICQRkTbLYkBiaNy2iuOv4jDUM',
-              originalName: 'originalName'
-            };
-            response[i].activities = [{
-              id: 1,
-              class: '1.1',
-              name: 'TestName1'
-            }];
-          }
-          return response;
-        })
       );
 
     // todo remove

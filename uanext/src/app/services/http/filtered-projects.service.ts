@@ -33,11 +33,7 @@ export class ViewProjectsService {
 
     if (filter.moneyRequiredFrom == null || filter.moneyRequiredTo == null) {
       filter.moneyRequiredFrom = '0';
-      filter.moneyRequiredTo = '100000000000000';
-    }
-    // replace fieldOfActivity to activities
-    if (filter.fieldOfActivity) {
-      filter.activities = filter.fieldOfActivity;
+      filter.moneyRequiredTo = '100000000';
     }
 
     // return of(JSON.parse(JSON.stringify(responseProjects)));
@@ -55,22 +51,6 @@ export class ViewProjectsService {
           }
           return response;
         }),
-
-        map((response: FilteredProjects) => { // todo remove
-          for (let i = 0; i < response.projectsList.length; i++) {
-            response.projectsList[i].avatara = {
-              id: Math.random(),
-              url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW2Jc5MRcTd3SO3-Pjq_O7CJICQRkTbLYkBiaNy2iuOv4jDUM',
-              originalName: 'originalName'
-            };
-            response.projectsList[i].activities = [{
-              id: 1,
-              class: '1.1',
-              name: 'TestName1'
-            }];
-          }
-          return response;
-        })
       );
   }
 

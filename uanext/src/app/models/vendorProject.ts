@@ -7,7 +7,7 @@ export interface VendorProject {
   goal: string;
   region: string;
   address: string;
-  activities: any[];
+  sphereActivities: any[];
   companyAge: number;
   employeesNumber: string;
   employeesToHire: number;
