@@ -23,7 +23,6 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   projectId: string;
   FormHelper = FormHelper;
   self = 'UpdateVendorProjectComponent';
-  fieldActivityOptions: FieldActivityInterface[];
 
   avataraSize = 0;
   maxAvataraSize = 1024 * 1024 * 5;
@@ -53,7 +52,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['', Validators.required],
       address: ['', Validators.required],
-      activities: ['', Validators.required],
+      sphereActivities: ['', Validators.required],
       companyAge: ['', Validators.required],
       employeesNumber: ['', Validators.required],
       employeesToHire: ['', Validators.required],
@@ -92,10 +91,10 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     this.projectId = this.activateRoute.url['value'][arrLength - 1].path;
 
     this.projectsService.fetchVendorProjects().subscribe(
-      (companies: VendorProject[]) => {
-        for (let i = 0; i < companies.length; i++) {
-          if (companies[i].id === this.projectId) {
-            this.vendorProject = companies[i];
+      (projects: VendorProject[]) => {
+        for (let i = 0; i < projects.length; i++) {
+          if (projects[i].id.toString() === this.projectId.toString()) {
+            this.vendorProject = projects[i];
             this.whenProjectIsLoaded();
             return;
           }
@@ -219,6 +218,10 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   }
 
   setFormValues(): void {
+    const selectedActivities = [];
+    for (let i = 0; i < this.vendorProject.sphereActivities.length; i++) {
+      selectedActivities.push(this.vendorProject.sphereActivities[i].id.toString());
+    }
     this.vendorProjectForm.setValue({
       name: this.vendorProject.name,
       avatara: '',
@@ -226,7 +229,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       goal: this.vendorProject.goal,
       region: this.vendorProject.region,
       address: this.vendorProject.address,
-      activities: this.vendorProject.activities,
+      sphereActivities: selectedActivities,
       companyAge: this.vendorProject.companyAge,
       employeesNumber: this.vendorProject.employeesNumber,
       employeesToHire: this.vendorProject.employeesToHire,
@@ -249,7 +252,6 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   photosUploaded(event) {
     if (event.error === false) {
       const photosData: any[] = event.files;
-      console.log(photosData);
       for (let i = 0; i < photosData.length; i++) {
         this.vendorProject.images.push(photosData[i]);
       }
@@ -296,28 +298,52 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const updatedVendorCompany: VendorProject = {
+    const updatedVendorProject: VendorProject = {
       ...this.vendorProjectForm.value,
     };
 
-    updatedVendorCompany.steps = this.vendorProject.steps;
-    updatedVendorCompany.videos = this.vendorProject.videos;
-    updatedVendorCompany.avatara = this.vendorProject.avatara;
-    updatedVendorCompany.images = this.vendorProject.images;
-    updatedVendorCompany.files = this.vendorProject.files;
+    updatedVendorProject.steps = this.vendorProject.steps;
+    updatedVendorProject.videos = this.vendorProject.videos;
+    updatedVendorProject.avatara = this.vendorProject.avatara;
+    updatedVendorProject.avatara.isAvatara = true;
+    updatedVendorProject.images = this.vendorProject.images;
+    updatedVendorProject.images.push(updatedVendorProject.avatara);
+    updatedVendorProject.files = this.vendorProject.files;
+    delete updatedVendorProject.avatara;
+
+    delete updatedVendorProject['forFiles'];
+    delete updatedVendorProject['forPhotos'];
+    delete updatedVendorProject['forSteps'];
+    delete updatedVendorProject['forVideos'];
+    // for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) { // todo uncomment
+    //   updatedVendorProject.sphereActivities[i] = {
+    //     id: updatedVendorProject.sphereActivities[i]
+    //   };
+    // }
+    updatedVendorProject.sphereActivities = [
+      {
+        id: 1,
+        name: 'TestName1',
+        class: '1.1'
+      }
+    ];
+
+    for (let i = 0; i < updatedVendorProject.steps.length; i++) {
+      delete updatedVendorProject.steps[i].id;
+    }
 
     this.showProgressBar = true;
 
-    this.projectsService.updateVendorProject(this.vendorProject.id, updatedVendorCompany)
+    this.projectsService.updateVendorProject(this.vendorProject.id, updatedVendorProject)
       .subscribe(
         response => {
-          console.log(response);
           this.showProgressBar = false;
-          this.notify.show(response['data']);
+          this.notify.show(this.translateService.data.projectUpdated);
         },
         err => {
           console.warn(err);
           this.showProgressBar = false;
+          this.notify.show(this.translateService.data.projectNotUpdated);
         }
       );
   }

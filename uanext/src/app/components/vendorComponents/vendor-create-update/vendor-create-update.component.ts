@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
+import { FilesService } from 'src/app/services/http/files.service';
+import { FileResponseDto } from 'src/app/models/fileResponseDto';
 
 @Component({
   selector: 'app-vendor-create-update',
@@ -18,16 +20,17 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   @ViewChild('dropArea') dropArea: ElementRef;
   @ViewChild('gallery') gallery: ElementRef;
-  // @ViewChild('progressBar') progressBar: ElementRef;
-
+  filesForUploadCount = 0;
+  uploadedFilesArr: FileResponseDto[] = [];
   projectSteps: any[] = [];
   tieSteps: any[] = [];
   self = 'VendorCreateUpdateComponent';
+  showProgress = false;
+  comment: string;
 
-  constructor() { }
+  constructor(private filesService: FilesService) { }
 
   ngOnInit() {
   }
@@ -76,34 +79,31 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
   handleDrop(e) {
     const dt = e.dataTransfer;
     const files = dt.files;
-
     this.handleFiles(files);
   }
 
-  // initializeProgress(numFiles) {
-  //   this.progressBar.value = 0;
-  //   this.uploadProgress = [];
-
-  //   for (let i = numFiles; i > 0; i--) {
-  //     this.uploadProgress.push(0);
-  //   }
-  // }
-
-  // updateProgress(fileNumber, percent) {
-  //   this.uploadProgress[fileNumber] = percent;
-  //   const total = this.uploadProgress.reduce((tot, curr) => tot + curr, 0) / this.uploadProgress.length;
-  //   this.progressBar.value = total;
-  // }
-
   handleFiles(files) {
     for (let i = 0; i < files.length; i++) {
-      this.uploadFile(files[i], i);
+      this.uploadFileSubscriber(files[i]);
       this.previewFile(files[i]);
     }
-    // this.initializeProgress(files.length);
   }
 
-  previewFile(file) {
+  previewFile(file: any) {
+    const fileType = this.filesService.defineFileType(file.name);
+
+    if (fileType === 'image') {
+      this.isImage(file);
+    }
+    if (fileType === 'video') {
+      this.isVideo(file);
+    }
+    if (fileType === 'file') {
+      this.isFile(file);
+    }
+  }
+
+  isImage = (file: any) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -115,32 +115,66 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
     };
   }
 
-  uploadFile(file, i) {
-    const url = 'https://api.cloudinary.com/v1_1/joezimim007/image/upload';
-    const xhr = new XMLHttpRequest();
+  isVideo = (file: any) => {
+    const figure = document.createElement('figure');
+    const img = document.createElement('img');
+    img.src = '../../../../assets/img/video-image.png';
+    figure.appendChild(img);
+    this.gallery.nativeElement.appendChild(figure);
+  }
+
+  isFile = (file: any) => {
+    const figure = document.createElement('figure');
+    const img = document.createElement('img');
+    img.src = '../../../../assets/img/file.png';
+    figure.appendChild(img);
+    this.gallery.nativeElement.appendChild(figure);
+  }
+
+  uploadFileSubscriber(file) {
+    this.filesForUploadCount += 1;
+    this.showProgress = true;
     const formData = new FormData();
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    formData.append(file.name, file);
 
-    // Update progress (can be used to show progress indicator)
-    // xhr.upload.addEventListener('progress', (e) => {
-    //   this.updateProgress(i, (e.loaded * 100.0 / e.total) || 100);
-    // });
+    this.filesService.uploadFiles(formData).subscribe(
+      (val: FileResponseDto[]) => {
+        this.uploadedFilesArr.push(val[0]);
+        if (this.allFilesUploaded() === true) {
+          this.showProgress = false;
+        }
+      },
+      err => {
+        console.warn(err);
+      }
+    );
+  }
 
-    // xhr.addEventListener('readystatechange', (e) => {
-    //   if (xhr.readyState === 4 && xhr.status === 200) {
-    //     this.updateProgress(i, 100); // <- Add this
-    //   } else if (xhr.readyState === 4 && xhr.status !== 200) {
-    //     // Error. Inform the user
-    //   }
-    // });
+  allFilesUploaded(): boolean {
+    if (this.filesForUploadCount === this.uploadedFilesArr.length) {
+      return true;
+    }
 
-    formData.append('upload_preset', 'ujpu6gyk');
-    formData.append('file', file);
-    xhr.send(formData);
+    return false;
   }
 
   send() {
-    // todo
+    // http request
+    console.log(this.comment);
+    console.log(this.uploadedFilesArr);
+    console.log(this.tieSteps);
+
+    this.comment = '';
+    this.filesForUploadCount = 0;
+    this.uploadedFilesArr = [];
+    this.tieSteps = [];
+    for (let i = 0; i < this.projectSteps.length; i++) {
+      this.projectSteps[i].selected = false;
+    }
+
+    const elementsForRemove = this.gallery.nativeElement.querySelectorAll('figure');
+    for (let i = 0; i < elementsForRemove.length; i++) {
+      elementsForRemove[i].parentNode.removeChild(elementsForRemove[i]);
+    }
   }
 }

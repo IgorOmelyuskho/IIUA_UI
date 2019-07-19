@@ -13,7 +13,7 @@ const emptyVendorProject: VendorProject = {
   goal: '',
   region: '',
   address: '',
-  activities: [{id: 1, name: 'string'}],
+  sphereActivities: [{ id: 1, name: 'string' }],
   companyAge: 0,
   employeesNumber: '',
   employeesToHire: 0,
@@ -42,26 +42,28 @@ export class ProjectsService {
   constructor(private http: HttpClient) { }
 
   fetchVendorProjects(): Observable<VendorProject[]> {
-    // return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
-    //   .pipe(
-    //     map((response: any) => {
-    //       return response['data'];
-    //     })
-    //   );
-
-
-    // todo comment
-    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
+    return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
       .pipe(
-        map(val => {
-          const res = JSON.parse(JSON.stringify(val));
-          for (let i = 0; i < res.length; i++) {
-            res[i].id = 'ID' + Math.random();
+        map((response: VendorProject[]) => {
+          for (let i = 0; i < response.length; i++) {
+            response[i].rating = '9.5';
           }
-          return res;
+          return response;
         }),
-        delay(1000)
       );
+
+    // todo remove
+    // return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
+    //   .pipe(
+    //     map(val => {
+    //       const res = JSON.parse(JSON.stringify(val));
+    //       for (let i = 0; i < res.length; i++) {
+    //         res[i].id = 'ID' + Math.random();
+    //       }
+    //       return res;
+    //     }),
+    //     delay(1000)
+    //   );
   }
 
   createVendorProject(newVendorProject: VendorProject): Observable<any> {
@@ -70,5 +72,30 @@ export class ProjectsService {
 
   updateVendorProject(projectId: string, updatedVendorProject: VendorProject): Observable<any> {
     return this.http.put<any>(environment.projects + environment.vendorProject + projectId, updatedVendorProject);
+  }
+
+  getSphereActivity(): Observable<any> {
+    // return this.http.get<any>(environment.projects + environment.sphereActivity);
+    return of([
+      {
+        id: 1,
+        class: '1.1',
+        name: 'TestName1'
+      },
+      {
+        id: 2,
+        class: '1.2',
+        name: 'TestName2'
+      },
+      {
+        id: 3,
+        class: '1.3',
+        name: 'TestName3'
+      }
+    ]);
+  }
+
+  postSphereActivity(sphereActivity): Observable<any> {
+    return this.http.post<any>(environment.projects + environment.sphereActivity, sphereActivity);
   }
 }

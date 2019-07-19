@@ -97,13 +97,13 @@
         }
 
         .budget-input-wrapper {
-          margin-right: 150px;
+          width: 210px;
           display: flex;
           align-items: center;
         }
 
         .region-input-wrapper {
-          margin-right: 20px;
+          width: 210px;
         }
 
         .goals {
@@ -143,14 +143,14 @@
             border-radius: 6px;
             width: 100%;
             padding: 10px;
+            padding-bottom: 0;
           }
 
           .drop-area.highlight {
-            border-color: rgba(128, 0, 128, 0.2);
+            border-color: #b39ddb78;
           }
 
           .gallery {
-            margin-top: 10px;
             display: flex;
             flex-wrap: wrap;
 
@@ -160,7 +160,9 @@
               border: 1px dashed $darkGreen;
               border-radius: 6px;
               margin-right: 10px;
+              margin-bottom: 10px;
               text-align: center;
+              box-sizing: content-box;
 
               img {
                 width: 14px;
@@ -182,6 +184,7 @@
               width: 80px;
               height: 80px;
               margin-right: 10px;
+              margin-bottom: 10px;
 
               img {
                 object-fit: cover;
@@ -200,13 +203,14 @@
     border-top: 1px solid #d3d3d3;
     background: #f8f8f8;
     height: 57px;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 
     button {
-      color: white;
-      background: $darkGreen;
+      color: #fff;
+      background: #2f5c02;
       margin-right: 20px;
-      margin-top: 15px;
       border: none;
       border-radius: 6px;
       font-size: 10px;

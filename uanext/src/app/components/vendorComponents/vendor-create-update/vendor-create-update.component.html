@@ -3,7 +3,7 @@
   <div class="blocks-container">
     <div class="block">
       <div class="block-name">{{ 'addComment' | translate:self }}</div>
-      <textarea placeholder="{{ 'addCommentPlaceholder' | translate:self }}" rows="4"></textarea>
+      <textarea [(ngModel)]="comment" placeholder="{{ 'addCommentPlaceholder' | translate:self }}" rows="4"></textarea>
     </div>
 
     <div class="block">
@@ -18,7 +18,8 @@
       <div class="block-name">{{ 'uploadMediaFiles' | translate:self }}</div>
       <div class="drop-file-zone">
         <div #dropArea class="drop-area">
-          <!-- <progress #progressBar class="progress-bar" max=100 value=0></progress> -->
+          <mat-progress-bar *ngIf="showProgress" mode="indeterminate">
+          </mat-progress-bar>
           <div #gallery class="gallery">
             <div class="drag-files">
               <img src="../../../../assets/img/download.png" alt="">
@@ -30,6 +31,6 @@
     </div>
   </div>
   <div class="send">
-    <button (click)="send()">{{ 'send' | translate:self }}</button>
+    <button [disabled]="showProgress" (click)="send()">{{ 'send' | translate:self }}</button>
   </div>
 </div>

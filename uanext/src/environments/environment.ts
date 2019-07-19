@@ -29,9 +29,11 @@ export const environment = {
   socialAuthInvestor: '/api/SocialAuth/social-investor',
   socialAuth: '/api/SocialAuth/social-auth',
 
-  vendorProject: '/api/Projects/',
   uploadFiles: '/api/Upload',
+
+  vendorProject: '/api/Projects/',
   filteringProjects: '/api/FilteringProjects',
+  sphereActivity: '/api/SphereActivity',
 
   get3DObject: '/api/Map/Get3DObject',
   post3DObject: '/api/Map/Post3DObject',
@@ -41,9 +43,12 @@ export const environment = {
 
   Notification: '/api/Notification',
 
-  getOrCreateChat: 'api/Conversations/GetOrCreateP2P',
+  getOrCreateChat: '/api/Conversations/GetOrCreateP2P',
+  getAllChats: '/api/Conversations/GetAll',
+  getChatById: '/api/Conversations/GetById',
+  getMessagesByChatId: '/api/Messages/GetByConversationId',
   createMessage: '/api/Messages/CreateMessage',
-  getAllMessages: '/api/Conversations/GetAll'
+  updateMessage: '/api/Messages/UpdateMessage'
 };
 
 /*

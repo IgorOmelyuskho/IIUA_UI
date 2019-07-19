@@ -31,7 +31,7 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   region = 'ALL';
 
-  fieldOfActivity: FieldActivityInterface[] = null;
+  sphereActivities: FieldActivityInterface[] = null;
 
   updateRate: string[] = null;
 
@@ -59,14 +59,14 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   fieldActivityOptions: FieldActivityInterface[];
   updateRateOptions: UpdateRateInterface[];
   regionOptions;
-  fieldOfActivitySubscription: Subscription;
+  sphereActivitiesSubscription: Subscription;
   updateRateSubscription: Subscription;
   regionSubscription: Subscription;
 
   constructor(private translateService: TranslateService) { }
 
   ngOnInit() {
-    this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
+    this.sphereActivitiesSubscription = this.translateService.fieldOfActivityOptions.subscribe(
       (val: FieldActivityInterface[]) => {
         this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
       }
@@ -92,7 +92,7 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initEmployeesSlider();
     this.initAvgCheckSlider();
 
-    this.fieldOfActivity = this.selectedFieldOfActivity();
+    this.sphereActivities = this.selectedFieldOfActivity();
 
     this.filter$
       .pipe(
@@ -172,7 +172,7 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
     for (let i = 0; i < this.fieldActivityOptions.length; i++) {
       if (forReset.value === this.fieldActivityOptions[i].name) {
         this.fieldActivityOptions[i].checked = false;
-        this.fieldOfActivity = this.selectedFieldOfActivity();
+        this.sphereActivities = this.selectedFieldOfActivity();
         this.filterOnChange();
         return;
       }
@@ -184,7 +184,7 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fieldActivityOptions[i].checked = false;
     }
 
-    this.fieldOfActivity = this.selectedFieldOfActivity();
+    this.sphereActivities = this.selectedFieldOfActivity();
     this.filterOnChange();
   }
 
@@ -258,7 +258,7 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fieldActivityOptions[0].checked = this.checkedAllFieldOfActivityOptions();
     }
 
-    this.fieldOfActivity = this.selectedFieldOfActivity();
+    this.sphereActivities = this.selectedFieldOfActivity();
     this.filterOnChange();
   }
 
@@ -483,8 +483,8 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
         filter.region = this.region;
       }
 
-      if (this.fieldOfActivity != null && this.fieldOfActivity.length !== 0) {
-        filter.fieldOfActivity = this.fieldOfActivity;
+      if (this.sphereActivities != null && this.sphereActivities.length !== 0) {
+        filter.sphereActivities = this.sphereActivities;
       }
 
       if (this.updateRate != null && this.updateRate.length !== 0) {
@@ -533,7 +533,7 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.fieldOfActivitySubscription.unsubscribe();
+    this.sphereActivitiesSubscription.unsubscribe();
     this.updateRateSubscription.unsubscribe();
     this.regionSubscription.unsubscribe();
   }

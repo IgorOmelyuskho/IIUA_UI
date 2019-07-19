@@ -230,17 +230,20 @@
         "investmentsMaxLength": "Максимальная длина 1024 символов",
         "address": "Адрес",
         "region": "Регион",
+        "regionPlaceholder": "Выберите регион",
         "regionEmpty": "Регион не может быть пустым",
         "fullAddress": "Полный адрес",
         "fullAddressPlaceholder": "Введите полный адрес",
         "addressEmpty": "Адрес не может быть пустым",
         "aboutCompany": "О компании",
         "employeesNumber": "Количество сотрудников",
+        "employeesNumberPlaceholder": "Выберите количество сотрудников",
         "employeesNumberEmpty": "Укажите количество сотрудников",
-        "employeesHire": "Сотрудники нанимать",
+        "employeesHire": "Сотрудников для найма",
         "employeesHirePlaceholder": "Введите количество сотрудников для найма",
         "employeesHireEmpty": "Укажите количество сотрудников для найма",
         "fieldActivity": "Сфера деятельности",
+        "fieldActivityPlaceholder": "Выберите сферу деятельности",
         "fieldActivityEmpty": "Сфера деятельности не может быть пустой",
         "companyAge": "Возраст компании",
         "companyAgePlaceholder": "Введите возраст компании",
@@ -255,6 +258,7 @@
         "avgPricePlaceholder": "Введите среднюю цену",
         "avgPriceEmpty": "Средняя цена не может быть пустой",
         "grossIncome": "Валовой доход",
+        "grossIncomePlaceholder": "Выберите валовой доход",
         "grossIncomeEmpty": "Укажите валовой доход",
         "investments": "Инвестиции",
         "describeBusiness": "Опишите свой бизнес",
@@ -299,13 +303,17 @@
         "addressLabel": "Адрес",
         "addressEmpty": "Адрес не может быть пустым",
         "region": "Регион",
+        "regionPlaceholder": "Выберите регион",
         "regionEmpty": "Регион не может быть пустым",
         "aboutCompany": "О компании",
         "employeesNumber": "Количество сотрудников",
+        "employeesNumberPlaceholder": "Выберите количество сотрудников",
         "employeesNumberEmpty": "Укажите количество сотрудников",
         "employeesHire": "Сотрудников для найма",
         "employeesHireEmpty": "Укажите количество сотрудников для найма",
         "fieldActivity": "Сфера деятельности",
+        "fieldActivityPlaceholder": "Выберите сферу деятельности",
+        "fieldActivityEmpty": "Сфера деятельности не может быть пустой",
         "companyAge": "Возраст компании",
         "companyAgeEmpty": "Возраст компании не может быть пустым",
         "avgCheck": "Средний чек",
@@ -315,6 +323,7 @@
         "avgPrice": "Средняя цена",
         "avgPriceEmpty": "Средняя цена не может быть пустой",
         "grossIncome": "Валовой доход",
+        "grossIncomePlaceholder": "Выберите валовой доход",
         "grossIncomeEmpty": "Укажите валовой доход",
         "investments": "Инвестиции",
         "businessDescription": "Опишите свой бизнес",
@@ -480,63 +489,6 @@
         "profile": "Профиль",
         "signOut": "Выйти"
     },
-    "fieldOfActivity": [
-        {
-            "id": "0",
-            "name": "Выбрать все",
-            "checked": false
-        },
-        {
-            "id": "1",
-            "name": "Сельское, лесное и рыбное хозяйство",
-            "checked": false
-        },
-        {
-            "id": "2",
-            "name": "Добыча полезных ископаемых",
-            "checked": false
-        },
-        {
-            "id": "3",
-            "name": "Промышленность",
-            "checked": false
-        },
-        {
-            "id": "4",
-            "name": "Поставка электроэнергии, газа, пара и кондиционирование воздуха",
-            "checked": false
-        },
-        {
-            "id": "5",
-            "name": "Водоснабжение; канализация, управление отходами",
-            "checked": false
-        },
-        {
-            "id": "6",
-            "name": "Строительство",
-            "checked": false
-        },
-        {
-            "id": "7",
-            "name": "Оптовая и розничная торговля; ремонт автомобилей и мотоциклов",
-            "checked": false
-        },
-        {
-            "id": "8",
-            "name": "Транспортная, складская, почтовая и курьерская деятельность",
-            "checked": false
-        },
-        {
-            "id": "9",
-            "name": "Временное размещение и организация питания",
-            "checked": false
-        },
-        {
-            "id": "10",
-            "name": "Информация и телекоммуникации",
-            "checked": false
-        }
-    ],
     "updateRateOptions": [
         {
             "id": "0",
@@ -568,103 +520,103 @@
             "text": "Выбрать все"
         },
         {
-            "value": "Автономная Республика Крым",
+            "value": "Autonomous Republic of Crimea",
             "text": "Автономная Республика Крым"
         },
         {
-            "value": "Черкасская область",
+            "value": "Cherkasy oblast",
             "text": "Черкасская область"
         },
         {
-            "value": "Черниговская область",
+            "value": "Chernihiv oblast",
             "text": "Черниговская область"
         },
         {
-            "value": "Черновицкая область",
+            "value": "Chernivtsi oblast",
             "text": "Черновицкая область"
         },
         {
-            "value": "Днепропетровская область",
+            "value": "Dnipropetrovsk oblast",
             "text": "Днепропетровская область"
         },
         {
-            "value": "Донецкая область",
+            "value": "Donetsk oblast",
             "text": "Донецкая область"
         },
         {
-            "value": "Ивано-Франковская область",
+            "value": "Ivano-Frankivsk oblast",
             "text": "Ивано-Франковская область"
         },
         {
-            "value": "Харьковская область",
+            "value": "Kharkiv oblast",
             "text": "Харьковская область"
         },
         {
-            "value": "Херсонская область",
+            "value": "Kherson oblast",
             "text": "Херсонская область"
         },
         {
-            "value": "Хмельницкая область",
+            "value": "Khmelnytsky oblast",
             "text": "Хмельницкая область"
         },
         {
-            "value": "Кировоградская область",
+            "value": "Kirovohrad oblast",
             "text": "Кировоградская область"
         },
         {
-            "value": "Киевская область",
+            "value": "Kyiv oblast",
             "text": "Киевская область"
         },
         {
-            "value": "Луганская область",
+            "value": "Luhansk oblast",
             "text": "Луганская область"
         },
         {
-            "value": "Львовская область",
+            "value": "Lviv oblast",
             "text": "Львовская область"
         },
         {
-            "value": "Николаевская область",
+            "value": "Mykolaiv oblast",
             "text": "Николаевская область"
         },
         {
-            "value": "Одесская область",
+            "value": "Odessa oblast",
             "text": "Одесская область"
         },
         {
-            "value": "Полтавская область",
+            "value": "Poltava oblast",
             "text": "Полтавская область"
         },
         {
-            "value": "Ровенская область",
+            "value": "Rivne oblast",
             "text": "Ровенская область"
         },
         {
-            "value": "Сумская область",
+            "value": "Sumy oblast",
             "text": "Сумская область"
         },
         {
-            "value": "Тернопольская область",
+            "value": "Ternopil oblast",
             "text": "Тернопольская область"
         },
         {
-            "value": "Винницкая область",
+            "value": "Vinnytsia oblast",
             "text": "Винницкая область"
         },
         {
-            "value": "Волынская область",
+            "value": "Volyn oblast",
             "text": "Волынская область"
         },
         {
-            "value": "Закарпатская область",
+            "value": "Zakarpattia oblast",
             "text": "Закарпатская область"
         },
         {
-            "value": "Запорожская область",
+            "value": "Zaporizhzhia oblast",
             "text": "Запорожская область"
         },
         {
-            "value": "Житомирская область",
+            "value": "Zhytomyr oblast",
             "text": "Житомирская область"
         }
     ],
@@ -734,5 +686,9 @@
     },
     "checkEmailShared": "Вы получили сообщение по электронной почте",
     "firstNeedRegister": "Сначала нужно зарегистрироваться как Вендор или как Инвестор",
-    "reallyRemoveAccount": "Действительно удалить аккаунт?"
+    "reallyRemoveAccount": "Действительно удалить аккаунт?",
+    "projectSuccessfullyCreated": "Вы успешно создали проект",
+    "projectNotCreated": "Проект не создан",
+    "projectUpdated": "Проект успешно обновлен",
+    "projectNotUpdated": "Проект не обновлен"
 }

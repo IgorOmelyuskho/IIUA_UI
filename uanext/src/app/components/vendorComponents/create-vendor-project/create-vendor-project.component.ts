@@ -7,6 +7,7 @@ import { ProjectsService } from 'src/app/services/http/projects.service';
 import { FilesService } from 'src/app/services/http/files.service';
 import { FieldActivityInterface, TranslateService } from 'src/app/services/translate.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-vendor-project',
@@ -41,20 +42,21 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     private notify: NotificationService,
     private projectsService: ProjectsService,
     private filesService: FilesService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {
     this.vendorProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
       avatara: ['', Validators.required],
       legalEntityName: ['', Validators.required],
       goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
-      region: ['Kyiv oblast', Validators.required],
+      region: ['', Validators.required],
       address: ['', Validators.required],
-      activities: ['', Validators.required],
+      sphereActivities: ['', Validators.required],
       companyAge: ['', Validators.required],
-      employeesNumber: ['1', Validators.required],
+      employeesNumber: ['', Validators.required],
       employeesToHire: ['', Validators.required],
-      grossIncome: ['100', Validators.required],
+      grossIncome: ['', Validators.required],
       averageCheck: ['', Validators.required],
       mounthlyClients: ['', Validators.required],
       averagePrice: ['', Validators.required],
@@ -69,6 +71,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
     this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
       (val: FieldActivityInterface[]) => {
         this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
@@ -240,29 +243,30 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     newVendorProject.steps = this.vendorProject.steps;
     newVendorProject.videos = this.vendorProject.videos;
     newVendorProject.avatara = this.avataraData;
+    newVendorProject.avatara.isAvatara = true;
     newVendorProject.images = this.vendorProject.images;
+    newVendorProject.images.push(newVendorProject.avatara);
     newVendorProject.files = this.vendorProject.files;
-    const newActivities = [];
-    for (let i = 0; i < newVendorProject.activities.length; i++) {
-      newActivities.push( {
-        // id: parseInt(newVendorProject.activities[i], 10),
-        id: 1,
-        class: '1.1',
-        name: 'TestName1'
-      } );
+    delete newVendorProject.avatara;
+    for (let i = 0; i < newVendorProject.sphereActivities.length; i++) {
+      newVendorProject.sphereActivities[i] = {
+        id: newVendorProject.sphereActivities[i],
+      };
     }
-    newVendorProject.activities = newActivities;
 
     this.showProgressBar = true;
 
     this.projectsService.createVendorProject(newVendorProject).subscribe(
       response => {
         this.showProgressBar = false;
-        this.notify.show(response['data']);
+        this.notify.show(this.translateService.data.projectSuccessfullyCreated);
+        this.router.navigateByUrl('home/vendor/projects');
       },
       err => {
         console.warn(err);
         this.showProgressBar = false;
+        this.notify.show(this.translateService.data.projectNotCreated);
+        this.router.navigateByUrl('home/vendor/projects');
       }
     );
   }

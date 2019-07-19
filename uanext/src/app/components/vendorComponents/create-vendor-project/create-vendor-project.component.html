@@ -7,7 +7,9 @@
     <div class="row">
       <div class="col-6 col-md-4 form-group avatara">
         <div class="avatara-img-wrapper">
-          <img #avatara2 height=100 src={{FormHelper.emptyAvatara}} alt="avatara">
+          <figure>
+            <img #avatara2 height=100 src={{FormHelper.emptyAvatara}} alt="avatara">
+          </figure>
           <mat-progress-bar *ngIf="showAvataraProgress === true" mode="indeterminate"></mat-progress-bar>
         </div>
 
@@ -76,10 +78,9 @@
       <h6 class="col-12">{{ 'address' | translate:self }}</h6>
       <div class="form-group col-lg-4 col-md-6 col-12">
         <label>{{ 'region' | translate:self }}</label>
-        <!-- <input type="text" formControlName="region" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.region.errors }"
-          placeholder="Enter region" /> -->
         <select type="text" formControlName="region" class="form-control"
           [ngClass]="{ 'is-invalid': submitted && formControls.region.errors }">
+          <option value="" selected disabled>{{ 'regionPlaceholder' | translate:self }}</option>
           <ng-container *ngFor="let option of regionOptions; let i = index">
             <option *ngIf="i !== 0" value="{{option.value}}">{{option.text}}</option>
           </ng-container>
@@ -107,6 +108,7 @@
         <label>{{ 'employeesNumber' | translate:self }}</label>
         <select type="number" min=0 formControlName="employeesNumber" class="form-control"
           [ngClass]="{ 'is-invalid': submitted && formControls.employeesNumber.errors }">
+          <option value="" selected disabled>{{ 'employeesNumberPlaceholder' | translate:self }}</option>
           <option value="1">0-1</option>
           <option value="5">2-5</option>
           <option value="10">6-10</option>
@@ -130,14 +132,14 @@
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'fieldActivity' | translate:self }}</label>
-        <mat-select multiple formControlName="activities" class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && formControls.activities.errors }">
+        <mat-select placeholder="{{ 'fieldActivityPlaceholder' | translate:self }}" multiple formControlName="sphereActivities" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && formControls.sphereActivities.errors }">
           <ng-container *ngFor="let option of fieldActivityOptions; let i = index">
             <mat-option *ngIf="i !== 0" value="{{option.id}}">{{option.name}}</mat-option>
           </ng-container>
         </mat-select>
-        <div *ngIf="formControls.activities.errors" class="invalid-feedback">
-          <div *ngIf="formControls.activities.errors.required">{{ 'fieldActivityEmpty' | translate:self }}</div>
+        <div *ngIf="formControls.sphereActivities.errors" class="invalid-feedback">
+          <div *ngIf="formControls.sphereActivities.errors.required">{{ 'fieldActivityEmpty' | translate:self }}</div>
         </div>
       </div>
       <div class="form-group col-lg-3 col-md-6">
@@ -182,8 +184,9 @@
       </div>
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'grossIncome' | translate:self }}</label>
-        <select type="number" min=0 formControlName="grossIncome" class="form-control"
+        <select placeholder="12345" type="number" min=0 formControlName="grossIncome" class="form-control"
           [ngClass]="{ 'is-invalid': submitted && formControls.grossIncome.errors }">
+          <option value="" selected disabled>{{ 'grossIncomePlaceholder' | translate:self }}</option>
           <option value="0">0</option>
           <option value="100">100</option>
         </select>

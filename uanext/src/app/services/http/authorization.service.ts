@@ -103,6 +103,8 @@ export class AuthorizationService {
       return;
     }
 
+    this.translate.getSphereActivityOption();
+
     if (role === UserRole.Vendor) {
       this.profileService.fetchVendor().subscribe(
         vendor => {
@@ -423,6 +425,7 @@ export class AuthorizationService {
 
   successSocialOrEmailLogin(response: any) {
     console.log(response);
+    this.translate.getSphereActivityOption();
 
     localStorage.setItem('token', response.body.token);
     const role: UserRole = this.stateService.role();

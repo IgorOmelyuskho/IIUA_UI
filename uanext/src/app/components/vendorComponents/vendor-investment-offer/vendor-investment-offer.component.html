@@ -12,7 +12,7 @@
       <div class="block">
         <div class="block-name">{{ 'budget' | translate:self }}</div>
         <div class="budget-input-wrapper">
-          <input type="number" class="form-control">
+          <input [(ngModel)]="budget" type="number" class="form-control">
           <div class="grey ml-2">грн</div>
         </div>
       </div>
@@ -39,25 +39,27 @@
 
       <div class="block">
         <div class="block-name">{{ 'shortDescription' | translate:self }}</div>
-        <textarea placeholder="{{ 'shortDescriptionPlaceholder' | translate:self }}" rows="4"></textarea>
+        <textarea [(ngModel)]="shortDescription" placeholder="{{ 'shortDescriptionPlaceholder' | translate:self }}"
+          rows="4"></textarea>
       </div>
 
       <div class="block">
         <div class="block-name">{{ 'detailedDescription' | translate:self }}</div>
-        <textarea placeholder="{{ 'detailedDescriptionPlaceholder' | translate:self }}" rows="4"></textarea>
+        <textarea [(ngModel)]="detailedDescription"
+          placeholder="{{ 'detailedDescriptionPlaceholder' | translate:self }}" rows="4"></textarea>
       </div>
 
       <div class="block">
         <div class="block-name">{{ 'uploadMediaFiles' | translate:self }}</div>
         <div class="drop-file-zone">
           <div #dropArea class="drop-area">
-            <!-- <progress #progressBar class="progress-bar" max=100 value=0></progress> -->
-            <div #gallery class="gallery">
-              <div class="drag-files">
-                <img src="../../../../assets/img/download.png" alt="">
-                <div class="text">{{ 'dragFiles' | translate:self }}</div>
+            <mat-progress-bar *ngIf="showProgress" mode="indeterminate"></mat-progress-bar>
+              <div #gallery class="gallery">
+                <div class="drag-files">
+                  <img src="../../../../assets/img/download.png" alt="">
+                  <div class="text">{{ 'dragFiles' | translate:self }}</div>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

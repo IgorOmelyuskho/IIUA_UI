@@ -33,22 +33,25 @@ export class ViewProjectsService {
 
     if (filter.moneyRequiredFrom == null || filter.moneyRequiredTo == null) {
       filter.moneyRequiredFrom = '0';
-      filter.moneyRequiredTo = '100000000000000';
+      filter.moneyRequiredTo = '100000000';
     }
-    // replace fieldOfActivity to activities
-    if (filter.fieldOfActivity) {
-      filter.activities = filter.fieldOfActivity;
-    }
-    return of(JSON.parse(JSON.stringify(responseProjects)));
-    // return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
-    // .pipe(
-    //   map((response: any) => {
-    //     if (response['data'] == null) {
-    //       return emptyFilteredProjects;
-    //     }
-    //     return response['data'];
-    //   })
-    // );
+
+    // return of(JSON.parse(JSON.stringify(responseProjects)));
+    return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
+      .pipe(
+        map((response: FilteredProjects) => {
+          if (response == null) {
+            return emptyFilteredProjects;
+          }
+          return response;
+        }),
+        map((response: FilteredProjects) => {
+          for (let i = 0; i < response.projectsList.length; i++) {
+            response.projectsList[i].rating = '9.5';
+          }
+          return response;
+        }),
+      );
   }
 
   // searchByProjectName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {

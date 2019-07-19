@@ -58,11 +58,11 @@ export class FilterItemsComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (filterParam.fieldOfActivity && filterParam.fieldOfActivity.length !== 0) {
-      for (let i = 0; i < filterParam.fieldOfActivity.length; i++) {
+    if (filterParam.sphereActivities && filterParam.sphereActivities.length !== 0) {
+      for (let i = 0; i < filterParam.sphereActivities.length; i++) {
         filterItems.push({
-          value: filterParam.fieldOfActivity[i].name,
-          text: filterParam.fieldOfActivity[i].name,
+          value: filterParam.sphereActivities[i].name,
+          text: filterParam.sphereActivities[i].name,
           name: FilterItemsName.FIELD_OF_ACTIVITY
         });
       }

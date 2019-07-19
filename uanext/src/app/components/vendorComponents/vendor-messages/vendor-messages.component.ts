@@ -27,10 +27,10 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   constructor(private chatService: ChatService, private fileService: FilesService, private stateService: StateService) { }
 
   ngOnInit() {
-    this.getAllMessagesSubscribe(this.chatService.getAllMessages(), true);
+    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), true);
   }
 
-  getAllMessagesSubscribe(observable: Observable<Message[]>, initial?: boolean) {
+  getMessagesByChatIdSubscribe(observable: Observable<Message[]>, initial?: boolean) {
     this.messagesLoading = true;
     observable.subscribe(
       (messages: Message[]) => {
@@ -162,7 +162,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onScrollUp() {
-    this.getAllMessagesSubscribe(this.chatService.getAllMessages());
+    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'));
   }
 
   ngOnDestroy() {

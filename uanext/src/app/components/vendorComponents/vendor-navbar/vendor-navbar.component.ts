@@ -116,6 +116,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       err => {
         console.warn(err);
+        this.profileMenuOpen = true;
         this.showProfileProgress = false;
       }
     );

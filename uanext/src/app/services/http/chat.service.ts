@@ -19,6 +19,14 @@ export class ChatService {
     return this.http.get<any>(environment.chat + environment.getOrCreateChat + userId);
   }
 
+  getAllChats(): Observable<GetOrCreateChatResponse[]> { // all chats for current user (token)
+    return this.http.get<any>(environment.chat + environment.getAllChats);
+  }
+
+  getChatById(chatId: string): Observable<GetOrCreateChatResponse> {
+    return this.http.get<any>(environment.chat + environment.getChatById + '/' + chatId);
+  }
+
   createMessage(message: Message): Observable<Message> {
     // return this.http.post<any>(environment.chat + environment.createMessage, message);
     return of({ ...message })
@@ -31,8 +39,12 @@ export class ChatService {
       );
   }
 
-  getAllMessages(): Observable<Message[]> {
-    // return this.http.post<any>(environment.chat + environment.getAllMessages, message);
+  updateMessage(messageId: string, updatedMessage: Message): Observable<any> {
+    return this.http.put<any>(environment.chat + environment.updateMessage + '/' + messageId, updatedMessage);
+  }
+
+  getMessagesByChatId(chatId: string): Observable<Message[]> {
+    // return this.http.get<any>(environment.chat + environment.getMessagesByChatId + '/' + chatId);
     this.counter += 1;
     return of(JSON.parse(JSON.stringify([testMessagePhoto, testMessageFile, testMessageVideo, testMessageFile, testMessagePhoto])))
       .pipe(
