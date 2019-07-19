@@ -218,7 +218,6 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   }
 
   setFormValues(): void {
-    console.log(this.vendorProject.region);
     const selectedActivities = [];
     for (let i = 0; i < this.vendorProject.sphereActivities.length; i++) {
       selectedActivities.push(this.vendorProject.sphereActivities[i].id.toString());
@@ -310,10 +309,27 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     updatedVendorProject.images = this.vendorProject.images;
     updatedVendorProject.images.push(updatedVendorProject.avatara);
     updatedVendorProject.files = this.vendorProject.files;
-    for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) {
-      updatedVendorProject.sphereActivities[i] = {
-        id: updatedVendorProject.sphereActivities[i]
-      };
+    delete updatedVendorProject.avatara;
+
+    delete updatedVendorProject['forFiles'];
+    delete updatedVendorProject['forPhotos'];
+    delete updatedVendorProject['forSteps'];
+    delete updatedVendorProject['forVideos'];
+    // for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) { // todo uncomment
+    //   updatedVendorProject.sphereActivities[i] = {
+    //     id: updatedVendorProject.sphereActivities[i]
+    //   };
+    // }
+    updatedVendorProject.sphereActivities = [
+      {
+        id: 1,
+        name: 'TestName1',
+        class: '1.1'
+      }
+    ];
+
+    for (let i = 0; i < updatedVendorProject.steps.length; i++) {
+      delete updatedVendorProject.steps[i].id;
     }
 
     this.showProgressBar = true;

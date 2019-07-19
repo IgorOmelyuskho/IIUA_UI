@@ -7,6 +7,7 @@ import { ProjectsService } from 'src/app/services/http/projects.service';
 import { FilesService } from 'src/app/services/http/files.service';
 import { FieldActivityInterface, TranslateService } from 'src/app/services/translate.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-vendor-project',
@@ -41,7 +42,8 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     private notify: NotificationService,
     private projectsService: ProjectsService,
     private filesService: FilesService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {
     this.vendorProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -69,6 +71,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
     this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
       (val: FieldActivityInterface[]) => {
         this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
@@ -244,6 +247,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     newVendorProject.images = this.vendorProject.images;
     newVendorProject.images.push(newVendorProject.avatara);
     newVendorProject.files = this.vendorProject.files;
+    delete newVendorProject.avatara;
     for (let i = 0; i < newVendorProject.sphereActivities.length; i++) {
       newVendorProject.sphereActivities[i] = {
         id: newVendorProject.sphereActivities[i],
@@ -256,11 +260,13 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
       response => {
         this.showProgressBar = false;
         this.notify.show(this.translateService.data.projectSuccessfullyCreated);
+        this.router.navigateByUrl('home/vendor/projects');
       },
       err => {
         console.warn(err);
         this.showProgressBar = false;
         this.notify.show(this.translateService.data.projectNotCreated);
+        this.router.navigateByUrl('home/vendor/projects');
       }
     );
   }

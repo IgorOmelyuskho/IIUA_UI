@@ -50,7 +50,6 @@ export class VendorProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   getAvataraUrl(project) {
-    console.log(project);
     const url = project.avatara.url;
     return 'url("' + url + '")';
   }

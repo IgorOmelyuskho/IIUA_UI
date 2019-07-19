@@ -67,6 +67,8 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { UserAgreementComponent } from './user-agreement/user-agreement.component';
 import { VendorProjectCardComponent } from './vendorComponents/vendor-project-card/vendor-project-card.component';
 import { RotatingLoadIndicatorComponent } from './rotating-load-indicator/rotating-load-indicator.component';
+import { VendorProjectMinCardComponent } from './vendor-project-min-card/vendor-project-min-card.component';
+import { InvestorCardComponent } from './investor-card/investor-card.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -132,7 +134,9 @@ export {
   PrivacyPolicyComponent,
   UserAgreementComponent,
   VendorProjectCardComponent,
-  RotatingLoadIndicatorComponent
+  RotatingLoadIndicatorComponent,
+  VendorProjectMinCardComponent,
+  InvestorCardComponent
 };
 
 export const components = [
@@ -198,7 +202,9 @@ export const components = [
   PrivacyPolicyComponent,
   UserAgreementComponent,
   VendorProjectCardComponent,
-  RotatingLoadIndicatorComponent
+  RotatingLoadIndicatorComponent,
+  VendorProjectMinCardComponent,
+  InvestorCardComponent
 ];
 
 
