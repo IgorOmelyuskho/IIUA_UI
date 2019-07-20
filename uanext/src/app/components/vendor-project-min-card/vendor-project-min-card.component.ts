@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { VendorProject } from 'src/app/models/vendorProject';
 
 @Component({
   selector: 'app-vendor-project-min-card',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vendor-project-min-card.component.scss']
 })
 export class VendorProjectMinCardComponent implements OnInit {
+  @Input() project: VendorProject;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  getAvataraUrl(project) {
+    const url = project.avatara.url;
+    return 'url("' + url + '")';
   }
 
 }

@@ -1,28 +1,5 @@
 <div class="last-activity">
-  <div *ngFor="let project of projects" class="project-wrapper">
-    <div class="project">
-      <div class="red-circle"></div>
-      <div class="avatara-wrapper">
-        <div class="avatara" [ngStyle]="{ 'background-image': getAvataraUrl(project) }"></div>
-      </div>
-      <div class="info">
-        <div class="project-name">{{project.name}}</div>
-        <div class="region">
-          <i class="fa fa-map-marker mr-1" aria-hidden="true"></i>
-          <span class="region">{{project.region}}</span>
-        </div>
-        <div class="field-activity">
-          <div class="d-flex">
-            <img class="flame" src="../../../../assets/img/squares.png" alt="">
-            <div class="max-width">{{project.fieldOfActivity}}</div>
-          </div>
-          <div class="d-flex">
-            <img class="right-img" src="../../../../assets/img/car.png" alt="">
-            <img class="right-img" src="../../../../assets/img/s-city.png" alt="">
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
+  <div *ngFor="let project of projects">
+    <app-vendor-project-min-card [project]="project"></app-vendor-project-min-card>
   </div>
 </div>

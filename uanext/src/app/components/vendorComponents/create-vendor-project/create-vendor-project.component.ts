@@ -255,7 +255,6 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     }
 
     this.showProgressBar = true;
-
     this.projectsService.createVendorProject(newVendorProject).subscribe(
       response => {
         this.showProgressBar = false;

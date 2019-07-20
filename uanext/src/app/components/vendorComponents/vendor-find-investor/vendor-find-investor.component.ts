@@ -12,13 +12,6 @@ export class VendorFindInvestorComponent implements OnInit {
   selected = 'all'; // investor/vendor
 
   constructor() {
-    for (let i = 0; i < this.projects.length; i++) {
-      if (i % 2 === 0) {
-        this.projects[i].owner = 'Investor';
-      } else {
-        this.projects[i].owner = 'Vendor';
-      }
-    }
   }
 
   ngOnInit() {
