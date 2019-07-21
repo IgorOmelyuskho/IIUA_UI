@@ -1,16 +1,28 @@
 @import '../../../../styles-variables.scss';
 
-.projects {
-  display: flex;
-  flex-wrap: wrap;
-  .project {
-    margin: 10px 10px 10px 0;
-    border: 1px solid rgba(0, 0, 0, .125);
-    border-radius: 6px;
-    overflow: hidden;
+.wrapper {
+  text-align: center;
 
-    &:hover {
-      box-shadow: 0 0 0 0.2rem rgba($green, 0.25);
+  .projects {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+
+    .project {
+      margin: 10px 10px 10px 0;
+      border: 1px solid rgba(0, 0, 0, .125);
+      border-radius: 6px;
+      overflow: hidden;
+
+      &:last-child {
+        background-color: lime;
+      }
+
+      &:hover {
+        box-shadow: 0 0 0 0.2rem rgba($green, 0.25);
+      }
     }
   }
+
 }

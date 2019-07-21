@@ -1,36 +1,38 @@
 <div class="create-update">
   <div class="header">{{ 'createUpdate' | translate:self }}</div>
-  <div class="blocks-container">
-    <div class="block">
-      <div class="block-name">{{ 'addComment' | translate:self }}</div>
-      <textarea [(ngModel)]="comment" placeholder="{{ 'addCommentPlaceholder' | translate:self }}" rows="4"></textarea>
-    </div>
-
-    <div class="block">
-      <div class="block-name">{{ 'tieToGoal' | translate:self }}</div>
-      <div class="goals">
-        <div [ngClass]="{'selected-goal': step.selected}" (click)="tieToStep(step)" *ngFor="let step of projectSteps"
-          class="goal">{{step.data}}</div>
+  <div *ngIf="project == null" class="select-project">SELECT PROJECT</div>
+  <div *ngIf="project != null">
+    <div class="blocks-container">
+      <div class="block">
+        <div class="block-name">{{ 'addComment' | translate:self }}</div>
+        <textarea [(ngModel)]="comment" placeholder="{{ 'addCommentPlaceholder' | translate:self }}" rows="4"></textarea>
       </div>
-    </div>
 
-    <div class="block">
-      <div class="block-name">{{ 'uploadMediaFiles' | translate:self }}</div>
-      <div class="drop-file-zone">
-        <div #dropArea class="drop-area">
-          <mat-progress-bar *ngIf="showProgress" mode="indeterminate">
-          </mat-progress-bar>
-          <div #gallery class="gallery">
-            <div class="drag-files">
-              <img src="../../../../assets/img/download.png" alt="">
-              <div class="text">{{ 'dragFiles' | translate:self }}</div>
+      <div class="block">
+        <div class="block-name">{{ 'tieToGoal' | translate:self }}</div>
+        <div class="goals">
+          <div [ngClass]="{'selected-goal': step.selected}" (click)="tieToStep(step)" *ngFor="let step of projectSteps"class="goal">{{step.data}}</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-name">{{ 'uploadMediaFiles' | translate:self }}</div>
+        <div class="drop-file-zone">
+          <div #dropArea class="drop-area">
+            <mat-progress-bar *ngIf="showProgress" mode="indeterminate">
+            </mat-progress-bar>
+            <div #gallery class="gallery">
+              <div class="drag-files">
+                <img src="../../../../assets/img/download.png" alt="">
+                <div class="text">{{ 'dragFiles' | translate:self }}</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="send">
-    <button [disabled]="showProgress" (click)="send()">{{ 'send' | translate:self }}</button>
+    <div class="send">
+      <button [disabled]="showProgress" (click)="send()">{{ 'send' | translate:self }}</button>
+    </div>
   </div>
 </div>

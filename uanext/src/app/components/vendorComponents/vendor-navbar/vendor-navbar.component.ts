@@ -5,6 +5,8 @@ import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from '../../../helperClasses/projects';
 import { TranslateService } from 'src/app/services/translate.service';
 import { ProjectsService } from 'src/app/services/http/projects.service';
+import { StateService } from 'src/app/services/state/state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-vendor-navbar',
@@ -24,6 +26,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   projects: VendorProject[];
 
   profileSelectedProject: VendorProject;
+  selectedProjectSubscription: Subscription;
   profileMenuOpen = false;
   showProfileProgress = false;
 
@@ -31,12 +34,22 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private authService: AuthorizationService,
     public translateService: TranslateService,
-    private projectsService: ProjectsService
+    private projectsService: ProjectsService,
+    private stateService: StateService
   ) { }
 
   ngOnInit() {
     this.initMenu();
     this.mq.addListener(this.matchMediaHandler);
+
+    this.selectedProjectSubscription = this.stateService.selectedVendorProject$.subscribe(
+      (val: VendorProject) => {
+        this.profileSelectedProject = val;
+      },
+      err => {
+        console.warn(err);
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -98,7 +111,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   changeProject(project: VendorProject) {
-    this.profileSelectedProject = project;
+    this.stateService.selectedVendorProject$.next(project);
   }
 
   openProfileMenu() {
@@ -133,5 +146,6 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.mq.removeListener(this.matchMediaHandler);
+    this.selectedProjectSubscription.unsubscribe();
   }
 }

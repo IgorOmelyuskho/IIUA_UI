@@ -19,7 +19,9 @@ export class StateService {
   private helper = new JwtHelperService();
   user$: BehaviorSubject<VendorRole | InvestorRole | AdminRole | ProjectUserRole> = new BehaviorSubject(null);
   authorized$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   interactiveInvestmentProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
+  selectedVendorProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
 
   constructor(private notify: NotificationService, private router: Router, private socialAuthService: AuthService) { }
 
