@@ -23,6 +23,8 @@ export class StateService {
   interactiveInvestmentProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
   selectedVendorProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
 
+  cardClickEnabled = true;
+
   constructor(private notify: NotificationService, private router: Router, private socialAuthService: AuthService) { }
 
   /**

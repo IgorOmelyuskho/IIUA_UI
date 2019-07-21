@@ -3,9 +3,11 @@
 <div class="wrapper">
   <button class="btn btn-success mt-3" (click)="createNewProject()">{{ 'newProject' | translate:self }}</button>
 
-  <div *ngIf="projects?.length !== 0 && isLoaded === true" class="projects">
-    <div *ngFor="let project of projects" class="project">
-      <app-vendor-project-card (clickOnCardEvent)="onCardClick($event)" [project]="project"></app-vendor-project-card>
+  <div class="for-scroll">
+    <div *ngIf="projects?.length !== 0 && isLoaded === true" id="projects-1-for-muuri">
+      <div *ngFor="let project of projects" class="project" [attr.data-id]="project.id">
+        <app-vendor-project-card (clickOnCardEvent)="onCardClick($event)" [project]="project"></app-vendor-project-card>
+      </div>
     </div>
   </div>
 

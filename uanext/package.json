@@ -30,6 +30,7 @@
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "maptalks": "^0.43.0",
+    "muuri": "^0.8.0",
     "ngx-gallery": "^5.9.1",
     "ngx-infinite-scroll": "^7.1.0",
     "ngx-sortable": "^1.0.1",
