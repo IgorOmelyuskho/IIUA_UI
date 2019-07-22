@@ -409,15 +409,23 @@
         }
       }
 
-      .input-text {
+      .textarea-wrapper {
         border-radius: 20px;
         border: solid 1px #000000;
         margin-left: 20px;
         margin-right: 20px;
-        width: 100%;
         padding: 6px;
         padding-left: 15px;
         padding-right: 15px;
+        width: 100%;
+        display: flex;
+      }
+
+      textarea {
+        width: 100%;
+        resize: none;
+        max-height: 250px;
+        border: none;
       }
 
       .send {

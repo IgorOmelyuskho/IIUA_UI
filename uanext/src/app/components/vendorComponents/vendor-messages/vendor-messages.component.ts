@@ -5,6 +5,7 @@ import { FilesService } from 'src/app/services/http/files.service';
 import { StateService } from 'src/app/services/state/state.service';
 import { Observable, Subscription } from 'rxjs';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
+import * as autosize from 'autosize';
 
 @Component({
   selector: 'app-vendor-messages',
@@ -28,6 +29,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit() {
     this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), true);
+    autosize(document.querySelector('.bottom-wrapper .textarea-wrapper textarea'));
   }
 
   getMessagesByChatIdSubscribe(observable: Observable<Message[]>, initial?: boolean) {
@@ -166,5 +168,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnDestroy() {
+    autosize.destroy(document.querySelector('.bottom-wrapper .textarea-wrapper textarea'));
   }
 }

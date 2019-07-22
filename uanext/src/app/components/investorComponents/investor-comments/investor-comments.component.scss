@@ -4,15 +4,26 @@
   .send-comment {
     display: flex;
     justify-content: space-between;
-    height: 32px;
+    align-items: flex-end;
+    min-height: 32px;
     margin-top: 16px;
     margin-bottom: 16px;
 
-    input {
+    .textarea-wrapper {
       width: 100%;
       border-radius: 6px;
       border: solid 1px #dbdbdb;
       padding-left: 8px;
+      padding-right: 8px;
+      display: flex;
+      min-height: 32px;
+
+      textarea {
+        width: 100%;
+        resize: none;
+        max-height: 250px;
+        border: none;
+      }
     }
 
     button {
@@ -25,7 +36,8 @@
       font-weight: 600;
       letter-spacing: 1.2px;
       cursor: pointer;
-      min-width: 100px
+      min-width: 100px;
+      min-height: 32px;
     }
   }
 
@@ -75,15 +87,26 @@
           .answer {
             display: flex;
             justify-content: space-between;
-            height: 32px;
+            align-items: flex-end;
+            min-height: 32px;
             margin-top: 16px;
             margin-bottom: 16px;
 
-            input {
+            .textarea-wrapper {
               width: 100%;
               border-radius: 6px;
               border: solid 1px #dbdbdb;
               padding-left: 8px;
+              padding-right: 8px;
+              display: flex;
+              min-height: 32px;
+
+              textarea {
+                width: 100%;
+                resize: none;
+                max-height: 250px;
+                border: none;
+              }
             }
 
             button {
@@ -97,6 +120,7 @@
               letter-spacing: 1.2px;
               cursor: pointer;
               min-width: 100px;
+              min-height: 32px;
             }
           }
         }
