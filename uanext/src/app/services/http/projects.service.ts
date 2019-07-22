@@ -50,6 +50,9 @@ export class ProjectsService {
           }
           return response;
         }),
+        map((response: VendorProject[]) => { // todo remove
+          return this.addAvatara(response);
+        }),
       );
 
     // todo remove
@@ -97,5 +100,18 @@ export class ProjectsService {
 
   postSphereActivity(sphereActivity): Observable<any> {
     return this.http.post<any>(environment.projects + environment.sphereActivity, sphereActivity);
+  }
+
+  addAvatara(projects: VendorProject[]): VendorProject[] {
+    for (let i = 0; i < projects.length; i++) {
+      if (projects[i].avatara == null) {
+        projects[i].avatara = {
+          id: 1,
+          url: 'https://www.eguardtech.com/wp-content/uploads/2018/08/Network-Profile.png',
+          originalName: 'Network-Profile.png'
+        };
+      }
+    }
+    return projects;
   }
 }

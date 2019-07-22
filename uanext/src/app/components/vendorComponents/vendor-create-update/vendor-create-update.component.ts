@@ -1,14 +1,17 @@
-import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { FilesService } from 'src/app/services/http/files.service';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
+import { StateService } from 'src/app/services/state/state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-vendor-create-update',
   templateUrl: './vendor-create-update.component.html',
   styleUrls: ['./vendor-create-update.component.scss']
 })
-export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
+export class VendorCreateUpdateComponent implements OnInit, AfterViewInit, OnDestroy {
+
   @Input()
   set selectedProject(project: VendorProject) {
     if (project != null) {
@@ -24,15 +27,31 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
   @ViewChild('gallery') gallery: ElementRef;
   filesForUploadCount = 0;
   uploadedFilesArr: FileResponseDto[] = [];
+  project: VendorProject;
   projectSteps: any[] = [];
   tieSteps: any[] = [];
   self = 'VendorCreateUpdateComponent';
   showProgress = false;
   comment: string;
+  selectedProjectSubscription: Subscription;
 
-  constructor(private filesService: FilesService) { }
+  constructor(private filesService: FilesService, private stateService: StateService) { }
 
   ngOnInit() {
+    this.selectedProjectSubscription = this.stateService.selectedVendorProject$.subscribe(
+      (val: VendorProject) => {
+        if (val !== null) {
+          this.project = val;
+          this.projectSteps = [...this.project.steps];
+          for (let i = 0; i < this.projectSteps.length; i++) {
+            this.projectSteps[i].selected = false;
+          }
+        }
+      },
+      err => {
+        console.warn(err);
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -176,5 +195,9 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < elementsForRemove.length; i++) {
       elementsForRemove[i].parentNode.removeChild(elementsForRemove[i]);
     }
+  }
+
+  ngOnDestroy() {
+    this.selectedProjectSubscription.unsubscribe();
   }
 }

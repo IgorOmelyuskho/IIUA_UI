@@ -1,6 +1,8 @@
 <div class="comments">
   <div class="send-comment">
-    <input type="text" placeholder="{{ 'leaveComment' | translate:self }}">
+    <div class="textarea-wrapper">
+      <textarea rows="1" placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
+    </div>
     <button type="button">{{ 'send' | translate:self}}</button>
   </div>
 
@@ -21,7 +23,9 @@
           </div>
           <div class="text">{{comment.text}}</div>
           <div class="answer">
-            <input type="text" placeholder="{{ 'leaveComment' | translate:self }}">
+            <div class="textarea-wrapper">
+              <textarea rows="1" placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
+            </div>
             <button type="button">{{ 'replyBtn' | translate:self}}</button>
           </div>
         </div>

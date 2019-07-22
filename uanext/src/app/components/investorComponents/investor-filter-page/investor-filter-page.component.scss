@@ -2,12 +2,15 @@
 
 .bg-color {
   background: #fafafa;
+  height: calc(100vh - 62px);
 }
 
 .left-col {
   .search-by-name {
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
     border-radius: 6px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
     button {
       background: $green;
@@ -15,20 +18,32 @@
     }
   }
 
-  .projects {
-    max-height: 1500px;
-    overflow: auto;
+  .row-height {
+    height: calc(100% - 60px);
+  }
 
-    .project-wrapper {
-      margin: 0px 10px 10px 0;
-      border-radius: 7px;
-      border: solid 1px #bfbfbf;
-      overflow: hidden;
+  .projects-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .projects {
+      overflow: auto;
+
+      .project-wrapper {
+        margin: 0px 5px 10px 0;
+        border-radius: 7px;
+        border: solid 1px #bfbfbf;
+        overflow: hidden;
+      }
     }
   }
 }
 
 .right-col {
+  height: calc(100vh - 62px);
+  overflow: auto;
+
   .map-wrapper {
     height: 400px;
     width: 100%;
@@ -37,7 +52,7 @@
   .detail-project-info {
     .project-info-menu {
       border-bottom: 2px solid $green;
-      margin-top: 20px;
+      padding-top: 20px;
 
       button {
         font-size: 18px;
@@ -66,8 +81,8 @@
       .iiua {
         font-size: 30px;
         color: $green;
-        margin-top: 70px;
-        margin-bottom: 10px;
+        padding-top: 70px;
+        padding-bottom: 10px;
         font-weight: bold;
       }
 

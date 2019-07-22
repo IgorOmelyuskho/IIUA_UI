@@ -18,11 +18,14 @@
         <span class="region">{{project.region}}</span>
       </div>
     </div>
-    <div class="d-flex justify-content-between">
-      <h5>$ {{project.moneyRequired}}</h5>
+    <div class="money-and-sphere">
+      <h5><span>$ </span>{{project.moneyRequired}}</h5>
       <div class="field-activity">
         <img src="../../../assets/img/squares.png" alt="">
-        <div>{{project.sphereActivities[0].name}}</div>
+        <div class="field-activity-text">
+          {{project.sphereActivities[0].name}}
+          <span *ngIf="project.sphereActivities.length > 1">+{{project.sphereActivities.length - 1}}</span>
+        </div>
       </div>
     </div>
     <hr>

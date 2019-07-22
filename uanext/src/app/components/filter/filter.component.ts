@@ -469,8 +469,8 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
     try { // todo
       if (
-        this.budgetFromElement.value !== '' && // todo remove ?
-        this.budgetToElement.value !== '' && // todo remove ?
+        this.budgetFromElement.value !== '' &&
+        this.budgetToElement.value !== '' &&
         !(this.budgetFromElement.value === this.budgetMin.toString() &&
           this.budgetToElement.value === this.budgetMax.toString()
         )

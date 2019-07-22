@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-email-validate',
@@ -22,10 +23,12 @@ export class EmailValidateComponent implements OnInit, AfterViewInit {
   }
 
   confirmEmail() {
-    setTimeout(() => {
-      const urlArr = window.location.href.split('/');
-      this.code = urlArr[urlArr.length - 1];
-      this.authService.emailValidate(this.code).subscribe(
+    const urlArr = window.location.href.split('/');
+    this.code = urlArr[urlArr.length - 1];
+    this.authService.emailValidate(this.code).pipe(
+      delay(5000)
+    )
+      .subscribe(
         val => {
           this.emailBeingVerified = false;
           if (val.mailIsVerified === true) {
@@ -39,7 +42,6 @@ export class EmailValidateComponent implements OnInit, AfterViewInit {
           this.emailBeingVerified = false;
         }
       );
-    }, 5000);
   }
 
 }

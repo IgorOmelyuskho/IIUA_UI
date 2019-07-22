@@ -87,16 +87,34 @@
       }
     }
 
-    .field-activity {
+    .money-and-sphere {
       display: flex;
-      font-size: 15px;
-      letter-spacing: 0.5px;
+      justify-content: space-between;
 
-      img {
-        position: relative;
-        top: 6px;
-        margin-right: 10px;
-        height: 12px;
+      h5 {
+        margin: 0;
+        line-height: 1.8;
+      }
+
+      .field-activity {
+        display: flex;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+
+        img {
+          position: relative;
+          top: 6px;
+          margin-right: 10px;
+          height: 12px;
+        }
+
+        .field-activity-text {
+
+          span {
+            color: $green;
+            font-weight: bold;
+          }
+        }
       }
     }
 
@@ -111,7 +129,7 @@
 
   .company-name {
     font-size: 12px;
-    line-height: 1.33;
+    line-height: 2.1;
     letter-spacing: 0.4px;
   }
 

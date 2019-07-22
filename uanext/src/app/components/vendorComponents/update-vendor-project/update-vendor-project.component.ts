@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ProjectsService } from 'src/app/services/http/projects.service';
@@ -43,7 +43,8 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     private projectsService: ProjectsService,
     private activateRoute: ActivatedRoute,
     private filesService: FilesService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {
     this.vendorProjectForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -310,40 +311,25 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     updatedVendorProject.images.push(updatedVendorProject.avatara);
     updatedVendorProject.files = this.vendorProject.files;
     delete updatedVendorProject.avatara;
-
-    delete updatedVendorProject['forFiles'];
-    delete updatedVendorProject['forPhotos'];
-    delete updatedVendorProject['forSteps'];
-    delete updatedVendorProject['forVideos'];
-    // for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) { // todo uncomment
-    //   updatedVendorProject.sphereActivities[i] = {
-    //     id: updatedVendorProject.sphereActivities[i]
-    //   };
-    // }
-    updatedVendorProject.sphereActivities = [
-      {
-        id: 1,
-        name: 'TestName1',
-        class: '1.1'
-      }
-    ];
-
-    for (let i = 0; i < updatedVendorProject.steps.length; i++) {
-      delete updatedVendorProject.steps[i].id;
+    for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) {
+      updatedVendorProject.sphereActivities[i] = {
+        id: updatedVendorProject.sphereActivities[i]
+      };
     }
 
     this.showProgressBar = true;
-
     this.projectsService.updateVendorProject(this.vendorProject.id, updatedVendorProject)
       .subscribe(
         response => {
           this.showProgressBar = false;
           this.notify.show(this.translateService.data.projectUpdated);
+          this.router.navigateByUrl('home/vendor/projects');
         },
         err => {
           console.warn(err);
           this.showProgressBar = false;
           this.notify.show(this.translateService.data.projectNotUpdated);
+          this.router.navigateByUrl('home/vendor/projects');
         }
       );
   }

@@ -9,8 +9,6 @@ import { responseProject2 } from 'src/app/helperClasses/projects';
 })
 export class VendorMainScreenRightComponent implements OnInit, OnDestroy {
   @ViewChild('mainScreenRight') rightBlock: ElementRef;
-
-  selectedProject: VendorProject = responseProject2;
   find_investor_show = false;
   messages_show = false;
   investment_offer_show = false;

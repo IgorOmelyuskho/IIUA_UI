@@ -120,6 +120,10 @@
 
       h5 {
         margin: 0;
+
+        span {
+          color: $green;
+        }
       }
 
       .field-activity {
@@ -135,10 +139,12 @@
         }
 
         .field-activity-text {
-          white-space: nowrap;
-          overflow: hidden;
           padding: 5px;
-          text-overflow: ellipsis;
+
+          span {
+            color: $green;
+            font-weight: bold;
+          }
         }
       }
     }
