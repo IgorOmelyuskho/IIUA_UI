@@ -48,6 +48,9 @@ export class ViewProjectsService {
           }
           return response;
         }),
+        map((response: FilteredProjects) => { // todo remove
+          return this.addAvatara(response);
+        }),
       );
   }
 
@@ -100,7 +103,10 @@ export class ViewProjectsService {
             return emptyFilteredProjects;
           }
           return response['data'];
-        })
+        }),
+        map((response: FilteredProjects) => { // todo remove
+          return this.addAvatara(response);
+        }),
       );
   }
 
@@ -128,6 +134,19 @@ export class ViewProjectsService {
         });
     }
     return filter;
+  }
+
+  addAvatara(filteredProjects: FilteredProjects): FilteredProjects {
+    for (let i = 0; i < filteredProjects.projectsList.length; i++) {
+      if (filteredProjects.projectsList[i].avatara == null) {
+        filteredProjects.projectsList[i].avatara = {
+          id: 1,
+          url: 'https://www.eguardtech.com/wp-content/uploads/2018/08/Network-Profile.png',
+          originalName: 'Network-Profile.png'
+        };
+      }
+    }
+    return filteredProjects;
   }
 
 }

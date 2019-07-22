@@ -32,7 +32,7 @@
     }
 
     .info {
-      width: 100%;
+      width: calc(100% - 65px); // avatara-wrapper width
       display: flex;
       flex-direction: column;
       justify-content: space-around;
@@ -47,6 +47,13 @@
           color: $darkGreen;
           line-height: 1;
           cursor: pointer;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          &:hover {
+            transform: scale(1.05);
+          }
         }
 
         .date {
@@ -60,6 +67,9 @@
       .company-name {
         font-size: 10px;
         font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .bottom-info {
@@ -100,7 +110,6 @@
     line-height: 1.33;
     letter-spacing: 0.3px;
     overflow: hidden;
-    height: 80px;
     padding: 5px;
   }
 
@@ -109,7 +118,7 @@
     display: flex;
     max-height: 32px;
     overflow: hidden;
-
+    padding-left: 5px;
 
     figure {
       min-width: 32px;
@@ -151,7 +160,6 @@
       font-size: 11px;
       border-radius: 6px;
       cursor: pointer;
-      min-width: 80px;
     }
 
     button.approve {
@@ -173,7 +181,6 @@
 
       &:focus {
         border-color: #ee3949 !important;
-        box-shadow: 0 0 0 0.2rem rgba(245, 39, 62, 0.25) !important;
         outline: none !important;
       }
     }
