@@ -112,6 +112,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   changeProject(project: VendorProject) {
     this.stateService.selectedVendorProject$.next(project);
+    this.profileMenuOpen = false;
   }
 
   openProfileMenu() {

@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { TranslateService } from 'src/app/services/translate.service';
 import { FilesService } from 'src/app/services/http/files.service';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-vendor-investment-offer',
@@ -12,17 +13,8 @@ import { FileResponseDto } from 'src/app/models/fileResponseDto';
   styleUrls: ['./vendor-investment-offer.component.scss']
 })
 export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input()
-  set selectedProject(project: VendorProject) {
-    if (project != null) {
-      this.projectSteps = [...project.steps];
-
-      for (let i = 0; i < this.projectSteps.length; i++) {
-        this.projectSteps[i].selected = false;
-      }
-    }
-  }
-
+  project: VendorProject;
+  selectedProjectSubscription: Subscription;
   @ViewChild('dropArea') dropArea: ElementRef;
   @ViewChild('gallery') gallery: ElementRef;
   self = 'VendorInvestmentOfferComponent';
@@ -39,13 +31,27 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit, On
   showProgress = false;
   uploadedFilesArr: FileResponseDto[] = [];
 
-
-  constructor(private translateService: TranslateService, private filesService: FilesService) { }
+  constructor(private translateService: TranslateService, private filesService: FilesService, private stateService: StateService) { }
 
   ngOnInit() {
     this.regionSubscription = this.translateService.region.subscribe(
       val => {
         this.regionOptions = JSON.parse(JSON.stringify(val));
+      }
+    );
+
+    this.selectedProjectSubscription = this.stateService.selectedVendorProject$.subscribe(
+      (val: VendorProject) => {
+        if (val !== null) {
+          this.project = val;
+          this.projectSteps = [...this.project.steps];
+          for (let i = 0; i < this.projectSteps.length; i++) {
+            this.projectSteps[i].selected = false;
+          }
+        }
+      },
+      err => {
+        console.warn(err);
       }
     );
   }
@@ -210,6 +216,7 @@ export class VendorInvestmentOfferComponent implements OnInit, AfterViewInit, On
 
   ngOnDestroy() {
     this.regionSubscription.unsubscribe();
+    this.selectedProjectSubscription.unsubscribe();
   }
 }
 
