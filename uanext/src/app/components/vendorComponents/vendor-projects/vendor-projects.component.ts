@@ -49,7 +49,8 @@ export class VendorProjectsComponent implements OnInit {
       this.stateService.cardClickEnabled = false;
     });
 
-    const layout = window.localStorage.getItem('layout-1');
+    const userId = this.stateService.userId();
+    const layout = window.localStorage.getItem(userId);
     if (layout) {
       this.loadLayout(grid, layout);
     } else {
@@ -66,8 +67,9 @@ export class VendorProjectsComponent implements OnInit {
   }
 
   saveLayout(grid) {
+    const userId = this.stateService.userId();
     const layout = this.serializeLayout(grid);
-    window.localStorage.setItem('layout-1', layout);
+    window.localStorage.setItem(userId, layout);
   }
 
   loadLayout(grid, serializedLayout) {

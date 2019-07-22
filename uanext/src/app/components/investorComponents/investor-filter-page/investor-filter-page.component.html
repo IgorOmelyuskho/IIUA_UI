@@ -10,9 +10,9 @@
 
   <div class="row bg-color">
     <!-- main -->
-    <div class="col-8 left-col">
+    <div class="col-8 left-col h-100">
       <div class="search-by-name">
-        <div class="input-group mb-3 mt-3">
+        <div class="input-group">
           <div class="input-group-prepend">
             <button (click)="searchByKeywordBtn($event)" class="btn btn-outline-secondary" type="button">
               <span class="fa fa-search"></span>
@@ -24,13 +24,13 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-3 pl-0 pr-0">
+      <div class="row row-height">
+        <div class="col-3 pl-0 pr-0 h-100 overflow-auto">
           <!-- filter -->
           <app-filter [filterItemForRemove]="filterItemForRemove" (filterChange)="filterOnChange($event)"></app-filter>
         </div>
 
-        <div class="col-9">
+        <div class="col-9 h-100">
           <div class="projects-wrapper">
             <!-- filter-property -->
             <div class="filter-properties">

@@ -9,6 +9,11 @@
     display: flex;
     justify-content: space-between;
     position: relative;
+    cursor: pointer;
+
+    &:hover {
+      background: #d3d3d3
+    }
 
     .red-circle {
       position: absolute;
