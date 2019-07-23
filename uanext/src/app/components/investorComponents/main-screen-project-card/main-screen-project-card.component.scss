@@ -9,13 +9,13 @@
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 1000000;
 
   .close-btn {
     position: absolute;
     top: 15px;
     right: 15px;
-    z-index: 100000;
+    z-index: 10;
 
     img {
       height: 21px;

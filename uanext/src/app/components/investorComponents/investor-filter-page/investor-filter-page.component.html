@@ -1,5 +1,3 @@
-<mat-progress-bar class="progress-bar-fixed" *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
-
 <div class="container-fluid" (dblclick)="scrollToElement($event)">
 
   <!-- <h3>Projects</h3> -->
@@ -40,6 +38,7 @@
             <div class="projects search-results" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
               [infiniteScrollThrottle]="500" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()">
               <h5 *ngIf="projects?.length === 0 && showProgress === false">{{ 'noProjects' | translate:self }}</h5>
+              <mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
 
               <div *ngFor="let project of projects" class="project-wrapper">
                 <app-filtered-project [searchText]="searchWord" [project]="project"
@@ -53,7 +52,7 @@
 
     </div>
 
-    <div class="col-4 pr-0 pl-0 right-col">
+    <div #rightCol class="col-4 pr-0 pl-0 right-col">
       <div class="map-wrapper">
         <app-map (mapFinishInit)="onMapFinishInit()" [replace3DObjects]="mapObjects"
           [changeSelectedProject]="selectedProject" (objectClick)="onMapObjectClick($event)"></app-map>
@@ -104,7 +103,7 @@
         </div>
         <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
           <div class="images-gallery">
-            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            <ngx-gallery [options]="galleryOptions" (previewOpen)="previewOpenHandler($event)" (previewClose)="previewCloseHandler($event)" [images]="galleryImages"></ngx-gallery>
           </div>
           <div class="videos">
             <h5>
