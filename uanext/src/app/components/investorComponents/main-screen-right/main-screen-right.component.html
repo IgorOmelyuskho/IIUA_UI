@@ -21,13 +21,13 @@
 
 <!-- right menu -->
 <div class="right-menu" id="investor-main-screen-right-menu">
-  <div (click)="showMessages()" class="message" [ngClass]="{ 'selected': messages_show }">
+  <div data-toggle="tooltip" title="{{ 'chat' | translate:self }}" (click)="showMessages()" class="message" [ngClass]="{ 'selected': messages_show }">
     <div class="img-bg"></div>
   </div>
-  <div (click)="showNotifications()" class="bell" [ngClass]="{ 'selected': notifications_show }">
+  <div data-toggle="tooltip" title="{{ 'notifications' | translate:self }}" (click)="showNotifications()" class="bell" [ngClass]="{ 'selected': notifications_show }">
     <div class="img-bg"></div>
   </div>
-  <div (click)="showIterativeInvestment()" class="approve" [ngClass]="{ 'selected': iterative_investment_show }">
+  <div data-toggle="tooltip" title="{{ 'iterativeInvestment' | translate:self }}" (click)="showIterativeInvestment()" class="approve" [ngClass]="{ 'selected': iterative_investment_show }">
     <div class="img-bg"></div>
   </div>
 </div>

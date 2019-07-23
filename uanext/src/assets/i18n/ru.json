@@ -690,5 +690,14 @@
     "projectSuccessfullyCreated": "Вы успешно создали проект",
     "projectNotCreated": "Проект не создан",
     "projectUpdated": "Проект успешно обновлен",
-    "projectNotUpdated": "Проект не обновлен"
+    "projectNotUpdated": "Проект не обновлен",
+    "VendorMainScreenRightComponent": {
+        "chat": "Чат",
+        "investmentOffer": "Предложение инвестиций"
+    },
+    "MainScreenRightComponent": {
+        "chat": "Чат",
+        "notifications": "Уведомления",
+        "iterativeInvestment": "Итеративное инвестирование"
+    }
 }

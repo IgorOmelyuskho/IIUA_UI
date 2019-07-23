@@ -690,5 +690,14 @@
     "projectSuccessfullyCreated": "You have successfully created project",
     "projectNotCreated": "Project not created",
     "projectUpdated": "Project successfully updated",
-    "projectNotUpdated": "Project not updated"
+    "projectNotUpdated": "Project not updated",
+    "VendorMainScreenRightComponent": {
+        "chat": "Chat",
+        "investmentOffer": "Investment offer"
+    },
+    "MainScreenRightComponent": {
+        "chat": "Chat",
+        "notifications": "Notifications",
+        "iterativeInvestment": "Iterative investment"
+    }
 }

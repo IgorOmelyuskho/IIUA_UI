@@ -14,6 +14,7 @@ export class VendorMainScreenRightComponent implements OnInit, OnDestroy {
   investment_offer_show = false;
   mq = window.matchMedia('screen and (max-width: 1250px)'); // also used in .scss
   matchesMediaQuery = false;
+  self = 'VendorMainScreenRightComponent';
 
   constructor() { }
 

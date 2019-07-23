@@ -1,3 +1,5 @@
+import { UserRole } from './userRole';
+
 export interface InvestorRole {
   fullName: string;
   email: string;
@@ -8,6 +10,7 @@ export interface InvestorRole {
   creditCardNumberVerified?: boolean;
   created?: string;
   lastEdited?: string;
-  userRole?: string;
+  userRole?: UserRole;
   id?: string;
+  isSocial: boolean;
 }

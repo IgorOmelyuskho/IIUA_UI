@@ -15,6 +15,7 @@ export class MainScreenRightComponent implements OnInit, OnDestroy {
   detailedProjectCard: VendorProject;
   mq = window.matchMedia('screen and (max-width: 1450px)'); // also used in .scss
   matchesMediaQuery = false;
+  self = 'MainScreenRightComponent';
 
   constructor() { }
 

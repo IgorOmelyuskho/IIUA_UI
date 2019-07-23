@@ -55,6 +55,8 @@ export class AdminProfileComponent implements OnInit {
           return;
         }
         this.admin = admin as AdminRole;
+        this.admin.created = new Date(this.admin.created).toLocaleString();
+        this.admin.lastEdited = new Date(this.admin.lastEdited).toLocaleString();
         this.isLoaded = true;
         this.setFormValues();
       },

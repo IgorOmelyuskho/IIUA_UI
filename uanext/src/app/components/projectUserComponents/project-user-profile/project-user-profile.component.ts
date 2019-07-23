@@ -59,6 +59,8 @@ export class ProjectUserProfileComponent implements OnInit {
           return;
         }
         this.projectUser = projectUser as ProjectUserRole;
+        this.projectUser.created = new Date(this.projectUser.created).toLocaleString();
+        this.projectUser.lastEdited = new Date(this.projectUser.lastEdited).toLocaleString();
         this.isLoaded = true;
         this.setFormValues();
       },

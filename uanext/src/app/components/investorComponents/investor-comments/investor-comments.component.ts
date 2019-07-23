@@ -10,6 +10,9 @@ import * as autosize from 'autosize';
 export class InvestorCommentsComponent implements OnInit, OnDestroy {
   @Input() project: VendorProject;
   self = 'InvestorCommentsComponent';
+  textareaSelector1 = '.comments .send-comment .textarea-wrapper textarea';
+  textareaSelector2 = '.comments-wrapper .comment .answer .textarea-wrapper textarea';
+
   comments = [
     {
       type: 'their',
@@ -51,14 +54,14 @@ export class InvestorCommentsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     requestAnimationFrame(() => {
-      autosize(document.querySelector('.comments .send-comment .textarea-wrapper textarea'));
-      autosize(document.querySelectorAll('.comments-wrapper .comment .answer .textarea-wrapper textarea'));
+      autosize(document.querySelector(this.textareaSelector1));
+      autosize(document.querySelectorAll(this.textareaSelector2));
     });
   }
 
   ngOnDestroy() {
-    autosize.destroy(document.querySelector('.comments .send-comment .textarea-wrapper textarea'));
-    autosize.destroy(document.querySelectorAll('.comments-wrapper .comment .answer .textarea-wrapper textarea'));
+    autosize.destroy(document.querySelector(this.textareaSelector1));
+    autosize.destroy(document.querySelectorAll(this.textareaSelector2));
   }
 
 }

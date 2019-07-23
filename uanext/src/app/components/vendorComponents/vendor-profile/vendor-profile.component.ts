@@ -59,6 +59,8 @@ export class VendorProfileComponent implements OnInit {
           return;
         }
         this.vendor = vendor as VendorRole;
+        this.vendor.created = new Date(this.vendor.created).toLocaleString();
+        this.vendor.lastEdited = new Date(this.vendor.lastEdited).toLocaleString();
         this.isLoaded = true;
         this.setFormValues();
       },

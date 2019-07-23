@@ -1,3 +1,5 @@
+import { UserRole } from './userRole';
+
 export interface ProjectUserRole { // todo fields
   fullName: string;
   email: string;
@@ -7,8 +9,9 @@ export interface ProjectUserRole { // todo fields
   created?: string;
   lastEdited?: string;
   projectId?: string;
-  userRole?: string;
+  userRole?: UserRole;
   id?: string;
+  iisSocial?: boolean;
 }
 
 

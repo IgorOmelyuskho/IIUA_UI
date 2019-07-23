@@ -24,12 +24,13 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   messagesLoading = false;
   attachmentReady = true;
   uploadFilesSubscribe: Subscription;
+  textareaSelector = '.bottom-wrapper .textarea-wrapper textarea';
 
   constructor(private chatService: ChatService, private fileService: FilesService, private stateService: StateService) { }
 
   ngOnInit() {
     this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), true);
-    autosize(document.querySelector('.bottom-wrapper .textarea-wrapper textarea'));
+    autosize(document.querySelector(this.textareaSelector));
   }
 
   getMessagesByChatIdSubscribe(observable: Observable<Message[]>, initial?: boolean) {
@@ -168,6 +169,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnDestroy() {
-    autosize.destroy(document.querySelector('.bottom-wrapper .textarea-wrapper textarea'));
+    autosize.destroy(document.querySelector(this.textareaSelector));
   }
 }
