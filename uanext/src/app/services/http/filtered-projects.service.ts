@@ -99,13 +99,13 @@ export class ViewProjectsService {
     return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, filter)
       .pipe(
         map(response => {
-          if (response['data'] == null) {
+          if (response == null) {
             return emptyFilteredProjects;
           }
-          return response['data'];
+          return response;
         }),
         map((response: FilteredProjects) => { // todo remove
-          return this.addAvatara(response);
+          return  this.addAvatara(response);
         }),
       );
   }
