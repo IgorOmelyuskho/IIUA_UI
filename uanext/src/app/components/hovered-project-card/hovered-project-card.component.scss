@@ -138,6 +138,7 @@
 }
 
 :host ::ng-deep .highlighted {
-  background: rgb(201, 181, 8);
-  color: red;
+  background: #ff855e;
+  color: #673ab7;
+  border-radius: 3px;
 }
