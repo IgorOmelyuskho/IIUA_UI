@@ -18,6 +18,7 @@ import { ViewProjectsService } from 'src/app/services/http/filtered-projects.ser
 })
 export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('searchByKeyWordInput') searchByKeyWordInput: ElementRef;
+  @ViewChild('rightCol') rightCol: ElementRef;
 
   FormHelper = FormHelper;
   self = 'InvestorFilterPageComponent';
@@ -51,7 +52,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   ngOnInit() {
     this.galleryOptions = [
       {
-        preview: false,
+        preview: true,
         width: '100%',
         height: '400px',
         thumbnailsColumns: 4,
@@ -261,6 +262,14 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
     setTimeout(() => {
       el.classList.add('animation-class');
     }, 0);
+  }
+
+  previewOpenHandler() {
+    this.rightCol.nativeElement.style.zIndex = '1000000';
+  }
+
+  previewCloseHandler() {
+    this.rightCol.nativeElement.style.zIndex = '1';
   }
 
   ngOnDestroy() {

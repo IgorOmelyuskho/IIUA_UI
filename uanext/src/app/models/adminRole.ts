@@ -1,3 +1,5 @@
+import { UserRole } from './userRole';
+
 export interface AdminRole {
   fullName: string;
   email: string;
@@ -6,6 +8,7 @@ export interface AdminRole {
   phoneVerified?: boolean;
   created?: string;
   lastEdited?: string;
-  userRole?: string;
+  userRole?: UserRole;
   id?: string;
+  isSocial?: boolean;
 }

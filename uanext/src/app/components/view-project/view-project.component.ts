@@ -1,5 +1,5 @@
 
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ActivatedRoute } from '@angular/router';
@@ -18,6 +18,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   project: VendorProject = null;
   projectId: string;
   self = 'ViewProjectComponent';
+  @ViewChild('container') container: ElementRef;
 
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -43,7 +44,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.galleryOptions = [
       {
-        preview: false,
+        preview: true,
         width: '600px',
         height: '400px',
         thumbnailsColumns: 4,
@@ -132,6 +133,16 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onMapFinishInit() {
     // todo 'load objects model after map init'
+  }
+
+  previewOpenHandler() {
+    this.container.nativeElement.style.zIndex = '1000000';
+    this.container.nativeElement.style.position = 'relative';
+  }
+
+  previewCloseHandler() {
+    this.container.nativeElement.style.zIndex = '1';
+    this.container.nativeElement.style.position = '';
   }
 
   ngOnDestroy() {

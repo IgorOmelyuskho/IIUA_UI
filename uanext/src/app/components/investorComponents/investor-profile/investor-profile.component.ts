@@ -59,6 +59,8 @@ export class InvestorProfileComponent implements OnInit {
           return;
         }
         this.investor = investor as InvestorRole;
+        this.investor.created = new Date(this.investor.created).toLocaleString();
+        this.investor.lastEdited = new Date(this.investor.lastEdited).toLocaleString();
         this.isLoaded = true;
         this.setFormValues();
       },

@@ -135,7 +135,7 @@
       </div>
       <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
         <div class="images-gallery">
-          <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+          <ngx-gallery [options]="galleryOptions" (previewOpen)="previewOpenHandler($event)" (previewClose)="previewCloseHandler($event)" [images]="galleryImages"></ngx-gallery>
         </div>
         <div class="videos">
           <h5>

@@ -34,7 +34,7 @@ export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.galleryOptions = [
       {
-        preview: false,
+        preview: true,
         width: '100%',
         height: '400px',
         thumbnailsColumns: 4,
@@ -80,6 +80,14 @@ export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
 
   hideSelectedProjectInfo() {
     this.projectCard.nativeElement.style.display = 'none';
+  }
+
+  previewOpenHandler(event) { // fix IIUA-64
+    this.projectCard.nativeElement.style.overflow = 'hidden';
+  }
+
+  previewCloseHandler(event) {  // fix IIUA-64
+    this.projectCard.nativeElement.style.overflow = 'auto';
   }
 
 }

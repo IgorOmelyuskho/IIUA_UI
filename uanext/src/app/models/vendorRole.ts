@@ -1,3 +1,5 @@
+import { UserRole } from './userRole';
+
 export interface VendorRole {
   fullName: string;
   email: string;
@@ -8,6 +10,7 @@ export interface VendorRole {
   lastEdited?: string;
   itn?: string;
   itnVerified?: boolean;
-  userRole?: string;
+  userRole?: UserRole;
   id?: string;
+  isSocial?: boolean;
 }

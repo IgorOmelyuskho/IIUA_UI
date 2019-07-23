@@ -1,116 +1,119 @@
-<div *ngIf="project != null" class="container">
+<div class="wrapper">
+  <div #container *ngIf="project != null" class="container">
 
-  <div class="row mt-3">
-    <div class="col-xl-6">
+    <div class="row pt-3">
+      <div class="col-xl-6">
+        <div class="d-flex">
+          <div class="avatara">
+            <img height=100 src="{{project.avatara?.url}}" alt="avatara">
+          </div>
+          <div>
+            <h4 class="mb-5">{{project.name}}</h4>
+            <h4>{{project.legalEntityName}}</h4>
+          </div>
+        </div>
+        <div>{{project.goal}}</div>
+        <h5 class="mt-3">{{ 'plan' | translate:self }}</h5>
+        <div class="steps">
+          <div *ngFor="let step of project.steps">{{step.data}}</div>
+        </div>
+      </div>
+      <div class="col-xl-6">
+        <div class="map-wrapper">
+          <app-map (mapFinishInit)="onMapFinishInit()"></app-map>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row mt-3">
+      <div class="col-lg-3 col-md-6">
+        <label>{{ 'employeesNumber' | translate:self }} {{project.employeesNumber}}</label>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <label>{{ 'employeesHire' | translate:self }} {{project.employeesToHire}}</label>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <label>{{ 'fieldActivity' | translate:self }} {{project.fieldOfActivity}}</label>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <label>{{ 'companyAge' | translate:self }} {{project.companyAge}} year</label>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-3 col-md-6">
+        <label>{{ 'avgCheck' | translate:self }} {{project.averageCheck}} $</label>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <label>{{ 'clientMonth' | translate:self }} {{project.mounthlyClients}}</label>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <label>{{ 'avgPrice' | translate:self }} {{project.averagePrice}} $</label>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <label>{{ 'grossIncome' | translate:self }} {{project.grossIncome}} $</label>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-12">
+        <div>{{project.investmentDescription}}</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-12">
+        <div>{{ 'wantGet' | translate:self }} {{project.moneyRequired}}</div>
+      </div>
+      <div class="col-12">
+        <div>{{project.description}}</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="gallery">
+      <ngx-gallery [options]="galleryOptions" (previewOpen)="previewOpenHandler($event)"
+        (previewClose)="previewCloseHandler($event)" [images]="galleryImages"></ngx-gallery>
+    </div>
+
+    <hr>
+
+    <!-- <div class="videos">
+      <h6>Videos</h6>
+      <div *ngFor="let video of project.videos">
+        <a href="{{video.url}}" target="_blank" rel="noopener noreferrer">{{video.url}}</a>
+      </div>
+    </div> -->
+
+    <div class="videos">
+      <h6>{{ 'videos' | translate:self }}</h6>
+      <div class="d-flex flex-wrap">
+        <div class="m-1" *ngFor="let video of project.videos">
+          <iframe *ngIf="video.safeVideoUrl" width="250" height="180" [src]="video.safeVideoUrl" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="videos">
+      <h6>{{ 'documents' | translate:self }}</h6>
       <div class="d-flex">
-        <div class="avatara">
-          <img height=100 src="{{project.avatara?.url}}" alt="avatara">
-        </div>
-        <div>
-          <h4 class="mb-5">{{project.name}}</h4>
-          <h4>{{project.legalEntityName}}</h4>
+        <div (click)="downloadFile(file)" class="file" *ngFor="let file of project.files">
+          <img height=100 src="../../../assets/img/file.png" alt="file">
+          <div class="extension">{{ file.originalName?.split('.').pop().toUpperCase() }}</div>
         </div>
       </div>
-      <div>{{project.goal}}</div>
-      <h5 class="mt-3">{{ 'plan' | translate:self }}</h5>
-      <div class="steps">
-        <div *ngFor="let step of project.steps">{{step.data}}</div>
-      </div>
     </div>
-    <div class="col-xl-6">
-      <div class="map-wrapper">
-        <app-map (mapFinishInit)="onMapFinishInit()"></app-map>
-      </div>
-    </div>
+
   </div>
-
-  <hr>
-
-  <div class="row mt-3">
-    <div class="col-lg-3 col-md-6">
-      <label>{{ 'employeesNumber' | translate:self }} {{project.employeesNumber}}</label>
-    </div>
-    <div class="col-lg-3 col-md-6">
-      <label>{{ 'employeesHire' | translate:self }} {{project.employeesToHire}}</label>
-    </div>
-    <div class="col-lg-3 col-md-6">
-      <label>{{ 'fieldActivity' | translate:self }} {{project.fieldOfActivity}}</label>
-    </div>
-    <div class="col-lg-3 col-md-6">
-      <label>{{ 'companyAge' | translate:self }} {{project.companyAge}} year</label>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-lg-3 col-md-6">
-      <label>{{ 'avgCheck' | translate:self }} {{project.averageCheck}} $</label>
-    </div>
-    <div class="col-lg-3 col-md-6">
-      <label>{{ 'clientMonth' | translate:self }} {{project.mounthlyClients}}</label>
-    </div>
-    <div class="col-lg-3 col-md-6">
-      <label>{{ 'avgPrice' | translate:self }} {{project.averagePrice}} $</label>
-    </div>
-    <div class="col-lg-3 col-md-6">
-      <label>{{ 'grossIncome' | translate:self }} {{project.grossIncome}} $</label>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row">
-    <div class="col-12">
-      <div>{{project.investmentDescription}}</div>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row">
-    <div class="col-12">
-      <div>{{ 'wantGet' | translate:self }} {{project.moneyRequired}}</div>
-    </div>
-    <div class="col-12">
-      <div>{{project.description}}</div>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="gallery">
-    <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
-  </div>
-
-  <hr>
-
-  <!-- <div class="videos">
-    <h6>Videos</h6>
-    <div *ngFor="let video of project.videos">
-      <a href="{{video.url}}" target="_blank" rel="noopener noreferrer">{{video.url}}</a>
-    </div>
-  </div> -->
-
-  <div class="videos">
-    <h6>{{ 'videos' | translate:self }}</h6>
-    <div class="d-flex flex-wrap">
-      <div class="m-1" *ngFor="let video of project.videos">
-        <iframe *ngIf="video.safeVideoUrl" width="250" height="180" [src]="video.safeVideoUrl" frameborder="0"
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="videos">
-    <h6>{{ 'documents' | translate:self }}</h6>
-    <div class="d-flex">
-      <div (click)="downloadFile(file)" class="file" *ngFor="let file of project.files">
-        <img height=100 src="../../../assets/img/file.png" alt="file">
-        <div class="extension">{{ file.originalName?.split('.').pop().toUpperCase() }}</div>
-      </div>
-    </div>
-  </div>
-
 </div>
