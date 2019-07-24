@@ -223,26 +223,27 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.vendorProject.sphereActivities.length; i++) {
       selectedActivities.push(this.vendorProject.sphereActivities[i].id.toString());
     }
+
     let employeesNumber: string;
-    if (this.vendorProject.employeesNumberMin === '0') {
+    if (this.vendorProject.employeesNumberMin === 0) {
       employeesNumber = '0-1';
     }
-    if (this.vendorProject.employeesNumberMin === '2') {
+    if (this.vendorProject.employeesNumberMin === 2) {
       employeesNumber = '2-5';
     }
-    if (this.vendorProject.employeesNumberMin === '6') {
+    if (this.vendorProject.employeesNumberMin === 6) {
       employeesNumber = '6-10';
     }
-    if (this.vendorProject.employeesNumberMin === '11') {
+    if (this.vendorProject.employeesNumberMin === 11) {
       employeesNumber = '11-25';
     }
-    if (this.vendorProject.employeesNumberMin === '26') {
+    if (this.vendorProject.employeesNumberMin === 26) {
       employeesNumber = '26-50';
     }
-    if (this.vendorProject.employeesNumberMin === '51') {
+    if (this.vendorProject.employeesNumberMin === 51) {
       employeesNumber = '51-100';
     }
-    if (this.vendorProject.employeesNumberMin === '101') {
+    if (this.vendorProject.employeesNumberMin === 101) {
       employeesNumber = '101-10000';
     }
 

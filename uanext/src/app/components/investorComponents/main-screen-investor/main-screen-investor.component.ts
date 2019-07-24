@@ -148,6 +148,16 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.selectedProjectId = project.id;
   }
 
+  searchByKeywordBtn(event) {
+    this.searchProjectsByKeyword(this.searchWord, 100, 1);
+  }
+
+  searchByKeywordKeyDown(e) {
+    if (e.code === 'Enter') {
+      this.searchProjectsByKeyword(this.searchWord, 100, 1);
+    }
+  }
+
   // http
   searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
     this.showProgress = true;
