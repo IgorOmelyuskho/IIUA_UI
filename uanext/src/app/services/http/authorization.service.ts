@@ -103,13 +103,12 @@ export class AuthorizationService {
       return;
     }
 
-    this.translate.getSphereActivityOption();
-
     if (role === UserRole.Vendor) {
       this.profileService.fetchVendor().subscribe(
         vendor => {
           this.stateService.user$.next(vendor);
           this.stateService.authorized$.next(true);
+          this.translate.getSphereActivityOption();
           if (pathName === '' || pathName === '/') {
             this.router.navigate(['home', 'vendor']);
           } else {
@@ -128,6 +127,7 @@ export class AuthorizationService {
         investor => {
           this.stateService.user$.next(investor);
           this.stateService.authorized$.next(true);
+          this.translate.getSphereActivityOption();
           if (pathName === '' || pathName === '/') {
             this.router.navigate(['home', 'investor']);
           } else {
@@ -146,6 +146,7 @@ export class AuthorizationService {
         admin => {
           this.stateService.user$.next(admin);
           this.stateService.authorized$.next(true);
+          this.translate.getSphereActivityOption();
           if (pathName === '' || pathName === '/') {
             this.router.navigate(['admin']);
           } else {
@@ -164,6 +165,7 @@ export class AuthorizationService {
         projectUser => {
           this.stateService.user$.next(projectUser);
           this.stateService.authorized$.next(true);
+          this.translate.getSphereActivityOption();
           if (pathName === '' || pathName === '/') {
             this.router.navigate(['projectUser']);
           } else {
@@ -368,6 +370,7 @@ export class AuthorizationService {
       (vendor: VendorRole) => {
         this.stateService.user$.next(vendor);
         this.stateService.authorized$.next(true);
+        this.translate.getSphereActivityOption();
         this.router.navigate(['home', 'vendor']);
       },
       err => {
@@ -382,6 +385,7 @@ export class AuthorizationService {
       (investor: InvestorRole) => {
         this.stateService.user$.next(investor);
         this.stateService.authorized$.next(true);
+        this.translate.getSphereActivityOption();
         this.router.navigate(['home', 'investor']);
       },
       err => {
@@ -396,6 +400,7 @@ export class AuthorizationService {
       (admin: AdminRole) => {
         this.stateService.user$.next(admin);
         this.stateService.authorized$.next(true);
+        this.translate.getSphereActivityOption();
         this.router.navigate(['admin']);
       },
       err => {
@@ -410,6 +415,7 @@ export class AuthorizationService {
       (projectUser: ProjectUserRole) => {
         this.stateService.user$.next(projectUser);
         this.stateService.authorized$.next(true);
+        this.translate.getSphereActivityOption();
         this.router.navigate(['projectUser']);
       },
       err => {
@@ -425,7 +431,6 @@ export class AuthorizationService {
 
   successSocialOrEmailLogin(response: any) {
     console.log(response);
-    this.translate.getSphereActivityOption();
 
     localStorage.setItem('token', response.body.token);
     const role: UserRole = this.stateService.role();

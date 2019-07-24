@@ -1,6 +1,8 @@
 <div class="full-screen-block">
+  <mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
   <div class="map-wrapper">
-    <app-map (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)" (objectHover)="onMapObjectHover($event)"></app-map>
+    <app-map (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)"
+      (objectHover)="onMapObjectHover($event)"></app-map>
   </div>
 
   <div class="filter-wrapper">
@@ -12,8 +14,8 @@
               <span class="fa fa-search"></span>
             </button>
           </div>
-          <input #searchByKeyWordInput type="text"
-            class="form-control" placeholder="{{ 'findProject' | translate:self }}" aria-label="Project name"
+          <input #searchByKeyWordInput type="text" class="form-control" [(ngModel)]="searchWord"
+            placeholder="{{ 'findProject' | translate:self }}" aria-label="Project name"
             aria-describedby="basic-addon2">
         </div>
       </div>
@@ -46,7 +48,8 @@
 
 <div #previewCardWrapper class="preview-card-wrapper">
   <div *ngIf="showPreviewCard && hoveredProject" class="preview-card">
-    <app-hovered-project-card (clickOnCardEvent)="onCardClick($event)" [hoveredProject]="hoveredProject"></app-hovered-project-card>
+    <app-hovered-project-card (clickOnCardEvent)="onCardClick($event)" [hoveredProject]="hoveredProject">
+    </app-hovered-project-card>
   </div>
 </div>
 

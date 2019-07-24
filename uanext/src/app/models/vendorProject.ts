@@ -22,5 +22,7 @@ export interface VendorProject {
   videos?: any[];
   images?: any[];
   files?: any[];
-  rating: string;
+  rating?: string;
+
+  TEST_3D_Objects_Arr?: any[];
 }

@@ -68,7 +68,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       this.mapManager.mapReplaceObjects([female, male, tractor, walt]); // if add object - add new object in signalRService
       // mapReplaceObjects([female, male]);
       // mapAddNewObjects([female, male]);
-    }, 25);
+    }, 7500);
 
     this.timeOut4 = setTimeout(() => {
       // mapReplaceObjects([tractor, walt]);

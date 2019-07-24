@@ -35,10 +35,10 @@
               <app-filter-items (filterItemRemove)="onFilterItemRemove($event)" [filter]="filter"></app-filter-items>
             </div>
             <!-- projects -->
+            <mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
             <div class="projects search-results" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
               [infiniteScrollThrottle]="500" (scrolled)="onScroll()" (scrolledUp)="onScrollUp()">
               <h5 *ngIf="projects?.length === 0 && showProgress === false">{{ 'noProjects' | translate:self }}</h5>
-              <mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
 
               <div *ngFor="let project of projects" class="project-wrapper">
                 <app-filtered-project [searchText]="searchWord" [project]="project"

@@ -27,6 +27,10 @@
     flex-direction: column;
     height: 100%;
 
+    mat-progress-bar {
+      flex-shrink: 0.0000001;
+    }
+
     .projects {
       overflow: auto;
 

@@ -5,6 +5,8 @@ export class GeoObject {
   coords: { x: number, y: number };
   projectName: string;
   pathToZip: string;
+  canMove?: boolean;
+
   project: VendorProject;
 
   object3D?: any;

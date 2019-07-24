@@ -165,20 +165,18 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   // http
   searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
     this.prevSearch = 'keyWord';
-    this.showProgressBar(true);
-    concat(
-      this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
-    )
+    this.showProgress = true;
+    this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
           this.pagesCount = filteringProjects.pages;
           this.projectsCount = filteringProjects.projectsCount;
           this.addNewProjects(filteringProjects.projectsList);
-          this.showProgressBar(false);
+          this.showProgress = false;
         },
         err => {
           console.warn(err);
-          this.showProgressBar(false);
+          this.showProgress = false;
         }
       );
   }
@@ -186,30 +184,20 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   // http
   searchProjectsByFilter(filterParam: any) {
     this.prevSearch = 'filter';
-    this.showProgressBar(true);
-    concat(
-      this.viewProjectsService.searchByFilter(filterParam)
-    )
+    this.showProgress = true;
+    this.viewProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
           this.pagesCount = filteringProjects.pages;
           this.projectsCount = filteringProjects.projectsCount;
           this.addNewProjects(filteringProjects.projectsList);
-          this.showProgressBar(false);
+          this.showProgress = false;
         },
         err => {
           console.warn(err);
-          this.showProgressBar(false);
+          this.showProgress = false;
         }
       );
-  }
-
-  showProgressBar(show: boolean) {
-    if (show === true) {
-      this.showProgress = true;
-    } else {
-      this.showProgress = false;
-    }
   }
 
   addNewProjects(newProjects: VendorProject[]) {
@@ -247,7 +235,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   onMapObjectClick(mapProject: GeoObject) {
-   // todo
+    // todo
   }
 
   onMapFinishInit() {

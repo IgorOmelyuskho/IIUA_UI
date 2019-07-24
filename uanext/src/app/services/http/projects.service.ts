@@ -51,6 +51,7 @@ export class ProjectsService {
           return response;
         }),
         map((response: VendorProject[]) => { // todo remove
+          this.addRating(response);
           return this.addAvatara(response);
         }),
       );
@@ -78,31 +79,14 @@ export class ProjectsService {
   }
 
   getSphereActivity(): Observable<any> {
-    // return this.http.get<any>(environment.projects + environment.sphereActivity);
-    return of([
-      {
-        id: 1,
-        class: '1.1',
-        name: 'TestName1'
-      },
-      {
-        id: 2,
-        class: '1.2',
-        name: 'TestName2'
-      },
-      {
-        id: 3,
-        class: '1.3',
-        name: 'TestName3'
-      }
-    ]);
+    return this.http.get<any>(environment.projects + environment.sphereActivity);
   }
 
   postSphereActivity(sphereActivity): Observable<any> {
     return this.http.post<any>(environment.projects + environment.sphereActivity, sphereActivity);
   }
 
-  addAvatara(projects: VendorProject[]): VendorProject[] {
+  private addAvatara(projects: VendorProject[]): VendorProject[] {
     for (let i = 0; i < projects.length; i++) {
       if (projects[i].avatara == null) {
         projects[i].avatara = {
@@ -113,5 +97,12 @@ export class ProjectsService {
       }
     }
     return projects;
+  }
+
+  private addRating(filteredProjects: VendorProject[]): VendorProject[] {
+    for (let i = 0; i < filteredProjects.length; i++) {
+      filteredProjects[i].rating = '9.5';
+    }
+    return filteredProjects;
   }
 }

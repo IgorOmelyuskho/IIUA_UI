@@ -2,9 +2,12 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy, Ren
 // import { mapInit, mapDestroy, mapSetProject } from './map3-no-class';
 // import { Map } from './map3';
 import { VendorProject } from 'src/app/models/vendorProject.js';
-import { FilterFields, UserRole, GeoObject } from 'src/app/models/index.js';
+import { FilterFields, UserRole, GeoObject, FilteredProjects } from 'src/app/models/index.js';
 import { StateService } from 'src/app/services/state/state.service';
 import { responseProject } from 'src/app/helperClasses/projects';
+import { BehaviorSubject, Subscription, fromEvent } from 'rxjs';
+import { map, debounceTime, filter, distinctUntilChanged, tap } from 'rxjs/operators';
+import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
 
 @Component({
   selector: 'app-main-screen-investor',
@@ -14,19 +17,25 @@ import { responseProject } from 'src/app/helperClasses/projects';
 export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('previewCardWrapper') previewCardWrapper: ElementRef;
   @ViewChild('interactiveInvestmentCard') interactiveInvestmentCard: ElementRef;
+  @ViewChild('searchByKeyWordInput') searchByKeyWordInput: ElementRef;
   self = 'MainScreenInvestorComponent';
 
   selectedProject: VendorProject = null;
   selectedProjectId: string = null;
 
-  filter: FilterFields;
-  filterIsExpanded = false; // false - свернут
+  filter: FilterFields = {};
+  searchWord: string;
+  $searchByFilterChange: BehaviorSubject<FilterFields> = new BehaviorSubject(this.filter);
+  $fromEvent: Subscription;
 
+  filterIsExpanded = false; // false - свернут
   showPreviewCard = false;
   previewCardX = 0;
   previewCardY = 0;
   hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
+
+  showProgress: boolean;
 
   windowMouseMoveHandler = (e) => {
     this.previewCardX = e.pageX;
@@ -39,7 +48,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     }, 100);
   }
 
-  constructor(private stateService: StateService, private renderer: Renderer2) { }
+  constructor(private stateService: StateService, private viewProjectsService: ViewProjectsService) { }
 
   ngOnInit() {
     new Image().src = '../../../assets/img/message-3.png';
@@ -61,10 +70,30 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
           }
         }
       );
+
+    this.$fromEvent = fromEvent<any>(this.searchByKeyWordInput.nativeElement, 'input')
+      .pipe(
+        map(e => e.target.value),
+        debounceTime(1000),
+        filter(e => e.length >= 3),
+        distinctUntilChanged((a, b) => a === b),
+      )
+      .subscribe(res => {
+        this.searchProjectsByKeyword(this.searchWord, 100, 1);
+      });
+
+    this.$searchByFilterChange
+      .pipe(
+        debounceTime(1000),
+      )
+      .subscribe(filterParam => {
+        this.searchProjectsByFilter(filterParam); // async
+      });
   }
 
   filterOnChange(filterParam: FilterFields) {
     this.filter = filterParam;
+    this.$searchByFilterChange.next(this.filter);
   }
 
   onMapObjectClick(mapObject: GeoObject) {
@@ -89,7 +118,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     let resultX = this.previewCardX;
     let resultY = this.previewCardY + deltaY;
 
-    if ( this.previewCardX > window.innerWidth - cardWidth - rightMenuOffset) {
+    if (this.previewCardX > window.innerWidth - cardWidth - rightMenuOffset) {
       resultX = window.innerWidth - cardWidth - rightMenuOffset - 5;
     }
     if (rightComponentOffset !== 0 && this.previewCardX > window.innerWidth - cardWidth - rightComponentOffset) {
@@ -108,11 +137,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     // todo 'load obj model after this log'
   }
 
-  ngOnDestroy() {
-    window.removeEventListener('mousemove', this.windowMouseMoveHandler);
-    window.removeEventListener('mousedown', this.windowClickHandler);
-  }
-
   getAvataraUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
@@ -121,5 +145,46 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   onCardClick(project: VendorProject) {
     this.selectedProject = { ...project };
     this.selectedProjectId = project.id;
+  }
+
+  // http
+  searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
+    this.showProgress = true;
+      this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
+      .subscribe(
+        (filteringProjects: FilteredProjects) => {
+          // this.addNewProjects(filteringProjects.projectsList);
+          console.log(filteringProjects);
+          this.showProgress = false;
+        },
+        err => {
+          console.warn(err);
+          this.showProgress = false;
+        }
+      );
+  }
+
+  // http
+  searchProjectsByFilter(filterParam: any) {
+    this.showProgress = true;
+      this.viewProjectsService.searchByFilter(filterParam)
+      .subscribe(
+        (filteringProjects: FilteredProjects) => {
+          // this.addNewProjects(filteringProjects.projectsList);
+          console.log(filteringProjects);
+          this.showProgress = false;
+        },
+        err => {
+          console.warn(err);
+          this.showProgress = false;
+        }
+      );
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('mousemove', this.windowMouseMoveHandler);
+    window.removeEventListener('mousedown', this.windowClickHandler);
+    this.$fromEvent.unsubscribe();
+    this.$searchByFilterChange.unsubscribe();
   }
 }
