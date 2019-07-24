@@ -1,3 +1,5 @@
+import { GeoObject } from './geoObject';
+
 export interface VendorProject {
   id?: string;
   userId?: number;
@@ -9,7 +11,8 @@ export interface VendorProject {
   address: string;
   sphereActivities: any[];
   companyAge: number;
-  employeesNumber: string;
+  employeesNumberMin?: string;
+  employeesNumberMax?: string;
   employeesToHire: number;
   grossIncome: string;
   averageCheck: number;
@@ -22,5 +25,8 @@ export interface VendorProject {
   videos?: any[];
   images?: any[];
   files?: any[];
-  rating: string;
+  rating?: string;
+  queuePosition?: any;
+
+  TEST_3D_Objects_Arr?: GeoObject[];
 }

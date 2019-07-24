@@ -12,7 +12,7 @@
     <div class="bottom-info">
       <div class="d-flex">
         <h5 (click)="goToProjectClick()" class="project-name"
-          [innerHTML]="project.legalEntityName | highlight: searchText"></h5>
+          [innerHTML]="project.name | highlight: searchText"></h5>
         <img class="flame" src="../../../assets/img/flame.png" alt="">
       </div>
       <div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="d-flex justify-content-between mb-2">
-      <div class="company-name" [innerHTML]="project.name | highlight: searchText"></div>
+      <div class="company-name" [innerHTML]="project.legalEntityName | highlight: searchText"></div>
       <div>
         <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>
         <span class="region">{{project.region}}</span>

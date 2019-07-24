@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IndexComponent, ProjectUserPageComponent, ProjectUserProfileComponent, ProjectUserSignupComponent,
   EmailValidateComponent, PasswordRecoveryComponent, ConfirmPasswordRecoveryComponent,
-  PrivacyPolicyComponent, UserAgreementComponent } from './components';
+  PrivacyPolicyComponent, UserAgreementComponent, CreateVendorProjectFilledComponent } from './components';
 import { VendorProjectsComponent } from './components';
 import { CreateVendorProjectComponent } from './components';
 import { SigninComponent } from './components';
@@ -42,6 +42,7 @@ const childVendorRoutes: Routes = [
   { path: 'profile', component: VendorProfileComponent },
   { path: 'projects', component: VendorProjectsComponent },
   { path: 'newProject', component: CreateVendorProjectComponent },
+  { path: 'newProject-filled', component: CreateVendorProjectFilledComponent },
   { path: 'project/:id', component: UpdateVendorProjectComponent },
   { path: 'main-page', component: MainScreenVendorComponent },
 ];

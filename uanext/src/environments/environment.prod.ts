@@ -30,6 +30,7 @@ export const environment = {
   vendorProject: '/api/Projects/',
   filteringProjects: '/api/FilteringProjects',
   sphereActivity: '/api/SphereActivity',
+  changeQueuePosition: '/api/Projects/ChangeQueuePosition',
 
   get3DObject: '/api/Map/Get3DObject',
   post3DObject: '/api/Map/Post3DObject',

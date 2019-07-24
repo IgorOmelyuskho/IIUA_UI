@@ -133,9 +133,9 @@ export class MapManager {
       this.remove3DObjectFromScene(this.objectsArr[i].pointForMove);
       this.remove3DObjectFromScene(this.objectsArr[i].object3D);
       if (this.objectsArr[i].objectDivLabel != null) {
-        objects[i].objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
-        objects[i].objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
-        objects[i].objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
+        this.objectsArr[i].objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
+        this.objectsArr[i].objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
+        this.objectsArr[i].objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
         this.objectsArr[i].objectDivLabel.style.display = 'none';
         this.objectsArr[i].objectDivLabel.parentNode.removeChild(this.objectsArr[i].objectDivLabel); // not work
       }

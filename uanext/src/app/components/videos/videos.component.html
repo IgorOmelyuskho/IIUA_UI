@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-12 mb-2">{{ 'linkToVideo' | translate:self }}</div>
       <div class="col-lg-8 col-md-7 col-12">
-        <input (input)="newItemOnInput()" type="text" placeholder="http://..." [(ngModel)]="newItem" class="form-control item-name"
+        <input (input)="newItemOnInput()" type="text" placeholder="https://www.youtube.com/..." [(ngModel)]="newItem" class="form-control item-name"
           [ngClass]="{ 'is-invalid': !newItemMinValid || !newItemMaxValid || !newItemNullValid }">
         <div *ngIf="!newItemMinValid || !newItemMaxValid || !newItemNullValid" class="invalid-feedback">
           <div *ngIf="!newItemNullValid">{{ 'videosEmpty' | translate:self }}</div>

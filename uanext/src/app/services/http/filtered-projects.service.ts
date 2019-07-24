@@ -42,49 +42,13 @@ export class ViewProjectsService {
           }
           return response;
         }),
-        map((response: FilteredProjects) => {
-          for (let i = 0; i < response.projectsList.length; i++) {
-            response.projectsList[i].rating = '9.5';
-          }
-          return response;
-        }),
         map((response: FilteredProjects) => { // todo remove
-          return this.addAvatara(response);
+          this.addRating(response);
+          this.addAvatara(response);
+          return this.add3DObjectsArr(response);
         }),
       );
   }
-
-  // searchByProjectName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
-  //   return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
-  //     projectName: name,
-  //     pageSize,
-  //     page
-  //   })
-  //     .pipe(
-  //       map(response => {
-  //         if (response['data'] == null) {
-  //           return emptyFilteredProjects;
-  //         }
-  //         return response['data'];
-  //       })
-  //     );
-  // }
-
-  // searchByCompanyName(name: string, pageSize: number, page: number): Observable<FilteredProjects> {
-  //   return this.http.post<FilteredProjects>(environment.projects + environment.filteringProjects, {
-  //     companyName: name,
-  //     pageSize,
-  //     page
-  //   })
-  //     .pipe(
-  //       map(response => {
-  //         if (response['data'] == null) {
-  //           return emptyFilteredProjects;
-  //         }
-  //         return response['data'];
-  //       })
-  //     );
-  // }
 
   searchByKeyword(keyword: string, pageSize: number, page: number): Observable<FilteredProjects> {
     // return of(JSON.parse(JSON.stringify(responseProjects)));
@@ -105,12 +69,14 @@ export class ViewProjectsService {
           return response;
         }),
         map((response: FilteredProjects) => { // todo remove
-          return  this.addAvatara(response);
+          this.addRating(response);
+          this.addAvatara(response);
+          return this.add3DObjectsArr(response);
         }),
       );
   }
 
-  fixFilterForBackend(filter: FilterFields | any): FilterFields {
+  private fixFilterForBackend(filter: FilterFields | any): FilterFields {
     // if (filter.companyName == null) {
     //   filter.companyName = '';
     // }
@@ -136,7 +102,7 @@ export class ViewProjectsService {
     return filter;
   }
 
-  addAvatara(filteredProjects: FilteredProjects): FilteredProjects {
+  private addAvatara(filteredProjects: FilteredProjects): FilteredProjects {
     for (let i = 0; i < filteredProjects.projectsList.length; i++) {
       if (filteredProjects.projectsList[i].avatara == null) {
         filteredProjects.projectsList[i].avatara = {
@@ -145,6 +111,76 @@ export class ViewProjectsService {
           originalName: 'Network-Profile.png'
         };
       }
+    }
+    return filteredProjects;
+  }
+
+  private addRating(filteredProjects: FilteredProjects): FilteredProjects {
+    for (let i = 0; i < filteredProjects.projectsList.length; i++) {
+      filteredProjects.projectsList[i].rating = '9.5';
+    }
+    return filteredProjects;
+  }
+
+  private add3DObjectsArr(filteredProjects: FilteredProjects): FilteredProjects {
+    const delta = 0.005;
+    for (let i = 0; i < filteredProjects.projectsList.length; i++) {
+      if (Math.random() > 0.5) {
+        filteredProjects.projectsList[i].TEST_3D_Objects_Arr = [
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects.projectsList[i].name,
+            pathToZip: window.location.origin + '/assets/objects/female.zip',
+            project: filteredProjects.projectsList[i],
+            canMove: true
+          },
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects.projectsList[i].name,
+            pathToZip: window.location.origin + '/assets/objects/male.zip',
+            project: filteredProjects.projectsList[i],
+            canMove: true
+          },
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects.projectsList[i].name,
+            pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+            project: filteredProjects.projectsList[i],
+            canMove: true
+          },
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects.projectsList[i].name,
+            pathToZip: window.location.origin + '/assets/objects/walt.zip',
+            project: filteredProjects.projectsList[i],
+            canMove: false
+          },
+        ];
+      } else {
+        filteredProjects.projectsList[i].TEST_3D_Objects_Arr = [
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects.projectsList[i].name,
+            pathToZip: window.location.origin + '/assets/objects/female.zip',
+            project: filteredProjects.projectsList[i],
+            canMove: true
+          },
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects.projectsList[i].name,
+            pathToZip: window.location.origin + '/assets/objects/walt.zip',
+            project: filteredProjects.projectsList[i],
+            canMove: false
+          },
+        ];
+      }
+
     }
     return filteredProjects;
   }

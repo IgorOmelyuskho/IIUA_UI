@@ -109,13 +109,13 @@
         <select type="number" min=0 formControlName="employeesNumber" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.employeesNumber.errors }">
           <option value="" selected disabled>{{ 'employeesNumberPlaceholder' | translate:self }}</option>
-          <option value="1">0-1</option>
-          <option value="5">2-5</option>
-          <option value="10">6-10</option>
-          <option value="25">11-25</option>
-          <option value="50">26-50</option>
-          <option value="100">51-100</option>
-          <option value="101">100+</option>
+          <option value="0-1">0-1</option>
+          <option value="2-5">2-5</option>
+          <option value="6-10">6-10</option>
+          <option value="11-25">11-25</option>
+          <option value="26-50">26-50</option>
+          <option value="51-100">51-100</option>
+          <option value="101-10000">100+</option>
         </select>
         <div *ngIf="formControls.employeesNumber.errors" class="invalid-feedback">
           <div *ngIf="formControls.employeesNumber.errors.required">{{ 'employeesNumberEmpty' | translate:self }}</div>
