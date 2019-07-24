@@ -1,0 +1,106 @@
+.steps {
+    padding: 5px;
+    border: 1px solid blueviolet;
+  
+    .step-name {
+      margin-bottom: 5px;
+    }
+  
+    .invalid-new-step {
+      color: #dc3545;
+      font-size: 80%;
+    }
+  
+    .close {
+      outline: none;
+      margin: 5px;
+  
+      &:hover {
+        color: red;
+      }
+    }
+  }
+  
+  .photos-uploader,
+  .files-uploader {
+    margin-top: 20px;
+  }
+  
+  .avatara-img-wrapper {
+    display: inline-block;
+  
+    figure {
+      margin: 0;
+  
+      img {
+        max-width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+  
+  .wrapper {
+    border: 2px solid #e0e0e0;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  
+  hr {
+    border-top: 1px solid rgba(0, 0, 0, 0.7);
+  }
+  
+  .avatara {
+    .avatara-invalid-feedback {
+      color: #dc3545;
+      font-size: 80%;
+    }
+  
+    .select-avatara-input {
+      position: relative;
+      overflow: hidden;
+      margin: 5px 0;
+      width: fit-content;
+  
+      input[type=file] {
+        position: absolute;
+        left: -300px;
+        top: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+    }
+  }
+  
+  .project-photos,
+  .project-files {
+    img {
+      height: 50px;
+    }
+  
+    .min-files-count {
+      color: #dc3545;
+      font-size: 80%;
+      margin-bottom: 20px;
+    }
+  
+    .extension {
+      font-size: 1.5em;
+      color: rgb(83, 23, 139);
+      padding-left: 5px;
+    }
+  
+    .list-group-item {
+      padding: 4px 10px;
+    }
+  
+  }
+  
+  :host ::ng-deep .mat-select-arrow {
+    transform: scale(0.5, 1.2);
+    color: black;
+    position: relative;
+    left: 13.4px;
+  }
+  

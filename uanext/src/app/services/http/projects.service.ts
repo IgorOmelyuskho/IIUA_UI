@@ -15,7 +15,8 @@ const emptyVendorProject: VendorProject = {
   address: '',
   sphereActivities: [{ id: 1, name: 'string' }],
   companyAge: 0,
-  employeesNumber: '',
+  employeesNumberMin: '0',
+  employeesNumberMax: '0',
   employeesToHire: 0,
   grossIncome: '',
   averageCheck: 0,
@@ -84,6 +85,11 @@ export class ProjectsService {
 
   postSphereActivity(sphereActivity): Observable<any> {
     return this.http.post<any>(environment.projects + environment.sphereActivity, sphereActivity);
+  }
+
+  setProjectsQueue(queue: any[]): Observable<any> {
+    return this.http.put<any>(environment.projects + environment.changeQueuePosition, queue);
+
   }
 
   private addAvatara(projects: VendorProject[]): VendorProject[] {

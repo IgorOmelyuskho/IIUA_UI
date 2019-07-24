@@ -1,38 +1,38 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ProjectsService } from 'src/app/services/http/projects.service';
 import { FilesService } from 'src/app/services/http/files.service';
 import { FieldActivityInterface, TranslateService } from 'src/app/services/translate.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-update-vendor-project',
-  templateUrl: './update-vendor-project.component.html',
-  styleUrls: ['./update-vendor-project.component.scss']
+  selector: 'app-create-vendor-project-filled',
+  templateUrl: './create-vendor-project-filled.component.html',
+  styleUrls: ['./create-vendor-project-filled.component.scss']
 })
-export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
+export class CreateVendorProjectFilledComponent implements OnInit, OnDestroy {
   vendorProject: VendorProject = this.projectsService.emptyVendorProject;
   vendorProjectForm: FormGroup;
-  isLoaded = false;
+  submitted = false;
   showProgressBar = false;
-  @ViewChild('avatara') avataraImg: ElementRef;
-  projectId: string;
+  @ViewChild('avatara2') avataraImg: ElementRef;
   FormHelper = FormHelper;
-  self = 'UpdateVendorProjectComponent';
+  self = 'CreateVendorProjectComponent';
 
   avataraSize = 0;
   maxAvataraSize = 1024 * 1024 * 5;
   avataraFormData: FormData = new FormData();
   showAvataraProgress = false;
   avataraIsTouched = false;
+  avataraData: any;
 
   minPhotosCount = 5;
 
-  fieldActivityOptions_2: FieldActivityInterface[];
+  fieldActivityOptions: FieldActivityInterface[];
   fieldOfActivitySubscription: Subscription;
   regionOptions;
   regionSubscription: Subscription;
@@ -41,29 +41,28 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private notify: NotificationService,
     private projectsService: ProjectsService,
-    private activateRoute: ActivatedRoute,
     private filesService: FilesService,
     private translateService: TranslateService,
     private router: Router
   ) {
     this.vendorProjectForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['project-name', Validators.required],
       avatara: ['', Validators.required],
-      legalEntityName: ['', Validators.required],
-      goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
+      legalEntityName: ['company-name', Validators.required],
+      goal: ['goal', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['', Validators.required],
-      address: ['', Validators.required],
+      address: ['address', Validators.required],
       sphereActivities: ['', Validators.required],
-      companyAge: ['', Validators.required],
-      employeesNumber: ['', Validators.required],
-      employeesToHire: ['', Validators.required],
-      grossIncome: ['', Validators.required],
-      averageCheck: ['', Validators.required],
-      mounthlyClients: ['', Validators.required],
-      averagePrice: ['', Validators.required],
-      description: ['', [Validators.required, Validators.maxLength(1024)]],
-      moneyRequired: ['', Validators.required],
-      investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
+      companyAge: ['1', Validators.required],
+      employeesNumber: ['6-10', Validators.required],
+      employeesToHire: ['1', Validators.required],
+      grossIncome: ['100', Validators.required],
+      averageCheck: ['1', Validators.required],
+      mounthlyClients: ['1', Validators.required],
+      averagePrice: ['1', Validators.required],
+      description: ['description', [Validators.required, Validators.maxLength(1024)]],
+      moneyRequired: ['1', Validators.required],
+      investmentDescription: ['investmentDescription', [Validators.required, Validators.maxLength(4096)]],
       forSteps: [''],
       forVideos: [''],
       forPhotos: [''],
@@ -71,46 +70,11 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     });
   }
 
-  whenProjectIsLoaded() {
-    this.isLoaded = true;
-    this.setFormValues();
-    this.avataraImg.nativeElement['src'] = this.vendorProject.avatara.url;
-  }
-
-  getCompanyFromService() {
-    if (this.projectsService.projectForUpdate == null) {
-      return;
-    }
-    setTimeout(() => {
-      this.vendorProject = this.projectsService.projectForUpdate;
-      this.whenProjectIsLoaded();
-    }, 0);
-  }
-
-  getCompanyFromServer() {
-    const arrLength: number = this.activateRoute.url['value'].length;
-    this.projectId = this.activateRoute.url['value'][arrLength - 1].path;
-
-    this.projectsService.fetchVendorProjects().subscribe(
-      (projects: VendorProject[]) => {
-        for (let i = 0; i < projects.length; i++) {
-          if (projects[i].id.toString() === this.projectId.toString()) {
-            this.vendorProject = projects[i];
-            this.whenProjectIsLoaded();
-            return;
-          }
-        }
-      },
-      err => {
-        console.warn(err);
-      }
-    );
-  }
-
   ngOnInit() {
+    console.log('ngOnInit');
     this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
       (val: FieldActivityInterface[]) => {
-        this.fieldActivityOptions_2 = JSON.parse(JSON.stringify(val));
+        this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
       }
     );
 
@@ -120,16 +84,8 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       }
     );
 
-    if (
-      this.projectsService.projectForUpdate == null ||
-      this.projectsService.projectForUpdate === this.projectsService.emptyVendorProject
-    ) {
-      // use when page reload
-      this.getCompanyFromServer();
-    } else {
-      // else if navigate from projects
-      this.getCompanyFromService();
-    }
+    this.vendorProject.images = [];
+    this.vendorProject.files = [];
   }
 
   get formControls() {
@@ -161,6 +117,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
     if (event.target.files == null || event.target.files.length === 0) {
       this.avataraImg.nativeElement['src'] = this.FormHelper.emptyAvatara;
+      this.avataraFormData.delete('AVATAR');
       return;
     }
 
@@ -205,7 +162,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     this.filesService.uploadFiles(this.avataraFormData)
       .subscribe(
         res => {
-          this.vendorProject.avatara = res[0];
+          this.avataraData = res[0];
           this.vendorProjectForm.controls['avatara'].setErrors(null);
           this.avataraFormData.delete('AVATAR');
           this.showAvataraProgressBar(false);
@@ -216,61 +173,6 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
           this.showAvataraProgressBar(false);
         }
       );
-  }
-
-  setFormValues(): void {
-    const selectedActivities = [];
-    for (let i = 0; i < this.vendorProject.sphereActivities.length; i++) {
-      selectedActivities.push(this.vendorProject.sphereActivities[i].id.toString());
-    }
-    let employeesNumber: string;
-    if (this.vendorProject.employeesNumberMin === '0') {
-      employeesNumber = '0-1';
-    }
-    if (this.vendorProject.employeesNumberMin === '2') {
-      employeesNumber = '2-5';
-    }
-    if (this.vendorProject.employeesNumberMin === '6') {
-      employeesNumber = '6-10';
-    }
-    if (this.vendorProject.employeesNumberMin === '11') {
-      employeesNumber = '11-25';
-    }
-    if (this.vendorProject.employeesNumberMin === '26') {
-      employeesNumber = '26-50';
-    }
-    if (this.vendorProject.employeesNumberMin === '51') {
-      employeesNumber = '51-100';
-    }
-    if (this.vendorProject.employeesNumberMin === '101') {
-      employeesNumber = '101-10000';
-    }
-
-    this.vendorProjectForm.setValue({
-      name: this.vendorProject.name,
-      avatara: '',
-      legalEntityName: this.vendorProject.legalEntityName,
-      goal: this.vendorProject.goal,
-      region: this.vendorProject.region,
-      address: this.vendorProject.address,
-      sphereActivities: selectedActivities,
-      companyAge: this.vendorProject.companyAge,
-      employeesNumber: employeesNumber,
-      employeesToHire: this.vendorProject.employeesToHire,
-      grossIncome: this.vendorProject.grossIncome,
-      averageCheck: this.vendorProject.averageCheck,
-      mounthlyClients: this.vendorProject.mounthlyClients,
-      averagePrice: this.vendorProject.averagePrice,
-      description: this.vendorProject.description,
-      moneyRequired: this.vendorProject.moneyRequired,
-      investmentDescription: this.vendorProject.investmentDescription,
-      forSteps: '',
-      forVideos: '',
-      forPhotos: '',
-      forFiles: '',
-    });
-
-    this.vendorProjectForm.controls['avatara'].setErrors(null);
   }
 
   photosUploaded(event) {
@@ -318,43 +220,58 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.submitted = true;
+
+    if (this.vendorProject.steps.length === 0) {
+      this.vendorProjectForm.controls['forSteps'].setErrors({ 'err': true });
+    }
+    if (this.vendorProject.videos.length === 0) {
+      this.vendorProjectForm.controls['forVideos'].setErrors({ 'err': true });
+    }
+    if (this.vendorProject.images.length < this.minPhotosCount) {
+      this.vendorProjectForm.controls['forPhotos'].setErrors({ 'err': true });
+    }
+
     if (this.vendorProjectForm.valid === false) {
       return;
     }
 
-    const updatedVendorProject: VendorProject = {
+    const newVendorProject: VendorProject = {
       ...this.vendorProjectForm.value,
     };
 
-    updatedVendorProject.steps = this.vendorProject.steps;
-    updatedVendorProject.videos = this.vendorProject.videos;
-    updatedVendorProject.avatara = this.vendorProject.avatara;
-    updatedVendorProject.avatara.isAvatara = true;
-    updatedVendorProject.images = this.vendorProject.images;
-    updatedVendorProject.images.push(updatedVendorProject.avatara);
-    updatedVendorProject.files = this.vendorProject.files;
-    delete updatedVendorProject.avatara;
-    for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) {
-      updatedVendorProject.sphereActivities[i] = {
-        id: updatedVendorProject.sphereActivities[i]
+    newVendorProject.steps = this.vendorProject.steps;
+    newVendorProject.videos = this.vendorProject.videos;
+    newVendorProject.avatara = this.avataraData;
+    newVendorProject.avatara.isAvatara = true;
+    newVendorProject.images = this.vendorProject.images;
+    newVendorProject.images.push(newVendorProject.avatara);
+    newVendorProject.files = this.vendorProject.files;
+    delete newVendorProject.avatara;
+    for (let i = 0; i < newVendorProject.sphereActivities.length; i++) {
+      newVendorProject.sphereActivities[i] = {
+        id: newVendorProject.sphereActivities[i],
       };
     }
+    newVendorProject.employeesNumberMin = this.vendorProjectForm.value.employeesNumber.split('-')[0];
+    newVendorProject.employeesNumberMax = this.vendorProjectForm.value.employeesNumber.split('-')[1];
+    console.log(newVendorProject.employeesNumberMin);
+    console.log(newVendorProject.employeesNumberMax);
 
     this.showProgressBar = true;
-    this.projectsService.updateVendorProject(this.vendorProject.id, updatedVendorProject)
-      .subscribe(
-        response => {
-          this.showProgressBar = false;
-          this.notify.show(this.translateService.data.projectUpdated);
-          this.router.navigateByUrl('home/vendor/projects');
-        },
-        err => {
-          console.warn(err);
-          this.showProgressBar = false;
-          this.notify.show(this.translateService.data.projectNotUpdated);
-          this.router.navigateByUrl('home/vendor/projects');
-        }
-      );
+    this.projectsService.createVendorProject(newVendorProject).subscribe(
+      response => {
+        this.showProgressBar = false;
+        this.notify.show(this.translateService.data.projectSuccessfullyCreated);
+        this.router.navigateByUrl('home/vendor/projects');
+      },
+      err => {
+        console.warn(err);
+        this.showProgressBar = false;
+        this.notify.show(this.translateService.data.projectNotCreated);
+        this.router.navigateByUrl('home/vendor/projects');
+      }
+    );
   }
 
   ngOnDestroy() {

@@ -9,7 +9,8 @@ export interface VendorProject {
   address: string;
   sphereActivities: any[];
   companyAge: number;
-  employeesNumber: string;
+  employeesNumberMin?: string;
+  employeesNumberMax?: string;
   employeesToHire: number;
   grossIncome: string;
   averageCheck: number;
@@ -23,6 +24,7 @@ export interface VendorProject {
   images?: any[];
   files?: any[];
   rating?: string;
+  queuePosition?: any;
 
   TEST_3D_Objects_Arr?: any[];
 }

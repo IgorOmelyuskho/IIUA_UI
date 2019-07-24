@@ -48,9 +48,12 @@ export class VendorProjectsComponent implements OnInit {
       this.saveLayout(grid);
       this.stateService.cardClickEnabled = false;
     });
-
-    const userId = this.stateService.userId();
-    const layout = window.localStorage.getItem(userId);
+    const layout = this.projects.map((project) => {
+      return {
+        projectId: project.id,
+        queuePosition: project.queuePosition
+      };
+    });
     if (layout) {
       this.loadLayout(grid, layout);
     } else {
@@ -59,26 +62,40 @@ export class VendorProjectsComponent implements OnInit {
     grid.layout(true);
   }
 
-  serializeLayout(grid) {
-    const itemIds = grid.getItems().map((item) => {
+  saveLayout(grid) {
+    const itemIdsArr = grid.getItems().map((item) => {
       return item.getElement().getAttribute('data-id');
     });
-    return JSON.stringify(itemIds);
+    const res = [];
+    for (let i = 0; i < itemIdsArr.length; i++) {
+      res.push({
+        projectId: itemIdsArr[i],
+        queuePosition: i,
+      });
+    }
+    this.projectsService.setProjectsQueue(res).subscribe();
   }
 
-  saveLayout(grid) {
-    const userId = this.stateService.userId();
-    const layout = this.serializeLayout(grid);
-    window.localStorage.setItem(userId, layout);
-  }
+  loadLayout(grid, layout) {
+    const sortedByQueuePosition = layout.sort((a, b) => {
+      if (a.queuePosition < b.queuePosition) {
+        return -1;
+      }
+      if (a.queuePosition > b.queuePosition) {
+        return 1;
+      }
+      return 0;
+    });
 
-  loadLayout(grid, serializedLayout) {
-    const layout = JSON.parse(serializedLayout);
+    const layoutIdArr = sortedByQueuePosition.map(opt => {
+      return opt.projectId;
+    });
+
     const currentItems = grid.getItems();
     const currentItemIds = currentItems.map((item) => {
       return item.getElement().getAttribute('data-id');
     });
-    this.checkMatchLengths(currentItems, currentItemIds, layout, grid);
+    this.checkMatchLengths(currentItems, currentItemIds, layoutIdArr, grid);
   }
 
   checkMatchLengths(currentItems, currentItemIds, layout, grid) {
