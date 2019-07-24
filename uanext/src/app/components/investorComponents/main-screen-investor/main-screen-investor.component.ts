@@ -34,6 +34,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   previewCardY = 0;
   hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
+  projects: GeoObject[];
 
   showProgress: boolean;
 
@@ -153,12 +154,20 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
       this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          // this.addNewProjects(filteringProjects.projectsList);
           console.log(filteringProjects);
+          const projectsArr: GeoObject[] = [];
+          for (let i = 0; i < filteringProjects.projectsList.length; i++) {
+            for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
+              projectsArr.push(filteringProjects.projectsList[i].TEST_3D_Objects_Arr[j]);
+            }
+          }
+          this.projects = projectsArr;
+          console.log(this.projects);
           this.showProgress = false;
         },
         err => {
           console.warn(err);
+          this.projects = [];
           this.showProgress = false;
         }
       );
@@ -170,12 +179,20 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
       this.viewProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          // this.addNewProjects(filteringProjects.projectsList);
           console.log(filteringProjects);
+          const projectsArr: GeoObject[] = [];
+          for (let i = 0; i < filteringProjects.projectsList.length; i++) {
+            for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
+              projectsArr.push(filteringProjects.projectsList[i].TEST_3D_Objects_Arr[j]);
+            }
+          }
+          this.projects = projectsArr;
+          console.log(this.projects);
           this.showProgress = false;
         },
         err => {
           console.warn(err);
+          this.projects = [];
           this.showProgress = false;
         }
       );

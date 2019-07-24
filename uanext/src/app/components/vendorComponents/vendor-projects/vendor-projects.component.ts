@@ -69,14 +69,16 @@ export class VendorProjectsComponent implements OnInit {
     const res = [];
     for (let i = 0; i < itemIdsArr.length; i++) {
       res.push({
-        projectId: itemIdsArr[i],
+        projectId: parseInt(itemIdsArr[i], 10),
         queuePosition: i,
       });
     }
+    console.log(res);
     this.projectsService.setProjectsQueue(res).subscribe();
   }
 
   loadLayout(grid, layout) {
+    console.log(layout);
     const sortedByQueuePosition = layout.sort((a, b) => {
       if (a.queuePosition < b.queuePosition) {
         return -1;
@@ -118,7 +120,9 @@ export class VendorProjectsComponent implements OnInit {
       grid.sort(newItems, {
         layout: 'instant'
       });
-    } catch { }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   createNewProject() {

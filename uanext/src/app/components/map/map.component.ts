@@ -29,7 +29,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   set replace3DObjects(objects: GeoObject[]) {
     if (objects != null && this.mapManager != null) {
+      console.log(objects);
       this.mapManager.mapReplaceObjects(objects);
+
+      this.signalRService.objectsArr = objects.map((obj) => { // todo remove
+        return {
+          object3DId: obj.geoObjectId,
+          positionX: obj.coords.x,
+          positionY: obj.coords.y,
+          canMove: obj.canMove
+        };
+      });
     }
   }
 
@@ -53,19 +63,19 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.signalRService.signalRConnect(this.mapManager.signalRMessage); // or connect when sign in ?
 
     this.timeOut1 = setTimeout(() => {
-      this.mapManager.mapAddNewPolygons([polygon1]);
+      // this.mapManager.mapAddNewPolygons([polygon1]);
     }, 10);
 
     this.timeOut2 = setTimeout(() => {
-      this.mapManager.mapReplacePolygons([polygon1, polygon2]);
+      // this.mapManager.mapReplacePolygons([polygon1, polygon2]);
     }, 15);
 
     this.timeOut5 = setTimeout(() => {
-      this.mapManager.mapAddNewObjects([female2]);
+      // this.mapManager.mapAddNewObjects([female2]);
     }, 10);
 
     this.timeOut3 = setTimeout(() => {
-      this.mapManager.mapReplaceObjects([female, male, tractor, walt]); // if add object - add new object in signalRService
+      // this.mapManager.mapReplaceObjects([female, male, tractor, walt]); // if add object - add new object in signalRService
       // mapReplaceObjects([female, male]);
       // mapAddNewObjects([female, male]);
     }, 7500);
