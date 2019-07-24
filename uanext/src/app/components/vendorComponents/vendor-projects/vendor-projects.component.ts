@@ -73,13 +73,19 @@ export class VendorProjectsComponent implements OnInit {
         queuePosition: i,
       });
     }
-    console.log(res);
     this.projectsService.setProjectsQueue(res).subscribe();
   }
 
   loadLayout(grid, layout) {
-    console.log(layout);
     const sortedByQueuePosition = layout.sort((a, b) => {
+      if (a.projectId < b.projectId) {
+        return 1;
+      }
+      if (a.projectId > b.projectId) {
+        return -1;
+      }
+      return 0;
+    }).sort((a, b) => {
       if (a.queuePosition < b.queuePosition) {
         return -1;
       }
@@ -95,7 +101,7 @@ export class VendorProjectsComponent implements OnInit {
 
     const currentItems = grid.getItems();
     const currentItemIds = currentItems.map((item) => {
-      return item.getElement().getAttribute('data-id');
+      return parseInt(item.getElement().getAttribute('data-id'), 10);
     });
     this.checkMatchLengths(currentItems, currentItemIds, layoutIdArr, grid);
   }

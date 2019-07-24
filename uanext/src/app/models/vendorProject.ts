@@ -11,8 +11,8 @@ export interface VendorProject {
   address: string;
   sphereActivities: any[];
   companyAge: number;
-  employeesNumberMin?: string;
-  employeesNumberMax?: string;
+  employeesNumberMin?: number;
+  employeesNumberMax?: number;
   employeesToHire: number;
   grossIncome: string;
   averageCheck: number;

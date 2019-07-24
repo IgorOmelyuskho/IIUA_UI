@@ -10,11 +10,11 @@
       <div class="search-by-name">
         <div class="input-group mb-3 mt-3">
           <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button">
+            <button (click)="searchByKeywordBtn($event)" class="btn btn-outline-secondary" type="button">
               <span class="fa fa-search"></span>
             </button>
           </div>
-          <input #searchByKeyWordInput type="text" class="form-control" [(ngModel)]="searchWord"
+          <input #searchByKeyWordInput (keydown)="searchByKeywordKeyDown($event)" type="text" class="form-control" [(ngModel)]="searchWord"
             placeholder="{{ 'findProject' | translate:self }}" aria-label="Project name"
             aria-describedby="basic-addon2">
         </div>
