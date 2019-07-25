@@ -19,4 +19,5 @@ export class GeoObject {
   marker?: any;
   mouseUnder?: boolean;
   box3?: any;
+  boundingBoxHelper?: any;
 }

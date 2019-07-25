@@ -7,9 +7,13 @@ declare var maptalks: any;
 export class MapManager {
   // constants region
   private readonly zoomWhenChangeVisible = 16;
+  private readonly deltaZoom = 0.2;
+  private readonly zoomWhenClusterLayer = 12;
+  // private readonly zoomWhenClusterLayer = 1;
   private readonly initZoom = 15;
   private readonly updatedInterval = 3500;
   private readonly drawInterval = 50;
+  private readonly constForObjectsScale = 3;
 
   // callbacks
   private on_click_object: Function = null;
@@ -34,6 +38,7 @@ export class MapManager {
   private polygonLayer = null;
   private labelRenderer = null;
   private camera = null;
+  private objectsScale = 1;
 
   // html elements id
   private mapWrapperId: string;
@@ -130,7 +135,9 @@ export class MapManager {
   mapReplaceObjects(objects: GeoObject[]) {
     clearInterval(this.timerForDraw);
     for (let i = 0; i < this.objectsArr.length; i++) {
-      this.remove3DObjectFromScene(this.objectsArr[i].pointForMove);
+      if (this.objectsArr[i].pointForMove) {
+        this.remove3DObjectFromScene(this.objectsArr[i].pointForMove);
+      }
       this.remove3DObjectFromScene(this.objectsArr[i].object3D);
       if (this.objectsArr[i].objectDivLabel != null) {
         this.objectsArr[i].objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
@@ -276,7 +283,7 @@ export class MapManager {
     this.map = new maptalks.Map('map-html-element-id-495367235', { // DIV id
       center: [13.41261, 52.529611],
       zoom: this.initZoom,
-      minZoom : 3,
+      minZoom: 3,
       // pitch: 60,
       // bearing: 30,
       pitch: 0,
@@ -294,6 +301,7 @@ export class MapManager {
       })
     });
 
+    this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(this.map.getZoom());
     this.mapEventHandlers();
   }
 
@@ -305,13 +313,9 @@ export class MapManager {
     });
 
     this.map.on('zooming', (event) => {
-      // const scale = calcInterpolationScale(map.getZoom());
+      this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(this.map.getZoom());
       for (let i = 0; i < this.objectsArr.length; i++) {
-        if (this.objectsArr[i].object3D == null || this.objectsArr[i].marker == null) {
-          continue; // objectsArr[i].marker uses in changeVisible
-        }
-        this.changeVisible(this.objectsArr[i], event.to);
-        // objectsArr[i].model.scale.set(scale, scale, scale);
+        this.changeVisibleAndScale(this.objectsArr[i], event.to);
       }
     });
 
@@ -338,7 +342,7 @@ export class MapManager {
       'noClusterWithOneMarker': true,
       'animation': false,
       'maxClusterRadius': 50,
-      'maxClusterZoom': this.zoomWhenChangeVisible, // -2
+      'maxClusterZoom': this.zoomWhenClusterLayer,
       // "count" is an internal variable: marker count in the cluster.
       'symbol': {
         'markerType': 'ellipse',
@@ -445,15 +449,21 @@ export class MapManager {
     object3D.position.z = v.z;
 
     geoObject.box3 = new THREE.Box3().setFromObject(object3D);
+
+    geoObject.boundingBoxHelper = new THREE.BoundingBoxHelper(object3D, 0xff0000);
+    this.scene.add(geoObject.boundingBoxHelper);
+
     const cubeGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
     const cubeMaterial = new THREE.MeshBasicMaterial({
       color: 0x00ff00
     });
-    geoObject.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    geoObject.pointForMove.position.x = geoObject.object3D.position.x;
-    geoObject.pointForMove.position.y = geoObject.object3D.position.y;
-    geoObject.pointForMove.position.z = geoObject.object3D.position.z;
-    this.scene.add(geoObject.pointForMove);
+    if (geoObject.canMove === true) {
+      geoObject.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
+      geoObject.pointForMove.position.x = geoObject.object3D.position.x;
+      geoObject.pointForMove.position.y = geoObject.object3D.position.y;
+      geoObject.pointForMove.position.z = geoObject.object3D.position.z;
+      this.scene.add(geoObject.pointForMove);
+    }
 
     const objectDivLabel = document.createElement('div');
     objectDivLabel['geoObject'] = geoObject;
@@ -470,7 +480,7 @@ export class MapManager {
     objLabel.position.z = geoObject.box3.getSize().z * 1.1;
     geoObject.object3D.add(objLabel);
 
-    this.changeVisible(geoObject, this.map.getZoom());
+    this.changeVisibleAndScale(geoObject, this.map.getZoom());
     this.scene.add(object3D);
     this.threeLayer.renderScene();
   }
@@ -503,7 +513,7 @@ export class MapManager {
 
   private loadObject3D(obj: GeoObject) {
     THREE.ZipLoadingManager
-      .uncompress(obj.pathToZip, ['.mtl', '.obj', '.jpg', '.png'])
+      .uncompress(obj.pathToZip, ['.mtl', '.obj', '.jpg', '.png', '.ma'])
       .then((zip) => {
         const pathToFolder = zip.urls[0].substring(0, zip.urls[0].lastIndexOf('/') + 1);
         let mtlFileName = '';
@@ -579,7 +589,7 @@ export class MapManager {
     obj.marker = marker;
     obj.marker.parent = obj;
     this.clusterLayer.addGeometry(marker);
-    this.changeVisible(obj, this.map.getZoom());
+    this.changeVisibleAndScale(obj, this.map.getZoom());
     this.markerEventHandlers(marker);
   }
 
@@ -624,7 +634,10 @@ export class MapManager {
       this.updateCoordsForDraw(this.objectsArr[i]);
     }
 
-    if (this.map.getZoom() < this.zoomWhenChangeVisible + 0.2 || this.map.getZoom() < this.zoomWhenChangeVisible - 0.2) {
+    if (
+      this.map.getZoom() < this.zoomWhenChangeVisible + this.deltaZoom ||
+      this.map.getZoom() < this.zoomWhenChangeVisible - this.deltaZoom
+    ) {
       this.customRedraw(); // todo remove
       return;
     }
@@ -647,6 +660,7 @@ export class MapManager {
     obj.object3D.position.y = v.y;
     obj.object3D.position.z = v.z;
     obj.object3D.rotation.z = Math.atan2(prevY - obj.object3D.position.y, prevX - obj.object3D.position.x);
+    obj.boundingBoxHelper.update();
   }
   //#endregion
 
@@ -753,14 +767,32 @@ export class MapManager {
     this.canvasElem.style.cursor = cursor;
   }
 
-  private changeVisible(obj: GeoObject, zoom: number) {
-    if (zoom < this.zoomWhenChangeVisible + 0.2 || zoom < this.zoomWhenChangeVisible - 0.2) {
+  private changeVisibleAndScale(obj: GeoObject, mapZoom: number) {
+      if ( mapZoom < this.zoomWhenChangeVisible + this.deltaZoom || mapZoom < this.zoomWhenChangeVisible - this.deltaZoom ) {
+        if (obj.object3D) {
+          obj.object3D.scale.set(this.objectsScale, this.objectsScale, this.objectsScale);
+        }
+      } else {
+        if (obj.object3D) {
+          obj.object3D.scale.set(1, 1, 1);
+        }
+    }
+
+
+    if (mapZoom < this.zoomWhenChangeVisible + this.deltaZoom || mapZoom < this.zoomWhenChangeVisible - this.deltaZoom) {
+      // if (obj.object3D) {
+      //   obj.object3D.visible = false;
+      //   obj.objectDivLabel.style.display = 'none';
+      // }
+      // if (obj.marker) {
+      //   obj.marker.options.visible = true;
+      // }
       if (obj.object3D) {
-        obj.object3D.visible = false;
+        obj.object3D.visible = true;
         obj.objectDivLabel.style.display = 'none';
       }
       if (obj.marker) {
-        obj.marker.options.visible = true;
+        obj.marker.options.visible = false;
       }
     } else {
       if (obj.object3D) {

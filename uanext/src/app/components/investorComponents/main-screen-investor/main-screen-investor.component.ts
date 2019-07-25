@@ -80,14 +80,17 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
         distinctUntilChanged((a, b) => a === b),
       )
       .subscribe(res => {
-        this.searchProjectsByKeyword(this.searchWord, 100, 1);
+        this.searchProjectsByKeyword(this.searchWord, 5, 1);
       });
 
     this.$searchByFilterChange
       .pipe(
         debounceTime(1000),
       )
-      .subscribe(filterParam => {
+      .subscribe((filterParam: FilterFields) => {
+        filterParam.page = 1;
+        filterParam.pageSize = 5;
+        console.log(filterParam);
         this.searchProjectsByFilter(filterParam); // async
       });
   }
@@ -149,12 +152,12 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   searchByKeywordBtn(event) {
-    this.searchProjectsByKeyword(this.searchWord, 100, 1);
+    this.searchProjectsByKeyword(this.searchWord, 5, 1);
   }
 
   searchByKeywordKeyDown(e) {
     if (e.code === 'Enter') {
-      this.searchProjectsByKeyword(this.searchWord, 100, 1);
+      this.searchProjectsByKeyword(this.searchWord, 5, 1);
     }
   }
 

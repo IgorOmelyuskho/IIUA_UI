@@ -89,7 +89,7 @@ export class ViewProjectsService {
       filter.moneyRequiredTo = '100000000';
     }
 
-    if (filter.sphereActivities == null || filter.sphereActivities.length === 0) {
+    if ( (filter.sphereActivities == null || filter.sphereActivities.length === 0) && this.fieldActivityOptions != null) {
       filter.sphereActivities = this.fieldActivityOptions
         .filter(opt => opt.name !== this.fieldActivityOptions[0].name)
         .map(opt => {
@@ -155,7 +155,7 @@ export class ViewProjectsService {
             geoObjectId: 'ID-' + Math.random(),
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/walt.zip',
+            pathToZip: window.location.origin + '/assets/objects/building.zip',
             project: filteredProjects.projectsList[i],
             canMove: false
           },
@@ -166,7 +166,7 @@ export class ViewProjectsService {
             geoObjectId: 'ID-' + Math.random(),
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/female.zip',
+            pathToZip: window.location.origin + '/assets/objects/male.zip',
             project: filteredProjects.projectsList[i],
             canMove: true
           },
@@ -174,7 +174,7 @@ export class ViewProjectsService {
             geoObjectId: 'ID-' + Math.random(),
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/walt.zip',
+            pathToZip: window.location.origin + '/assets/objects/building.zip',
             project: filteredProjects.projectsList[i],
             canMove: false
           },
