@@ -23,7 +23,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input()
   set changeSelectedProject(project: VendorProject) {
     if (project != null && this.mapManager != null) {
-      this.mapManager.mapSetProject(project);
+      this.mapManager.mapSetCenterByProject(project);
     }
   }
 

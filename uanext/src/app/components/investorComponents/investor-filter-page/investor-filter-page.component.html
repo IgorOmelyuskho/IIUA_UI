@@ -16,7 +16,7 @@
               <span class="fa fa-search"></span>
             </button>
           </div>
-          <input #searchByKeyWordInput type="text" (keydown)="searchByKeywordKeyDown($event)" [(ngModel)]="searchWord"
+          <input #searchByKeyWordInput type="text" (input)="searchByKeywordInput($event)" [(ngModel)]="searchWord"
             class="form-control" placeholder="{{ 'findProject' | translate:self }}" aria-label="Project name"
             aria-describedby="basic-addon2">
         </div>

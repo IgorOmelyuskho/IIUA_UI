@@ -96,7 +96,9 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   filterOnChange(filterParam: FilterFields) {
-    this.filter = filterParam;
+    if (filterParam != null) {
+      this.filter = filterParam;
+    }
     this.$searchByFilterChange.next(this.filter);
   }
 
@@ -159,8 +161,11 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
   }
 
-  searchByKeywordKeyDown(e) {
-    if (e.code === 'Enter') {
+  searchByKeywordInput(event) {
+    if (event.target.value === '') {
+      this.filterOnChange(null);
+    }
+    if (event.code === 'Enter') {
       this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
     }
   }

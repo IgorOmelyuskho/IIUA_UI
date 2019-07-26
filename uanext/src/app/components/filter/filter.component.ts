@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import FormHelper from '../../helperClasses/helperClass';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { debounceTime, throttleTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, throttleTime, distinctUntilChanged, skip } from 'rxjs/operators';
 import { FilterFields, FilterItemsName } from 'src/app/models';
 import { FieldActivityInterface, TranslateService, UpdateRateInterface } from 'src/app/services/translate.service';
 
@@ -56,7 +56,7 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   avgCheckMax = 10000;
   avgCheckTouched = 0;
 
-  fieldActivityOptions: FieldActivityInterface[];
+  fieldActivityOptions: FieldActivityInterface[] = [];
   updateRateOptions: UpdateRateInterface[];
   regionOptions;
   sphereActivitiesSubscription: Subscription;
@@ -68,7 +68,9 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.sphereActivitiesSubscription = this.translateService.fieldOfActivityOptions.subscribe(
       (val: FieldActivityInterface[]) => {
-        this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
+        if (val != null) {
+          this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
+        }
       }
     );
 
@@ -97,7 +99,8 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filter$
       .pipe(
         debounceTime(10), // use for performance, not use big value - (slow filter item)
-        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)) // fix bug
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)), // fix bug
+        skip(1)
       )
       .subscribe(
         val => {
@@ -524,10 +527,8 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
         filter.avgCheckTo = this.avgCheckToElement.value;
       }
 
-      // this.filterChange.emit(filter);
       this.filter$.next(filter);
     } catch (err) {
-      // this.filterChange.emit(filter);
       this.filter$.next(filter);
     }
   }

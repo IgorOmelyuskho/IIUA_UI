@@ -53,7 +53,7 @@ export class MapManager {
     this.mapInit(cb);
   }
 
-  mapSetProject(project: VendorProject) {
+  mapSetCenterByProject(project: VendorProject) {
     // project.coords = {};
     // project.coords.x = Math.random() * 30;
     // project.coords.y = Math.random() * 30;

@@ -111,7 +111,9 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   filterOnChange(filterParam: FilterFields) {
-    this.filter = filterParam;
+    if (filterParam != null) {
+      this.filter = filterParam;
+    }
     this.filter.page = 1;
     this.filter.pageSize = this.pageSize;
     this.$searchByFilterChange.next(this.filter);
@@ -154,8 +156,11 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
     this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
   }
 
-  searchByKeywordKeyDown(e) {
-    if (e.code === 'Enter') {
+  searchByKeywordInput(event) {
+    if (event.target.value === '') {
+      this.filterOnChange(null);
+    }
+    if (event.code === 'Enter') {
       this.searchByScroll = false;
       this.resetBeforeNewSearch();
       this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
