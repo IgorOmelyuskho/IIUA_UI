@@ -6,10 +6,9 @@ declare var maptalks: any;
 
 export class MapManager {
   // constants region
-  private readonly zoomWhenChangeVisible = 16;
+  private readonly bigZoom = 16;
   private readonly deltaZoom = 0.2;
-  private readonly zoomWhenClusterLayer = 12;
-  // private readonly zoomWhenClusterLayer = 1;
+  private readonly avgZoom = 12;
   private readonly initZoom = 15;
   private readonly updatedInterval = 3500;
   private readonly drawInterval = 50;
@@ -19,6 +18,7 @@ export class MapManager {
   private on_click_object: Function = null;
   private on_hover_object: Function = null;
   private on_map_init: Function = null;
+  private on_map_change_extent: Function = null;
 
   // fields
   private canvasElem: HTMLElement = null;
@@ -85,6 +85,7 @@ export class MapManager {
     this.on_click_object = null;
     this.on_hover_object = null;
     this.on_map_init = null;
+    this.on_map_change_extent = null;
   }
 
   mapSetFullScreen() { // todo navbar height
@@ -127,10 +128,14 @@ export class MapManager {
   setObjectHoverCallback(cb: Function) {
     this.on_hover_object = cb;
   }
+
+  setChangeExtentCallback(cb: Function) {
+    this.on_map_change_extent = cb;
+  }
   //#endregion
 
 
-  // add / replace / delete / change GeoObjects or polygons with map
+  // add / replace / delete / change GeoObjects or polygons with map, getExtent
   //#region
   mapReplaceObjects(objects: GeoObject[]) {
     clearInterval(this.timerForDraw);
@@ -224,6 +229,17 @@ export class MapManager {
     this.polygonLayer.clear();
     this.mapAddNewPolygons(polygons);
   }
+
+  getExtent(): any {
+    const extent = this.map.getExtent();
+    const res = {
+      xmin: extent.xmin,
+      ymin: extent.ymin,
+      xmax: extent.xmax,
+      ymax: extent.ymax,
+    };
+    return res;
+  }
   //#endregion
 
 
@@ -313,7 +329,7 @@ export class MapManager {
     });
 
     this.map.on('zooming', (event) => {
-      this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(this.map.getZoom());
+      this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(event.to);
       for (let i = 0; i < this.objectsArr.length; i++) {
         this.changeVisibleAndScale(this.objectsArr[i], event.to);
       }
@@ -335,14 +351,36 @@ export class MapManager {
         }
       }
     });
+
+    this.map.on('animateend', (event) => {
+      if (this.on_map_change_extent != null) {
+        const extent = this.getExtent();
+        this.on_map_change_extent(extent);
+      }
+    });
+    this.map.on('moving', (event) => {
+      if (this.on_map_change_extent != null) {
+        const extent = this.getExtent();
+        this.on_map_change_extent(extent);
+      }
+    });
+    this.map.on('dragrotateend', (event) => {
+      if (this.on_map_change_extent != null) {
+        const extent = this.getExtent();
+        this.on_map_change_extent(extent);
+      }
+    });
   }
 
   private createClusterLayer() {
     this.clusterLayer = new maptalks.ClusterLayer('cluster', {
-      'noClusterWithOneMarker': true,
+      'noClusterWithOneMarker': false,
+      'single': false,
+      'drawClusterText': true,
+      'geometryEvents': true,
       'animation': false,
       'maxClusterRadius': 50,
-      'maxClusterZoom': this.zoomWhenClusterLayer,
+      'maxClusterZoom': this.avgZoom,
       // "count" is an internal variable: marker count in the cluster.
       'symbol': {
         'markerType': 'ellipse',
@@ -378,9 +416,6 @@ export class MapManager {
           ]
         }
       },
-      'drawClusterText': true,
-      'geometryEvents': true,
-      'single': true
     });
 
     this.map.addLayer(this.clusterLayer);
@@ -406,10 +441,6 @@ export class MapManager {
     this.threeLayer.addTo(this.map);
   }
   //#endregion
-
-  // init / remove 3D Object
-  //#region
-
 
   // init / remove 3D Object
   //#region
@@ -450,8 +481,8 @@ export class MapManager {
 
     geoObject.box3 = new THREE.Box3().setFromObject(object3D);
 
-    geoObject.boundingBoxHelper = new THREE.BoundingBoxHelper(object3D, 0xff0000);
-    this.scene.add(geoObject.boundingBoxHelper);
+    geoObject.boxHelper = new THREE.BoxHelper(object3D, 0xff0000);
+    this.scene.add(geoObject.boxHelper);
 
     const cubeGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
     const cubeMaterial = new THREE.MeshBasicMaterial({
@@ -634,14 +665,6 @@ export class MapManager {
       this.updateCoordsForDraw(this.objectsArr[i]);
     }
 
-    if (
-      this.map.getZoom() < this.zoomWhenChangeVisible + this.deltaZoom ||
-      this.map.getZoom() < this.zoomWhenChangeVisible - this.deltaZoom
-    ) {
-      this.customRedraw(); // todo remove
-      return;
-    }
-
     this.customRedraw();
   }
 
@@ -660,7 +683,7 @@ export class MapManager {
     obj.object3D.position.y = v.y;
     obj.object3D.position.z = v.z;
     obj.object3D.rotation.z = Math.atan2(prevY - obj.object3D.position.y, prevX - obj.object3D.position.x);
-    obj.boundingBoxHelper.update();
+    obj.boxHelper.update();
   }
   //#endregion
 
@@ -768,43 +791,54 @@ export class MapManager {
   }
 
   private changeVisibleAndScale(obj: GeoObject, mapZoom: number) {
-      if ( mapZoom < this.zoomWhenChangeVisible + this.deltaZoom || mapZoom < this.zoomWhenChangeVisible - this.deltaZoom ) {
-        if (obj.object3D) {
-          obj.object3D.scale.set(this.objectsScale, this.objectsScale, this.objectsScale);
-        }
-      } else {
-        if (obj.object3D) {
-          obj.object3D.scale.set(1, 1, 1);
-        }
-    }
-
-
-    if (mapZoom < this.zoomWhenChangeVisible + this.deltaZoom || mapZoom < this.zoomWhenChangeVisible - this.deltaZoom) {
-      // if (obj.object3D) {
-      //   obj.object3D.visible = false;
-      //   obj.objectDivLabel.style.display = 'none';
-      // }
-      // if (obj.marker) {
-      //   obj.marker.options.visible = true;
-      // }
-      if (obj.object3D) {
-        obj.object3D.visible = true;
-        obj.objectDivLabel.style.display = 'none';
-      }
-      if (obj.marker) {
-        obj.marker.options.visible = false;
-      }
+    if (mapZoom >= this.bigZoom + this.deltaZoom) {
+      this.whenBigZoom(obj);
+    } else if (mapZoom < this.avgZoom + this.deltaZoom) {
+      this.whenSmallZoom(obj);
     } else {
-      if (obj.object3D) {
-        obj.object3D.visible = true;
-        obj.objectDivLabel.style.display = '';
-      }
-      if (obj.marker) {
-        obj.marker.options.visible = false;
-      }
+      this.whenAvgZoom(obj);
     }
   }
 
+  private whenBigZoom(obj: GeoObject) {
+    if (obj.object3D) {
+      obj.object3D.visible = true;
+      obj.objectDivLabel.style.display = '';
+    }
+    if (obj.boxHelper) {
+      obj.boxHelper.visible = true;
+    }
+    if (obj.marker) {
+      obj.marker.options.visible = false;
+    }
+  }
+
+  private whenAvgZoom(obj: GeoObject) {
+    if (obj.object3D) {
+      obj.object3D.scale.set(this.objectsScale, this.objectsScale, this.objectsScale);
+      obj.object3D.visible = true;
+      obj.objectDivLabel.style.display = 'none';
+    }
+    if (obj.boxHelper) {
+      obj.boxHelper.visible = true;
+    }
+    if (obj.marker) {
+      obj.marker.options.visible = false;
+    }
+  }
+
+  private whenSmallZoom(obj: GeoObject) {
+    if (obj.object3D) {
+      obj.object3D.visible = false;
+      obj.objectDivLabel.style.display = 'none';
+    }
+    if (obj.boxHelper) {
+      obj.boxHelper.visible = false;
+    }
+    if (obj.marker) {
+      obj.marker.options.visible = false;
+    }
+  }
 
   // change object scale
   //#region

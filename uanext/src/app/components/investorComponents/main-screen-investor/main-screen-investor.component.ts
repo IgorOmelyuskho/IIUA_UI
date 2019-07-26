@@ -141,6 +141,10 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     // todo 'load obj model after this log'
   }
 
+  onMapChangeExtent(extent) {
+    console.log(extent);
+  }
+
   getAvataraUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
@@ -167,7 +171,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
       this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          console.log(filteringProjects);
           const projectsArr: GeoObject[] = [];
           for (let i = 0; i < filteringProjects.projectsList.length; i++) {
             for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
@@ -175,7 +178,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
             }
           }
           this.projects = projectsArr;
-          console.log(this.projects);
           this.showProgress = false;
         },
         err => {
@@ -192,7 +194,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
       this.viewProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          console.log(filteringProjects);
           const projectsArr: GeoObject[] = [];
           for (let i = 0; i < filteringProjects.projectsList.length; i++) {
             for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
@@ -200,7 +201,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
             }
           }
           this.projects = projectsArr;
-          console.log(this.projects);
           this.showProgress = false;
         },
         err => {

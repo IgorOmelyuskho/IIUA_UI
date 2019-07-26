@@ -123,7 +123,7 @@ export class ViewProjectsService {
   }
 
   private add3DObjectsArr(filteredProjects: FilteredProjects): FilteredProjects {
-    const delta = 0.005;
+    const delta = 0.5;
     for (let i = 0; i < filteredProjects.projectsList.length; i++) {
       if (Math.random() > 0.5) {
         filteredProjects.projectsList[i].TEST_3D_Objects_Arr = [
