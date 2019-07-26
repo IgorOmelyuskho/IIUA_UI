@@ -38,7 +38,8 @@ export class MapManager {
   private polygonLayer = null;
   private labelRenderer = null;
   private camera = null;
-  private objectsScale = 1;
+  private objectsScale: number = null;
+  private prevClusterGeoObjectId: string = null;
 
   // html elements id
   private mapWrapperId: string;
@@ -81,6 +82,8 @@ export class MapManager {
     this.clusterLayer = null;
     this.polygonLayer = null;
     this.camera = null;
+    this.objectsScale = null;
+    this.prevClusterGeoObjectId = null;
 
     this.on_click_object = null;
     this.on_hover_object = null;
@@ -326,6 +329,26 @@ export class MapManager {
       this.mouse.x = (event.containerPoint.x / event.target.width) * 2 - 1;
       this.mouse.y = -(event.containerPoint.y / event.target.height) * 2 + 1;
       this.selectObjects();
+
+      const identify = this.clusterLayer.identify(event.coordinate);
+      if (identify.children == null) {
+        this.prevClusterGeoObjectId = null;
+        return;
+      }
+      if (this.map.getZoom() < this.avgZoom + this.deltaZoom) { // pointer when cluster contain more than 1 items ?
+        this.setCanvasCursor('pointer');
+      } else {
+        this.setCanvasCursor('inherit');
+      }
+      if (identify.children.length === 1) {
+        const geoObject: GeoObject = identify.children[0].parent;
+        if (geoObject.geoObjectId !== this.prevClusterGeoObjectId) { // so that there are not many events
+          if (this.on_hover_object != null) {
+            this.on_hover_object(geoObject);
+          }
+        }
+        this.prevClusterGeoObjectId = geoObject.geoObjectId;
+      }
     });
 
     this.map.on('zooming', (event) => {
@@ -336,6 +359,14 @@ export class MapManager {
     });
 
     this.map.on('click', (event) => {
+      const identify = this.clusterLayer.identify(event.coordinate);
+      if (identify.children && identify.children.length === 1) {
+        const geoObject: GeoObject = identify.children[0].parent;
+        if (this.on_click_object != null) {
+          this.on_click_object(geoObject);
+        }
+      }
+
       for (let i = 0; i < this.objectsArr.length; i++) {
         if (this.objectsArr[i].mouseUnder === true) {
           if (this.selectedObject != null) {
@@ -375,7 +406,7 @@ export class MapManager {
   private createClusterLayer() {
     this.clusterLayer = new maptalks.ClusterLayer('cluster', {
       'noClusterWithOneMarker': false,
-      'single': false,
+      'single': false, // not work ?
       'drawClusterText': true,
       'geometryEvents': true,
       'animation': false,

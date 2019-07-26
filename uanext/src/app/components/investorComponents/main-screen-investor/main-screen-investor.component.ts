@@ -35,7 +35,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
   projects: GeoObject[];
-
+  readonly maxPageSize = 2;
   showProgress: boolean;
 
   windowMouseMoveHandler = (e) => {
@@ -80,7 +80,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
         distinctUntilChanged((a, b) => a === b),
       )
       .subscribe(res => {
-        this.searchProjectsByKeyword(this.searchWord, 5, 1);
+        this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
       });
 
     this.$searchByFilterChange
@@ -89,7 +89,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
       )
       .subscribe((filterParam: FilterFields) => {
         filterParam.page = 1;
-        filterParam.pageSize = 5;
+        filterParam.pageSize = this.maxPageSize;
         console.log(filterParam);
         this.searchProjectsByFilter(filterParam); // async
       });
@@ -156,12 +156,12 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   searchByKeywordBtn(event) {
-    this.searchProjectsByKeyword(this.searchWord, 5, 1);
+    this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
   }
 
   searchByKeywordKeyDown(e) {
     if (e.code === 'Enter') {
-      this.searchProjectsByKeyword(this.searchWord, 5, 1);
+      this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
     }
   }
 
