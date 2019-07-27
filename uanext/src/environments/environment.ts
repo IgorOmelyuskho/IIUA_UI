@@ -41,6 +41,7 @@ export const environment = {
   postHistoryData: '/api/Map/PostHistoryData',
   getLastHistoryCoordinates: '/api/Map/GetLastHistoryCoordinates',
   search3DObject: '/api/Map/Search3DObject',
+  mapFilteringProjects: '/api/Map/projects-filtering',
 
   Notification: '/api/Notification',
 

@@ -8,6 +8,7 @@ import { responseProject } from 'src/app/helperClasses/projects';
 import { BehaviorSubject, Subscription, fromEvent } from 'rxjs';
 import { map, debounceTime, filter, distinctUntilChanged, tap } from 'rxjs/operators';
 import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { MapService } from 'src/app/services/http/map.service';
 
 @Component({
   selector: 'app-main-screen-investor',
@@ -50,7 +51,11 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     }, 100);
   }
 
-  constructor(private stateService: StateService, private filteredProjectsService: FilteredProjectsService) { }
+  constructor(
+    private stateService: StateService,
+    private filteredProjectsService: FilteredProjectsService,
+    private mapService: MapService
+  ) { }
 
   ngOnInit() {
     new Image().src = '../../../assets/img/message-3.png';
@@ -145,10 +150,24 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
 
   onMapChangeExtent(extent) {
     if (this.prevSearch === 'filter') {
-      this.searchProjectsByFilter(this.filter);
+      // this.searchProjectsByFilter(this.filter);
+      const requestDto = {...this.filter};
+      requestDto.coordinateFrame = extent;
+      this.mapService.mapFilteringProjects(this.filter).subscribe(
+        val => {
+          console.log(val);
+        }
+      );
     }
     if (this.prevSearch === 'keyWord') {
-      this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
+      // this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
+      const requestDto = {...this.filter};
+      requestDto.coordinateFrame = extent;
+      this.mapService.mapFilteringProjects(this.filter).subscribe(
+        val => {
+          console.log(val);
+        }
+      );
     }
   }
 

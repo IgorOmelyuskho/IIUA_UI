@@ -2,6 +2,8 @@ export interface FilterFields {
   page?: string | number;
   pageSize?: string | number;
 
+  coordinateFrame?: any;
+
   projectName?: string;
   companyName?: string;
 
