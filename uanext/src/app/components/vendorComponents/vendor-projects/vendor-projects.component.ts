@@ -16,6 +16,7 @@ export class VendorProjectsComponent implements OnInit {
   isLoaded = false;
   self = 'VendorProjectsComponent';
   selfUserId: string;
+  prevLayout: any[];
 
   constructor(private router: Router, private projectsService: ProjectsService, private stateService: StateService) { }
 
@@ -45,7 +46,8 @@ export class VendorProjectsComponent implements OnInit {
         distance: 10,
       },
     }).on('dragEnd', (item, event) => {
-      this.saveLayout(grid);
+      const projectId: string = item.getElement().getAttribute('data-id');
+      this.saveLayout(grid, projectId, true);
       this.stateService.cardClickEnabled = false;
     });
     const layout = this.projects.map((project) => {
@@ -60,40 +62,42 @@ export class VendorProjectsComponent implements OnInit {
       grid.layout(true);
     }
     grid.layout(true);
+    this.saveLayout(grid, null, false);
   }
 
-  saveLayout(grid) {
+  saveLayout(grid: any, projectId: string, sendToBackend: boolean) {
     const itemIdsArr = grid.getItems().map((item) => {
       return item.getElement().getAttribute('data-id');
     });
-    const res = [];
+    const newLayout = [];
     for (let i = 0; i < itemIdsArr.length; i++) {
-      res.push({
+      newLayout.push({
         projectId: parseInt(itemIdsArr[i], 10),
         queuePosition: i,
       });
     }
-    this.projectsService.setProjectsQueue(res).subscribe();
+    if (sendToBackend === true) {
+      const forSend: any = {};
+      forSend.projectId = parseInt(projectId, 10);
+      forSend.oldQueuePosition = this.prevLayout.map(opt => opt.projectId).indexOf(parseInt(projectId, 10));
+      forSend.newQueuePosition = newLayout.map(opt => opt.projectId).indexOf(parseInt(projectId, 10));
+      this.projectsService.setProjectsQueue(forSend).subscribe();
+      this.prevLayout = newLayout;
+    } else {
+      this.prevLayout = newLayout;
+    }
   }
 
   loadLayout(grid, layout) {
     const sortedByQueuePosition = layout.sort((a, b) => {
-      if (a.projectId < b.projectId) {
-        return 1;
-      }
-      if (a.projectId > b.projectId) {
-        return -1;
-      }
-      return 0;
-    }).sort((a, b) => {
-      if (a.queuePosition < b.queuePosition) {
-        return -1;
-      }
-      if (a.queuePosition > b.queuePosition) {
-        return 1;
-      }
-      return 0;
-    });
+        if (a.queuePosition < b.queuePosition) {
+          return -1;
+        }
+        if (a.queuePosition > b.queuePosition) {
+          return 1;
+        }
+        return 0;
+      });
 
     const layoutIdArr = sortedByQueuePosition.map(opt => {
       return opt.projectId;
@@ -103,22 +107,13 @@ export class VendorProjectsComponent implements OnInit {
     const currentItemIds = currentItems.map((item) => {
       return parseInt(item.getElement().getAttribute('data-id'), 10);
     });
-    this.checkMatchLengths(currentItems, currentItemIds, layoutIdArr, grid);
+    this.applyLayout(currentItems, currentItemIds, layoutIdArr, grid);
   }
 
-  checkMatchLengths(currentItems, currentItemIds, layout, grid) {
-    const arrayDifference = (x1, x2) => {
-      return x1.filter(x => !x2.includes(x));
-    };
-
-    const arrDiff = arrayDifference(currentItemIds, layout);
-    arrDiff.sort((a, b) => {
-      return parseInt(b, 10) - parseInt(a, 10);
-    });
-    const bufferArr = arrDiff.concat(layout);
+  applyLayout(currentItems, currentItemIds, layout, grid) {
     const newItems = [];
-    for (let i = 0; i < bufferArr.length; i++) {
-      const itemIndex = currentItemIds.indexOf(bufferArr[i]);
+    for (let i = 0; i < layout.length; i++) {
+      const itemIndex = currentItemIds.indexOf(layout[i]);
       newItems.push(currentItems[itemIndex]);
     }
 

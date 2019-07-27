@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { map, tap, delay } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from 'src/app/helperClasses/projects';
+import { StateService } from '../state/state.service';
 
 const emptyVendorProject: VendorProject = {
   name: '',
@@ -87,9 +88,8 @@ export class ProjectsService {
     return this.http.post<any>(environment.projects + environment.sphereActivity, sphereActivity);
   }
 
-  setProjectsQueue(queue: any[]): Observable<any> {
-    return this.http.put<any>(environment.projects + environment.changeQueuePosition, queue);
-
+  setProjectsQueue(param): Observable<any> {
+    return this.http.put<any>(environment.projects + environment.changeQueuePosition, param);
   }
 
   private addAvatara(projects: VendorProject[]): VendorProject[] {
