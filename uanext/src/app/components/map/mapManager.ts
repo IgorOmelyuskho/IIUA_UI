@@ -1,6 +1,7 @@
 import Stats from 'stats-js';
 import { GeoObject } from 'src/app/models';
 import { VendorProject } from 'src/app/models/vendorProject';
+import { TouchSequence } from 'selenium-webdriver';
 declare var THREE: any;
 declare var maptalks: any;
 
@@ -140,33 +141,64 @@ export class MapManager {
 
   // add / replace / delete / change GeoObjects or polygons with map, getExtent
   //#region
-  mapReplaceObjects(objects: GeoObject[]) {
+  mapReplaceObjects(replacementObjectsArr: GeoObject[]) {
     clearInterval(this.timerForDraw);
-    for (let i = 0; i < this.objectsArr.length; i++) {
-      if (this.objectsArr[i].pointForMove) {
-        this.remove3DObjectFromScene(this.objectsArr[i].pointForMove);
+
+    const diff = (x1: string[], x2: string[]) => {
+      return x1.filter(x => !x2.includes(x));
+    };
+
+    // преобразуем массив GeoObject[] в массив geoObjectId
+    const objectsArrId: string[] = this.objectsArr.map((item: GeoObject) => {
+      return item.geoObjectId;
+    });
+
+    // преобразуем массив GeoObject[] в массив geoObjectId
+    const replacementObjectsArrId: string[] = replacementObjectsArr.map((item: GeoObject) => {
+      return item.geoObjectId;
+    });
+
+    const addArrId: string[] = diff(replacementObjectsArrId, objectsArrId); // массив geoObjectId которые нужно добавить
+    const leaveArrId: string[] = diff(replacementObjectsArrId, addArrId); // массив geoObjectId которые остаются
+    const removeArrId: string[] = diff(objectsArrId, replacementObjectsArrId); // массив geoObjectId которые нужно удалить
+
+    // const removeArrForPush: GeoObject[] = []; // массив geoObjectId которые нужно удалить
+    for (let i = 0; i < removeArrId.length; i++) {
+      for (let j = 0; j < this.objectsArr.length; j++) {
+        if (removeArrId[i] === this.objectsArr[j].geoObjectId) {
+          // removeArrForPush.push(this.objectsArr[j]);
+          this.remove3DObjectFromScene(this.objectsArr[j]);
+        }
       }
-      if (this.objectsArr[i].boxHelper) {
-        this.scene.remove(this.objectsArr[i].boxHelper);
-      }
-      if (this.objectsArr[i].objectDivLabel != null) {
-        this.objectsArr[i].objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
-        this.objectsArr[i].objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
-        this.objectsArr[i].objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
-        this.objectsArr[i].objectDivLabel.style.display = 'none';
-        this.objectsArr[i].objectDivLabel.parentNode.removeChild(this.objectsArr[i].objectDivLabel); // not work
-      }
-      this.remove3DObjectFromScene(this.objectsArr[i].object3D);
     }
-    // while (scene.children.length > 0) {
-    //   scene.remove(scene.children[0]);
-    // }
-    // scene.remove.apply(scene, scene.children);
-    // scene.add(new THREE.AmbientLight(0xffffff, 1));
+
+    const leaveArrForPush: GeoObject[] = [];  // массив geoObjectId которые остаются
+    for (let i = 0; i < leaveArrId.length; i++) {
+      for (let j = 0; j < this.objectsArr.length; j++) {
+        if (leaveArrId[i] === this.objectsArr[j].geoObjectId) {
+          leaveArrForPush.push(this.objectsArr[j]);
+        }
+      }
+    }
+    this.objectsArr = leaveArrForPush; // addArrForPush добавятся в this.objectsArr в методе this.mapAddNewObjects(addArrForPush);
+
+    const addArrForPush: GeoObject[] = []; // массив geoObjectId которые нужно добавить
+    for (let i = 0; i < addArrId.length; i++) {
+      for (let j = 0; j < replacementObjectsArr.length; j++) {
+        if (addArrId[i] === replacementObjectsArr[j].geoObjectId) {
+          addArrForPush.push(replacementObjectsArr[j]);
+        }
+      }
+    }
+    this.mapAddNewObjects(addArrForPush);
+
     this.clusterLayer.clear();
-    this.objectsArr = [];
-    this.customRedraw();
-    this.mapAddNewObjects(objects);
+    // тут this.objectsArr включает в себя и leaveArrForPush и addArrForPush,
+    // которые были добавлены в методе в методе this.mapAddNewObjects(addArrForPush);
+    for (let i = 0; i < this.objectsArr.length; i++) {
+      this.clusterLayer.addGeometry(this.objectsArr[i].marker);
+    }
+
     this.timerForDraw = setInterval(() => {
       this.updateCoordsForRedraw();
     }, this.drawInterval);
@@ -480,20 +512,46 @@ export class MapManager {
 
   // init / remove 3D Object
   //#region
-  private remove3DObjectFromScene(object: any) { // any - not geoObject !
-    if (object == null) {
+  private remove3DObjectFromScene(geoObject: GeoObject) { // any - not geoObject !
+    if (geoObject == null) {
       return; // null when object model did not have time to boot
     }
-    if (object.geometry) {
-      object.geometry.dispose();
+
+    if (geoObject.pointForMove) {
+      if (geoObject.pointForMove.geometry) {
+        geoObject.pointForMove.geometry.dispose();
+      }
+      if (geoObject.pointForMove.material) {
+        geoObject.pointForMove.material.dispose();
+      }
+      if (geoObject.pointForMove.texture) {
+        geoObject.pointForMove.texture.dispose();
+      }
+      this.scene.remove(geoObject.pointForMove);
     }
-    if (object.material) {
-      object.material.dispose();
+
+    if (geoObject.boxHelper) {
+      this.scene.remove(geoObject.boxHelper);
     }
-    if (object.texture) {
-      object.texture.dispose();
+
+    if (geoObject.objectDivLabel != null) {
+      geoObject.objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
+      geoObject.objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
+      geoObject.objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
+      geoObject.objectDivLabel.style.display = 'none';
+      geoObject.objectDivLabel.parentNode.removeChild(geoObject.objectDivLabel); // not work
     }
-    this.scene.remove(object);
+
+    if (geoObject.object3D.geometry) {
+      geoObject.object3D.geometry.dispose();
+    }
+    if (geoObject.object3D.material) {
+      geoObject.object3D.material.dispose();
+    }
+    if (geoObject.object3D.texture) {
+      geoObject.object3D.texture.dispose();
+    }
+    this.scene.remove(geoObject.object3D);
   }
 
   private init3dObject(geoObject: GeoObject, object3D: any) {
@@ -654,6 +712,7 @@ export class MapManager {
     });
 
     obj.marker = marker;
+    obj.marker.options.visible = false;
     obj.marker.parent = obj;
     this.clusterLayer.addGeometry(marker);
     this.changeVisibleAndScale(obj, this.map.getZoom());
@@ -844,9 +903,6 @@ export class MapManager {
     if (obj.boxHelper) {
       obj.boxHelper.visible = true;
     }
-    if (obj.marker) {
-      obj.marker.options.visible = false;
-    }
   }
 
   private whenAvgZoom(obj: GeoObject) {
@@ -858,9 +914,6 @@ export class MapManager {
     if (obj.boxHelper) {
       obj.boxHelper.visible = true;
     }
-    if (obj.marker) {
-      obj.marker.options.visible = false;
-    }
   }
 
   private whenSmallZoom(obj: GeoObject) {
@@ -870,9 +923,6 @@ export class MapManager {
     }
     if (obj.boxHelper) {
       obj.boxHelper.visible = false;
-    }
-    if (obj.marker) {
-      obj.marker.options.visible = false;
     }
   }
 

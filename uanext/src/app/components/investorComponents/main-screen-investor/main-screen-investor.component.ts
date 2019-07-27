@@ -151,23 +151,25 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   onMapChangeExtent(extent) {
     if (this.prevSearch === 'filter') {
       // this.searchProjectsByFilter(this.filter);
-      const requestDto = {...this.filter};
-      requestDto.coordinateFrame = extent;
-      this.mapService.mapFilteringProjects(this.filter).subscribe(
-        val => {
-          console.log(val);
-        }
-      );
+
+      // const requestDto = {...this.filter};
+      // requestDto.coordinateFrame = extent;
+      // this.mapService.mapFilteringProjects(requestDto).subscribe(
+      //   val => {
+      //     console.log(val);
+      //   }
+      // );
     }
     if (this.prevSearch === 'keyWord') {
       // this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
-      const requestDto = {...this.filter};
-      requestDto.coordinateFrame = extent;
-      this.mapService.mapFilteringProjects(this.filter).subscribe(
-        val => {
-          console.log(val);
-        }
-      );
+
+      // const requestDto = {...this.filter};
+      // requestDto.coordinateFrame = extent;
+      // this.mapService.mapFilteringProjects(requestDto).subscribe(
+      //   val => {
+      //     console.log(val);
+      //   }
+      // );
     }
   }
 
