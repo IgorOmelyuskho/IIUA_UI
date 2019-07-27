@@ -335,12 +335,12 @@ export class MapManager {
         this.prevClusterGeoObjectId = null;
         return;
       }
-      if (this.map.getZoom() < this.avgZoom + this.deltaZoom) { // pointer when cluster contain more than 1 items ?
-        this.setCanvasCursor('pointer');
-      } else {
-        this.setCanvasCursor('inherit');
-      }
-      if (identify.children.length === 1) {
+      if (identify.children.length === 1) { // if number 1 on cluster
+        if (this.map.getZoom() < this.avgZoom + this.deltaZoom) {
+          this.setCanvasCursor('pointer');
+        } else {
+          this.setCanvasCursor('inherit');
+        }
         const geoObject: GeoObject = identify.children[0].parent;
         if (geoObject.geoObjectId !== this.prevClusterGeoObjectId) { // so that there are not many events
           if (this.on_hover_object != null) {
@@ -348,6 +348,8 @@ export class MapManager {
           }
         }
         this.prevClusterGeoObjectId = geoObject.geoObjectId;
+      } else { // if number 2 or more on cluster
+        this.setCanvasCursor('default');
       }
     });
 

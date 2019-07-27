@@ -32,7 +32,7 @@ export const environment = {
   uploadFiles: '/api/Upload',
 
   vendorProject: '/api/Projects/',
-  filteringProjects: '/api/FilteringProjects',
+  filteringProjects: '/api/FilteringProjects/Filtering-projects',
   sphereActivity: '/api/SphereActivity',
   changeQueuePosition: '/api/Projects/ChangeQueuePosition',
 
