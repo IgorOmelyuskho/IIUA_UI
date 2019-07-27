@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { environment } from 'src/environments/environment';
 import { tap, map, catchError, delay } from 'rxjs/operators';
-import { FilteredProjects, FilterFields } from 'src/app/models';
+import { FilteredProjects, FilterFields, GeoObject } from 'src/app/models';
 import { responseProjects } from 'src/app/helperClasses/projects';
 import { FilterComponent } from 'src/app/components';
 import { FieldActivityInterface, TranslateService } from '../translate.service';
@@ -18,10 +18,13 @@ const emptyFilteredProjects = {
 @Injectable({
   providedIn: 'root'
 })
-export class ViewProjectsService {
+export class FilteredProjectsService {
 
   projectForView: VendorProject = null; // initial when click on selected project
   fieldActivityOptions: FieldActivityInterface[];
+
+  // todo remove
+  public mockGeoObjectArr: {projectId: number, TEST_3D_Objects_Arr: GeoObject[]}[] = [];
 
   constructor(private http: HttpClient, private translateService: TranslateService) {
     this.translateService.fieldOfActivityOptions.subscribe(
@@ -29,6 +32,8 @@ export class ViewProjectsService {
         this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
       }
     );
+
+    this.bindGeoObjectsToProjectsIds();
   }
 
   searchByFilter(filter: FilterFields = {}): Observable<FilteredProjects> {
@@ -122,67 +127,77 @@ export class ViewProjectsService {
     return filteredProjects;
   }
 
+  // todo remove
   private add3DObjectsArr(filteredProjects: FilteredProjects): FilteredProjects {
-    const delta = 0.5;
     for (let i = 0; i < filteredProjects.projectsList.length; i++) {
-      if (Math.random() > 0.5) {
-        filteredProjects.projectsList[i].TEST_3D_Objects_Arr = [
-          {
-            geoObjectId: 'ID-' + Math.random(),
-            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
-            projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/female.zip',
-            project: filteredProjects.projectsList[i],
-            canMove: true
-          },
-          {
-            geoObjectId: 'ID-' + Math.random(),
-            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
-            projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/male.zip',
-            project: filteredProjects.projectsList[i],
-            canMove: true
-          },
-          {
-            geoObjectId: 'ID-' + Math.random(),
-            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
-            projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-            project: filteredProjects.projectsList[i],
-            canMove: true
-          },
-          {
-            geoObjectId: 'ID-' + Math.random(),
-            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
-            projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/building.zip',
-            project: filteredProjects.projectsList[i],
-            canMove: false
-          },
-        ];
-      } else {
-        filteredProjects.projectsList[i].TEST_3D_Objects_Arr = [
-          {
-            geoObjectId: 'ID-' + Math.random(),
-            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
-            projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/male.zip',
-            project: filteredProjects.projectsList[i],
-            canMove: true
-          },
-          {
-            geoObjectId: 'ID-' + Math.random(),
-            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
-            projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/building.zip',
-            project: filteredProjects.projectsList[i],
-            canMove: false
-          },
-        ];
+      filteredProjects.projectsList[i].TEST_3D_Objects_Arr = this.mockGeoObjectArr[filteredProjects.projectsList[i].id].TEST_3D_Objects_Arr;
+      for (let j = 0; j < filteredProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
+        filteredProjects.projectsList[i].TEST_3D_Objects_Arr[j].project = filteredProjects.projectsList[i];
+        filteredProjects.projectsList[i].TEST_3D_Objects_Arr[j].projectName = filteredProjects.projectsList[i].name;
       }
-
     }
     return filteredProjects;
+  }
+
+  // todo remove
+  private bindGeoObjectsToProjectsIds() {
+    for (let i = 0; i < 100; i++) {
+      const geoObjectsArr: GeoObject[] = this.createMockGeoObjectArr();
+      this.mockGeoObjectArr.push({
+        projectId: i,
+        TEST_3D_Objects_Arr: geoObjectsArr
+      });
+    }
+  }
+
+  // todo remove
+  private createMockGeoObjectArr(): GeoObject[] {
+    const delta = 0.005;
+    let res: GeoObject[] = [];
+    if (Math.random() > 0.5) {
+      res = [
+        {
+          geoObjectId: 'ID-' + Math.random(),
+          coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+          pathToZip: window.location.origin + '/assets/objects/female.zip',
+          canMove: true
+        },
+        {
+          geoObjectId: 'ID-' + Math.random(),
+          coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+          pathToZip: window.location.origin + '/assets/objects/male.zip',
+          canMove: true
+        },
+        {
+          geoObjectId: 'ID-' + Math.random(),
+          coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+          pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+          canMove: true
+        },
+        {
+          geoObjectId: 'ID-' + Math.random(),
+          coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+          pathToZip: window.location.origin + '/assets/objects/building.zip',
+          canMove: false
+        },
+      ];
+    } else {
+      res = [
+        {
+          geoObjectId: 'ID-' + Math.random(),
+          coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+          pathToZip: window.location.origin + '/assets/objects/male.zip',
+          canMove: true
+        },
+        {
+          geoObjectId: 'ID-' + Math.random(),
+          coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+          pathToZip: window.location.origin + '/assets/objects/building.zip',
+          canMove: false
+        },
+      ];
+    }
+    return res;
   }
 
 }

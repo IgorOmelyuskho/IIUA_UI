@@ -9,7 +9,7 @@ import { fromEvent, BehaviorSubject, Observable, Subscription, concat } from 'rx
 import { tap, map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { FilterFields, FilteredProjects, GeoObject } from 'src/app/models';
-import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 
 @Component({
   selector: 'app-investor-filter-page',
@@ -46,7 +46,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
 
   constructor(
     private router: Router,
-    private viewProjectsService: ViewProjectsService
+    private filteredProjectsService: FilteredProjectsService
   ) { }
 
   ngOnInit() {
@@ -132,7 +132,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   goToProject(project: VendorProject) {
-    this.viewProjectsService.projectForView = project;
+    this.filteredProjectsService.projectForView = project;
     this.router.navigate(['home', 'investor', 'project', project.id]);
   }
 
@@ -173,7 +173,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
     this.prevSearch = 'keyWord';
     this.showProgress = true;
-    this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
+    this.filteredProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
           this.pagesCount = filteringProjects.pages;
@@ -192,7 +192,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   searchProjectsByFilter(filterParam: any) {
     this.prevSearch = 'filter';
     this.showProgress = true;
-    this.viewProjectsService.searchByFilter(filterParam)
+    this.filteredProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
           this.pagesCount = filteringProjects.pages;

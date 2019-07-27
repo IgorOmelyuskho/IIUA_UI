@@ -1,6 +1,6 @@
 
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
@@ -26,7 +26,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   private hubConnection: HubConnection;
 
   constructor(
-    private viewProjectsService: ViewProjectsService,
+    private filteredProjectsService: FilteredProjectsService,
     private activateRoute: ActivatedRoute,
     private sanitizer: DomSanitizer
   ) { }
@@ -34,7 +34,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     // this.signalRConnect();
 
-    if (this.viewProjectsService.projectForView == null) {
+    if (this.filteredProjectsService.projectForView == null) {
       // use when page reload
       this.getProjectFromServer();
     } else {
@@ -108,7 +108,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     const arrLength: number = this.activateRoute.url['value'].length;
     this.projectId = this.activateRoute.url['value'][arrLength - 1].path;
 
-    this.viewProjectsService.searchByFilter({}).subscribe(
+    this.filteredProjectsService.searchByFilter({}).subscribe(
       (filteringProjects: FilteredProjects) => {
         for (let i = 0; i < filteringProjects.projectsList.length; i++) {
           if (filteringProjects.projectsList[i].id === this.projectId) {
@@ -126,7 +126,7 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getProjectFromService() {
-    this.project = this.viewProjectsService.projectForView;
+    this.project = this.filteredProjectsService.projectForView;
     this.videoUrlToSafe(this.project.videos);
     this.setGalleryImages(this.project.images);
   }

@@ -7,7 +7,7 @@ import { StateService } from 'src/app/services/state/state.service';
 import { responseProject } from 'src/app/helperClasses/projects';
 import { BehaviorSubject, Subscription, fromEvent } from 'rxjs';
 import { map, debounceTime, filter, distinctUntilChanged, tap } from 'rxjs/operators';
-import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 
 @Component({
   selector: 'app-main-screen-investor',
@@ -27,6 +27,8 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   searchWord: string;
   $searchByFilterChange: BehaviorSubject<FilterFields> = new BehaviorSubject(this.filter);
   $fromEvent: Subscription;
+  showProgress: boolean;
+  prevSearch: string; // filter/keyWord
 
   filterIsExpanded = false; // false - свернут
   showPreviewCard = false;
@@ -36,7 +38,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   hoveredProject: VendorProject;
   projects: GeoObject[];
   readonly maxPageSize = 2;
-  showProgress: boolean;
 
   windowMouseMoveHandler = (e) => {
     this.previewCardX = e.pageX;
@@ -49,7 +50,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     }, 100);
   }
 
-  constructor(private stateService: StateService, private viewProjectsService: ViewProjectsService) { }
+  constructor(private stateService: StateService, private filteredProjectsService: FilteredProjectsService) { }
 
   ngOnInit() {
     new Image().src = '../../../assets/img/message-3.png';
@@ -90,7 +91,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
       .subscribe((filterParam: FilterFields) => {
         filterParam.page = 1;
         filterParam.pageSize = this.maxPageSize;
-        console.log(filterParam);
         this.searchProjectsByFilter(filterParam); // async
       });
   }
@@ -144,7 +144,12 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   onMapChangeExtent(extent) {
-    console.log(extent);
+    if (this.prevSearch === 'filter') {
+      this.searchProjectsByFilter(this.filter);
+    }
+    if (this.prevSearch === 'keyWord') {
+      this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
+    }
   }
 
   getAvataraUrl(project) {
@@ -172,8 +177,9 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
 
   // http
   searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
+    this.prevSearch = 'keyWord';
     this.showProgress = true;
-      this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
+    this.filteredProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
           const projectsArr: GeoObject[] = [];
@@ -195,8 +201,9 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
 
   // http
   searchProjectsByFilter(filterParam: any) {
+    this.prevSearch = 'filter';
     this.showProgress = true;
-      this.viewProjectsService.searchByFilter(filterParam)
+    this.filteredProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
           const projectsArr: GeoObject[] = [];

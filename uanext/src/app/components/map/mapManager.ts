@@ -146,7 +146,9 @@ export class MapManager {
       if (this.objectsArr[i].pointForMove) {
         this.remove3DObjectFromScene(this.objectsArr[i].pointForMove);
       }
-      this.remove3DObjectFromScene(this.objectsArr[i].object3D);
+      if (this.objectsArr[i].boxHelper) {
+        this.scene.remove(this.objectsArr[i].boxHelper);
+      }
       if (this.objectsArr[i].objectDivLabel != null) {
         this.objectsArr[i].objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
         this.objectsArr[i].objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
@@ -154,6 +156,7 @@ export class MapManager {
         this.objectsArr[i].objectDivLabel.style.display = 'none';
         this.objectsArr[i].objectDivLabel.parentNode.removeChild(this.objectsArr[i].objectDivLabel); // not work
       }
+      this.remove3DObjectFromScene(this.objectsArr[i].object3D);
     }
     // while (scene.children.length > 0) {
     //   scene.remove(scene.children[0]);
@@ -236,10 +239,10 @@ export class MapManager {
   getExtent(): any {
     const extent = this.map.getExtent();
     const res = {
-      xmin: extent.xmin,
-      ymin: extent.ymin,
-      xmax: extent.xmax,
-      ymax: extent.ymax,
+      lowerBoundX: extent.xmin,
+      lowerBoundY: extent.ymin,
+      upperBoundX: extent.xmax,
+      upperBoundY: extent.ymax,
     };
     return res;
   }

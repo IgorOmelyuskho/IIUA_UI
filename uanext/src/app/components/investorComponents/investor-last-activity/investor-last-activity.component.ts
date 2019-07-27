@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { responseProjects } from '../../../helperClasses/projects';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 import { FilteredProjects } from 'src/app/models';
 
 @Component({
@@ -13,10 +13,10 @@ export class InvestorLastActivityComponent implements OnInit {
   // projects: VendorProject[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
   projects: VendorProject[] = [];
 
-  constructor(private viewProjectsService: ViewProjectsService) { }
+  constructor(private filteredProjectsService: FilteredProjectsService) { }
 
   ngOnInit() {
-    this.viewProjectsService.searchByFilter().subscribe(
+    this.filteredProjectsService.searchByFilter().subscribe(
       (val: FilteredProjects) => {
         this.projects = val.projectsList;
       },
