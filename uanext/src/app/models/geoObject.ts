@@ -19,5 +19,5 @@ export class GeoObject {
   marker?: any;
   mouseUnder?: boolean;
   box3?: any;
-  boxHelper?: any;
+  boxHelper?: any; // todo remove
 }

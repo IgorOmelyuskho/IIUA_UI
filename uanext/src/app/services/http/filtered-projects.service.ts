@@ -89,7 +89,7 @@ export class FilteredProjectsService {
       filter.moneyRequiredTo = '100000000';
     }
 
-    if (filter.sphereActivities == null || filter.sphereActivities.length === 0) {
+    if ( (filter.sphereActivities == null || filter.sphereActivities.length === 0) && this.fieldActivityOptions != null) {
       filter.sphereActivities = this.fieldActivityOptions
         .filter(opt => opt.name !== this.fieldActivityOptions[0].name)
         .map(opt => {
@@ -123,7 +123,7 @@ export class FilteredProjectsService {
   }
 
   private add3DObjectsArr(filteredProjects: FilteredProjects): FilteredProjects {
-    const delta = 0.005;
+    const delta = 0.05;
     for (let i = 0; i < filteredProjects.projectsList.length; i++) {
       if (Math.random() > 0.5) {
         filteredProjects.projectsList[i].TEST_3D_Objects_Arr = [

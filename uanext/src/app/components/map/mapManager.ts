@@ -1,20 +1,25 @@
 import Stats from 'stats-js';
 import { GeoObject } from 'src/app/models';
 import { VendorProject } from 'src/app/models/vendorProject';
+import { TouchSequence } from 'selenium-webdriver';
 declare var THREE: any;
 declare var maptalks: any;
 
 export class MapManager {
   // constants region
-  private readonly zoomWhenChangeVisible = 16;
+  private readonly bigZoom = 16;
+  private readonly deltaZoom = 0.2;
+  private readonly avgZoom = 12;
   private readonly initZoom = 15;
   private readonly updatedInterval = 3500;
   private readonly drawInterval = 50;
+  private readonly constForObjectsScale = 3;
 
   // callbacks
   private on_click_object: Function = null;
   private on_hover_object: Function = null;
   private on_map_init: Function = null;
+  private on_map_change_extent: Function = null;
 
   // fields
   private canvasElem: HTMLElement = null;
@@ -34,6 +39,8 @@ export class MapManager {
   private polygonLayer = null;
   private labelRenderer = null;
   private camera = null;
+  private objectsScale: number = null;
+  private prevClusterGeoObjectId: string = null;
 
   // html elements id
   private mapWrapperId: string;
@@ -47,7 +54,7 @@ export class MapManager {
     this.mapInit(cb);
   }
 
-  mapSetProject(project: VendorProject) {
+  mapSetCenterByProject(project: VendorProject) {
     // project.coords = {};
     // project.coords.x = Math.random() * 30;
     // project.coords.y = Math.random() * 30;
@@ -76,10 +83,13 @@ export class MapManager {
     this.clusterLayer = null;
     this.polygonLayer = null;
     this.camera = null;
+    this.objectsScale = null;
+    this.prevClusterGeoObjectId = null;
 
     this.on_click_object = null;
     this.on_hover_object = null;
     this.on_map_init = null;
+    this.on_map_change_extent = null;
   }
 
   mapSetFullScreen() { // todo navbar height
@@ -122,33 +132,73 @@ export class MapManager {
   setObjectHoverCallback(cb: Function) {
     this.on_hover_object = cb;
   }
+
+  setChangeExtentCallback(cb: Function) {
+    this.on_map_change_extent = cb;
+  }
   //#endregion
 
 
-  // add / replace / delete / change GeoObjects or polygons with map
+  // add / replace / delete / change GeoObjects or polygons with map, getExtent
   //#region
-  mapReplaceObjects(objects: GeoObject[]) {
+  mapReplaceObjects(replacementObjectsArr: GeoObject[]) {
     clearInterval(this.timerForDraw);
-    for (let i = 0; i < this.objectsArr.length; i++) {
-      this.remove3DObjectFromScene(this.objectsArr[i].pointForMove);
-      this.remove3DObjectFromScene(this.objectsArr[i].object3D);
-      if (this.objectsArr[i].objectDivLabel != null) {
-        this.objectsArr[i].objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
-        this.objectsArr[i].objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
-        this.objectsArr[i].objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
-        this.objectsArr[i].objectDivLabel.style.display = 'none';
-        this.objectsArr[i].objectDivLabel.parentNode.removeChild(this.objectsArr[i].objectDivLabel); // not work
+
+    const diff = (x1: string[], x2: string[]) => {
+      return x1.filter(x => !x2.includes(x));
+    };
+
+    // преобразуем массив GeoObject[] в массив geoObjectId
+    const objectsArrId: string[] = this.objectsArr.map((item: GeoObject) => {
+      return item.geoObjectId;
+    });
+
+    // преобразуем массив GeoObject[] в массив geoObjectId
+    const replacementObjectsArrId: string[] = replacementObjectsArr.map((item: GeoObject) => {
+      return item.geoObjectId;
+    });
+
+    const addArrId: string[] = diff(replacementObjectsArrId, objectsArrId); // массив geoObjectId которые нужно добавить
+    const leaveArrId: string[] = diff(replacementObjectsArrId, addArrId); // массив geoObjectId которые остаются
+    const removeArrId: string[] = diff(objectsArrId, replacementObjectsArrId); // массив geoObjectId которые нужно удалить
+
+    // const removeArrForPush: GeoObject[] = []; // массив geoObjectId которые нужно удалить
+    for (let i = 0; i < removeArrId.length; i++) {
+      for (let j = 0; j < this.objectsArr.length; j++) {
+        if (removeArrId[i] === this.objectsArr[j].geoObjectId) {
+          // removeArrForPush.push(this.objectsArr[j]);
+          this.remove3DObjectFromScene(this.objectsArr[j]);
+        }
       }
     }
-    // while (scene.children.length > 0) {
-    //   scene.remove(scene.children[0]);
-    // }
-    // scene.remove.apply(scene, scene.children);
-    // scene.add(new THREE.AmbientLight(0xffffff, 1));
+
+    const leaveArrForPush: GeoObject[] = [];  // массив geoObjectId которые остаются
+    for (let i = 0; i < leaveArrId.length; i++) {
+      for (let j = 0; j < this.objectsArr.length; j++) {
+        if (leaveArrId[i] === this.objectsArr[j].geoObjectId) {
+          leaveArrForPush.push(this.objectsArr[j]);
+        }
+      }
+    }
+    this.objectsArr = leaveArrForPush; // addArrForPush добавятся в this.objectsArr в методе this.mapAddNewObjects(addArrForPush);
+
+    const addArrForPush: GeoObject[] = []; // массив geoObjectId которые нужно добавить
+    for (let i = 0; i < addArrId.length; i++) {
+      for (let j = 0; j < replacementObjectsArr.length; j++) {
+        if (addArrId[i] === replacementObjectsArr[j].geoObjectId) {
+          addArrForPush.push(replacementObjectsArr[j]);
+        }
+      }
+    }
+    this.mapAddNewObjects(addArrForPush);
+
     this.clusterLayer.clear();
-    this.objectsArr = [];
-    this.customRedraw();
-    this.mapAddNewObjects(objects);
+    // тут this.objectsArr включает в себя и leaveArrForPush и addArrForPush,
+    // которые были добавлены в методе в методе this.mapAddNewObjects(addArrForPush);
+    for (let i = 0; i < this.objectsArr.length; i++) {
+      this.clusterLayer.addGeometry(this.objectsArr[i].marker);
+    }
+
     this.timerForDraw = setInterval(() => {
       this.updateCoordsForRedraw();
     }, this.drawInterval);
@@ -217,6 +267,17 @@ export class MapManager {
     this.polygonLayer.clear();
     this.mapAddNewPolygons(polygons);
   }
+
+  getExtent(): any {
+    const extent = this.map.getExtent();
+    const res = {
+      lowerBoundX: extent.xmin,
+      lowerBoundY: extent.ymin,
+      upperBoundX: extent.xmax,
+      upperBoundY: extent.ymax,
+    };
+    return res;
+  }
   //#endregion
 
 
@@ -276,7 +337,7 @@ export class MapManager {
     this.map = new maptalks.Map('map-html-element-id-495367235', { // DIV id
       center: [13.41261, 52.529611],
       zoom: this.initZoom,
-      minZoom : 3,
+      minZoom: 3,
       // pitch: 60,
       // bearing: 30,
       pitch: 0,
@@ -294,6 +355,7 @@ export class MapManager {
       })
     });
 
+    this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(this.map.getZoom());
     this.mapEventHandlers();
   }
 
@@ -302,20 +364,46 @@ export class MapManager {
       this.mouse.x = (event.containerPoint.x / event.target.width) * 2 - 1;
       this.mouse.y = -(event.containerPoint.y / event.target.height) * 2 + 1;
       this.selectObjects();
+
+      const identify = this.clusterLayer.identify(event.coordinate);
+      if (identify.children == null) {
+        this.prevClusterGeoObjectId = null;
+        return;
+      }
+      if (identify.children.length === 1) { // if number 1 on cluster
+        if (this.map.getZoom() < this.avgZoom + this.deltaZoom) {
+          this.setCanvasCursor('pointer');
+        } else {
+          this.setCanvasCursor('inherit');
+        }
+        const geoObject: GeoObject = identify.children[0].parent;
+        if (geoObject.geoObjectId !== this.prevClusterGeoObjectId) { // so that there are not many events
+          if (this.on_hover_object != null) {
+            this.on_hover_object(geoObject);
+          }
+        }
+        this.prevClusterGeoObjectId = geoObject.geoObjectId;
+      } else { // if number 2 or more on cluster
+        this.setCanvasCursor('default');
+      }
     });
 
     this.map.on('zooming', (event) => {
-      // const scale = calcInterpolationScale(map.getZoom());
+      this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(event.to);
       for (let i = 0; i < this.objectsArr.length; i++) {
-        if (this.objectsArr[i].object3D == null || this.objectsArr[i].marker == null) {
-          continue; // objectsArr[i].marker uses in changeVisible
-        }
-        this.changeVisible(this.objectsArr[i], event.to);
-        // objectsArr[i].model.scale.set(scale, scale, scale);
+        this.changeVisibleAndScale(this.objectsArr[i], event.to);
       }
     });
 
     this.map.on('click', (event) => {
+      const identify = this.clusterLayer.identify(event.coordinate);
+      if (identify.children && identify.children.length === 1) {
+        const geoObject: GeoObject = identify.children[0].parent;
+        if (this.on_click_object != null) {
+          this.on_click_object(geoObject);
+        }
+      }
+
       for (let i = 0; i < this.objectsArr.length; i++) {
         if (this.objectsArr[i].mouseUnder === true) {
           if (this.selectedObject != null) {
@@ -331,14 +419,36 @@ export class MapManager {
         }
       }
     });
+
+    this.map.on('animateend', (event) => {
+      if (this.on_map_change_extent != null) {
+        const extent = this.getExtent();
+        this.on_map_change_extent(extent);
+      }
+    });
+    this.map.on('moving', (event) => {
+      if (this.on_map_change_extent != null) {
+        const extent = this.getExtent();
+        this.on_map_change_extent(extent);
+      }
+    });
+    this.map.on('dragrotateend', (event) => {
+      if (this.on_map_change_extent != null) {
+        const extent = this.getExtent();
+        this.on_map_change_extent(extent);
+      }
+    });
   }
 
   private createClusterLayer() {
     this.clusterLayer = new maptalks.ClusterLayer('cluster', {
-      'noClusterWithOneMarker': true,
+      'noClusterWithOneMarker': false,
+      'single': false, // not work ?
+      'drawClusterText': true,
+      'geometryEvents': true,
       'animation': false,
       'maxClusterRadius': 50,
-      'maxClusterZoom': this.zoomWhenChangeVisible, // -2
+      'maxClusterZoom': this.avgZoom,
       // "count" is an internal variable: marker count in the cluster.
       'symbol': {
         'markerType': 'ellipse',
@@ -374,9 +484,6 @@ export class MapManager {
           ]
         }
       },
-      'drawClusterText': true,
-      'geometryEvents': true,
-      'single': true
     });
 
     this.map.addLayer(this.clusterLayer);
@@ -405,24 +512,46 @@ export class MapManager {
 
   // init / remove 3D Object
   //#region
-
-
-  // init / remove 3D Object
-  //#region
-  private remove3DObjectFromScene(object: any) { // any - not geoObject !
-    if (object == null) {
+  private remove3DObjectFromScene(geoObject: GeoObject) { // any - not geoObject !
+    if (geoObject == null) {
       return; // null when object model did not have time to boot
     }
-    if (object.geometry) {
-      object.geometry.dispose();
+
+    if (geoObject.pointForMove) {
+      if (geoObject.pointForMove.geometry) {
+        geoObject.pointForMove.geometry.dispose();
+      }
+      if (geoObject.pointForMove.material) {
+        geoObject.pointForMove.material.dispose();
+      }
+      if (geoObject.pointForMove.texture) {
+        geoObject.pointForMove.texture.dispose();
+      }
+      this.scene.remove(geoObject.pointForMove);
     }
-    if (object.material) {
-      object.material.dispose();
+
+    if (geoObject.boxHelper) {
+      this.scene.remove(geoObject.boxHelper);
     }
-    if (object.texture) {
-      object.texture.dispose();
+
+    if (geoObject.objectDivLabel != null) {
+      geoObject.objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
+      geoObject.objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
+      geoObject.objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
+      geoObject.objectDivLabel.style.display = 'none';
+      geoObject.objectDivLabel.parentNode.removeChild(geoObject.objectDivLabel); // not work
     }
-    this.scene.remove(object);
+
+    if (geoObject.object3D.geometry) {
+      geoObject.object3D.geometry.dispose();
+    }
+    if (geoObject.object3D.material) {
+      geoObject.object3D.material.dispose();
+    }
+    if (geoObject.object3D.texture) {
+      geoObject.object3D.texture.dispose();
+    }
+    this.scene.remove(geoObject.object3D);
   }
 
   private init3dObject(geoObject: GeoObject, object3D: any) {
@@ -445,15 +574,21 @@ export class MapManager {
     object3D.position.z = v.z;
 
     geoObject.box3 = new THREE.Box3().setFromObject(object3D);
+
+    // geoObject.boxHelper = new THREE.BoxHelper(object3D, 0xff0000); // todo remove
+    // this.scene.add(geoObject.boxHelper);
+
     const cubeGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
     const cubeMaterial = new THREE.MeshBasicMaterial({
       color: 0x00ff00
     });
-    geoObject.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    geoObject.pointForMove.position.x = geoObject.object3D.position.x;
-    geoObject.pointForMove.position.y = geoObject.object3D.position.y;
-    geoObject.pointForMove.position.z = geoObject.object3D.position.z;
-    this.scene.add(geoObject.pointForMove);
+    if (geoObject.canMove === true) {
+      geoObject.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
+      geoObject.pointForMove.position.x = geoObject.object3D.position.x;
+      geoObject.pointForMove.position.y = geoObject.object3D.position.y;
+      geoObject.pointForMove.position.z = geoObject.object3D.position.z;
+      this.scene.add(geoObject.pointForMove);
+    }
 
     const objectDivLabel = document.createElement('div');
     objectDivLabel['geoObject'] = geoObject;
@@ -470,7 +605,7 @@ export class MapManager {
     objLabel.position.z = geoObject.box3.getSize().z * 1.1;
     geoObject.object3D.add(objLabel);
 
-    this.changeVisible(geoObject, this.map.getZoom());
+    this.changeVisibleAndScale(geoObject, this.map.getZoom());
     this.scene.add(object3D);
     this.threeLayer.renderScene();
   }
@@ -503,7 +638,7 @@ export class MapManager {
 
   private loadObject3D(obj: GeoObject) {
     THREE.ZipLoadingManager
-      .uncompress(obj.pathToZip, ['.mtl', '.obj', '.jpg', '.png'])
+      .uncompress(obj.pathToZip, ['.mtl', '.obj', '.jpg', '.png', '.ma'])
       .then((zip) => {
         const pathToFolder = zip.urls[0].substring(0, zip.urls[0].lastIndexOf('/') + 1);
         let mtlFileName = '';
@@ -577,9 +712,10 @@ export class MapManager {
     });
 
     obj.marker = marker;
+    obj.marker.options.visible = false;
     obj.marker.parent = obj;
     this.clusterLayer.addGeometry(marker);
-    this.changeVisible(obj, this.map.getZoom());
+    this.changeVisibleAndScale(obj, this.map.getZoom());
     this.markerEventHandlers(marker);
   }
 
@@ -624,11 +760,6 @@ export class MapManager {
       this.updateCoordsForDraw(this.objectsArr[i]);
     }
 
-    if (this.map.getZoom() < this.zoomWhenChangeVisible + 0.2 || this.map.getZoom() < this.zoomWhenChangeVisible - 0.2) {
-      this.customRedraw(); // todo remove
-      return;
-    }
-
     this.customRedraw();
   }
 
@@ -647,6 +778,7 @@ export class MapManager {
     obj.object3D.position.y = v.y;
     obj.object3D.position.z = v.z;
     obj.object3D.rotation.z = Math.atan2(prevY - obj.object3D.position.y, prevX - obj.object3D.position.x);
+    // obj.boxHelper.update();
   }
   //#endregion
 
@@ -753,26 +885,46 @@ export class MapManager {
     this.canvasElem.style.cursor = cursor;
   }
 
-  private changeVisible(obj: GeoObject, zoom: number) {
-    if (zoom < this.zoomWhenChangeVisible + 0.2 || zoom < this.zoomWhenChangeVisible - 0.2) {
-      if (obj.object3D) {
-        obj.object3D.visible = false;
-        obj.objectDivLabel.style.display = 'none';
-      }
-      if (obj.marker) {
-        obj.marker.options.visible = true;
-      }
+  private changeVisibleAndScale(obj: GeoObject, mapZoom: number) {
+    if (mapZoom >= this.bigZoom + this.deltaZoom) {
+      this.whenBigZoom(obj);
+    } else if (mapZoom < this.avgZoom + this.deltaZoom) {
+      this.whenSmallZoom(obj);
     } else {
-      if (obj.object3D) {
-        obj.object3D.visible = true;
-        obj.objectDivLabel.style.display = '';
-      }
-      if (obj.marker) {
-        obj.marker.options.visible = false;
-      }
+      this.whenAvgZoom(obj);
     }
   }
 
+  private whenBigZoom(obj: GeoObject) {
+    if (obj.object3D) {
+      obj.object3D.visible = true;
+      obj.objectDivLabel.style.display = '';
+    }
+    if (obj.boxHelper) {
+      obj.boxHelper.visible = true;
+    }
+  }
+
+  private whenAvgZoom(obj: GeoObject) {
+    if (obj.object3D) {
+      obj.object3D.scale.set(this.objectsScale, this.objectsScale, this.objectsScale);
+      obj.object3D.visible = true;
+      obj.objectDivLabel.style.display = 'none';
+    }
+    if (obj.boxHelper) {
+      obj.boxHelper.visible = true;
+    }
+  }
+
+  private whenSmallZoom(obj: GeoObject) {
+    if (obj.object3D) {
+      obj.object3D.visible = false;
+      obj.objectDivLabel.style.display = 'none';
+    }
+    if (obj.boxHelper) {
+      obj.boxHelper.visible = false;
+    }
+  }
 
   // change object scale
   //#region
