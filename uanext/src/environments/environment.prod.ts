@@ -28,7 +28,7 @@ export const environment = {
   uploadFiles: '/api/Upload',
 
   vendorProject: '/api/Projects/',
-  filteringProjects: '/api/FilteringProjects',
+  filteringProjects: '/api/FilteringProjects/Filtering-projects',
   sphereActivity: '/api/SphereActivity',
   changeQueuePosition: '/api/Projects/ChangeQueuePosition',
 
@@ -37,6 +37,7 @@ export const environment = {
   postHistoryData: '/api/Map/PostHistoryData',
   getLastHistoryCoordinates: '/api/Map/GetLastHistoryCoordinates',
   search3DObject: '/api/Map/Search3DObject',
+  mapFilteringProjects: '/api/Map/projects-filtering',
 
   Notification: '/api/Notification',
 

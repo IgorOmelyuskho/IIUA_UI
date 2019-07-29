@@ -123,9 +123,17 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.showProfileProgress = true;
     this.projectsService.fetchVendorProjects().subscribe(
-      val => {
+      (val: VendorProject[]) => {
         this.profileMenuOpen = true;
-        this.projects = val;
+        this.projects = val.sort((a: VendorProject, b: VendorProject) => {
+          if (a.queuePosition < b.queuePosition) {
+            return -1;
+          }
+          if (a.queuePosition > b.queuePosition) {
+            return 1;
+          }
+          return 0;
+        });
         this.showProfileProgress = false;
       },
       err => {

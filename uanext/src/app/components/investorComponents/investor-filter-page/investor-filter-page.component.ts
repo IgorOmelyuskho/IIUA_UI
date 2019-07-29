@@ -9,7 +9,7 @@ import { fromEvent, BehaviorSubject, Observable, Subscription, concat } from 'rx
 import { tap, map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { FilterFields, FilteredProjects, GeoObject } from 'src/app/models';
-import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 
 @Component({
   selector: 'app-investor-filter-page',
@@ -46,7 +46,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
 
   constructor(
     private router: Router,
-    private viewProjectsService: ViewProjectsService
+    private filteredProjectsService: FilteredProjectsService
   ) { }
 
   ngOnInit() {
@@ -90,6 +90,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
       )
       .subscribe(res => {
         this.resetBeforeNewSearch();
+        console.log('1111');
         this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
       });
 
@@ -102,6 +103,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
       )
       .subscribe(filterParam => {
         this.resetBeforeNewSearch();
+        console.log('2222');
         this.searchProjectsByFilter(filterParam); // async
       });
   }
@@ -111,7 +113,9 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   filterOnChange(filterParam: FilterFields) {
-    this.filter = filterParam;
+    if (filterParam != null) {
+      this.filter = filterParam;
+    }
     this.filter.page = 1;
     this.filter.pageSize = this.pageSize;
     this.$searchByFilterChange.next(this.filter);
@@ -128,7 +132,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   goToProject(project: VendorProject) {
-    this.viewProjectsService.projectForView = project;
+    this.filteredProjectsService.projectForView = project;
     this.router.navigate(['home', 'investor', 'project', project.id]);
   }
 
@@ -154,8 +158,11 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
     this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
   }
 
-  searchByKeywordKeyDown(e) {
-    if (e.code === 'Enter') {
+  searchByKeywordInput(event) {
+    if (event.target.value === '') {
+      this.filterOnChange(null);
+    }
+    if (event.code === 'Enter') {
       this.searchByScroll = false;
       this.resetBeforeNewSearch();
       this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
@@ -166,7 +173,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
     this.prevSearch = 'keyWord';
     this.showProgress = true;
-    this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
+    this.filteredProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
           this.pagesCount = filteringProjects.pages;
@@ -185,7 +192,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   searchProjectsByFilter(filterParam: any) {
     this.prevSearch = 'filter';
     this.showProgress = true;
-    this.viewProjectsService.searchByFilter(filterParam)
+    this.filteredProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
           this.pagesCount = filteringProjects.pages;
@@ -214,6 +221,7 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
     this.projects = [];
     this.pageNumber = 1;
     this.filter.page = 1;
+    this.filter.pageSize = this.pageSize;
   }
 
   onScroll() {

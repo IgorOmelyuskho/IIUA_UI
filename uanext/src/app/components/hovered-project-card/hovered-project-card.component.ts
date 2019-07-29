@@ -12,7 +12,9 @@ export class HoveredProjectCardComponent implements OnInit, AfterViewInit {
   @Output() clickOnCardEvent = new EventEmitter<VendorProject>();
   @Input()
   set hoveredProject(project: VendorProject) { // project id
-    this.fetchProject(project);
+    if (project != null) {
+      this.fetchProject(project);
+    }
   }
 
   projectUploaded = false;
@@ -28,7 +30,7 @@ export class HoveredProjectCardComponent implements OnInit, AfterViewInit {
 
   fetchProject(project) {  // project id
     this.projectUploaded = false;
-    setTimeout(() => {
+    setTimeout(() => { // emulate delay http query for fetch project
       this.project = project;
       this.projectUploaded = true;
       requestAnimationFrame(() => {

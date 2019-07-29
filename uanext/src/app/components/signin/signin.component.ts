@@ -62,12 +62,11 @@ export class SigninComponent implements OnInit {
     this.authService.signIn(this.signinForm.value).subscribe(
       response => {
         this.showProgressBar = false;
-        this.authService.successSocialOrEmailLogin(response);
+        this.authService.successSocialOrEmailLogin(response.body.token);
       },
       err => {
         console.warn(err);
         this.showProgressBar = false;
-        this.notify.show(err.error.error.errorMessage[0]);
       }
     );
   }

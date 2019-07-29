@@ -2,7 +2,7 @@
   <mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
   <div class="map-wrapper">
     <app-map [replace3DObjects]="projects" (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)"
-      (objectHover)="onMapObjectHover($event)"></app-map>
+      (objectHover)="onMapObjectHover($event)" (changeExtent)="onMapChangeExtent($event)"></app-map>
   </div>
 
   <div class="filter-wrapper">
@@ -14,7 +14,7 @@
               <span class="fa fa-search"></span>
             </button>
           </div>
-          <input #searchByKeyWordInput (keydown)="searchByKeywordKeyDown($event)" type="text" class="form-control" [(ngModel)]="searchWord"
+          <input #searchByKeyWordInput (input)="searchByKeywordInput($event)" type="text" class="form-control" [(ngModel)]="searchWord"
             placeholder="{{ 'findProject' | translate:self }}" aria-label="Project name"
             aria-describedby="basic-addon2">
         </div>

@@ -7,7 +7,8 @@ import { StateService } from 'src/app/services/state/state.service';
 import { responseProject } from 'src/app/helperClasses/projects';
 import { BehaviorSubject, Subscription, fromEvent } from 'rxjs';
 import { map, debounceTime, filter, distinctUntilChanged, tap } from 'rxjs/operators';
-import { ViewProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { MapService } from 'src/app/services/http/map.service';
 
 @Component({
   selector: 'app-main-screen-investor',
@@ -27,6 +28,8 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   searchWord: string;
   $searchByFilterChange: BehaviorSubject<FilterFields> = new BehaviorSubject(this.filter);
   $fromEvent: Subscription;
+  showProgress: boolean;
+  prevSearch: string; // filter/keyWord
 
   filterIsExpanded = false; // false - свернут
   showPreviewCard = false;
@@ -35,8 +38,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
   projects: GeoObject[];
-
-  showProgress: boolean;
+  readonly maxPageSize = 2;
 
   windowMouseMoveHandler = (e) => {
     this.previewCardX = e.pageX;
@@ -49,7 +51,11 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     }, 100);
   }
 
-  constructor(private stateService: StateService, private viewProjectsService: ViewProjectsService) { }
+  constructor(
+    private stateService: StateService,
+    private filteredProjectsService: FilteredProjectsService,
+    private mapService: MapService
+  ) { }
 
   ngOnInit() {
     new Image().src = '../../../assets/img/message-3.png';
@@ -80,20 +86,24 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
         distinctUntilChanged((a, b) => a === b),
       )
       .subscribe(res => {
-        this.searchProjectsByKeyword(this.searchWord, 100, 1);
+        this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
       });
 
     this.$searchByFilterChange
       .pipe(
         debounceTime(1000),
       )
-      .subscribe(filterParam => {
+      .subscribe((filterParam: FilterFields) => {
+        filterParam.page = 1;
+        filterParam.pageSize = this.maxPageSize;
         this.searchProjectsByFilter(filterParam); // async
       });
   }
 
   filterOnChange(filterParam: FilterFields) {
-    this.filter = filterParam;
+    if (filterParam != null) {
+      this.filter = filterParam;
+    }
     this.$searchByFilterChange.next(this.filter);
   }
 
@@ -138,6 +148,31 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     // todo 'load obj model after this log'
   }
 
+  onMapChangeExtent(extent) {
+    if (this.prevSearch === 'filter') {
+      // this.searchProjectsByFilter(this.filter);
+
+      // const requestDto = {...this.filter};
+      // requestDto.coordinateFrame = extent;
+      // this.mapService.mapFilteringProjects(requestDto).subscribe(
+      //   val => {
+      //     console.log(val);
+      //   }
+      // );
+    }
+    if (this.prevSearch === 'keyWord') {
+      // this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
+
+      // const requestDto = {...this.filter};
+      // requestDto.coordinateFrame = extent;
+      // this.mapService.mapFilteringProjects(requestDto).subscribe(
+      //   val => {
+      //     console.log(val);
+      //   }
+      // );
+    }
+  }
+
   getAvataraUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
@@ -149,22 +184,25 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   }
 
   searchByKeywordBtn(event) {
-    this.searchProjectsByKeyword(this.searchWord, 100, 1);
+    this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
   }
 
-  searchByKeywordKeyDown(e) {
-    if (e.code === 'Enter') {
-      this.searchProjectsByKeyword(this.searchWord, 100, 1);
+  searchByKeywordInput(event) {
+    if (event.target.value === '') {
+      this.filterOnChange(null);
+    }
+    if (event.code === 'Enter') {
+      this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
     }
   }
 
   // http
   searchProjectsByKeyword(keyword: string, pageSize: number, pageNumber: number) {
+    this.prevSearch = 'keyWord';
     this.showProgress = true;
-      this.viewProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
+    this.filteredProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          console.log(filteringProjects);
           const projectsArr: GeoObject[] = [];
           for (let i = 0; i < filteringProjects.projectsList.length; i++) {
             for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
@@ -172,7 +210,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
             }
           }
           this.projects = projectsArr;
-          console.log(this.projects);
           this.showProgress = false;
         },
         err => {
@@ -185,11 +222,11 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
 
   // http
   searchProjectsByFilter(filterParam: any) {
+    this.prevSearch = 'filter';
     this.showProgress = true;
-      this.viewProjectsService.searchByFilter(filterParam)
+    this.filteredProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          console.log(filteringProjects);
           const projectsArr: GeoObject[] = [];
           for (let i = 0; i < filteringProjects.projectsList.length; i++) {
             for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
@@ -197,7 +234,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
             }
           }
           this.projects = projectsArr;
-          console.log(this.projects);
           this.showProgress = false;
         },
         err => {
