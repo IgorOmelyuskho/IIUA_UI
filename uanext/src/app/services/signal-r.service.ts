@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { environment } from 'src/environments/environment';
-import { FilteredProjectsService } from './http/filtered-projects.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +12,40 @@ export class SignalRService {
 
   // todo - remove (use for emulate signalR)
   timeOut1: any;
-  objectsArr: { object3DId: string, positionX: number, positionY: number, canMove: boolean }[] = [];
+  objectsArr: {object3DId: string, positionX: number, positionY: number, canMove: boolean}[] = [
+    {
+      object3DId: '0',
+      positionX: 13.417122340477,
+      positionY: 52.5281344784827,
+      canMove: true,
+    },
+    {
+      object3DId: '1',
+      positionX: 13.417222340477,
+      positionY: 52.5282344784827,
+      canMove: true,
+    },
+    {
+      object3DId: '2',
+      positionX: 13.417322340477,
+      positionY: 52.5283344784827,
+      canMove: false,
+    },
+    {
+      object3DId: '3',
+      positionX: 13.417422340477,
+      positionY: 52.5284344784827,
+      canMove: true,
+    },
+    {
+      object3DId: '4',
+      positionX: 13.417522340477,
+      positionY: 52.5281444184827,
+      canMove: true,
+    }
+  ];
 
-  constructor(private filteredProjectsService: FilteredProjectsService) { }
+  constructor() { }
 
   signalRConnect(cb: Function) { // todo dispose
     this.receiveMessageCallback = cb;
@@ -63,18 +93,6 @@ export class SignalRService {
 
   emulateSignalR() {
     this.timeOut1 = setInterval(() => {
-      this.objectsArr = [];
-      for (let i = 0; i < this.filteredProjectsService.mockGeoObjectArr.length; i++) {
-        for (let j = 0; j < this.filteredProjectsService.mockGeoObjectArr[i].TEST_3D_Objects_Arr.length; j++) {
-          this.objectsArr.push({
-            object3DId: this.filteredProjectsService.mockGeoObjectArr[i].TEST_3D_Objects_Arr[j].geoObjectId,
-            positionX: this.filteredProjectsService.mockGeoObjectArr[i].TEST_3D_Objects_Arr[j].coords.x,
-            positionY: this.filteredProjectsService.mockGeoObjectArr[i].TEST_3D_Objects_Arr[j].coords.y,
-            canMove: this.filteredProjectsService.mockGeoObjectArr[i].TEST_3D_Objects_Arr[j].canMove
-          });
-        }
-      }
-
       for (let i = 0; i < this.objectsArr.length; i++) {
         if (this.objectsArr[i].canMove === false) {
           continue;

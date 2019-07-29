@@ -38,7 +38,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
   projects: GeoObject[];
-  readonly maxPageSize = 2;
+  readonly maxPageSize = 2000;
 
   windowMouseMoveHandler = (e) => {
     this.previewCardX = e.pageX;

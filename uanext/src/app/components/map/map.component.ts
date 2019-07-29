@@ -5,8 +5,6 @@ import { environment } from 'src/environments/environment';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { GeoObject } from 'src/app/models';
 import { SignalRService } from 'src/app/services/signal-r.service';
-import { BehaviorSubject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-map',
@@ -18,12 +16,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() objectClick = new EventEmitter<GeoObject>();
   @Output() objectHover = new EventEmitter<GeoObject>();
   @Output() mapFinishInit = new EventEmitter<void>();
-  @Output() changeExtent = new EventEmitter<any>();
+
+  mapManager: MapManager;
 
   @Input()
   set changeSelectedProject(project: VendorProject) {
     if (project != null && this.mapManager != null) {
-      this.mapManager.mapSetCenterByProject(project);
+      this.mapManager.mapSetProject(project);
     }
   }
 
@@ -32,10 +31,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     if (objects != null && this.mapManager != null) {
       console.log(objects);
       this.mapManager.mapReplaceObjects(objects);
+
+      this.signalRService.objectsArr = objects.map((obj) => { // todo remove
+        return {
+          object3DId: obj.geoObjectId,
+          positionX: obj.coords.x,
+          positionY: obj.coords.y,
+          canMove: obj.canMove
+        };
+      });
     }
   }
-
-  mapManager: MapManager;
 
   timeOut1: any;
   timeOut2: any;
@@ -43,8 +49,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   timeOut4: any;
   timeOut5: any;
   timeOut6: any;
-
-  $fromChangeExtentEvent: BehaviorSubject<any> = new BehaviorSubject(null);
 
   clickObjectCallback: Function = (object: GeoObject) => {
     this.objectClick.emit(object);
@@ -56,7 +60,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   mapFinishInitCallback: Function = () => {
     this.mapFinishInit.emit();
-    this.$fromChangeExtentEvent.next(this.mapManager.getExtent());
     this.signalRService.signalRConnect(this.mapManager.signalRMessage); // or connect when sign in ?
 
     this.timeOut1 = setTimeout(() => {
@@ -86,10 +89,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     // }, 5000);
   }
 
-  changeExtentCallback: Function = (extent: any) => {
-    this.$fromChangeExtentEvent.next(extent);
-  }
-
   constructor(private signalRService: SignalRService) { }
 
   ngOnInit() {
@@ -107,19 +106,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.mapManager.setObjectClickCallback(this.clickObjectCallback);
     this.mapManager.setObjectHoverCallback(this.hoverObjectCallback);
-    this.mapManager.setChangeExtentCallback(this.changeExtentCallback);
-
-    this.$fromChangeExtentEvent
-      .pipe(
-        debounceTime(800),
-      )
-      .subscribe(
-        (extent: any) => {
-          if (extent != null) {
-            this.changeExtent.emit(extent);
-          }
-        }
-      );
   }
 
   ngOnDestroy() {
