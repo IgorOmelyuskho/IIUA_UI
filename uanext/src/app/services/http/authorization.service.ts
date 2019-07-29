@@ -262,7 +262,7 @@ export class AuthorizationService {
         if (response.body == null) {
           this.notify.show(this.translate.data.checkEmailShared);
         } else {
-          this.successSocialOrEmailLogin(response);
+          this.successSocialOrEmailLogin(response.body.token);
         }
       },
       err => {
@@ -343,6 +343,8 @@ export class AuthorizationService {
           if (provider === 'GOOGLE') {
             this.router.navigate(['signin']);
           }
+        } else {
+          this.successSocialOrEmailLogin(response.body.token);
         }
       },
       err => {
@@ -429,10 +431,8 @@ export class AuthorizationService {
 
 
 
-  successSocialOrEmailLogin(response: any) {
-    console.log(response);
-
-    localStorage.setItem('token', response.body.token);
+  successSocialOrEmailLogin(token: string) {
+    localStorage.setItem('token', token);
     const role: UserRole = this.stateService.role();
 
     if (role === UserRole.Vendor) {

@@ -54,16 +54,9 @@ export class SignupVendorComponent implements OnInit {
 
     this.authService.signUpAsVendor(this.signupForm.value).subscribe(
       response => {
-        console.log(response);
         this.showProgress.emit(false);
-        if (response.status === 200) {
-          if (response.body == null) {
-            this.notify.show(this.translate.data['SignupVendorComponent'].checkEmail);
-          } else {
-            this.notify.show(response.body.data);
-          }
-        } else {
-          this.notify.show(response.body.error);
+        if (response.body.token == null) {
+          this.notify.show(this.translate.data['SignupVendorComponent'].checkEmail);
         }
       },
       err => {

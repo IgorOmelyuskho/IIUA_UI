@@ -29,10 +29,10 @@ export class EmailValidateComponent implements OnInit, AfterViewInit {
       delay(5000)
     )
       .subscribe(
-        val => {
-          this.emailBeingVerified = false;
-          if (val.mailIsVerified === true) {
-            this.router.navigate(['signin']);
+        response => {
+          // this.emailBeingVerified = false;
+          if (response.mailIsVerified === true && response.token) {
+            this.authService.successSocialOrEmailLogin(response.token);
           } else {
             this.failedConfirmEmail = true;
           }

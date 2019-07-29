@@ -34,7 +34,7 @@ export class ProjectUserSignupComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       rePassword: ['', [Validators.required, matchOtherValidator('password')]],
     });
-   }
+  }
 
   ngOnInit() { }
 
@@ -53,16 +53,9 @@ export class ProjectUserSignupComponent implements OnInit {
 
     this.authService.signUpAsProjectUser(this.signupForm.value).subscribe(
       response => {
-        console.log(response);
         this.showProgress = false;
-        if (response.status === 200) {
-          if (response.body == null) {
-            this.notify.show(this.translate.data['ProjectUserSignupComponent'].checkEmail);
-          } else {
-            this.notify.show(response.body.data);
-          }
-        } else {
-          this.notify.show(response.body.error);
+        if (response.body.token == null) {
+          this.notify.show(this.translate.data['ProjectUserSignupComponent'].checkEmail);
         }
       },
       err => {

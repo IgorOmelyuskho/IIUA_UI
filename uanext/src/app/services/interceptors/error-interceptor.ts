@@ -24,10 +24,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           (error: any) => {
             if (error.status === 401) {
               console.log(error);
-              this.notify.show(error.statusText);
-              if (window.location.href.includes('signin') === false && window.location.href.includes('signup') === false) {
-                this.authService.signOut();
-              }
+              this.authService.signOut();
             }
 
             return throwError(error);
