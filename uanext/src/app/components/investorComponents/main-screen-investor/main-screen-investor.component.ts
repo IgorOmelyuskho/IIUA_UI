@@ -22,7 +22,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   self = 'MainScreenInvestorComponent';
 
   selectedProject: VendorProject = null;
-  selectedProjectId: string = null;
+  selectedProjectId: number;
 
   filter: FilterFields = {};
   searchWord: string;
@@ -38,7 +38,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
   projects: GeoObject[];
-  readonly maxPageSize = 2;
+  readonly maxPageSize = 5;
 
   windowMouseMoveHandler = (e) => {
     this.previewCardX = e.pageX;
@@ -190,9 +190,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   searchByKeywordInput(event) {
     if (event.target.value === '') {
       this.filterOnChange(null);
-    }
-    if (event.code === 'Enter') {
-      this.searchProjectsByKeyword(this.searchWord, this.maxPageSize, 1);
     }
   }
 

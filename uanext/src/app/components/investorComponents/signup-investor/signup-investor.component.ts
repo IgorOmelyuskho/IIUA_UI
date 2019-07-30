@@ -55,7 +55,7 @@ export class SignupInvestorComponent implements OnInit {
     this.authService.signUpAsInvestor(this.signupForm.value).subscribe(
       response => {
         this.showProgress.emit(false);
-        if (response.body.token == null) {
+        if (response.body == null || response.body.token == null) {
           this.notify.show(this.translate.data['SignupInvestorComponent'].checkEmail);
         }
       },

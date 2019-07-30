@@ -162,11 +162,6 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
     if (event.target.value === '') {
       this.filterOnChange(null);
     }
-    if (event.code === 'Enter') {
-      this.searchByScroll = false;
-      this.resetBeforeNewSearch();
-      this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
-    }
   }
 
   // http

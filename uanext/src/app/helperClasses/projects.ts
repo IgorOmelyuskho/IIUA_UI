@@ -17,7 +17,7 @@ export const polygon2 = [
 ];
 
 export const responseProject: VendorProject = {
-  'id': '0',
+  'id': 0,
   'rating': '9.3',
   'userId': 0,
   'name': 'project name',
@@ -129,7 +129,7 @@ export const responseProject: VendorProject = {
 };
 
 export const responseProject2: VendorProject = {
-  'id': '1',
+  'id': 1,
   'rating': '9.3',
   'userId': 0,
   'name': 'project name 2',
@@ -248,6 +248,7 @@ export const female: GeoObject = {
   coords: { x: 13.417122340477, y: 52.5281344784827 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/female.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject
 };
 
@@ -256,6 +257,7 @@ export const female2: GeoObject = {
   coords: { x: 13.417522340477, y: 52.5281444184827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/female.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -264,6 +266,7 @@ export const male: GeoObject = {
   coords: { x: 13.417222340477, y: 52.5282344784827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/male.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -272,6 +275,7 @@ export const tractor: GeoObject = {
   coords: { x: 13.417322340477, y: 52.5283344784827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/tractor.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -280,6 +284,7 @@ export const walt: GeoObject = {
   coords: { x: 13.417422340477, y: 52.5284344784827 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/walt.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject
 };
 
@@ -288,7 +293,7 @@ export const responseProjects: FilteredProjects = {
   'projectsCount': 1,
   'projectsList': [
     {
-      'id': '0',
+      'id': 0,
       'rating': '9.3',
       'userId': 0,
       'name': 'project name 3',
@@ -500,7 +505,7 @@ export const responseProjects: FilteredProjects = {
       ]
     },
     {
-      'id': '1',
+      'id': 1,
       'rating': '9.3',
       'userId': 0,
       'name': 'project name 4',
@@ -620,7 +625,7 @@ export const responseProjects: FilteredProjects = {
       ]
     },
     {
-      'id': '2',
+      'id': 2,
       'rating': '9.3',
       'userId': 0,
       'name': 'project name 5',
@@ -709,7 +714,7 @@ export const responseProjects: FilteredProjects = {
       ]
     },
     {
-      'id': '3',
+      'id': 3,
       'rating': '9.3',
       'userId': 0,
       'name': 'project name 6',
@@ -780,7 +785,7 @@ export const responseProjects: FilteredProjects = {
       ]
     },
     {
-      'id': '4',
+      'id': 4,
       'rating': '9.3',
       'userId': 0,
       'name': 'project name 7',
@@ -859,7 +864,7 @@ export const responseProjects: FilteredProjects = {
       ]
     },
     {
-      'id': '5',
+      'id': 5,
       'rating': '9.3',
       'userId': 0,
       'name': 'project name 8',
@@ -943,7 +948,7 @@ export const responseProjects: FilteredProjects = {
       ]
     },
     {
-      'id': '6',
+      'id': 6,
       'rating': '9.3',
       'userId': 0,
       'name': 'project name 9',
@@ -1028,7 +1033,7 @@ export const responseProjects: FilteredProjects = {
       ]
     },
     {
-      'id': '7',
+      'id': 7,
       'rating': '9.3',
       'userId': 0,
       'name': 'project name 10',

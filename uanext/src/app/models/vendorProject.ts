@@ -1,7 +1,7 @@
 import { GeoObject } from './geoObject';
 
 export interface VendorProject {
-  id?: string;
+  id?: number;
   userId?: number;
   name: string;
   avatara?: any;

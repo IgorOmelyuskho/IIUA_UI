@@ -9,7 +9,8 @@
         <option value="en" [selected]="translateService.lang === 'en'">en</option>
       </select>
     </div>
-    <button (click)='goToProfile()' type="button">{{ 'profile' | translate:self }}</button>
+    <button #profile (click)='goToProfile()' type="button">{{ 'profile' | translate:self }}</button>
+    <button #upload (click)='uploadModel()' type="button">{{ 'upload3DModels' | translate:self }}</button>
     <button (click)="signOut()" type="button">{{ 'signOut' | translate:self }}</button>
   </div>
 </nav>
