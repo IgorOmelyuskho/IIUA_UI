@@ -5,6 +5,12 @@ import { TouchSequence } from 'selenium-webdriver';
 declare var THREE: any;
 declare var maptalks: any;
 
+export enum MapZoomEnum {
+  BIG = 'BIG', // > bigZoom
+  AVG = 'AVG', // avgZoom - bigZoom
+  SMALL = 'SMALL', // < avgZoom
+}
+
 export class MapManager {
   // constants region
   private readonly bigZoom = 16;
@@ -41,6 +47,7 @@ export class MapManager {
   private camera = null;
   private objectsScale: number = null;
   private prevClusterGeoObjectId: string = null;
+  private mapZoomEnum: MapZoomEnum;
 
   // html elements id
   private mapWrapperId: string;
@@ -356,6 +363,7 @@ export class MapManager {
     });
 
     this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(this.map.getZoom());
+    this.mapZoomEnum = this.detectMapZoom(this.map.getZoom());
     this.mapEventHandlers();
   }
 
@@ -390,8 +398,9 @@ export class MapManager {
 
     this.map.on('zooming', (event) => {
       this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(event.to);
+      this.mapZoomEnum = this.detectMapZoom(event.to);
       for (let i = 0; i < this.objectsArr.length; i++) {
-        this.changeVisibleAndScale(this.objectsArr[i], event.to);
+        this.changeVisibleAndScale(this.objectsArr[i]);
       }
     });
 
@@ -605,7 +614,7 @@ export class MapManager {
     objLabel.position.z = geoObject.box3.getSize().z * 1.1;
     geoObject.object3D.add(objLabel);
 
-    this.changeVisibleAndScale(geoObject, this.map.getZoom());
+    this.changeVisibleAndScale(geoObject);
     this.scene.add(object3D);
     this.threeLayer.renderScene();
   }
@@ -715,7 +724,6 @@ export class MapManager {
     obj.marker.options.visible = false;
     obj.marker.parent = obj;
     this.clusterLayer.addGeometry(marker);
-    this.changeVisibleAndScale(obj, this.map.getZoom());
     this.markerEventHandlers(marker);
   }
 
@@ -885,13 +893,23 @@ export class MapManager {
     this.canvasElem.style.cursor = cursor;
   }
 
-  private changeVisibleAndScale(obj: GeoObject, mapZoom: number) {
-    if (mapZoom >= this.bigZoom + this.deltaZoom) {
+  private changeVisibleAndScale(obj: GeoObject) {
+    if (this.mapZoomEnum === MapZoomEnum.BIG) {
       this.whenBigZoom(obj);
-    } else if (mapZoom < this.avgZoom + this.deltaZoom) {
+    } else if (this.mapZoomEnum === MapZoomEnum.SMALL) {
       this.whenSmallZoom(obj);
     } else {
       this.whenAvgZoom(obj);
+    }
+  }
+
+  private detectMapZoom(mapZoom: number): MapZoomEnum {
+    if (mapZoom >= this.bigZoom + this.deltaZoom) {
+      return MapZoomEnum.BIG;
+    } else if (mapZoom < this.avgZoom + this.deltaZoom) {
+      return MapZoomEnum.SMALL;
+    } else {
+      return MapZoomEnum.AVG;
     }
   }
 

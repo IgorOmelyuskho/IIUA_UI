@@ -15,9 +15,17 @@ export class GeoObject {
   speedY?: number;
   rotationZ?: number;
   objectDivLabel?: HTMLElement;
-  pointForMove?: any;
+  pointForMove?: any; // todo remove
   marker?: any;
   mouseUnder?: boolean;
   box3?: any;
   boxHelper?: any; // todo remove
 }
+
+export class Object3D {
+  lowPolygonal: any;
+  highPolygonal: any;
+}
+
+
+
