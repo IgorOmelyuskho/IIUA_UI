@@ -1,4 +1,10 @@
 <div class="wrapper">
+
+  <div class="soc-btn">
+      <button type="button" (click)="signInWithFB()">FB</button>
+      <button type="button" (click)="signInWithGoogle()">Google</button>
+  </div>
+
   <div *ngIf="currentPage === 1" class="header">
     <app-header *ngIf="!userRole"></app-header>
     <app-investor-navbar *ngIf="userRole === 'Investor'"></app-investor-navbar>
@@ -30,12 +36,14 @@
                 <div (click)="signInWithFB()" class="social-signin-btn">
                   <img src="../../../assets/img/facebook.png" alt="">
                 </div>
+                <button type="button" (click)="signInWithFB()">FB</button>
                 <!-- <div class="social-signin-btn">
                   <img src="../../../assets/img/linkedin.png" alt="">
                 </div> -->
                 <div (click)="signInWithGoogle()" class="social-signin-btn">
                   <img src="../../../assets/img/google.png" alt="">
                 </div>
+                <button type="button" (click)="signInWithGoogle()">Google</button>
                 <!-- <div class="social-signin-btn">
                   <button id="googleBtn">Google</button>
                 </div> -->

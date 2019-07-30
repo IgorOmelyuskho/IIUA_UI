@@ -7,6 +7,10 @@
 
   <section class="bg-color-signin">
     <div class="container">
+        <div class="soc-btn">
+            <button type="button" (click)="signInWithFB()">FB</button>
+            <button type="button" (click)="signInWithGoogle()">Google</button>
+        </div>
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="form">
@@ -18,12 +22,14 @@
                 <div (click)="signInWithFB()" class="social-signin-btn">
                   <img src="../../../assets/img/facebook.png" alt="">
                 </div>
+                <button type="button" (click)="signInWithFB()">FB</button>
                 <!-- <div class="social-signin-btn">
                   <img src="../../../assets/img/linkedin.png" alt="">
                 </div> -->
                 <div (click)="signInWithGoogle()" class="social-signin-btn">
                   <img src="../../../assets/img/google.png" alt="">
                 </div>
+                <button type="button" (click)="signInWithGoogle()">Google</button>
               </div>
             </div>
             <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
@@ -57,3 +63,5 @@
     </div>
   </section>
 </div>
+
+
