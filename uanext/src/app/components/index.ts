@@ -69,7 +69,10 @@ import { VendorProjectCardComponent } from './vendorComponents/vendor-project-ca
 import { RotatingLoadIndicatorComponent } from './rotating-load-indicator/rotating-load-indicator.component';
 import { VendorProjectMinCardComponent } from './vendor-project-min-card/vendor-project-min-card.component';
 import { InvestorCardComponent } from './investor-card/investor-card.component';
-import { CreateVendorProjectFilledComponent} from './vendorComponents/create-vendor-project-filled/create-vendor-project-filled.component';
+import { CreateVendorProjectFilledComponent } from './vendorComponents/create-vendor-project-filled/create-vendor-project-filled.component';
+import {
+  ProjectUserObject3dUploadComponent
+} from './projectUserComponents/project-user-object3d-upload/project-user-object3d-upload.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -138,7 +141,8 @@ export {
   RotatingLoadIndicatorComponent,
   VendorProjectMinCardComponent,
   InvestorCardComponent,
-  CreateVendorProjectFilledComponent
+  CreateVendorProjectFilledComponent,
+  ProjectUserObject3dUploadComponent
 };
 
 export const components = [
@@ -207,7 +211,8 @@ export const components = [
   RotatingLoadIndicatorComponent,
   VendorProjectMinCardComponent,
   InvestorCardComponent,
-  CreateVendorProjectFilledComponent
+  CreateVendorProjectFilledComponent,
+  ProjectUserObject3dUploadComponent
 ];
 
 

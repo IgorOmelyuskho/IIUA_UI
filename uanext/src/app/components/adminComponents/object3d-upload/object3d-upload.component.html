@@ -1,22 +1,55 @@
-<mat-progress-bar *ngIf="showProgressBar" class="progress-bar-fixed" mode="indeterminate"></mat-progress-bar>
-
 <div class="container">
   <div class="row pt-3">
-    <div class="col-6">
+    <div class="col-7">
+
+      <div class="search-by-name">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <button (click)="searchByKeywordBtn($event)" class="btn btn-outline-secondary" type="button">
+              <span class="fa fa-search"></span>
+            </button>
+          </div>
+          <input type="text" (input)="searchByKeywordInput($event)" [(ngModel)]="searchWord"
+            class="form-control" aria-label="Project name"
+            aria-describedby="basic-addon2">
+        </div>
+      </div>
+
+      <div class="projects-container">
+        <div *ngFor="let project of projects" (click)="projectWrapperClick(project, $event)" class="project-wrapper">
+          <app-hovered-project-card [hoveredProject]="project"></app-hovered-project-card>
+          <div class="project-id">Project id: {{project.id}}</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-5">
       <div class="custom-file">
-        <input accept="application/zip,application/x-zip,application/x-zip-compressed,application" 
-        (change)="filesChange($event)" type="file" class="custom-file-input" id="3d-object-files" required>
-        <label *ngIf="fileForUpload == null" class="custom-file-label" for="3d-object-files">Choose 3D object .zip file</label>
-        <label *ngIf="fileForUpload != null" class="custom-file-label" for="3d-object-files">{{fileForUpload.name}}</label>
+        <input accept="application/zip,application/x-zip,application/x-zip-compressed,application"
+          (change)="filesChange($event)" type="file" class="custom-file-input" id="3d-object-files" required>
+        <label *ngIf="fileForUpload == null" class="custom-file-label" for="3d-object-files">Choose 3D object .zip
+          file</label>
+        <label *ngIf="fileForUpload != null" class="custom-file-label"
+          for="3d-object-files">{{fileForUpload.name}}</label>
         <div *ngIf="fileForUpload == null" class="invalid-feedback d-block">Choose file</div>
       </div>
 
-      <button [disabled]="fileForUpload == null" (click)="uploadFile()" type="button" class="btn btn-success mt-1">Upload selected file</button>
+      <button [disabled]="fileForUpload == null" (click)="uploadFile()" type="button"
+        class="btn btn-success mt-1">Upload selected file</button>
 
-      <div *ngFor="let file of files">
-        <h6 class="file-name">{{file.name}}</h6>
-        <button (click)="removeFile(file)">Remove</button>
+      <div class="coord">
+        <div class="label">X Coordinate</div>
+        <input [(ngModel)]="xCoordinate" type="number">
       </div>
+      <div class="coord">
+        <div class="label">Y Coordinate</div>
+        <input [(ngModel)]="yCoordinate" type="number">
+      </div>
+      <div class="project-id">Project id: {{projectId}}</div>
+
+      <button [disabled]="zipUploaded === false || projectId == null" (click)="createGeoObject()" type="button"
+        class="btn btn-success mt-1">Create GeoObject</button>
     </div>
 
   </div>

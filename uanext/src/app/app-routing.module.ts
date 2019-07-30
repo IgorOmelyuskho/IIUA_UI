@@ -56,6 +56,7 @@ const childAdminRoutes: Routes = [
 
 const childProjectUserRoutes: Routes = [
   { path: '', redirectTo: 'profile', pathMatch: 'full' },
+  { path: 'upload3dModel', component: Object3dUploadComponent, canActivate: [ProjectUserGuard] },
   { path: 'profile', component: ProjectUserProfileComponent, canActivate: [ProjectUserGuard] },
   { path: 'signup', component: ProjectUserSignupComponent },
 ];

@@ -12,12 +12,7 @@ export class MapService {
   constructor(private http: HttpClient) { }
 
   post3DObject(formData: FormData): Observable<any> {
-    return this.http.post<any>(environment.map + environment.post3DObject, formData)
-      .pipe(
-        map(response => {
-          return response.data;
-        })
-      );
+    return this.http.post<any>(environment.map + environment.post3DObject, formData);
   }
 
   get3DObject(id: string): Observable<{ id: string, name: string, path: string }> {
@@ -28,12 +23,7 @@ export class MapService {
   }
 
   postHistoryData(data): Observable<any> {
-    return this.http.post<any>(environment.map + environment.postHistoryData, data)
-      .pipe(
-        map((response: any[]) => {
-          return response;
-        })
-      );
+    return this.http.post<any>(environment.map + environment.postHistoryData, data);
   }
 
   getLastHistoryCoordinates(): Observable<{ object3DId: string, positionX: string, positionY: string }> {

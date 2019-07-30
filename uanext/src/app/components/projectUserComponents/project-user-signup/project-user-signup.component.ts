@@ -54,7 +54,7 @@ export class ProjectUserSignupComponent implements OnInit {
     this.authService.signUpAsProjectUser(this.signupForm.value).subscribe(
       response => {
         this.showProgress = false;
-        if (response.body.token == null) {
+        if (response.body == null || response.body.token == null) {
           this.notify.show(this.translate.data['ProjectUserSignupComponent'].checkEmail);
         }
       },

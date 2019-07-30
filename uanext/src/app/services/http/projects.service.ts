@@ -76,7 +76,7 @@ export class ProjectsService {
     return this.http.post<any>(environment.projects + environment.vendorProject, newVendorProject);
   }
 
-  updateVendorProject(projectId: string, updatedVendorProject: VendorProject): Observable<any> {
+  updateVendorProject(projectId: number, updatedVendorProject: VendorProject): Observable<any> {
     return this.http.put<any>(environment.projects + environment.vendorProject + projectId, updatedVendorProject);
   }
 

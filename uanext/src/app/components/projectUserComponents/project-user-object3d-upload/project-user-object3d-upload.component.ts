@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FilesService } from 'src/app/services/http/files.service';
 import { VendorProject } from 'src/app/models/vendorProject';
+import { FilesService } from 'src/app/services/http/files.service';
 import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
-import { FilteredProjects } from 'src/app/models';
 import { MapService } from 'src/app/services/http/map.service';
+import { FilteredProjects } from 'src/app/models';
 
 @Component({
-  selector: 'app-object3d-upload',
-  templateUrl: './object3d-upload.component.html',
-  styleUrls: ['./object3d-upload.component.scss']
+  selector: 'app-project-user-object3d-upload',
+  templateUrl: './project-user-object3d-upload.component.html',
+  styleUrls: ['./project-user-object3d-upload.component.scss']
 })
-export class Object3dUploadComponent implements OnInit {
+export class ProjectUserObject3dUploadComponent implements OnInit {
   formData: FormData;
   fileForUpload: any;
   projects: VendorProject[];

@@ -487,6 +487,7 @@
     },
     "ProjectUserPageComponent": {
         "profile": "Профиль",
+        "upload3DModels": "Загузить 3D модели",
         "signOut": "Выйти"
     },
     "updateRateOptions": [

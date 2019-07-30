@@ -487,6 +487,7 @@
     },
     "ProjectUserPageComponent": {
         "profile": "Profile",
+        "upload3DModels": "Upload 3d models",
         "signOut": "Sign out"
     },
     "updateRateOptions": [

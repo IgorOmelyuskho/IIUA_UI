@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment.js';
 })
 export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
   project: VendorProject = null;
-  projectId: string;
+  projectId: number;
   self = 'ViewProjectComponent';
   @ViewChild('container') container: ElementRef;
 
