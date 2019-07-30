@@ -541,7 +541,7 @@ export class MapManager {
     this.threeLayer.prepareToDraw = (gl, localScene, localCamera) => {
       this.scene = localScene;
       this.camera = localCamera;
-      this.scene.add(new THREE.AmbientLight(0xffffff, 1));
+      this.scene.add(new THREE.AmbientLight(0xffffff, 1.5));
       this.labelRenderer.setSize(this.mapElement.clientWidth, this.mapElement.clientHeight);
       if (this.on_map_init != null) {
         this.on_map_init();
