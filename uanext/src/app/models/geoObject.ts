@@ -5,11 +5,13 @@ export class GeoObject {
   coords: { x: number, y: number };
   projectName?: string;
   pathToZip: string;
+  pathToZip2: string;
   canMove?: boolean;
 
   project?: VendorProject;
 
-  object3D?: any;
+  object3DLP?: any;
+  object3DHP?: any;
   prevCoords?: any;
   speedX?: number;
   speedY?: number;
@@ -21,11 +23,3 @@ export class GeoObject {
   box3?: any;
   boxHelper?: any; // todo remove
 }
-
-export class Object3D {
-  lowPolygonal: any;
-  highPolygonal: any;
-}
-
-
-

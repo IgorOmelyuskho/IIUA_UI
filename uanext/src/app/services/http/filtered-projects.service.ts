@@ -132,6 +132,7 @@ export class FilteredProjectsService {
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
             pathToZip: window.location.origin + '/assets/objects/female.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
             project: filteredProjects.projectsList[i],
             canMove: true
           },
@@ -140,6 +141,7 @@ export class FilteredProjectsService {
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
             pathToZip: window.location.origin + '/assets/objects/male.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
             project: filteredProjects.projectsList[i],
             canMove: true
           },
@@ -148,6 +150,7 @@ export class FilteredProjectsService {
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
             pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
             project: filteredProjects.projectsList[i],
             canMove: true
           },
@@ -156,6 +159,7 @@ export class FilteredProjectsService {
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
             pathToZip: window.location.origin + '/assets/objects/walt.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
             project: filteredProjects.projectsList[i],
             canMove: false
           },
@@ -167,6 +171,7 @@ export class FilteredProjectsService {
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
             pathToZip: window.location.origin + '/assets/objects/female.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
             project: filteredProjects.projectsList[i],
             canMove: true
           },
@@ -175,17 +180,18 @@ export class FilteredProjectsService {
             coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
             projectName: filteredProjects.projectsList[i].name,
             pathToZip: window.location.origin + '/assets/objects/walt.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
             project: filteredProjects.projectsList[i],
             canMove: false
           },
-          {
-            geoObjectId: 'ID-' + Math.random(),
-            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
-            projectName: filteredProjects.projectsList[i].name,
-            pathToZip: window.location.origin + '/assets/objects/low-poly-tractor.zip',
-            project: filteredProjects.projectsList[i],
-            canMove: true
-          },
+          // {
+          //   geoObjectId: 'ID-' + Math.random(),
+          //   coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+          //   projectName: filteredProjects.projectsList[i].name,
+          //   pathToZip: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+          //   project: filteredProjects.projectsList[i],
+          //   canMove: true
+          // },
         ];
       }
 

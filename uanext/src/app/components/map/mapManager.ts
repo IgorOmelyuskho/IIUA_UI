@@ -11,6 +11,11 @@ export enum MapZoomEnum {
   SMALL = 'SMALL', // < avgZoom
 }
 
+export enum ModelQuality {
+  LOW = 'LOW',
+  HIGH = 'HIGH',
+}
+
 export class MapManager {
   // constants region
   private readonly bigZoom = 16;
@@ -215,7 +220,8 @@ export class MapManager {
     for (let i = 0; i < objects.length; i++) {
       const newObj: GeoObject = objects[i];
       newObj.marker = null;
-      newObj.object3D = null;
+      newObj.object3DLP = null;
+      newObj.object3DHP = null;
       newObj.mouseUnder = false;
       newObj.speedX = 0;
       newObj.speedY = 0;
@@ -226,7 +232,17 @@ export class MapManager {
       newObj.prevCoords.y = newObj.coords.y;
 
       this.createMarker(newObj);
-      this.loadObject3D(newObj); // async
+      const modelQuality: ModelQuality = this.modelQualityDependenceMapZoomEnum(this.mapZoomEnum);
+
+      this.loadObject3D(newObj.pathToZip, (obj3D) => {
+        this.init3dObject(newObj, obj3D, ModelQuality.HIGH);
+      });
+
+      this.loadObject3D(newObj.pathToZip2, (obj3D) => {
+        this.init3dObject(newObj, obj3D, ModelQuality.LOW);
+      });
+
+
       this.objectsArr.push(newObj);
     }
   }
@@ -551,19 +567,30 @@ export class MapManager {
       geoObject.objectDivLabel.parentNode.removeChild(geoObject.objectDivLabel); // not work
     }
 
-    if (geoObject.object3D.geometry) {
-      geoObject.object3D.geometry.dispose();
+    if (geoObject.object3DLP.geometry) {
+      geoObject.object3DLP.geometry.dispose();
     }
-    if (geoObject.object3D.material) {
-      geoObject.object3D.material.dispose();
+    if (geoObject.object3DLP.material) {
+      geoObject.object3DLP.material.dispose();
     }
-    if (geoObject.object3D.texture) {
-      geoObject.object3D.texture.dispose();
+    if (geoObject.object3DLP.texture) {
+      geoObject.object3DLP.texture.dispose();
     }
-    this.scene.remove(geoObject.object3D);
+    this.scene.remove(geoObject.object3DLP);
+
+    if (geoObject.object3DHP.geometry) {
+      geoObject.object3DHP.geometry.dispose();
+    }
+    if (geoObject.object3DHP.material) {
+      geoObject.object3DHP.material.dispose();
+    }
+    if (geoObject.object3DHP.texture) {
+      geoObject.object3DHP.texture.dispose();
+    }
+    this.scene.remove(geoObject.object3DHP);
   }
 
-  private init3dObject(geoObject: GeoObject, object3D: any) {
+  private init3dObject(geoObject: GeoObject, object3D: any, modelQuality: ModelQuality) { // modelQuality - low / high
     const childScale = 0.004;
     object3D.traverse((child) => {
       if (child instanceof THREE.Mesh) {
@@ -576,7 +603,13 @@ export class MapManager {
       }
     });
 
-    geoObject.object3D = object3D;
+    if (modelQuality === ModelQuality.LOW) {
+      geoObject.object3DLP = object3D;
+    }
+    if (modelQuality === ModelQuality.HIGH) {
+      geoObject.object3DHP = object3D;
+    }
+
     const v = this.threeLayer.coordinateToVector3(new maptalks.Coordinate(geoObject.coords.x, geoObject.coords.y));
     object3D.position.x = v.x;
     object3D.position.y = v.y;
@@ -593,9 +626,9 @@ export class MapManager {
     });
     if (geoObject.canMove === true) {
       geoObject.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
-      geoObject.pointForMove.position.x = geoObject.object3D.position.x;
-      geoObject.pointForMove.position.y = geoObject.object3D.position.y;
-      geoObject.pointForMove.position.z = geoObject.object3D.position.z;
+      // geoObject.pointForMove.position.x = geoObject.object3D.position.x;
+      // geoObject.pointForMove.position.y = geoObject.object3D.position.y;
+      // geoObject.pointForMove.position.z = geoObject.object3D.position.z;
       this.scene.add(geoObject.pointForMove);
     }
 
@@ -612,7 +645,13 @@ export class MapManager {
     objLabel.position.x = 0;
     objLabel.position.y = 0;
     objLabel.position.z = geoObject.box3.getSize().z * 1.1;
-    geoObject.object3D.add(objLabel);
+
+    if (modelQuality === ModelQuality.LOW) {
+      geoObject.object3DLP.add(objLabel);
+    }
+    if (modelQuality === ModelQuality.HIGH) {
+      geoObject.object3DHP.add(objLabel);
+    }
 
     this.changeVisibleAndScale(geoObject);
     this.scene.add(object3D);
@@ -645,9 +684,9 @@ export class MapManager {
     }
   }
 
-  private loadObject3D(obj: GeoObject) {
+  private loadObject3D(pathToZip: string, callback: (obj3D: any) => void) {
     THREE.ZipLoadingManager
-      .uncompress(obj.pathToZip, ['.mtl', '.obj', '.jpg', '.png', '.ma'])
+      .uncompress(pathToZip, ['.mtl', '.obj', '.jpg', '.png', '.ma'])
       .then((zip) => {
         const pathToFolder = zip.urls[0].substring(0, zip.urls[0].lastIndexOf('/') + 1);
         let mtlFileName = '';
@@ -668,7 +707,7 @@ export class MapManager {
           objLoader.setMaterials(materials);
           objLoader.setPath(pathToFolder);
           objLoader.load(objFileName, (object3D) => {
-            this.init3dObject(obj, object3D);
+            callback(object3D);
           });
         });
       });
@@ -699,8 +738,8 @@ export class MapManager {
     marker.setZIndex(1000);
   }
 
-  private createMarker(obj: GeoObject) {
-    const coords = new maptalks.Coordinate(obj.coords.x, obj.coords.y);
+  private createMarker(geoObject: GeoObject) {
+    const coords = new maptalks.Coordinate(geoObject.coords.x, geoObject.coords.y);
     const marker = new maptalks.Marker(coords, {
       visible: true,
       cursor: 'pointer',
@@ -711,7 +750,7 @@ export class MapManager {
       },
       {
         'textFaceName': 'sans-serif',
-        'textName': obj.projectName,
+        'textName': geoObject.projectName,
         'textSize': 16,
         'textDy': 10,
         'textFill': 'black',
@@ -720,9 +759,9 @@ export class MapManager {
       }]
     });
 
-    obj.marker = marker;
-    obj.marker.options.visible = false;
-    obj.marker.parent = obj;
+    geoObject.marker = marker;
+    geoObject.marker.options.visible = false;
+    geoObject.marker.parent = geoObject;
     this.clusterLayer.addGeometry(marker);
     this.markerEventHandlers(marker);
   }
@@ -771,21 +810,38 @@ export class MapManager {
     this.customRedraw();
   }
 
-  private updateCoordsForDraw(obj: GeoObject) {
-    if (obj == null || obj.object3D == null || obj.marker == null) {
+  private updateCoordsForDraw(geoObj: GeoObject) {
+    const modelQuality: ModelQuality = this.modelQualityDependenceMapZoomEnum(this.mapZoomEnum);
+    let obj3D: any;
+    if (modelQuality === ModelQuality.LOW) {
+      obj3D = geoObj.object3DLP;
+      if (obj3D == null) {
+        obj3D = geoObj.object3DHP;
+      }
+    } else if (modelQuality === ModelQuality.HIGH) {
+      obj3D = geoObj.object3DHP;
+      if (obj3D == null) {
+        obj3D = geoObj.object3DLP;
+      }
+    }
+
+    if (obj3D == null) {
+      obj3D = geoObj.object3DHP;
+    }
+    if (geoObj == null || obj3D == null || geoObj.marker == null) {
       return;
     }
-    obj.coords.x += obj.speedX; // geographical coordinates
-    obj.coords.y += obj.speedY; // geographical coordinates
-    obj.marker.setCoordinates(new maptalks.Coordinate(obj.coords));
+    geoObj.coords.x += geoObj.speedX; // geographical coordinates
+    geoObj.coords.y += geoObj.speedY; // geographical coordinates
+    geoObj.marker.setCoordinates(new maptalks.Coordinate(geoObj.coords));
 
-    const prevX = obj.object3D.position.x;
-    const prevY = obj.object3D.position.y;
-    const v = this.threeLayer.coordinateToVector3(obj.coords);
-    obj.object3D.position.x = v.x;
-    obj.object3D.position.y = v.y;
-    obj.object3D.position.z = v.z;
-    obj.object3D.rotation.z = Math.atan2(prevY - obj.object3D.position.y, prevX - obj.object3D.position.x);
+    const prevX = obj3D.position.x;
+    const prevY = obj3D.position.y;
+    const v = this.threeLayer.coordinateToVector3(geoObj.coords);
+    obj3D.position.x = v.x;
+    obj3D.position.y = v.y;
+    obj3D.position.z = v.z;
+    obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
     // obj.boxHelper.update();
   }
   //#endregion
@@ -804,15 +860,29 @@ export class MapManager {
     }
   }
 
-  private selectObject(obj: GeoObject) {
-    if (obj.object3D == null || obj.object3D.visible === false) {
-      obj.mouseUnder = false;
+  private selectObject(geoObj: GeoObject) {
+    const modelQuality: ModelQuality = this.modelQualityDependenceMapZoomEnum(this.mapZoomEnum);
+    let obj3D: any;
+    if (modelQuality === ModelQuality.LOW) {
+      obj3D = geoObj.object3DLP;
+      if (obj3D == null) {
+        obj3D = geoObj.object3DHP;
+      }
+    } else if (modelQuality === ModelQuality.HIGH) {
+      obj3D = geoObj.object3DHP;
+      if (obj3D == null) {
+        obj3D = geoObj.object3DLP;
+      }
+    }
+
+    if (obj3D == null || obj3D.visible === false) {
+      geoObj.mouseUnder = false;
       return false;
     }
 
     const objects = [];
 
-    obj.object3D.traverse((child) => {
+    obj3D.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         objects.push(child);
       }
@@ -822,28 +892,28 @@ export class MapManager {
     const intersects = this.raycaster.intersectObjects(objects);
 
     if (intersects.length > 0) {
-      return this.intersections(obj);
+      return this.intersections(geoObj, obj3D);
     }
 
     if (intersects.length === 0) {
-      return this.noIntersections(obj);
+      return this.noIntersections(geoObj, obj3D);
     }
   }
 
-  private intersections(obj: GeoObject): true {
-    const prevMouseUnderObject_2 = obj.mouseUnder;
-    obj.mouseUnder = true;
+  private intersections(geoObj: GeoObject, obj3D: any): true {
+    const prevMouseUnderObject_2 = geoObj.mouseUnder;
+    geoObj.mouseUnder = true;
 
     // on hover event
-    if (prevMouseUnderObject_2 !== obj.mouseUnder) {
-      obj.objectDivLabel.className = 'obj-label-selected';
+    if (prevMouseUnderObject_2 !== geoObj.mouseUnder) {
+      geoObj.objectDivLabel.className = 'obj-label-selected';
       if (this.on_hover_object != null) {
-        this.on_hover_object(obj);
+        this.on_hover_object(geoObj);
       }
     }
 
     // set selected color
-    obj.object3D.traverse((child) => {
+    obj3D.traverse((child) => {
       if (!(child instanceof THREE.Mesh)) {
         return;
       }
@@ -851,7 +921,7 @@ export class MapManager {
         return;
       } else {
         const initColor = child.material.initColor;
-        child.material.color.setHex(initColor - 100);
+        child.material.color.setHex(initColor + 150);
       }
     });
 
@@ -859,12 +929,12 @@ export class MapManager {
     return true;
   }
 
-  private noIntersections(obj: GeoObject): false {
-    const prevMouseUnderObject = obj.mouseUnder;
-    obj.mouseUnder = false;
+  private noIntersections(geoObj: GeoObject, obj3D: any): false {
+    const prevMouseUnderObject = geoObj.mouseUnder;
+    geoObj.mouseUnder = false;
 
     // set default color
-    obj.object3D.traverse((child) => {
+    obj3D.traverse((child) => {
       if (!(child instanceof THREE.Mesh)) {
         return;
       }
@@ -877,10 +947,10 @@ export class MapManager {
     });
 
     // event when mouse move and mouse leave 3d object
-    if (prevMouseUnderObject !== obj.mouseUnder) {
+    if (prevMouseUnderObject !== geoObj.mouseUnder) {
       this.customRedraw();
-      if (obj !== this.selectedObject) {
-        obj.objectDivLabel.className = 'obj-label';
+      if (geoObj !== this.selectedObject) {
+        geoObj.objectDivLabel.className = 'obj-label';
       }
     }
 
@@ -893,13 +963,22 @@ export class MapManager {
     this.canvasElem.style.cursor = cursor;
   }
 
-  private changeVisibleAndScale(obj: GeoObject) {
+  private modelQualityDependenceMapZoomEnum(mapZoomEnum: MapZoomEnum): ModelQuality { // low / high
+    if (this.mapZoomEnum === MapZoomEnum.SMALL || this.mapZoomEnum === MapZoomEnum.AVG) {
+      return ModelQuality.LOW;
+    }
     if (this.mapZoomEnum === MapZoomEnum.BIG) {
-      this.whenBigZoom(obj);
+      return ModelQuality.HIGH;
+    }
+  }
+
+  private changeVisibleAndScale(geoObj: GeoObject) {
+    if (this.mapZoomEnum === MapZoomEnum.BIG) {
+      this.whenBigZoom(geoObj);
     } else if (this.mapZoomEnum === MapZoomEnum.SMALL) {
-      this.whenSmallZoom(obj);
+      this.whenSmallZoom(geoObj);
     } else {
-      this.whenAvgZoom(obj);
+      this.whenAvgZoom(geoObj);
     }
   }
 
@@ -913,34 +992,49 @@ export class MapManager {
     }
   }
 
-  private whenBigZoom(obj: GeoObject) {
-    if (obj.object3D) {
-      obj.object3D.visible = true;
-      obj.objectDivLabel.style.display = '';
+  private whenBigZoom(geoObj: GeoObject) {
+    if (geoObj.objectDivLabel) {
+      geoObj.objectDivLabel.style.display = '';
     }
-    if (obj.boxHelper) {
-      obj.boxHelper.visible = true;
+    if (geoObj.object3DHP) {
+      geoObj.object3DHP.visible = true;
     }
-  }
-
-  private whenAvgZoom(obj: GeoObject) {
-    if (obj.object3D) {
-      obj.object3D.scale.set(this.objectsScale, this.objectsScale, this.objectsScale);
-      obj.object3D.visible = true;
-      obj.objectDivLabel.style.display = 'none';
+    if (geoObj.object3DLP) {
+      geoObj.object3DLP.visible = false;
     }
-    if (obj.boxHelper) {
-      obj.boxHelper.visible = true;
+    if (geoObj.boxHelper) {
+      geoObj.boxHelper.visible = true;
     }
   }
 
-  private whenSmallZoom(obj: GeoObject) {
-    if (obj.object3D) {
-      obj.object3D.visible = false;
-      obj.objectDivLabel.style.display = 'none';
+  private whenAvgZoom(geoObj: GeoObject) {
+    if (geoObj.objectDivLabel) {
+      geoObj.objectDivLabel.style.display = 'none';
     }
-    if (obj.boxHelper) {
-      obj.boxHelper.visible = false;
+    if (geoObj.object3DHP) {
+      geoObj.object3DHP.visible = false;
+    }
+    if (geoObj.object3DLP) {
+      geoObj.object3DLP.visible = true;
+      geoObj.object3DLP.scale.set(this.objectsScale, this.objectsScale, this.objectsScale);
+    }
+    if (geoObj.boxHelper) {
+      geoObj.boxHelper.visible = true;
+    }
+  }
+
+  private whenSmallZoom(geoObj: GeoObject) {
+    if (geoObj.objectDivLabel) {
+      geoObj.objectDivLabel.style.display = 'none';
+    }
+    if (geoObj.object3DHP) {
+      geoObj.object3DHP.visible = false;
+    }
+    if (geoObj.object3DLP) {
+      geoObj.object3DLP.visible = false;
+    }
+    if (geoObj.boxHelper) {
+      geoObj.boxHelper.visible = false;
     }
   }
 

@@ -248,6 +248,7 @@ export const female: GeoObject = {
   coords: { x: 13.417122340477, y: 52.5281344784827 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/female.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject
 };
 
@@ -256,6 +257,7 @@ export const female2: GeoObject = {
   coords: { x: 13.417522340477, y: 52.5281444184827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/female.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -264,6 +266,7 @@ export const male: GeoObject = {
   coords: { x: 13.417222340477, y: 52.5282344784827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/male.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -272,6 +275,7 @@ export const tractor: GeoObject = {
   coords: { x: 13.417322340477, y: 52.5283344784827 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/tractor.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -280,6 +284,7 @@ export const walt: GeoObject = {
   coords: { x: 13.417422340477, y: 52.5284344784827 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/walt.zip',
+  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject
 };
 
