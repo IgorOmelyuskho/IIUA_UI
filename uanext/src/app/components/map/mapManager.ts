@@ -221,7 +221,9 @@ export class MapManager {
       const newObj: GeoObject = objects[i];
       newObj.marker = null;
       newObj.object3DLP = null;
+      newObj.object3DLPStartLoaded = false;
       newObj.object3DHP = null;
+      newObj.object3DHPStartLoaded = false;
       newObj.mouseUnder = false;
       newObj.speedX = 0;
       newObj.speedY = 0;
@@ -234,15 +236,7 @@ export class MapManager {
       this.createMarker(newObj);
       const modelQuality: ModelQuality = this.modelQualityDependenceMapZoomEnum(this.mapZoomEnum);
 
-      this.loadObject3D(newObj.pathToZip, (obj3D) => {
-        this.init3dObject(newObj, obj3D, ModelQuality.HIGH);
-      });
-
-      this.loadObject3D(newObj.pathToZip2, (obj3D) => {
-        this.init3dObject(newObj, obj3D, ModelQuality.LOW);
-      });
-
-
+      this.loadObject3D(modelQuality, newObj);
       this.objectsArr.push(newObj);
     }
   }
@@ -416,6 +410,15 @@ export class MapManager {
       this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(event.to);
       this.mapZoomEnum = this.detectMapZoom(event.to);
       for (let i = 0; i < this.objectsArr.length; i++) {
+        const whatModelNeedLoad: ModelQuality = this.detectWhenNeedLoadObject3D(this.mapZoomEnum, this.objectsArr[i]);
+
+        if (whatModelNeedLoad === ModelQuality.HIGH) {
+          this.loadObject3D(whatModelNeedLoad, this.objectsArr[i]);
+        }
+        if (whatModelNeedLoad === ModelQuality.LOW) {
+          this.loadObject3D(whatModelNeedLoad, this.objectsArr[i]);
+        }
+
         this.changeVisibleAndScale(this.objectsArr[i]);
       }
     });
@@ -463,6 +466,19 @@ export class MapManager {
         this.on_map_change_extent(extent);
       }
     });
+  }
+
+  private detectWhenNeedLoadObject3D(mapZoomEnum: MapZoomEnum, geoObject: GeoObject): ModelQuality {
+    if (mapZoomEnum === MapZoomEnum.SMALL && geoObject.object3DLP == null && geoObject.object3DLPStartLoaded === false) {
+      return ModelQuality.LOW;
+    }
+    if (mapZoomEnum === MapZoomEnum.AVG && geoObject.object3DLP == null && geoObject.object3DLPStartLoaded === false) {
+      return ModelQuality.LOW;
+    }
+    if (mapZoomEnum === MapZoomEnum.BIG && geoObject.object3DHP == null && geoObject.object3DHPStartLoaded === false) {
+      return ModelQuality.HIGH;
+    }
+    return null;
   }
 
   private createClusterLayer() {
@@ -684,7 +700,17 @@ export class MapManager {
     }
   }
 
-  private loadObject3D(pathToZip: string, callback: (obj3D: any) => void) {
+  private loadObject3D(modelQuality: ModelQuality, geoObject: GeoObject) {
+    let pathToZip: string;
+    if (modelQuality === ModelQuality.LOW) {
+      pathToZip = geoObject.pathToZip2;
+      geoObject.object3DLPStartLoaded = true;
+    }
+    if (modelQuality === ModelQuality.HIGH) {
+      pathToZip = geoObject.pathToZip;
+      geoObject.object3DHPStartLoaded = true;
+    }
+
     THREE.ZipLoadingManager
       .uncompress(pathToZip, ['.mtl', '.obj', '.jpg', '.png', '.ma'])
       .then((zip) => {
@@ -707,7 +733,13 @@ export class MapManager {
           objLoader.setMaterials(materials);
           objLoader.setPath(pathToFolder);
           objLoader.load(objFileName, (object3D) => {
-            callback(object3D);
+            if (modelQuality === ModelQuality.LOW) {
+              geoObject.object3DLPStartLoaded = false;
+            }
+            if (modelQuality === ModelQuality.HIGH) {
+              geoObject.object3DHPStartLoaded = false;
+            }
+            this.init3dObject(geoObject, object3D, modelQuality);
           });
         });
       });

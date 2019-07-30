@@ -11,7 +11,9 @@ export class GeoObject {
   project?: VendorProject;
 
   object3DLP?: any;
+  object3DLPStartLoaded?: boolean;
   object3DHP?: any;
+  object3DHPStartLoaded?: boolean;
   prevCoords?: any;
   speedX?: number;
   speedY?: number;
