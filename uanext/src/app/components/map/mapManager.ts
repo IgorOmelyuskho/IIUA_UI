@@ -557,7 +557,7 @@ export class MapManager {
       return; // null when object model did not have time to boot
     }
 
-    if (geoObject.pointForMove) {
+    if (geoObject.pointForMove != null) {
       if (geoObject.pointForMove.geometry) {
         geoObject.pointForMove.geometry.dispose();
       }
@@ -570,7 +570,7 @@ export class MapManager {
       this.scene.remove(geoObject.pointForMove);
     }
 
-    if (geoObject.boxHelper) {
+    if (geoObject.boxHelper != null) {
       this.scene.remove(geoObject.boxHelper);
     }
 
@@ -578,31 +578,34 @@ export class MapManager {
       geoObject.objectDivLabel.removeEventListener('mouseenter', this.labelMouseEnterHandler);
       geoObject.objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
       geoObject.objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
-      geoObject.objectDivLabel.style.display = 'none';
-      geoObject.objectDivLabel.parentNode.removeChild(geoObject.objectDivLabel); // not work
+      geoObject.objectDivLabel.parentNode.removeChild(geoObject.objectDivLabel);
     }
 
-    if (geoObject.object3DLP.geometry) {
-      geoObject.object3DLP.geometry.dispose();
+    if (geoObject.object3DLP != null) {
+      if (geoObject.object3DLP.geometry) {
+        geoObject.object3DLP.geometry.dispose();
+      }
+      if (geoObject.object3DLP.material) {
+        geoObject.object3DLP.material.dispose();
+      }
+      if (geoObject.object3DLP.texture) {
+        geoObject.object3DLP.texture.dispose();
+      }
+      this.scene.remove(geoObject.object3DLP);
     }
-    if (geoObject.object3DLP.material) {
-      geoObject.object3DLP.material.dispose();
-    }
-    if (geoObject.object3DLP.texture) {
-      geoObject.object3DLP.texture.dispose();
-    }
-    this.scene.remove(geoObject.object3DLP);
 
-    if (geoObject.object3DHP.geometry) {
-      geoObject.object3DHP.geometry.dispose();
+    if (geoObject.object3DHP != null) {
+      if (geoObject.object3DHP.geometry) {
+        geoObject.object3DHP.geometry.dispose();
+      }
+      if (geoObject.object3DHP.material) {
+        geoObject.object3DHP.material.dispose();
+      }
+      if (geoObject.object3DHP.texture) {
+        geoObject.object3DHP.texture.dispose();
+      }
+      this.scene.remove(geoObject.object3DHP);
     }
-    if (geoObject.object3DHP.material) {
-      geoObject.object3DHP.material.dispose();
-    }
-    if (geoObject.object3DHP.texture) {
-      geoObject.object3DHP.texture.dispose();
-    }
-    this.scene.remove(geoObject.object3DHP);
   }
 
   private init3dObject(geoObject: GeoObject, object3D: any, modelQuality: ModelQuality) { // modelQuality - low / high
