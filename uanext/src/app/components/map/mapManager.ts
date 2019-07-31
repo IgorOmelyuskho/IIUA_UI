@@ -435,11 +435,15 @@ export class MapManager {
       for (let i = 0; i < this.objectsArr.length; i++) {
         if (this.objectsArr[i].mouseUnder === true) {
           if (this.selectedObject != null) {
-            this.selectedObject.objectDivLabel.className = 'obj-label';
+            if (this.selectedObject.objectDivLabel) {
+              this.selectedObject.objectDivLabel.className = 'obj-label';
+            }
             this.setMarkerSymbolDefault(this.selectedObject.marker);
           }
           this.selectedObject = this.objectsArr[i];
-          this.selectedObject.objectDivLabel.className = 'obj-label-selected';
+          if (this.selectedObject.objectDivLabel) {
+            this.selectedObject.objectDivLabel.className = 'obj-label-selected';
+          }
           this.setMarkerSymbolSelected(this.selectedObject.marker);
           if (this.on_click_object != null) {
             this.on_click_object(this.selectedObject);
@@ -642,30 +646,26 @@ export class MapManager {
     });
     if (geoObject.canMove === true) {
       geoObject.pointForMove = new THREE.Mesh(cubeGeometry, cubeMaterial);
-      // geoObject.pointForMove.position.x = geoObject.object3D.position.x;
-      // geoObject.pointForMove.position.y = geoObject.object3D.position.y;
-      // geoObject.pointForMove.position.z = geoObject.object3D.position.z;
       this.scene.add(geoObject.pointForMove);
     }
 
-    const objectDivLabel = document.createElement('div');
-    objectDivLabel['geoObject'] = geoObject;
-    objectDivLabel.addEventListener('mouseenter', this.labelMouseEnterHandler);
-    objectDivLabel.addEventListener('mouseleave', this.labelMouseLeaveHandler);
-    objectDivLabel.addEventListener('click', this.labelMouseClickHandler);
-    objectDivLabel.className = 'obj-label';
-    objectDivLabel.textContent = geoObject.projectName;
-    objectDivLabel.style.marginTop = '-1em';
-    const objLabel = new THREE.CSS2DObject(objectDivLabel);
-    geoObject.objectDivLabel = objectDivLabel;
-    objLabel.position.x = 0;
-    objLabel.position.y = 0;
-    objLabel.position.z = geoObject.box3.getSize().z * 1.1;
-
-    if (modelQuality === ModelQuality.LOW) {
-      geoObject.object3DLP.add(objLabel);
-    }
+    // if (modelQuality === ModelQuality.LOW) { // if need objectDivLabel for low quality model
+    //   geoObject.object3DLP.add(objLabel);
+    // }
     if (modelQuality === ModelQuality.HIGH) {
+      const objectDivLabel = document.createElement('div');
+      objectDivLabel['geoObject'] = geoObject;
+      objectDivLabel.addEventListener('mouseenter', this.labelMouseEnterHandler);
+      objectDivLabel.addEventListener('mouseleave', this.labelMouseLeaveHandler);
+      objectDivLabel.addEventListener('click', this.labelMouseClickHandler);
+      objectDivLabel.className = 'obj-label';
+      objectDivLabel.textContent = geoObject.projectName;
+      objectDivLabel.style.marginTop = '-1em';
+      const objLabel = new THREE.CSS2DObject(objectDivLabel);
+      geoObject.objectDivLabel = objectDivLabel;
+      objLabel.position.x = 0;
+      objLabel.position.y = 0;
+      objLabel.position.z = geoObject.box3.getSize().z * 1.1;
       geoObject.object3DHP.add(objLabel);
     }
 
@@ -938,7 +938,9 @@ export class MapManager {
 
     // on hover event
     if (prevMouseUnderObject_2 !== geoObj.mouseUnder) {
-      geoObj.objectDivLabel.className = 'obj-label-selected';
+      if (geoObj.objectDivLabel) {
+        geoObj.objectDivLabel.className = 'obj-label-selected';
+      }
       if (this.on_hover_object != null) {
         this.on_hover_object(geoObj);
       }
@@ -982,7 +984,9 @@ export class MapManager {
     if (prevMouseUnderObject !== geoObj.mouseUnder) {
       this.customRedraw();
       if (geoObj !== this.selectedObject) {
-        geoObj.objectDivLabel.className = 'obj-label';
+        if (geoObj.objectDivLabel) {
+          geoObj.objectDivLabel.className = 'obj-label';
+        }
       }
     }
 
