@@ -1,13 +1,12 @@
 @import '../../../styles-variables.scss';
 
-.chart-wrapper {
+#chart-wrapper {
     width: 100%;
     height: 100%;
 
     svg.svg-line-chat {
         width: 100%;
         height: 100%;
-        background: rgb(255, 230, 0);
     }
 
     #line-chat-tooltip {

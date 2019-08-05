@@ -26,6 +26,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   canScrollDown = true;
   self = 'IndexComponent';
   currentPage = 1;
+  @ViewChild('chartsWrapper') chartsWrapper: ElementRef;
+  isFirstWheel = true;
 
   animationInterval_1: any;
   animationInterval_2: any;
@@ -127,6 +129,32 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     window.addEventListener('resize', this.windowResizeHandler);
+    this.chartsWrapper.nativeElement.addEventListener('wheel', this.chartWrapperWheelHandler);
+  }
+
+  chartWrapperWheelHandler = (event) => {
+    let delta = 0;
+    if (event.wheelDelta) {
+        delta = event.wheelDelta / 120;
+    } else if (event.detail) {
+        delta = -event.detail / 3;
+    }
+    const dir = delta > 0 ? 'Up' : 'Down';
+    if (this.isFirstWheel === true) {
+      this.isFirstWheel = false;
+      event.stopPropagation();
+      return;
+    }
+
+    if (this.chartsWrapper.nativeElement.scrollTop === 0 && dir === 'Up') {
+      return;
+    }
+
+    if (this.chartsWrapper.nativeElement.scrollTop - this.chartsWrapper.nativeElement.clientHeight >= -1 && dir === 'Down') {
+      return;
+    }
+
+    event.stopPropagation();
   }
 
   startAnimation1() {
@@ -196,6 +224,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.slide.destroy();
     window.removeEventListener('resize', this.windowResizeHandler);
+    this.chartsWrapper.nativeElement.removeEventListener('wheel', this.chartWrapperWheelHandler);
     clearInterval(this.animationInterval_1);
     clearInterval(this.animationInterval_2);
   }

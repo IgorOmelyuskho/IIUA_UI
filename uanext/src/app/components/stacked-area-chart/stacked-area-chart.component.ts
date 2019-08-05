@@ -16,7 +16,7 @@ export class StackedAreaChartComponent implements OnInit, AfterViewInit, OnDestr
 
   ngAfterViewInit() {
     this.chartInit();
-    // window.addEventListener('resize', this.windowResizeHandler);
+    window.addEventListener('resize', this.windowResizeHandler);
   }
 
   windowResizeHandler = () => {
@@ -25,8 +25,6 @@ export class StackedAreaChartComponent implements OnInit, AfterViewInit, OnDestr
 
   chartInit() {
     d3.selectAll('#stacked-area-container svg.stacked-area-svg > *').remove();
-
-    let tsvData = null;
 
     const svgContainer = document.getElementById('stacked-area-container');
 
@@ -92,9 +90,6 @@ export class StackedAreaChartComponent implements OnInit, AfterViewInit, OnDestr
       data.forEach(function (d) {
         d.date = parseDate(d.date);
       });
-      tsvData = (function () {
-        return data;
-      })();
 
 
       const maxDateVal = d3.max(data, function (d) {

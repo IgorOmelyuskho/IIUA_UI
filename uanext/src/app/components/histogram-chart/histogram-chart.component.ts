@@ -16,7 +16,7 @@ export class HistogramChartComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit() {
     this.histogramChartInit();
-    // window.addEventListener('resize', this.windowResizeHandler);
+    window.addEventListener('resize', this.windowResizeHandler);
   }
 
   windowResizeHandler = () => {

@@ -17,7 +17,7 @@ export class PieChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.pieChartInit();
-    // window.addEventListener('resize', this.windowResizeHandler);
+    window.addEventListener('resize', this.windowResizeHandler);
   }
 
   windowResizeHandler = () => {
