@@ -26,6 +26,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               console.log(error);
               this.authService.signOut();
             }
+            if (error.status === 400) {
+              this.notify.show(error.statusText);
+            }
 
             return throwError(error);
           })

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
 declare const d3;
 
@@ -7,7 +7,7 @@ declare const d3;
   templateUrl: './histogram-chart.component.html',
   styleUrls: ['./histogram-chart.component.scss']
 })
-export class HistogramChartComponent implements OnInit, AfterViewInit {
+export class HistogramChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor() { }
 
@@ -16,9 +16,15 @@ export class HistogramChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.histogramChartInit();
+    // window.addEventListener('resize', this.windowResizeHandler);
+  }
+
+  windowResizeHandler = () => {
+    this.histogramChartInit();
   }
 
   histogramChartInit() {
+    d3.selectAll('#histogram-chart-container svg.histogram-chart-svg > *').remove();
     // https://insights.stackoverflow.com/survey/2018/#technology-most-loved-dreaded-and-wanted-languages
     const sample = [{
       language: 'Rust',
@@ -179,6 +185,10 @@ export class HistogramChartComponent implements OnInit, AfterViewInit {
       .attr('y', 40)
       .attr('text-anchor', 'middle')
       .text('Most loved programming languages in 2018');
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.windowResizeHandler);
   }
 
 }

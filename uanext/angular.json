@@ -41,6 +41,10 @@
               "./src/js/slidePage.min.js",
               "./src/js/d3.v4.min.js",
               "./src/js/mime-types.js",
+              "./src/js/LoaderCommons.js",
+              "./src/js/LoaderBuilder.js",
+              "./src/js/LoaderWorkerSupport.js",
+              "./src/js/OBJLoader2.js",
               "./node_modules/nouislider/distribute/nouislider.min.js",
               "./node_modules/three-ziploader/build/ziploader.min.js"
             ]
@@ -108,6 +112,11 @@
               "./src/js/slidePage.min.js",
               "./src/js/d3.v4.min.js",
               "./src/js/mime-types.js",
+              "./src/js/mime-types.js",
+              "./src/js/LoaderCommons.js",
+              "./src/js/LoaderBuilder.js",
+              "./src/js/LoaderWorkerSupport.js",
+              "./src/js/OBJLoader2.js",
               "./node_modules/nouislider/distribute/nouislider.min.js",
               "./node_modules/three-ziploader/build/ziploader.min.js"
             ],

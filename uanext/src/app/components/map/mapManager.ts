@@ -710,7 +710,7 @@ export class MapManager {
     }
 
     THREE.ZipLoadingManager
-      .uncompress(pathToZip, ['.mtl', '.obj', '.jpg', '.png', '.ma'])
+      .uncompress(pathToZip, ['.mtl', '.obj', '.jpg', '.png'])
       .then((zip) => {
         const pathToFolder = zip.urls[0].substring(0, zip.urls[0].lastIndexOf('/') + 1);
         let mtlFileName = '';
@@ -723,25 +723,52 @@ export class MapManager {
             objFileName = zip.urls[i].replace(/^.*[\\\/]/, '');
           }
         }
-        const mtlLoader = new THREE.MTLLoader(zip.manager);
-        const objLoader = new THREE.OBJLoader(zip.manager);
-        mtlLoader.setPath(pathToFolder);
-        mtlLoader.load(mtlFileName, (materials) => {
-          materials.preload();
-          objLoader.setMaterials(materials);
-          objLoader.setPath(pathToFolder);
-          objLoader.load(objFileName, (object3D) => {
-            if (modelQuality === ModelQuality.LOW) {
-              geoObject.object3DLPStartLoaded = false;
-            }
-            if (modelQuality === ModelQuality.HIGH) {
-              geoObject.object3DHPStartLoaded = false;
-            }
-            this.init3dObject(geoObject, object3D, modelQuality);
-          });
-        });
+
+        this.mtlLoad(
+          (materials) => { this.mtlLoadOnLoad(materials, zip.manager, pathToFolder, objFileName, modelQuality, geoObject); },
+          (err) => { console.error(err); },
+          zip.manager,
+          pathToFolder,
+          mtlFileName,
+        );
       });
   }
+
+  private mtlLoad = (onLoadCb: Function, onErrorCb: Function, zipManager: any, pathToFolder: string, mtlFileName: string) => {
+    const mtlLoader = new THREE.MTLLoader(zipManager);
+    mtlLoader.setPath(pathToFolder);
+    mtlLoader.load(mtlFileName, onLoadCb, null, onErrorCb);
+  }
+
+  private mtlLoadOnLoad = (materials, zipManager, pathToFolder, objFileName, modelQuality, geoObject) => {
+    this.objLoad(
+      (object3D) => { this.objLoadOnLoad(object3D, modelQuality, geoObject); },
+      (err) => { console.error(err); },
+      zipManager,
+      materials,
+      pathToFolder,
+      objFileName,
+    );
+  }
+
+  private objLoad = (onLoadCb: Function, onErrorCb: Function, zipManager: any, materials: any, pathToFolder: string, objFileName: string) => {
+    materials.preload();
+    const objLoader = new THREE.OBJLoader(zipManager);
+    objLoader.setMaterials(materials);
+    objLoader.setPath(pathToFolder);
+    objLoader.load(objFileName, onLoadCb, null, onErrorCb);
+  }
+
+  private objLoadOnLoad = (object3D, modelQuality, geoObject) => {
+    if (modelQuality === ModelQuality.LOW) {
+      geoObject.object3DLPStartLoaded = false;
+    }
+    if (modelQuality === ModelQuality.HIGH) {
+      geoObject.object3DHPStartLoaded = false;
+    }
+    this.init3dObject(geoObject, object3D, modelQuality);
+  }
+
   //#endregion
 
 

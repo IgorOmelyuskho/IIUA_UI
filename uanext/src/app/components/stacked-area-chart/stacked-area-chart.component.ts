@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
 declare const d3;
 
@@ -7,7 +7,7 @@ declare const d3;
   templateUrl: './stacked-area-chart.component.html',
   styleUrls: ['./stacked-area-chart.component.scss']
 })
-export class StackedAreaChartComponent implements OnInit, AfterViewInit {
+export class StackedAreaChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor() { }
 
@@ -16,9 +16,16 @@ export class StackedAreaChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.chartInit();
+    // window.addEventListener('resize', this.windowResizeHandler);
+  }
+
+  windowResizeHandler = () => {
+    this.chartInit();
   }
 
   chartInit() {
+    d3.selectAll('#stacked-area-container svg.stacked-area-svg > *').remove();
+
     let tsvData = null;
 
     const svgContainer = document.getElementById('stacked-area-container');
@@ -33,8 +40,6 @@ export class StackedAreaChartComponent implements OnInit, AfterViewInit {
     const height = svgContainer.clientHeight - margin.top - margin.bottom;
 
     const parseDate = d3.timeParse('%Y');
-
-    const formatSi = d3.format('.3s');
 
     const formatNumber = d3.format('.1f'),
       formatBillion = function (x2) {
@@ -155,6 +160,10 @@ export class StackedAreaChartComponent implements OnInit, AfterViewInit {
         .attr('dy', '-10px');
 
     });
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.windowResizeHandler);
   }
 
 }

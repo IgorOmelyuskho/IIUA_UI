@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 // import { pieChartInit } from './pie-chart.js';
 
 declare const d3;
@@ -8,17 +8,24 @@ declare const d3;
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss']
 })
-export class PieChartComponent implements OnInit, AfterViewInit {
+export class PieChartComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   ngAfterViewInit() {
+    this.pieChartInit();
+    // window.addEventListener('resize', this.windowResizeHandler);
+  }
+
+  windowResizeHandler = () => {
     this.pieChartInit();
   }
 
   pieChartInit() {
+    d3.selectAll('#pie-chart-wrapper svg.svg-pie-chart > *').remove();
     const data = [10, 20, 100];
     const dataPercent = [];
     let total = 0;
@@ -100,11 +107,15 @@ export class PieChartComponent implements OnInit, AfterViewInit {
         return '$' + total;
       });
 
-      g.append('text')
+    g.append('text')
       .attr('class', 'total')
       .text(function (d) {
         return 'Total';
       });
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.windowResizeHandler);
   }
 
 }
