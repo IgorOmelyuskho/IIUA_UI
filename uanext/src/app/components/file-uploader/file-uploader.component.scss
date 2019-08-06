@@ -1,15 +1,33 @@
+@import '../../../styles-variables.scss';
+
+.custom-file {
+  margin-right: 5px;
+
+  .custom-file-input {
+    cursor: pointer;
+  }
+
+  .custom-file-input:focus~.custom-file-label {
+    border-color: $middleGreen;
+    box-shadow: none;
+  }
+}
+
 .file {
   border: 1px solid rgba(128, 128, 128, 0.438);
   border-radius: 3px;
   margin: 5px 0;
   padding: 5px;
+
   .file-name {
     font-weight: 600;
-  };
+  }
+
   .too-large {
     font-weight: 600;
     color: red;
   }
+
   img {
     margin-right: 5px;
   }
