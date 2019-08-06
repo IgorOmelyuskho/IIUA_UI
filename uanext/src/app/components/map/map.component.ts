@@ -31,19 +31,24 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   set replace3DObjects(objects: GeoObject[]) {
-    if (objects != null && this.mapManager != null) {
-      console.log(objects);
-      this.mapManager.mapReplaceObjects(objects);
+    try {
+      if (objects != null && this.mapManager != null) {
+        console.log(objects);
+        this.mapManager.mapReplaceObjects(objects);
 
-      this.signalRService.objectsArr = objects.map((obj) => { // todo remove
-        return {
-          object3DId: obj.geoObjectId,
-          positionX: obj.coords.x,
-          positionY: obj.coords.y,
-          canMove: obj.canMove
-        };
-      });
+        this.signalRService.objectsArr = objects.map((obj) => { // todo remove
+          return {
+            object3DId: obj.geoObjectId,
+            positionX: obj.coords.x,
+            positionY: obj.coords.y,
+            canMove: obj.canMove
+          };
+        });
+      }
+    } catch (e) {
+      console.log(e);
     }
+
   }
 
   timeOut1: any;

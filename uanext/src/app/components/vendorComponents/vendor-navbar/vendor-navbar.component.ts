@@ -17,6 +17,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('home') homeTab: ElementRef;
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('myProjects') myProjectsTab: ElementRef;
+  @ViewChild('createProjectUser') createProjectUser: ElementRef;
   self = 'VendorNavbarComponent';
   mediaQueryString = 'screen and (max-width: 760px)'; // also used in .scss
   mq = window.matchMedia(this.mediaQueryString);
@@ -64,6 +65,9 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     if (tab === 'main-page') {
       this.homeTab.nativeElement.classList.add('selected');
     }
+    if (tab === 'create-project-user') {
+      this.createProjectUser.nativeElement.classList.add('selected');
+    }
   }
 
   initMenu() {
@@ -88,6 +92,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.profileTab.nativeElement.classList.remove('selected');
     this.myProjectsTab.nativeElement.classList.remove('selected');
     this.homeTab.nativeElement.classList.add('selected');
+    this.createProjectUser.nativeElement.classList.remove('selected');
     this.router.navigate(['home', 'vendor', 'main-page']);
   }
 
@@ -95,6 +100,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.profileTab.nativeElement.classList.add('selected');
     this.myProjectsTab.nativeElement.classList.remove('selected');
     this.homeTab.nativeElement.classList.remove('selected');
+    this.createProjectUser.nativeElement.classList.remove('selected');
     this.router.navigate(['home', 'vendor', 'profile']);
   }
 
@@ -102,7 +108,16 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.profileTab.nativeElement.classList.remove('selected');
     this.myProjectsTab.nativeElement.classList.add('selected');
     this.homeTab.nativeElement.classList.remove('selected');
+    this.createProjectUser.nativeElement.classList.remove('selected');
     this.router.navigate(['home', 'vendor', 'projects']);
+  }
+
+  createProjectUserClick() {
+    this.profileTab.nativeElement.classList.remove('selected');
+    this.myProjectsTab.nativeElement.classList.remove('selected');
+    this.homeTab.nativeElement.classList.remove('selected');
+    this.createProjectUser.nativeElement.classList.add('selected');
+    this.router.navigate(['home', 'vendor', 'create-project-user']);
   }
 
   signOutClick() {

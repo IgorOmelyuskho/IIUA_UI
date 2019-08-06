@@ -1,7 +1,7 @@
 <div class="full-screen-block">
   <mat-progress-bar *ngIf="showProgress === true" mode="indeterminate"></mat-progress-bar>
   <div class="map-wrapper">
-    <app-map [replace3DObjects]="projects" (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)"
+    <app-map [replace3DObjects]="geoObjects" (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)"
       (objectHover)="onMapObjectHover($event)" (changeExtent)="onMapChangeExtent($event)"></app-map>
   </div>
 

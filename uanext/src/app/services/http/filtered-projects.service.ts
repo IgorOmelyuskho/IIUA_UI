@@ -44,7 +44,7 @@ export class FilteredProjectsService {
         }),
         map((response: FilteredProjects) => { // todo remove
           this.addRating(response);
-          this.addAvatara(response);
+          // this.addAvatara(response);
           return this.add3DObjectsArr(response);
         }),
       );
@@ -70,7 +70,7 @@ export class FilteredProjectsService {
         }),
         map((response: FilteredProjects) => { // todo remove
           this.addRating(response);
-          this.addAvatara(response);
+          // this.addAvatara(response);
           return this.add3DObjectsArr(response);
         }),
       );
