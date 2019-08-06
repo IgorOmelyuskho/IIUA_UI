@@ -380,6 +380,7 @@
         "profile": "Профиль",
         "projects": "Проекты",
         "selectProject": "Выбрать проект",
+        "createProjectUser": "Создать пользователя проекта",
         "changeProject": "Сменить проект:",
         "signOut": "Выйти",
         "menu": "Меню"
@@ -639,7 +640,7 @@
     },
     "ProjectUserSignupComponent": {
         "createAccount": "Создать учетную запись в качестве пользователя проекта",
-        "fullName": "Full Name",
+        "fullName": "Полное Имя",
         "fullNameEmpty": "Требуется полное имя",
         "phone": "Телефон",
         "phoneEmpty": "Требуется телефон",
@@ -647,8 +648,8 @@
         "email": "Емайл",
         "emailEmpty": "Требуется электронная почта",
         "emailValid": "Адрес электронной почты должен быть действительным адресом электронной почты",
-        "projectId": "Идентификатор проекта",
-        "projectIdEmpty": "Требуется идентификатор проекта",
+        "projectId": "Проект",
+        "projectIdEmpty": "Требуется выбрать проект",
         "password": "Пароль",
         "passwordEmpty": "Необходим пароль",
         "passwordLength": "Пароль должен содержать не менее 6 символов",
@@ -656,7 +657,8 @@
         "repeatPasswordEmpty": "Это поле обязательно к заполнению",
         "passwordNotMatch": "Пароли не совпадают",
         "signUp": "Зарегистрироватся",
-        "checkEmail": "Вам пришло сообщение на почту"
+        "checkEmail": "Вам пришло сообщение на почту",
+        "projectUserCreated": "Пользователь проекта успешно создан"
     },
     "EmailValidateComponent": {
         "text": "Вы успешно зарегистрировались",

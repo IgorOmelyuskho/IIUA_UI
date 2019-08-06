@@ -53,8 +53,9 @@ export class ProjectsService {
           return response;
         }),
         map((response: VendorProject[]) => { // todo remove
-          this.addRating(response);
-          return this.addAvatara(response);
+          this.add3DObjectsArr(response);
+          return this.addRating(response);
+          // return this.addAvatara(response);
         }),
       );
 
@@ -108,6 +109,83 @@ export class ProjectsService {
   private addRating(filteredProjects: VendorProject[]): VendorProject[] {
     for (let i = 0; i < filteredProjects.length; i++) {
       filteredProjects[i].rating = '9.5';
+    }
+    return filteredProjects;
+  }
+
+  private add3DObjectsArr(filteredProjects: VendorProject[]): VendorProject[] {
+    const delta = 0.005;
+    for (let i = 0; i < filteredProjects.length; i++) {
+      if (Math.random() > 0.5) {
+        filteredProjects[i].TEST_3D_Objects_Arr = [
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects[i].name,
+            pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+            project: filteredProjects[i],
+            canMove: true
+          },
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects[i].name,
+            pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+            project: filteredProjects[i],
+            canMove: true
+          },
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects[i].name,
+            pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+            project: filteredProjects[i],
+            canMove: true
+          },
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects[i].name,
+            pathToZip: window.location.origin + '/assets/objects/bl4.zip',
+            pathToZip2: window.location.origin + '/assets/objects/bl4.zip',
+            project: filteredProjects[i],
+            canMove: false
+          },
+        ];
+      } else {
+        filteredProjects[i].TEST_3D_Objects_Arr = [
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects[i].name,
+            pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+            pathToZip2: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+            project: filteredProjects[i],
+            canMove: true
+          },
+          {
+            geoObjectId: 'ID-' + Math.random(),
+            coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+            projectName: filteredProjects[i].name,
+            pathToZip: window.location.origin + '/assets/objects/bl4.zip',
+            pathToZip2: window.location.origin + '/assets/objects/bl4.zip',
+            project: filteredProjects[i],
+            canMove: false
+          },
+          // {
+          //   geoObjectId: 'ID-' + Math.random(),
+          //   coords: { x: 13.417522340477 + Math.random() * delta, y: 52.5281444184827 + Math.random() * delta },
+          //   projectName: filteredProjects.projectsList[i].name,
+          //   pathToZip: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+          //   project: filteredProjects.projectsList[i],
+          //   canMove: true
+          // },
+        ];
+      }
+
     }
     return filteredProjects;
   }

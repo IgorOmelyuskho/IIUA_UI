@@ -36,12 +36,6 @@
                 <div (click)="signInWithGoogle()" class="social-signin-btn">
                   <img src="../../../assets/img/google.png" alt="">
                 </div>
-                <!-- <div class="social-signin-btn">
-                  <button id="googleBtn">Google</button>
-                </div> -->
-                <!-- <div class="social-signin-btn">
-                  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                </div> -->
               </div>
             </div>
             <div class="use-email">
@@ -260,7 +254,7 @@
                 </div>
               </div>
             </div>
-            <div class="right">
+            <div #chartsWrapper  class="right">
               <div class="histogram-chart">
                 <app-histogram-chart></app-histogram-chart>
               </div>

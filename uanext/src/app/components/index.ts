@@ -43,7 +43,7 @@ import { HoveredProjectCardComponent } from './hovered-project-card/hovered-proj
 import { InvestorFilterPageComponent } from './investorComponents/investor-filter-page/investor-filter-page.component';
 import { ProjectUserPageComponent } from './projectUserComponents/project-user-page/project-user-page.component';
 import { ProjectUserProfileComponent } from './projectUserComponents/project-user-profile/project-user-profile.component';
-import { ProjectUserSignupComponent } from './projectUserComponents/project-user-signup/project-user-signup.component';
+import { ProjectUserSignupComponent } from './vendorComponents/project-user-signup/project-user-signup.component';
 import { VendorInvestmentOfferComponent } from './vendorComponents/vendor-investment-offer/vendor-investment-offer.component';
 import { VendorMainScreenRightComponent } from './vendorComponents/vendor-main-screen-right/vendor-main-screen-right.component';
 import { VendorMessagesComponent } from './vendorComponents/vendor-messages/vendor-messages.component';

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/notification.service';
 import { matchOtherValidator } from 'src/app/validators/validators';
 import { TranslateService } from 'src/app/services/translate.service';
+import { ProjectsService } from 'src/app/services/http/projects.service';
+import { VendorProject } from 'src/app/models/vendorProject';
 
 @Component({
   selector: 'app-project-user-signup',
@@ -18,13 +20,15 @@ export class ProjectUserSignupComponent implements OnInit {
   FormHelper = FormHelper;
   showProgress = false;
   self = 'ProjectUserSignupComponent';
+  projects: VendorProject[];
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
     private router: Router,
     private notify: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private projectsService: ProjectsService
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
@@ -36,7 +40,16 @@ export class ProjectUserSignupComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.projectsService.fetchVendorProjects().subscribe(
+      (val: VendorProject[]) => {
+        this.projects = val;
+      },
+      err => {
+        console.warn(err);
+      }
+    );
+  }
 
   get formControls() {
     return this.signupForm.controls;
@@ -44,24 +57,18 @@ export class ProjectUserSignupComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     if (this.signupForm.invalid) {
       return;
     }
-
     this.showProgress = true;
-
     this.authService.signUpAsProjectUser(this.signupForm.value).subscribe(
       response => {
         this.showProgress = false;
-        if (response.body == null || response.body.token == null) {
-          this.notify.show(this.translate.data['ProjectUserSignupComponent'].checkEmail);
-        }
+        this.notify.show(this.translate.data['ProjectUserSignupComponent'].projectUserCreated);
       },
       err => {
         console.warn(err);
         this.showProgress = false;
-        this.notify.show(err.error.error.errorMessage[0]);
       }
     );
   }

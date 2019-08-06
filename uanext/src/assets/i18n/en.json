@@ -379,6 +379,7 @@
         "home": "Home",
         "profile": "Profile",
         "projects": "Projects",
+        "createProjectUser": "Create project user",
         "selectProject": "Select project",
         "changeProject": "Change project:",
         "signOut": "Sign out",
@@ -647,8 +648,8 @@
         "email": "Email",
         "emailEmpty": "Email is required",
         "emailValid": "Email must be a valid email address",
-        "projectId": "Project id",
-        "projectIdEmpty": "Project Id is required",
+        "projectId": "Project",
+        "projectIdEmpty": "It is required to choose a project",
         "password": "Password",
         "passwordEmpty": "Password is required",
         "passwordLength": "Password must be at least 6 characters",
@@ -656,7 +657,8 @@
         "repeatPasswordEmpty": "This field is required",
         "passwordNotMatch": "Passwords not match",
         "signUp": "Sign Up",
-        "checkEmail": "You received a message in the email"
+        "checkEmail": "You received a message in the email",
+        "projectUserCreated": "Project user created successfully"
     },
     "EmailValidateComponent": {
         "text": "You have successfully registered",

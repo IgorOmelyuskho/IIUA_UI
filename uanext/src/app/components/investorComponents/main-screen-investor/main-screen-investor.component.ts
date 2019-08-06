@@ -37,7 +37,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   previewCardY = 0;
   hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
-  projects: GeoObject[];
+  geoObjects: GeoObject[];
   readonly maxPageSize = 5;
 
   windowMouseMoveHandler = (e) => {
@@ -200,18 +200,18 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.filteredProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          const projectsArr: GeoObject[] = [];
+          const geoObjectsArr: GeoObject[] = [];
           for (let i = 0; i < filteringProjects.projectsList.length; i++) {
             for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
-              projectsArr.push(filteringProjects.projectsList[i].TEST_3D_Objects_Arr[j]);
+              geoObjectsArr.push(filteringProjects.projectsList[i].TEST_3D_Objects_Arr[j]);
             }
           }
-          this.projects = projectsArr;
+          this.geoObjects = geoObjectsArr;
           this.showProgress = false;
         },
         err => {
           console.warn(err);
-          this.projects = [];
+          this.geoObjects = [];
           this.showProgress = false;
         }
       );
@@ -224,18 +224,18 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.filteredProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          const projectsArr: GeoObject[] = [];
+          const geoObjectsArr: GeoObject[] = [];
           for (let i = 0; i < filteringProjects.projectsList.length; i++) {
             for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
-              projectsArr.push(filteringProjects.projectsList[i].TEST_3D_Objects_Arr[j]);
+              geoObjectsArr.push(filteringProjects.projectsList[i].TEST_3D_Objects_Arr[j]);
             }
           }
-          this.projects = projectsArr;
+          this.geoObjects = geoObjectsArr;
           this.showProgress = false;
         },
         err => {
           console.warn(err);
-          this.projects = [];
+          this.geoObjects = [];
           this.showProgress = false;
         }
       );
