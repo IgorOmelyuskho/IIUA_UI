@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IndexComponent, ProjectUserPageComponent, ProjectUserProfileComponent, ProjectUserSignupComponent,
   EmailValidateComponent, PasswordRecoveryComponent, ConfirmPasswordRecoveryComponent,
-  PrivacyPolicyComponent, UserAgreementComponent, CreateVendorProjectFilledComponent } from './components';
+  PrivacyPolicyComponent, UserAgreementComponent, CreateVendorProjectFilledComponent, MapEditModeComponent } from './components';
 import { VendorProjectsComponent } from './components';
 import { CreateVendorProjectComponent } from './components';
 import { SigninComponent } from './components';
@@ -72,6 +72,7 @@ const routes: Routes = [
   { path: 'map_test', component: MapComponent },
   { path: 'main-screen_vendor_test', component: VendorComponent, children: childVendorRoutes },
   { path: 'vendor-projects_test', component: VendorProjectsComponent },
+  { path: 'map-edit', component: MapEditModeComponent },
 
 
   { path: '', component: IndexComponent, pathMatch: 'full' },
