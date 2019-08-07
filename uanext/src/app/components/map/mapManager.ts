@@ -53,13 +53,15 @@ export class MapManager {
   private objectsScale: number = null;
   private prevClusterGeoObjectId: string = null;
   private mapZoomEnum: MapZoomEnum;
+  private editMode = false;
 
   // html elements id
   private mapWrapperId: string;
   private mapId: string;
   private labelRendererId: string;
 
-  public constructor(cb: Function, htmlId: { mapWrapperId: string, mapId: string, labelRendererId: string }) {
+  public constructor(cb: Function, htmlId: { mapWrapperId: string, mapId: string, labelRendererId: string }, editMode) {
+    this.editMode = editMode;
     this.mapWrapperId = htmlId.mapWrapperId;
     this.mapId = htmlId.mapId;
     this.labelRendererId = htmlId.labelRendererId;
@@ -77,7 +79,8 @@ export class MapManager {
   mapDestroy() {
     clearInterval(this.timerForDraw);
     cancelAnimationFrame(this.animationFrame);
-    window.removeEventListener('resize', this.windowOnResize);
+    window.removeEventListener('resize', this.windowResize);
+    window.removeEventListener('keydown', this.windowKeyDown);
 
     this.canvasElem = null;
     this.stats = null;
@@ -97,6 +100,7 @@ export class MapManager {
     this.camera = null;
     this.objectsScale = null;
     this.prevClusterGeoObjectId = null;
+    this.editMode = false;
 
     this.on_click_object = null;
     this.on_hover_object = null;
@@ -318,7 +322,8 @@ export class MapManager {
     this.createLabelRenderer();
     this.animation();
 
-    window.addEventListener('resize', this.windowOnResize);
+    window.addEventListener('resize', this.windowResize);
+    window.addEventListener('keydown', this.windowKeyDown);
 
     this.on_map_init = cb;
     this.createThreeLayer(); // async
@@ -335,11 +340,16 @@ export class MapManager {
     this.mapElement.appendChild(this.labelRenderer.domElement);
   }
 
-  private windowOnResize = (event) => {
+  private windowResize = (event) => {
     const x = this.mapWrapperElement.clientWidth; // offsetWidth
     const y = this.mapWrapperElement.clientHeight; // offsetHeight
     // mapElement width and height 100% in styles.scss
     this.labelRenderer.setSize(x, y);
+  }
+
+  private windowKeyDown = (event) => {
+    const evtObj = window.event ? event : event;
+    this.detectEditAction(evtObj);
   }
 
   private animation = () => {
@@ -352,7 +362,8 @@ export class MapManager {
 
   private createMap() {
     this.map = new maptalks.Map('map-html-element-id-495367235', { // DIV id
-      center: [13.41261, 52.529611],
+      // center: [13.41261, 52.529611],
+      center: [35.028, 48.474],
       zoom: this.initZoom,
       minZoom: 3,
       // pitch: 60,
@@ -419,6 +430,7 @@ export class MapManager {
     });
 
     this.map.on('click', (event) => {
+      console.log(event.coordinate);
       const identify = this.clusterLayer.identify(event.coordinate);
       if (identify && identify.children && identify.children.length === 1) {
         const geoObject: GeoObject = identify.children[0].parent;
@@ -898,7 +910,12 @@ export class MapManager {
     obj3D.position.x = v.x;
     obj3D.position.y = v.y;
     obj3D.position.z = v.z;
-    obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
+    if (this.editMode === true) {  // for edit mode
+      obj3D.position.z = geoObj.zCoords ? geoObj.zCoords : 0;
+    }
+    if (geoObj.canMove === true) {
+      obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
+    }
     // obj.boxHelper.update();
   }
   //#endregion
@@ -1139,6 +1156,129 @@ export class MapManager {
   }
   //#endregion
 
+  // edit mode
+  //#region
+  private detectEditAction(event) {
+    if (this.editMode === false || this.selectedObject == null) {
+      return;
+    }
+
+    if (event.keyCode === 81) { // Q
+      this.editMoveUp(this.selectedObject);
+    }
+    if (event.keyCode === 87) { // W
+      this.editMoveForward(this.selectedObject);
+    }
+    if (event.keyCode === 69) { // E
+      this.editMoveDown(this.selectedObject);
+    }
+    if (event.keyCode === 65) { // A
+      this.editMoveLeft(this.selectedObject);
+    }
+    if (event.keyCode === 83) { // S
+      this.editMoveBack(this.selectedObject);
+    }
+    if (event.keyCode === 68) { // D
+      this.editMoveRight(this.selectedObject);
+    }
+    if (event.keyCode === 90) { // Z
+      this.editRotate1(this.selectedObject);
+    }
+    if (event.keyCode === 67) { // C
+      this.editRotate2(this.selectedObject);
+    }
+    if (event.keyCode === 86) { // V
+      this.editSaveToStorage();
+    }
+    if (event.keyCode === 82) { // R
+      this.editReduceScale(this.selectedObject);
+    }
+    if (event.keyCode === 84) { // T
+      this.editIncreaseScale(this.selectedObject);
+    }
+
+    this.customRedraw();
+  }
+
+  private editMoveUp(geoObject: GeoObject) {
+    console.log('zCoords ', geoObject.zCoords.toFixed(5));
+    geoObject.zCoords += 0.1;
+  }
+
+  private editMoveDown(geoObject: GeoObject) {
+    console.log('zCoords', geoObject.zCoords.toFixed(5));
+    geoObject.zCoords -= 0.1;
+  }
+
+  private editMoveForward(geoObject: GeoObject) {
+    geoObject.coords.x += 0.00001;
+  }
+
+  private editMoveBack(geoObject: GeoObject) {
+    geoObject.coords.x -= 0.00001;
+  }
+
+  private editMoveLeft(geoObject: GeoObject) {
+    geoObject.coords.y -= 0.00001;
+  }
+
+  private editMoveRight(geoObject: GeoObject) {
+    geoObject.coords.y += 0.00001;
+  }
+
+  private editRotate1(geoObject: GeoObject) {
+    if (geoObject.object3DLP) {
+      geoObject.object3DLP.rotation.z += 0.01;
+    }
+    if (geoObject.object3DHP) {
+      geoObject.object3DHP.rotation.z += 0.01;
+    }
+  }
+
+  private editRotate2(geoObject: GeoObject) {
+    if (geoObject.object3DLP) {
+      geoObject.object3DLP.rotation.z -= 0.01;
+    }
+    if (geoObject.object3DHP) {
+      geoObject.object3DHP.rotation.z -= 0.01;
+    }
+  }
+
+  private editIncreaseScale(geoObject: GeoObject) {
+    const delta = 0.05;
+    if (geoObject.object3DLP) {
+      const scaleLP = geoObject.object3DLP.scale.x + delta;
+      geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
+    }
+    if (geoObject.object3DHP) {
+      const scaleHP = geoObject.object3DHP.scale.x + delta;
+      geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
+    }
+  }
+
+  private editReduceScale(geoObject: GeoObject) {
+    const delta = -0.05;
+    if (geoObject.object3DLP) {
+      const scaleLP = geoObject.object3DLP.scale.x + delta;
+      geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
+    }
+    if (geoObject.object3DHP) {
+      const scaleHP = geoObject.object3DHP.scale.x + delta;
+      geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
+    }
+  }
+
+  private editSaveToStorage() { // save for only low poly 3D object
+    // const res: any[];
+    // for (let i = 0; i < this.objectsArr.length; i++) {
+    //   res.push({
+    //     geoObjectId: this.objectsArr[i].geoObjectId,
+    //     coords: this.objectsArr[i].coords
+    //   });
+    // }
+  }
+
+  //#endregion
 }
 
 

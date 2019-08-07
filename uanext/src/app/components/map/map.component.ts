@@ -22,6 +22,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   mapManager: MapManager;
 
+  @Input() editMode = false;
+
   @Input()
   set changeSelectedProject(project: VendorProject) {
     if (project != null && this.mapManager != null) {
@@ -110,13 +112,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    console.log('MAP EDIT MODE = ', this.editMode);
     this.mapManager = new MapManager(
       this.mapFinishInitCallback,
       {
         mapWrapperId: 'map-wrapper-html-element-id-3585349',
         mapId: 'map-html-element-id-495367235',
         labelRendererId: 'label-renderer-843744329'
-      }
+      },
+      this.editMode
     );
 
     this.mapManager.setObjectClickCallback(this.clickObjectCallback);
