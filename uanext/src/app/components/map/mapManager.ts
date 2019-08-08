@@ -362,7 +362,6 @@ export class MapManager {
 
   private createMap() {
     this.map = new maptalks.Map('map-html-element-id-495367235', { // DIV id
-      // center: [13.41261, 52.529611],
       center: [35.028, 48.474],
       zoom: this.initZoom,
       minZoom: 3,
@@ -713,7 +712,7 @@ export class MapManager {
   private loadObject3D(modelQuality: ModelQuality, geoObject: GeoObject) {
     let pathToZip: string;
     if (modelQuality === ModelQuality.LOW) {
-      pathToZip = geoObject.pathToZip2;
+      pathToZip = geoObject.pathToZipLP;
       geoObject.object3DLPStartLoaded = true;
     }
     if (modelQuality === ModelQuality.HIGH) {
@@ -1249,10 +1248,12 @@ export class MapManager {
     if (geoObject.object3DLP) {
       const scaleLP = geoObject.object3DLP.scale.x + delta;
       geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
+      console.log('scaleLP ', scaleLP);
     }
     if (geoObject.object3DHP) {
       const scaleHP = geoObject.object3DHP.scale.x + delta;
       geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
+      console.log('scaleHP ', scaleHP);
     }
   }
 
@@ -1261,21 +1262,23 @@ export class MapManager {
     if (geoObject.object3DLP) {
       const scaleLP = geoObject.object3DLP.scale.x + delta;
       geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
+      console.log('scaleLP ', scaleLP);
     }
     if (geoObject.object3DHP) {
       const scaleHP = geoObject.object3DHP.scale.x + delta;
       geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
+      console.log('scaleHP ', scaleHP);
     }
   }
 
   private editSaveToStorage() { // save for only low poly 3D object
-    // const res: any[];
-    // for (let i = 0; i < this.objectsArr.length; i++) {
-    //   res.push({
-    //     geoObjectId: this.objectsArr[i].geoObjectId,
-    //     coords: this.objectsArr[i].coords
-    //   });
-    // }
+    const res: any[] = [];
+    for (let i = 0; i < this.objectsArr.length; i++) {
+      res.push({
+        geoObjectId: this.objectsArr[i].geoObjectId,
+        coords: this.objectsArr[i].coords
+      });
+    }
   }
 
   //#endregion

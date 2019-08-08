@@ -4,9 +4,10 @@ export class GeoObject {
   geoObjectId: string;
   coords: { x: number, y: number };
   zCoords?: number; // for edit mode
+  editModeScale?: number; // for edit mode
   projectName?: string;
   pathToZip: string;
-  pathToZip2: string;
+  pathToZipLP: string;
   canMove?: boolean;
 
   project?: VendorProject;
