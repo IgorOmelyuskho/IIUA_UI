@@ -74,6 +74,7 @@ import {
   ProjectUserObject3dUploadComponent
 } from './projectUserComponents/project-user-object3d-upload/project-user-object3d-upload.component';
 import { MapEditModeComponent } from './map-edit-mode/map-edit-mode.component';
+import { MapDemoComponent } from './map-demo/map-demo.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -144,7 +145,8 @@ export {
   InvestorCardComponent,
   CreateVendorProjectFilledComponent,
   ProjectUserObject3dUploadComponent,
-  MapEditModeComponent
+  MapEditModeComponent,
+  MapDemoComponent
 };
 
 export const components = [
@@ -215,7 +217,8 @@ export const components = [
   InvestorCardComponent,
   CreateVendorProjectFilledComponent,
   ProjectUserObject3dUploadComponent,
-  MapEditModeComponent
+  MapEditModeComponent,
+  MapDemoComponent
 ];
 
 

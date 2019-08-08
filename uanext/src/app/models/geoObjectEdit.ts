@@ -1,12 +1,12 @@
 import { VendorProject } from './vendorProject';
 
-export class GeoObject {
+export class GeoObjectEdit {
   geoObjectId: string;
   coords: { x: number, y: number };
-  projectName?: string;
+  projectName: string;
   pathToZip: string;
   pathToZipLP: string;
-  canMove?: boolean;
+  canMove: boolean;
 
   project?: VendorProject;
 
@@ -24,4 +24,12 @@ export class GeoObject {
   mouseUnder?: boolean;
   box3?: any;
   boxHelper?: any; // todo remove
+
+  // for edit mode
+  zCoords: number;
+  editModeScale: number;
+  speed?: number;
+  movedTo?: { x: number, y: number };
+  coordsArr?: { x: number, y: number }[];
+  coordsArrIndex?: number;
 }

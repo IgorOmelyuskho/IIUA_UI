@@ -1,26 +1,27 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
-import { MapManager } from './mapManager';
+import { MapManager } from './mapDemoManager';
 import { polygon1, polygon2, female, male, tractor, walt, female2 } from 'src/app/helperClasses/projects';
 import { environment } from 'src/environments/environment';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { GeoObject } from 'src/app/models';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { GeoObjectEdit } from 'src/app/models/geoObjectEdit';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  selector: 'app-map-demo',
+  templateUrl: './map-demo.component.html',
+  styleUrls: ['./map-demo.component.scss']
 })
-export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
-
-  @Output() objectClick = new EventEmitter<GeoObject>();
-  @Output() objectHover = new EventEmitter<GeoObject>();
+export class MapDemoComponent implements OnInit, AfterViewInit, OnDestroy  {
+  @Output() objectClick = new EventEmitter<GeoObjectEdit>();
+  @Output() objectHover = new EventEmitter<GeoObjectEdit>();
   @Output() mapFinishInit = new EventEmitter<void>();
   @Output() changeExtent = new EventEmitter<any>();
 
   mapManager: MapManager;
+
+  @Input() editMode = false;
 
   @Input()
   set changeSelectedProject(project: VendorProject) {
@@ -30,7 +31,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @Input()
-  set replace3DObjects(objects: GeoObject[]) {
+  set replace3DObjects(objects: GeoObjectEdit[]) {
     try {
       if (objects != null && this.mapManager != null) {
         console.log(objects);
@@ -60,44 +61,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   $fromChangeExtentEvent: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  clickObjectCallback: Function = (object: GeoObject) => {
+  clickObjectCallback: Function = (object: GeoObjectEdit) => {
     this.objectClick.emit(object);
   }
 
-  hoverObjectCallback: Function = (object: GeoObject) => {
+  hoverObjectCallback: Function = (object: GeoObjectEdit) => {
     this.objectHover.emit(object);
   }
 
   mapFinishInitCallback: Function = () => {
     this.mapFinishInit.emit();
     this.$fromChangeExtentEvent.next(this.mapManager.getExtent());
-    this.signalRService.signalRConnect(this.mapManager.signalRMessage); // or connect when sign in ?
-
-    this.timeOut1 = setTimeout(() => {
-      // this.mapManager.mapAddNewPolygons([polygon1]);
-    }, 10);
-
-    this.timeOut2 = setTimeout(() => {
-      // this.mapManager.mapReplacePolygons([polygon1, polygon2]);
-    }, 15);
-
-    this.timeOut5 = setTimeout(() => {
-      // this.mapManager.mapAddNewObjects([female2]);
-    }, 10);
-
-    this.timeOut3 = setTimeout(() => {
-      // this.mapManager.mapReplaceObjects([female, male, tractor, walt]); // if add object - add new object in signalRService
-      // mapReplaceObjects([female, male]);
-      // mapAddNewObjects([female, male]);
-    }, 7500);
-
-    this.timeOut4 = setTimeout(() => {
-      // mapReplaceObjects([tractor, walt]);
-    }, 10000);
-
-    // this.timeOut5 = setTimeout(() => {
-    //   mapSetFullScreen();
-    // }, 5000);
+    // this.signalRService.signalRConnect(this.mapManager.signalRMessage); // or connect when sign in ?
   }
 
   changeExtentCallback: Function = (extent: any) => {
@@ -113,9 +88,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mapManager = new MapManager(
       this.mapFinishInitCallback,
       {
-        mapWrapperId: 'map-wrapper-html-element-id-3585349',
-        mapId: 'map-html-element-id-495367235',
-        labelRendererId: 'label-renderer-843744329'
+        mapWrapperId: 'map-wrapper-html-element-id-12345',
+        mapId: 'map-html-element-id-12345',
+        labelRendererId: 'label-renderer-12345'
       }
     );
 
@@ -148,5 +123,4 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.mapManager.mapDestroy();
   }
-
 }
