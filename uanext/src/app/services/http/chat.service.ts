@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { GetOrCreateChatResponse } from 'src/app/models/chat/getOrCreateChatResponse';
+import { Chat } from 'src/app/models/chat/chat';
 import { Message } from 'src/app/models/chat/message';
 import { testMessagePhoto, testMessageFile, testMessageVideo } from 'src/app/helperClasses/messages';
 import { delay, map } from 'rxjs/operators';
@@ -15,17 +15,27 @@ export class ChatService {
 
   constructor(private http: HttpClient) { }
 
-  getOrCreateP2P(userId: string): Observable<GetOrCreateChatResponse> { // userId - которому хотим написать
-    return this.http.get<any>(environment.chat + environment.getOrCreateChat + userId);
+  getOrCreateP2P(userId: string): Observable<Chat> { // userId - которому хотим написать
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.get<any>(environment.chat + environment.getOrCreateChat , { params: params });
   }
 
-  getAllChats(): Observable<GetOrCreateChatResponse[]> { // all chats for current user (token)
+  getAllChats(): Observable<Chat[]> { // all chats for current user (token)
     return this.http.get<any>(environment.chat + environment.getAllChats);
   }
 
-  getChatById(chatId: string): Observable<GetOrCreateChatResponse> {
-    return this.http.get<any>(environment.chat + environment.getChatById + '/' + chatId);
+  getChatById(chatId: string): Observable<Chat> {
+    const params = new HttpParams().set('chatId', chatId.toString());
+    return this.http.get<any>(environment.chat + environment.getChatById, { params: params });
   }
+
+  getChatBProjectId(projectId: number): Observable<Chat> {
+    const params = new HttpParams().set('projectId', projectId.toString());
+    return this.http.get<any>(environment.chat + environment.getChatByProjectId, { params: params });
+  }
+
+
+
 
   createMessage(message: Message): Observable<Message> {
     // return this.http.post<any>(environment.chat + environment.createMessage, message);

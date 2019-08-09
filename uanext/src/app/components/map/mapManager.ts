@@ -417,7 +417,6 @@ export class MapManager {
     });
 
     this.map.on('click', (event) => {
-      console.log(event.coordinate);
       const identify = this.clusterLayer.identify(event.coordinate);
       if (identify && identify.children && identify.children.length === 1) {
         const geoObject: GeoObject = identify.children[0].parent;

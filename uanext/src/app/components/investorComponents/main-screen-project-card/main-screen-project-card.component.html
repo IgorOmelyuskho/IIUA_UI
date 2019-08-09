@@ -75,7 +75,7 @@
         <div class="col-4">
           <div class="info-item">
             <div class="name">{{ 'employees' | translate:self }}</div>
-            <div class="value">{{_selectedProject.employeesNumber}}</div>
+            <div class="value">{{_selectedProject.employeesToHire}}</div>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
         <div class="col-4">
           <div class="info-item">
             <div class="name">{{ 'fieldActivity' | translate:self }}</div>
-            <div class="value">{{_selectedProject.fieldOfActivity}}</div>
+            <div class="value">{{_selectedProject.sphereActivities[0].name}}</div>
           </div>
         </div>
         <div class="col-4">

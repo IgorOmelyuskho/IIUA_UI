@@ -1,7 +1,7 @@
 import { Participants } from './chatParticipants';
 import { Message } from './message';
 
-export interface GetOrCreateChatResponse {
+export interface Chat {
     id: string;
     title: string;
     conversationType: string; // P2P / All2All
