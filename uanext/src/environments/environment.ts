@@ -2,15 +2,17 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const domain = 'https://master.iiua.com.ua';
+
 export const environment = {
   production: false,
-  signalR: 'https://proxy.alexduxa.online/notifications/api/CoordinatesHub',
-  auth: 'https://master.iiua.com.ua/auth',
-  projects: 'https://master.iiua.com.ua/projects',
-  map: 'https://master.iiua.com.ua/map',
-  notifications: 'https://master.iiua.com.ua/notifications',
-  files: 'https://master.iiua.com.ua/files',
-  chat: 'https://master.iiua.com.ua/conversations',
+  signalR: domain + '/notifications/api/CoordinatesHub',
+  auth:  domain + '/auth',
+  projects: domain +  '/projects',
+  map:  domain + '/map',
+  notifications: domain +  '/notifications',
+  files: domain + '/files',
+  chat: domain + '/conversations',
 
   authenticate: '/api/Auth/authenticate',
   vendorRegister: '/api/Vendor/register',
@@ -48,6 +50,7 @@ export const environment = {
   getOrCreateChat: '/api/Conversations/GetOrCreateP2P',
   getAllChats: '/api/Conversations/GetAll',
   getChatById: '/api/Conversations/GetById',
+  getChatByProjectId: '/api/Conversations/GetByProjectId',
   getMessagesByChatId: '/api/Messages/GetByConversationId',
   createMessage: '/api/Messages/CreateMessage',
   updateMessage: '/api/Messages/UpdateMessage'

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 import * as autosize from 'autosize';
+import { ChatService } from 'src/app/services/http/chat.service';
+import { Chat } from 'src/app/models/chat/chat';
 
 @Component({
   selector: 'app-investor-comments',
@@ -12,6 +14,7 @@ export class InvestorCommentsComponent implements OnInit, OnDestroy {
   self = 'InvestorCommentsComponent';
   textareaSelector1 = '.comments .send-comment .textarea-wrapper textarea';
   textareaSelector2 = '.comments-wrapper .comment .answer .textarea-wrapper textarea';
+  chat: Chat;
 
   comments = [
     {
@@ -50,13 +53,24 @@ export class InvestorCommentsComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor() { }
+  constructor(private chatService: ChatService) { }
 
   ngOnInit() {
+    console.log(this.project);
     requestAnimationFrame(() => {
       autosize(document.querySelector(this.textareaSelector1));
       autosize(document.querySelectorAll(this.textareaSelector2));
     });
+
+    this.chatService.getChatBProjectId(this.project.id).subscribe(
+      (chat: Chat) => {
+        this.chat = chat;
+        console.log(this.chat);
+      },
+      err => {
+        console.warn(err);
+      }
+    );
   }
 
   ngOnDestroy() {

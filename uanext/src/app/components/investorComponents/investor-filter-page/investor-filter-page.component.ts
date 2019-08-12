@@ -145,8 +145,8 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
 
   setMapCoordinateByProject(project: VendorProject) {
     project['projectCoords'] = {
-      x: 13.41561 + Math.random() * 0.1,
-      y: 52.539611 + Math.random() * 0.1,
+      x: 35.028 + Math.random() * 0.1,
+      y: 48.4747 + Math.random() * 0.1,
     };
 
     // mapSetProject(project); // todo

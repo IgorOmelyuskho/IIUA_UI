@@ -1,0 +1,21 @@
+#map-wrapper-html-element-id-12345 {
+    position: relative;
+    width: 100%;
+    // height: 500px; // default value
+    height: 100%;
+    background: white;
+    overflow: hidden;
+  
+    #map-html-element-id-12345 {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+  
+    #label-renderer-12345 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  }

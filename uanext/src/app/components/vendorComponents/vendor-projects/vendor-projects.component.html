@@ -1,7 +1,7 @@
 <mat-progress-bar *ngIf="isLoaded === false" mode="indeterminate" class="progress-bar-fixed"></mat-progress-bar>
 
 <div class="wrapper">
-  <button class="btn btn-success mt-3" (click)="createNewProject()">{{ 'newProject' | translate:self }}</button>
+  <button class="btn btn-green mt-3" (click)="createNewProject()">{{ 'newProject' | translate:self }}</button>
 
   <div class="for-scroll">
     <div *ngIf="projects?.length !== 0 && isLoaded === true" id="projects-1-for-muuri">

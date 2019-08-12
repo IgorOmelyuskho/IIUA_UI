@@ -22,13 +22,13 @@
         </div>
 
         <div class="select-avatara-input">
-          <button type="button" class="btn btn-primary">{{ 'chooseAvatara' | translate:self }}</button>
+          <button type="button" class="btn btn-green">{{ 'chooseAvatara' | translate:self }}</button>
           <input (change)="handleAvataraSelect($event)" type="file" accept="image/*" formControlName="avatara"
             class="form-control" [ngClass]="{ 'is-invalid': avataraIsTouched && formControls.avatara.errors}">
         </div>
 
         <button type="button" (click)="uploadAvatara()"
-          class="btn btn-primary">{{ 'uploadAvataraBtn' | translate:self }}</button>
+          class="btn btn-green">{{ 'uploadAvataraBtn' | translate:self }}</button>
       </div>
 
       <div class="col-lg-4 col-md-6">
@@ -296,7 +296,7 @@
 
     <div class="form-group">
       <button [disabled]="!isLoaded || !vendorProjectForm.valid"
-        class="btn btn-success update-project-btn">{{ 'updateProject' | translate:self }}</button>
+        class="btn btn-green update-project-btn">{{ 'updateProject' | translate:self }}</button>
     </div>
   </form>
 

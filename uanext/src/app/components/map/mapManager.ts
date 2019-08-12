@@ -77,7 +77,7 @@ export class MapManager {
   mapDestroy() {
     clearInterval(this.timerForDraw);
     cancelAnimationFrame(this.animationFrame);
-    window.removeEventListener('resize', this.windowOnResize);
+    window.removeEventListener('resize', this.windowResize);
 
     this.canvasElem = null;
     this.stats = null;
@@ -227,8 +227,6 @@ export class MapManager {
       newObj.mouseUnder = false;
       newObj.speedX = 0;
       newObj.speedY = 0;
-      newObj.rotationZ = 0;
-      // newObj.coords = map.getCenter().add(Math.random() * 0.008, Math.random() * 0.009); // todo remove
       newObj.prevCoords = {};
       newObj.prevCoords.x = newObj.coords.x;
       newObj.prevCoords.y = newObj.coords.y;
@@ -318,7 +316,7 @@ export class MapManager {
     this.createLabelRenderer();
     this.animation();
 
-    window.addEventListener('resize', this.windowOnResize);
+    window.addEventListener('resize', this.windowResize);
 
     this.on_map_init = cb;
     this.createThreeLayer(); // async
@@ -335,7 +333,7 @@ export class MapManager {
     this.mapElement.appendChild(this.labelRenderer.domElement);
   }
 
-  private windowOnResize = (event) => {
+  private windowResize = (event) => {
     const x = this.mapWrapperElement.clientWidth; // offsetWidth
     const y = this.mapWrapperElement.clientHeight; // offsetHeight
     // mapElement width and height 100% in styles.scss
@@ -351,8 +349,8 @@ export class MapManager {
   }
 
   private createMap() {
-    this.map = new maptalks.Map('map-html-element-id-495367235', { // DIV id
-      center: [13.41261, 52.529611],
+    this.map = new maptalks.Map(this.mapId, { // DIV id
+      center: [35.028, 48.474],
       zoom: this.initZoom,
       minZoom: 3,
       // pitch: 60,
@@ -701,7 +699,7 @@ export class MapManager {
   private loadObject3D(modelQuality: ModelQuality, geoObject: GeoObject) {
     let pathToZip: string;
     if (modelQuality === ModelQuality.LOW) {
-      pathToZip = geoObject.pathToZip2;
+      pathToZip = geoObject.pathToZipLP;
       geoObject.object3DLPStartLoaded = true;
     }
     if (modelQuality === ModelQuality.HIGH) {
@@ -1138,7 +1136,6 @@ export class MapManager {
     return this.linearInterpolation(y0, y1, x0, x1, mapZoom);
   }
   //#endregion
-
 }
 
 

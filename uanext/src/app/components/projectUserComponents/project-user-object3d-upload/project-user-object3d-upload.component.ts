@@ -15,8 +15,8 @@ export class ProjectUserObject3dUploadComponent implements OnInit {
   fileForUpload: any;
   projects: VendorProject[];
   delta = 0.05;
-  xCoord = 13.417522340477;
-  yCoord = 52.5281444184827;
+  xCoord = 35.028;
+  yCoord = 48.4747;
   xCoordinate = this.xCoord + Math.random() * this.delta;
   yCoordinate = this.yCoord + Math.random() * this.delta;
   zipUploaded = false;

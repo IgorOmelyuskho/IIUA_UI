@@ -15,32 +15,32 @@ export class SignalRService {
   objectsArr: {object3DId: string, positionX: number, positionY: number, canMove: boolean}[] = [
     {
       object3DId: '0',
-      positionX: 13.417122340477,
-      positionY: 52.5281344784827,
+      positionX: 35.0282,
+      positionY: 48.4746,
       canMove: true,
     },
     {
       object3DId: '1',
-      positionX: 13.417222340477,
-      positionY: 52.5282344784827,
+      positionX: 35.0281,
+      positionY: 48.4741,
       canMove: true,
     },
     {
       object3DId: '2',
-      positionX: 13.417322340477,
-      positionY: 52.5283344784827,
+      positionX: 35.0289,
+      positionY: 48.4743,
       canMove: false,
     },
     {
       object3DId: '3',
-      positionX: 13.417422340477,
-      positionY: 52.5284344784827,
+      positionX: 35.0285,
+      positionY: 48.4744,
       canMove: true,
     },
     {
       object3DId: '4',
-      positionX: 13.417522340477,
-      positionY: 52.5281444184827,
+      positionX: 35.0281,
+      positionY: 48.4747,
       canMove: true,
     }
   ];

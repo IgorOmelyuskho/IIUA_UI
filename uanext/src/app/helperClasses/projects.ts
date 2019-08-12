@@ -245,46 +245,46 @@ export const responseProject2: VendorProject = {
 
 export const female: GeoObject = {
   geoObjectId: '0', // only unique
-  coords: { x: 13.417122340477, y: 52.5281344784827 },
+  coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/female.zip',
-  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject
 };
 
 export const female2: GeoObject = {
   geoObjectId: '4',  // only unique
-  coords: { x: 13.417522340477, y: 52.5281444184827 },
+  coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/female.zip',
-  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
 export const male: GeoObject = {
   geoObjectId: '1',  // only unique
-  coords: { x: 13.417222340477, y: 52.5282344784827 },
+  coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/male.zip',
-  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
 export const tractor: GeoObject = {
   geoObjectId: '2',  // only unique
-  coords: { x: 13.417322340477, y: 52.5283344784827 },
+  coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject2.name,
   pathToZip: '../../../assets/objects/tractor.zip',
-  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
 export const walt: GeoObject = {
   geoObjectId: '3',  // only unique
-  coords: { x: 13.417422340477, y: 52.5284344784827 },
+  coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject.name,
   pathToZip: '../../../assets/objects/walt.zip',
-  pathToZip2: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject
 };
 

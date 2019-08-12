@@ -1,3 +1,5 @@
+@import '../../../../styles-variables.scss';
+
 .steps {
   padding: 5px;
   border: 1px solid blueviolet;
@@ -60,6 +62,18 @@ hr {
     overflow: hidden;
     margin: 5px 0;
     width: fit-content;
+
+    &:hover {
+      button {
+        background: $green;
+      }
+    }
+
+    &:active {
+      button {
+        background: $darkGreen;
+      }
+    }
 
     input[type=file] {
       position: absolute;
