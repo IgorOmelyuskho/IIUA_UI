@@ -229,7 +229,6 @@
         position: absolute;
         width: 50px;
         height: 50px;
-        background: white;
         z-index: 10;
       }
 
@@ -418,6 +417,12 @@
     }
 
     .investor-curve-line {
+      background: linear-gradient(140deg, #ffffff 10%, #e8e8e8 90%);
+
+      .top-left-cover-div {
+        background: white;
+      }
+
       @media screen and (max-width: 460px) {
         .block.b3:hover {
           .name-and-text {
@@ -508,6 +513,12 @@
     }
 
     .vendor-curve-line {
+      background: linear-gradient(41deg, #ffffff 10%, #e8e8e8 90%);
+
+      .top-left-cover-div {
+        background: #f3f3f3;
+      }
+
       .b1 {
         top: 16.9%;
         left: 19.4%;
@@ -680,10 +691,11 @@
           }
 
           @media screen and (max-width: 1331px) {
+
             .line-chart,
             .stacked-area-chart,
             .histogram-chart,
-            .pie-chart  {
+            .pie-chart {
               width: calc(100% - 1px);
             }
           }

@@ -53,7 +53,7 @@ export class MapManager {
   private objectsScale: number = null;
   private prevClusterGeoObjectId: string = null;
   private mapZoomEnum: MapZoomEnum;
-  private coordsArr: {x: number, y: number}[] = [];
+  private coordsArr: { x: number, y: number }[] = [];
 
   // html elements id
   private mapWrapperId: string;
@@ -382,7 +382,7 @@ export class MapManager {
     this.map.on('mousemove', (event) => {
       this.mouse.x = (event.containerPoint.x / event.target.width) * 2 - 1;
       this.mouse.y = -(event.containerPoint.y / event.target.height) * 2 + 1;
-      this.selectObjects();
+      // this.selectObjects();
 
       const identify = this.clusterLayer.identify(event.coordinate);
       if (identify == null || identify.children == null) {
@@ -549,7 +549,7 @@ export class MapManager {
     this.threeLayer.prepareToDraw = (gl, localScene, localCamera) => {
       this.scene = localScene;
       this.camera = localCamera;
-      this.scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+      this.scene.add(new THREE.AmbientLight(0xffffff, 1.2));
       this.labelRenderer.setSize(this.mapElement.clientWidth, this.mapElement.clientHeight);
       if (this.on_map_init != null) {
         this.on_map_init();
@@ -660,7 +660,7 @@ export class MapManager {
     // if (modelQuality === ModelQuality.LOW) { // if need objectDivLabel for low quality model
     //   geoObject.object3DLP.add(objLabel);
     // }
-    if (modelQuality === ModelQuality.HIGH) {
+    if (modelQuality === ModelQuality.HIGH && geoObject.canMove === true) {
       const objectDivLabel = document.createElement('div');
       objectDivLabel['geoObject'] = geoObject;
       objectDivLabel.addEventListener('mouseenter', this.labelMouseEnterHandler);
@@ -902,16 +902,21 @@ export class MapManager {
     if (geoObj.canMove === true) {
       this.moveObject(geoObj, obj3D);
     } else {
+      this.rotateObject(geoObj, obj3D);
       const v = this.threeLayer.coordinateToVector3(geoObj.coords);
       obj3D.position.x = v.x;
       obj3D.position.y = v.y;
-      obj3D.position.z = v.z;
+      // obj3D.position.z = v.z;
+      obj3D.position.z = geoObj.zCoords || 0;
       obj3D.rotation.z = geoObj.rotationZ;
     }
     // obj.boxHelper.update();
   }
 
   moveObject(geoObj: GeoObjectEdit, obj3D: any) {
+    if (geoObj.movedTo == null && geoObj.coordsArr == null) { // not move
+      return;
+    }
     if (geoObj.movedTo == null) {
       geoObj.movedTo = geoObj.coordsArr[0];
       geoObj.coordsArrIndex = 0;
@@ -945,10 +950,23 @@ export class MapManager {
     obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
   }
 
+  rotateObject(geoObj: GeoObjectEdit, obj3D: any) { // only for not moved object
+    const rotateSpeed = geoObj.rotateSpeed || 0;
+    geoObj.rotationZ += rotateSpeed;
+  }
+
   moveToNextPoint(coords: { x: number, y: number }, movedTo: { x: number, y: number }): boolean {
     const dx = movedTo.x - coords.x;
     const dy = movedTo.y - coords.y;
-    if (Math.sqrt(dx * dx + dy * dy) < 0.0001) {
+    if (Math.sqrt(dx * dx + dy * dy) < 0.00005) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  rotateToNextPoint(currentRotation: number, rotateTo: number): boolean {
+    if (Math.abs(currentRotation - rotateTo) < 0.01) {
       return true;
     } else {
       return false;
@@ -1204,22 +1222,22 @@ export class MapManager {
     }
 
     if (event.keyCode === 81) { // Q
-      this.editMoveUp(this.selectedObject);
+      this.editMoveUp(event, this.selectedObject);
     }
     if (event.keyCode === 87) { // W
-      this.editMoveForward(this.selectedObject);
+      this.editMoveForward(event, this.selectedObject);
     }
     if (event.keyCode === 69) { // E
-      this.editMoveDown(this.selectedObject);
+      this.editMoveDown(event, this.selectedObject);
     }
     if (event.keyCode === 65) { // A
-      this.editMoveLeft(this.selectedObject);
+      this.editMoveLeft(event, this.selectedObject);
     }
     if (event.keyCode === 83) { // S
-      this.editMoveBack(this.selectedObject);
+      this.editMoveBack(event, this.selectedObject);
     }
     if (event.keyCode === 68) { // D
-      this.editMoveRight(this.selectedObject);
+      this.editMoveRight(event, this.selectedObject);
     }
     if (event.keyCode === 90) { // Z
       this.editRotate1(this.selectedObject);
@@ -1240,30 +1258,48 @@ export class MapManager {
     this.customRedraw();
   }
 
-  private editMoveUp(geoObject: GeoObjectEdit) {
+  private editMoveUp(event: any, geoObject: GeoObjectEdit) {
+    geoObject.zCoords += 0.01;
+    if (event.shiftKey) {
+      geoObject.zCoords += 0.1;
+    }
     console.log('zCoords ', geoObject.zCoords.toFixed(5));
-    geoObject.zCoords += 0.1;
   }
 
-  private editMoveDown(geoObject: GeoObjectEdit) {
+  private editMoveDown(event: any, geoObject: GeoObjectEdit) {
+    geoObject.zCoords -= 0.01;
+    if (event.shiftKey) {
+      geoObject.zCoords -= 0.1;
+    }
     console.log('zCoords', geoObject.zCoords.toFixed(5));
-    geoObject.zCoords -= 0.1;
   }
 
-  private editMoveForward(geoObject: GeoObjectEdit) {
+  private editMoveForward(event: any, geoObject: GeoObjectEdit) {
     geoObject.coords.x += 0.00001;
+    if (event.shiftKey) {
+      geoObject.coords.x += 0.0001;
+    }
   }
 
-  private editMoveBack(geoObject: GeoObjectEdit) {
+  private editMoveBack(event: any, geoObject: GeoObjectEdit) {
     geoObject.coords.x -= 0.00001;
+    if (event.shiftKey) {
+      geoObject.coords.x -= 0.0001;
+    }
   }
 
-  private editMoveLeft(geoObject: GeoObjectEdit) {
+  private editMoveLeft(event: any, geoObject: GeoObjectEdit) {
     geoObject.coords.y -= 0.00001;
+    if (event.shiftKey) {
+      geoObject.coords.y -= 0.0001;
+    }
   }
 
-  private editMoveRight(geoObject: GeoObjectEdit) {
+  private editMoveRight(event: any, geoObject: GeoObjectEdit) {
     geoObject.coords.y += 0.00001;
+    if (event.shiftKey) {
+      geoObject.coords.y += 0.0001;
+    }
   }
 
   private editRotate1(geoObject: GeoObjectEdit) {

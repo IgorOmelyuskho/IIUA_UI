@@ -47,7 +47,7 @@ export class MapDemoComponent implements OnInit, AfterViewInit, OnDestroy  {
         });
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
 
   }

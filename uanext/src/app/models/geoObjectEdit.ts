@@ -32,4 +32,5 @@ export class GeoObjectEdit {
   movedTo?: { x: number, y: number };
   coordsArr?: { x: number, y: number }[];
   coordsArrIndex?: number;
+  rotateSpeed?: number;
 }
