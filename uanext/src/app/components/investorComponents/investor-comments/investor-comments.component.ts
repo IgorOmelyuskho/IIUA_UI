@@ -3,6 +3,8 @@ import { VendorProject } from 'src/app/models/vendorProject';
 import * as autosize from 'autosize';
 import { ChatService } from 'src/app/services/http/chat.service';
 import { Chat } from 'src/app/models/chat/chat';
+import { Observable } from 'rxjs';
+import { Message } from 'src/app/models/chat/message';
 
 @Component({
   selector: 'app-investor-comments',
@@ -15,6 +17,8 @@ export class InvestorCommentsComponent implements OnInit, OnDestroy {
   textareaSelector1 = '.comments .send-comment .textarea-wrapper textarea';
   textareaSelector2 = '.comments-wrapper .comment .answer .textarea-wrapper textarea';
   chat: Chat;
+  messages: Message[];
+  messagesLoading = false;
 
   comments = [
     {
@@ -53,6 +57,7 @@ export class InvestorCommentsComponent implements OnInit, OnDestroy {
     },
   ];
 
+
   constructor(private chatService: ChatService) { }
 
   ngOnInit() {
@@ -66,6 +71,18 @@ export class InvestorCommentsComponent implements OnInit, OnDestroy {
       (chat: Chat) => {
         this.chat = chat;
         console.log(this.chat);
+        this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id));
+      },
+      err => {
+        console.warn(err);
+      }
+    );
+  }
+
+  getMessagesByChatIdSubscribe(observable: Observable<any>) {
+    observable.subscribe(
+      (messages: Message[]) => {
+        console.log(messages);
       },
       err => {
         console.warn(err);
@@ -79,3 +96,28 @@ export class InvestorCommentsComponent implements OnInit, OnDestroy {
   }
 
 }
+
+
+// getMessagesByChatIdSubscribe(observable: Observable<Message[]>, initial?: boolean) {
+//   this.messagesLoading = true;
+//   observable.subscribe(
+//     (messages: Message[]) => {
+//       for (let i = 0; i < messages.length; i++) {
+//         messages[i].isYou = this.messageIsYou(messages[i]);
+//         this.messages.push(messages[i]);
+//         this.chatService.sortMessages(this.messages);
+//       }
+//       console.log(messages);
+//       this.messagesLoading = false;
+//       if (initial === true) {
+//         requestAnimationFrame(() => {
+//           this.scrollToBottom(this.messagesElement.nativeElement);
+//         });
+//       }
+//     },
+//     err => {
+//       console.warn(err);
+//       this.messagesLoading = false;
+//     }
+//   );
+// }

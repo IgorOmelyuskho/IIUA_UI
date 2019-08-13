@@ -17,7 +17,7 @@ export class ChatService {
 
   getOrCreateP2P(userId: string): Observable<Chat> { // userId - которому хотим написать
     const params = new HttpParams().set('userId', userId.toString());
-    return this.http.get<any>(environment.chat + environment.getOrCreateChat , { params: params });
+    return this.http.get<any>(environment.chat + environment.getOrCreateChat, { params: params });
   }
 
   getAllChats(): Observable<Chat[]> { // all chats for current user (token)
@@ -30,8 +30,43 @@ export class ChatService {
   }
 
   getChatBProjectId(projectId: number): Observable<Chat> {
-    const params = new HttpParams().set('projectId', projectId.toString());
-    return this.http.get<any>(environment.chat + environment.getChatByProjectId, { params: params });
+    // const params = new HttpParams().set('projectId', projectId.toString());
+    // return this.http.get<any>(environment.chat + environment.getChatByProjectId, { params: params });
+    const chat: Chat = {
+      id: 'chatId',
+      title: 'chatTitle',
+      creatorId: 'creatorId',
+      conversationType: 'All2All',
+      lastMessage: 'lastMessage',
+      lastMessageId: 'lastMessageId',
+      icon: 'icon',
+      lastActivityDate: new Date(),
+      leaveDate: null,
+      participants: [
+        {
+          id: 'participantId-1',
+          userId: 'userId-1',
+          participantsRole: 0,
+          conversationId: 'chatId',
+          lastReadDate: new Date(),
+          createdDate: new Date(),
+          unreadsNumber: 0,
+          leaveDate: null,
+        },
+        {
+          id: 'participantId-2',
+          userId: 'userId-2',
+          participantsRole: 0,
+          conversationId: 'chatId',
+          lastReadDate: new Date(),
+          createdDate: new Date(),
+          unreadsNumber: 0,
+          leaveDate: null,
+        }
+      ],
+      projectId: projectId.toString() // for All2All
+    };
+    return of(chat);
   }
 
 

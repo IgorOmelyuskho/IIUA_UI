@@ -1,7 +1,7 @@
 import { Message } from 'src/app/models/chat/message';
 
 export const testMessagePhoto: Message = {
-    text: 'text of message',
+    text: 'text of message text of message text of message text of message text of message text of message text of message text of message text of message text of message text of message text of message',
     conversationId: 'conversationId',
     participantId: 'participantId',
     attachmentUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm1DKrUQDVaNcJ6xSXK5XwLDSliIJ_LLaWgMdgf-pMNsulcpJe7A',
@@ -11,7 +11,7 @@ export const testMessagePhoto: Message = {
 };
 
 export const testMessageFile: Message = {
-    text: 'text of message',
+    text: 'text of message text of message text of message text of message text of message text of message text of message text of message text of message',
     conversationId: 'conversationId',
     participantId: 'participantId',
     attachmentUrl: 'https://www.axmag.com/download/pdfurl-guide.pdf',
