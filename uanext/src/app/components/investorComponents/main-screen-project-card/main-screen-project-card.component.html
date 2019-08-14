@@ -117,59 +117,56 @@
       </div>
     </div>
 
-    <div class="menu-items-wrapper">
-      <div class="no-selected" *ngIf="selectedMenuItem == null">
-        <div class="iiua">IIUA</div>
-        <div>{{ 'investingFuture' | translate:self }}</div>
-        <div class="grey-text">{{ 'projectInfo' | translate:self }}</div>
+    <div class="no-selected" *ngIf="selectedMenuItem == null">
+      <div class="iiua">IIUA</div>
+      <div>{{ 'investingFuture' | translate:self }}</div>
+      <div class="grey-text">{{ 'projectInfo' | translate:self }}</div>
+    </div>
+    <div class="shared" *ngIf="selectedMenuItem === 'shared'">
+      <h5 class="mb-2">
+        <img src="../../../assets/img/notepad.png" alt="">
+        <span>{{ 'investmentFor' | translate:self }}</span>
+      </h5>
+      <div class="steps">
+        <div class="step" *ngFor="let step of _selectedProject.steps">
+          {{step.data}}
+        </div>
       </div>
-      <div class="shared" *ngIf="selectedMenuItem === 'shared'">
-        <h5 class="mb-2">
-          <img src="../../../assets/img/notepad.png" alt="">
-          <span>{{ 'investmentFor' | translate:self }}</span>
+      <hr>
+      <div>{{_selectedProject.investmentDescription}}</div>
+    </div>
+    <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
+      <div class="images-gallery">
+        <ngx-gallery [options]="galleryOptions" (previewOpen)="previewOpenHandler($event)"
+          (previewClose)="previewCloseHandler($event)" [images]="galleryImages"></ngx-gallery>
+      </div>
+      <div class="videos">
+        <h5>
+          <img src="../../../assets/img/video.png" alt="">
+          <span>{{ 'videos' | translate:self }}</span>
         </h5>
-        <div class="steps">
-          <div class="step" *ngFor="let step of _selectedProject.steps">
-            {{step.data}}
+        <div class="video-links-wrapper">
+          <div *ngFor="let video of _selectedProject.videos" class="link">
+            <img src="../../../assets/img/video-link.png" alt="">
+            <a target="_blank" rel="noopener noreferrer" href="video.url">{{video.url}}</a>
           </div>
         </div>
-        <hr>
-        <div>{{_selectedProject.investmentDescription}}</div>
-      </div>
-      <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
-        <div class="images-gallery">
-          <ngx-gallery [options]="galleryOptions" (previewOpen)="previewOpenHandler($event)"
-            (previewClose)="previewCloseHandler($event)" [images]="galleryImages"></ngx-gallery>
-        </div>
-        <div class="videos">
-          <h5>
-            <img src="../../../assets/img/video.png" alt="">
-            <span>{{ 'videos' | translate:self }}</span>
-          </h5>
-          <div class="video-links-wrapper">
-            <div *ngFor="let video of _selectedProject.videos" class="link">
-              <img src="../../../assets/img/video-link.png" alt="">
-              <a target="_blank" rel="noopener noreferrer" href="video.url">{{video.url}}</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="documents" *ngIf="selectedMenuItem === 'documents'">
-        <div class="documents-wrapper">
-          <div class="document" *ngFor="let document of _selectedProject.files">
-            <img src="../../../assets/img/file.png" alt="file">
-            <span>{{document.url}}</span>
-          </div>
-        </div>
-      </div>
-      <div class="updates" *ngIf="selectedMenuItem === 'updates'">
-        <app-investor-updates [project]="_selectedProject"></app-investor-updates>
-      </div>
-      <div class="comments" *ngIf="selectedMenuItem === 'comments'">
-        <app-investor-comments [project]="_selectedProject"></app-investor-comments>
       </div>
     </div>
-
+    <div class="documents" *ngIf="selectedMenuItem === 'documents'">
+      <div class="documents-wrapper">
+        <div class="document" *ngFor="let document of _selectedProject.files">
+          <img src="../../../assets/img/file.png" alt="file">
+          <span>{{document.url}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="updates" *ngIf="selectedMenuItem === 'updates'">
+      <app-investor-updates [project]="_selectedProject"></app-investor-updates>
+    </div>
+    <div class="comments" *ngIf="selectedMenuItem === 'comments'">
+      <app-investor-comments [project]="_selectedProject"></app-investor-comments>
+    </div>
 
 
   </div>

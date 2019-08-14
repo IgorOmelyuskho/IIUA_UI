@@ -31,9 +31,10 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   ngOnInit() {
     this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), true);
     autosize(document.querySelector(this.textareaSelector));
+    this.selfUserId = this.stateService.userId();
   }
 
-  getMessagesByChatIdSubscribe(observable: Observable<Message[]>, initial?: boolean) {
+  getMessagesByChatIdSubscribe(observable: Observable<Message[]>, initial: boolean) {
     this.messagesLoading = true;
     observable.subscribe(
       (messages: Message[]) => {
@@ -97,7 +98,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
       attachmentId: this.attachmentData.id,
       attachmentUrl: this.attachmentData.url,
       attachmentOriginalName: this.attachmentData.originalName,
-      lastUpdatedDate: 'string',
     };
 
     this.attachmentData = {};
@@ -111,6 +111,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
         this.messages.push(msg);
         this.chatService.sortMessages(this.messages);
         requestAnimationFrame(() => {
+          autosize.update(document.querySelector(this.textareaSelector));
           this.scrollToBottom(this.messagesElement.nativeElement);
         });
       },
@@ -165,10 +166,13 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onScrollUp() {
-    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'));
+    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), false);
   }
 
   ngOnDestroy() {
     autosize.destroy(document.querySelector(this.textareaSelector));
+    if (this.uploadFilesSubscribe != null) {
+      this.uploadFilesSubscribe.unsubscribe();
+    }
   }
 }

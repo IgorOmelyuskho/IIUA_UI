@@ -6,6 +6,7 @@ export interface Message {
     attachmentId: string;
     attachmentUrl: string;
     attachmentOriginalName: string;
-    lastUpdatedDate?: any; // use in response
+    createdDate?: any; // use in response
+    leaveDate?: any; // use in response
     isYou?: boolean; // you / their
 }

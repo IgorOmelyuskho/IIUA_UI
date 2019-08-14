@@ -1,53 +1,96 @@
-<div class="comments">
-  <div class="send-comment">
-    <div class="textarea-wrapper">
-      <textarea rows="1" placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
-    </div>
-    <button type="button">{{ 'send' | translate:self}}</button>
-  </div>
+<div class="wrapper">
+  <mat-progress-bar *ngIf="messagesLoading === true" mode="indeterminate"></mat-progress-bar>
 
-  <div class="comments-wrapper">
-    <div *ngFor="let comment of comments" class="comment">
+  <div #messagesElem class="comments" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
+    [infiniteScrollThrottle]="100" (scrolledUp)="onScrollUp()">
 
-      <div *ngIf="comment.type === 'their'" class="their">
-        <div class="avatara-wrapper">
-          <img src="{{project.avatara.url}}" alt="">
-        </div>
-        <div class="right-part">
-          <div class="data-and-name">
-            <div class="name">{{project.legalEntityName}}</div>
-            <div class="data">
-              <span>{{ 'reply' | translate:self}}</span>
-              <span>{{comment.date}}</span>
-            </div>
-          </div>
-          <div class="text">{{comment.text}}</div>
-          <div class="answer">
-            <div class="textarea-wrapper">
-              <textarea rows="1" placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
-            </div>
-            <button type="button">{{ 'replyBtn' | translate:self}}</button>
-          </div>
-        </div>
-      </div>
+    <div class="comments-wrapper">
+      <div *ngFor="let message of messages" class="comment">
 
-      <div *ngIf="comment.type === 'you'" class="you">
-        <div class="content-wrapper">
+        <div *ngIf="message.isYou === false" class="their">
           <div class="avatara-wrapper">
-            <img src="https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png" alt="">
+            <img src="{{project.avatara.url}}" alt="avatara">
           </div>
           <div class="right-part">
             <div class="data-and-name">
-              <div class="name">{{ 'investor' | translate:self}}</div>
+              <div class="name">{{project.legalEntityName}}</div>
               <div class="data">
-                <span>{{ 'reply2' | translate:self}}</span>
-                <span>{{comment.date}}</span>
+                <span>{{ 'reply' | translate:self}}</span>
+                <span>{{message.createdDate | date: 'dd MMM yyyy'}}</span>
               </div>
             </div>
-            <div class="text">{{comment.text}}</div>
+            <div class="text">{{message.text}}</div>
+            <div class="answer">
+              <div class="textarea-wrapper">
+                <textarea rows="1" placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
+              </div>
+              <button type="button">{{ 'replyBtn' | translate:self}}</button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="message.isYou === true" class="you">
+          <div class="content-wrapper">
+            <div class="avatara-wrapper">
+              <img src="https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png" alt="avatara">
+            </div>
+            <div class="right-part">
+              <div class="data-and-name">
+                <div class="name">{{ 'investor' | translate:self}}</div>
+                <div class="data">
+                  <span>{{ 'reply2' | translate:self}}</span>
+                  <span>{{message.createdDate | date: 'dd MMM yyyy'}}</span>
+                </div>
+              </div>
+              <div class="text">{{message.text}}</div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="send-comment">
+    <div *ngIf="previewAttachment" class="attachment-wrapper">
+      <div class="attachments">
+        <div *ngIf="defineFileType(previewAttachment.name) === 'image'" class="img-wrapper">
+          <img (click)="removeAttachment()" class="close-img" src="../../../../assets/img/close-2.png" alt="close">
+          <app-rotating-load-indicator *ngIf="attachmentReady === false"></app-rotating-load-indicator>
+          <figure>
+            <img src={{previewAttachment.binaryData}} alt="">
+          </figure>
+        </div>
+        <div *ngIf="defineFileType(previewAttachment.name) === 'video'" class="video-wrapper">
+          <img (click)="removeAttachment()" class="close-img" src="../../../../assets/img/close-2.png" alt="close">
+          <app-rotating-load-indicator *ngIf="attachmentReady === false"></app-rotating-load-indicator>
+          <div class="video">
+            <figure>
+              <video controls>
+                <source src={{previewAttachment.binaryData}}>
+              </video>
+            </figure>
+          </div>
+        </div>
+        <div *ngIf="defineFileType(previewAttachment.name) === 'file'" class="file-wrapper">
+          <img (click)="removeAttachment()" class="close-img" src="../../../../assets/img/close-2.png" alt="close">
+          <app-rotating-load-indicator *ngIf="attachmentReady === false"></app-rotating-load-indicator>
+          <div class="file">
+            <img src="../../../assets/img/file.png" alt="">
+            <div class="file-name">{{previewAttachment.name}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-wrapper">
+      <div class="attach">
+        <i class="fa fa-paperclip" aria-hidden="true"></i>
+        <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">
+      </div>
+      <div class="textarea-wrapper">
+        <textarea [(ngModel)]="sharedChatMsgText" rows="1"
+          placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
+      </div>
+      <button (click)="sendMessageToSharedChat()" type="button">{{ 'send' | translate:self}}</button>
     </div>
   </div>
 </div>

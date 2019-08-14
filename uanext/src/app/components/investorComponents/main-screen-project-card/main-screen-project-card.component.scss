@@ -218,131 +218,135 @@
       }
     }
 
-    .menu-items-wrapper {
-      overflow: auto;
+    .no-selected,
+    .shared,
+    .gallery,
+    .documents,
+    .updates,
+    .comments {
+      height: 100%;
       padding-left: 5px;
-      padding-right: 10px;
-      margin-right: 2px;
+      padding-right: 5px;
+    }
 
-      .no-selected {
-        text-align: center;
-        font-size: 16px;
-        font-weight: 500;
+    .no-selected {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
 
-        .iiua {
-          font-size: 30px;
-          color: $green;
-          margin-top: 70px;
-          margin-bottom: 10px;
-          font-weight: bold;
-        }
+      .iiua {
+        font-size: 30px;
+        color: $green;
+        margin-top: 70px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
 
-        .grey-text {
-          color: $grey;
-          font-size: 12px;
-          margin-top: 10px;
+      .grey-text {
+        color: $grey;
+        font-size: 12px;
+        margin-top: 10px;
+      }
+    }
+
+    .shared {
+      h5 {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 18px;
+
+        img {
+          height: 20px;
+          position: relative;
+          bottom: 1px;
+          padding-right: 20px;
         }
       }
 
-      .shared {
+      .steps {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 5px;
+        padding-left: 0;
+
+        .step {
+          border-radius: 6px;
+          border: solid 1px $green;
+          color: $green;
+          font-size: 15px;
+          margin: 2px 5px 2px 0px;
+          padding: 0px 9px 3px 9px;
+        }
+      }
+    }
+
+    .gallery {
+      .images-gallery {
+        margin-top: 15px;
+      }
+
+      .videos {
         h5 {
-          font-weight: bold;
+          margin-top: 10px;
+          margin-bottom: 10px;
           font-size: 18px;
-          margin-top: 18px;
+          font-weight: bold;
 
           img {
-            height: 20px;
+            height: 18px;
             position: relative;
-            bottom: 1px;
-            padding-right: 20px;
+            bottom: 2px;
+            margin-right: 15px;
           }
         }
 
-        .steps {
-          display: flex;
-          flex-wrap: wrap;
-          padding: 5px;
-          padding-left: 0;
+        .video-links-wrapper {
+          margin-top: 20px;
 
-          .step {
-            border-radius: 6px;
-            border: solid 1px $green;
-            color: $green;
-            font-size: 15px;
-            margin: 2px 5px 2px 0px;
-            padding: 0px 9px 3px 9px;
-          }
-        }
-      }
-
-      .gallery {
-        .images-gallery {
-          margin-top: 15px;
-        }
-
-        .videos {
-          h5 {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            font-size: 18px;
-            font-weight: bold;
+          .link {
+            font-size: 16px;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            margin-top: 5px;
 
             img {
-              height: 18px;
+              height: 12px;
               position: relative;
-              bottom: 2px;
-              margin-right: 15px;
+              bottom: 5px;
+              margin-right: 5px;
             }
-          }
 
-          .video-links-wrapper {
-            margin-top: 20px;
-
-            .link {
-              font-size: 16px;
-              letter-spacing: 0.4px;
-              cursor: pointer;
-              margin-top: 5px;
-
-              img {
-                height: 12px;
-                position: relative;
-                bottom: 5px;
-                margin-right: 5px;
-              }
-
-              a {
-                color: black
-              }
+            a {
+              color: black
             }
           }
         }
       }
+    }
 
-      .documents {
-        .documents-wrapper {
-          width: 90%;
-          overflow: hidden;
+    .documents {
+      .documents-wrapper {
+        width: 90%;
+        overflow: hidden;
 
-          .document {
-            display: flex;
-            margin: 5px;
+        .document {
+          display: flex;
+          margin: 5px;
 
-            img {
-              margin-right: 10px;
-              height: 20px;
-            }
+          img {
+            margin-right: 10px;
+            height: 20px;
           }
         }
       }
+    }
 
-      .updates {
-        font-weight: normal;
-      }
+    .updates {
+      font-weight: normal;
+    }
 
-      .comments {
-        font-weight: normal;
-      }
+    .comments {
+      font-weight: normal;
     }
 
   }
