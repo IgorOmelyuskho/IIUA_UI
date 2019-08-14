@@ -347,7 +347,8 @@
         "tieToGoal": "Привязать к цели",
         "uploadMediaFiles": "Загрузите медиа файлы",
         "dragFiles": "Перетащите файлы сюда",
-        "send": "ОТПРАВИТЬ"
+        "send": "ОТПРАВИТЬ",
+        "selectProject": "ВЫБЕРИТЕ ПРОЕКТ"
     },
     "VendorFindInvestorComponent": {
         "findPlaceholder": "Найти проект или инвестора",

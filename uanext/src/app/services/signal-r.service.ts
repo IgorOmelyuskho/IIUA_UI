@@ -6,8 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class SignalRService {
-
-  hubConnection: HubConnection;
+  private hubConnection: HubConnection;
   receiveMessageCallback: Function;
 
   // todo - remove (use for emulate signalR)
@@ -55,7 +54,7 @@ export class SignalRService {
     //   .withUrl(
     //     environment.signalR,
     //     {
-    //       accessTokenFactory: () => token // Bearer ?
+    //       accessTokenFactory: () => token
     //     })
     //   .build();
 
@@ -76,15 +75,6 @@ export class SignalRService {
     //     return;
     //   });
   }
-
-  // remove
-  // signalRSendMsg() {
-  //   this.hubConnection.invoke('SendMessage')
-  //     .catch(function (err) {
-  //       console.error(err.toString());
-  //       return;
-  //     });
-  // }
 
   signalRDisconnect() {
     // this.hubConnection.stop();

@@ -12,7 +12,7 @@ export const environment = {
   map:  domain + '/map',
   notifications: domain +  '/notifications',
   files: domain + '/files',
-  chat: domain + '/conversations',
+  chat: domain + '/conversation',
 
   authenticate: '/api/Auth/authenticate',
   vendorRegister: '/api/Vendor/register',

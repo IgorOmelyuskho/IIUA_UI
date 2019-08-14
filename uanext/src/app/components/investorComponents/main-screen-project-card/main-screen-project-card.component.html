@@ -4,105 +4,105 @@
     <img src="../../../assets/img/close-2.png" alt="close">
   </div>
 
-  <div class="container">
+  <div class="wrapper">
 
-    <div class="row pt-3">
-      <div class="col-6 pr-1">
-        <div class="avatara-wrapper">
-          <div class="avatara" [ngStyle]="{ 'background-image': getAvataraUrl(_selectedProject) }"></div>
-          <div class="rating">
-            {{_selectedProject.rating}}
+    <div class="block">
+      <div class="row pt-3">
+        <div class="col-6 pr-1">
+          <div class="avatara-wrapper">
+            <div class="avatara" [ngStyle]="{ 'background-image': getAvataraUrl(_selectedProject) }"></div>
+            <div class="rating">
+              {{_selectedProject.rating}}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-6 pl-1">
-        <div class="wrapper-1">
-          <h5 class="project-name">{{_selectedProject.name}}</h5>
-          <div class="company-name">{{_selectedProject.legalEntityName}}</div>
-          <div class="investment-sum">
-            <div class="sum">{{ 'investSum' | translate:self }}</div>
-            <div class="sum-value">$ {{_selectedProject.moneyRequired}}</div>
-          </div>
-          <div class="btn-wrapper">
-            <button class="invest">
-              <span>{{ 'invest' | translate:self }}</span>
-              <span class="big-font">$</span>
-            </button>
-            <button class="start-chat">
-              <span>{{ 'chat' | translate:self }}</span>
-              <span class="img-bg"></span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="info-items-wrapper">
-      <div class="row">
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'avgCheck' | translate:self }}</div>
-            <div class="value">{{_selectedProject.averageCheck}} грн</div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'clientsPerMount' | translate:self }}</div>
-            <div class="value">{{_selectedProject.mounthlyClients}}</div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'avgPrice' | translate:self }}</div>
-            <div class="value">{{_selectedProject.averagePrice}} грн</div>
+        <div class="col-6 pl-1">
+          <div class="wrapper-1">
+            <h5 class="project-name">{{_selectedProject.name}}</h5>
+            <div class="company-name">{{_selectedProject.legalEntityName}}</div>
+            <div class="investment-sum">
+              <div class="sum">{{ 'investSum' | translate:self }}</div>
+              <div class="sum-value">$ {{_selectedProject.moneyRequired}}</div>
+            </div>
+            <div class="btn-wrapper">
+              <button class="invest">
+                <span>{{ 'invest' | translate:self }}</span>
+                <span class="big-font">$</span>
+              </button>
+              <button class="start-chat">
+                <span>{{ 'chat' | translate:self }}</span>
+                <span class="img-bg"></span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'grossIncome' | translate:self }}</div>
-            <div class="value">{{_selectedProject.grossIncome}} грн</div>
+      <div class="info-items-wrapper">
+        <div class="row">
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'avgCheck' | translate:self }}</div>
+              <div class="value">{{_selectedProject.averageCheck}} грн</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'clientsPerMount' | translate:self }}</div>
+              <div class="value">{{_selectedProject.mounthlyClients}}</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'avgPrice' | translate:self }}</div>
+              <div class="value">{{_selectedProject.averagePrice}} грн</div>
+            </div>
           </div>
         </div>
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'companyAge' | translate:self }}</div>
-            <div class="value">{{_selectedProject.companyAge}}</div>
+
+        <div class="row">
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'grossIncome' | translate:self }}</div>
+              <div class="value">{{_selectedProject.grossIncome}} грн</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'companyAge' | translate:self }}</div>
+              <div class="value">{{_selectedProject.companyAge}}</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'employees' | translate:self }}</div>
+              <div class="value">{{_selectedProject.employeesToHire}}</div>
+            </div>
           </div>
         </div>
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'employees' | translate:self }}</div>
-            <div class="value">{{_selectedProject.employeesToHire}}</div>
+
+        <div class="row">
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'fieldActivity' | translate:self }}</div>
+              <div class="value">{{_selectedProject.sphereActivities[0].name}}</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'region' | translate:self }}</div>
+              <div class="value">{{_selectedProject.region}}</div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="info-item">
+              <div class="name">{{ 'employeesToHire' | translate:self }}</div>
+              <div class="value">{{_selectedProject.employeesToHire}}</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'fieldActivity' | translate:self }}</div>
-            <div class="value">{{_selectedProject.sphereActivities[0].name}}</div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'region' | translate:self }}</div>
-            <div class="value">{{_selectedProject.region}}</div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="info-item">
-            <div class="name">{{ 'employeesToHire' | translate:self }}</div>
-            <div class="value">{{_selectedProject.employeesToHire}}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="detail-project-info">
       <div class="project-info-menu">
         <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'shared'}"
           (click)="selectedMenuItem = 'shared'">{{ 'shared' | translate:self }}</button>
@@ -115,56 +115,59 @@
         <button type="button" [ngClass]="{selectedMenuItem: selectedMenuItem === 'comments'}"
           (click)="selectedMenuItem = 'comments'">{{ 'comments' | translate:self }}</button>
       </div>
-      <div class="no-selected" *ngIf="selectedMenuItem == null">
-        <div class="iiua">IIUA</div>
-        <div>{{ 'investingFuture' | translate:self }}</div>
-        <div class="grey-text">{{ 'projectInfo' | translate:self }}</div>
+    </div>
+
+    <div class="no-selected" *ngIf="selectedMenuItem == null">
+      <div class="iiua">IIUA</div>
+      <div>{{ 'investingFuture' | translate:self }}</div>
+      <div class="grey-text">{{ 'projectInfo' | translate:self }}</div>
+    </div>
+    <div class="shared" *ngIf="selectedMenuItem === 'shared'">
+      <h5 class="mb-2">
+        <img src="../../../assets/img/notepad.png" alt="">
+        <span>{{ 'investmentFor' | translate:self }}</span>
+      </h5>
+      <div class="steps">
+        <div class="step" *ngFor="let step of _selectedProject.steps">
+          {{step.data}}
+        </div>
       </div>
-      <div class="shared" *ngIf="selectedMenuItem === 'shared'">
-        <h5 class="mb-2">
-          <img src="../../../assets/img/notepad.png" alt="">
-          <span>{{ 'investmentFor' | translate:self }}</span>
+      <hr>
+      <div>{{_selectedProject.investmentDescription}}</div>
+    </div>
+    <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
+      <div class="images-gallery">
+        <ngx-gallery [options]="galleryOptions" (previewOpen)="previewOpenHandler($event)"
+          (previewClose)="previewCloseHandler($event)" [images]="galleryImages"></ngx-gallery>
+      </div>
+      <div class="videos">
+        <h5>
+          <img src="../../../assets/img/video.png" alt="">
+          <span>{{ 'videos' | translate:self }}</span>
         </h5>
-        <div class="steps">
-          <div class="step" *ngFor="let step of _selectedProject.steps">
-            {{step.data}}
+        <div class="video-links-wrapper">
+          <div *ngFor="let video of _selectedProject.videos" class="link">
+            <img src="../../../assets/img/video-link.png" alt="">
+            <a target="_blank" rel="noopener noreferrer" href="video.url">{{video.url}}</a>
           </div>
         </div>
-        <hr>
-        <div>{{_selectedProject.investmentDescription}}</div>
-      </div>
-      <div class="gallery" *ngIf="selectedMenuItem === 'gallery'">
-        <div class="images-gallery">
-          <ngx-gallery [options]="galleryOptions" (previewOpen)="previewOpenHandler($event)" (previewClose)="previewCloseHandler($event)" [images]="galleryImages"></ngx-gallery>
-        </div>
-        <div class="videos">
-          <h5>
-            <img src="../../../assets/img/video.png" alt="">
-            <span>{{ 'videos' | translate:self }}</span>
-          </h5>
-          <div class="video-links-wrapper">
-            <div *ngFor="let video of _selectedProject.videos" class="link">
-              <img src="../../../assets/img/video-link.png" alt="">
-              <a target="_blank" rel="noopener noreferrer" href="video.url">{{video.url}}</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="documents" *ngIf="selectedMenuItem === 'documents'">
-        <div class="documents-wrapper">
-          <div class="document" *ngFor="let document of _selectedProject.files">
-            <img src="../../../assets/img/file.png" alt="file">
-            <span>{{document.url}}</span>
-          </div>
-        </div>
-      </div>
-      <div class="updates" *ngIf="selectedMenuItem === 'updates'">
-        <app-investor-updates [project]="_selectedProject"></app-investor-updates>
-      </div>
-      <div class="comments" *ngIf="selectedMenuItem === 'comments'">
-        <app-investor-comments [project]="_selectedProject"></app-investor-comments>
       </div>
     </div>
+    <div class="documents" *ngIf="selectedMenuItem === 'documents'">
+      <div class="documents-wrapper">
+        <div class="document" *ngFor="let document of _selectedProject.files">
+          <img src="../../../assets/img/file.png" alt="file">
+          <span>{{document.url}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="updates" *ngIf="selectedMenuItem === 'updates'">
+      <app-investor-updates [project]="_selectedProject"></app-investor-updates>
+    </div>
+    <div class="comments" *ngIf="selectedMenuItem === 'comments'">
+      <app-investor-comments [project]="_selectedProject"></app-investor-comments>
+    </div>
+
 
   </div>
 </div>

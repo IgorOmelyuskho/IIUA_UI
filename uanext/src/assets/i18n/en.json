@@ -347,7 +347,8 @@
         "tieToGoal": "Tie to goal",
         "uploadMediaFiles": "Upload media files",
         "dragFiles": "Drag files here",
-        "send": "SEND"
+        "send": "SEND",
+        "selectProject": "SELECT PROJECT"
     },
     "VendorFindInvestorComponent": {
         "findPlaceholder": "Find a project or investor",

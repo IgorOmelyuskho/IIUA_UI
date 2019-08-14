@@ -5,7 +5,6 @@
   background: white;
   width: 48vw;
   height: 100%;
-  overflow: auto;
   position: absolute;
   left: 0;
   top: 0;
@@ -23,191 +22,211 @@
     }
   }
 
-  .avatara-wrapper {
-    min-width: 210px;
-    height: 185px;
-    margin-right: 20px;
-    position: relative;
-
-    .avatara {
-      width: 100%;
-      height: 100%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      border-radius: 6px;
-    }
-
-    .rating {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 60px;
-      height: 50px;
-      border-top-left-radius: 6px;
-      border-bottom-right-radius: 6px;
-      background: $green;
-      line-height: 47px;
-      text-align: center;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      font-style: normal;
-      font-stretch: normal;
-    }
-  }
-
-  .wrapper-1 {
+  .wrapper {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
 
-    h5.project-name {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 0px;
-    }
+    .block {
+      padding-right: 15px;
+      padding-left: 15px;
 
-    .company-name {
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
+      .avatara-wrapper {
+        min-width: 210px;
+        height: 185px;
+        margin-right: 20px;
+        position: relative;
 
-    .investment-sum {
-      .sum {
-        opacity: 0.95;
-        font-size: 13px;
-        line-height: 1.23;
-        letter-spacing: 0.4px;
-        color: $green;
-        margin-bottom: 10px;
-      }
-
-      .sum-value {
-        opacity: 0.95;
-        font-size: 15px;
-        font-weight: bold;
-        line-height: 1.07;
-        letter-spacing: 0.5px;
-      }
-    }
-
-    .btn-wrapper {
-      display: flex;
-
-      button {
-        width: 205px;
-        height: 36px;
-        border-radius: 6px;
-        border: 1px solid $middleGreen;
-        outline: none;
-        font-size: 15px;
-        font-weight: 600;
-        letter-spacing: 1.4px;
-        cursor: pointer;
-      }
-
-      button.start-chat {
-        background: transparent;
-        color: $middleGreen;
-        border: 1px solid $middleGreen !important;
-        width: 105px;
-
-        &:hover {
-          color: $green;
-          border: 1px solid $green !important;
-        }
-
-        &:hover .img-bg {
-          background-image: url('../../../../assets/img/message-2.png');
-        }
-
-        &:active {
-          background: $middleGreen;
-          border: 1px solid $middleGreen !important;
-          color: white;
-        }
-
-        &:active .img-bg {
-          background-image: url('../../../../assets/img/message-3.png');
-        }
-
-        .img-bg {
-          padding-left: 35px;
-          margin-left: 10px;
-          background-image: url('../../../../assets/img/message.png');
-          background-size: contain;
+        .avatara {
+          width: 100%;
+          height: 100%;
           background-repeat: no-repeat;
+          background-position: center;
+          background-size: cover;
+          border-radius: 6px;
         }
-      }
 
-      button.invest {
-        margin-right: 7px;
-        background: $middleGreen;
-        color: white;
-
-        &:hover {
+        .rating {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          width: 60px;
+          height: 50px;
+          border-top-left-radius: 6px;
+          border-bottom-right-radius: 6px;
           background: $green;
-          border: 1px solid $green;
+          line-height: 47px;
+          text-align: center;
+          color: white;
+          font-size: 18px;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+        }
+      }
+
+      .wrapper-1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+
+        h5.project-name {
+          font-size: 24px;
+          font-weight: bold;
+          margin-bottom: 0px;
         }
 
-        &:active {
-          background: $darkGreen;
-          border-color: $green;
+        .company-name {
+          font-size: 18px;
+          margin-bottom: 15px;
         }
 
-        .big-font {
-          font-size: 20px;
-          padding-left: 10px;
+        .investment-sum {
+          .sum {
+            opacity: 0.95;
+            font-size: 13px;
+            line-height: 1.23;
+            letter-spacing: 0.4px;
+            color: $green;
+            margin-bottom: 10px;
+          }
+
+          .sum-value {
+            opacity: 0.95;
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 1.07;
+            letter-spacing: 0.5px;
+          }
+        }
+
+        .btn-wrapper {
+          display: flex;
+
+          button {
+            width: 205px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid $middleGreen;
+            outline: none;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            cursor: pointer;
+          }
+
+          button.start-chat {
+            background: transparent;
+            color: $middleGreen;
+            border: 1px solid $middleGreen !important;
+            width: 105px;
+
+            &:hover {
+              color: $green;
+              border: 1px solid $green !important;
+            }
+
+            &:hover .img-bg {
+              background-image: url('../../../../assets/img/message-2.png');
+            }
+
+            &:active {
+              background: $middleGreen;
+              border: 1px solid $middleGreen !important;
+              color: white;
+            }
+
+            &:active .img-bg {
+              background-image: url('../../../../assets/img/message-3.png');
+            }
+
+            .img-bg {
+              padding-left: 35px;
+              margin-left: 10px;
+              background-image: url('../../../../assets/img/message.png');
+              background-size: contain;
+              background-repeat: no-repeat;
+            }
+          }
+
+          button.invest {
+            margin-right: 7px;
+            background: $middleGreen;
+            color: white;
+
+            &:hover {
+              background: $green;
+              border: 1px solid $green;
+            }
+
+            &:active {
+              background: $darkGreen;
+              border-color: $green;
+            }
+
+            .big-font {
+              font-size: 20px;
+              padding-left: 10px;
+            }
+          }
+        }
+      }
+
+      .info-items-wrapper {
+        margin-top: 15px;
+
+        .info-item {
+          margin-bottom: 20px;
+
+          .name {
+            font-size: 12px;
+            letter-spacing: 0.4px;
+            color: $darkGreen;
+            margin-bottom: 5px;
+          }
+
+          .value {
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+          }
+        }
+      }
+
+      .project-info-menu {
+        border-bottom: 2px solid $green;
+        margin-top: 10px;
+
+        button {
+          font-size: 18px;
+          margin-right: 10px;
+          background: transparent;
+          border: none;
+          outline: none;
+          box-shadow: none;
+          border-bottom: 3px solid transparent;
+          cursor: pointer;
+          box-shadow: none !important;
+        }
+
+        .selectedMenuItem {
+          border-bottom: 3px solid $green;
+          font-weight: bold;
+          color: $green;
         }
       }
     }
-  }
 
-  .info-items-wrapper {
-    margin-top: 15px;
-
-    .info-item {
-      margin-bottom: 20px;
-
-      .name {
-        font-size: 12px;
-        letter-spacing: 0.4px;
-        color: $darkGreen;
-        margin-bottom: 5px;
-      }
-
-      .value {
-        font-size: 15px;
-        letter-spacing: 0.5px;
-        font-weight: 600;
-      }
-    }
-  }
-
-  .detail-project-info {
-    .project-info-menu {
-      border-bottom: 2px solid $green;
-      margin-top: 10px;
-
-      button {
-        font-size: 18px;
-        margin-right: 10px;
-        background: transparent;
-        border: none;
-        outline: none;
-        box-shadow: none;
-        border-bottom: 3px solid transparent;
-        cursor: pointer;
-        box-shadow: none !important;
-      }
-
-      .selectedMenuItem {
-        border-bottom: 3px solid $green;
-        font-weight: bold;
-        color: $green;
-      }
+    .no-selected,
+    .shared,
+    .gallery,
+    .documents,
+    .updates,
+    .comments {
+      height: 100%;
+      padding-left: 5px;
+      padding-right: 5px;
     }
 
     .no-selected {
@@ -329,6 +348,6 @@
     .comments {
       font-weight: normal;
     }
-  }
 
+  }
 }
