@@ -144,10 +144,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.showPreviewCard = true;
   }
 
-  onMapFinishInit() {
-    // todo 'load obj model after this log'
-  }
-
   onMapChangeExtent(extent) {
     if (this.prevSearch === 'filter') {
       // this.searchProjectsByFilter(this.filter);

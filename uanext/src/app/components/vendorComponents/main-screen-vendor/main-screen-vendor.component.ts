@@ -40,9 +40,4 @@ export class MainScreenVendorComponent implements OnInit {
 
   onMapObjectHover(mapObject: GeoObject) {
   }
-
-  onMapFinishInit() {
-    // todo 'load obj model after this log'
-  }
-
 }
