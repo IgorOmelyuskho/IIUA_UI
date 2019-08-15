@@ -36,7 +36,7 @@
     }
 
     .action-btn-wrapper {
-      .action-btn {
+      button {
         border-radius: 6px;
         margin-top: 10px;
         margin-bottom: 20px;
@@ -46,7 +46,6 @@
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23) !important;
         background-color: #ffffff;
         cursor: pointer;
-        min-width: 215px;
 
         &:hover {
           background-color: #ebf3df;
@@ -54,6 +53,20 @@
       }
 
       .action-btn-expanded {
+        background-color: $green !important;
+        color: white !important;
+      }
+
+      .my-projects-btn {
+        margin-left: 10px;
+
+        img {
+          height: 12px;
+          margin-left: 5px;
+        }
+      }
+
+      .only-my-projects {
         background-color: $green !important;
         color: white !important;
       }

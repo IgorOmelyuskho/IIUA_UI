@@ -279,7 +279,8 @@
         "createProject": "Создать проект"
     },
     "MainScreenVendorComponent": {
-        "quickAction": "Быстрые действия"
+        "quickAction": "Быстрые действия",
+        "onlyMyProjects": "Только мои проекты"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Обновите настройки вашего проекта",

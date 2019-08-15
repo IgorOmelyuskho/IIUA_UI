@@ -12,6 +12,7 @@ import { ProjectsService } from 'src/app/services/http/projects.service';
 export class MainScreenVendorComponent implements OnInit {
   self = 'MainScreenVendorComponent';
   actionIsExpanded = false;
+  onlyMyProjects = false;
   geoObjects: GeoObject[];
 
   constructor(private stateService: StateService, private projectsService: ProjectsService) { }
@@ -39,5 +40,9 @@ export class MainScreenVendorComponent implements OnInit {
   }
 
   onMapObjectHover(mapObject: GeoObject) {
+  }
+
+  onlyMyProjectsClick() {
+    this.onlyMyProjects = !this.onlyMyProjects;
   }
 }
