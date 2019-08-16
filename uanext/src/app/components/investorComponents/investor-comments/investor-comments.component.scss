@@ -46,6 +46,7 @@
         .their {
           width: 100%;
           display: flex;
+          flex-direction: column;
           justify-content: flex-start;
 
           .attachments {
@@ -53,7 +54,6 @@
               display: flex;
               justify-content: flex-start;
               margin-top: 5px;
-              margin-bottom: 5px;
 
               figure {
                 max-width: 60%;
@@ -74,18 +74,15 @@
               justify-content: flex-start;
               margin-top: 5px;
 
-              .video {
+              figure {
                 max-width: 60%;
-                display: flex;
-                justify-content: flex-start;
+                height: 150px;
+                margin: 0;
 
-                figure {
-                  margin: 0;
-
-                  video {
-                    max-width: 100%;
-                    max-height: 100%;
-                  }
+                video {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
                 }
               }
             }
@@ -122,81 +119,87 @@
             }
           }
 
-          .avatara-wrapper {
-            img {
-              width: 48px;
-              margin-right: 15px;
-              border-radius: 100px;
-            }
-          }
-
-          .right-part {
+          .content-wrapper {
             width: 100%;
-            overflow: hidden;
+            display: flex;
+            justify-content: flex-start;
 
-            .data-and-name {
-              display: flex;
-              justify-content: space-between;
-              margin-bottom: 5px;
-
-              .data {
-                font-size: 13px;
-                color: rgba(0, 0, 0, 0.8);
-              }
-
-              .name {
-                font-size: 13px;
-                font-weight: bold;
-                color: $green;
+            .avatara-wrapper {
+              img {
+                width: 48px;
+                margin-right: 15px;
+                border-radius: 100px;
               }
             }
 
-            .text {
-              font-size: 15px;
-              line-height: 1.4;
-              letter-spacing: 0.4px;
-              white-space: pre-wrap;
-              word-break: break-all;
-            }
+            .right-part {
+              width: 100%;
+              overflow: hidden;
 
-            .answer {
-              display: flex;
-              justify-content: space-between;
-              align-items: flex-end;
-              min-height: 32px;
-              margin-top: 16px;
-              margin-bottom: 16px;
-
-              .textarea-wrapper {
-                width: 100%;
-                border-radius: 6px;
-                border: solid 1px #dbdbdb;
-                padding-left: 8px;
-                padding-right: 8px;
+              .data-and-name {
                 display: flex;
-                min-height: 32px;
-                background: white;
+                justify-content: space-between;
+                margin-bottom: 5px;
 
-                textarea {
-                  width: 100%;
-                  resize: none;
-                  max-height: 150px;
-                  border: none;
+                .data {
+                  font-size: 13px;
+                  color: rgba(0, 0, 0, 0.8);
+                }
+
+                .name {
+                  font-size: 13px;
+                  font-weight: bold;
+                  color: $green;
                 }
               }
 
-              button {
-                color: white;
-                border-radius: 6px;
-                background-color: $green;
-                margin-left: 8px;
-                border: none;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: 1.2px;
-                cursor: pointer;
-                min-width: 100px;
+              .text {
+                font-size: 15px;
+                line-height: 1.4;
+                letter-spacing: 0.4px;
+                white-space: pre-wrap;
+                word-break: break-all;
+              }
+
+              .answer {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
                 min-height: 32px;
+                margin-top: 16px;
+                margin-bottom: 16px;
+
+                .textarea-wrapper {
+                  width: 100%;
+                  border-radius: 6px;
+                  border: solid 1px #dbdbdb;
+                  padding-left: 8px;
+                  padding-right: 8px;
+                  display: flex;
+                  min-height: 32px;
+                  background: white;
+
+                  textarea {
+                    width: 100%;
+                    resize: none;
+                    max-height: 150px;
+                    border: none;
+                  }
+                }
+
+                button {
+                  color: white;
+                  border-radius: 6px;
+                  background-color: $green;
+                  margin-left: 8px;
+                  border: none;
+                  font-size: 12px;
+                  font-weight: 600;
+                  letter-spacing: 1.2px;
+                  cursor: pointer;
+                  min-width: 100px;
+                  min-height: 32px;
+                }
               }
             }
           }
@@ -213,7 +216,6 @@
               display: flex;
               justify-content: flex-end;
               margin-top: 5px;
-              margin-bottom: 5px;
 
               figure {
                 max-width: 60%;
@@ -234,18 +236,15 @@
               justify-content: flex-end;
               margin-top: 5px;
 
-              .video {
+              figure {
                 max-width: 60%;
-                display: flex;
-                justify-content: flex-end;
+                height: 150px;
+                margin: 0;
 
-                figure {
-                  margin: 0;
-
-                  video {
-                    max-width: 100%;
-                    max-height: 100%;
-                  }
+                video {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
                 }
               }
             }

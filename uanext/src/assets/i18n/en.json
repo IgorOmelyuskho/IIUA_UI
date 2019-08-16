@@ -124,7 +124,8 @@
         "reply2": "Reply • ",
         "investor": "Investor",
         "leaveComment": "Leave your comment",
-        "newMessage": "New message arrived"
+        "newMessage": "New message arrived",
+        "download": "Download"
     },
     "InvestorFilterPageComponent": {
         "findProject": "Find a project or company by keywords",

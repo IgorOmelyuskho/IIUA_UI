@@ -140,12 +140,12 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   messageIsYou(message: Message): boolean {
-    return true;
-    // if (message.userId === this.selfUserId) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    // return false;
+    if (message.userId === this.selfUserId) {
+      return true;
+    } else {
+      return false;
+    }
     // if (Math.random() > 0.5) {
     //   return true;
     // } else {

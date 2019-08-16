@@ -73,22 +73,22 @@ export class ChatService {
 
 
   createMessage(message: Message): Observable<Message> {
-    // return this.http.post<any>(environment.chat + environment.createMessage, message)
-    // .pipe(
-    //   map((msg: Message) => {
-    //     msg.createdDate = new Date(msg.createdDate); // not remove
-    //     return msg;
-    //   })
-    // );
+    return this.http.post<any>(environment.chat + environment.createMessage, message)
+    .pipe(
+      map((msg: Message) => {
+        msg.createdDate = new Date(msg.createdDate); // not remove
+        return msg;
+      })
+    );
 
-    return of({ ...message }) // todo remove
-      .pipe(
-        map((msg: Message) => {
-          msg.createdDate = new Date();
-          return msg;
-        }),
-        delay(1000)
-      );
+    // return of({ ...message }) // todo remove
+    //   .pipe(
+    //     map((msg: Message) => {
+    //       msg.createdDate = new Date();
+    //       return msg;
+    //     }),
+    //     delay(1000)
+    //   );
   }
 
   updateMessage(messageId: string, updatedMessage: Message): Observable<any> {

@@ -124,7 +124,8 @@
         "reply2": "Ответить •",
         "investor": "Инвестор",
         "leaveComment": "Оставьте свой комментарий",
-        "newMessage": "Пришло новое сообщение"
+        "newMessage": "Пришло новое сообщение",
+        "download": "Скачать"
     },
     "InvestorFilterPageComponent": {
         "findProject": "Найти проект или компанию по ключевым словам",

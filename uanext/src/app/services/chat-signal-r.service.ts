@@ -69,11 +69,14 @@ export class ChatSignalRService {
       text: message.Text,
       conversationId: message.ConversationId,
       participantId: message.ParticipantId,
-      userId: message.UserId || 'userId todo remove', // todo remove
+      userId: message.UserId,
       attachmentId: message.AttachmentId,
       attachmentUrl: message.AttachmentUrl,
       attachmentOriginalName: message.AttachmentOriginalName,
-      createdDate: new Date(message.CreatedDate)
+      createdDate: new Date(message.CreatedDate),
+      creator: message.Creator,
+      lastUpdatedDate: message.LastUpdatedDate,
+      leaveDate: message.LeaveDate
     };
     return newMessage;
   }

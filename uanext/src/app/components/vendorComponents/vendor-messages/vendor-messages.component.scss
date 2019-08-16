@@ -53,18 +53,15 @@
             justify-content: flex-end;
             margin-top: 5px;
 
-            .video {
+            figure {
               max-width: 60%;
-              display: flex;
-              justify-content: flex-end;
+              height: 150px;
+              margin: 0;
 
-              figure {
-                margin: 0;
-
-                video {
-                  max-width: 100%;
-                  max-height: 100%;
-                }
+              video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
               }
             }
           }
@@ -161,18 +158,15 @@
             justify-content: flex-start;
             margin-top: 5px;
 
-            .video {
+            figure {
               max-width: 60%;
-              display: flex;
-              justify-content: flex-start;
+              height: 150px;
+              margin: 0;
 
-              figure {
-                margin: 0;
-
-                video {
-                  max-width: 100%;
-                  max-height: 100%;
-                }
+              video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
               }
             }
           }

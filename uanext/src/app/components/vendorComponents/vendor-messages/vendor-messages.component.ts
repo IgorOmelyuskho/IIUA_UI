@@ -59,12 +59,13 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   messageIsYou(message: Message): boolean {
+    return false;
     // if (message.userId === this.selfUserId) {
-    if (Math.random() > 0.5) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (Math.random() > 0.5) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 
   ngAfterViewInit() {
@@ -115,7 +116,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.chatService.createMessage(message).subscribe(
       (msg: Message) => {
         console.log(msg);
-        msg.isYou = true;
+        msg.isYou = this.messageIsYou(msg);
         this.messages.push(msg);
         this.chatService.sortMessages(this.messages);
         requestAnimationFrame(() => {

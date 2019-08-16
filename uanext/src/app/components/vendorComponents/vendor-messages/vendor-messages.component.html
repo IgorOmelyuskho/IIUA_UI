@@ -15,13 +15,11 @@
             </figure>
           </div>
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'video'" class="video-wrapper">
-            <div class="video">
-              <figure>
-                <video controls>
-                  <source src={{message.attachmentUrl}}>
-                </video>
-              </figure>
-            </div>
+            <figure>
+              <video controls>
+                <source src={{message.attachmentUrl}}>
+              </video>
+            </figure>
           </div>
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'file'" class="file-wrapper">
             <div class="file">
@@ -50,13 +48,11 @@
             </figure>
           </div>
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'video'" class="video-wrapper">
-            <div class="video">
-              <figure>
-                <video controls>
-                  <source src={{message.attachmentUrl}}>
-                </video>
-              </figure>
-            </div>
+            <figure>
+              <video controls>
+                <source src={{message.attachmentUrl}}>
+              </video>
+            </figure>
           </div>
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'file'" class="file-wrapper">
             <div class="file">
