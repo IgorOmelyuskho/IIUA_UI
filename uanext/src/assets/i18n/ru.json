@@ -123,7 +123,8 @@
         "replyBtn": "Ответить",
         "reply2": "Ответить •",
         "investor": "Инвестор",
-        "leaveComment": "Оставьте свой комментарий"
+        "leaveComment": "Оставьте свой комментарий",
+        "newMessage": "Пришло новое сообщение"
     },
     "InvestorFilterPageComponent": {
         "findProject": "Найти проект или компанию по ключевым словам",

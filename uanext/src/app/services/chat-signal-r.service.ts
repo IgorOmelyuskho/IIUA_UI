@@ -3,20 +3,21 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { environment } from 'src/environments/environment';
 import { Message } from '../models/chat/message';
 import { testMessagePhoto } from '../helperClasses/messages';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatSignalRService {
   private hubConnection: HubConnection;
-  receiveMessageCallback: Function;
   private timeOut1: any;
   private counter = 0; // todo remove
+  $InvestorCommentsComponent: ReplaySubject<Message> = new ReplaySubject(1);
 
   constructor() { }
 
-  signalRConnect(cb: Function) { // todo dispose
-    this.receiveMessageCallback = cb;
+  signalRConnect() {
     // this.emulateSignalR();
     const token = localStorage.getItem('token');
     this.hubConnection = new HubConnectionBuilder()
@@ -27,38 +28,53 @@ export class ChatSignalRService {
         })
       .build();
 
-    this.hubConnection.on('MessageSBEvent', function (message) {
-      console.log(message);
-      if (this.receiveMessageCallback != null) {
-        this.receiveMessageCallback(message);
+    this.hubConnection.on('MessageSBEvent', (message) => {
+      try {
+        const parsedMessage = JSON.parse(message);
+        const replacedFields = this.replaceFieldsName(parsedMessage);
+        this.$InvestorCommentsComponent.next(replacedFields);
+      } catch (err) {
+        console.warn(err);
       }
     });
 
-    // todo remove ?
     this.hubConnection.start()
-      .then(function () {
-        console.log('chat SignalRConnect START');
+      .then(() => {
+        console.log('chat SignalRConnect');
       })
-      .catch(function (err) {
-        console.error(err.toString());
+      .catch((err) => {
+        console.warn(err.toString());
         return;
       });
   }
 
-  signalRDisconnect() {
-    this.hubConnection.stop();
-    clearInterval(this.timeOut1);
-  }
+  // signalRDisconnect() { // not use in child component - use in main component ?
+  //   this.hubConnection.stop();
+  //   clearInterval(this.timeOut1);
+  // }
 
-  emulateSignalR() {
+  private emulateSignalR() {
     this.timeOut1 = setInterval(() => {
       this.counter++;
-      const message: Message = {...testMessagePhoto};
+      const message: Message = { ...testMessagePhoto };
       message.createdDate = new Date();
       message.text = this.counter.toString() + message.text;
-      if (this.receiveMessageCallback != null) {
-        this.receiveMessageCallback(message);
-      }
+      this.$InvestorCommentsComponent.next(message);
     }, 3500);
+  }
+
+  private replaceFieldsName(message: any): Message {
+    const newMessage = {
+      id: message.Id,
+      text: message.Text,
+      conversationId: message.ConversationId,
+      participantId: message.ParticipantId,
+      userId: message.UserId || 'userId todo remove', // todo remove
+      attachmentId: message.AttachmentId,
+      attachmentUrl: message.AttachmentUrl,
+      attachmentOriginalName: message.AttachmentOriginalName,
+      createdDate: new Date(message.CreatedDate)
+    };
+    return newMessage;
   }
 }

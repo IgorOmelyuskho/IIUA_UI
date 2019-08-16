@@ -59,7 +59,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   messageIsYou(message: Message): boolean {
-    // if (message.participantId === selfUserId)
+    // if (message.userId === this.selfUserId) {
     if (Math.random() > 0.5) {
       return true;
     } else {
@@ -79,6 +79,14 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     return this.fileService.defineFileType(originalFileName);
   }
 
+  hasAttachment(message: Message): boolean {
+    if (message.attachmentId == null || message.attachmentUrl == null || message.attachmentOriginalName == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   sendMessage() {
     if (this.attachmentReady === false) {
       return;
@@ -94,7 +102,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     const message: Message = {
       text: this.textFromInput,
       conversationId: 'string',
-      participantId: 'string',
+      userId: this.stateService.userId(),
       attachmentId: this.attachmentData.id,
       attachmentUrl: this.attachmentData.url,
       attachmentOriginalName: this.attachmentData.originalName,
@@ -145,7 +153,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.attachmentReady = false;
     this.uploadFilesSubscribe = this.fileService.uploadFiles(formData).subscribe(
       (val: FileResponseDto[]) => {
-        console.log(val);
         this.attachmentData = val[0];
         this.attachmentReady = true;
       },

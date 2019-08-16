@@ -10,6 +10,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
 export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
   _selectedProject: VendorProject;
   self = 'MainScreenProjectCardComponent';
+  public reset: any[] = [{}]; // use for reinit child components
 
   @ViewChild('projectCard') projectCard: ElementRef;
 
@@ -17,6 +18,7 @@ export class MainScreenProjectCardComponent implements OnInit, AfterViewInit {
   set selectedProject(selectedProject: VendorProject) {
     if (selectedProject != null) {
       this._selectedProject = selectedProject;
+      this.reset[0] = {};
       requestAnimationFrame(() => {
         this.projectCard.nativeElement.style.display = '';
       });

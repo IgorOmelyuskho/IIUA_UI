@@ -46,7 +46,7 @@ export class SignalRService {
 
   constructor() { }
 
-  signalRConnect(cb: Function) { // todo dispose
+  signalRConnect(cb: Function) {
     this.receiveMessageCallback = cb;
     this.emulateSignalR();
     // const token = localStorage.getItem('token');
@@ -58,19 +58,18 @@ export class SignalRService {
     //     })
     //   .build();
 
-    // this.hubConnection.on('HistoryPositionSBEvent', function (message) {
-    // //   // console.log(message);
+    // this.hubConnection.on('HistoryPositionSBEvent', (message) => {
+    // //   // console.log(JSON.parse(message));
     // //   // if (this.receiveMessageCallback != null) {
-    // //   //   this.receiveMessageCallback(message);
+    // //   //   this.receiveMessageCallback(JSON.parse(message));
     // //   // }
     // // });
 
-    // // todo remove ?
     // this.hubConnection.start()
-    //   .then(function () {
-    //     console.log('START');
+    //   .then(() => {
+    //     console.log('coordinates SignalRConnect');
     //   })
-    //   .catch(function (err) {
+    //   .catch((err) => {
     //     console.error(err.toString());
     //     return;
     //   });

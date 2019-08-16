@@ -123,7 +123,8 @@
         "replyBtn": "Reply",
         "reply2": "Reply • ",
         "investor": "Investor",
-        "leaveComment": "Leave your comment"
+        "leaveComment": "Leave your comment",
+        "newMessage": "New message arrived"
     },
     "InvestorFilterPageComponent": {
         "findProject": "Find a project or company by keywords",

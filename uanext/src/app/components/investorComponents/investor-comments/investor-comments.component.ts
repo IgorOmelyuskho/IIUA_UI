@@ -16,7 +16,13 @@ import { FilesService } from 'src/app/services/http/files.service';
   styleUrls: ['./investor-comments.component.scss']
 })
 export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() project: VendorProject;
+  @Input()
+  set setProject(project: VendorProject) {
+    if (project != null) {
+      this.project = project;
+    }
+  }
+  project: VendorProject;
   @ViewChild('messagesElem') messagesElement: ElementRef;
   self = 'InvestorCommentsComponent';
   textareaSelector1 = '.send-comment .textarea-wrapper textarea';
@@ -30,15 +36,23 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   previewAttachment: any;
   attachmentReady = true;
   selfUserId: string;
+  newMsgCame = false;
+  subscription: Subscription;
 
   constructor(private chatService: ChatService, private stateService: StateService, private chatSignalR: ChatSignalRService, private fileService: FilesService) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngAfterViewInit() {
+    console.log(this.project);
     this.selfUserId = this.stateService.userId();
 
-    this.chatSignalR.signalRConnect(this.onSignalRMessage);
+    this.subscription = this.chatSignalR.$InvestorCommentsComponent.subscribe(
+      (message: Message) => {
+        this.onSignalRMessage(message);
+      }
+    );
 
-    console.log(this.project);
     requestAnimationFrame(() => {
       autosize(document.querySelector(this.textareaSelector1));
       autosize(document.querySelectorAll(this.textareaSelector2));
@@ -54,21 +68,47 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
         console.warn(err);
       }
     );
+    this.scrollToBottom();
+
+
+    this.messagesElement.nativeElement.addEventListener('scroll', this.scrollHandler);
   }
 
-  ngAfterViewInit() {
-    this.scrollToBottom(this.messagesElement.nativeElement);
+  scrollHandler = (event) => {
+    if (this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight >= this.messagesElement.nativeElement.scrollHeight) {
+      this.newMsgCame = false;
+    }
   }
 
   onSignalRMessage = (message: Message) => {
+    console.log(message);
     message.isYou = this.messageIsYou(message);
     this.messages.push(message);
     this.chatService.sortMessages(this.messages);
-    console.log(message);
+
+    this.sharedChatMsgText = '';
+    this.attachmentData = {};
+    this.previewAttachment = null;
+    this.chatService.sortMessages(this.messages);
+    if (this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight < this.messagesElement.nativeElement.scrollHeight) {
+      this.newMsgCame = true;
+    } else {
+      requestAnimationFrame(() => {
+        this.scrollToBottom();
+      });
+    }
+    requestAnimationFrame(() => {
+      autosize.update(document.querySelector(this.textareaSelector1));
+    });
   }
 
-  scrollToBottom(element: HTMLElement) {
-    element.scrollTop = element.scrollHeight;
+  scrollToBottom() {
+    this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
+  }
+
+  newMsgCameBtnClick() {
+    this.newMsgCame = false;
+    this.scrollToBottom();
   }
 
   getMessagesByChatIdSubscribe(observable: Observable<any>, initial: boolean) {
@@ -76,7 +116,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     observable.subscribe(
       (messages: Message[]) => {
         requestAnimationFrame(() => {
-          autosize.destroy(document.querySelectorAll(this.textareaSelector2));
+          autosize.destroy(document.querySelectorAll(this.textareaSelector2)); // update not work
           autosize(document.querySelectorAll(this.textareaSelector2));
         });
         for (let i = 0; i < messages.length; i++) {
@@ -88,7 +128,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
         this.messagesLoading = false;
         if (initial === true) {
           requestAnimationFrame(() => {
-            this.scrollToBottom(this.messagesElement.nativeElement);
+            this.scrollToBottom();
           });
         }
       },
@@ -100,16 +140,17 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   messageIsYou(message: Message): boolean {
-    // if (message.participantId === this.selfUserId) {
+    return true;
+    // if (message.userId === this.selfUserId) {
     //   return true;
     // } else {
     //   return false;
     // }
-    if (Math.random() > 0.5) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (Math.random() > 0.5) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 
   handleAttachmentChange(event) {
@@ -136,7 +177,6 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     this.attachmentReady = false;
     this.uploadFilesSubscribe = this.fileService.uploadFiles(formData).subscribe(
       (val: FileResponseDto[]) => {
-        console.log(val);
         this.attachmentData = val[0];
         this.attachmentReady = true;
       },
@@ -157,11 +197,19 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onScrollUp() {
-    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), false);
+    // this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), false); // get not all messages
   }
 
   defineFileType(originalFileName: string) {
     return this.fileService.defineFileType(originalFileName);
+  }
+
+  hasAttachment(message: Message): boolean {
+    if (message.attachmentId == null || message.attachmentUrl == null || message.attachmentOriginalName == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   sendMessageToSharedChat() {
@@ -175,25 +223,15 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     const message: Message = {
       text: this.sharedChatMsgText,
       conversationId: this.chat.id,
-      participantId: this.stateService.userId(),
-      attachmentId: null,
-      attachmentUrl: null,
-      attachmentOriginalName: null,
+      userId: this.stateService.userId(),
+      participantId: 'participantId ?????',
+      attachmentId: this.attachmentData.id,
+      attachmentUrl: this.attachmentData.url,
+      attachmentOriginalName: this.attachmentData.originalName,
     };
 
     this.chatService.createMessage(message).subscribe(
-      (msg: Message) => {
-        this.messages.push(msg);
-        console.log(this.messages);
-        this.sharedChatMsgText = '';
-        this.attachmentData = {};
-        this.previewAttachment = null;
-        this.chatService.sortMessages(this.messages);
-        requestAnimationFrame(() => {
-          autosize.update(document.querySelector(this.textareaSelector1));
-          this.scrollToBottom(this.messagesElement.nativeElement);
-        });
-      },
+      (msg: Message) => { },
       err => {
         console.warn(err);
       }
@@ -201,9 +239,10 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnDestroy() {
+    this.messagesElement.nativeElement.removeEventListener('scroll', this.scrollHandler);
     autosize.destroy(document.querySelector(this.textareaSelector1));
     autosize.destroy(document.querySelectorAll(this.textareaSelector2));
-    this.chatSignalR.signalRDisconnect();
+    this.subscription.unsubscribe();
     if (this.uploadFilesSubscribe != null) {
       this.uploadFilesSubscribe.unsubscribe();
     }

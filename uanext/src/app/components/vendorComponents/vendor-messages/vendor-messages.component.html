@@ -8,7 +8,7 @@
     <div *ngFor="let message of messages" class="message">
 
       <div *ngIf="message.isYou === true" class="you">
-        <div class="attachments">
+        <div *ngIf="hasAttachment(message)" class="attachments">
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'image'" class="img-wrapper">
             <figure>
               <img src={{message.attachmentUrl}} alt="">
@@ -43,7 +43,7 @@
       </div>
 
       <div *ngIf="message.isYou === false || message.isYou == null" class="their">
-        <div class="attachments">
+        <div *ngIf="hasAttachment(message)" class="attachments">
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'image'" class="img-wrapper">
             <figure>
               <img src={{message.attachmentUrl}} alt="">
