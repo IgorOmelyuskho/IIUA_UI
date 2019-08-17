@@ -10,5 +10,6 @@ export interface AdminRole {
   lastEdited?: string;
   userRole?: UserRole;
   id?: string;
+  userId?: string;
   isSocial?: boolean;
 }

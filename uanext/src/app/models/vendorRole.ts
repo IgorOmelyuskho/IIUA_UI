@@ -12,5 +12,6 @@ export interface VendorRole {
   itnVerified?: boolean;
   userRole?: UserRole;
   id?: string;
+  userId?: string;
   isSocial?: boolean;
 }

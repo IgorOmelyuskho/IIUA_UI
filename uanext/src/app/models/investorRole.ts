@@ -12,5 +12,6 @@ export interface InvestorRole {
   lastEdited?: string;
   userRole?: UserRole;
   id?: string;
+  userId?: string;
   isSocial: boolean;
 }

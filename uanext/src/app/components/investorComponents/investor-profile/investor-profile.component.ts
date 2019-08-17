@@ -91,7 +91,7 @@ export class InvestorProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    const id = this.stateService.userId();
+    const id = this.stateService.getId();
 
     if (this.editProfileForm.valid === false || id == null) {
       return;
