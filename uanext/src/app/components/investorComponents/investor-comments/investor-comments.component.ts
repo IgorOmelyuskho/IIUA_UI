@@ -37,7 +37,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   attachmentReady = true;
   selfUserId: string;
   newMsgCame = false;
-  subscription: Subscription;
+  signalRSubscription: Subscription;
 
   constructor(private chatService: ChatService, private stateService: StateService, private chatSignalR: ChatSignalRService, private fileService: FilesService) { }
 
@@ -47,7 +47,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     console.log(this.project);
     this.selfUserId = this.stateService.userId();
 
-    this.subscription = this.chatSignalR.$InvestorCommentsComponent.subscribe(
+    this.signalRSubscription = this.chatSignalR.InvestorCommentsComponent$.subscribe(
       (message: Message) => {
         this.onSignalRMessage(message);
       }
@@ -68,9 +68,8 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
         console.warn(err);
       }
     );
+
     this.scrollToBottom();
-
-
     this.messagesElement.nativeElement.addEventListener('scroll', this.scrollHandler);
   }
 
@@ -81,8 +80,17 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onSignalRMessage = (message: Message) => {
+    if (message.conversationId !== this.chat.id) {
+      return;
+    }
     console.log(message);
     message.isYou = this.messageIsYou(message);
+    console.log(this.stateService.user$.getValue().id);
+    console.log(this.stateService.userId());
+    console.log(this.selfUserId);
+    console.log(message.userId);
+    console.log(message.isYou);
+    console.log(' ');
     this.messages.push(message);
     this.chatService.sortMessages(this.messages);
 
@@ -90,7 +98,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     this.attachmentData = {};
     this.previewAttachment = null;
     this.chatService.sortMessages(this.messages);
-    if (this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight < this.messagesElement.nativeElement.scrollHeight) {
+    if (message.isYou === false && this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight < this.messagesElement.nativeElement.scrollHeight) {
       this.newMsgCame = true;
     } else {
       requestAnimationFrame(() => {
@@ -119,6 +127,12 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
           autosize.destroy(document.querySelectorAll(this.textareaSelector2)); // update not work
           autosize(document.querySelectorAll(this.textareaSelector2));
         });
+        if (initial === true) {
+          this.messages = [];
+          requestAnimationFrame(() => {
+            this.scrollToBottom();
+          });
+        }
         for (let i = 0; i < messages.length; i++) {
           messages[i].isYou = this.messageIsYou(messages[i]);
           this.messages.push(messages[i]);
@@ -126,11 +140,6 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
         }
         console.log(this.messages);
         this.messagesLoading = false;
-        if (initial === true) {
-          requestAnimationFrame(() => {
-            this.scrollToBottom();
-          });
-        }
       },
       err => {
         console.warn(err);
@@ -140,7 +149,6 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   messageIsYou(message: Message): boolean {
-    // return false;
     if (message.userId === this.selfUserId) {
       return true;
     } else {
@@ -224,14 +232,13 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
       text: this.sharedChatMsgText,
       conversationId: this.chat.id,
       userId: this.stateService.userId(),
-      participantId: 'participantId ?????',
       attachmentId: this.attachmentData.id,
       attachmentUrl: this.attachmentData.url,
       attachmentOriginalName: this.attachmentData.originalName,
     };
 
     this.chatService.createMessage(message).subscribe(
-      (msg: Message) => { },
+      (msg: Message) => {},
       err => {
         console.warn(err);
       }
@@ -242,7 +249,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     this.messagesElement.nativeElement.removeEventListener('scroll', this.scrollHandler);
     autosize.destroy(document.querySelector(this.textareaSelector1));
     autosize.destroy(document.querySelectorAll(this.textareaSelector2));
-    this.subscription.unsubscribe();
+    this.signalRSubscription.unsubscribe();
     if (this.uploadFilesSubscribe != null) {
       this.uploadFilesSubscribe.unsubscribe();
     }

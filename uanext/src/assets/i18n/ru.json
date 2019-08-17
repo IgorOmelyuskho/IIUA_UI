@@ -356,8 +356,8 @@
     "VendorFindInvestorComponent": {
         "findPlaceholder": "Найти проект или инвестора",
         "all": "Все",
-        "investor": "Инвестор",
-        "vendor": "Вендор"
+        "group": "Групповые",
+        "single": "Одиночные"
     },
     "VendorInvestmentOfferComponent": {
         "investmentOffer": "Предложение инвестиций",
@@ -377,7 +377,8 @@
     "VendorMessagesComponent": {
         "communication": "Общение",
         "message": "Сообщение",
-        "download": "Скачать"
+        "download": "Скачать",
+        "newMessage": "Пришло новое сообщение"
     },
     "VendorNavbarComponent": {
         "home": "Домой",

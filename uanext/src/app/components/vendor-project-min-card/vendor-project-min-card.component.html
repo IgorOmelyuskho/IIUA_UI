@@ -1,5 +1,5 @@
-<div class="project-wrapper">
-  <div class="project">
+<div (click)="projectWrapperClick(project)" class="project-wrapper">
+  <div [ngClass]="{'select': isSelect === true}" class="project">
     <div class="red-circle"></div>
     <div class="avatara-wrapper">
       <div class="avatara" [ngStyle]="{ 'background-image': getAvataraUrl(project) }"></div>

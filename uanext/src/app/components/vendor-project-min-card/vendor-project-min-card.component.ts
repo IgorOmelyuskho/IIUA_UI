@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 
 @Component({
@@ -8,6 +8,8 @@ import { VendorProject } from 'src/app/models/vendorProject';
 })
 export class VendorProjectMinCardComponent implements OnInit {
   @Input() project: VendorProject;
+  @Input() isSelect: boolean;
+  @Output() selectEvent = new EventEmitter<VendorProject>();
 
   constructor() { }
 
@@ -17,6 +19,10 @@ export class VendorProjectMinCardComponent implements OnInit {
   getAvataraUrl(project) {
     const url = project.avatara.url;
     return 'url("' + url + '")';
+  }
+
+  projectWrapperClick(project: VendorProject) {
+    this.selectEvent.emit(project);
   }
 
 }

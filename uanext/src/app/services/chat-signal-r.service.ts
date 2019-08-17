@@ -13,7 +13,8 @@ export class ChatSignalRService {
   private hubConnection: HubConnection;
   private timeOut1: any;
   private counter = 0; // todo remove
-  $InvestorCommentsComponent: ReplaySubject<Message> = new ReplaySubject(1);
+  InvestorCommentsComponent$: ReplaySubject<Message> = new ReplaySubject(1);
+  VendorMessagesComponent$: ReplaySubject<Message> = new ReplaySubject(1);
 
   constructor() { }
 
@@ -29,13 +30,10 @@ export class ChatSignalRService {
       .build();
 
     this.hubConnection.on('MessageSBEvent', (message) => {
-      try {
-        const parsedMessage = JSON.parse(message);
-        const replacedFields = this.replaceFieldsName(parsedMessage);
-        this.$InvestorCommentsComponent.next(replacedFields);
-      } catch (err) {
-        console.warn(err);
-      }
+      const parsedMessage = JSON.parse(message);
+      const replacedFields = this.replaceFieldsName(parsedMessage);
+      this.InvestorCommentsComponent$.next(replacedFields);
+      this.VendorMessagesComponent$.next(replacedFields);
     });
 
     this.hubConnection.start()
@@ -59,7 +57,8 @@ export class ChatSignalRService {
       const message: Message = { ...testMessagePhoto };
       message.createdDate = new Date();
       message.text = this.counter.toString() + message.text;
-      this.$InvestorCommentsComponent.next(message);
+      this.InvestorCommentsComponent$.next(message);
+      this.VendorMessagesComponent$.next(message);
     }, 3500);
   }
 

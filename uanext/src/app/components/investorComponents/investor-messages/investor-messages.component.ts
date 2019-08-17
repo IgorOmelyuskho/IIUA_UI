@@ -76,7 +76,6 @@ export class InvestorMessagesComponent implements OnInit {
   }
 
   getImageUrl(url) {
-    // const url = project.avatara.url;
     return 'url("' + url + '")';
   }
 

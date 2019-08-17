@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, Input } from '@angular/core';
 import { ChatService } from 'src/app/services/http/chat.service';
 import { Message } from 'src/app/models/chat/message';
 import { FilesService } from 'src/app/services/http/files.service';
@@ -6,6 +6,9 @@ import { StateService } from 'src/app/services/state/state.service';
 import { Observable, Subscription } from 'rxjs';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import * as autosize from 'autosize';
+import { VendorProject } from 'src/app/models/vendorProject';
+import { Chat } from 'src/app/models/chat/chat';
+import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';
 
 @Component({
   selector: 'app-vendor-messages',
@@ -15,6 +18,7 @@ import * as autosize from 'autosize';
 export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy {
   self = 'VendorMessagesComponent';
   @ViewChild('messagesElem') messagesElement: ElementRef;
+  project: VendorProject;
   textFromInput: string;
   selfUserId: string;
   chatParticipantAvatara = 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png'; // todo get avatara from user id ?
@@ -25,31 +29,110 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   attachmentReady = true;
   uploadFilesSubscribe: Subscription;
   textareaSelector = '.bottom-wrapper .textarea-wrapper textarea';
+  projectSubscription: Subscription;
+  signalRSubscription: Subscription;
+  chat: Chat;
+  newMsgCame = false;
 
-  constructor(private chatService: ChatService, private fileService: FilesService, private stateService: StateService) { }
+  constructor(private chatService: ChatService, private fileService: FilesService, private stateService: StateService, private chatSignalR: ChatSignalRService) { }
 
-  ngOnInit() {
-    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), true);
+  ngOnInit() { }
+
+  ngAfterViewInit() {
     autosize(document.querySelector(this.textareaSelector));
     this.selfUserId = this.stateService.userId();
+
+    this.projectSubscription = this.stateService.selectedProjectForChat$.subscribe(
+      (project: VendorProject) => {
+        if (project != null) {
+          this.project = project;
+          this.getChatByProjectIdSubscribe(this.project.id);
+        }
+      }
+    );
+
+    this.signalRSubscription = this.chatSignalR.VendorMessagesComponent$.subscribe(
+      (message: Message) => {
+        this.onSignalRMessage(message);
+      }
+    );
+
+    this.scrollToBottom();
+    this.messagesElement.nativeElement.addEventListener('scroll', this.scrollHandler);
   }
 
-  getMessagesByChatIdSubscribe(observable: Observable<Message[]>, initial: boolean) {
+  onSignalRMessage = (message: Message) => {
+    if (message.conversationId !== this.chat.id) {
+      return;
+    }
+    console.log(message);
+    message.isYou = this.messageIsYou(message);
+    console.log(message.isYou);
+    this.messages.push(message);
+    this.chatService.sortMessages(this.messages);
+
+    this.attachmentData = {};
+    this.previewAttachment = null;
+    this.textFromInput = '';
+
+    this.chatService.sortMessages(this.messages);
+    if (message.isYou === false && this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight < this.messagesElement.nativeElement.scrollHeight) {
+      this.newMsgCame = true;
+    } else {
+      requestAnimationFrame(() => {
+        this.scrollToBottom();
+      });
+    }
+    requestAnimationFrame(() => {
+      autosize.update(document.querySelector(this.textareaSelector));
+    });
+  }
+
+  scrollHandler = (event) => {
+    if (this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight >= this.messagesElement.nativeElement.scrollHeight) {
+      this.newMsgCame = false;
+    }
+  }
+
+  newMsgCameBtnClick() {
+    this.newMsgCame = false;
+    this.scrollToBottom();
+  }
+
+  getChatByProjectIdSubscribe(projectId: number) {
+    this.chatService.getChatBProjectId(projectId).subscribe(
+      (chat: Chat) => {
+        this.chat = chat;
+        console.log(this.chat);
+        this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), true);
+      },
+      err => {
+        console.warn(err);
+      }
+    );
+  }
+
+  getMessagesByChatIdSubscribe(observable: Observable<any>, initial: boolean) {
     this.messagesLoading = true;
     observable.subscribe(
       (messages: Message[]) => {
+        requestAnimationFrame(() => {
+          autosize.destroy(document.querySelectorAll(this.textareaSelector)); // update not work
+          autosize(document.querySelectorAll(this.textareaSelector));
+        });
+        if (initial === true) {
+          this.messages = [];
+          requestAnimationFrame(() => {
+            this.scrollToBottom();
+          });
+        }
         for (let i = 0; i < messages.length; i++) {
           messages[i].isYou = this.messageIsYou(messages[i]);
           this.messages.push(messages[i]);
           this.chatService.sortMessages(this.messages);
         }
-        console.log(messages);
+        console.log(this.messages);
         this.messagesLoading = false;
-        if (initial === true) {
-          requestAnimationFrame(() => {
-            this.scrollToBottom(this.messagesElement.nativeElement);
-          });
-        }
       },
       err => {
         console.warn(err);
@@ -59,8 +142,12 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   messageIsYou(message: Message): boolean {
-    return false;
-    // if (message.userId === this.selfUserId) {
+    // return false;
+    if (message.userId === this.selfUserId) {
+      return true;
+    } else {
+      return false;
+    }
     // if (Math.random() > 0.5) {
     //   return true;
     // } else {
@@ -68,12 +155,8 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     // }
   }
 
-  ngAfterViewInit() {
-    this.scrollToBottom(this.messagesElement.nativeElement);
-  }
-
-  scrollToBottom(element: HTMLElement) {
-    element.scrollTop = element.scrollHeight;
+  scrollToBottom() {
+    this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
   }
 
   defineFileType(originalFileName: string) {
@@ -102,28 +185,15 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
 
     const message: Message = {
       text: this.textFromInput,
-      conversationId: 'string',
+      conversationId: this.chat.id,
       userId: this.stateService.userId(),
       attachmentId: this.attachmentData.id,
       attachmentUrl: this.attachmentData.url,
       attachmentOriginalName: this.attachmentData.originalName,
     };
 
-    this.attachmentData = {};
-    this.previewAttachment = null;
-    this.textFromInput = '';
-
     this.chatService.createMessage(message).subscribe(
-      (msg: Message) => {
-        console.log(msg);
-        msg.isYou = this.messageIsYou(msg);
-        this.messages.push(msg);
-        this.chatService.sortMessages(this.messages);
-        requestAnimationFrame(() => {
-          autosize.update(document.querySelector(this.textareaSelector));
-          this.scrollToBottom(this.messagesElement.nativeElement);
-        });
-      },
+      (msg: Message) => {},
       err => {
         console.warn(err);
       }
@@ -174,10 +244,13 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onScrollUp() {
-    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), false);
+    // this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), false);
   }
 
   ngOnDestroy() {
+    this.messagesElement.nativeElement.removeEventListener('scroll', this.scrollHandler);
+    this.projectSubscription.unsubscribe();
+    this.signalRSubscription.unsubscribe();
     autosize.destroy(document.querySelector(this.textareaSelector));
     if (this.uploadFilesSubscribe != null) {
       this.uploadFilesSubscribe.unsubscribe();

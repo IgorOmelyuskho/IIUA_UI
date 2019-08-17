@@ -356,8 +356,8 @@
     "VendorFindInvestorComponent": {
         "findPlaceholder": "Find a project or investor",
         "all": "All",
-        "investor": "Investor",
-        "vendor": "Vendor"
+        "group": "Group",
+        "single": "Single"
     },
     "VendorInvestmentOfferComponent": {
         "investmentOffer": "Investment offer",
@@ -377,7 +377,8 @@
     "VendorMessagesComponent": {
         "communication": "Communication",
         "message": "Message",
-        "download": "Download"
+        "download": "Download",
+        "newMessage": "New message arrived"
     },
     "VendorNavbarComponent": {
         "home": "Home",

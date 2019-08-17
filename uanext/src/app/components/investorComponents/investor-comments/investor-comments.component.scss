@@ -40,16 +40,20 @@
     padding-right: 5px;
 
     .comments-wrapper {
+      font-weight: normal;
+
       .comment {
         margin-top: 20px;
 
-        .their {
+        .you {
           width: 100%;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
 
           .attachments {
+            width: 100%;
+            
             .img-wrapper {
               display: flex;
               justify-content: flex-start;
@@ -205,13 +209,15 @@
           }
         }
 
-        .you {
+        .their {
           width: 100%;
           display: flex;
           flex-direction: column;
           align-items: flex-end;
 
           .attachments {
+            width: 100%;
+
             .img-wrapper {
               display: flex;
               justify-content: flex-end;
