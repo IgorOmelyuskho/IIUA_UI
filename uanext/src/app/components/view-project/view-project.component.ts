@@ -131,10 +131,6 @@ export class ViewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setGalleryImages(this.project.images);
   }
 
-  onMapFinishInit() {
-    // todo 'load objects model after map init'
-  }
-
   previewOpenHandler() {
     this.container.nativeElement.style.zIndex = '1000000';
     this.container.nativeElement.style.position = 'relative';

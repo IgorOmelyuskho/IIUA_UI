@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Chat } from 'src/app/models/chat/chat';
 import { Message } from 'src/app/models/chat/message';
 import { testMessagePhoto, testMessageFile, testMessageVideo } from 'src/app/helperClasses/messages';
-import { delay, map } from 'rxjs/operators';
+import { delay, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -74,12 +74,12 @@ export class ChatService {
 
   createMessage(message: Message): Observable<Message> {
     return this.http.post<any>(environment.chat + environment.createMessage, message)
-      .pipe( // todo remove
-        map((msg: Message) => {
-          msg.createdDate = new Date();
-          return msg;
-        })
-      );
+    .pipe(
+      map((msg: Message) => {
+        msg.createdDate = new Date(msg.createdDate); // not remove
+        return msg;
+      })
+    );
 
     // return of({ ...message }) // todo remove
     //   .pipe(
@@ -98,14 +98,14 @@ export class ChatService {
   getMessagesByChatId(chatId: string): Observable<Message[]> {
     const params = new HttpParams().set('conversationId', chatId.toString());
     return this.http.get<any>(environment.chat + environment.getMessagesByChatId, { params: params })
-      .pipe( // todo remove
-        map((messages: Message[]) => {
-          for (let i = 0; i < messages.length; i++) {
-            messages[i].createdDate = new Date();
-          }
-          return messages;
-        })
-      );
+    .pipe(
+      map((messages: Message[]) => {
+        for (let i = 0; i < messages.length; i++) {
+          messages[i].createdDate = new Date(messages[i].createdDate); // not remove
+        }
+        return messages;
+      })
+    );
 
     // this.counter += 1;
     // return of(JSON.parse(JSON.stringify([testMessagePhoto, testMessageFile, testMessageVideo, testMessageFile, testMessagePhoto])))

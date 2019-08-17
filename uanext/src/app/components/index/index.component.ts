@@ -27,7 +27,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   self = 'IndexComponent';
   currentPage = 1;
   @ViewChild('chartsWrapper') chartsWrapper: ElementRef;
-  isFirstWheel = true;
 
   animationInterval_1: any;
   animationInterval_2: any;
@@ -140,9 +139,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         delta = -event.detail / 3;
     }
     const dir = delta > 0 ? 'Up' : 'Down';
-    if (this.isFirstWheel === true) {
-      this.isFirstWheel = false;
-      event.stopPropagation();
+
+    if (this.chartsWrapper.nativeElement.scrollHeight === this.chartsWrapper.nativeElement.clientHeight) {
       return;
     }
 

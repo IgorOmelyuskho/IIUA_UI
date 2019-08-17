@@ -1,17 +1,19 @@
 <div class="full-screen-block">
   <div class="map-wrapper">
-      <app-map [replace3DObjects]="geoObjects" (mapFinishInit)="onMapFinishInit()" (objectClick)="onMapObjectClick($event)"
+    <app-map [replace3DObjects]="geoObjects" (objectClick)="onMapObjectClick($event)"
       (objectHover)="onMapObjectHover($event)"></app-map>
   </div>
 
   <div class="quick-action-wrapper">
     <div class="action-btn-wrapper">
-      <button (click)="actionIsExpanded = !actionIsExpanded" type="button" class="action-btn"
+      <button (click)="actionIsExpanded = !actionIsExpanded" type="button"
         [ngClass]="{ 'action-btn-expanded': actionIsExpanded }">
         <span>{{ 'quickAction' | translate:self }}</span>
         <i *ngIf="actionIsExpanded" class="fa fa-angle-up ml-2"></i>
         <i *ngIf="!actionIsExpanded" class="fa fa-angle-down ml-2"></i>
       </button>
+      <button (click)="onlyMyProjectsClick()" type="button" [ngClass]="{ 'only-my-projects': onlyMyProjects }"
+        class="my-projects-btn">{{ 'onlyMyProjects' | translate:self }}<img *ngIf="onlyMyProjects" src="../../../../assets/img/check-solid.svg" alt=""></button>
     </div>
 
     <div *ngIf="actionIsExpanded" class="create-update-wrapper">

@@ -8,20 +8,18 @@
     <div *ngFor="let message of messages" class="message">
 
       <div *ngIf="message.isYou === true" class="you">
-        <div class="attachments">
+        <div *ngIf="hasAttachment(message)" class="attachments">
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'image'" class="img-wrapper">
             <figure>
               <img src={{message.attachmentUrl}} alt="">
             </figure>
           </div>
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'video'" class="video-wrapper">
-            <div class="video">
-              <figure>
-                <video controls>
-                  <source src={{message.attachmentUrl}}>
-                </video>
-              </figure>
-            </div>
+            <figure>
+              <video controls>
+                <source src={{message.attachmentUrl}}>
+              </video>
+            </figure>
           </div>
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'file'" class="file-wrapper">
             <div class="file">
@@ -43,20 +41,18 @@
       </div>
 
       <div *ngIf="message.isYou === false || message.isYou == null" class="their">
-        <div class="attachments">
+        <div *ngIf="hasAttachment(message)" class="attachments">
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'image'" class="img-wrapper">
             <figure>
               <img src={{message.attachmentUrl}} alt="">
             </figure>
           </div>
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'video'" class="video-wrapper">
-            <div class="video">
-              <figure>
-                <video controls>
-                  <source src={{message.attachmentUrl}}>
-                </video>
-              </figure>
-            </div>
+            <figure>
+              <video controls>
+                <source src={{message.attachmentUrl}}>
+              </video>
+            </figure>
           </div>
           <div *ngIf="defineFileType(message.attachmentOriginalName) === 'file'" class="file-wrapper">
             <div class="file">
@@ -74,7 +70,7 @@
             <img src={{chatParticipantAvatara}} alt="avatara get from id?">
           </div>
           <div class="text-and-sender">
-            <div class="sender">{{message.participantId}}</div>
+            <div class="sender">{{message.userId}}</div>
             <div *ngIf="message.text" class="text">
               <div class="message-text">{{message.text}}</div>
               <div class="time">{{message.lastUpdatedDate | date:"HH:mm"}}</div>
@@ -85,7 +81,7 @@
 
       <div class="date">
         <hr>
-        <div class="text">Ср 24 Апрель</div>
+        <div class="text">{{message.createdDate | date: 'dd MMM yyyy'}}</div>
         <hr>
       </div>
 
@@ -124,6 +120,8 @@
       </div>
     </div>
     <div class="bottom-wrapper">
+      <div (click)="newMsgCameBtnClick()" *ngIf="newMsgCame" class="has-new-messages">{{ 'newMessage' | translate:self }}<img
+          src="../../../../assets/img/down-arrow-2.png" alt="alt"></div>
       <div class="attach">
         <i class="fa fa-paperclip" aria-hidden="true"></i>
         <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">

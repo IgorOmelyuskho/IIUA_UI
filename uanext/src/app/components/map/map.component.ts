@@ -17,10 +17,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() objectClick = new EventEmitter<GeoObject>();
   @Output() objectHover = new EventEmitter<GeoObject>();
-  @Output() mapFinishInit = new EventEmitter<void>();
   @Output() changeExtent = new EventEmitter<any>();
 
   mapManager: MapManager;
+  mapIsFinishInit = false;
+  bufferGeoObjectsArr: GeoObject[];
 
   @Input()
   set changeSelectedProject(project: VendorProject) {
@@ -31,6 +32,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   set replace3DObjects(objects: GeoObject[]) {
+    if (this.mapIsFinishInit === true) {
+      this.replaceObjects(objects);
+    } else {
+      this.bufferGeoObjectsArr = objects;
+    }
+  }
+
+  timeOut1: any;
+  timeOut2: any;
+  timeOut3: any;
+  timeOut4: any;
+  timeOut5: any;
+  timeOut6: any;
+
+  $fromChangeExtentEvent: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  replaceObjects(objects: GeoObject[]) {
     try {
       if (objects != null && this.mapManager != null) {
         console.log(objects);
@@ -48,17 +66,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     } catch (e) {
       console.log(e);
     }
-
   }
-
-  timeOut1: any;
-  timeOut2: any;
-  timeOut3: any;
-  timeOut4: any;
-  timeOut5: any;
-  timeOut6: any;
-
-  $fromChangeExtentEvent: BehaviorSubject<any> = new BehaviorSubject(null);
 
   clickObjectCallback: Function = (object: GeoObject) => {
     this.objectClick.emit(object);
@@ -69,7 +77,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   mapFinishInitCallback: Function = () => {
-    this.mapFinishInit.emit();
+    if (this.bufferGeoObjectsArr != null) {
+      this.replaceObjects(this.bufferGeoObjectsArr);
+    }
+    this.mapIsFinishInit = true;
     this.$fromChangeExtentEvent.next(this.mapManager.getExtent());
     this.signalRService.signalRConnect(this.mapManager.signalRMessage); // or connect when sign in ?
 

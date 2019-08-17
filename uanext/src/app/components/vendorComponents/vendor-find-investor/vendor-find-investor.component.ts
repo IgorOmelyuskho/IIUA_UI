@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { responseProjects } from 'src/app/helperClasses/projects';
+import { VendorProject } from 'src/app/models/vendorProject';
+import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
+import { FilteredProjects } from 'src/app/models';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-vendor-find-investor',
@@ -7,14 +11,27 @@ import { responseProjects } from 'src/app/helperClasses/projects';
   styleUrls: ['./vendor-find-investor.component.scss']
 })
 export class VendorFindInvestorComponent implements OnInit {
-  projects: any[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
+  // projects: VendorProject[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
+  projects: VendorProject[] = [];
   self = 'VendorFindInvestorComponent';
-  selected = 'all'; // investor/vendor
+  selected = 'all'; // group/single
+  selectedProject: VendorProject;
+  searchName = '';
 
-  constructor() {
+  constructor(private filteredProjectsService: FilteredProjectsService, private stateService: StateService) {
   }
 
   ngOnInit() {
+    this.filteredProjectsService.searchByKeyword('', 1000, 1).subscribe(
+      (filteredProjects: FilteredProjects) => {
+        this.projects = filteredProjects.projectsList;
+        this.selectedProject = this.projects[0];
+        this.stateService.selectedProjectForChat$.next(this.selectedProject);
+      },
+      err => {
+        console.warn(err);
+      }
+    );
   }
 
   getAvataraUrl(project) {
@@ -26,11 +43,27 @@ export class VendorFindInvestorComponent implements OnInit {
     this.selected = 'all';
   }
 
-  investor() {
-    this.selected = 'investor';
+  group() {
+    this.selected = 'group';
   }
 
-  vendor() {
-    this.selected = 'vendor';
+  single() {
+    this.selected = 'single';
+  }
+
+  projectSelectHandler(project: VendorProject) {
+    this.selectedProject = project;
+    this.stateService.selectedProjectForChat$.next(this.selectedProject);
+  }
+
+  findByNameClick() {
+    this.filteredProjectsService.searchByKeyword(this.searchName, 1000, 1).subscribe(
+      (filteredProjects: FilteredProjects) => {
+        this.projects = filteredProjects.projectsList;
+      },
+      err => {
+        console.warn(err);
+      }
+    );
   }
 }

@@ -19,6 +19,7 @@
       border-bottom-right-radius: 0px;
       line-height: 1;
       font-size: 10px;
+      cursor: pointer;
     }
 
     input {
@@ -40,7 +41,7 @@
     padding: 0px 5px 5px 5px;
 
     .selected {
-      background: $green;
+      background: $green !important;
       color: white;
     }
 
@@ -53,6 +54,11 @@
       font-size: 12px;
       line-height: 1;
       box-shadow: none;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(117, 175, 39, 0.15);
+      }
     }
 
     button.left-btn {
@@ -62,13 +68,11 @@
     }
 
     button.center-btn {
-      border-left: none;
       border-right: none;
       border-radius: 0;
     }
 
     button.right-btn {
-      border-left: none;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }

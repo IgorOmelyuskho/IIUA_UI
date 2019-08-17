@@ -22,6 +22,7 @@ export class StateService {
 
   interactiveInvestmentProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
   selectedVendorProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
+  selectedProjectForChat$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
 
   cardClickEnabled = true;
 

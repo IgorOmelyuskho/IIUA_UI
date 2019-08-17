@@ -162,10 +162,10 @@
       </div>
     </div>
     <div class="updates" *ngIf="selectedMenuItem === 'updates'">
-      <app-investor-updates [project]="_selectedProject"></app-investor-updates>
+      <app-investor-updates *ngFor="let r of reset" [setProject]="_selectedProject"></app-investor-updates>
     </div>
     <div class="comments" *ngIf="selectedMenuItem === 'comments'">
-      <app-investor-comments [project]="_selectedProject"></app-investor-comments>
+      <app-investor-comments *ngFor="let r of reset" [setProject]="_selectedProject"></app-investor-comments>
     </div>
 
 

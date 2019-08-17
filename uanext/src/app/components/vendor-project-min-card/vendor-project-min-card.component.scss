@@ -12,7 +12,11 @@
     cursor: pointer;
 
     &:hover {
-      background: #d3d3d3
+      background: #e8e8e8;
+    }
+
+    &.select {
+      background: #d3d3d3 !important;
     }
 
     .red-circle {

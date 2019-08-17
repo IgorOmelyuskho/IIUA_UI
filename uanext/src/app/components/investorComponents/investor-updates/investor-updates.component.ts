@@ -7,7 +7,13 @@ import { VendorProject } from 'src/app/models/vendorProject';
   styleUrls: ['./investor-updates.component.scss']
 })
 export class InvestorUpdatesComponent implements OnInit {
-  @Input() project: VendorProject;
+  @Input()
+  set setProject(project: VendorProject) {
+    if (project != null) {
+      this.project = project;
+    }
+  }
+  project: VendorProject;
 
   updates = [
     {

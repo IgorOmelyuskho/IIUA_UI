@@ -53,18 +53,15 @@
             justify-content: flex-end;
             margin-top: 5px;
 
-            .video {
+            figure {
               max-width: 60%;
-              display: flex;
-              justify-content: flex-end;
+              height: 150px;
+              margin: 0;
 
-              figure {
-                margin: 0;
-
-                video {
-                  max-width: 100%;
-                  max-height: 100%;
-                }
+              video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
               }
             }
           }
@@ -119,6 +116,8 @@
               font-size: 15px;
               color: white;
               letter-spacing: -0.4px;
+              white-space: pre-wrap;
+              word-break: break-all;
             }
 
             .time {
@@ -161,18 +160,15 @@
             justify-content: flex-start;
             margin-top: 5px;
 
-            .video {
+            figure {
               max-width: 60%;
-              display: flex;
-              justify-content: flex-start;
+              height: 150px;
+              margin: 0;
 
-              figure {
-                margin: 0;
-
-                video {
-                  max-width: 100%;
-                  max-height: 100%;
-                }
+              video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
               }
             }
           }
@@ -245,6 +241,8 @@
               .message-text {
                 font-size: 15px;
                 letter-spacing: -0.4px;
+                white-space: pre-wrap;
+                word-break: break-all;
               }
 
               .time {
@@ -386,6 +384,29 @@
       width: 100%;
       padding: 10px;
       align-items: center;
+      position: relative;
+
+      .has-new-messages {
+        background: $green;
+        padding: 5px 10px;
+        border-radius: 100px;
+        position: absolute;
+        bottom: 80px;
+        z-index: 1000;
+        left: 50%;
+        transform: translate(-50%);
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+          background: $middleGreen;
+        }
+
+        img {
+          height: 16px;
+          margin-left: 5px;
+        }
+      }
 
       .attach {
         font-size: 30px;

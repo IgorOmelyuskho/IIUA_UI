@@ -123,7 +123,9 @@
         "replyBtn": "Reply",
         "reply2": "Reply • ",
         "investor": "Investor",
-        "leaveComment": "Leave your comment"
+        "leaveComment": "Leave your comment",
+        "newMessage": "New message arrived",
+        "download": "Download"
     },
     "InvestorFilterPageComponent": {
         "findProject": "Find a project or company by keywords",
@@ -279,7 +281,8 @@
         "createProject": "Create project"
     },
     "MainScreenVendorComponent": {
-        "quickAction": "Quick action"
+        "quickAction": "Quick action",
+        "onlyMyProjects": "Only my projects"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Update you project settings",
@@ -353,8 +356,8 @@
     "VendorFindInvestorComponent": {
         "findPlaceholder": "Find a project or investor",
         "all": "All",
-        "investor": "Investor",
-        "vendor": "Vendor"
+        "group": "Group",
+        "single": "Single"
     },
     "VendorInvestmentOfferComponent": {
         "investmentOffer": "Investment offer",
@@ -374,7 +377,8 @@
     "VendorMessagesComponent": {
         "communication": "Communication",
         "message": "Message",
-        "download": "Download"
+        "download": "Download",
+        "newMessage": "New message arrived"
     },
     "VendorNavbarComponent": {
         "home": "Home",

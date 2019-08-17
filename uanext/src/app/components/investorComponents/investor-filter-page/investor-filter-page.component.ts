@@ -241,10 +241,6 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
     // todo
   }
 
-  onMapFinishInit() {
-    // todo 'load obj model after this log'
-  }
-
   scrollToElement(id) {
     const el = document.getElementById('2');
     // el.scrollIntoView({ behavior: 'smooth', inline: 'start' });
