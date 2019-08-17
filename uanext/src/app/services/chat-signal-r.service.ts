@@ -36,9 +36,19 @@ export class ChatSignalRService {
       this.VendorMessagesComponent$.next(replacedFields);
     });
 
+    this.connectionStart();
+
+    this.hubConnection.onclose((err) => {
+      console.error(err);
+      console.log('Chat SignalR connection close');
+      this.connectionStart();
+    });
+  }
+
+  connectionStart() {
     this.hubConnection.start()
       .then(() => {
-        console.log('chat SignalRConnect');
+        console.log('Chat SignalR start');
       })
       .catch((err) => {
         console.warn(err.toString());
