@@ -80,17 +80,10 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onSignalRMessage = (message: Message) => {
-    if (message.conversationId !== this.chat.id) {
+    if (this.chat == null || message.conversationId !== this.chat.id) {
       return;
     }
-    console.log(message);
     message.isYou = this.messageIsYou(message);
-    console.log(this.stateService.user$.getValue().id);
-    console.log(this.stateService.getUserId());
-    console.log(this.selfUserId);
-    console.log(message.userId);
-    console.log(message.isYou);
-    console.log(' ');
     this.messages.push(message);
     this.chatService.sortMessages(this.messages);
 
@@ -138,7 +131,6 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
           this.messages.push(messages[i]);
           this.chatService.sortMessages(this.messages);
         }
-        console.log(this.messages);
         this.messagesLoading = false;
       },
       err => {
@@ -154,11 +146,6 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     } else {
       return false;
     }
-    // if (Math.random() > 0.5) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
   }
 
   handleAttachmentChange(event) {

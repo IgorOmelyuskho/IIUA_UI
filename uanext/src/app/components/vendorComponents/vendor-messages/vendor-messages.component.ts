@@ -62,12 +62,10 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onSignalRMessage = (message: Message) => {
-    if (message.conversationId !== this.chat.id) {
+    if (this.chat == null || message.conversationId !== this.chat.id) {
       return;
     }
-    console.log(message);
     message.isYou = this.messageIsYou(message);
-    console.log(message.isYou);
     this.messages.push(message);
     this.chatService.sortMessages(this.messages);
 
@@ -131,7 +129,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
           this.messages.push(messages[i]);
           this.chatService.sortMessages(this.messages);
         }
-        console.log(this.messages);
         this.messagesLoading = false;
       },
       err => {
@@ -142,17 +139,11 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   messageIsYou(message: Message): boolean {
-    // return false;
     if (message.userId === this.selfUserId) {
       return true;
     } else {
       return false;
     }
-    // if (Math.random() > 0.5) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
   }
 
   scrollToBottom() {
