@@ -41,7 +41,11 @@ export class StateService {
     }
   }
 
-  userId(): string {
+  getId(): string {
     return this.user$.value.id;
+  }
+
+  getUserId(): string {
+    return this.user$.value.userId;
   }
 }

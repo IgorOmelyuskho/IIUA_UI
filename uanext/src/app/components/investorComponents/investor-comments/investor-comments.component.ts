@@ -45,7 +45,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
 
   ngAfterViewInit() {
     console.log(this.project);
-    this.selfUserId = this.stateService.userId();
+    this.selfUserId = this.stateService.getUserId();
 
     this.signalRSubscription = this.chatSignalR.InvestorCommentsComponent$.subscribe(
       (message: Message) => {
@@ -86,7 +86,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     console.log(message);
     message.isYou = this.messageIsYou(message);
     console.log(this.stateService.user$.getValue().id);
-    console.log(this.stateService.userId());
+    console.log(this.stateService.getUserId());
     console.log(this.selfUserId);
     console.log(message.userId);
     console.log(message.isYou);
@@ -231,7 +231,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     const message: Message = {
       text: this.sharedChatMsgText,
       conversationId: this.chat.id,
-      userId: this.stateService.userId(),
+      userId: this.stateService.getUserId(),
       attachmentId: this.attachmentData.id,
       attachmentUrl: this.attachmentData.url,
       attachmentOriginalName: this.attachmentData.originalName,

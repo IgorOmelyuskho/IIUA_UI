@@ -40,7 +40,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit() {
     autosize(document.querySelector(this.textareaSelector));
-    this.selfUserId = this.stateService.userId();
+    this.selfUserId = this.stateService.getUserId();
 
     this.projectSubscription = this.stateService.selectedProjectForChat$.subscribe(
       (project: VendorProject) => {
@@ -186,7 +186,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     const message: Message = {
       text: this.textFromInput,
       conversationId: this.chat.id,
-      userId: this.stateService.userId(),
+      userId: this.stateService.getUserId(),
       attachmentId: this.attachmentData.id,
       attachmentUrl: this.attachmentData.url,
       attachmentOriginalName: this.attachmentData.originalName,

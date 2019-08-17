@@ -11,6 +11,7 @@ export interface ProjectUserRole { // todo fields
   projectId?: string;
   userRole?: UserRole;
   id?: string;
+  userId?: string;
   iisSocial?: boolean;
 }
 
