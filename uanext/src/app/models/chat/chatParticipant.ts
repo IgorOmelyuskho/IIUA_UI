@@ -1,10 +1,11 @@
-export interface Participants {
+export interface Participant {
     id: string;
     userId: string;
-    participantsRole: 0;
+    fullName: string;
+    participantsRole: number;
     conversationId: string;
     lastReadDate: any;
     createdDate: any;
-    unreadsNumber: 0;
+    unreadsNumber: number;
     leaveDate: any;
 }

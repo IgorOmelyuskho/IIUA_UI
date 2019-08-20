@@ -1,3 +1,5 @@
+import { Participant } from './chatParticipant';
+
 export interface Message {
     id?: string;
     userId: string;
@@ -12,4 +14,5 @@ export interface Message {
     lastUpdatedDate?: any;
     leaveDate?: any;
     isYou?: boolean; // you / their
+    participant?: Participant;
 }

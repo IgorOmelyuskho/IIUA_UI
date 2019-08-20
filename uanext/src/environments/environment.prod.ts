@@ -49,5 +49,7 @@ export const environment = {
   getChatByProjectId: '/api/Conversations/GetByProjectId',
   getMessagesByChatId: '/api/Messages/GetByConversationId',
   createMessage: '/api/Messages/CreateMessage',
-  updateMessage: '/api/Messages/UpdateMessage'
+  updateMessage: '/api/Messages/UpdateMessage',
+  getParticipantById: '/api/Participants/GetByParticipantId',
+  getParticipantByChatId: '/api/Participants/GetByConversationId'
 };

@@ -124,11 +124,13 @@ export class FilteredProjectsService {
 
   private add3DObjectsArr(filteredProjects: FilteredProjects): FilteredProjects {
     const delta = 0.005;
+    const x = 35.024159076690694;
+    const y = 48.46812449736811;
     for (let i = 0; i < filteredProjects.projectsList.length; i++) {
       filteredProjects.projectsList[i].TEST_3D_Objects_Arr = [
 /*         {
           geoObjectId: 'ID-' + Math.random(),
-          coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
+          coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
           projectName: filteredProjects.projectsList[i].name,
           pathToZip: window.location.origin + '/assets/objects/tractor.zip',
           pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
@@ -137,7 +139,7 @@ export class FilteredProjectsService {
         },
         {
           geoObjectId: 'ID-' + Math.random(),
-          coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
+          coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
           projectName: filteredProjects.projectsList[i].name,
           pathToZip: window.location.origin + '/assets/objects/tractor.zip',
           pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
@@ -146,18 +148,18 @@ export class FilteredProjectsService {
         }, */
         {
           geoObjectId: 'ID-' + Math.random(),
-          coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
+          coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
           projectName: filteredProjects.projectsList[i].name,
-          pathToZip: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+          pathToZip: window.location.origin + '/assets/objects/tractor.zip',
           pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
           project: filteredProjects.projectsList[i],
           canMove: true
         },
         {
           geoObjectId: 'ID-' + Math.random(),
-          coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
+          coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
           projectName: filteredProjects.projectsList[i].name,
-          pathToZip: window.location.origin + '/assets/objects/low-poly-building.zip',
+          pathToZip: window.location.origin + '/assets/objects/building.zip',
           pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
           project: filteredProjects.projectsList[i],
           canMove: false

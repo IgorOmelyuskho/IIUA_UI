@@ -39,8 +39,8 @@ export class ChatSignalRService {
     this.connectionStart();
 
     this.hubConnection.onclose((err) => {
-      console.error(err);
-      console.log('Chat SignalR connection close');
+      // console.error(err);
+      // console.log('Chat SignalR connection close');
       this.connectionStart();
     });
   }
@@ -48,7 +48,7 @@ export class ChatSignalRService {
   connectionStart() {
     this.hubConnection.start()
       .then(() => {
-        console.log('Chat SignalR start');
+        // console.log('Chat SignalR start');
       })
       .catch((err) => {
         console.warn(err.toString());

@@ -5,7 +5,13 @@
   </div>
   <div #messagesElem class="messages" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
     [infiniteScrollThrottle]="100" (scrolledUp)="onScrollUp()">
-    <div *ngFor="let message of messages" class="message">
+    <div *ngFor="let message of messages; let i = index" class="message">
+
+      <div *ngIf="showDate(i)" class="date">
+        <hr>
+        <div class="text">{{message.createdDate | date: 'dd MMM yyyy'}}</div>
+        <hr>
+      </div>
 
       <div *ngIf="message.isYou === true" class="you">
         <div *ngIf="hasAttachment(message)" class="attachments">
@@ -70,7 +76,7 @@
             <img src={{chatParticipantAvatara}} alt="avatara get from id?">
           </div>
           <div class="text-and-sender">
-            <div class="sender">{{message.userId}}</div>
+            <div class="sender">{{message.participant?.fullName || 'todo-name'}}</div>
             <div *ngIf="message.text" class="text">
               <div class="message-text">{{message.text}}</div>
               <div class="time">{{message.lastUpdatedDate | date:"HH:mm"}}</div>
@@ -78,13 +84,6 @@
           </div>
         </div>
       </div>
-
-      <div class="date">
-        <hr>
-        <div class="text">{{message.createdDate | date: 'dd MMM yyyy'}}</div>
-        <hr>
-      </div>
-
     </div>
   </div>
 
@@ -120,8 +119,8 @@
       </div>
     </div>
     <div class="bottom-wrapper">
-      <div (click)="newMsgCameBtnClick()" *ngIf="newMsgCame" class="has-new-messages">{{ 'newMessage' | translate:self }}<img
-          src="../../../../assets/img/down-arrow-2.png" alt="alt"></div>
+      <div (click)="newMsgCameBtnClick()" *ngIf="newMsgCame" class="has-new-messages">
+        {{ 'newMessage' | translate:self }}<img src="../../../../assets/img/down-arrow-2.png" alt="alt"></div>
       <div class="attach">
         <i class="fa fa-paperclip" aria-hidden="true"></i>
         <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">

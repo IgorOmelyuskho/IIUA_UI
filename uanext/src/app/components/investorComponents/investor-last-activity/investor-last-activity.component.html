@@ -1,5 +1,17 @@
 <div class="last-activity">
+  <div (click)="findByNameClick()" class="find">
+    <button><i class="fa fa-search"></i></button>
+    <input [(ngModel)]="searchName" placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
+  </div>
+  <div class="param">
+    <button [ngClass]="{'selected': selected === 'all'}" (click)="all()"
+      class="left-btn">{{ 'all' | translate:self }}</button>
+    <button [ngClass]="{'selected': selected === 'single'}" (click)="single()"
+      class="center-btn">{{ 'single' | translate:self }}</button>
+    <button [ngClass]="{'selected': selected === 'group'}" (click)="group()"
+      class="right-btn">{{ 'group' | translate:self }}</button>
+  </div>
   <div *ngFor="let project of projects">
-    <app-vendor-project-min-card [project]="project"></app-vendor-project-min-card>
+    <app-vendor-project-min-card [isSelect]="selectedProject?.id === project.id" (selectEvent)="projectSelectHandler($event)" [project]="project"></app-vendor-project-min-card>
   </div>
 </div>
