@@ -198,8 +198,8 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
         (filteringProjects: FilteredProjects) => {
           const geoObjectsArr: GeoObject[] = [];
           for (let i = 0; i < filteringProjects.projectsList.length; i++) {
-            for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
-              geoObjectsArr.push(filteringProjects.projectsList[i].TEST_3D_Objects_Arr[j]);
+            for (let j = 0; j < filteringProjects.projectsList[i].geoObjects.length; j++) {
+              geoObjectsArr.push(filteringProjects.projectsList[i].geoObjects[j]);
             }
           }
           this.geoObjects = geoObjectsArr;
@@ -222,8 +222,8 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
         (filteringProjects: FilteredProjects) => {
           const geoObjectsArr: GeoObject[] = [];
           for (let i = 0; i < filteringProjects.projectsList.length; i++) {
-            for (let j = 0; j < filteringProjects.projectsList[i].TEST_3D_Objects_Arr.length; j++) {
-              geoObjectsArr.push(filteringProjects.projectsList[i].TEST_3D_Objects_Arr[j]);
+            for (let j = 0; j < filteringProjects.projectsList[i].geoObjects.length; j++) {
+              geoObjectsArr.push(filteringProjects.projectsList[i].geoObjects[j]);
             }
           }
           this.geoObjects = geoObjectsArr;

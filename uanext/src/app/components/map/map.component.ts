@@ -7,6 +7,11 @@ import { GeoObject } from 'src/app/models';
 import { SignalRService } from 'src/app/services/signal-r.service';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { FileResponseDto } from 'src/app/models/fileResponseDto';
+import { Object3DDto } from 'src/app/models/Object3DDto';
+import { MapService } from 'src/app/services/http/map.service';
+import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
+import { Object3DAndProject } from '../threejs-scene/threejs-scene.component';
 
 @Component({
   selector: 'app-map',
@@ -115,7 +120,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.$fromChangeExtentEvent.next(extent);
   }
 
-  constructor(private signalRService: SignalRService) { }
+  constructor(private signalRService: SignalRService, private mapService: MapService) { }
 
   ngOnInit() {
   }
@@ -127,7 +132,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         mapWrapperId: 'map-wrapper-html-element-id-3585349',
         mapId: 'map-html-element-id-495367235',
         labelRendererId: 'label-renderer-843744329'
-      }
+      },
+      this.mapService
     );
 
     this.mapManager.setObjectClickCallback(this.clickObjectCallback);
@@ -147,6 +153,30 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       );
   }
 
+  drop(event) {
+    event.preventDefault();
+    const dataString = event.dataTransfer.getData('data');
+    const object3DAndProject: Object3DAndProject = JSON.parse(dataString);
+    console.log(object3DAndProject);
+    this.post3DObjectSubscribe(object3DAndProject.object3DDto, object3DAndProject.project);
+  }
+
+  allowDrop(event) {
+    event.preventDefault();
+  }
+
+  post3DObjectSubscribe(object3DDto: Object3DDto, project: VendorProject) {
+    this.mapService.post3DObject(object3DDto).subscribe(
+      (object3DId: string) => {
+        this.mapManager.drop3DObject(object3DDto, object3DId, project);
+      },
+      err => {
+        console.warn(err);
+        this.mapManager.drop3DObject(object3DDto, err.error.text, project);
+      }
+    );
+  }
+
   ngOnDestroy() {
     // if use http - clear http request
     clearTimeout(this.timeOut1);
@@ -156,7 +186,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     clearTimeout(this.timeOut5);
     clearTimeout(this.timeOut6);
     this.signalRService.signalRDisconnect();
-
     this.mapManager.mapDestroy();
   }
 

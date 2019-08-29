@@ -40,6 +40,8 @@ export const environment = {
   getLastHistoryCoordinates: '/api/Map/GetLastHistoryCoordinates',
   search3DObject: '/api/Map/Search3DObject',
   mapFilteringProjects: '/api/Map/projects-filtering',
+  addGeoModel: '/api/Map/addGeoModel',
+  getGeoModels: '/api/Map/getGeoModels',
 
   Notification: '/api/Notification',
 
@@ -49,5 +51,7 @@ export const environment = {
   getChatByProjectId: '/api/Conversations/GetByProjectId',
   getMessagesByChatId: '/api/Messages/GetByConversationId',
   createMessage: '/api/Messages/CreateMessage',
-  updateMessage: '/api/Messages/UpdateMessage'
+  updateMessage: '/api/Messages/UpdateMessage',
+  getParticipantById: '/api/Participants/GetByParticipantId',
+  getParticipantByChatId: '/api/Participants/GetByConversationId'
 };

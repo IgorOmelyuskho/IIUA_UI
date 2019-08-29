@@ -1,7 +1,7 @@
 <div class="last-activity">
   <div (click)="findByNameClick()" class="find">
     <button><i class="fa fa-search"></i></button>
-    <input ([ngModel])="searchName" placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
+    <input [(ngModel)]="searchName" placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
   </div>
   <div class="param">
     <button [ngClass]="{'selected': selected === 'all'}" (click)="all()"
@@ -15,7 +15,9 @@
   <div class="projects">
     <div class="wrapper-for-border">
       <div *ngFor="let project of projects">
-        <app-vendor-project-min-card [isSelect]="selectedProject?.id === project.id" (selectEvent)="projectSelectHandler($event)" [project]="project"></app-vendor-project-min-card>
+        <app-vendor-project-min-card *ngIf="allowedCards(project) === true"
+          [isSelect]="selectedProject?.id === project.id" (selectEvent)="projectSelectHandler($event)"
+          [project]="project"></app-vendor-project-min-card>
         <!-- <app-investor-card [project]="project"></app-investor-card> -->
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Participants } from './chatParticipants';
+import { Participant } from './chatParticipant';
 import { Message } from './message';
 
 export interface Chat {
@@ -11,6 +11,6 @@ export interface Chat {
     icon: string;
     lastActivityDate: any;
     leaveDate: any;
-    participants: Participants[];
+    participants?: Participant[]; // get from /api/Participants/GetByConversationId
     projectId?: string; // for All2All
 }

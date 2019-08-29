@@ -282,7 +282,8 @@
     },
     "MainScreenVendorComponent": {
         "quickAction": "Быстрые действия",
-        "onlyMyProjects": "Только мои проекты"
+        "onlyMyProjects": "Только мои проекты",
+        "upload3dModels": "Загрузить 3Д модель на карту"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Обновите настройки вашего проекта",
@@ -692,13 +693,6 @@
         "validEmail": "Адрес электронной почты должен быть действительным адресом электронной почты",
         "sendBtn": "ОТПРАВИТЬ"
     },
-    "checkEmailShared": "Вы получили сообщение по электронной почте",
-    "firstNeedRegister": "Сначала нужно зарегистрироваться как Вендор или как Инвестор",
-    "reallyRemoveAccount": "Действительно удалить аккаунт?",
-    "projectSuccessfullyCreated": "Вы успешно создали проект",
-    "projectNotCreated": "Проект не создан",
-    "projectUpdated": "Проект успешно обновлен",
-    "projectNotUpdated": "Проект не обновлен",
     "VendorMainScreenRightComponent": {
         "chat": "Чат",
         "investmentOffer": "Предложение инвестиций"
@@ -707,5 +701,21 @@
         "chat": "Чат",
         "notifications": "Уведомления",
         "iterativeInvestment": "Итеративное инвестирование"
-    }
+    },
+    "InvestorLastActivityComponent": {
+        "findPlaceholder": "Найти проект или инвестора",
+        "all": "Все",
+        "group": "Групповые",
+        "single": "Одиночные"
+    },
+    "Panel3dModelsComponent": {
+      "selectProject": "ВЫБЕРИТЕ ПРОЕКТ"
+    },
+    "checkEmailShared": "Вы получили сообщение по электронной почте",
+    "firstNeedRegister": "Сначала нужно зарегистрироваться как Вендор или как Инвестор",
+    "reallyRemoveAccount": "Действительно удалить аккаунт?",
+    "projectSuccessfullyCreated": "Вы успешно создали проект",
+    "projectNotCreated": "Проект не создан",
+    "projectUpdated": "Проект успешно обновлен",
+    "projectNotUpdated": "Проект не обновлен"
 }

@@ -6,6 +6,7 @@ import { Chat } from 'src/app/models/chat/chat';
 import { Message } from 'src/app/models/chat/message';
 import { testMessagePhoto, testMessageFile, testMessageVideo } from 'src/app/helperClasses/messages';
 import { delay, map, tap } from 'rxjs/operators';
+import { Participant } from 'src/app/models/chat/chatParticipant';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ChatService {
   constructor(private http: HttpClient) { }
 
   getOrCreateP2P(userId: string): Observable<Chat> { // userId - которому хотим написать
-    const params = new HttpParams().set('userId', userId.toString());
+    const params = new HttpParams().set('userId', userId);
     return this.http.get<any>(environment.chat + environment.getOrCreateChat, { params: params });
   }
 
@@ -25,7 +26,7 @@ export class ChatService {
   }
 
   getChatById(chatId: string): Observable<Chat> {
-    const params = new HttpParams().set('conversationId', chatId.toString());
+    const params = new HttpParams().set('conversationId', chatId);
     return this.http.get<any>(environment.chat + environment.getChatById, { params: params });
   }
 
@@ -72,6 +73,8 @@ export class ChatService {
 
 
 
+
+
   createMessage(message: Message): Observable<Message> {
     return this.http.post<any>(environment.chat + environment.createMessage, message)
     .pipe(
@@ -96,7 +99,7 @@ export class ChatService {
   }
 
   getMessagesByChatId(chatId: string): Observable<Message[]> {
-    const params = new HttpParams().set('conversationId', chatId.toString());
+    const params = new HttpParams().set('conversationId', chatId);
     return this.http.get<any>(environment.chat + environment.getMessagesByChatId, { params: params })
     .pipe(
       map((messages: Message[]) => {
@@ -121,6 +124,23 @@ export class ChatService {
     //     delay(1000)
     //   );
   }
+
+
+
+
+
+getParticipantById(participantId: string): Observable<Participant> {
+  const params = new HttpParams().set('participantId', participantId);
+  return this.http.get<any>(environment.chat + environment.getParticipantById, { params: params });
+}
+
+getParticipantsByChatId(chatId: string): Observable<Participant[]> {
+  const params = new HttpParams().set('conversationId', chatId);
+  return this.http.get<any>(environment.chat + environment.getParticipantByChatId, { params: params });
+}
+
+
+
 
   sortMessages(messages: Message[]): Message[] {
     return messages.sort((a: Message, b: Message) => {

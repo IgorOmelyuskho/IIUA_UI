@@ -9,6 +9,8 @@ import * as autosize from 'autosize';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { Chat } from 'src/app/models/chat/chat';
 import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';
+import { Participant } from 'src/app/models/chat/chatParticipant';
+import { ParticipantsCacheService } from 'src/app/services/participants-cache.service';
 
 @Component({
   selector: 'app-vendor-messages',
@@ -34,7 +36,13 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   chat: Chat;
   newMsgCame = false;
 
-  constructor(private chatService: ChatService, private fileService: FilesService, private stateService: StateService, private chatSignalR: ChatSignalRService) { }
+  constructor(
+    private chatService: ChatService,
+    private fileService: FilesService,
+    private stateService: StateService,
+    private chatSignalR: ChatSignalRService,
+    private participantsCacheService: ParticipantsCacheService
+  ) { }
 
   ngOnInit() { }
 
@@ -67,13 +75,13 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     }
     message.isYou = this.messageIsYou(message);
     this.messages.push(message);
+    this.getParticipantByParticipantId(message);
     this.chatService.sortMessages(this.messages);
 
     this.attachmentData = {};
     this.previewAttachment = null;
     this.textFromInput = '';
 
-    this.chatService.sortMessages(this.messages);
     if (message.isYou === false && this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight < this.messagesElement.nativeElement.scrollHeight) {
       this.newMsgCame = true;
     } else {
@@ -127,8 +135,9 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
         for (let i = 0; i < messages.length; i++) {
           messages[i].isYou = this.messageIsYou(messages[i]);
           this.messages.push(messages[i]);
-          this.chatService.sortMessages(this.messages);
+          this.getParticipantByParticipantId(messages[i]);
         }
+        this.chatService.sortMessages(this.messages);
         this.messagesLoading = false;
       },
       err => {
@@ -144,6 +153,28 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     } else {
       return false;
     }
+  }
+
+  getParticipantByParticipantId(message: Message) {
+    this.participantsCacheService.getData(message.participantId).subscribe(
+      (participant: Participant) => {
+        if (participant != null) {
+          message.participant = participant;
+        }
+      }
+    );
+  }
+
+  showDate(index: number): boolean {
+    if (index === 0) {
+      return true;
+    }
+    const date1 = this.messages[index - 1].createdDate.getDate();
+    const date2 = this.messages[index].createdDate.getDate();
+    if (date1 !== date2) {
+      return true;
+    }
+    return false;
   }
 
   scrollToBottom() {
@@ -184,7 +215,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     };
 
     this.chatService.createMessage(message).subscribe(
-      (msg: Message) => {},
+      (msg: Message) => { },
       err => {
         console.warn(err);
       }

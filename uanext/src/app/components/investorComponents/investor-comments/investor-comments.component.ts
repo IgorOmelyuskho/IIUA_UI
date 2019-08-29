@@ -9,6 +9,8 @@ import { StateService } from 'src/app/services/state/state.service';
 import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import { FilesService } from 'src/app/services/http/files.service';
+import { Participant } from 'src/app/models/chat/chatParticipant';
+import { ParticipantsCacheService } from 'src/app/services/participants-cache.service';
 
 @Component({
   selector: 'app-investor-comments',
@@ -39,7 +41,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   newMsgCame = false;
   signalRSubscription: Subscription;
 
-  constructor(private chatService: ChatService, private stateService: StateService, private chatSignalR: ChatSignalRService, private fileService: FilesService) { }
+  constructor(private chatService: ChatService, private stateService: StateService, private chatSignalR: ChatSignalRService, private fileService: FilesService, private participantsCacheService: ParticipantsCacheService) { }
 
   ngOnInit() { }
 
@@ -85,12 +87,12 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     }
     message.isYou = this.messageIsYou(message);
     this.messages.push(message);
+    this.getParticipantByParticipantId(message);
     this.chatService.sortMessages(this.messages);
 
     this.sharedChatMsgText = '';
     this.attachmentData = {};
     this.previewAttachment = null;
-    this.chatService.sortMessages(this.messages);
     if (message.isYou === false && this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight < this.messagesElement.nativeElement.scrollHeight) {
       this.newMsgCame = true;
     } else {
@@ -129,8 +131,10 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
         for (let i = 0; i < messages.length; i++) {
           messages[i].isYou = this.messageIsYou(messages[i]);
           this.messages.push(messages[i]);
-          this.chatService.sortMessages(this.messages);
+          this.getParticipantByParticipantId(messages[i]);
+          console.log(messages[i].createdDate.getDate());
         }
+        this.chatService.sortMessages(this.messages);
         this.messagesLoading = false;
       },
       err => {
@@ -146,6 +150,16 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     } else {
       return false;
     }
+  }
+
+  getParticipantByParticipantId(message: Message) {
+    this.participantsCacheService.getData(message.participantId).subscribe(
+      (participant: Participant) => {
+        if (participant != null) {
+          message.participant = participant;
+        }
+      }
+    );
   }
 
   handleAttachmentChange(event) {

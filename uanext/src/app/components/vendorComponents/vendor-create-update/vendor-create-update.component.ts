@@ -11,18 +11,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./vendor-create-update.component.scss']
 })
 export class VendorCreateUpdateComponent implements OnInit, AfterViewInit, OnDestroy {
-
-  @Input()
-  set selectedProject(project: VendorProject) {
-    if (project != null) {
-      this.projectSteps = [...project.steps];
-
-      for (let i = 0; i < this.projectSteps.length; i++) {
-        this.projectSteps[i].selected = false;
-      }
-    }
-  }
-
   @ViewChild('dropArea') dropArea: ElementRef;
   @ViewChild('gallery') gallery: ElementRef;
   filesForUploadCount = 0;
@@ -47,9 +35,6 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit, OnDes
             this.projectSteps[i].selected = false;
           }
         }
-      },
-      err => {
-        console.warn(err);
       }
     );
   }

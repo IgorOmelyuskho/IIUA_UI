@@ -282,7 +282,8 @@
     },
     "MainScreenVendorComponent": {
         "quickAction": "Quick action",
-        "onlyMyProjects": "Only my projects"
+        "onlyMyProjects": "Only my projects",
+        "upload3dModels": "Download 3D model to the map"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Update you project settings",
@@ -692,13 +693,6 @@
         "validEmail": "Email address must be a valid email address",
         "sendBtn": "SEND"
     },
-    "checkEmailShared": "You received a message in the email",
-    "firstNeedRegister": "First you need to register as Vendor or Investor",
-    "reallyRemoveAccount": "Really remove account?",
-    "projectSuccessfullyCreated": "You have successfully created project",
-    "projectNotCreated": "Project not created",
-    "projectUpdated": "Project successfully updated",
-    "projectNotUpdated": "Project not updated",
     "VendorMainScreenRightComponent": {
         "chat": "Chat",
         "investmentOffer": "Investment offer"
@@ -707,5 +701,21 @@
         "chat": "Chat",
         "notifications": "Notifications",
         "iterativeInvestment": "Iterative investment"
-    }
+    },
+    "InvestorLastActivityComponent": {
+        "findPlaceholder": "Find a project or investor",
+        "all": "All",
+        "group": "Group",
+        "single": "Single"
+    },
+    "Panel3dModelsComponent": {
+      "selectProject": "SELECT PROJECT"
+    },
+    "checkEmailShared": "You received a message in the email",
+    "firstNeedRegister": "First you need to register as Vendor or Investor",
+    "reallyRemoveAccount": "Really remove account?",
+    "projectSuccessfullyCreated": "You have successfully created project",
+    "projectNotCreated": "Project not created",
+    "projectUpdated": "Project successfully updated",
+    "projectNotUpdated": "Project not updated"
 }
