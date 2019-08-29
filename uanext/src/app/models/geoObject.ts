@@ -24,4 +24,6 @@ export class GeoObject {
   mouseUnder?: boolean;
   box3?: any;
   boxHelper?: any; // todo remove
+  currentUser?: boolean;
+  scale?: number;
 }

@@ -1,7 +1,10 @@
 import Stats from 'stats-js';
 import { GeoObject } from 'src/app/models';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { TouchSequence } from 'selenium-webdriver';
+import { FileResponseDto } from 'src/app/models/fileResponseDto';
+import { Object3DDto } from 'src/app/models/Object3DDto';
+import { MapService } from 'src/app/services/http/map.service';
+import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 declare var THREE: any;
 declare var maptalks: any;
 
@@ -53,16 +56,21 @@ export class MapManager {
   private objectsScale: number = null;
   private prevClusterGeoObjectId: string = null;
   private mapZoomEnum: MapZoomEnum;
+  private mapService: MapService;
 
   // html elements id
   private mapWrapperId: string;
   private mapId: string;
   private labelRendererId: string;
 
-  public constructor(cb: Function, htmlId: { mapWrapperId: string, mapId: string, labelRendererId: string }) {
+  // key
+  private xKeyPressed = false;
+
+  public constructor(cb: Function, htmlId: { mapWrapperId: string, mapId: string, labelRendererId: string }, mapService: MapService) {
     this.mapWrapperId = htmlId.mapWrapperId;
     this.mapId = htmlId.mapId;
     this.labelRendererId = htmlId.labelRendererId;
+    this.mapService = mapService;
     this.mapInit(cb);
   }
 
@@ -78,6 +86,8 @@ export class MapManager {
     clearInterval(this.timerForDraw);
     cancelAnimationFrame(this.animationFrame);
     window.removeEventListener('resize', this.windowResize);
+    window.removeEventListener('keydown', this.windowKeyDown);
+    window.removeEventListener('keyup', this.windowKeyUp);
 
     this.canvasElem = null;
     this.stats = null;
@@ -97,6 +107,7 @@ export class MapManager {
     this.camera = null;
     this.objectsScale = null;
     this.prevClusterGeoObjectId = null;
+    this.mapService = null;
 
     this.on_click_object = null;
     this.on_hover_object = null;
@@ -134,6 +145,97 @@ export class MapManager {
       }
     }
   }
+
+  drop3DObject(object3DDto: Object3DDto, object3DId: string, project: VendorProject) {
+    const geoObject: GeoObject = this.object3DDtoToGeoObject(object3DDto, object3DId, project);
+    this.postHistoryData(geoObject);
+    this.mapAddNewObjects([geoObject]);
+  }
+
+  private object3DDtoToGeoObject(object3DDto: Object3DDto, object3DId: string, project: VendorProject): GeoObject {
+    const geoObject: GeoObject = {
+      geoObjectId: object3DId,
+      project: project,
+      coords: this.getMapCoordsWhenDrop(),
+      pathToZip: object3DDto.path,
+      pathToZipLP: object3DDto.path,
+      canMove: false,
+      currentUser: true,
+      projectName: project.name,
+      rotationZ: 0
+    };
+    return geoObject;
+  }
+
+  private postHistoryData(geoObject: GeoObject) {
+    // const historyPositionDto: HistoryPositionDto = {
+    //   object3DId: geoObject.geoObjectId,
+    //   positionX: geoObject.coords.x,
+    //   positionY: geoObject.coords.y,
+    //   // scale: geoObject.scale.toString()
+    //   // rotate: geoObject.rotationZ.toString(),
+    // };
+    // this.mapService.postHistoryData(historyPositionDto).subscribe();
+  }
+
+  private getMapCoordsWhenDrop(): { x: number, y: number } {
+    // console.log(document.getElementById(this.mapWrapperId));
+    // document.getElementById(this.mapWrapperId).click();
+
+    // const e1 = document.querySelector('#map-wrapper-html-element-id-3585349 .maptalks-canvas-layer canvas');
+    // console.log(e1);
+
+    // this.triggerEvent(document.getElementById(this.mapWrapperId), 'onclick');
+    // this.triggerEvent(e1, 'onclick');
+
+    // this.simulateClick(document.getElementById(this.mapWrapperId), 'onclick');
+    // this.simulateClick(e1, 'onclick');
+
+    // this.eventFire(document.getElementById(this.mapWrapperId), 'onclick');
+    // this.eventFire(e1, 'onclick');
+
+    // this.simulateClick2(document.getElementById(this.mapWrapperId));
+    // this.simulateClick2(e1);
+
+    return this.map.getCenter();
+  }
+
+  // eventFire(el, etype) {
+  //   if (el.fireEvent) {
+  //     el.fireEvent(etype);
+  //   } else {
+  //     const evObj = document.createEvent('Events');
+  //     evObj.initEvent(etype, true, true);
+  //     el.dispatchEvent(evObj);
+  //   }
+  // }
+
+  // triggerEvent(elem, event) {
+  //   const clickEvent = new Event(event, { bubbles: true }); // Create the event.
+  //   elem.dispatchEvent(clickEvent);    // Dispatch the event.
+  // }
+
+  // simulateClick(elem, eventType) {
+  //   const event = new MouseEvent('click', {
+  //     'view': window,
+  //     'bubbles': true,
+  //     'cancelable': true
+  //   });
+  //   const canceled = !elem.dispatchEvent(event);
+  //   if (canceled) {
+  //     // A handler called preventDefault.
+  //     console.log('cancel');
+  //   } else {
+  //     // None of the handlers called preventDefault.
+  //     console.log('not canceled');
+  //   }
+  // }
+
+  // simulateClick2(elem) {
+  //   const evt = document.createEvent('MouseEvents');
+  //   evt.initMouseEvent('click', true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
+  //   document.body.dispatchEvent(evt);
+  // }
 
   // set callbacks
   //#region
@@ -231,6 +333,10 @@ export class MapManager {
       newObj.prevCoords.x = newObj.coords.x;
       newObj.prevCoords.y = newObj.coords.y;
 
+      if (newObj.scale == null) {
+        newObj.scale = 1;
+      }
+
       this.createMarker(newObj);
       const modelQuality: ModelQuality = this.modelQualityDependenceMapZoomEnum(this.mapZoomEnum);
 
@@ -317,6 +423,8 @@ export class MapManager {
     this.animation();
 
     window.addEventListener('resize', this.windowResize);
+    window.addEventListener('keydown', this.windowKeyDown);
+    window.addEventListener('keyup', this.windowKeyUp);
 
     this.on_map_init = cb;
     this.createThreeLayer(); // async
@@ -338,6 +446,16 @@ export class MapManager {
     const y = this.mapWrapperElement.clientHeight; // offsetHeight
     // mapElement width and height 100% in styles.scss
     this.labelRenderer.setSize(x, y);
+  }
+
+  private windowKeyDown = (event) => {
+    const evtObj = window.event ? event : event;
+    this.windowKeyDownHandler(evtObj);
+  }
+
+  private windowKeyUp = (event) => {
+    const evtObj = window.event ? event : event;
+    this.windowKeyUpHandler(evtObj);
   }
 
   private animation = () => {
@@ -372,6 +490,7 @@ export class MapManager {
 
   private mapEventHandlers() {
     this.map.on('mousemove', (event) => {
+      this.dragSelectedObject(event.coordinate.x, event.coordinate.y);
       this.mouse.x = (event.containerPoint.x / event.target.width) * 2 - 1;
       this.mouse.y = -(event.containerPoint.y / event.target.height) * 2 + 1;
       this.selectObjects();
@@ -417,6 +536,7 @@ export class MapManager {
     });
 
     this.map.on('click', (event) => {
+      console.log('ON MAP CLICK');
       const identify = this.clusterLayer.identify(event.coordinate);
       if (identify && identify.children && identify.children.length === 1) {
         const geoObject: GeoObject = identify.children[0].parent;
@@ -451,12 +571,14 @@ export class MapManager {
         this.on_map_change_extent(extent);
       }
     });
+
     this.map.on('moving', (event) => {
       if (this.on_map_change_extent != null) {
         const extent = this.getExtent();
         this.on_map_change_extent(extent);
       }
     });
+
     this.map.on('dragrotateend', (event) => {
       if (this.on_map_change_extent != null) {
         const extent = this.getExtent();
@@ -545,6 +667,22 @@ export class MapManager {
       }
     };
     this.threeLayer.addTo(this.map);
+
+    // document.getElementById(this.mapWrapperId).addEventListener('click', (event) => {
+    //   console.log(event);
+    //   console.log(1111111111111111111111111111111);
+    // });
+
+    // const e1 = document.querySelector('#map-wrapper-html-element-id-3585349 .maptalks-canvas-layer canvas');
+    // e1.addEventListener('click', (event) => {
+    //   console.log(event);
+    //   console.log(222222222222222222222222222);
+    // });
+
+    // document.addEventListener('click', (event) => {
+    //   console.log(event);
+    //   console.log(333333333333333);
+    // });
   }
   //#endregion
 
@@ -608,9 +746,10 @@ export class MapManager {
 
   private init3dObject(geoObject: GeoObject, object3D: any, modelQuality: ModelQuality) { // modelQuality - low / high
     const childScale = 0.004;
+    const resultScale = childScale * geoObject.scale;
     object3D.traverse((child) => {
       if (child instanceof THREE.Mesh) {
-        child.scale.set(childScale, childScale, childScale);
+        child.scale.set(resultScale, resultScale, resultScale);
         child.rotation.set(Math.PI * 1 / 2, -Math.PI * 1 / 2, 0);
         if (Array.isArray(child.material)) {
           return;
@@ -896,8 +1035,13 @@ export class MapManager {
     obj3D.position.x = v.x;
     obj3D.position.y = v.y;
     obj3D.position.z = v.z;
-    obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
-    // obj.boxHelper.update();
+    // obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
+    if (geoObj.canMove === true) {
+      obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
+      // obj.boxHelper.update();
+    } else {
+      obj3D.rotation.z = geoObj.rotationZ || 0;
+    }
   }
   //#endregion
 
@@ -1134,6 +1278,149 @@ export class MapManager {
     const y0 = this.calcScale(x0);
     const y1 = this.calcScale(x1);
     return this.linearInterpolation(y0, y1, x0, x1, mapZoom);
+  }
+  //#endregion
+
+  // edit mode
+  //#region
+  private windowKeyDownHandler(event) {
+    this.detectEditAction(event);
+  }
+
+  private windowKeyUpHandler(event) {
+    if (event.code === 'KeyX') {
+      this.disableObjectDrag();
+    }
+  }
+
+  private detectEditAction(event) {
+    if (this.selectedObject == null || this.selectedObject.currentUser === false) {
+      return;
+    }
+
+    if (event.code === 'KeyW') { // W
+      this.editMoveForward(event, this.selectedObject);
+    }
+    if (event.code === 'KeyA') { // A
+      this.editMoveLeft(event, this.selectedObject);
+    }
+    if (event.code === 'KeyS') { // S
+      this.editMoveBack(event, this.selectedObject);
+    }
+    if (event.code === 'KeyD') { // D
+      this.editMoveRight(event, this.selectedObject);
+    }
+    if (event.code === 'KeyZ') { // Z
+      this.editRotate1(this.selectedObject);
+    }
+    if (event.code === 'KeyC') { // C
+      this.editRotate2(this.selectedObject);
+    }
+    if (event.code === 'KeyR') { // R
+      this.editReduceScale(this.selectedObject);
+    }
+    if (event.code === 'KeyT') { // T
+      this.editIncreaseScale(this.selectedObject);
+    }
+    if (event.code === 'KeyX') { // X
+      this.enableObjectDrag();
+    }
+
+    this.customRedraw();
+  }
+
+  private enableObjectDrag() {
+    if (this.xKeyPressed === false) {
+      this.map.config('dragPan', false);
+    }
+    this.xKeyPressed = true;
+  }
+
+  private disableObjectDrag() {
+    this.xKeyPressed = false;
+    this.map.config('dragPan', true);
+  }
+
+  private editMoveForward(event: any, geoObject: GeoObject) {
+    geoObject.coords.x += 0.00001;
+    if (event.shiftKey) {
+      geoObject.coords.x += 0.0001;
+    }
+    this.postHistoryData(geoObject);
+  }
+
+  private editMoveBack(event: any, geoObject: GeoObject) {
+    geoObject.coords.x -= 0.00001;
+    if (event.shiftKey) {
+      geoObject.coords.x -= 0.0001;
+    }
+    this.postHistoryData(geoObject);
+  }
+
+  private editMoveLeft(event: any, geoObject: GeoObject) {
+    geoObject.coords.y -= 0.00001;
+    if (event.shiftKey) {
+      geoObject.coords.y -= 0.0001;
+    }
+    this.postHistoryData(geoObject);
+  }
+
+  private editMoveRight(event: any, geoObject: GeoObject) {
+    geoObject.coords.y += 0.00001;
+    if (event.shiftKey) {
+      geoObject.coords.y += 0.0001;
+    }
+    this.postHistoryData(geoObject);
+  }
+
+  private editRotate1(geoObject: GeoObject) {
+    geoObject.rotationZ += 0.01;
+    this.postHistoryData(geoObject);
+  }
+
+  private editRotate2(geoObject: GeoObject) {
+    geoObject.rotationZ -= 0.01;
+    this.postHistoryData(geoObject);
+  }
+
+  private editIncreaseScale(geoObject: GeoObject) {
+    const delta = 0.05;
+    if (geoObject.object3DLP) {
+      const scaleLP = geoObject.object3DLP.scale.x + delta;
+      geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
+      geoObject.scale = scaleLP;
+      console.log('scaleLP ', scaleLP);
+    }
+    if (geoObject.object3DHP) {
+      const scaleHP = geoObject.object3DHP.scale.x + delta;
+      geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
+      console.log('scaleHP ', scaleHP);
+    }
+    this.postHistoryData(geoObject);
+  }
+
+  private editReduceScale(geoObject: GeoObject) {
+    const delta = -0.05;
+    if (geoObject.object3DLP) {
+      const scaleLP = geoObject.object3DLP.scale.x + delta;
+      geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
+      geoObject.scale = scaleLP;
+      console.log('scaleLP ', scaleLP);
+    }
+    if (geoObject.object3DHP) {
+      const scaleHP = geoObject.object3DHP.scale.x + delta;
+      geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
+      console.log('scaleHP ', scaleHP);
+    }
+    this.postHistoryData(geoObject);
+  }
+
+  private dragSelectedObject(x: number, y: number) {
+    if (this.selectedObject != null && this.xKeyPressed === true) {
+      this.selectedObject.coords.x = x;
+      this.selectedObject.coords.y = y;
+      this.postHistoryData(this.selectedObject);
+    }
   }
   //#endregion
 }

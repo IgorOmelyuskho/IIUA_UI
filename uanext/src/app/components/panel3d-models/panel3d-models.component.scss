@@ -1,0 +1,44 @@
+.panel3d-models {
+  width: 120px;
+  position: relative;
+
+  .threejs-scene-wrapper {
+    font-weight: normal;
+  }
+
+  .slide-up,
+  .slide-down {
+    position: sticky;
+    left: calc(50% - 20px);
+    width: 40px;
+    height: 20px;
+    z-index: 10;
+    cursor: pointer;
+    opacity: 0.2;
+  }
+
+  .slide-up {
+    top: 5px;
+    transform: rotate(180deg);
+
+    &:hover {
+      opacity: 0.3;
+      transform: rotate(180deg) scaleX(0.9);
+    }
+  }
+
+  .slide-down {
+    bottom: 5px;
+
+    &:hover {
+      opacity: 0.3;
+      transform: scaleX(0.9);
+    }
+  }
+
+  .select-project {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+  }
+}

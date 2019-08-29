@@ -282,7 +282,8 @@
     },
     "MainScreenVendorComponent": {
         "quickAction": "Быстрые действия",
-        "onlyMyProjects": "Только мои проекты"
+        "onlyMyProjects": "Только мои проекты",
+        "upload3dModels": "Загрузить 3Д модель на карту"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Обновите настройки вашего проекта",
@@ -706,6 +707,9 @@
         "all": "Все",
         "group": "Групповые",
         "single": "Одиночные"
+    },
+    "Panel3dModelsComponent": {
+      "selectProject": "ВЫБЕРИТЕ ПРОЕКТ"
     },
     "checkEmailShared": "Вы получили сообщение по электронной почте",
     "firstNeedRegister": "Сначала нужно зарегистрироваться как Вендор или как Инвестор",

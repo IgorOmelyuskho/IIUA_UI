@@ -25,8 +25,6 @@ import { TranslateService } from './services/translate.service';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-import { MapEditModeComponent } from './components/map-edit-mode/map-edit-mode.component';
-import { MapDemoComponent } from './components/map-demo/map-demo.component';
 
 const config = new AuthServiceConfig([
   {
@@ -53,8 +51,6 @@ export function setupTranslateFactory(service: TranslateService): Function {
     ...components,
     HighlightPipe,
     TranslatePipe,
-    MapEditModeComponent,
-    MapDemoComponent,
   ],
   imports: [
     BrowserModule,

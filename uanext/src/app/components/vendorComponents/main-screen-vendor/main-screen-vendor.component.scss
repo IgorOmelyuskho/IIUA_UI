@@ -12,7 +12,6 @@
   }
 
   .quick-action-wrapper {
-    width: 35vw;
     max-height: 100%;
     position: absolute;
     top: 0;
@@ -21,6 +20,11 @@
     background: transparent;
     display: flex;
     flex-direction: column;
+    pointer-events: none;
+
+    & * {
+      pointer-events: auto;
+    }
 
     .search-by-name {
       box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23);
@@ -39,13 +43,13 @@
       button {
         border-radius: 6px;
         margin-top: 10px;
-        margin-bottom: 20px;
         outline: none;
         border: none;
         padding: 5px 20px;
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.23) !important;
         background-color: #ffffff;
         cursor: pointer;
+        margin-right: 10px;
 
         &:hover {
           background-color: #ebf3df;
@@ -58,15 +62,18 @@
       }
 
       .my-projects-btn {
-        margin-left: 10px;
-
         img {
           height: 12px;
           margin-left: 5px;
         }
       }
 
-      .only-my-projects {
+      .my-projects-btn-active {
+        background-color: $green !important;
+        color: white !important;
+      }
+
+      .upload-3d-models-active {
         background-color: $green !important;
         color: white !important;
       }
@@ -80,25 +87,46 @@
       margin-bottom: 10px;
       border-right: 4px solid white;
     }
+
+    .create-update-wrapper {
+      z-index: 10;
+      overflow: auto;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+      background-color: #ffffff;
+      min-width: 359px;
+      margin-top: 20px;
+      width: 35vw;
+    }
+  
+    .panel3d-models-wrapper {
+      z-index: 10;
+      overflow: auto;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
+      background-color: #ffffff;
+      margin-top: 20px;
+      width: 120px;
+    }
   }
 
-  .project-card-wrapper {
-    font-weight: normal;
+  .edit-mode-tooltip-wrapper {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    width: 500px;
+    margin: auto;
+    z-index: 100;
   }
 
   .right-component-wrapper {
     font-weight: normal;
   }
 
-  .create-update-wrapper {
-    z-index: 10;
-    overflow: auto;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.16);
-    background-color: #ffffff;
-    min-width: 359px;
-  }
+
 }
 
 .highlighted {

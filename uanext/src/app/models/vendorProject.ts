@@ -29,6 +29,6 @@ export interface VendorProject {
   rating?: string;
   queuePosition?: any;
 
-  TEST_3D_Objects_Arr?: GeoObject[];
+  geoObjects?: GeoObject[];
   chat?: Chat;
 }

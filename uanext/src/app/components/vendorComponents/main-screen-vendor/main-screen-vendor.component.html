@@ -6,19 +6,30 @@
 
   <div class="quick-action-wrapper">
     <div class="action-btn-wrapper">
-      <button (click)="actionIsExpanded = !actionIsExpanded" type="button"
+      <button (click)="quickActionClick()" type="button"
         [ngClass]="{ 'action-btn-expanded': actionIsExpanded }">
         <span>{{ 'quickAction' | translate:self }}</span>
         <i *ngIf="actionIsExpanded" class="fa fa-angle-up ml-2"></i>
         <i *ngIf="!actionIsExpanded" class="fa fa-angle-down ml-2"></i>
       </button>
-      <button (click)="onlyMyProjectsClick()" type="button" [ngClass]="{ 'only-my-projects': onlyMyProjects }"
-        class="my-projects-btn">{{ 'onlyMyProjects' | translate:self }}<img *ngIf="onlyMyProjects" src="../../../../assets/img/check-solid.svg" alt=""></button>
+      <button (click)="onlyMyProjectsClick()" type="button" [ngClass]="{ 'my-projects-btn-active': onlyMyProjects }"
+        class="my-projects-btn">{{ 'onlyMyProjects' | translate:self }}<img *ngIf="onlyMyProjects"
+          src="../../../../assets/img/check-solid.svg" alt=""></button>
+      <button (click)="upload3dModelsClick()" type="button" [ngClass]="{ 'upload-3d-models-active': upload3dModels }"
+        class="my-projects-btn">{{ 'upload3dModels' | translate:self }}</button>
     </div>
 
     <div *ngIf="actionIsExpanded" class="create-update-wrapper">
       <app-vendor-create-update></app-vendor-create-update>
     </div>
+
+    <div *ngIf="upload3dModels" class="panel3d-models-wrapper">
+      <app-panel3d-models></app-panel3d-models>
+    </div>
+  </div>
+
+  <div *ngIf="showTooltip" class="edit-mode-tooltip-wrapper">
+    <app-edit-mode-tooltip (closeFormEvent)="closeTooltipForm($event)"></app-edit-mode-tooltip>
   </div>
 
   <div class="right-component-wrapper">

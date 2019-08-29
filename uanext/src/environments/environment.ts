@@ -44,6 +44,8 @@ export const environment = {
   getLastHistoryCoordinates: '/api/Map/GetLastHistoryCoordinates',
   search3DObject: '/api/Map/Search3DObject',
   mapFilteringProjects: '/api/Map/projects-filtering',
+  addGeoModel: '/api/Map/addGeoModel',
+  getGeoModels: '/api/Map/getGeoModels',
 
   Notification: '/api/Notification',
 

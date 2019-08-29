@@ -4,10 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { environment } from 'src/environments/environment';
 import { tap, map, catchError, delay } from 'rxjs/operators';
-import { FilteredProjects, FilterFields } from 'src/app/models';
+import { FilteredProjects, FilterFields, GeoObject } from 'src/app/models';
 import { responseProjects } from 'src/app/helperClasses/projects';
 import { FilterComponent } from 'src/app/components';
 import { FieldActivityInterface, TranslateService } from '../translate.service';
+import { StateService } from '../state/state.service';
 
 const emptyFilteredProjects = {
   pages: 0,
@@ -23,7 +24,7 @@ export class FilteredProjectsService {
   projectForView: VendorProject = null; // initial when click on selected project
   fieldActivityOptions: FieldActivityInterface[];
 
-  constructor(private http: HttpClient, private translateService: TranslateService) {
+  constructor(private http: HttpClient, private translateService: TranslateService, private stateService: StateService) {
     this.translateService.fieldOfActivityOptions.subscribe(
       (val: FieldActivityInterface[]) => {
         this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
@@ -43,9 +44,9 @@ export class FilteredProjectsService {
           return response;
         }),
         map((response: FilteredProjects) => { // todo remove
-          this.addRating(response);
+          return this.addRating(response);
           // this.addAvatara(response);
-          return this.add3DObjectsArr(response);
+          // return this.add3DObjectsArr(response);
         }),
       );
   }
@@ -69,9 +70,9 @@ export class FilteredProjectsService {
           return response;
         }),
         map((response: FilteredProjects) => { // todo remove
-          this.addRating(response);
+          return this.addRating(response);
           // this.addAvatara(response);
-          return this.add3DObjectsArr(response);
+          // return this.add3DObjectsArr(response);
         }),
       );
   }
@@ -127,7 +128,7 @@ export class FilteredProjectsService {
     const x = 35.024159076690694;
     const y = 48.46812449736811;
     for (let i = 0; i < filteredProjects.projectsList.length; i++) {
-      filteredProjects.projectsList[i].TEST_3D_Objects_Arr = [
+      filteredProjects.projectsList[i].geoObjects = [
 /*         {
           geoObjectId: 'ID-' + Math.random(),
           coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
@@ -168,6 +169,13 @@ export class FilteredProjectsService {
 
     }
     return filteredProjects;
+  }
+
+  private currentUserGeoObject(geoObject: GeoObject): boolean {
+    console.log(this.stateService.getId());
+    console.log(this.stateService.getUserId());
+
+    return true;
   }
 
 }

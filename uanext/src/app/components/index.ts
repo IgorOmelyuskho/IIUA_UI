@@ -75,6 +75,9 @@ import {
 } from './projectUserComponents/project-user-object3d-upload/project-user-object3d-upload.component';
 import { MapEditModeComponent } from './map-edit-mode/map-edit-mode.component';
 import { MapDemoComponent } from './map-demo/map-demo.component';
+import { Panel3dModelsComponent } from './panel3d-models/panel3d-models.component';
+import { ThreejsSceneComponent } from './threejs-scene/threejs-scene.component';
+import { EditModeTooltipComponent } from './edit-mode-tooltip/edit-mode-tooltip.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -146,7 +149,10 @@ export {
   CreateVendorProjectFilledComponent,
   ProjectUserObject3dUploadComponent,
   MapEditModeComponent,
-  MapDemoComponent
+  MapDemoComponent,
+  Panel3dModelsComponent,
+  ThreejsSceneComponent,
+  EditModeTooltipComponent
 };
 
 export const components = [
@@ -218,7 +224,10 @@ export const components = [
   CreateVendorProjectFilledComponent,
   ProjectUserObject3dUploadComponent,
   MapEditModeComponent,
-  MapDemoComponent
+  MapDemoComponent,
+  Panel3dModelsComponent,
+  ThreejsSceneComponent,
+  EditModeTooltipComponent
 ];
 
 

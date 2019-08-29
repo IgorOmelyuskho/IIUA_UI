@@ -53,7 +53,7 @@ export class ProjectsService {
           return response;
         }),
         map((response: VendorProject[]) => { // todo remove
-          this.add3DObjectsArr(response);
+          // this.add3DObjectsArr(response);
           return this.addRating(response);
           // return this.addAvatara(response);
         }),
@@ -116,7 +116,7 @@ export class ProjectsService {
   private add3DObjectsArr(filteredProjects: VendorProject[]): VendorProject[] {
     const delta = 0.005;
     for (let i = 0; i < filteredProjects.length; i++) {
-      filteredProjects[i].TEST_3D_Objects_Arr = [
+      filteredProjects[i].geoObjects = [
         {
           geoObjectId: 'ID-' + Math.random(),
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
@@ -148,8 +148,8 @@ export class ProjectsService {
           geoObjectId: 'ID-' + Math.random(),
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
           projectName: filteredProjects[i].name,
-          pathToZip: window.location.origin + '/assets/objects/bl4.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/bl4.zip',
+          pathToZip: window.location.origin + '/assets/objects/low-poly-building.zip',
+          pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
           project: filteredProjects[i],
           canMove: false
         },

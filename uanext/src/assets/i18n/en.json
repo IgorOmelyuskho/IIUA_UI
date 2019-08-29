@@ -282,7 +282,8 @@
     },
     "MainScreenVendorComponent": {
         "quickAction": "Quick action",
-        "onlyMyProjects": "Only my projects"
+        "onlyMyProjects": "Only my projects",
+        "upload3dModels": "Download 3D model to the map"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Update you project settings",
@@ -706,6 +707,9 @@
         "all": "All",
         "group": "Group",
         "single": "Single"
+    },
+    "Panel3dModelsComponent": {
+      "selectProject": "SELECT PROJECT"
     },
     "checkEmailShared": "You received a message in the email",
     "firstNeedRegister": "First you need to register as Vendor or Investor",
