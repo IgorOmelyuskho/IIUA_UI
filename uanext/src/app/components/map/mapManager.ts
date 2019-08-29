@@ -179,24 +179,6 @@ export class MapManager {
   }
 
   private getMapCoordsWhenDrop(): { x: number, y: number } {
-    // console.log(document.getElementById(this.mapWrapperId));
-    // document.getElementById(this.mapWrapperId).click();
-
-    // const e1 = document.querySelector('#map-wrapper-html-element-id-3585349 .maptalks-canvas-layer canvas');
-    // console.log(e1);
-
-    // this.triggerEvent(document.getElementById(this.mapWrapperId), 'onclick');
-    // this.triggerEvent(e1, 'onclick');
-
-    // this.simulateClick(document.getElementById(this.mapWrapperId), 'onclick');
-    // this.simulateClick(e1, 'onclick');
-
-    // this.eventFire(document.getElementById(this.mapWrapperId), 'onclick');
-    // this.eventFire(e1, 'onclick');
-
-    // this.simulateClick2(document.getElementById(this.mapWrapperId));
-    // this.simulateClick2(e1);
-
     return this.map.getCenter();
   }
 
