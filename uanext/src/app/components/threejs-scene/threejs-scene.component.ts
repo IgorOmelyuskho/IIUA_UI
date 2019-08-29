@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { Object3DDto } from 'src/app/models/Object3DDto';
+import { Object3DDto } from 'src/app/models/object3DDto';
 
 export interface Object3DAndProject {
   object3DDto: Object3DDto;
