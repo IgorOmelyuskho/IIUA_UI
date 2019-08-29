@@ -8,7 +8,7 @@ import { SignalRService } from 'src/app/services/signal-r.service';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
-import { Object3DDto } from 'src/app/models/Object3DDto';
+import { Object3DDto } from 'src/app/models/object3DDto';
 import { MapService } from 'src/app/services/http/map.service';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 import { Object3DAndProject } from '../threejs-scene/threejs-scene.component';
