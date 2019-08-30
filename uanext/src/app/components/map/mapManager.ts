@@ -2,7 +2,7 @@ import Stats from 'stats-js';
 import { GeoObject } from 'src/app/models';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
-import { Object3DDto } from 'src/app/models/Object3DDto';
+import { Object3DDto } from 'src/app/models/object3DDto';
 import { MapService } from 'src/app/services/http/map.service';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 declare var THREE: any;
@@ -27,7 +27,6 @@ export class MapManager {
   private readonly initZoom = 15;
   private readonly updatedInterval = 3500;
   private readonly drawInterval = 50;
-  private readonly constForObjectsScale = 3;
 
   // callbacks
   private on_click_object: Function = null;
@@ -53,7 +52,6 @@ export class MapManager {
   private polygonLayer = null;
   private labelRenderer = null;
   private camera = null;
-  private objectsScale: number = null;
   private prevClusterGeoObjectId: string = null;
   private mapZoomEnum: MapZoomEnum;
   private mapService: MapService;
@@ -105,7 +103,6 @@ export class MapManager {
     this.clusterLayer = null;
     this.polygonLayer = null;
     this.camera = null;
-    this.objectsScale = null;
     this.prevClusterGeoObjectId = null;
     this.mapService = null;
 
@@ -465,7 +462,6 @@ export class MapManager {
       })
     });
 
-    this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(this.map.getZoom());
     this.mapZoomEnum = this.detectMapZoom(this.map.getZoom());
     this.mapEventHandlers();
   }
@@ -501,7 +497,6 @@ export class MapManager {
     });
 
     this.map.on('zooming', (event) => {
-      this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(event.to);
       this.mapZoomEnum = this.detectMapZoom(event.to);
       for (let i = 0; i < this.objectsArr.length; i++) {
         const whatModelNeedLoad: ModelQuality = this.detectWhenNeedLoadObject3D(this.mapZoomEnum, this.objectsArr[i]);
@@ -1201,7 +1196,6 @@ export class MapManager {
     }
     if (geoObj.object3DLP) {
       geoObj.object3DLP.visible = true;
-      geoObj.object3DLP.scale.set(this.objectsScale, this.objectsScale, this.objectsScale);
     }
     if (geoObj.boxHelper) {
       geoObj.boxHelper.visible = true;
@@ -1367,32 +1361,26 @@ export class MapManager {
 
   private editIncreaseScale(geoObject: GeoObject) {
     const delta = 0.05;
+    const scale = geoObject.scale + delta;
+    geoObject.scale = scale;
     if (geoObject.object3DLP) {
-      const scaleLP = geoObject.object3DLP.scale.x + delta;
-      geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
-      geoObject.scale = scaleLP;
-      console.log('scaleLP ', scaleLP);
+      geoObject.object3DLP.scale.set(scale, scale, scale);
     }
     if (geoObject.object3DHP) {
-      const scaleHP = geoObject.object3DHP.scale.x + delta;
-      geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
-      console.log('scaleHP ', scaleHP);
+      geoObject.object3DHP.scale.set(scale, scale, scale);
     }
     this.postHistoryData(geoObject);
   }
 
   private editReduceScale(geoObject: GeoObject) {
     const delta = -0.05;
+    const scale = geoObject.scale + delta;
+    geoObject.scale = scale;
     if (geoObject.object3DLP) {
-      const scaleLP = geoObject.object3DLP.scale.x + delta;
-      geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
-      geoObject.scale = scaleLP;
-      console.log('scaleLP ', scaleLP);
+      geoObject.object3DLP.scale.set(scale, scale, scale);
     }
     if (geoObject.object3DHP) {
-      const scaleHP = geoObject.object3DHP.scale.x + delta;
-      geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
-      console.log('scaleHP ', scaleHP);
+      geoObject.object3DHP.scale.set(scale, scale, scale);
     }
     this.postHistoryData(geoObject);
   }
