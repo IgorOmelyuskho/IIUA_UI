@@ -19,6 +19,7 @@ export class GeoObject {
   speedY?: number;
   rotationZ?: number;
   objectDivLabel?: HTMLElement;
+  editBtnLabel?: HTMLElement;
   pointForMove?: any; // todo remove
   marker?: any;
   mouseUnder?: boolean;
