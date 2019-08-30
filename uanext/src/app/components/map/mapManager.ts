@@ -2,7 +2,7 @@ import Stats from 'stats-js';
 import { GeoObject } from 'src/app/models';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
-import { Object3DDto } from 'src/app/models/Object3DDto';
+import { Object3DDto } from 'src/app/models/object3DDto';
 import { MapService } from 'src/app/services/http/map.service';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 declare var THREE: any;
@@ -24,10 +24,9 @@ export class MapManager {
   private readonly bigZoom = 16;
   private readonly deltaZoom = 0.2;
   private readonly avgZoom = 12;
-  private readonly initZoom = 15;
+  private readonly initZoom = 18;
   private readonly updatedInterval = 3500;
   private readonly drawInterval = 50;
-  private readonly constForObjectsScale = 3;
 
   // callbacks
   private on_click_object: Function = null;
@@ -53,7 +52,6 @@ export class MapManager {
   private polygonLayer = null;
   private labelRenderer = null;
   private camera = null;
-  private objectsScale: number = null;
   private prevClusterGeoObjectId: string = null;
   private mapZoomEnum: MapZoomEnum;
   private mapService: MapService;
@@ -105,7 +103,6 @@ export class MapManager {
     this.clusterLayer = null;
     this.polygonLayer = null;
     this.camera = null;
-    this.objectsScale = null;
     this.prevClusterGeoObjectId = null;
     this.mapService = null;
 
@@ -181,43 +178,6 @@ export class MapManager {
   private getMapCoordsWhenDrop(): { x: number, y: number } {
     return this.map.getCenter();
   }
-
-  // eventFire(el, etype) {
-  //   if (el.fireEvent) {
-  //     el.fireEvent(etype);
-  //   } else {
-  //     const evObj = document.createEvent('Events');
-  //     evObj.initEvent(etype, true, true);
-  //     el.dispatchEvent(evObj);
-  //   }
-  // }
-
-  // triggerEvent(elem, event) {
-  //   const clickEvent = new Event(event, { bubbles: true }); // Create the event.
-  //   elem.dispatchEvent(clickEvent);    // Dispatch the event.
-  // }
-
-  // simulateClick(elem, eventType) {
-  //   const event = new MouseEvent('click', {
-  //     'view': window,
-  //     'bubbles': true,
-  //     'cancelable': true
-  //   });
-  //   const canceled = !elem.dispatchEvent(event);
-  //   if (canceled) {
-  //     // A handler called preventDefault.
-  //     console.log('cancel');
-  //   } else {
-  //     // None of the handlers called preventDefault.
-  //     console.log('not canceled');
-  //   }
-  // }
-
-  // simulateClick2(elem) {
-  //   const evt = document.createEvent('MouseEvents');
-  //   evt.initMouseEvent('click', true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
-  //   document.body.dispatchEvent(evt);
-  // }
 
   // set callbacks
   //#region
@@ -465,7 +425,6 @@ export class MapManager {
       })
     });
 
-    this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(this.map.getZoom());
     this.mapZoomEnum = this.detectMapZoom(this.map.getZoom());
     this.mapEventHandlers();
   }
@@ -501,7 +460,6 @@ export class MapManager {
     });
 
     this.map.on('zooming', (event) => {
-      this.objectsScale = this.constForObjectsScale * this.calcInterpolationScale(event.to);
       this.mapZoomEnum = this.detectMapZoom(event.to);
       for (let i = 0; i < this.objectsArr.length; i++) {
         const whatModelNeedLoad: ModelQuality = this.detectWhenNeedLoadObject3D(this.mapZoomEnum, this.objectsArr[i]);
@@ -518,7 +476,6 @@ export class MapManager {
     });
 
     this.map.on('click', (event) => {
-      console.log('ON MAP CLICK');
       const identify = this.clusterLayer.identify(event.coordinate);
       if (identify && identify.children && identify.children.length === 1) {
         const geoObject: GeoObject = identify.children[0].parent;
@@ -649,22 +606,6 @@ export class MapManager {
       }
     };
     this.threeLayer.addTo(this.map);
-
-    // document.getElementById(this.mapWrapperId).addEventListener('click', (event) => {
-    //   console.log(event);
-    //   console.log(1111111111111111111111111111111);
-    // });
-
-    // const e1 = document.querySelector('#map-wrapper-html-element-id-3585349 .maptalks-canvas-layer canvas');
-    // e1.addEventListener('click', (event) => {
-    //   console.log(event);
-    //   console.log(222222222222222222222222222);
-    // });
-
-    // document.addEventListener('click', (event) => {
-    //   console.log(event);
-    //   console.log(333333333333333);
-    // });
   }
   //#endregion
 
@@ -697,6 +638,11 @@ export class MapManager {
       geoObject.objectDivLabel.removeEventListener('mouseleave', this.labelMouseLeaveHandler);
       geoObject.objectDivLabel.removeEventListener('click', this.labelMouseClickHandler);
       geoObject.objectDivLabel.parentNode.removeChild(geoObject.objectDivLabel);
+    }
+
+    if (geoObject.editBtnLabel != null) {
+      geoObject.editBtnLabel.removeEventListener('click', this.editBtnLabelClickHandler);
+      geoObject.editBtnLabel.parentNode.removeChild(geoObject.editBtnLabel);
     }
 
     if (geoObject.object3DLP != null) {
@@ -766,6 +712,15 @@ export class MapManager {
       this.scene.add(geoObject.pointForMove);
     }
 
+    this.createObjectDivLabel(geoObject, modelQuality);
+    this.createObjectEditLabel(geoObject, modelQuality);
+
+    this.changeVisibleAndScale(geoObject);
+    this.scene.add(object3D);
+    this.threeLayer.renderScene();
+  }
+
+  private createObjectDivLabel(geoObject: GeoObject, modelQuality: ModelQuality) {
     // if (modelQuality === ModelQuality.LOW) { // if need objectDivLabel for low quality model
     //   geoObject.object3DLP.add(objLabel);
     // }
@@ -777,7 +732,6 @@ export class MapManager {
       objectDivLabel.addEventListener('click', this.labelMouseClickHandler);
       objectDivLabel.className = 'obj-label';
       objectDivLabel.textContent = geoObject.projectName;
-      objectDivLabel.style.marginTop = '-1em';
       const objLabel = new THREE.CSS2DObject(objectDivLabel);
       geoObject.objectDivLabel = objectDivLabel;
       objLabel.position.x = 0;
@@ -785,10 +739,21 @@ export class MapManager {
       objLabel.position.z = geoObject.box3.getSize().z * 1.1;
       geoObject.object3DHP.add(objLabel);
     }
+  }
 
-    this.changeVisibleAndScale(geoObject);
-    this.scene.add(object3D);
-    this.threeLayer.renderScene();
+  private createObjectEditLabel(geoObject: GeoObject, modelQuality: ModelQuality) {
+    if (modelQuality === ModelQuality.HIGH) {
+      const objectEditLabel = document.createElement('div');
+      objectEditLabel['geoObject'] = geoObject;
+      objectEditLabel.addEventListener('click', this.editBtnLabelClickHandler);
+      objectEditLabel.className = 'obj-edit-label';
+      const objLabel = new THREE.CSS2DObject(objectEditLabel);
+      geoObject.editBtnLabel = objectEditLabel;
+      objLabel.position.x = 0;
+      objLabel.position.y = 0;
+      objLabel.position.z = -geoObject.box3.getSize().z * 0.2;
+      geoObject.object3DHP.add(objLabel);
+    }
   }
 
   private labelMouseEnterHandler = (event) => {
@@ -809,6 +774,11 @@ export class MapManager {
     if (this.on_click_object != null) {
       this.on_click_object(this.selectedObject);
     }
+  }
+
+  private editBtnLabelClickHandler = (event) => {
+    const geoObject: GeoObject = event.target['geoObject'];
+    geoObject.editBtnLabel.className = 'obj-edit-label-selected';
   }
 
   private labelMouseLeaveHandler = (event) => {
@@ -1180,6 +1150,7 @@ export class MapManager {
   private whenBigZoom(geoObj: GeoObject) {
     if (geoObj.objectDivLabel) {
       geoObj.objectDivLabel.style.display = '';
+      geoObj.editBtnLabel.style.display = '';
     }
     if (geoObj.object3DHP) {
       geoObj.object3DHP.visible = true;
@@ -1195,13 +1166,13 @@ export class MapManager {
   private whenAvgZoom(geoObj: GeoObject) {
     if (geoObj.objectDivLabel) {
       geoObj.objectDivLabel.style.display = 'none';
+      geoObj.editBtnLabel.style.display = 'none';
     }
     if (geoObj.object3DHP) {
       geoObj.object3DHP.visible = false;
     }
     if (geoObj.object3DLP) {
       geoObj.object3DLP.visible = true;
-      geoObj.object3DLP.scale.set(this.objectsScale, this.objectsScale, this.objectsScale);
     }
     if (geoObj.boxHelper) {
       geoObj.boxHelper.visible = true;
@@ -1211,6 +1182,7 @@ export class MapManager {
   private whenSmallZoom(geoObj: GeoObject) {
     if (geoObj.objectDivLabel) {
       geoObj.objectDivLabel.style.display = 'none';
+      geoObj.editBtnLabel.style.display = 'none';
     }
     if (geoObj.object3DHP) {
       geoObj.object3DHP.visible = false;
@@ -1367,32 +1339,26 @@ export class MapManager {
 
   private editIncreaseScale(geoObject: GeoObject) {
     const delta = 0.05;
+    const scale = geoObject.scale + delta;
+    geoObject.scale = scale;
     if (geoObject.object3DLP) {
-      const scaleLP = geoObject.object3DLP.scale.x + delta;
-      geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
-      geoObject.scale = scaleLP;
-      console.log('scaleLP ', scaleLP);
+      geoObject.object3DLP.scale.set(scale, scale, scale);
     }
     if (geoObject.object3DHP) {
-      const scaleHP = geoObject.object3DHP.scale.x + delta;
-      geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
-      console.log('scaleHP ', scaleHP);
+      geoObject.object3DHP.scale.set(scale, scale, scale);
     }
     this.postHistoryData(geoObject);
   }
 
   private editReduceScale(geoObject: GeoObject) {
     const delta = -0.05;
+    const scale = geoObject.scale + delta;
+    geoObject.scale = scale;
     if (geoObject.object3DLP) {
-      const scaleLP = geoObject.object3DLP.scale.x + delta;
-      geoObject.object3DLP.scale.set(scaleLP, scaleLP, scaleLP);
-      geoObject.scale = scaleLP;
-      console.log('scaleLP ', scaleLP);
+      geoObject.object3DLP.scale.set(scale, scale, scale);
     }
     if (geoObject.object3DHP) {
-      const scaleHP = geoObject.object3DHP.scale.x + delta;
-      geoObject.object3DHP.scale.set(scaleHP, scaleHP, scaleHP);
-      console.log('scaleHP ', scaleHP);
+      geoObject.object3DHP.scale.set(scale, scale, scale);
     }
     this.postHistoryData(geoObject);
   }
