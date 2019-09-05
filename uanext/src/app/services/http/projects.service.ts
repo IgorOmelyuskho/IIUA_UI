@@ -122,7 +122,7 @@ export class ProjectsService {
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
           projectName: filteredProjects[i].name,
           pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+          // pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
           project: filteredProjects[i],
           canMove: true
         },
@@ -131,7 +131,7 @@ export class ProjectsService {
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
           projectName: filteredProjects[i].name,
           pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+          // pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
           project: filteredProjects[i],
           canMove: true
         },
@@ -140,7 +140,7 @@ export class ProjectsService {
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
           projectName: filteredProjects[i].name,
           pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+          // pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
           project: filteredProjects[i],
           canMove: true
         },
@@ -149,7 +149,7 @@ export class ProjectsService {
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
           projectName: filteredProjects[i].name,
           pathToZip: window.location.origin + '/assets/objects/low-poly-building.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
+          // pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
           project: filteredProjects[i],
           canMove: false
         },

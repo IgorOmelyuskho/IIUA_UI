@@ -5,13 +5,13 @@ export class GeoObject {
   coords: { x: number, y: number };
   projectName?: string;
   pathToZip: string;
-  pathToZipLP: string;
+  // pathToZipLP: string;
   canMove?: boolean;
 
   project?: VendorProject;
 
-  object3DLP?: any;
-  object3DLPStartLoaded?: boolean;
+  // object3DLP?: any;
+  // object3DLPStartLoaded?: boolean;
   object3DHP?: any;
   object3DHPStartLoaded?: boolean;
   prevCoords?: any;

@@ -14,11 +14,6 @@ export enum MapZoomEnum {
   SMALL = 'SMALL', // < avgZoom
 }
 
-export enum ModelQuality {
-  LOW = 'LOW',
-  HIGH = 'HIGH',
-}
-
 export class MapManager {
   // constants region
   private readonly bigZoom = 16;
@@ -161,7 +156,6 @@ export class MapManager {
       project: project,
       coords: this.map.getCenter(),
       pathToZip: object3DDto.path,
-      pathToZipLP: object3DDto.path,
       canMove: false,
       currentUser: true,
       projectName: project.name,
@@ -266,8 +260,6 @@ export class MapManager {
     for (let i = 0; i < objects.length; i++) {
       const newObj: GeoObject = objects[i];
       newObj.marker = null;
-      newObj.object3DLP = null;
-      newObj.object3DLPStartLoaded = false;
       newObj.object3DHP = null;
       newObj.object3DHPStartLoaded = false;
       newObj.mouseUnder = false;
@@ -283,9 +275,7 @@ export class MapManager {
       }
 
       this.createMarker(newObj);
-      const modelQuality: ModelQuality = this.modelQualityDependenceMapZoomEnum(this.mapZoomEnum);
-
-      this.loadObject3D(modelQuality, newObj);
+      this.loadObject3D(newObj);
       this.objectsArr.push(newObj);
     }
   }
@@ -453,15 +443,6 @@ export class MapManager {
     this.map.on('zooming', (event) => {
       this.mapZoomEnum = this.detectMapZoom(event.to);
       for (let i = 0; i < this.objectsArr.length; i++) {
-        const whatModelNeedLoad: ModelQuality = this.detectWhenNeedLoadObject3D(this.mapZoomEnum, this.objectsArr[i]);
-
-        if (whatModelNeedLoad === ModelQuality.HIGH) {
-          this.loadObject3D(whatModelNeedLoad, this.objectsArr[i]);
-        }
-        if (whatModelNeedLoad === ModelQuality.LOW) {
-          this.loadObject3D(whatModelNeedLoad, this.objectsArr[i]);
-        }
-
         this.changeVisibleAndScale(this.objectsArr[i]);
       }
     });
@@ -525,19 +506,6 @@ export class MapManager {
         this.on_map_change_extent(extent);
       }
     });
-  }
-
-  private detectWhenNeedLoadObject3D(mapZoomEnum: MapZoomEnum, geoObject: GeoObject): ModelQuality {
-    if (mapZoomEnum === MapZoomEnum.SMALL && geoObject.object3DLP == null && geoObject.object3DLPStartLoaded === false) {
-      return ModelQuality.LOW;
-    }
-    if (mapZoomEnum === MapZoomEnum.AVG && geoObject.object3DLP == null && geoObject.object3DLPStartLoaded === false) {
-      return ModelQuality.LOW;
-    }
-    if (mapZoomEnum === MapZoomEnum.BIG && geoObject.object3DHP == null && geoObject.object3DHPStartLoaded === false) {
-      return ModelQuality.HIGH;
-    }
-    return null;
   }
 
   private createClusterLayer() {
@@ -650,19 +618,6 @@ export class MapManager {
       geoObject.editPanelLabel.parentNode.removeChild(geoObject.editPanelLabel);
     }
 
-    if (geoObject.object3DLP != null) {
-      if (geoObject.object3DLP.geometry) {
-        geoObject.object3DLP.geometry.dispose();
-      }
-      if (geoObject.object3DLP.material) {
-        geoObject.object3DLP.material.dispose();
-      }
-      if (geoObject.object3DLP.texture) {
-        geoObject.object3DLP.texture.dispose();
-      }
-      this.scene.remove(geoObject.object3DLP);
-    }
-
     if (geoObject.object3DHP != null) {
       if (geoObject.object3DHP.geometry) {
         geoObject.object3DHP.geometry.dispose();
@@ -677,7 +632,8 @@ export class MapManager {
     }
   }
 
-  private init3dObject(geoObject: GeoObject, object3D: any, modelQuality: ModelQuality) { // modelQuality - low / high
+  private init3dObject(geoObject: GeoObject, object3D: any) {
+    console.log('INIT-OBJECT');
     const childScale = 0.004;
     const resultScale = childScale * geoObject.scale;
     object3D.traverse((child) => {
@@ -690,13 +646,7 @@ export class MapManager {
         child.material.initColor = child.material.color.getHex();
       }
     });
-
-    if (modelQuality === ModelQuality.LOW) {
-      geoObject.object3DLP = object3D;
-    }
-    if (modelQuality === ModelQuality.HIGH) {
-      geoObject.object3DHP = object3D;
-    }
+    geoObject.object3DHP = object3D;
 
     const v = this.threeLayer.coordinateToVector3(new maptalks.Coordinate(geoObject.coords.x, geoObject.coords.y));
     object3D.position.x = v.x;
@@ -717,9 +667,9 @@ export class MapManager {
       this.scene.add(geoObject.pointForMove);
     }
 
-    this.createObjectDivLabel(geoObject, modelQuality);
-    this.createObjectEditLabel(geoObject, modelQuality);
-    this.createObjectEditPanelLabel(geoObject, modelQuality);
+    this.createObjectDivLabel(geoObject);
+    this.createObjectEditLabel(geoObject);
+    this.createObjectEditPanelLabel(geoObject);
 
     this.changeVisibleAndScale(geoObject);
     this.scene.add(object3D);
@@ -732,16 +682,10 @@ export class MapManager {
     }
   }
 
-  private loadObject3D(modelQuality: ModelQuality, geoObject: GeoObject) {
+  private loadObject3D(geoObject: GeoObject) {
     let pathToZip: string;
-    if (modelQuality === ModelQuality.LOW) {
-      pathToZip = geoObject.pathToZipLP;
-      geoObject.object3DLPStartLoaded = true;
-    }
-    if (modelQuality === ModelQuality.HIGH) {
-      pathToZip = geoObject.pathToZip;
-      geoObject.object3DHPStartLoaded = true;
-    }
+    pathToZip = geoObject.pathToZip;
+    geoObject.object3DHPStartLoaded = true;
 
     THREE.ZipLoadingManager
       .uncompress(pathToZip, ['.mtl', '.obj', '.jpg', '.png'])
@@ -759,7 +703,7 @@ export class MapManager {
         }
 
         this.mtlLoad(
-          (materials) => { this.mtlLoadOnLoad(materials, zip.manager, pathToFolder, objFileName, modelQuality, geoObject); },
+          (materials) => { this.mtlLoadOnLoad(materials, zip.manager, pathToFolder, objFileName, geoObject); },
           (err) => { console.error(err); },
           zip.manager,
           pathToFolder,
@@ -774,9 +718,9 @@ export class MapManager {
     mtlLoader.load(mtlFileName, onLoadCb, null, onErrorCb);
   }
 
-  private mtlLoadOnLoad = (materials, zipManager, pathToFolder, objFileName, modelQuality, geoObject) => {
+  private mtlLoadOnLoad = (materials, zipManager, pathToFolder, objFileName, geoObject) => {
     this.objLoad(
-      (object3D) => { this.objLoadOnLoad(object3D, modelQuality, geoObject); },
+      (object3D) => { this.objLoadOnLoad(object3D, geoObject); },
       (err) => { console.error(err); },
       zipManager,
       materials,
@@ -793,73 +737,60 @@ export class MapManager {
     objLoader.load(objFileName, onLoadCb, null, onErrorCb);
   }
 
-  private objLoadOnLoad = (object3D, modelQuality, geoObject) => {
-    if (modelQuality === ModelQuality.LOW) {
-      geoObject.object3DLPStartLoaded = false;
-    }
-    if (modelQuality === ModelQuality.HIGH) {
-      geoObject.object3DHPStartLoaded = false;
-    }
-    this.init3dObject(geoObject, object3D, modelQuality);
+  private objLoadOnLoad = (object3D, geoObject) => {
+    console.log('OBJ-ON-LOAD');
+    geoObject.object3DHPStartLoaded = false;
+    this.init3dObject(geoObject, object3D);
   }
   //#endregion
 
 
   // labels
   //#region
-  private createObjectDivLabel(geoObject: GeoObject, modelQuality: ModelQuality) {
-    // if (modelQuality === ModelQuality.LOW) { // if need objectDivLabel for low quality model
-    //   geoObject.object3DLP.add(objLabel);
-    // }
-    if (modelQuality === ModelQuality.HIGH) {
-      const objectDivLabel = document.createElement('div');
-      objectDivLabel['geoObject'] = geoObject;
-      objectDivLabel.addEventListener('mouseenter', this.labelMouseEnterHandler);
-      objectDivLabel.addEventListener('mouseleave', this.labelMouseLeaveHandler);
-      objectDivLabel.addEventListener('click', this.labelMouseClickHandler);
-      objectDivLabel.className = 'obj-label';
-      objectDivLabel.textContent = geoObject.projectName;
-      const objLabel = new THREE.CSS2DObject(objectDivLabel);
-      geoObject.objectDivLabel = objectDivLabel;
-      objLabel.position.x = 0;
-      objLabel.position.y = 0;
-      objLabel.position.z = geoObject.box3.getSize().z * 1.1;
-      geoObject.object3DHP.add(objLabel);
-    }
+  private createObjectDivLabel(geoObject: GeoObject) {
+    const objectDivLabel = document.createElement('div');
+    objectDivLabel['geoObject'] = geoObject;
+    objectDivLabel.addEventListener('mouseenter', this.labelMouseEnterHandler);
+    objectDivLabel.addEventListener('mouseleave', this.labelMouseLeaveHandler);
+    objectDivLabel.addEventListener('click', this.labelMouseClickHandler);
+    objectDivLabel.className = 'obj-label';
+    objectDivLabel.textContent = geoObject.projectName;
+    const objLabel = new THREE.CSS2DObject(objectDivLabel);
+    geoObject.objectDivLabel = objectDivLabel;
+    objLabel.position.x = 0;
+    objLabel.position.y = 0;
+    objLabel.position.z = geoObject.box3.getSize().z * 1.1;
+    geoObject.object3DHP.add(objLabel);
   }
 
-  private createObjectEditLabel(geoObject: GeoObject, modelQuality: ModelQuality) {
-    if (modelQuality === ModelQuality.HIGH) {
-      const objectEditLabel = document.createElement('div');
-      objectEditLabel['geoObject'] = geoObject;
-      objectEditLabel.addEventListener('click', this.editBtnLabelClickHandler);
-      objectEditLabel.className = 'obj-edit-label';
-      const objLabel = new THREE.CSS2DObject(objectEditLabel);
-      geoObject.editBtnLabel = objectEditLabel;
-      objLabel.position.x = 0;
-      objLabel.position.y = 0;
-      objLabel.position.z = 0; // for edit panel
-      geoObject.object3DHP.add(objLabel);
-    }
+  private createObjectEditLabel(geoObject: GeoObject) {
+    const objectEditLabel = document.createElement('div');
+    objectEditLabel['geoObject'] = geoObject;
+    objectEditLabel.addEventListener('click', this.editBtnLabelClickHandler);
+    objectEditLabel.className = 'obj-edit-label';
+    const objLabel = new THREE.CSS2DObject(objectEditLabel);
+    geoObject.editBtnLabel = objectEditLabel;
+    objLabel.position.x = 0;
+    objLabel.position.y = 0;
+    objLabel.position.z = 0; // for edit panel
+    geoObject.object3DHP.add(objLabel);
   }
 
-  private createObjectEditPanelLabel(geoObject: GeoObject, modelQuality: ModelQuality) {
-    if (modelQuality === ModelQuality.HIGH) {
-      const elemForClone = document.getElementById('edit-panel-label');
-      const editPanelLabel: HTMLElement = <HTMLElement>elemForClone.cloneNode(true);
-      editPanelLabel.removeAttribute('id');
-      editPanelLabel['geoObject'] = geoObject;
-      editPanelLabel.style.display = 'none';
-      this.initNoUiSlider(editPanelLabel.querySelector('.scale-container .slider-range'));
-      this.initRotateSection(editPanelLabel.querySelector('.rotate-container'));
-      this.initCloseBtn(editPanelLabel.querySelector('.close'));
-      const objLabel = new THREE.CSS2DObject(editPanelLabel);
-      geoObject.editPanelLabel = editPanelLabel;
-      objLabel.position.x = 0;
-      objLabel.position.y = 0;
-      objLabel.position.z = 0; // for edit panel
-      geoObject.object3DHP.add(objLabel);
-    }
+  private createObjectEditPanelLabel(geoObject: GeoObject) {
+    const elemForClone = document.getElementById('edit-panel-label');
+    const editPanelLabel: HTMLElement = <HTMLElement>elemForClone.cloneNode(true);
+    editPanelLabel.removeAttribute('id');
+    editPanelLabel['geoObject'] = geoObject;
+    editPanelLabel.style.display = 'none';
+    this.initNoUiSlider(editPanelLabel.querySelector('.scale-container .slider-range'));
+    this.initRotateSection(editPanelLabel.querySelector('.rotate-container'));
+    this.initCloseBtn(editPanelLabel.querySelector('.close'));
+    const objLabel = new THREE.CSS2DObject(editPanelLabel);
+    geoObject.editPanelLabel = editPanelLabel;
+    objLabel.position.x = 0;
+    objLabel.position.y = 0;
+    objLabel.position.z = 0; // for edit panel
+    geoObject.object3DHP.add(objLabel);
   }
 
   private initNoUiSlider(rangeElement) {
@@ -1032,23 +963,9 @@ export class MapManager {
   }
 
   private updateCoordsForDraw(geoObj: GeoObject) {
-    const modelQuality: ModelQuality = this.modelQualityDependenceMapZoomEnum(this.mapZoomEnum);
     let obj3D: any;
-    if (modelQuality === ModelQuality.LOW) {
-      obj3D = geoObj.object3DLP;
-      if (obj3D == null) {
-        obj3D = geoObj.object3DHP;
-      }
-    } else if (modelQuality === ModelQuality.HIGH) {
-      obj3D = geoObj.object3DHP;
-      if (obj3D == null) {
-        obj3D = geoObj.object3DLP;
-      }
-    }
+    obj3D = geoObj.object3DHP;
 
-    if (obj3D == null) {
-      obj3D = geoObj.object3DHP;
-    }
     if (geoObj == null || obj3D == null || geoObj.marker == null) {
       return;
     }
@@ -1087,19 +1004,8 @@ export class MapManager {
   }
 
   private selectObject(geoObj: GeoObject) {
-    const modelQuality: ModelQuality = this.modelQualityDependenceMapZoomEnum(this.mapZoomEnum);
     let obj3D: any;
-    if (modelQuality === ModelQuality.LOW) {
-      obj3D = geoObj.object3DLP;
-      if (obj3D == null) {
-        obj3D = geoObj.object3DHP;
-      }
-    } else if (modelQuality === ModelQuality.HIGH) {
-      obj3D = geoObj.object3DHP;
-      if (obj3D == null) {
-        obj3D = geoObj.object3DLP;
-      }
-    }
+    obj3D = geoObj.object3DHP;
 
     if (obj3D == null || obj3D.visible === false) {
       geoObj.mouseUnder = false;
@@ -1193,15 +1099,6 @@ export class MapManager {
     this.canvasElem.style.cursor = cursor;
   }
 
-  private modelQualityDependenceMapZoomEnum(mapZoomEnum: MapZoomEnum): ModelQuality { // low / high
-    if (this.mapZoomEnum === MapZoomEnum.SMALL || this.mapZoomEnum === MapZoomEnum.AVG) {
-      return ModelQuality.LOW;
-    }
-    if (this.mapZoomEnum === MapZoomEnum.BIG) {
-      return ModelQuality.HIGH;
-    }
-  }
-
   private changeVisibleAndScale(geoObj: GeoObject) {
     if (this.mapZoomEnum === MapZoomEnum.BIG) {
       this.whenBigZoom(geoObj);
@@ -1225,15 +1122,12 @@ export class MapManager {
   private whenBigZoom(geoObj: GeoObject) {
     if (geoObj.objectDivLabel) {
       geoObj.objectDivLabel.style.display = 'block';
-      if (this.selectedForEditObject == null) {
+      if (this.selectedForEditObject == null) { 
         geoObj.editBtnLabel.style.display = 'block';
       }
     }
     if (geoObj.object3DHP) {
       geoObj.object3DHP.visible = true;
-    }
-    if (geoObj.object3DLP) {
-      geoObj.object3DLP.visible = false;
     }
     if (geoObj.boxHelper) {
       geoObj.boxHelper.visible = true;
@@ -1246,10 +1140,7 @@ export class MapManager {
       geoObj.editBtnLabel.style.display = 'none';
     }
     if (geoObj.object3DHP) {
-      geoObj.object3DHP.visible = false;
-    }
-    if (geoObj.object3DLP) {
-      geoObj.object3DLP.visible = true;
+      geoObj.object3DHP.visible = true;
     }
     if (geoObj.boxHelper) {
       geoObj.boxHelper.visible = true;
@@ -1263,9 +1154,6 @@ export class MapManager {
     }
     if (geoObj.object3DHP) {
       geoObj.object3DHP.visible = false;
-    }
-    if (geoObj.object3DLP) {
-      geoObj.object3DLP.visible = false;
     }
     if (geoObj.boxHelper) {
       geoObj.boxHelper.visible = false;
@@ -1320,9 +1208,6 @@ export class MapManager {
       return;
     }
     geoObject.scale = scale;
-    if (geoObject.object3DLP) {
-      geoObject.object3DLP.scale.set(scale, scale, scale);
-    }
     if (geoObject.object3DHP) {
       geoObject.object3DHP.scale.set(scale, scale, scale);
     }
