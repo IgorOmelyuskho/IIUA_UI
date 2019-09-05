@@ -216,19 +216,15 @@ mat-progress-bar {
 .obj-edit-label {
   width: 15px;
   height: 15px;
+  top: 30px;
   background: url('./assets/img/edit.png');
   background-size: contain;
   cursor: pointer;
-  left: 50px;
-}
 
-.obj-edit-label-selected {
-  width: 20px;
-  height: 20px;
-  background: url('./assets/img/edit.png');
-  background-size: contain;
-  cursor: pointer;
-  left: 50px;
+  &:hover {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 //#endregion

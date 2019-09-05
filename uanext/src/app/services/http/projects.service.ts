@@ -44,33 +44,33 @@ export class ProjectsService {
   constructor(private http: HttpClient) { }
 
   fetchVendorProjects(): Observable<VendorProject[]> {
-    return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
-      .pipe(
-        map((response: VendorProject[]) => {
-          for (let i = 0; i < response.length; i++) {
-            response[i].rating = '9.5';
-          }
-          return response;
-        }),
-        map((response: VendorProject[]) => { // todo remove
-          // this.add3DObjectsArr(response);
-          return this.addRating(response);
-          // return this.addAvatara(response);
-        }),
-      );
+    // return this.http.get<VendorProject[]>(environment.projects + environment.vendorProject)
+    //   .pipe(
+    //     map((response: VendorProject[]) => {
+    //       for (let i = 0; i < response.length; i++) {
+    //         response[i].rating = '9.5';
+    //       }
+    //       return response;
+    //     }),
+    //     map((response: VendorProject[]) => { // todo remove
+    //       // this.add3DObjectsArr(response);
+    //       return this.addRating(response);
+    //       // return this.addAvatara(response);
+    //     }),
+    //   );
 
     // todo remove
-    // return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
-    //   .pipe(
-    //     map(val => {
-    //       const res = JSON.parse(JSON.stringify(val));
-    //       for (let i = 0; i < res.length; i++) {
-    //         res[i].id = 'ID' + Math.random();
-    //       }
-    //       return res;
-    //     }),
-    //     delay(1000)
-    //   );
+    return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
+      .pipe(
+        map(val => {
+          const res = JSON.parse(JSON.stringify(val));
+          for (let i = 0; i < res.length; i++) {
+            res[i].id = 'ID' + Math.random();
+          }
+          return res;
+        }),
+        delay(50)
+      );
   }
 
   createVendorProject(newVendorProject: VendorProject): Observable<any> {

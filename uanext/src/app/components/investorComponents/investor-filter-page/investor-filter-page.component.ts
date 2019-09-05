@@ -103,7 +103,6 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
       )
       .subscribe(filterParam => {
         this.resetBeforeNewSearch();
-        console.log('2222');
         this.searchProjectsByFilter(filterParam); // async
       });
   }

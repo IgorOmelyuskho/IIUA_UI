@@ -20,6 +20,7 @@ export class GeoObject {
   rotationZ?: number;
   objectDivLabel?: HTMLElement;
   editBtnLabel?: HTMLElement;
+  editPanelLabel?: HTMLElement;
   pointForMove?: any; // todo remove
   marker?: any;
   mouseUnder?: boolean;
@@ -27,4 +28,5 @@ export class GeoObject {
   boxHelper?: any; // todo remove
   currentUser?: boolean;
   scale?: number;
+  enabledEditMode?: boolean;
 }
