@@ -46,6 +46,7 @@ export const environment = {
   mapFilteringProjects: '/api/Map/projects-filtering',
   addGeoModel: '/api/Map/addGeoModel',
   getGeoModels: '/api/Map/getGeoModels',
+  updateGeoObjectSettings: '/api/Map/UpdateGeoObjectSettings',
 
   Notification: '/api/Notification',
 

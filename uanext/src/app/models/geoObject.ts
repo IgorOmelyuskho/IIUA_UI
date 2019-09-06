@@ -17,7 +17,7 @@ export class GeoObject {
   prevCoords?: any;
   speedX?: number;
   speedY?: number;
-  rotationZ?: number;
+  rotate?: number;
   objectDivLabel?: HTMLElement;
   editBtnLabel?: HTMLElement;
   editPanelLabel?: HTMLElement;

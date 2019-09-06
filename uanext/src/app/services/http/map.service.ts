@@ -71,10 +71,14 @@ export class MapService {
       originalName: 'building4',
     };
     const userGeoObject5: FileResponseDto = {
-      id: '5',
+      id: 'file-response-id-5',
       url: window.location.origin + '/assets/objects/low-poly-building.zip',
       originalName: 'building5',
     };
     return of([userGeoObject1, userGeoObject2, userGeoObject3, userGeoObject4, userGeoObject5]);
+  }
+
+  updateGeoObjectSettings(historyPosition: HistoryPositionDto): Observable<any> {
+    return this.http.put<any>(environment.map + environment.updateGeoObjectSettings, historyPosition);
   }
 }

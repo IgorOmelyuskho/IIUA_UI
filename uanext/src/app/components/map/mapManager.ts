@@ -5,6 +5,8 @@ import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import { Object3DDto } from 'src/app/models/object3DDto';
 import { MapService } from 'src/app/services/http/map.service';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
+import { debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 declare var THREE: any;
 declare var maptalks: any;
 
@@ -55,14 +57,12 @@ export class MapManager {
   private rotateRightInterval: any;
   private mouseBtnClicked = false;
   private enabledObjectDrag = false;
+  private updateGeoObjectSubject: ReplaySubject<HistoryPositionDto> = new ReplaySubject(1);
 
   // html elements id
   private mapWrapperId: string;
   private mapId: string;
   private labelRendererId: string;
-
-  // key
-  private xKeyPressed = false;
 
   public constructor(cb: Function, htmlId: { mapWrapperId: string, mapId: string, labelRendererId: string }, mapService: MapService) {
     this.mapWrapperId = htmlId.mapWrapperId;
@@ -70,6 +70,15 @@ export class MapManager {
     this.labelRendererId = htmlId.labelRendererId;
     this.mapService = mapService;
     this.mapInit(cb);
+    this.updateGeoObjectSubject
+      .pipe(
+        debounceTime(1000),
+      )
+      .subscribe(
+        (historyPosition: HistoryPositionDto) => {
+          this.mapService.updateGeoObjectSettings(historyPosition).subscribe();
+        }
+      );
   }
 
   mapSetCenterByProject(project: VendorProject) {
@@ -111,6 +120,8 @@ export class MapManager {
     this.on_hover_object = null;
     this.on_map_init = null;
     this.on_map_change_extent = null;
+
+    this.updateGeoObjectSubject.unsubscribe();
   }
 
   mapSetFullScreen() { // todo navbar height
@@ -146,7 +157,6 @@ export class MapManager {
 
   drop3DObject(object3DDto: Object3DDto, object3DId: string, project: VendorProject) {
     const geoObject: GeoObject = this.object3DDtoToGeoObject(object3DDto, object3DId, project);
-    this.postHistoryData(geoObject);
     this.mapAddNewObjects([geoObject]);
   }
 
@@ -159,20 +169,20 @@ export class MapManager {
       canMove: false,
       currentUser: true,
       projectName: project.name,
-      rotationZ: 0
+      rotate: 0
     };
     return geoObject;
   }
 
-  private postHistoryData(geoObject: GeoObject) {
-    // const historyPositionDto: HistoryPositionDto = {
-    //   object3DId: geoObject.geoObjectId,
-    //   positionX: geoObject.coords.x,
-    //   positionY: geoObject.coords.y,
-    //   // scale: geoObject.scale.toString()
-    //   // rotate: geoObject.rotationZ.toString(),
-    // };
-    // this.mapService.postHistoryData(historyPositionDto).subscribe();
+  private updateGeoObjectSettings(geoObject: GeoObject) {
+    const historyPosition: HistoryPositionDto = {
+      object3DId: geoObject.geoObjectId,
+      positionX: geoObject.coords.x,
+      positionY: geoObject.coords.y,
+      scale: geoObject.scale,
+      rotate: geoObject.rotate
+    };
+    this.updateGeoObjectSubject.next(historyPosition);
   }
 
   // set callbacks
@@ -333,6 +343,10 @@ export class MapManager {
       upperBoundY: extent.ymax,
     };
     return res;
+  }
+
+  getCenter(): any {
+    return this.map.getCenter();
   }
   //#endregion
 
@@ -633,12 +647,10 @@ export class MapManager {
   }
 
   private init3dObject(geoObject: GeoObject, object3D: any) {
-    console.log('INIT-OBJECT');
     const childScale = 0.004;
-    const resultScale = childScale * geoObject.scale;
     object3D.traverse((child) => {
       if (child instanceof THREE.Mesh) {
-        child.scale.set(resultScale, resultScale, resultScale);
+        child.scale.set(childScale, childScale, childScale);
         child.rotation.set(Math.PI * 1 / 2, -Math.PI * 1 / 2, 0);
         if (Array.isArray(child.material)) {
           return;
@@ -647,6 +659,7 @@ export class MapManager {
       }
     });
     geoObject.object3DHP = object3D;
+    geoObject.object3DHP.scale.set(geoObject.scale, geoObject.scale, geoObject.scale);
 
     const v = this.threeLayer.coordinateToVector3(new maptalks.Coordinate(geoObject.coords.x, geoObject.coords.y));
     object3D.position.x = v.x;
@@ -738,7 +751,6 @@ export class MapManager {
   }
 
   private objLoadOnLoad = (object3D, geoObject) => {
-    console.log('OBJ-ON-LOAD');
     geoObject.object3DHPStartLoaded = false;
     this.init3dObject(geoObject, object3D);
   }
@@ -782,7 +794,7 @@ export class MapManager {
     editPanelLabel.removeAttribute('id');
     editPanelLabel['geoObject'] = geoObject;
     editPanelLabel.style.display = 'none';
-    this.initNoUiSlider(editPanelLabel.querySelector('.scale-container .slider-range'));
+    this.initNoUiSlider(editPanelLabel.querySelector('.scale-container .slider-range'), geoObject);
     this.initRotateSection(editPanelLabel.querySelector('.rotate-container'));
     this.initCloseBtn(editPanelLabel.querySelector('.close'));
     const objLabel = new THREE.CSS2DObject(editPanelLabel);
@@ -793,10 +805,10 @@ export class MapManager {
     geoObject.object3DHP.add(objLabel);
   }
 
-  private initNoUiSlider(rangeElement) {
+  private initNoUiSlider(rangeElement, geoObject: GeoObject) {
     const noUiSlider = window['noUiSlider'];
     noUiSlider.create(rangeElement, {
-      start: [1],
+      start: [geoObject.scale],
       connect: true,
       range: {
         'min': 0.1,
@@ -804,7 +816,7 @@ export class MapManager {
       }
     });
 
-    rangeElement.noUiSlider.on('update', (values, handle) => {
+    rangeElement.noUiSlider.on('slide', (values, handle) => {
       const value = values[handle];
       this.editChangeScale(value);
     });
@@ -984,7 +996,7 @@ export class MapManager {
       obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
       // obj.boxHelper.update();
     } else {
-      obj3D.rotation.z = geoObj.rotationZ || 0;
+      obj3D.rotation.z = geoObj.rotate || 0;
     }
   }
   //#endregion
@@ -1122,7 +1134,7 @@ export class MapManager {
   private whenBigZoom(geoObj: GeoObject) {
     if (geoObj.objectDivLabel) {
       geoObj.objectDivLabel.style.display = 'block';
-      if (this.selectedForEditObject == null) { 
+      if (this.selectedForEditObject !== geoObj) {
         geoObj.editBtnLabel.style.display = 'block';
       }
     }
@@ -1211,7 +1223,7 @@ export class MapManager {
     if (geoObject.object3DHP) {
       geoObject.object3DHP.scale.set(scale, scale, scale);
     }
-    this.postHistoryData(geoObject);
+    this.updateGeoObjectSettings(geoObject);
   }
 
   private rotateLeft = () => {
@@ -1219,8 +1231,8 @@ export class MapManager {
       return;
     }
     this.rotateLeftInterval = setInterval(() => {
-      this.selectedForEditObject.rotationZ -= 0.01;
-      this.postHistoryData(this.selectedForEditObject);
+      this.selectedForEditObject.rotate -= 0.01;
+      this.updateGeoObjectSettings(this.selectedForEditObject);
     }, this.drawInterval);
   }
 
@@ -1235,8 +1247,8 @@ export class MapManager {
       return;
     }
     this.rotateRightInterval = setInterval(() => {
-      this.selectedForEditObject.rotationZ += 0.01;
-      this.postHistoryData(this.selectedForEditObject);
+      this.selectedForEditObject.rotate += 0.01;
+      this.updateGeoObjectSettings(this.selectedForEditObject);
     }, this.drawInterval);
   }
 
@@ -1258,7 +1270,9 @@ export class MapManager {
   private disableObjectDrag() {
     if (this.selectedForEditObject != null) {
       this.map.config('draggable', true);
-      this.selectedForEditObject.objectDivLabel.style.display = 'block';
+      if (this.mapZoomEnum === MapZoomEnum.BIG) {
+        this.selectedForEditObject.objectDivLabel.style.display = 'block';
+      }
       this.selectedForEditObject.editPanelLabel.style.display = 'block';
       this.enabledObjectDrag = false;
     }
@@ -1268,7 +1282,7 @@ export class MapManager {
     if (this.selectedForEditObject != null && this.mouseBtnClicked === true && this.enabledObjectDrag === true) {
       this.selectedForEditObject.coords.x = x;
       this.selectedForEditObject.coords.y = y;
-      this.postHistoryData(this.selectedForEditObject);
+      this.updateGeoObjectSettings(this.selectedForEditObject);
     }
   }
   //#endregion

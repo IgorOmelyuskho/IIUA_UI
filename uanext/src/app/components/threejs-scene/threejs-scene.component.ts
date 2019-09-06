@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { Object3DDto } from 'src/app/models/object3DDto';
+import { StateService } from 'src/app/services/state/state.service';
 
 export interface Object3DAndProject {
   object3DDto: Object3DDto;
@@ -17,7 +18,7 @@ export class ThreejsSceneComponent implements OnInit {
   @Input() object3DResponse: FileResponseDto;
   @Input() project: VendorProject;
 
-  constructor() { }
+  constructor(private stateService: StateService) { }
 
   ngOnInit() { }
 
@@ -32,8 +33,7 @@ export class ThreejsSceneComponent implements OnInit {
       object3DDto: object3DDto,
       project: this.project
     };
-    const stringData: string = JSON.stringify(object3DAndProject);
-    event.dataTransfer.setData('data', stringData);
+    this.stateService.object3DAndProject = object3DAndProject;
   }
 
 }
