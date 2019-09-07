@@ -20,11 +20,13 @@ export class ThreejsSceneComponent implements OnInit {
 
   constructor(private stateService: StateService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.object3DResponse['imgUrl']);
+   }
 
   drag(event) {
     const object3DDto: Object3DDto = {
-      id: this.object3DResponse.id,
+      // id: this.object3DResponse.id,
       name: this.object3DResponse.originalName,
       path: this.object3DResponse.url,
       projectId: this.project.id
@@ -36,4 +38,10 @@ export class ThreejsSceneComponent implements OnInit {
     this.stateService.object3DAndProject = object3DAndProject;
   }
 
+  setMyStyles() {
+    const styles = {
+      'background-image': 'url(' + this.object3DResponse['imgUrl'] + ')',
+    };
+    return styles;
+  }
 }

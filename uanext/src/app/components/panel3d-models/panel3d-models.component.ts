@@ -29,6 +29,9 @@ export class Panel3dModelsComponent implements OnInit, OnDestroy {
 
     this.mapService.getGeoModels(1, 100).subscribe(
       (object3DResponse: FileResponseDto[]) => {
+        for (let i = 0; i < object3DResponse.length; i++) {
+          object3DResponse[i]['imgUrl'] = window.location.origin + '/assets/objects/objects-image/' + object3DResponse[i].originalName + '.png';
+        }
         this.object3DResponse = object3DResponse;
       },
       err => {
@@ -40,5 +43,4 @@ export class Panel3dModelsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.selectedProjectSubscription.unsubscribe();
   }
-
 }

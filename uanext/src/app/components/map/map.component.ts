@@ -171,12 +171,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     object3DDto.scale = 1;
     object3DDto.rotate = 0;
     this.mapService.post3DObject(object3DDto).subscribe(
-      (object3DId: string) => {
-        this.mapManager.drop3DObject(object3DDto, object3DId, project);
+      (val: {objectId: string}) => {
+        this.mapManager.drop3DObject(object3DDto, val.objectId, project);
       },
       err => {
         console.warn(err);
-        this.mapManager.drop3DObject(object3DDto, err.error.text, project);
       }
     );
   }

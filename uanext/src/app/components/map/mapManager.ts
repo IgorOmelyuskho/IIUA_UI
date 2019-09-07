@@ -486,6 +486,7 @@ export class MapManager {
             this.selectedObject.objectDivLabel.className = 'obj-label-selected';
           }
           this.setMarkerSymbolSelected(this.selectedObject.marker);
+          console.log(this.selectedObject);
           if (this.on_click_object != null) {
             this.on_click_object(this.selectedObject);
           }
@@ -659,7 +660,6 @@ export class MapManager {
       }
     });
     geoObject.object3DHP = object3D;
-    geoObject.object3DHP.scale.set(geoObject.scale, geoObject.scale, geoObject.scale);
 
     const v = this.threeLayer.coordinateToVector3(new maptalks.Coordinate(geoObject.coords.x, geoObject.coords.y));
     object3D.position.x = v.x;
@@ -667,6 +667,7 @@ export class MapManager {
     object3D.position.z = v.z;
 
     geoObject.box3 = new THREE.Box3().setFromObject(object3D);
+    geoObject.object3DHP.scale.set(geoObject.scale, geoObject.scale, geoObject.scale);
 
     // geoObject.boxHelper = new THREE.BoxHelper(object3D, 0xff0000); // todo remove
     // this.scene.add(geoObject.boxHelper);
@@ -812,7 +813,7 @@ export class MapManager {
       connect: true,
       range: {
         'min': 0.1,
-        'max': 5
+        'max': 10
       }
     });
 
@@ -992,9 +993,9 @@ export class MapManager {
     obj3D.position.y = v.y;
     obj3D.position.z = v.z;
     // obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
+    // geoObj.boxHelper.update();
     if (geoObj.canMove === true) {
       obj3D.rotation.z = Math.atan2(prevY - obj3D.position.y, prevX - obj3D.position.x);
-      // obj.boxHelper.update();
     } else {
       obj3D.rotation.z = geoObj.rotate || 0;
     }
