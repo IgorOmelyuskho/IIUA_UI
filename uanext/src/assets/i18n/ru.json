@@ -151,7 +151,10 @@
     },
     "InvestorMessagesComponent": {
         "communication": "Общение",
-        "message": "Сообщение"
+        "message": "Сообщение",
+        "download": "Скачать",
+        "newMessage": "Пришло новое сообщение",
+        "privateChat": "Приватный чат"
     },
     "InvestorNavbarComponent": {
         "home": "Домой",
@@ -379,7 +382,8 @@
         "communication": "Общение",
         "message": "Сообщение",
         "download": "Скачать",
-        "newMessage": "Пришло новое сообщение"
+        "newMessage": "Пришло новое сообщение",
+        "privateChat": "Приватный чат"
     },
     "VendorNavbarComponent": {
         "home": "Домой",

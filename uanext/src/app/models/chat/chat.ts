@@ -12,5 +12,4 @@ export interface Chat {
     lastActivityDate: any;
     leaveDate: any;
     participants?: Participant[]; // get from /api/Participants/GetByConversationId
-    projectId?: string; // for All2All
 }

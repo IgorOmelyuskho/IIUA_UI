@@ -14,6 +14,7 @@ export class VendorProjectMinCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.project.chat.lastActivityDate);
   }
 
   getAvataraUrl(project) {

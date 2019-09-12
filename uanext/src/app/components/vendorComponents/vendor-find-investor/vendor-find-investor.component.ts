@@ -14,6 +14,7 @@ import { Chat } from 'src/app/models/chat/chat';
 })
 export class VendorFindInvestorComponent implements OnInit {
   // projects: VendorProject[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
+  projectsWithoutChat: VendorProject[] = [];
   projects: VendorProject[] = [];
   self = 'VendorFindInvestorComponent';
   selected = 'all'; // group/single
@@ -26,11 +27,11 @@ export class VendorFindInvestorComponent implements OnInit {
   ngOnInit() {
     this.filteredProjectsService.searchByKeyword('', 1000, 1).subscribe(
       (filteredProjects: FilteredProjects) => {
-        this.projects = filteredProjects.projectsList;
-        this.selectedProject = this.projects[0];
+        this.projectsWithoutChat = filteredProjects.projectsList;
+        this.selectedProject = this.projectsWithoutChat[0];
         this.stateService.selectedProjectForChat$.next(this.selectedProject);
-        for (let i = 0; i < this.projects.length; i++) {
-          this.getChatByProject(this.projects[i]);
+        for (let i = 0; i < this.projectsWithoutChat.length; i++) {
+          this.getChatByProject(this.projectsWithoutChat[i]);
         }
       },
       err => {
@@ -64,9 +65,9 @@ export class VendorFindInvestorComponent implements OnInit {
   findByNameClick() {
     this.filteredProjectsService.searchByKeyword(this.searchName, 1000, 1).subscribe(
       (filteredProjects: FilteredProjects) => {
-        this.projects = filteredProjects.projectsList;
-        for (let i = 0; i < this.projects.length; i++) {
-          this.getChatByProject(this.projects[i]);
+        this.projectsWithoutChat = filteredProjects.projectsList;
+        for (let i = 0; i < this.projectsWithoutChat.length; i++) {
+          this.getChatByProject(this.projectsWithoutChat[i]);
         }
       },
       err => {
@@ -80,7 +81,7 @@ export class VendorFindInvestorComponent implements OnInit {
       (chat: Chat) => {
         if (chat != null) {
           project.chat = chat;
-          // message.participant = participant;
+          this.projects.push(project);
           console.log(project.chat.conversationType);
         }
       }
@@ -91,9 +92,9 @@ export class VendorFindInvestorComponent implements OnInit {
     if (this.selected === 'all') {
       return true;
     }
-    // if (this.selected === 'all') {
-    //   return true;
-    // }
+    if (project.chat == null) {
+      return false;
+    }
     if (project.chat.conversationType === 'All2All' && this.selected === 'group') {
       return true;
     }

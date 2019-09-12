@@ -76,7 +76,10 @@
             <img src={{chatParticipantAvatara}} alt="avatara get from id?">
           </div>
           <div class="text-and-sender">
-            <div class="sender">{{message.participant?.fullName || 'todo-name'}}</div>
+            <div class="sender-and-private-chat">
+              <div class="sender">{{message.participant?.fullName || 'todo-name'}}</div>
+              <div class="private-chat">{{ 'privateChat' | translate:self }}</div>
+            </div>
             <div *ngIf="message.text" class="text">
               <div class="message-text">{{message.text}}</div>
               <div class="time">{{message.lastUpdatedDate | date:"HH:mm"}}</div>
