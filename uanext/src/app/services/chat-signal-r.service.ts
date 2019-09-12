@@ -21,7 +21,7 @@ export class ChatSignalRService {
     // this.emulateSignalR();
     const token = localStorage.getItem('token');
 
-    const options = { accessTokenFactory: () => token, transport: HttpTransportType.None };
+    const options = { accessTokenFactory: () => token, transport: HttpTransportType.WebSockets };
 
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(environment.signalR, options).build();
