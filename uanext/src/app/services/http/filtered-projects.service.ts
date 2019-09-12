@@ -152,7 +152,7 @@ export class FilteredProjectsService {
           coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
           projectName: filteredProjects.projectsList[i].name,
           pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+          // pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
           project: filteredProjects.projectsList[i],
           canMove: true
         },
@@ -161,7 +161,7 @@ export class FilteredProjectsService {
           coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
           projectName: filteredProjects.projectsList[i].name,
           pathToZip: window.location.origin + '/assets/objects/building.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
+          // pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
           project: filteredProjects.projectsList[i],
           canMove: false
         },

@@ -49,7 +49,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     console.log(this.project);
     this.selfUserId = this.stateService.getUserId();
 
-    this.signalRSubscription = this.chatSignalR.InvestorCommentsComponent$.subscribe(
+    this.signalRSubscription = this.chatSignalR.messageReceived$.subscribe(
       (message: Message) => {
         this.onSignalRMessage(message);
       }
@@ -90,7 +90,10 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     this.getParticipantByParticipantId(message);
     this.chatService.sortMessages(this.messages);
 
-    this.sharedChatMsgText = '';
+    if (message.isYou === true) {
+      this.sharedChatMsgText = '';
+    }
+
     this.attachmentData = {};
     this.previewAttachment = null;
     if (message.isYou === false && this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight < this.messagesElement.nativeElement.scrollHeight) {

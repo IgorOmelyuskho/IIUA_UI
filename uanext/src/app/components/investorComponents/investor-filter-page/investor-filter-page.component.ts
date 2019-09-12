@@ -90,7 +90,6 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
       )
       .subscribe(res => {
         this.resetBeforeNewSearch();
-        console.log('1111');
         this.searchProjectsByKeyword(this.searchWord, this.pageSize, this.pageNumber);
       });
 
@@ -103,7 +102,6 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
       )
       .subscribe(filterParam => {
         this.resetBeforeNewSearch();
-        console.log('2222');
         this.searchProjectsByFilter(filterParam); // async
       });
   }

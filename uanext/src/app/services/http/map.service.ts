@@ -50,31 +50,35 @@ export class MapService {
     // params = params.append('page', page.toString());
     // params = params.append('count', count.toString());
     // return this.http.get<any>(environment.chat + environment.getGeoModels, { params: params });
-    const userGeoObject1: FileResponseDto = {
-      id: 'file-response-id-1',
-      url: window.location.origin + '/assets/objects/low-poly-building.zip',
+    const userGeoObject0: FileResponseDto = {
+      id: 'building1',
+      url: window.location.origin + '/assets/objects/models/building1.zip',
       originalName: 'building1',
     };
-    const userGeoObject2: FileResponseDto = {
-      id: 'file-response-id-2',
-      url: window.location.origin + '/assets/objects/low-poly-building.zip',
+    const userGeoObject1: FileResponseDto = {
+      id: 'building2',
+      url: window.location.origin + '/assets/objects/models/building2.zip',
       originalName: 'building2',
     };
+    const userGeoObject2: FileResponseDto = {
+      id: 'kiosk1',
+      url: window.location.origin + '/assets/objects/models/kiosk1.zip',
+      originalName: 'kiosk1',
+    };
     const userGeoObject3: FileResponseDto = {
-      id: 'file-response-id-3',
-      url: window.location.origin + '/assets/objects/low-poly-building.zip',
-      originalName: 'building3',
+      id: 'skyscraper',
+      url: window.location.origin + '/assets/objects/models/skyscraper.zip',
+      originalName: 'skyscraper',
     };
     const userGeoObject4: FileResponseDto = {
-      id: 'file-response-id-4',
-      url: window.location.origin + '/assets/objects/low-poly-building.zip',
-      originalName: 'building4',
+      id: 'building3',
+      url: window.location.origin + '/assets/objects/models/building3.zip',
+      originalName: 'building3',
     };
-    const userGeoObject5: FileResponseDto = {
-      id: '5',
-      url: window.location.origin + '/assets/objects/low-poly-building.zip',
-      originalName: 'building5',
-    };
-    return of([userGeoObject1, userGeoObject2, userGeoObject3, userGeoObject4, userGeoObject5]);
+    return of([userGeoObject0, userGeoObject1, userGeoObject2, userGeoObject3, userGeoObject4]);
+  }
+
+  updateGeoObjectSettings(historyPosition: HistoryPositionDto): Observable<any> {
+    return this.http.put<any>(environment.map + environment.updateGeoObjectSettings, historyPosition);
   }
 }

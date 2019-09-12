@@ -221,12 +221,22 @@
           }
 
           .text-and-sender {
-            .sender {
-              font-family: Helvetica;
+            .sender-and-private-chat {
               font-size: 11px;
-              letter-spacing: -0.3px;
-              color: rgba(50, 50, 50, 0.6);
-              margin-bottom: 5px;
+              display: flex;
+
+              .sender {
+                font-family: Helvetica;
+                letter-spacing: -0.3px;
+                color: rgba(50, 50, 50, 0.6);
+                margin-bottom: 5px;
+              }
+
+              .private-chat {
+                color: $green;
+                margin-left: 10px;
+                cursor: pointer;
+              }
             }
 
             .text {

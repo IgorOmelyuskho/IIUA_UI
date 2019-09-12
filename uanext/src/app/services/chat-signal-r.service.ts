@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, HttpTransportType, LogLevel } from '@aspnet/signalr';
 import { environment } from 'src/environments/environment';
 import { Message } from '../models/chat/message';
 import { testMessagePhoto } from '../helperClasses/messages';
@@ -13,34 +13,31 @@ export class ChatSignalRService {
   private hubConnection: HubConnection;
   private timeOut1: any;
   private counter = 0; // todo remove
-  InvestorCommentsComponent$: ReplaySubject<Message> = new ReplaySubject(1);
-  VendorMessagesComponent$: ReplaySubject<Message> = new ReplaySubject(1);
+  messageReceived$: ReplaySubject<Message> = new ReplaySubject(1);
 
   constructor() { }
 
   signalRConnect() {
     // this.emulateSignalR();
     const token = localStorage.getItem('token');
+
+    const options = { accessTokenFactory: () => token, transport: HttpTransportType.None };
+
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(
-        environment.signalR,
-        {
-          accessTokenFactory: () => token
-        })
-      .build();
+      .withUrl(environment.signalR, options).build();
+
+    this.hubConnection.serverTimeoutInMilliseconds = 1000 * 60 * 5000000; // 5000000 minute
 
     this.hubConnection.on('MessageSBEvent', (message) => {
       const parsedMessage = JSON.parse(message);
-      const replacedFields = this.replaceFieldsName(parsedMessage);
-      this.InvestorCommentsComponent$.next(replacedFields);
-      this.VendorMessagesComponent$.next(replacedFields);
+      const msg: Message = this.replaceFieldsName(parsedMessage);
+      console.log('MESSAGE = ', msg);
+      this.messageReceived$.next(msg);
     });
 
     this.connectionStart();
 
     this.hubConnection.onclose((err) => {
-      // console.error(err);
-      // console.log('Chat SignalR connection close');
       this.connectionStart();
     });
   }
@@ -67,8 +64,7 @@ export class ChatSignalRService {
       const message: Message = { ...testMessagePhoto };
       message.createdDate = new Date();
       message.text = this.counter.toString() + message.text;
-      this.InvestorCommentsComponent$.next(message);
-      this.VendorMessagesComponent$.next(message);
+      this.messageReceived$.next(message);
     }, 3500);
   }
 

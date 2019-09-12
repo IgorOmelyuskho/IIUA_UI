@@ -53,7 +53,7 @@ export class ProjectsService {
           return response;
         }),
         map((response: VendorProject[]) => { // todo remove
-          // this.add3DObjectsArr(response);
+          this.add3DObjectsArr(response);
           return this.addRating(response);
           // return this.addAvatara(response);
         }),
@@ -62,14 +62,17 @@ export class ProjectsService {
     // todo remove
     // return of([responseProject, responseProject2, responseProject, responseProject2, responseProject, responseProject2])
     //   .pipe(
-    //     map(val => {
+    //     map((val: VendorProject[]) => {
     //       const res = JSON.parse(JSON.stringify(val));
     //       for (let i = 0; i < res.length; i++) {
     //         res[i].id = 'ID' + Math.random();
     //       }
     //       return res;
     //     }),
-    //     delay(1000)
+    //     map((val: VendorProject[]) => {
+    //       return this.add3DObjectsArr(val);
+    //     }),
+    //     delay(50)
     //   );
   }
 
@@ -117,41 +120,43 @@ export class ProjectsService {
     const delta = 0.005;
     for (let i = 0; i < filteredProjects.length; i++) {
       filteredProjects[i].geoObjects = [
-        {
-          geoObjectId: 'ID-' + Math.random(),
-          coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
-          projectName: filteredProjects[i].name,
-          pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
-          project: filteredProjects[i],
-          canMove: true
-        },
-        {
-          geoObjectId: 'ID-' + Math.random(),
-          coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
-          projectName: filteredProjects[i].name,
-          pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
-          project: filteredProjects[i],
-          canMove: true
-        },
-        {
-          geoObjectId: 'ID-' + Math.random(),
-          coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
-          projectName: filteredProjects[i].name,
-          pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
-          project: filteredProjects[i],
-          canMove: true
-        },
+        // {
+        //   geoObjectId: 'ID-' + Math.random(),
+        //   coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
+        //   projectName: filteredProjects[i].name,
+        //   pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+        //   // pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+        //   project: filteredProjects[i],
+        //   canMove: true
+        // },
+        // {
+        //   geoObjectId: 'ID-' + Math.random(),
+        //   coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
+        //   projectName: filteredProjects[i].name,
+        //   pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+        //   // pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+        //   project: filteredProjects[i],
+        //   canMove: true
+        // },
+        // {
+        //   geoObjectId: 'ID-' + Math.random(),
+        //   coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
+        //   projectName: filteredProjects[i].name,
+        //   pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+        //   // pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+        //   project: filteredProjects[i],
+        //   canMove: true,
+        // },
         {
           geoObjectId: 'ID-' + Math.random(),
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
           projectName: filteredProjects[i].name,
           pathToZip: window.location.origin + '/assets/objects/low-poly-building.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
+          // pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
           project: filteredProjects[i],
-          canMove: false
+          canMove: false,
+          scale: Math.random() * 4 + 0.2,
+          rotate: Math.random(),
         },
       ];
 

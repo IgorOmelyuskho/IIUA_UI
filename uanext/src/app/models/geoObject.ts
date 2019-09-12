@@ -5,21 +5,22 @@ export class GeoObject {
   coords: { x: number, y: number };
   projectName?: string;
   pathToZip: string;
-  pathToZipLP: string;
+  // pathToZipLP: string;
   canMove?: boolean;
 
   project?: VendorProject;
 
-  object3DLP?: any;
-  object3DLPStartLoaded?: boolean;
+  // object3DLP?: any;
+  // object3DLPStartLoaded?: boolean;
   object3DHP?: any;
   object3DHPStartLoaded?: boolean;
   prevCoords?: any;
   speedX?: number;
   speedY?: number;
-  rotationZ?: number;
+  rotate?: number;
   objectDivLabel?: HTMLElement;
   editBtnLabel?: HTMLElement;
+  editPanelLabel?: HTMLElement;
   pointForMove?: any; // todo remove
   marker?: any;
   mouseUnder?: boolean;
@@ -27,4 +28,5 @@ export class GeoObject {
   boxHelper?: any; // todo remove
   currentUser?: boolean;
   scale?: number;
+  enabledEditMode?: boolean;
 }

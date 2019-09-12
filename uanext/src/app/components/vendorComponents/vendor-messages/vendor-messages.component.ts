@@ -59,7 +59,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
       }
     );
 
-    this.signalRSubscription = this.chatSignalR.VendorMessagesComponent$.subscribe(
+    this.signalRSubscription = this.chatSignalR.messageReceived$.subscribe(
       (message: Message) => {
         this.onSignalRMessage(message);
       }
@@ -80,7 +80,10 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.attachmentData = {};
     this.previewAttachment = null;
-    this.textFromInput = '';
+
+    if (message.isYou === true) {
+      this.textFromInput = '';
+    }
 
     if (message.isYou === false && this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight < this.messagesElement.nativeElement.scrollHeight) {
       this.newMsgCame = true;

@@ -151,7 +151,10 @@
     },
     "InvestorMessagesComponent": {
         "communication": "Communication",
-        "message": "Message"
+        "message": "Message",
+        "download": "Download",
+        "newMessage": "New message arrived",
+        "privateChat": "Private chat"
     },
     "InvestorNavbarComponent": {
         "home": "Home",
@@ -379,7 +382,8 @@
         "communication": "Communication",
         "message": "Message",
         "download": "Download",
-        "newMessage": "New message arrived"
+        "newMessage": "New message arrived",
+        "privateChat": "Private chat"
     },
     "VendorNavbarComponent": {
         "home": "Home",

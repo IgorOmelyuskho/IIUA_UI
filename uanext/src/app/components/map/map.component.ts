@@ -12,6 +12,7 @@ import { Object3DDto } from 'src/app/models/object3DDto';
 import { MapService } from 'src/app/services/http/map.service';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 import { Object3DAndProject } from '../threejs-scene/threejs-scene.component';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-map',
@@ -120,7 +121,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.$fromChangeExtentEvent.next(extent);
   }
 
-  constructor(private signalRService: SignalRService, private mapService: MapService) { }
+  constructor(private signalRService: SignalRService, private mapService: MapService, private stateService: StateService) { }
 
   ngOnInit() {
   }
@@ -155,9 +156,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   drop(event) {
     event.preventDefault();
-    const dataString = event.dataTransfer.getData('data');
-    const object3DAndProject: Object3DAndProject = JSON.parse(dataString);
-    console.log(object3DAndProject);
+    const object3DAndProject: Object3DAndProject = this.stateService.object3DAndProject;
     this.post3DObjectSubscribe(object3DAndProject.object3DDto, object3DAndProject.project);
   }
 
@@ -166,13 +165,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   post3DObjectSubscribe(object3DDto: Object3DDto, project: VendorProject) {
+    const mapCenter = this.mapManager.getCenter();
+    object3DDto.staticPositionX = mapCenter.x;
+    object3DDto.staticPositionY = mapCenter.y;
+    object3DDto.scale = 1;
+    object3DDto.rotate = 0;
     this.mapService.post3DObject(object3DDto).subscribe(
-      (object3DId: string) => {
-        this.mapManager.drop3DObject(object3DDto, object3DId, project);
+      (val: {objectId: string}) => {
+        this.mapManager.drop3DObject(object3DDto, val.objectId, project);
       },
       err => {
         console.warn(err);
-        this.mapManager.drop3DObject(object3DDto, err.error.text, project);
       }
     );
   }
