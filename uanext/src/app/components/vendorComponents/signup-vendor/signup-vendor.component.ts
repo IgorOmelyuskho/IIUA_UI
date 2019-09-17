@@ -2,7 +2,7 @@ import FormHelper from '../../../helperClasses/helperClass';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../../../services/http/authorization.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { matchOtherValidator } from '../../../validators/validators';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TranslateService } from 'src/app/services/translate.service';
@@ -18,6 +18,8 @@ export class SignupVendorComponent implements OnInit {
   FormHelper = FormHelper;
   @Output() showProgress = new EventEmitter<boolean>();
   self = 'SignupVendorComponent';
+  @ViewChild('passwordInput') passwordInput: ElementRef;
+  @ViewChild('togglePasswordImg') togglePasswordImg: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,6 +43,16 @@ export class SignupVendorComponent implements OnInit {
 
   get formControls() {
     return this.signupForm.controls;
+  }
+
+  togglePasswordVisible() {
+    if (this.passwordInput.nativeElement.type === 'password') {
+      this.passwordInput.nativeElement.type = 'text';
+      this.togglePasswordImg.nativeElement.src = '../../../../assets/img/hide-password.png';
+    } else {
+      this.passwordInput.nativeElement.type = 'password';
+      this.togglePasswordImg.nativeElement.src = '../../../../assets/img/show-password.png';
+    }
   }
 
   onSubmit() {

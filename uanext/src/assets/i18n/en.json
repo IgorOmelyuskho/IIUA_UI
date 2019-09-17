@@ -669,7 +669,7 @@
         "repeatPassword": "Repeat password",
         "repeatPasswordEmpty": "This field is required",
         "passwordNotMatch": "Passwords not match",
-        "signUp": "Sign Up",
+        "signUp": "Register",
         "checkEmail": "You received a message in the email",
         "projectUserCreated": "Project user created successfully"
     },
