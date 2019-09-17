@@ -77,6 +77,10 @@ export class FilteredProjectsService {
       );
   }
 
+  getProjectsWhenNotAuthorized(): Observable<VendorProject[]> {
+    return of([...responseProjects.projectsList, ...responseProjects.projectsList, ...responseProjects.projectsList]);
+  }
+
   private fixFilterForBackend(filter: FilterFields | any): FilterFields {
     // if (filter.companyName == null) {
     //   filter.companyName = '';

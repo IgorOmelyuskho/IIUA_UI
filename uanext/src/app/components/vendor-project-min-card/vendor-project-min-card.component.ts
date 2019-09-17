@@ -13,9 +13,7 @@ export class VendorProjectMinCardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.project.chat.lastActivityDate);
-  }
+  ngOnInit() { }
 
   getAvataraUrl(project) {
     const url = project.avatara.url;
@@ -25,5 +23,4 @@ export class VendorProjectMinCardComponent implements OnInit {
   projectWrapperClick(project: VendorProject) {
     this.selectEvent.emit(project);
   }
-
 }

@@ -1,15 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { UserRole } from 'src/app/models';
-import { AuthService } from 'angularx-social-login';
-import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
-import { SocialUser } from 'angularx-social-login';
+import { UserRole, FilteredProjects } from 'src/app/models';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
-import { SocialUserDto } from 'src/app/models/socialUserDto';
-import { Observable } from 'rxjs';
-import { NotificationService } from 'src/app/services/notification.service';
+import { VendorProject } from 'src/app/models/vendorProject';
+import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 import { Router } from '@angular/router';
-import { TranslateService } from 'src/app/services/translate.service';
 
 
 declare const slidePage;
@@ -27,19 +22,89 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   self = 'IndexComponent';
   currentPage = 1;
   @ViewChild('chartsWrapper') chartsWrapper: ElementRef;
+  allProjects: VendorProject[] = [];
+  projectsForView: VendorProject[] = [];
+  @ViewChild('buttonsWrapper') buttonsWrapper: ElementRef;
 
   animationInterval_1: any;
   animationInterval_2: any;
 
   slidePageDelay = 900; // wait for slidePage
 
-  constructor(private socialAuthService: AuthService,
+  constructor(
     private authService: AuthorizationService,
-    private notify: NotificationService,
-    private router: Router,
-    private translate: TranslateService) { }
+    private filteredProjectsService: FilteredProjectsService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.setUserRole();
+  }
+
+  ngAfterViewInit() {
+    // this.init1();
+    // this.init2();
+
+    this.filteredProjectsService.getProjectsWhenNotAuthorized().subscribe(
+      (projects: VendorProject[]) => {
+        this.allProjects = projects;
+        this.projectsBtn1();
+      },
+      err => {
+        console.warn(err);
+      }
+    );
+
+    this.slide = new slidePage({
+      before: (origin, direction, target) => {
+        this.currentPage = target;
+        this.canScrollDown = true;
+        this.canScrollUp = true;
+
+        // requestAnimationFrame(() => {
+        //   this.init1();
+        //   this.init2();
+        // });
+
+        if (target === 1) {
+          this.canScrollUp = false;
+        }
+
+        // if (target === 2) {
+        //   this.startAnimation1();
+        //   this.startCircleAnimation1();
+
+        //   this.animationInterval_1 = setInterval(() => {
+        //     this.startAnimation1();
+        //     this.startCircleAnimation1();
+        //   }, 8000 + 2000); // + so that the animation will end
+        // } else {
+        //   clearInterval(this.animationInterval_1);
+        // }
+
+        // if (target === 3) {
+        //   this.startAnimation2();
+        //   this.startCircleAnimation2();
+
+        //   this.animationInterval_2 = setInterval(() => {
+        //     this.startAnimation2();
+        //     this.startCircleAnimation2();
+        //   }, 8000 + 2000); // + so that the animation will end
+        // } else {
+        //   clearInterval(this.animationInterval_2);
+        // }
+
+        if (target === 3) {
+          this.canScrollDown = false;
+        }
+      }
+    });
+
+    window.addEventListener('resize', this.windowResizeHandler);
+    // this.chartsWrapper.nativeElement.addEventListener('wheel', this.chartWrapperWheelHandler); // removeEventListener
+  }
+
+  setUserRole() {
     const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     let decodedToken: any;
@@ -75,68 +140,14 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     if (role === UserRole.ProjectUser) {
       this.userRole = UserRole.ProjectUser;
     }
-
-  }
-
-  ngAfterViewInit() {
-    this.init1();
-    this.init2();
-
-    this.slide = new slidePage({
-      before: (origin, direction, target) => {
-        this.currentPage = target;
-        this.canScrollDown = true;
-        this.canScrollUp = true;
-
-        requestAnimationFrame(() => {
-          this.init1();
-          this.init2();
-        });
-
-        if (target === 1) {
-          this.canScrollUp = false;
-        }
-
-        if (target === 2) {
-          this.startAnimation1();
-          this.startCircleAnimation1();
-
-          this.animationInterval_1 = setInterval(() => {
-            this.startAnimation1();
-            this.startCircleAnimation1();
-          }, 8000 + 2000); // + so that the animation will end
-        } else {
-          clearInterval(this.animationInterval_1);
-        }
-
-        if (target === 3) {
-          this.startAnimation2();
-          this.startCircleAnimation2();
-
-          this.animationInterval_2 = setInterval(() => {
-            this.startAnimation2();
-            this.startCircleAnimation2();
-          }, 8000 + 2000); // + so that the animation will end
-        } else {
-          clearInterval(this.animationInterval_2);
-        }
-
-        if (target === 5) {
-          this.canScrollDown = false;
-        }
-      }
-    });
-
-    window.addEventListener('resize', this.windowResizeHandler);
-    this.chartsWrapper.nativeElement.addEventListener('wheel', this.chartWrapperWheelHandler);
   }
 
   chartWrapperWheelHandler = (event) => {
     let delta = 0;
     if (event.wheelDelta) {
-        delta = event.wheelDelta / 120;
+      delta = event.wheelDelta / 120;
     } else if (event.detail) {
-        delta = -event.detail / 3;
+      delta = -event.detail / 3;
     }
     const dir = delta > 0 ? 'Up' : 'Down';
 
@@ -217,14 +228,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   slideDown() {
     this.slide.slideNext();
-  }
-
-  ngOnDestroy() {
-    this.slide.destroy();
-    window.removeEventListener('resize', this.windowResizeHandler);
-    this.chartsWrapper.nativeElement.removeEventListener('wheel', this.chartWrapperWheelHandler);
-    clearInterval(this.animationInterval_1);
-    clearInterval(this.animationInterval_2);
   }
 
   signInWithGoogle(): void {
@@ -383,6 +386,58 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     return res;
+  }
+
+  cardWrapperClick() {
+    this.router.navigate(['signup']);
+  }
+
+  createProject() {
+    this.router.navigate(['signup']);
+  }
+
+  projectsBtn1() {
+    const buttons = this.buttonsWrapper.nativeElement.querySelectorAll('button');
+    buttons.forEach((element) => {
+      element.classList.remove('selected');
+    });
+    buttons[0].classList.add('selected');
+    this.projectsForView = [];
+    for (let i = 0; i < 3; i++) {
+      this.projectsForView.push(this.allProjects[i]);
+    }
+  }
+
+  projectsBtn2() {
+    const buttons = this.buttonsWrapper.nativeElement.querySelectorAll('button');
+    buttons.forEach((element) => {
+      element.classList.remove('selected');
+    });
+    buttons[1].classList.add('selected');
+    this.projectsForView = [];
+    for (let i = 3; i < 6; i++) {
+      this.projectsForView.push(this.allProjects[i]);
+    }
+  }
+
+  projectsBtn3() {
+    const buttons = this.buttonsWrapper.nativeElement.querySelectorAll('button');
+    buttons.forEach((element) => {
+      element.classList.remove('selected');
+    });
+    buttons[2].classList.add('selected');
+    this.projectsForView = [];
+    for (let i = 6; i < 9; i++) {
+      this.projectsForView.push(this.allProjects[i]);
+    }
+  }
+
+  ngOnDestroy() {
+    this.slide.destroy();
+    window.removeEventListener('resize', this.windowResizeHandler);
+    // this.chartsWrapper.nativeElement.removeEventListener('wheel', this.chartWrapperWheelHandler);
+    clearInterval(this.animationInterval_1);
+    clearInterval(this.animationInterval_2);
   }
 
 }

@@ -21,8 +21,8 @@
           </div>
           <div class="invest">
             <div class="start-invest">
-              <div class="start">{{ 'start' | translate:self }}</div>
-              <div class="invest-text">{{ 'invest' | translate:self }}</div>
+              <div class="start">{{ 'placeObject' | translate:self }}</div>
+              <div class="invest-text">{{ 'onMap' | translate:self }}</div>
             </div>
             <div class="social">
               <div class="text">{{ 'social' | translate:self }} </div>
@@ -42,7 +42,7 @@
               <img src="../../../assets/img/email-3.png" alt="">
               <a routerLink="signin">{{ 'useEmail' | translate:self }}</a>
             </div>
-            <div class="bottom">
+            <!-- <div class="bottom">
               <div class="commissions">
                 <span class="green">0% </span>
                 <span>{{ 'commissions' | translate:self }}</span>
@@ -51,12 +51,32 @@
                 <span class="green">{{ 'noHidden' | translate:self }} </span>
                 <span>{{ 'payments' | translate:self }}</span>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </section>
 
       <section class="slide-page transition" style="transform: translate3d(0px, 100%, 0px);">
+        <div class="projects-list">
+          <div class="container">
+            <div class="top-part">
+              <button class="btn btn-green" (click)="createProject()">{{ 'createProject' | translate:self }}</button>
+            </div>
+            <div class="projects-container">
+              <div *ngFor="let project of projectsForView" class="project" (click)="cardWrapperClick()">
+                <app-index-page-card [project]="project"></app-index-page-card>
+              </div>
+            </div>
+            <div class="slider-buttons" #buttonsWrapper>
+              <button (click)="projectsBtn1($event)">1</button>
+              <button (click)="projectsBtn2($event)">2</button>
+              <button (click)="projectsBtn3($event)">3</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- <section class="slide-page transition" style="transform: translate3d(0px, 100%, 0px);">
         <div class="investor-curve-line">
           <div class="top-left-cover-div"></div>
 
@@ -270,7 +290,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
 
       <section class="slide-page transition" style="transform: translate3d(0px, 100%, 0px);">
         <div class="subscribe-and-footer">
