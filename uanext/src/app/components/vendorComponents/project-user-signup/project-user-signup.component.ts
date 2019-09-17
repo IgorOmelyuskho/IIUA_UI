@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import FormHelper from 'src/app/helperClasses/helperClass';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
@@ -21,6 +21,8 @@ export class ProjectUserSignupComponent implements OnInit {
   showProgress = false;
   self = 'ProjectUserSignupComponent';
   projects: VendorProject[];
+  @ViewChild('passwordInput') passwordInput: ElementRef;
+  @ViewChild('togglePasswordImg') togglePasswordImg: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,10 +35,10 @@ export class ProjectUserSignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
-      phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
+      // phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
       projectId: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['', [Validators.required, matchOtherValidator('password')]],
+      // rePassword: ['', [Validators.required, matchOtherValidator('password')]],
     });
   }
 
@@ -53,6 +55,16 @@ export class ProjectUserSignupComponent implements OnInit {
 
   get formControls() {
     return this.signupForm.controls;
+  }
+
+  togglePasswordVisible() {
+    if (this.passwordInput.nativeElement.type === 'password') {
+      this.passwordInput.nativeElement.type = 'text';
+      this.togglePasswordImg.nativeElement.src = '../../../../assets/img/hide-password.png';
+    } else {
+      this.passwordInput.nativeElement.type = 'password';
+      this.togglePasswordImg.nativeElement.src = '../../../../assets/img/show-password.png';
+    }
   }
 
   onSubmit() {
