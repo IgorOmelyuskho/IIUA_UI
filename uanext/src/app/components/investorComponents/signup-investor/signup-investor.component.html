@@ -7,22 +7,22 @@
       <div *ngIf="formControls.fullName.errors.required">{{ 'nameRequired' | translate:self }}</div>
     </div>
   </div>
-  <div class="form-group">
+  <!-- <div class="form-group">
     <input placeholder="{{ 'creditCardNumber' | translate:self }}" [textMask]="{mask: FormHelper.creditCardMask}" type="text" formControlName="creditCardNumber" class="form-control"
       [ngClass]="{ 'is-invalid': submitted && formControls.creditCardNumber.errors }" />
     <div *ngIf="submitted && formControls.creditCardNumber.errors" class="invalid-feedback">
       <div *ngIf="formControls.creditCardNumber.errors.required">{{ 'creditCardNumberRequired' | translate:self }}</div>
       <div *ngIf="formControls.creditCardNumber.errors.pattern">{{ 'creditCardNumberValid' | translate:self }}</div>
     </div>
-  </div>
-  <div class="form-group">
+  </div> -->
+  <!-- <div class="form-group">
     <input placeholder="{{ 'phone' | translate:self }}" [textMask]="{mask: FormHelper.phoneMask}" type="text" formControlName="phone" class="form-control"
       [ngClass]="{ 'is-invalid': submitted && formControls.phone.errors }" />
     <div *ngIf="submitted && formControls.phone.errors" class="invalid-feedback">
       <div *ngIf="formControls.phone.errors.required">{{ 'phoneRequired' | translate:self }}</div>
       <div *ngIf="formControls.phone.errors.pattern">{{ 'validPhone' | translate:self }}</div>
     </div>
-  </div>
+  </div> -->
   <div class="form-group">
     <input placeholder="{{ 'email' | translate:self }}" type="email" formControlName="email" class="form-control"
       [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }" />
@@ -39,14 +39,14 @@
       <div *ngIf="formControls.password.errors.minlength">{{ 'passwordLength' | translate:self }}</div>
     </div>
   </div>
-  <div class="form-group mb-0">
+  <!-- <div class="form-group mb-0">
     <input placeholder="{{ 'repeatPassword' | translate:self }}" autocomplete="off" type="password" formControlName="rePassword" class="form-control"
       [ngClass]="{ 'is-invalid': submitted && formControls.rePassword.errors }" />
     <div *ngIf="submitted && formControls.rePassword.errors" class="invalid-feedback">
       <div *ngIf="formControls.rePassword.errors.required">{{ 'repeatPasswordRequired' | translate:self }}</div>
       <div *ngIf="formControls.rePassword.errors.matchOther">{{ 'passwordsNotMatch' | translate:self }}</div>
     </div>
-  </div>
+  </div> -->
   <div class="account">
     <a routerLink="/signin">{{ 'haveAccount' | translate:self }}</a>
   </div>

@@ -29,10 +29,10 @@ export class SignupVendorComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
-      itn: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
+      // itn: ['', Validators.required],
+      // phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['', [Validators.required, matchOtherValidator('password')]],
+      // rePassword: ['', [Validators.required, matchOtherValidator('password')]],
     });
   }
 
