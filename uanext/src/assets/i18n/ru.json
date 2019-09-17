@@ -110,7 +110,10 @@
         "enterEmail": "Введите ваш адрес электронной почты",
         "subscribe": "Подписаться",
         "emailIsSafe": "*Твой e-mail в безопастности с нами. Мы никогда и ни с кем не поделимся.",
-        "useEmail": "Войти с помощью почты"
+        "useEmail": "Войти с помощью почты",
+        "placeObject": "РАЗМЕСТИ ОБЪЕКТ",
+        "onMap": "НА КАРТЕ",
+        "createProject":"Создать проект"
     },
     "InteractiveInvestmentMinCardComponent": {
         "confirm": "Утвердить",

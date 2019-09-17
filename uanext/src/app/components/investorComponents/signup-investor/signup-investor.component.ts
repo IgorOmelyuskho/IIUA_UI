@@ -28,11 +28,11 @@ export class SignupInvestorComponent implements OnInit {
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],
-      creditCardNumber: ['', [Validators.required, Validators.pattern(FormHelper.creditCardPattern)]],
+      // creditCardNumber: ['', [Validators.required, Validators.pattern(FormHelper.creditCardPattern)]],
       email: ['', [Validators.required, Validators.pattern(FormHelper.emailPattern)]],
-      phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
+      // phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      rePassword: ['', [Validators.required, matchOtherValidator('password')]],
+      // rePassword: ['', [Validators.required, matchOtherValidator('password')]],
     });
   }
 

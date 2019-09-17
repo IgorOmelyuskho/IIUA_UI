@@ -298,7 +298,7 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 3',
       'legalEntityName': 'company name',
-      'goal': 'goal',
+      'goal': 'goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoalgoal goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoal',
       'region': 'region',
       'address': 'address',
       'sphereActivities': [{ id: 1, name: 'field of activity' }, { id: 2, name: 'field of activity' }],
