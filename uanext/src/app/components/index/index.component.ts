@@ -218,8 +218,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   windowResizeHandler = () => {
-    this.init1();
-    this.init2();
+    // this.init1();
+    // this.init2();
   }
 
   slideUp() {
