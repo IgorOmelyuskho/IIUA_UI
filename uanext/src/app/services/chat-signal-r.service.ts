@@ -21,9 +21,10 @@ export class ChatSignalRService {
     // this.emulateSignalR();
     const token = localStorage.getItem('token');
 
-    const options = { accessTokenFactory: () => token, transport: HttpTransportType.WebSockets };
+    const options = { accessTokenFactory: () => token, transport: HttpTransportType.WebSockets, skipNegotiation: true };
 
     this.hubConnection = new HubConnectionBuilder()
+      .configureLogging(LogLevel.Debug)
       .withUrl(environment.signalR, options).build();
 
     this.hubConnection.serverTimeoutInMilliseconds = 1000 * 60 * 5000000; // 5000000 minute
@@ -48,7 +49,7 @@ export class ChatSignalRService {
         // console.log('Chat SignalR start');
       })
       .catch((err) => {
-        console.warn(err.toString());
+        console.warn(err);
         return;
       });
   }
