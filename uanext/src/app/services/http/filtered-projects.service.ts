@@ -44,8 +44,8 @@ export class FilteredProjectsService {
           return response;
         }),
         map((response: FilteredProjects) => { // todo remove
+          this.addAvatara(response);
           return this.addRating(response);
-          // this.addAvatara(response);
           // return this.add3DObjectsArr(response);
         }),
       );
@@ -70,15 +70,11 @@ export class FilteredProjectsService {
           return response;
         }),
         map((response: FilteredProjects) => { // todo remove
+          this.addAvatara(response);
           return this.addRating(response);
-          // this.addAvatara(response);
           // return this.add3DObjectsArr(response);
         }),
       );
-  }
-
-  getProjectsWhenNotAuthorized(): Observable<VendorProject[]> {
-    return of([...responseProjects.projectsList, ...responseProjects.projectsList, ...responseProjects.projectsList]);
   }
 
   private fixFilterForBackend(filter: FilterFields | any): FilterFields {
@@ -133,24 +129,24 @@ export class FilteredProjectsService {
     const y = 48.46812449736811;
     for (let i = 0; i < filteredProjects.projectsList.length; i++) {
       filteredProjects.projectsList[i].geoObjects = [
-/*         {
-          geoObjectId: 'ID-' + Math.random(),
-          coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
-          projectName: filteredProjects.projectsList[i].name,
-          pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
-          project: filteredProjects.projectsList[i],
-          canMove: true
-        },
-        {
-          geoObjectId: 'ID-' + Math.random(),
-          coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
-          projectName: filteredProjects.projectsList[i].name,
-          pathToZip: window.location.origin + '/assets/objects/tractor.zip',
-          pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
-          project: filteredProjects.projectsList[i],
-          canMove: true
-        }, */
+        /*         {
+                  geoObjectId: 'ID-' + Math.random(),
+                  coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
+                  projectName: filteredProjects.projectsList[i].name,
+                  pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+                  pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+                  project: filteredProjects.projectsList[i],
+                  canMove: true
+                },
+                {
+                  geoObjectId: 'ID-' + Math.random(),
+                  coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },
+                  projectName: filteredProjects.projectsList[i].name,
+                  pathToZip: window.location.origin + '/assets/objects/tractor.zip',
+                  pathToZipLP: window.location.origin + '/assets/objects/low-poly-tractor.zip',
+                  project: filteredProjects.projectsList[i],
+                  canMove: true
+                }, */
         {
           geoObjectId: 'ID-' + Math.random(),
           coords: { x: x + Math.random() * delta, y: y + Math.random() * delta },

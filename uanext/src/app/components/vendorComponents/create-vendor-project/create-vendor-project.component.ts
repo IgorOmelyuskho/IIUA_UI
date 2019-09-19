@@ -255,8 +255,6 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     }
     newVendorProject.employeesNumberMin = this.vendorProjectForm.value.employeesNumber.split('-')[0];
     newVendorProject.employeesNumberMax = this.vendorProjectForm.value.employeesNumber.split('-')[1];
-    console.log(newVendorProject.employeesNumberMin);
-    console.log(newVendorProject.employeesNumberMax);
 
     this.showProgressBar = true;
     this.projectsService.createVendorProject(newVendorProject).subscribe(

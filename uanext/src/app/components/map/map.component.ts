@@ -13,6 +13,8 @@ import { MapService } from 'src/app/services/http/map.service';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 import { Object3DAndProject } from '../threejs-scene/threejs-scene.component';
 import { StateService } from 'src/app/services/state/state.service';
+import { ProjectsService } from 'src/app/services/http/projects.service';
+import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 
 @Component({
   selector: 'app-map',
@@ -121,7 +123,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.$fromChangeExtentEvent.next(extent);
   }
 
-  constructor(private signalRService: SignalRService, private mapService: MapService, private stateService: StateService) { }
+  constructor(private signalRService: SignalRService, private mapService: MapService, private stateService: StateService, private projectsService: ProjectsService) { }
 
   ngOnInit() {
   }
@@ -173,6 +175,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mapService.post3DObject(object3DDto).subscribe(
       (val: {objectId: string}) => {
         this.mapManager.drop3DObject(object3DDto, val.objectId, project);
+        const projectGeoObjectDto: ProjectGeoObjectDto = {
+          projectId: project.id,
+          projectUserId: this.stateService.getUserId(),
+          geoObjectId: val.objectId,
+          path: object3DDto.path
+        };
+        this.projectsService.addProjectGeoObject(projectGeoObjectDto).subscribe();
       },
       err => {
         console.warn(err);

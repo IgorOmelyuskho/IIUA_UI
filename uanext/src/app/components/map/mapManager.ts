@@ -176,7 +176,7 @@ export class MapManager {
 
   private updateGeoObjectSettings(geoObject: GeoObject) {
     const historyPosition: HistoryPositionDto = {
-      object3DId: geoObject.geoObjectId,
+      objecId: geoObject.geoObjectId,
       positionX: geoObject.coords.x,
       positionY: geoObject.coords.y,
       scale: geoObject.scale,

@@ -6,6 +6,7 @@ import { map, tap, delay } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from 'src/app/helperClasses/projects';
 import { StateService } from '../state/state.service';
+import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 
 const emptyVendorProject: VendorProject = {
   name: '',
@@ -54,8 +55,8 @@ export class ProjectsService {
         }),
         map((response: VendorProject[]) => { // todo remove
           this.add3DObjectsArr(response);
-          return this.addRating(response);
-          // return this.addAvatara(response);
+          this.addRating(response);
+          return this.addAvatara(response);
         }),
       );
 
@@ -94,6 +95,20 @@ export class ProjectsService {
 
   setProjectsQueue(param): Observable<any> {
     return this.http.put<any>(environment.projects + environment.changeQueuePosition, param);
+  }
+
+  addProjectGeoObject(projectGeoObjectDto: ProjectGeoObjectDto): Observable<any> {
+    return this.http.post<any>(environment.projects + environment.addProjectGeoObject, projectGeoObjectDto);
+  }
+
+  getProjectsWhenNotAuthorized(): Observable<VendorProject[]> {
+    // return of([...responseProjects.projectsList, ...responseProjects.projectsList, ...responseProjects.projectsList]);
+    return this.http.get<VendorProject[]>(environment.projects + environment.getLatestProjects)
+      .pipe(
+        map((response: VendorProject[]) => { // todo remove
+          return this.add3DObjectsArr(response);
+        })
+      );
   }
 
   private addAvatara(projects: VendorProject[]): VendorProject[] {
