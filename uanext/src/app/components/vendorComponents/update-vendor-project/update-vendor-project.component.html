@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="form-group col-md-10 col-12">
         <label for="vendor-goal-textarea2">{{ 'goal' | translate:self }}</label>
         <textarea id="vendor-goal-textarea2" rows="3" formControlName="goal" class="form-control"
@@ -70,21 +70,12 @@
         <app-steps [parentSubmitted]="true" [items]="vendorProject.steps" [minItemsCount]=3 [maxItemsCount]=15
           (itemsEvent)="stepsEventHandler($event)"></app-steps>
       </div>
-    </div>
+    </div> -->
 
     <hr>
 
     <div class="row">
       <h6 class="col-12">{{ 'address' | translate:self }}</h6>
-      <div class="form-group col-lg-4 col-md-6 col-12">
-        <label>{{ 'addressLabel' | translate:self }}</label>
-        <input type="text" formControlName="address" class="form-control"
-          [ngClass]="{ 'is-invalid': isLoaded && formControls.address.errors }" />
-        <div *ngIf="formControls.address.errors" class="invalid-feedback">
-          <div *ngIf="formControls.address.errors.required">{{ 'addressEmpty' | translate:self }}</div>
-        </div>
-      </div>
-
       <div class="form-group col-lg-4 col-md-6 col-12">
         <label>{{ 'region' | translate:self }}</label>
         <select type="text" formControlName="region" class="form-control"
@@ -98,11 +89,19 @@
           <div *ngIf="formControls.region.errors.required">{{ 'regionEmpty' | translate:self }}</div>
         </div>
       </div>
+      <div class="form-group col-lg-4 col-md-6 col-12">
+        <label>{{ 'addressLabel' | translate:self }}</label>
+        <input type="text" formControlName="address" class="form-control"
+          [ngClass]="{ 'is-invalid': isLoaded && formControls.address.errors }" />
+        <div *ngIf="formControls.address.errors" class="invalid-feedback">
+          <div *ngIf="formControls.address.errors.required">{{ 'addressEmpty' | translate:self }}</div>
+        </div>
+      </div>
     </div>
 
     <hr>
 
-    <div class="row">
+    <!-- <div class="row">
       <h6 class="col-12">{{ 'aboutCompany' | translate:self }}</h6>
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'employeesNumber' | translate:self }}</label>
@@ -149,9 +148,9 @@
           <div *ngIf="formControls.companyAge.errors.required">{{ 'companyAgeEmpty' | translate:self }}</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'avgCheck' | translate:self }}</label>
         <input type="number" min=0 formControlName="averageCheck" class="form-control"
@@ -188,12 +187,12 @@
           <div *ngIf="formControls.grossIncome.errors.required">{{ 'grossIncomeEmpty' | translate:self }}</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <hr>
+    <!-- <hr> -->
 
     <div class="row">
-      <h6 class="col-12">{{ 'investments' | translate:self }}</h6>
+      <!-- <h6 class="col-12">{{ 'investments' | translate:self }}</h6> -->
       <div class="form-group col-md-10 col-12">
         <label>{{ 'businessDescription' | translate:self }}</label>
         <textarea type="text" rows=3 formControlName="description" class="form-control"
@@ -204,15 +203,15 @@
           </div>
         </div>
       </div>
-      <div class="form-group col-md-6 col-xl-4 col-12">
+      <!-- <div class="form-group col-md-6 col-xl-4 col-12">
         <label>{{ 'moneyRequired' | translate:self }}</label>
         <input type="number" formControlName="moneyRequired" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.moneyRequired.errors }" />
         <div *ngIf="formControls.moneyRequired.errors" class="invalid-feedback">
           <div *ngIf="formControls.moneyRequired.errors.required">{{ 'moneyRequiredEmpty' | translate:self }}</div>
         </div>
-      </div>
-      <div class="form-group col-md-10 col-12">
+      </div> -->
+      <!-- <div class="form-group col-md-10 col-12">
         <label>{{ 'investmentDescription' | translate:self }}</label>
         <textarea rows=3 formControlName="investmentDescription" class="form-control"
           [ngClass]="{ 'is-invalid': isLoaded && formControls.investmentDescription.errors }"></textarea>
@@ -222,7 +221,7 @@
           <div *ngIf="formControls.investmentDescription.errors.maxlength">
             {{ 'investmentDescriptionLength' | translate:self }}</div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <hr>
@@ -234,7 +233,7 @@
           (itemsEvent)="videosEventHandler($event)"></app-videos>
       </div>
 
-      <div class="form-group col-lg-6 col-12">
+      <div class="form-group col-lg-12 col-12">
         <div class="wrapper">
           <div class="project-photos">
             <div class="mb-2">{{ 'uploadPhotos' | translate:self }}</div>
@@ -264,7 +263,7 @@
         </div>
       </div>
 
-      <div class="form-group col-lg-6 col-12">
+      <!-- <div class="form-group col-lg-6 col-12">
         <div class="wrapper">
           <div class="project-files">
             <div class="mb-2">{{ 'uploadedFiles' | translate:self }}</div>
@@ -290,7 +289,7 @@
           </div>
           <input style="display:none" type="text" formControlName="forFiles" />
         </div>
-      </div>
+      </div> -->
 
     </div>
 

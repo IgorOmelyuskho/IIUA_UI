@@ -33,9 +33,9 @@ export class HoveredProjectCardComponent implements OnInit, AfterViewInit {
     setTimeout(() => { // emulate delay http query for fetch project
       this.project = project;
       this.projectUploaded = true;
-      requestAnimationFrame(() => {
-        this.numberNotFitSteps();
-      });
+      // requestAnimationFrame(() => {
+      //   this.numberNotFitSteps();
+      // });
     }, 10);
   }
 

@@ -30,7 +30,7 @@ export class VendorCreateUpdateComponent implements OnInit, AfterViewInit, OnDes
       (val: VendorProject) => {
         if (val !== null) {
           this.project = val;
-          this.projectSteps = [...this.project.steps];
+          // this.projectSteps = [...this.project.steps];
           for (let i = 0; i < this.projectSteps.length; i++) {
             this.projectSteps[i].selected = false;
           }

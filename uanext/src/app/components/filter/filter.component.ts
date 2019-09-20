@@ -89,10 +89,10 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.noUiSlider = window['noUiSlider'];
-    this.initBudgetSlider();
-    this.initAgeSlider();
-    this.initEmployeesSlider();
-    this.initAvgCheckSlider();
+    // this.initBudgetSlider();
+    // this.initAgeSlider();
+    // this.initEmployeesSlider();
+    // this.initAvgCheckSlider();
 
     this.sphereActivities = this.selectedFieldOfActivity();
 
@@ -320,150 +320,150 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-  initBudgetSlider() {
-    this.budgetElement = document.getElementById('budget-range');
-    this.budgetFromElement = document.getElementById('budget-from');
-    this.budgetToElement = document.getElementById('budget-to');
+  // initBudgetSlider() {
+  //   this.budgetElement = document.getElementById('budget-range');
+  //   this.budgetFromElement = document.getElementById('budget-from');
+  //   this.budgetToElement = document.getElementById('budget-to');
 
-    this.noUiSlider.create(this.budgetElement, {
-      start: [0, 30000000],
-      connect: true,
-      range: {
-        'min': this.budgetMin,
-        'max': this.budgetMax
-      }
-    });
+  //   this.noUiSlider.create(this.budgetElement, {
+  //     start: [0, 30000000],
+  //     connect: true,
+  //     range: {
+  //       'min': this.budgetMin,
+  //       'max': this.budgetMax
+  //     }
+  //   });
 
-    this.budgetElement.noUiSlider.on('update', (values, handle) => {
-      const value = values[handle];
-      if (handle) {
-        this.budgetToElement.value = Math.round(value);
-      } else {
-        this.budgetFromElement.value = Math.round(value);
-      }
+  //   this.budgetElement.noUiSlider.on('update', (values, handle) => {
+  //     const value = values[handle];
+  //     if (handle) {
+  //       this.budgetToElement.value = Math.round(value);
+  //     } else {
+  //       this.budgetFromElement.value = Math.round(value);
+  //     }
 
-      this.filterOnChange();
-    });
+  //     this.filterOnChange();
+  //   });
 
-    this.budgetFromElement.addEventListener('input', () => {
-      this.budgetElement.noUiSlider.set([this.budgetFromElement.value, null]);
-    });
+  //   this.budgetFromElement.addEventListener('input', () => {
+  //     this.budgetElement.noUiSlider.set([this.budgetFromElement.value, null]);
+  //   });
 
-    this.budgetToElement.addEventListener('input', () => {
-      this.budgetElement.noUiSlider.set([null, this.budgetToElement.value]);
-    });
-  }
+  //   this.budgetToElement.addEventListener('input', () => {
+  //     this.budgetElement.noUiSlider.set([null, this.budgetToElement.value]);
+  //   });
+  // }
 
-  initAgeSlider() {
-    this.ageElement = document.getElementById('age-range');
-    this.ageFromElement = document.getElementById('age-from');
-    this.ageToElement = document.getElementById('age-to');
+  // initAgeSlider() {
+  //   this.ageElement = document.getElementById('age-range');
+  //   this.ageFromElement = document.getElementById('age-from');
+  //   this.ageToElement = document.getElementById('age-to');
 
-    this.noUiSlider.create(this.ageElement, {
-      start: [0, 50],
-      connect: true,
-      range: {
-        'min': this.ageMin,
-        'max': this.ageMax
-      }
-    });
+  //   this.noUiSlider.create(this.ageElement, {
+  //     start: [0, 50],
+  //     connect: true,
+  //     range: {
+  //       'min': this.ageMin,
+  //       'max': this.ageMax
+  //     }
+  //   });
 
-    this.ageElement.noUiSlider.on('update', (values, handle) => {
-      this.ageTouched += 1;
-      const value = values[handle];
-      if (handle) {
-        this.ageToElement.value = Math.round(value);
-      } else {
-        this.ageFromElement.value = Math.round(value);
-      }
+  //   this.ageElement.noUiSlider.on('update', (values, handle) => {
+  //     this.ageTouched += 1;
+  //     const value = values[handle];
+  //     if (handle) {
+  //       this.ageToElement.value = Math.round(value);
+  //     } else {
+  //       this.ageFromElement.value = Math.round(value);
+  //     }
 
-      this.filterOnChange();
-    });
+  //     this.filterOnChange();
+  //   });
 
-    this.ageFromElement.addEventListener('input', () => {
-      this.ageTouched += 1;
-      this.ageElement.noUiSlider.set([this.ageFromElement.value, null]);
-    });
+  //   this.ageFromElement.addEventListener('input', () => {
+  //     this.ageTouched += 1;
+  //     this.ageElement.noUiSlider.set([this.ageFromElement.value, null]);
+  //   });
 
-    this.ageToElement.addEventListener('input', () => {
-      this.ageTouched += 1;
-      this.ageElement.noUiSlider.set([null, this.ageToElement.value]);
-    });
-  }
+  //   this.ageToElement.addEventListener('input', () => {
+  //     this.ageTouched += 1;
+  //     this.ageElement.noUiSlider.set([null, this.ageToElement.value]);
+  //   });
+  // }
 
-  initEmployeesSlider() {
-    this.employeesElement = document.getElementById('employees-range');
-    this.employeesFromElement = document.getElementById('employees-from');
-    this.employeesToElement = document.getElementById('employees-to');
+  // initEmployeesSlider() {
+  //   this.employeesElement = document.getElementById('employees-range');
+  //   this.employeesFromElement = document.getElementById('employees-from');
+  //   this.employeesToElement = document.getElementById('employees-to');
 
-    this.noUiSlider.create(this.employeesElement, {
-      start: [0, 500],
-      connect: true,
-      range: {
-        'min': this.employeesMin,
-        'max': this.employeesMax
-      }
-    });
+  //   this.noUiSlider.create(this.employeesElement, {
+  //     start: [0, 500],
+  //     connect: true,
+  //     range: {
+  //       'min': this.employeesMin,
+  //       'max': this.employeesMax
+  //     }
+  //   });
 
-    this.employeesElement.noUiSlider.on('update', (values, handle) => {
-      this.employeesTouched += 1;
-      const value = values[handle];
-      if (handle) {
-        this.employeesToElement.value = Math.round(value);
-      } else {
-        this.employeesFromElement.value = Math.round(value);
-      }
+  //   this.employeesElement.noUiSlider.on('update', (values, handle) => {
+  //     this.employeesTouched += 1;
+  //     const value = values[handle];
+  //     if (handle) {
+  //       this.employeesToElement.value = Math.round(value);
+  //     } else {
+  //       this.employeesFromElement.value = Math.round(value);
+  //     }
 
-      this.filterOnChange();
-    });
+  //     this.filterOnChange();
+  //   });
 
-    this.employeesFromElement.addEventListener('input', () => {
-      this.employeesTouched += 1;
-      this.employeesElement.noUiSlider.set([this.employeesFromElement.value, null]);
-    });
+  //   this.employeesFromElement.addEventListener('input', () => {
+  //     this.employeesTouched += 1;
+  //     this.employeesElement.noUiSlider.set([this.employeesFromElement.value, null]);
+  //   });
 
-    this.employeesToElement.addEventListener('input', () => {
-      this.employeesTouched += 1;
-      this.employeesElement.noUiSlider.set([null, this.employeesToElement.value]);
-    });
-  }
+  //   this.employeesToElement.addEventListener('input', () => {
+  //     this.employeesTouched += 1;
+  //     this.employeesElement.noUiSlider.set([null, this.employeesToElement.value]);
+  //   });
+  // }
 
-  initAvgCheckSlider() {
-    this.avgCheckElement = document.getElementById('avg-check-range');
-    this.avgCheckFromElement = document.getElementById('avg-check-from');
-    this.avgCheckToElement = document.getElementById('avg-check-to');
+  // initAvgCheckSlider() {
+  //   this.avgCheckElement = document.getElementById('avg-check-range');
+  //   this.avgCheckFromElement = document.getElementById('avg-check-from');
+  //   this.avgCheckToElement = document.getElementById('avg-check-to');
 
-    this.noUiSlider.create(this.avgCheckElement, {
-      start: [0, 1000],
-      connect: true,
-      range: {
-        'min': this.avgCheckMin,
-        'max': this.avgCheckMax
-      }
-    });
+  //   this.noUiSlider.create(this.avgCheckElement, {
+  //     start: [0, 1000],
+  //     connect: true,
+  //     range: {
+  //       'min': this.avgCheckMin,
+  //       'max': this.avgCheckMax
+  //     }
+  //   });
 
-    this.avgCheckElement.noUiSlider.on('update', (values, handle) => {
-      const value = values[handle];
-      this.avgCheckTouched += 1;
-      if (handle) {
-        this.avgCheckToElement.value = Math.round(value);
-      } else {
-        this.avgCheckFromElement.value = Math.round(value);
-      }
+  //   this.avgCheckElement.noUiSlider.on('update', (values, handle) => {
+  //     const value = values[handle];
+  //     this.avgCheckTouched += 1;
+  //     if (handle) {
+  //       this.avgCheckToElement.value = Math.round(value);
+  //     } else {
+  //       this.avgCheckFromElement.value = Math.round(value);
+  //     }
 
-      this.filterOnChange();
-    });
+  //     this.filterOnChange();
+  //   });
 
-    this.avgCheckFromElement.addEventListener('input', () => {
-      this.avgCheckTouched += 1;
-      this.avgCheckElement.noUiSlider.set([this.avgCheckFromElement.value, null]);
-    });
+  //   this.avgCheckFromElement.addEventListener('input', () => {
+  //     this.avgCheckTouched += 1;
+  //     this.avgCheckElement.noUiSlider.set([this.avgCheckFromElement.value, null]);
+  //   });
 
-    this.avgCheckToElement.addEventListener('input', () => {
-      this.avgCheckTouched += 1;
-      this.avgCheckElement.noUiSlider.set([null, this.avgCheckToElement.value]);
-    });
-  }
+  //   this.avgCheckToElement.addEventListener('input', () => {
+  //     this.avgCheckTouched += 1;
+  //     this.avgCheckElement.noUiSlider.set([null, this.avgCheckToElement.value]);
+  //   });
+  // }
 
 
 
@@ -471,61 +471,61 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
     const filter: FilterFields = {};
 
     try { // todo
-      if (
-        this.budgetFromElement.value !== '' &&
-        this.budgetToElement.value !== '' &&
-        !(this.budgetFromElement.value === this.budgetMin.toString() &&
-          this.budgetToElement.value === this.budgetMax.toString()
-        )
-      ) {
-        filter.moneyRequiredFrom = this.budgetFromElement.value;
-        filter.moneyRequiredTo = this.budgetToElement.value;
-      }
+      // if (
+      //   this.budgetFromElement.value !== '' &&
+      //   this.budgetToElement.value !== '' &&
+      //   !(this.budgetFromElement.value === this.budgetMin.toString() &&
+      //     this.budgetToElement.value === this.budgetMax.toString()
+      //   )
+      // ) {
+      //   filter.moneyRequiredFrom = this.budgetFromElement.value;
+      //   filter.moneyRequiredTo = this.budgetToElement.value;
+      // }
 
       if (this.region != null && this.region !== 'ALL') {
         filter.region = this.region;
       }
 
-      if (this.sphereActivities != null && this.sphereActivities.length !== 0) {
-        filter.sphereActivities = this.sphereActivities;
-      }
+      // if (this.sphereActivities != null && this.sphereActivities.length !== 0) {
+      //   filter.sphereActivities = this.sphereActivities;
+      // }
 
-      if (this.updateRate != null && this.updateRate.length !== 0) {
-        filter.updateRate = this.updateRate;
-      }
+      // if (this.updateRate != null && this.updateRate.length !== 0) {
+      //   filter.updateRate = this.updateRate;
+      // }
 
-      if (
-        this.ageFromElement.value !== '' &&
-        this.ageToElement.value !== '' &&
-        !(this.ageFromElement.value === this.ageMin.toString() &&
-          this.ageToElement.value === this.ageMax.toString()
-        )
-      ) {
-        filter.companyAgeFrom = this.ageFromElement.value;
-        filter.companyAgeTo = this.ageToElement.value;
-      }
+      // if (
+      //   this.ageFromElement.value !== '' &&
+      //   this.ageToElement.value !== '' &&
+      //   !(this.ageFromElement.value === this.ageMin.toString() &&
+      //     this.ageToElement.value === this.ageMax.toString()
+      //   )
+      // ) {
+      //   filter.companyAgeFrom = this.ageFromElement.value;
+      //   filter.companyAgeTo = this.ageToElement.value;
+      // }
 
-      if (
-        this.employeesFromElement.value !== '' &&
-        this.employeesToElement.value !== '' &&
-        !(this.employeesFromElement.value === this.employeesMin.toString() &&
-          this.employeesToElement.value === this.employeesMax.toString()
-        )
-      ) {
-        filter.employeesFrom = this.employeesFromElement.value;
-        filter.employeesTo = this.employeesToElement.value;
-      }
+      // if (
+      //   this.employeesFromElement.value !== '' &&
+      //   this.employeesToElement.value !== '' &&
+      //   !(this.employeesFromElement.value === this.employeesMin.toString() &&
+      //     this.employeesToElement.value === this.employeesMax.toString()
+      //   )
+      // ) {
+      //   filter.employeesFrom = this.employeesFromElement.value;
+      //   filter.employeesTo = this.employeesToElement.value;
+      // }
 
-      if (
-        this.avgCheckFromElement.value !== '' &&
-        this.avgCheckToElement.value !== '' &&
-        !(this.avgCheckFromElement.value === this.avgCheckMin.toString() &&
-          this.avgCheckToElement.value === this.avgCheckMax.toString()
-        )
-      ) {
-        filter.avgCheckFrom = this.avgCheckFromElement.value;
-        filter.avgCheckTo = this.avgCheckToElement.value;
-      }
+      // if (
+      //   this.avgCheckFromElement.value !== '' &&
+      //   this.avgCheckToElement.value !== '' &&
+      //   !(this.avgCheckFromElement.value === this.avgCheckMin.toString() &&
+      //     this.avgCheckToElement.value === this.avgCheckMax.toString()
+      //   )
+      // ) {
+      //   filter.avgCheckFrom = this.avgCheckFromElement.value;
+      //   filter.avgCheckTo = this.avgCheckToElement.value;
+      // }
 
       this.filter$.next(filter);
     } catch (err) {

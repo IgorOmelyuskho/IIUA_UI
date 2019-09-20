@@ -19,7 +19,7 @@ export class VendorProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.numberNotFitSteps();
+    // this.numberNotFitSteps();
   }
 
   numberNotFitSteps() {

@@ -12,25 +12,25 @@ const emptyVendorProject: VendorProject = {
   name: '',
   avatara: '',
   legalEntityName: '',
-  goal: '',
+  // goal: '',
   region: '',
   address: '',
-  sphereActivities: [{ id: 1, name: 'string' }],
-  companyAge: 0,
-  employeesNumberMin: 0,
-  employeesNumberMax: 0,
-  employeesToHire: 0,
-  grossIncome: '',
-  averageCheck: 0,
-  mounthlyClients: 0,
-  averagePrice: 0,
+  // sphereActivities: [{ id: 1, name: 'string' }],
+  // companyAge: 0,
+  // employeesNumberMin: 0,
+  // employeesNumberMax: 0,
+  // employeesToHire: 0,
+  // grossIncome: '',
+  // averageCheck: 0,
+  // mounthlyClients: 0,
+  // averagePrice: 0,
   description: '',
-  moneyRequired: 0,
-  investmentDescription: '',
-  steps: [],
+  // moneyRequired: 0,
+  // investmentDescription: '',
+  // steps: [],
   videos: [],
   images: [],
-  files: [],
+  // files: [],
   rating: ''
 };
 
@@ -106,7 +106,8 @@ export class ProjectsService {
     return this.http.get<VendorProject[]>(environment.projects + environment.getLatestProjects)
       .pipe(
         map((response: VendorProject[]) => { // todo remove
-          return this.add3DObjectsArr(response);
+          this.addRating(response);
+          return this.addAvatara(response);
         })
       );
   }

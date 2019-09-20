@@ -49,20 +49,20 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       avatara: ['', Validators.required],
       legalEntityName: ['', Validators.required],
-      goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
+      // goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['', Validators.required],
       address: ['', Validators.required],
-      sphereActivities: ['', Validators.required],
-      companyAge: ['', Validators.required],
-      employeesNumber: ['', Validators.required],
-      employeesToHire: ['', Validators.required],
-      grossIncome: ['', Validators.required],
-      averageCheck: ['', Validators.required],
-      mounthlyClients: ['', Validators.required],
-      averagePrice: ['', Validators.required],
+      // sphereActivities: ['', Validators.required],
+      // companyAge: ['', Validators.required],
+      // employeesNumber: ['', Validators.required],
+      // employeesToHire: ['', Validators.required],
+      // grossIncome: ['', Validators.required],
+      // averageCheck: ['', Validators.required],
+      // mounthlyClients: ['', Validators.required],
+      // averagePrice: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(1024)]],
-      moneyRequired: ['', Validators.required],
-      investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
+      // moneyRequired: ['', Validators.required],
+      // investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
       forSteps: [''],
       forVideos: [''],
       forPhotos: [''],
@@ -85,7 +85,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     );
 
     this.vendorProject.images = [];
-    this.vendorProject.files = [];
+    // this.vendorProject.files = [];
   }
 
   get formControls() {
@@ -98,7 +98,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.vendorProject.steps = e;
+    // this.vendorProject.steps = e;
     this.vendorProjectForm.controls['forSteps'].setErrors(null);
   }
 
@@ -202,29 +202,29 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     }
   }
 
-  filesUploaded(event) {
-    if (event.error === false) {
-      const filesData: any[] = event.files;
-      for (let i = 0; i < filesData.length; i++) {
-        this.vendorProject.files.push(filesData[i]);
-      }
-    }
-  }
+  // filesUploaded(event) {
+  //   if (event.error === false) {
+  //     const filesData: any[] = event.files;
+  //     for (let i = 0; i < filesData.length; i++) {
+  //       this.vendorProject.files.push(filesData[i]);
+  //     }
+  //   }
+  // }
 
-  removeFileItem(event) {
-    for (let i = 0; i < this.vendorProject.files.length; i++) {
-      if (this.vendorProject.files[i] === event) {
-        this.vendorProject.files.splice(i, 1);
-      }
-    }
-  }
+  // removeFileItem(event) {
+  //   for (let i = 0; i < this.vendorProject.files.length; i++) {
+  //     if (this.vendorProject.files[i] === event) {
+  //       this.vendorProject.files.splice(i, 1);
+  //     }
+  //   }
+  // }
 
   onSubmit() {
     this.submitted = true;
 
-    if (this.vendorProject.steps.length === 0) {
-      this.vendorProjectForm.controls['forSteps'].setErrors({ 'err': true });
-    }
+    // if (this.vendorProject.steps.length === 0) {
+    //   this.vendorProjectForm.controls['forSteps'].setErrors({ 'err': true });
+    // }
     if (this.vendorProject.videos.length === 0) {
       this.vendorProjectForm.controls['forVideos'].setErrors({ 'err': true });
     }
@@ -240,21 +240,21 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
       ...this.vendorProjectForm.value,
     };
 
-    newVendorProject.steps = this.vendorProject.steps;
+    // newVendorProject.steps = this.vendorProject.steps;
     newVendorProject.videos = this.vendorProject.videos;
     newVendorProject.avatara = this.avataraData;
     newVendorProject.avatara.isAvatara = true;
     newVendorProject.images = this.vendorProject.images;
     newVendorProject.images.push(newVendorProject.avatara);
-    newVendorProject.files = this.vendorProject.files;
+    // newVendorProject.files = this.vendorProject.files;
     delete newVendorProject.avatara;
-    for (let i = 0; i < newVendorProject.sphereActivities.length; i++) {
-      newVendorProject.sphereActivities[i] = {
-        id: newVendorProject.sphereActivities[i],
-      };
-    }
-    newVendorProject.employeesNumberMin = this.vendorProjectForm.value.employeesNumber.split('-')[0];
-    newVendorProject.employeesNumberMax = this.vendorProjectForm.value.employeesNumber.split('-')[1];
+    // for (let i = 0; i < newVendorProject.sphereActivities.length; i++) {
+    //   newVendorProject.sphereActivities[i] = {
+    //     id: newVendorProject.sphereActivities[i],
+    //   };
+    // }
+    // newVendorProject.employeesNumberMin = this.vendorProjectForm.value.employeesNumber.split('-')[0];
+    // newVendorProject.employeesNumberMax = this.vendorProjectForm.value.employeesNumber.split('-')[1];
 
     this.showProgressBar = true;
     this.projectsService.createVendorProject(newVendorProject).subscribe(

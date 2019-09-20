@@ -14,8 +14,8 @@
     },
     "SignupComponent": {
         "registration": "Регистрация",
-        "investor": "Инвестор",
-        "vendor": "Вендор",
+        "investor": "Компания",
+        "vendor": "Пользователь",
         "social": "Зарегистрироватся с помощью социальных сетей:",
         "useEmail": "Использовать почту для регистрации"
     },
@@ -310,7 +310,7 @@
         "goalMinLength": "Минимальная длина 200 символов",
         "goalMaxLength": "Максимальная длина 1024 символов",
         "address": "Адрес",
-        "addressLabel": "Адрес",
+        "addressLabel": "Полный адрес",
         "addressEmpty": "Адрес не может быть пустым",
         "region": "Регион",
         "regionPlaceholder": "Выберите регион",
