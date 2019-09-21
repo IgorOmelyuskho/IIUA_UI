@@ -68,6 +68,14 @@
       justify-content: space-between;
       margin-top: 10px;
 
+      .remove-btn {
+        width: 25px;
+
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+
       img.flame {
         height: 21px;
         margin-left: 15px;

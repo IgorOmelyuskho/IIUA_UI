@@ -3,6 +3,8 @@ import { GeoObject } from 'src/app/models';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { StateService } from 'src/app/services/state/state.service';
 import { ProjectsService } from 'src/app/services/http/projects.service';
+import { MapService } from 'src/app/services/http/map.service';
+import { Object3DDto } from 'src/app/models/object3DDto';
 
 @Component({
   selector: 'app-main-screen-vendor',
@@ -17,7 +19,7 @@ export class MainScreenVendorComponent implements OnInit {
   geoObjects: GeoObject[];
   showTooltip = false;
 
-  constructor(private stateService: StateService, private projectsService: ProjectsService) { }
+  constructor(private stateService: StateService, private projectsService: ProjectsService, private mapService: MapService) { }
 
   ngOnInit() {
     this.projectsService.fetchVendorProjects().subscribe(
@@ -29,6 +31,12 @@ export class MainScreenVendorComponent implements OnInit {
           }
         }
         this.geoObjects = geoObjectsArr;
+        console.log(this.geoObjects);
+        this.mapService.get3DObject(/* this.geoObjects[0].id */ this.geoObjects[0].geoObjectId).subscribe(
+          (val: Object3DDto) => {
+            console.log(val);
+          }
+        );
       },
       err => {
         console.warn(err);

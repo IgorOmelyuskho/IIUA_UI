@@ -54,7 +54,7 @@ export class ProjectsService {
           return response;
         }),
         map((response: VendorProject[]) => { // todo remove
-          this.add3DObjectsArr(response);
+          // this.add3DObjectsArr(response);
           this.addRating(response);
           return this.addAvatara(response);
         }),

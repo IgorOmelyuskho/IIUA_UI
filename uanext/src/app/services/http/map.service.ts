@@ -19,7 +19,7 @@ export class MapService {
     return this.http.post<any>(environment.map + environment.post3DObject, object3DDto);
   }
 
-  get3DObject(id: string): Observable<{ id: string, name: string, path: string }> {
+  get3DObject(id: string | number): Observable<Object3DDto> {
     return this.http.get<any>(environment.map + environment.get3DObject + '/' + id)
       .pipe(
         map(response => response.data)
