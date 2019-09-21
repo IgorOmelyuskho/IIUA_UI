@@ -1,10 +1,13 @@
 import { VendorProject } from './vendorProject';
 
 export class GeoObject {
+  id?: number;
+  projectId?: number;
+  projectUserId?: string;
   geoObjectId: string;
   coords: { x: number, y: number };
   projectName?: string;
-  pathToZip: string;
+  path: string;
   // pathToZipLP: string;
   canMove?: boolean;
 

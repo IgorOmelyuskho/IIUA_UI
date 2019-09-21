@@ -1,6 +1,6 @@
 <div class="last-activity">
-  <div (click)="findByNameClick()" class="find">
-    <button><i class="fa fa-search"></i></button>
+  <div class="find">
+    <button (click)="findByNameClick()"><i class="fa fa-search"></i></button>
     <input [(ngModel)]="searchName" placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
   </div>
   <div class="param">

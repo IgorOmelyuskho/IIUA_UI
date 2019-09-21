@@ -50,20 +50,20 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       avatara: ['', Validators.required],
       legalEntityName: ['', Validators.required],
-      goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
+      // goal: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(1024)]], // todo min - 200
       region: ['', Validators.required],
       address: ['', Validators.required],
-      sphereActivities: ['', Validators.required],
-      companyAge: ['', Validators.required],
-      employeesNumber: ['', Validators.required],
-      employeesToHire: ['', Validators.required],
-      grossIncome: ['', Validators.required],
-      averageCheck: ['', Validators.required],
-      mounthlyClients: ['', Validators.required],
-      averagePrice: ['', Validators.required],
+      // sphereActivities: ['', Validators.required],
+      // companyAge: ['', Validators.required],
+      // employeesNumber: ['', Validators.required],
+      // employeesToHire: ['', Validators.required],
+      // grossIncome: ['', Validators.required],
+      // averageCheck: ['', Validators.required],
+      // mounthlyClients: ['', Validators.required],
+      // averagePrice: ['', Validators.required],
       description: ['', [Validators.required, Validators.maxLength(1024)]],
-      moneyRequired: ['', Validators.required],
-      investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
+      // moneyRequired: ['', Validators.required],
+      // investmentDescription: ['', [Validators.required, Validators.maxLength(4096)]],
       forSteps: [''],
       forVideos: [''],
       forPhotos: [''],
@@ -142,7 +142,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.vendorProject.steps = e;
+    // this.vendorProject.steps = e;
     this.vendorProjectForm.controls['forSteps'].setErrors(null);
   }
 
@@ -220,51 +220,51 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
   setFormValues(): void {
     const selectedActivities = [];
-    for (let i = 0; i < this.vendorProject.sphereActivities.length; i++) {
-      selectedActivities.push(this.vendorProject.sphereActivities[i].id.toString());
-    }
+    // for (let i = 0; i < this.vendorProject.sphereActivities.length; i++) {
+    //   selectedActivities.push(this.vendorProject.sphereActivities[i].id.toString());
+    // }
 
-    let employeesNumber: string;
-    if (this.vendorProject.employeesNumberMin === 0) {
-      employeesNumber = '0-1';
-    }
-    if (this.vendorProject.employeesNumberMin === 2) {
-      employeesNumber = '2-5';
-    }
-    if (this.vendorProject.employeesNumberMin === 6) {
-      employeesNumber = '6-10';
-    }
-    if (this.vendorProject.employeesNumberMin === 11) {
-      employeesNumber = '11-25';
-    }
-    if (this.vendorProject.employeesNumberMin === 26) {
-      employeesNumber = '26-50';
-    }
-    if (this.vendorProject.employeesNumberMin === 51) {
-      employeesNumber = '51-100';
-    }
-    if (this.vendorProject.employeesNumberMin === 101) {
-      employeesNumber = '101-10000';
-    }
+    // let employeesNumber: string;
+    // if (this.vendorProject.employeesNumberMin === 0) {
+    //   employeesNumber = '0-1';
+    // }
+    // if (this.vendorProject.employeesNumberMin === 2) {
+    //   employeesNumber = '2-5';
+    // }
+    // if (this.vendorProject.employeesNumberMin === 6) {
+    //   employeesNumber = '6-10';
+    // }
+    // if (this.vendorProject.employeesNumberMin === 11) {
+    //   employeesNumber = '11-25';
+    // }
+    // if (this.vendorProject.employeesNumberMin === 26) {
+    //   employeesNumber = '26-50';
+    // }
+    // if (this.vendorProject.employeesNumberMin === 51) {
+    //   employeesNumber = '51-100';
+    // }
+    // if (this.vendorProject.employeesNumberMin === 101) {
+    //   employeesNumber = '101-10000';
+    // }
 
     this.vendorProjectForm.setValue({
       name: this.vendorProject.name,
       avatara: '',
       legalEntityName: this.vendorProject.legalEntityName,
-      goal: this.vendorProject.goal,
+      // goal: this.vendorProject.goal,
       region: this.vendorProject.region,
       address: this.vendorProject.address,
-      sphereActivities: selectedActivities,
-      companyAge: this.vendorProject.companyAge,
-      employeesNumber: employeesNumber,
-      employeesToHire: this.vendorProject.employeesToHire,
-      grossIncome: this.vendorProject.grossIncome,
-      averageCheck: this.vendorProject.averageCheck,
-      mounthlyClients: this.vendorProject.mounthlyClients,
-      averagePrice: this.vendorProject.averagePrice,
+      // sphereActivities: selectedActivities,
+      // companyAge: this.vendorProject.companyAge,
+      // employeesNumber: employeesNumber,
+      // employeesToHire: this.vendorProject.employeesToHire,
+      // grossIncome: this.vendorProject.grossIncome,
+      // averageCheck: this.vendorProject.averageCheck,
+      // mounthlyClients: this.vendorProject.mounthlyClients,
+      // averagePrice: this.vendorProject.averagePrice,
       description: this.vendorProject.description,
-      moneyRequired: this.vendorProject.moneyRequired,
-      investmentDescription: this.vendorProject.investmentDescription,
+      // moneyRequired: this.vendorProject.moneyRequired,
+      // investmentDescription: this.vendorProject.investmentDescription,
       forSteps: '',
       forVideos: '',
       forPhotos: '',
@@ -301,22 +301,22 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
     }
   }
 
-  filesUploaded(event) {
-    if (event.error === false) {
-      const filesData: any[] = event.files;
-      for (let i = 0; i < filesData.length; i++) {
-        this.vendorProject.files.push(filesData[i]);
-      }
-    }
-  }
+  // filesUploaded(event) {
+  //   if (event.error === false) {
+  //     const filesData: any[] = event.files;
+  //     for (let i = 0; i < filesData.length; i++) {
+  //       this.vendorProject.files.push(filesData[i]);
+  //     }
+  //   }
+  // }
 
-  removeFileItem(event) {
-    for (let i = 0; i < this.vendorProject.files.length; i++) {
-      if (this.vendorProject.files[i] === event) {
-        this.vendorProject.files.splice(i, 1);
-      }
-    }
-  }
+  // removeFileItem(event) {
+  //   for (let i = 0; i < this.vendorProject.files.length; i++) {
+  //     if (this.vendorProject.files[i] === event) {
+  //       this.vendorProject.files.splice(i, 1);
+  //     }
+  //   }
+  // }
 
   onSubmit() {
     if (this.vendorProjectForm.valid === false) {
@@ -327,19 +327,19 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
       ...this.vendorProjectForm.value,
     };
 
-    updatedVendorProject.steps = this.vendorProject.steps;
+    // updatedVendorProject.steps = this.vendorProject.steps;
     updatedVendorProject.videos = this.vendorProject.videos;
     updatedVendorProject.avatara = this.vendorProject.avatara;
     updatedVendorProject.avatara.isAvatara = true;
     updatedVendorProject.images = this.vendorProject.images;
     updatedVendorProject.images.push(updatedVendorProject.avatara);
-    updatedVendorProject.files = this.vendorProject.files;
+    // updatedVendorProject.files = this.vendorProject.files;
     delete updatedVendorProject.avatara;
-    for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) {
-      updatedVendorProject.sphereActivities[i] = {
-        id: updatedVendorProject.sphereActivities[i]
-      };
-    }
+    // for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) {
+    //   updatedVendorProject.sphereActivities[i] = {
+    //     id: updatedVendorProject.sphereActivities[i]
+    //   };
+    // }
 
     this.showProgressBar = true;
     this.projectsService.updateVendorProject(this.vendorProject.id, updatedVendorProject)

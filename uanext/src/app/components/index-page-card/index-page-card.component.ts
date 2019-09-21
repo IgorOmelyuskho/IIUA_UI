@@ -13,6 +13,7 @@ export class IndexPageCardComponent implements OnInit, AfterViewInit {
   constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
+    console.log(this.project);
   }
 
   ngAfterViewInit() {

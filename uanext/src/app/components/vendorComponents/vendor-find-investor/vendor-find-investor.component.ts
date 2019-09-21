@@ -6,6 +6,7 @@ import { FilteredProjects } from 'src/app/models';
 import { StateService } from 'src/app/services/state/state.service';
 import { ChatsCacheService } from 'src/app/services/chats-cache.service';
 import { Chat } from 'src/app/models/chat/chat';
+import { ChatType } from 'src/app/models/chat/chatType';
 
 @Component({
   selector: 'app-vendor-find-investor',
@@ -28,8 +29,8 @@ export class VendorFindInvestorComponent implements OnInit {
     this.filteredProjectsService.searchByKeyword('', 1000, 1).subscribe(
       (filteredProjects: FilteredProjects) => {
         this.projectsWithoutChat = filteredProjects.projectsList;
-        this.selectedProject = this.projectsWithoutChat[0];
-        this.stateService.selectedProjectForChat$.next(this.selectedProject);
+        // this.selectedProject = this.projectsWithoutChat[0];
+        // this.stateService.selectedProjectForChat$.next(this.selectedProject);
         for (let i = 0; i < this.projectsWithoutChat.length; i++) {
           this.getChatByProject(this.projectsWithoutChat[i]);
         }
@@ -66,6 +67,7 @@ export class VendorFindInvestorComponent implements OnInit {
     this.filteredProjectsService.searchByKeyword(this.searchName, 1000, 1).subscribe(
       (filteredProjects: FilteredProjects) => {
         this.projectsWithoutChat = filteredProjects.projectsList;
+        this.projects = [];
         for (let i = 0; i < this.projectsWithoutChat.length; i++) {
           this.getChatByProject(this.projectsWithoutChat[i]);
         }
@@ -95,10 +97,10 @@ export class VendorFindInvestorComponent implements OnInit {
     if (project.chat == null) {
       return false;
     }
-    if (project.chat.conversationType === 'All2All' && this.selected === 'group') {
+    if (project.chat.conversationType === ChatType.all2all && this.selected === 'group') {
       return true;
     }
-    if (project.chat.conversationType === 'P2P' && this.selected === 'single') {
+    if (project.chat.conversationType === ChatType.p2p && this.selected === 'single') {
       return true;
     }
     return false;

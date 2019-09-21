@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="form-group col-md-10 col-12">
         <label for="vendor-goal-textarea">{{ 'describeInvestments' | translate:self }}</label>
         <textarea id="vendor-goal-textarea" rows="3" formControlName="goal" class="form-control"
@@ -70,7 +70,7 @@
         <app-steps [parentSubmitted]="submitted" [minItemsCount]=3 [maxItemsCount]=15
           (itemsEvent)="stepsEventHandler($event)"></app-steps>
       </div>
-    </div>
+    </div> -->
 
     <hr>
 
@@ -102,7 +102,7 @@
 
     <hr>
 
-    <div class="row">
+    <!-- <div class="row">
       <h6 class="col-12">{{ 'aboutCompany' | translate:self }}</h6>
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'employeesNumber' | translate:self }}</label>
@@ -151,10 +151,10 @@
           <div *ngIf="formControls.companyAge.errors.required">{{ 'companyAgeEmpty' | translate:self }}</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="form-group col-lg-3 col-md-6">
         <label>{{ 'avgCheck' | translate:self }}</label>
         <input type="number" min=0 formControlName="averageCheck" class="form-control"
@@ -196,10 +196,10 @@
       </div>
     </div>
 
-    <hr>
+    <hr> -->
 
     <div class="row">
-      <h6 class="col-12">{{ 'investments' | translate:self }}</h6>
+      <!-- <h6 class="col-12">{{ 'investments' | translate:self }}</h6> -->
       <div class="form-group col-md-10 col-12">
         <label>{{ 'describeBusiness' | translate:self }}</label>
         <textarea rows=3 type="text" formControlName="description" class="form-control"
@@ -210,7 +210,7 @@
           <div *ngIf="formControls.description.errors.maxlength">{{ 'businessLength' | translate:self }}</div>
         </div>
       </div>
-      <div class="form-group col-md-6 col-xl-4 col-12">
+      <!-- <div class="form-group col-md-6 col-xl-4 col-12">
         <label>{{ 'moneyRequired' | translate:self }}</label>
         <input type="number" formControlName="moneyRequired" class="form-control"
           placeholder="{{ 'moneyRequiredPlaceholder' | translate:self }}"
@@ -218,8 +218,8 @@
         <div *ngIf="formControls.moneyRequired.errors" class="invalid-feedback">
           <div *ngIf="formControls.moneyRequired.errors.required">{{ 'moneyRequiredEmpty' | translate:self }}</div>
         </div>
-      </div>
-      <div class="form-group col-md-10 col-12">
+      </div> -->
+      <!-- <div class="form-group col-md-10 col-12">
         <label>{{ 'investmentsDescribe' | translate:self }}</label>
         <textarea rows=3 placeholder="{{ 'investmentsDescribePlaceholder' | translate:self }}"
           formControlName="investmentDescription" class="form-control"
@@ -230,7 +230,7 @@
           <div *ngIf="formControls.investmentDescription.errors.maxlength">
             {{ 'investmentsDescribeLength' | translate:self }}</div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <hr>
@@ -242,7 +242,7 @@
           (itemsEvent)="videosEventHandler($event)"></app-videos>
       </div>
 
-      <div class="form-group col-lg-6 col-12">
+      <div class="form-group col-lg-12 col-12">
         <div class="wrapper">
           <div class="project-photos">
             <div class="mb-2">{{ 'uploadPhotos' | translate:self }}</div>
@@ -272,7 +272,7 @@
         </div>
       </div>
 
-      <div class="form-group col-lg-6 col-12">
+      <!-- <div class="form-group col-lg-6 col-12">
         <div class="wrapper">
           <div class="project-files">
             <div class="mb-2">{{ 'uploadedFiles' | translate:self }}</div>
@@ -298,7 +298,7 @@
           </div>
           <input style="display:none" type="text" formControlName="forFiles" />
         </div>
-      </div>
+      </div> -->
     </div>
 
 

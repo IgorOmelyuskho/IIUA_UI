@@ -7,6 +7,7 @@ import { Message } from 'src/app/models/chat/message';
 import { testMessagePhoto, testMessageFile, testMessageVideo } from 'src/app/helperClasses/messages';
 import { delay, map, tap } from 'rxjs/operators';
 import { Participant } from 'src/app/models/chat/chatParticipant';
+import { ChatType } from 'src/app/models/chat/chatType';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,14 @@ export class ChatService {
 
   constructor(private http: HttpClient) { }
 
-  getOrCreateP2P(userId: string): Observable<Chat> { // userId - которому хотим написать
-    const params = new HttpParams().set('userId', userId);
+  getOrCreateP2P(projectId: number): Observable<Chat> {
+    const params = new HttpParams().set('userId', projectId.toString());
     return this.http.get<any>(environment.chat + environment.getOrCreateChat, { params: params });
   }
 
-  getAllChats(): Observable<Chat[]> { // all chats for current user (token)
-    return this.http.get<any>(environment.chat + environment.getAllChats);
+  getAllChats(chatType: ChatType): Observable<Chat[]> { // chats for current user (token)
+    const params = new HttpParams().set('conversationType', chatType);
+    return this.http.get<any>(environment.chat + environment.getAllChats, { params: params });
   }
 
   getChatById(chatId: string): Observable<Chat> {
@@ -37,7 +39,7 @@ export class ChatService {
     //   id: 'chatId',
     //   title: 'chatTitle',
     //   creatorId: 'creatorId',
-    //   conversationType: 'All2All',
+    //   conversationType: ChatType.all2all,
     //   lastMessage: 'lastMessage',
     //   lastMessageId: 'lastMessageId',
     //   icon: 'icon',
@@ -98,7 +100,7 @@ export class ChatService {
     return this.http.put<any>(environment.chat + environment.updateMessage + '/' + messageId, updatedMessage);
   }
 
-  getMessagesByChatId(chatId: string): Observable<Message[]> {
+  getMessagesByChatId(chatId: string, data?: any, count?: number): Observable<Message[]> {
     const params = new HttpParams().set('conversationId', chatId);
     return this.http.get<any>(environment.chat + environment.getMessagesByChatId, { params: params })
     .pipe(

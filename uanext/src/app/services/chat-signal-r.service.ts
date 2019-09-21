@@ -25,7 +25,8 @@ export class ChatSignalRService {
 
     this.hubConnection = new HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
-      .withUrl(environment.signalR, options).build();
+      .withUrl(environment.signalR, options)
+      .build();
 
     this.hubConnection.serverTimeoutInMilliseconds = 1000 * 60 * 5000000; // 5000000 minute
 
@@ -46,7 +47,7 @@ export class ChatSignalRService {
   connectionStart() {
     this.hubConnection.start()
       .then(() => {
-        // console.log('Chat SignalR start');
+        console.log('Chat SignalR start');
       })
       .catch((err) => {
         console.warn(err);

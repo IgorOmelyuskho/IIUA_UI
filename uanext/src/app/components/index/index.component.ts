@@ -3,8 +3,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserRole, FilteredProjects } from 'src/app/models';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 import { Router } from '@angular/router';
+import { ProjectsService } from 'src/app/services/http/projects.service';
 
 
 declare const slidePage;
@@ -33,7 +33,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private authService: AuthorizationService,
-    private filteredProjectsService: FilteredProjectsService,
+    private projectsService: ProjectsService,
     private router: Router
   ) { }
 
@@ -45,7 +45,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.init1();
     // this.init2();
 
-    this.filteredProjectsService.getProjectsWhenNotAuthorized().subscribe(
+    this.projectsService.getProjectsWhenNotAuthorized().subscribe(
       (projects: VendorProject[]) => {
         this.allProjects = projects;
         this.projectsBtn1();

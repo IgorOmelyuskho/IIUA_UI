@@ -11,6 +11,7 @@ export class VendorProjectCardComponent implements OnInit, AfterViewInit {
   @ViewChild('stepsElement') stepsElement: ElementRef;
   @Input() project: VendorProject;
   @Output() clickOnCardEvent = new EventEmitter<VendorProject>();
+  // @Output() removeCardEvent = new EventEmitter<VendorProject>();
 
   constructor(private renderer: Renderer2, private stateService: StateService) {
   }
@@ -19,7 +20,7 @@ export class VendorProjectCardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.numberNotFitSteps();
+    // this.numberNotFitSteps();
   }
 
   numberNotFitSteps() {
@@ -62,4 +63,8 @@ export class VendorProjectCardComponent implements OnInit, AfterViewInit {
     }
     this.clickOnCardEvent.emit(this.project);
   }
+
+  // removeProject() {
+  //   this.removeCardEvent.emit(this.project);
+  // }
 }

@@ -22,43 +22,43 @@ export const responseProject: VendorProject = {
   'userId': 0,
   'name': 'project name',
   'legalEntityName': 'company name',
-  'goal': 'goal',
+  // 'goal': 'goal',
   'region': 'region',
   'address': 'address',
-  'sphereActivities': [{ id: 1, name: 'field of activity' }, { id: 2, name: 'field of activity' }],
-  'companyAge': 1,
-  'employeesNumberMin': 6,
-  'employeesNumberMax': 10,
-  'employeesToHire': 0,
-  'grossIncome': '0',
-  'averageCheck': 1110,
-  'mounthlyClients': 110,
-  'averagePrice': 1110,
+  // 'sphereActivities': [{ id: 1, name: 'field of activity' }, { id: 2, name: 'field of activity' }],
+  // 'companyAge': 1,
+  // 'employeesNumberMin': 6,
+  // 'employeesNumberMax': 10,
+  // 'employeesToHire': 0,
+  // 'grossIncome': '0',
+  // 'averageCheck': 1110,
+  // 'mounthlyClients': 110,
+  // 'averagePrice': 1110,
   'description': 'investmentDescription description description v description description description description',
-  'moneyRequired': 0,
-  'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-  'steps': [
-    {
-      'id': 0,
-      'stepNumber': 0,
-      'data': 'string string string string string string string string string string string string string string string string string'
-    },
-    {
-      'id': 2,
-      'stepNumber': 1,
-      'data': 'string'
-    },
-    {
-      'id': 3,
-      'stepNumber': 2,
-      'data': 'string'
-    },
-    {
-      'id': 3,
-      'stepNumber': 2,
-      'data': 'string'
-    }
-  ],
+  // 'moneyRequired': 0,
+  // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+  // 'steps': [
+  //   {
+  //     'id': 0,
+  //     'stepNumber': 0,
+  //     'data': 'string string string string string string string string string string string string string string string string string'
+  //   },
+  //   {
+  //     'id': 2,
+  //     'stepNumber': 1,
+  //     'data': 'string'
+  //   },
+  //   {
+  //     'id': 3,
+  //     'stepNumber': 2,
+  //     'data': 'string'
+  //   },
+  //   {
+  //     'id': 3,
+  //     'stepNumber': 2,
+  //     'data': 'string'
+  //   }
+  // ],
   'videos': [
     {
       'id': 0,
@@ -117,15 +117,15 @@ export const responseProject: VendorProject = {
       'accessFile': 0
     }
   ],
-  'files': [
-    {
-      'id': 0,
-      'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-        '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-      'originalName': 'original_name',
-      'accessFile': 0
-    }
-  ]
+  // 'files': [
+  //   {
+  //     'id': 0,
+  //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+  //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+  //     'originalName': 'original_name',
+  //     'accessFile': 0
+  //   }
+  // ]
 };
 
 export const responseProject2: VendorProject = {
@@ -134,73 +134,73 @@ export const responseProject2: VendorProject = {
   'userId': 0,
   'name': 'project name 2',
   'legalEntityName': 'company name',
-  'goal': 'goal',
+  // 'goal': 'goal',
   'region': 'region',
   'address': 'address',
-  'sphereActivities': [{ id: 1, name: 'field of activity' }, { id: 2, name: 'field of activity' }],
-  'companyAge': 1,
-  'employeesNumberMin': 6,
-  'employeesNumberMax': 10,
-  'employeesToHire': 0,
-  'grossIncome': '0',
-  'averageCheck': 1110,
-  'mounthlyClients': 110,
-  'averagePrice': 1110,
+  // 'sphereActivities': [{ id: 1, name: 'field of activity' }, { id: 2, name: 'field of activity' }],
+  // 'companyAge': 1,
+  // 'employeesNumberMin': 6,
+  // 'employeesNumberMax': 10,
+  // 'employeesToHire': 0,
+  // 'grossIncome': '0',
+  // 'averageCheck': 1110,
+  // 'mounthlyClients': 110,
+  // 'averagePrice': 1110,
   'description': 'investmentDescription description description v description description description description',
-  'moneyRequired': 0,
-  'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-  'steps': [
-    {
-      'id': 0,
-      'stepNumber': 0,
-      'data': 'some long step name'
-    },
-    {
-      'id': 2,
-      'stepNumber': 1,
-      'data': 'some long step name'
-    },
-    {
-      'id': 3,
-      'stepNumber': 2,
-      'data': 'some very long step name some step name some step name some step name'
-    },
-    {
-      'id': 4,
-      'stepNumber': 3,
-      'data': 'some step name'
-    },
-    {
-      'id': 5,
-      'stepNumber': 4,
-      'data': 'some step name'
-    },
-    {
-      'id': 6,
-      'stepNumber': 4,
-      'data': 'some step name'
-    },
-    {
-      'id': 7,
-      'stepNumber': 4,
-      'data': 'some step name'
-    },
-    {
-      'id': 8,
-      'stepNumber': 4,
-      'data': 'some step name'
-    },
-    {
-      'id': 9,
-      'stepNumber': 4,
-      'data': 'some step name some step name some step name'
-    },
-    {
-      'id': 10,
-      'stepNumber': 4,
-      'data': 'some step name some step name some step name'
-    }
-  ],
+  // 'moneyRequired': 0,
+  // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+  // 'steps': [
+  //   {
+  //     'id': 0,
+  //     'stepNumber': 0,
+  //     'data': 'some long step name'
+  //   },
+  //   {
+  //     'id': 2,
+  //     'stepNumber': 1,
+  //     'data': 'some long step name'
+  //   },
+  //   {
+  //     'id': 3,
+  //     'stepNumber': 2,
+  //     'data': 'some very long step name some step name some step name some step name'
+  //   },
+  //   {
+  //     'id': 4,
+  //     'stepNumber': 3,
+  //     'data': 'some step name'
+  //   },
+  //   {
+  //     'id': 5,
+  //     'stepNumber': 4,
+  //     'data': 'some step name'
+  //   },
+  //   {
+  //     'id': 6,
+  //     'stepNumber': 4,
+  //     'data': 'some step name'
+  //   },
+  //   {
+  //     'id': 7,
+  //     'stepNumber': 4,
+  //     'data': 'some step name'
+  //   },
+  //   {
+  //     'id': 8,
+  //     'stepNumber': 4,
+  //     'data': 'some step name'
+  //   },
+  //   {
+  //     'id': 9,
+  //     'stepNumber': 4,
+  //     'data': 'some step name some step name some step name'
+  //   },
+  //   {
+  //     'id': 10,
+  //     'stepNumber': 4,
+  //     'data': 'some step name some step name some step name'
+  //   }
+  // ],
   'videos': [
     {
       'id': 0,
@@ -232,23 +232,23 @@ export const responseProject2: VendorProject = {
       'accessFile': 0
     }
   ],
-  'files': [
-    {
-      'id': 0,
-      'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-        '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-      'originalName': 'original_name',
-      'accessFile': 0
-    }
-  ]
+  // 'files': [
+  //   {
+  //     'id': 0,
+  //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+  //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+  //     'originalName': 'original_name',
+  //     'accessFile': 0
+  //   }
+  // ]
 };
 
 export const female: GeoObject = {
   geoObjectId: '0', // only unique
   coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject.name,
-  pathToZip: '../../../assets/objects/female.zip',
-  // pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  path: '../../../assets/objects/female.zip',
+  // pathLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject
 };
 
@@ -256,8 +256,8 @@ export const female2: GeoObject = {
   geoObjectId: '4',  // only unique
   coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject2.name,
-  pathToZip: '../../../assets/objects/female.zip',
-  // pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  path: '../../../assets/objects/female.zip',
+  // pathLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -265,8 +265,8 @@ export const male: GeoObject = {
   geoObjectId: '1',  // only unique
   coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject2.name,
-  pathToZip: '../../../assets/objects/male.zip',
-  // pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  path: '../../../assets/objects/male.zip',
+  // pathLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -274,8 +274,8 @@ export const tractor: GeoObject = {
   geoObjectId: '2',  // only unique
   coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject2.name,
-  pathToZip: '../../../assets/objects/tractor.zip',
-  // pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  path: '../../../assets/objects/tractor.zip',
+  // pathLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject2
 };
 
@@ -283,8 +283,8 @@ export const walt: GeoObject = {
   geoObjectId: '3',  // only unique
   coords: { x: 35.028, y: 48.4747 },
   projectName: responseProject.name,
-  pathToZip: '../../../assets/objects/walt.zip',
-  // pathToZipLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
+  path: '../../../assets/objects/walt.zip',
+  // pathLP: window.location.origin + '../../../assets/objects/low-poly-tractor.zip',
   project: responseProject
 };
 
@@ -298,78 +298,78 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 3',
       'legalEntityName': 'company name',
-      'goal': 'goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoalgoal goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoal',
+      // 'goal': 'goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoalgoal goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoalgoal goalgoalgoalgoalgoalgoal goalgoalgoalgoal',
       'region': 'region',
       'address': 'address',
-      'sphereActivities': [{ id: 1, name: 'field of activity' }, { id: 2, name: 'field of activity' }],
-      'companyAge': 1,
-      'employeesNumberMin': 6,
-      'employeesNumberMax': 10,
-      'employeesToHire': 0,
-      'grossIncome': '0',
-      'averageCheck': 1110,
-      'mounthlyClients': 110,
-      'averagePrice': 1110,
+      // 'sphereActivities': [{ id: 1, name: 'field of activity' }, { id: 2, name: 'field of activity' }],
+      // 'companyAge': 1,
+      // 'employeesNumberMin': 6,
+      // 'employeesNumberMax': 10,
+      // 'employeesToHire': 0,
+      // 'grossIncome': '0',
+      // 'averageCheck': 1110,
+      // 'mounthlyClients': 110,
+      // 'averagePrice': 1110,
       'description': 'investmentDescription description description v description description description description',
-      'moneyRequired': 0,
-      'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-      'steps': [
-        {
-          'id': 0,
-          'stepNumber': 0,
-          'data': 'string string string string string string string string string string string string string string string string string'
-        },
-        {
-          'id': 2,
-          'stepNumber': 1,
-          'data': 'string'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name some very long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name some very long step name some very long step name some very long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name some very long step name some very long step name some very long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name some very long step name some very long step name some very long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'string'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'string'
-        }
-      ],
+      // 'moneyRequired': 0,
+      // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+      // 'steps': [
+      //   {
+      //     'id': 0,
+      //     'stepNumber': 0,
+      //     'data': 'string string string string string string string string string string string string string string string string string'
+      //   },
+      //   {
+      //     'id': 2,
+      //     'stepNumber': 1,
+      //     'data': 'string'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name some very long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name some very long step name some very long step name some very long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name some very long step name some very long step name some very long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name some very long step name some very long step name some very long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'string'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'string'
+      //   }
+      // ],
       'videos': [
         {
           'id': 0,
@@ -473,36 +473,36 @@ export const responseProjects: FilteredProjects = {
           'accessFile': 0
         }
       ],
-      'files': [
-        {
-          'id': 0,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        },
-        {
-          'id': 1,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        },
-        {
-          'id': 2,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        },
-        {
-          'id': 3,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        }
-      ]
+      // 'files': [
+      //   {
+      //     'id': 0,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   },
+      //   {
+      //     'id': 1,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   },
+      //   {
+      //     'id': 2,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   },
+      //   {
+      //     'id': 3,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   }
+      // ]
     },
     {
       'id': 1,
@@ -510,53 +510,53 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 4',
       'legalEntityName': 'company name',
-      'goal': 'goal',
+      // 'goal': 'goal',
       'region': 'region',
       'address': 'address',
-      'sphereActivities': [{ id: 1, name: 'field of activity' }],
-      'companyAge': 1,
-      'employeesNumberMin': 6,
-      'employeesNumberMax': 10,
-      'employeesToHire': 0,
-      'grossIncome': '0',
-      'averageCheck': 1110,
-      'mounthlyClients': 110,
-      'averagePrice': 1110,
+      // 'sphereActivities': [{ id: 1, name: 'field of activity' }],
+      // 'companyAge': 1,
+      // 'employeesNumberMin': 6,
+      // 'employeesNumberMax': 10,
+      // 'employeesToHire': 0,
+      // 'grossIncome': '0',
+      // 'averageCheck': 1110,
+      // 'mounthlyClients': 110,
+      // 'averagePrice': 1110,
       'description': 'investmentDescription description description v description description description description',
-      'moneyRequired': 0,
-      'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-      'steps': [
-        {
-          'id': 0,
-          'stepNumber': 0,
-          'data': 'some long step name'
-        },
-        {
-          'id': 2,
-          'stepNumber': 1,
-          'data': 'some long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
-        },
-        {
-          'id': 4,
-          'stepNumber': 3,
-          'data': 'some step name'
-        },
-        {
-          'id': 5,
-          'stepNumber': 4,
-          'data': 'some step name'
-        },
-        {
-          'id': 5,
-          'stepNumber': 4,
-          'data': 'some step name'
-        }
-      ],
+      // 'moneyRequired': 0,
+      // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+      // 'steps': [
+      //   {
+      //     'id': 0,
+      //     'stepNumber': 0,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 2,
+      //     'stepNumber': 1,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
+      //   },
+      //   {
+      //     'id': 4,
+      //     'stepNumber': 3,
+      //     'data': 'some step name'
+      //   },
+      //   {
+      //     'id': 5,
+      //     'stepNumber': 4,
+      //     'data': 'some step name'
+      //   },
+      //   {
+      //     'id': 5,
+      //     'stepNumber': 4,
+      //     'data': 'some step name'
+      //   }
+      // ],
       'videos': [
         {
           'id': 0,
@@ -614,15 +614,15 @@ export const responseProjects: FilteredProjects = {
           'accessFile': 0
         }
       ],
-      'files': [
-        {
-          'id': 0,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        }
-      ]
+      // 'files': [
+      //   {
+      //     'id': 0,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   }
+      // ]
     },
     {
       'id': 2,
@@ -630,38 +630,38 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 5',
       'legalEntityName': 'company name',
-      'goal': 'goal',
+      // 'goal': 'goal',
       'region': 'region',
       'address': 'address',
-      'sphereActivities': [{ id: 1, name: 'field of activity' }],
-      'companyAge': 1,
-      'employeesNumberMin': 6,
-  'employeesNumberMax': 10,
-      'employeesToHire': 0,
-      'grossIncome': '0',
-      'averageCheck': 1110,
-      'mounthlyClients': 110,
-      'averagePrice': 1110,
+      // 'sphereActivities': [{ id: 1, name: 'field of activity' }],
+      // 'companyAge': 1,
+      // 'employeesNumberMin': 6,
+      // 'employeesNumberMax': 10,
+      // 'employeesToHire': 0,
+      // 'grossIncome': '0',
+      // 'averageCheck': 1110,
+      // 'mounthlyClients': 110,
+      // 'averagePrice': 1110,
       'description': 'investmentDescription description description v description description description description',
-      'moneyRequired': 0,
-      'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-      'steps': [
-        {
-          'id': 0,
-          'stepNumber': 0,
-          'data': 'string111111 string string string v stringstringv  stringstringstring stringstring stringstringstring stringstring'
-        },
-        {
-          'id': 2,
-          'stepNumber': 1,
-          'data': 'string 11111'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'string'
-        }
-      ],
+      // 'moneyRequired': 0,
+      // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+      // 'steps': [
+      //   {
+      //     'id': 0,
+      //     'stepNumber': 0,
+      //     'data': 'string111111 string string string v stringstringv  stringstringstring stringstring stringstringstring stringstring'
+      //   },
+      //   {
+      //     'id': 2,
+      //     'stepNumber': 1,
+      //     'data': 'string 11111'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'string'
+      //   }
+      // ],
       'videos': [
         {
           'id': 0,
@@ -703,15 +703,15 @@ export const responseProjects: FilteredProjects = {
           'accessFile': 0
         },
       ],
-      'files': [
-        {
-          'id': 0,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        }
-      ]
+      // 'files': [
+      //   {
+      //     'id': 0,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   }
+      // ]
     },
     {
       'id': 3,
@@ -719,38 +719,38 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 6',
       'legalEntityName': 'company name',
-      'goal': 'goal',
+      // 'goal': 'goal',
       'region': 'region',
       'address': 'address',
-      'sphereActivities': [{ id: 1, name: 'field of activity' }],
-      'companyAge': 1,
-      'employeesNumberMin': 6,
-      'employeesNumberMax': 10,
-      'employeesToHire': 0,
-      'grossIncome': '0',
-      'averageCheck': 1110,
-      'mounthlyClients': 110,
-      'averagePrice': 1110,
+      // 'sphereActivities': [{ id: 1, name: 'field of activity' }],
+      // 'companyAge': 1,
+      // 'employeesNumberMin': 6,
+      // 'employeesNumberMax': 10,
+      // 'employeesToHire': 0,
+      // 'grossIncome': '0',
+      // 'averageCheck': 1110,
+      // 'mounthlyClients': 110,
+      // 'averagePrice': 1110,
       'description': 'investmentDescription description description v description description description description',
-      'moneyRequired': 0,
-      'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-      'steps': [
-        {
-          'id': 0,
-          'stepNumber': 0,
-          'data': 'string'
-        },
-        {
-          'id': 2,
-          'stepNumber': 1,
-          'data': 'string'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'string'
-        }
-      ],
+      // 'moneyRequired': 0,
+      // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+      // 'steps': [
+      //   {
+      //     'id': 0,
+      //     'stepNumber': 0,
+      //     'data': 'string'
+      //   },
+      //   {
+      //     'id': 2,
+      //     'stepNumber': 1,
+      //     'data': 'string'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'string'
+      //   }
+      // ],
       'videos': [
         {
           'id': 0,
@@ -774,15 +774,15 @@ export const responseProjects: FilteredProjects = {
           'accessFile': 0
         }
       ],
-      'files': [
-        {
-          'id': 0,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        }
-      ]
+      // 'files': [
+      //   {
+      //     'id': 0,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   }
+      // ]
     },
     {
       'id': 4,
@@ -790,48 +790,48 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 7',
       'legalEntityName': 'company name',
-      'goal': 'goal',
+      // 'goal': 'goal',
       'region': 'region',
       'address': 'address',
-      'sphereActivities': [{ id: 1, name: 'field of activity' }],
-      'companyAge': 1,
-      'employeesNumberMin': 6,
-      'employeesNumberMax': 10,
-      'employeesToHire': 0,
-      'grossIncome': '0',
-      'averageCheck': 1110,
-      'mounthlyClients': 110,
-      'averagePrice': 1110,
+      // 'sphereActivities': [{ id: 1, name: 'field of activity' }],
+      // 'companyAge': 1,
+      // 'employeesNumberMin': 6,
+      // 'employeesNumberMax': 10,
+      // 'employeesToHire': 0,
+      // 'grossIncome': '0',
+      // 'averageCheck': 1110,
+      // 'mounthlyClients': 110,
+      // 'averagePrice': 1110,
       'description': 'investmentDescription description description v description description description description',
-      'moneyRequired': 0,
-      'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-      'steps': [
-        {
-          'id': 0,
-          'stepNumber': 0,
-          'data': 'some long step name'
-        },
-        {
-          'id': 2,
-          'stepNumber': 1,
-          'data': 'some long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
-        },
-        {
-          'id': 4,
-          'stepNumber': 3,
-          'data': 'some step name'
-        },
-        {
-          'id': 5,
-          'stepNumber': 4,
-          'data': 'some step name'
-        }
-      ],
+      // 'moneyRequired': 0,
+      // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+      // 'steps': [
+      //   {
+      //     'id': 0,
+      //     'stepNumber': 0,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 2,
+      //     'stepNumber': 1,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
+      //   },
+      //   {
+      //     'id': 4,
+      //     'stepNumber': 3,
+      //     'data': 'some step name'
+      //   },
+      //   {
+      //     'id': 5,
+      //     'stepNumber': 4,
+      //     'data': 'some step name'
+      //   }
+      // ],
       'videos': [
         {
           'id': 0,
@@ -853,15 +853,15 @@ export const responseProjects: FilteredProjects = {
           'accessFile': 0
         }
       ],
-      'files': [
-        {
-          'id': 0,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        }
-      ]
+      // 'files': [
+      //   {
+      //     'id': 0,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   }
+      // ]
     },
     {
       'id': 5,
@@ -869,53 +869,53 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 8',
       'legalEntityName': 'company name',
-      'goal': 'goal',
+      // 'goal': 'goal',
       'region': 'region',
       'address': 'address',
-      'sphereActivities': [
-        { id: 1, name: 'field of activity' },
-        { id: 2, name: 'field of activity' },
-        { id: 3, name: 'field of activity' },
-        { id: 4, name: 'field of activity' }
-      ],
-      'companyAge': 1,
-      'employeesNumberMin': 6,
-      'employeesNumberMax': 10,
-      'employeesToHire': 0,
-      'grossIncome': '0',
-      'averageCheck': 1110,
-      'mounthlyClients': 110,
-      'averagePrice': 1110,
+      // 'sphereActivities': [
+      //   { id: 1, name: 'field of activity' },
+      //   { id: 2, name: 'field of activity' },
+      //   { id: 3, name: 'field of activity' },
+      //   { id: 4, name: 'field of activity' }
+      // ],
+      // 'companyAge': 1,
+      // 'employeesNumberMin': 6,
+      // 'employeesNumberMax': 10,
+      // 'employeesToHire': 0,
+      // 'grossIncome': '0',
+      // 'averageCheck': 1110,
+      // 'mounthlyClients': 110,
+      // 'averagePrice': 1110,
       'description': 'investmentDescription description description v description description description description',
-      'moneyRequired': 0,
-      'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-      'steps': [
-        {
-          'id': 0,
-          'stepNumber': 0,
-          'data': 'some long step name'
-        },
-        {
-          'id': 2,
-          'stepNumber': 1,
-          'data': 'some long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
-        },
-        {
-          'id': 4,
-          'stepNumber': 3,
-          'data': 'some step name'
-        },
-        {
-          'id': 5,
-          'stepNumber': 4,
-          'data': 'some step name'
-        }
-      ],
+      // 'moneyRequired': 0,
+      // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+      // 'steps': [
+      //   {
+      //     'id': 0,
+      //     'stepNumber': 0,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 2,
+      //     'stepNumber': 1,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
+      //   },
+      //   {
+      //     'id': 4,
+      //     'stepNumber': 3,
+      //     'data': 'some step name'
+      //   },
+      //   {
+      //     'id': 5,
+      //     'stepNumber': 4,
+      //     'data': 'some step name'
+      //   }
+      // ],
       'videos': [
         {
           'id': 0,
@@ -937,15 +937,15 @@ export const responseProjects: FilteredProjects = {
           'accessFile': 0
         }
       ],
-      'files': [
-        {
-          'id': 0,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        }
-      ]
+      // 'files': [
+      //   {
+      //     'id': 0,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   }
+      // ]
     },
     {
       'id': 6,
@@ -953,54 +953,54 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 9',
       'legalEntityName': 'company name',
-      'goal': 'goal',
+      // 'goal': 'goal',
       'region': 'region',
       'address': 'address',
-      'sphereActivities': [
-        { id: 1, name: 'field of activity' },
-        { id: 2, name: 'field of activity' },
-        { id: 3, name: 'field of activity' },
-        { id: 4, name: 'field of activity' },
-        { id: 5, name: 'field of activity' }
-      ],
-      'companyAge': 1,
-      'employeesNumberMin': 6,
-      'employeesNumberMax': 10,
-      'employeesToHire': 0,
-      'grossIncome': '0',
-      'averageCheck': 1110,
-      'mounthlyClients': 110,
-      'averagePrice': 1110,
+      // 'sphereActivities': [
+      //   { id: 1, name: 'field of activity' },
+      //   { id: 2, name: 'field of activity' },
+      //   { id: 3, name: 'field of activity' },
+      //   { id: 4, name: 'field of activity' },
+      //   { id: 5, name: 'field of activity' }
+      // ],
+      // 'companyAge': 1,
+      // 'employeesNumberMin': 6,
+      // 'employeesNumberMax': 10,
+      // 'employeesToHire': 0,
+      // 'grossIncome': '0',
+      // 'averageCheck': 1110,
+      // 'mounthlyClients': 110,
+      // 'averagePrice': 1110,
       'description': 'investmentDescription description description v description description description description',
-      'moneyRequired': 0,
-      'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-      'steps': [
-        {
-          'id': 0,
-          'stepNumber': 0,
-          'data': 'some long step name'
-        },
-        {
-          'id': 2,
-          'stepNumber': 1,
-          'data': 'some long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
-        },
-        {
-          'id': 4,
-          'stepNumber': 3,
-          'data': 'some step name'
-        },
-        {
-          'id': 5,
-          'stepNumber': 4,
-          'data': 'some step name'
-        }
-      ],
+      // 'moneyRequired': 0,
+      // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+      // 'steps': [
+      //   {
+      //     'id': 0,
+      //     'stepNumber': 0,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 2,
+      //     'stepNumber': 1,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
+      //   },
+      //   {
+      //     'id': 4,
+      //     'stepNumber': 3,
+      //     'data': 'some step name'
+      //   },
+      //   {
+      //     'id': 5,
+      //     'stepNumber': 4,
+      //     'data': 'some step name'
+      //   }
+      // ],
       'videos': [
         {
           'id': 0,
@@ -1022,15 +1022,15 @@ export const responseProjects: FilteredProjects = {
           'accessFile': 0
         }
       ],
-      'files': [
-        {
-          'id': 0,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        }
-      ]
+      // 'files': [
+      //   {
+      //     'id': 0,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   }
+      // ]
     },
     {
       'id': 7,
@@ -1038,54 +1038,54 @@ export const responseProjects: FilteredProjects = {
       'userId': 0,
       'name': 'project name 10',
       'legalEntityName': 'company name',
-      'goal': 'goal',
+      // 'goal': 'goal',
       'region': 'region',
       'address': 'address',
-      'sphereActivities': [
-        { id: 1, name: 'field of activity' },
-        { id: 2, name: 'field of activity' },
-        { id: 3, name: 'field of activity' },
-        { id: 4, name: 'field of activity' },
-        { id: 5, name: 'field of activity' }
-      ],
-      'companyAge': 1,
-      'employeesNumberMin': 6,
-      'employeesNumberMax': 10,
-      'employeesToHire': 0,
-      'grossIncome': '0',
-      'averageCheck': 1110,
-      'mounthlyClients': 110,
-      'averagePrice': 1110,
+      // 'sphereActivities': [
+      //   { id: 1, name: 'field of activity' },
+      //   { id: 2, name: 'field of activity' },
+      //   { id: 3, name: 'field of activity' },
+      //   { id: 4, name: 'field of activity' },
+      //   { id: 5, name: 'field of activity' }
+      // ],
+      // 'companyAge': 1,
+      // 'employeesNumberMin': 6,
+      // 'employeesNumberMax': 10,
+      // 'employeesToHire': 0,
+      // 'grossIncome': '0',
+      // 'averageCheck': 1110,
+      // 'mounthlyClients': 110,
+      // 'averagePrice': 1110,
       'description': 'investmentDescription description description v description description description description',
-      'moneyRequired': 0,
-      'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
-      'steps': [
-        {
-          'id': 0,
-          'stepNumber': 0,
-          'data': 'some long step name'
-        },
-        {
-          'id': 2,
-          'stepNumber': 1,
-          'data': 'some long step name'
-        },
-        {
-          'id': 3,
-          'stepNumber': 2,
-          'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
-        },
-        {
-          'id': 4,
-          'stepNumber': 3,
-          'data': 'some step name'
-        },
-        {
-          'id': 5,
-          'stepNumber': 4,
-          'data': 'some step name'
-        }
-      ],
+      // 'moneyRequired': 0,
+      // 'investmentDescription': 'investmentDescription investmentDescription investmentDescription investmentDescription',
+      // 'steps': [
+      //   {
+      //     'id': 0,
+      //     'stepNumber': 0,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 2,
+      //     'stepNumber': 1,
+      //     'data': 'some long step name'
+      //   },
+      //   {
+      //     'id': 3,
+      //     'stepNumber': 2,
+      //     'data': 'some very long step name qqqqqqqqqqqqqqqqqq'
+      //   },
+      //   {
+      //     'id': 4,
+      //     'stepNumber': 3,
+      //     'data': 'some step name'
+      //   },
+      //   {
+      //     'id': 5,
+      //     'stepNumber': 4,
+      //     'data': 'some step name'
+      //   }
+      // ],
       'videos': [
         {
           'id': 0,
@@ -1107,15 +1107,15 @@ export const responseProjects: FilteredProjects = {
           'accessFile': 0
         }
       ],
-      'files': [
-        {
-          'id': 0,
-          'url': 'https://3dexport.com/items/2004/10/21/469/1' +
-            '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
-          'originalName': 'original_name',
-          'accessFile': 0
-        }
-      ]
+      // 'files': [
+      //   {
+      //     'id': 0,
+      //     'url': 'https://3dexport.com/items/2004/10/21/469/1' +
+      //       '39030/massey_ferguson_5600_series_tracor_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1634842_o.jpg',
+      //     'originalName': 'original_name',
+      //     'accessFile': 0
+      //   }
+      // ]
     },
   ]
 };

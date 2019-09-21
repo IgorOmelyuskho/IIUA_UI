@@ -14,8 +14,8 @@
     },
     "SignupComponent": {
         "registration": "Registration",
-        "investor": "Investor",
-        "vendor": "Vendor",
+        "investor": "Company",
+        "vendor": "User",
         "social": "Sign up using social networks:",
         "useEmail": "Use email for registration"
     },
@@ -310,7 +310,7 @@
         "goalMinLength": "Minimal length is 200 charset",
         "goalMaxLength": "Maximal length is 1024 charset",
         "address": "Address",
-        "addressLabel": "Address",
+        "addressLabel": "Full address",
         "addressEmpty": "Address cannot be empty",
         "region": "Region",
         "regionPlaceholder": "Select region",
@@ -717,6 +717,9 @@
     },
     "Panel3dModelsComponent": {
       "selectProject": "SELECT PROJECT"
+    },
+    "VendorProjectMinCardComponent": {
+        "privateChat":"Private chat"
     },
     "checkEmailShared": "You received a message in the email",
     "firstNeedRegister": "First you need to register as Vendor or Investor",

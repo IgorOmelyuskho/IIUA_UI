@@ -1,7 +1,7 @@
 <div class="filter">
   <!-- <input [textMask]="{mask: FormHelper.bigNumberMask}" type="text" /> -->
 
-  <div class="border-bottom">
+  <!-- <div class="border-bottom">
     <h5 class="filter-item-name pt-3">{{ 'budget' | translate:self }}</h5>
     <div class="slider">
       <div class="input-group input-group-sm mb-2">
@@ -16,7 +16,7 @@
       </div>
       <div id="budget-range" class="mt-3 mb-3"></div>
     </div>
-  </div>
+  </div> -->
 
   <div class="border-bottom pb-3">
     <h5 class="filter-item-name pt-3">{{ 'region' | translate:self }}</h5>
@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="border-bottom">
+  <!-- <div class="border-bottom">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">
@@ -46,16 +46,15 @@
               <div class="field-activity">{{option.name}}</div>
               <input type="checkbox" name="fieldActivityOptions" value="{{option.name}}" [(ngModel)]="option.checked"
                 (change)="fieldActivityChange($event)" />
-              <!-- use only (change) - not (input) -->
               <span class="checkmark"></span>
             </label>
           </div>
         </div>
       </div>
     </mat-expansion-panel>
-  </div>
+  </div> -->
 
-  <div class="border-bottom">
+  <!-- <div class="border-bottom">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">
@@ -75,9 +74,9 @@
         <div id="employees-range" class="mt-3 mb-3"></div>
       </div>
     </mat-expansion-panel>
-  </div>
+  </div> -->
 
-  <div class="border-bottom">
+  <!-- <div class="border-bottom">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">
@@ -99,9 +98,9 @@
         <div id="avg-check-range" class="mt-3 mb-3"></div>
       </div>
     </mat-expansion-panel>
-  </div>
+  </div> -->
 
-  <div class="border-bottom">
+  <!-- <div class="border-bottom">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">
@@ -121,9 +120,9 @@
         <div id="age-range" class="mt-3 mb-3"></div>
       </div>
     </mat-expansion-panel>
-  </div>
+  </div> -->
 
-  <div class="border-bottom">
+  <!-- <div class="border-bottom">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <h5 class="filter-item-name">{{ 'dataUpdate' | translate:self }}</h5>
@@ -135,14 +134,13 @@
               <div class="field-activity">{{option.name}}</div>
               <input type="checkbox" name="updateRateOptions" value="{{option.name}}" [(ngModel)]="option.checked"
                 (change)="updateRateChange($event)" />
-              <!-- use only (change) - not (input) -->
               <span class="checkmark"></span>
             </label>
           </div>
         </div>
       </div>
     </mat-expansion-panel>
-  </div>
+  </div> -->
 
   <!-- <button (click)="searchByFilterBtn()" type="button" class="btn btn-primary mt-3">Apply filter</button> -->
 </div>

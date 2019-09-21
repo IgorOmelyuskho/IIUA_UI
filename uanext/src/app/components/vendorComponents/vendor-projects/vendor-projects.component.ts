@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
@@ -17,6 +17,8 @@ export class VendorProjectsComponent implements OnInit {
   self = 'VendorProjectsComponent';
   selfUserId: string;
   prevLayout: any[];
+  grid: any;
+  layout: any;
 
   constructor(private router: Router, private projectsService: ProjectsService, private stateService: StateService) { }
 
@@ -39,7 +41,7 @@ export class VendorProjectsComponent implements OnInit {
   }
 
   initMuuri() {
-    const grid = new Muuri('#projects-1-for-muuri', {
+    this.grid = new Muuri('#projects-1-for-muuri', {
       dragEnabled: true,
       layoutOnInit: false,
       dragStartPredicate: {
@@ -47,22 +49,22 @@ export class VendorProjectsComponent implements OnInit {
       },
     }).on('dragEnd', (item, event) => {
       const projectId: string = item.getElement().getAttribute('data-id');
-      this.saveLayout(grid, projectId, true);
+      this.saveLayout(this.grid, projectId, true);
       this.stateService.cardClickEnabled = false;
     });
-    const layout = this.projects.map((project) => {
+    this.layout = this.projects.map((project) => {
       return {
         projectId: project.id,
         queuePosition: project.queuePosition
       };
     });
-    if (layout) {
-      this.loadLayout(grid, layout);
+    if (this.layout) {
+      this.loadLayout(this.grid, this.layout);
     } else {
-      grid.layout(true);
+      this.grid.layout(true);
     }
-    grid.layout(true);
-    this.saveLayout(grid, null, false);
+    this.grid.layout(true);
+    this.saveLayout(this.grid, null, false);
   }
 
   saveLayout(grid: any, projectId: string, sendToBackend: boolean) {
@@ -90,14 +92,14 @@ export class VendorProjectsComponent implements OnInit {
 
   loadLayout(grid, layout) {
     const sortedByQueuePosition = layout.sort((a, b) => {
-        if (a.queuePosition < b.queuePosition) {
-          return -1;
-        }
-        if (a.queuePosition > b.queuePosition) {
-          return 1;
-        }
-        return 0;
-      });
+      if (a.queuePosition < b.queuePosition) {
+        return -1;
+      }
+      if (a.queuePosition > b.queuePosition) {
+        return 1;
+      }
+      return 0;
+    });
 
     const layoutIdArr = sortedByQueuePosition.map(opt => {
       return opt.projectId;
@@ -138,5 +140,4 @@ export class VendorProjectsComponent implements OnInit {
   onCardClick(project: VendorProject) {
     this.goToProject(project);
   }
-
 }

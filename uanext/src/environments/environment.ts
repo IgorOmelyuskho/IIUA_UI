@@ -37,6 +37,8 @@ export const environment = {
   filteringProjects: '/api/FilteringProjects/Filtering-projects',
   sphereActivity: '/api/SphereActivity',
   changeQueuePosition: '/api/Projects/ChangeQueuePosition',
+  addProjectGeoObject: '/api/Projects/AddProjectGeoObject',
+  getLatestProjects: '/api/Projects/GetLatestProjects',
 
   get3DObject: '/api/Map/Get3DObject',
   post3DObject: '/api/Map/Post3DObject',

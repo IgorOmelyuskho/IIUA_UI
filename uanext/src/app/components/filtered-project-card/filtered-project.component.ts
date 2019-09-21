@@ -21,7 +21,7 @@ export class FilteredProjectComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.numberNotFitSteps();
+    // this.numberNotFitSteps();
   }
 
   numberNotFitSteps() {

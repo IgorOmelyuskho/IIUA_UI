@@ -25,7 +25,6 @@ import { TranslateService } from './services/translate.service';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
-import { IndexPageCardComponent } from './components/index-page-card/index-page-card.component';
 
 const config = new AuthServiceConfig([
   {
@@ -52,7 +51,6 @@ export function setupTranslateFactory(service: TranslateService): Function {
     ...components,
     HighlightPipe,
     TranslatePipe,
-    IndexPageCardComponent,
   ],
   imports: [
     BrowserModule,

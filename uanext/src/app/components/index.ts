@@ -78,6 +78,7 @@ import { MapDemoComponent } from './map-demo/map-demo.component';
 import { Panel3dModelsComponent } from './panel3d-models/panel3d-models.component';
 import { ThreejsSceneComponent } from './threejs-scene/threejs-scene.component';
 import { EditModeTooltipComponent } from './edit-mode-tooltip/edit-mode-tooltip.component';
+import { IndexPageCardComponent } from './index-page-card/index-page-card.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -152,7 +153,8 @@ export {
   MapDemoComponent,
   Panel3dModelsComponent,
   ThreejsSceneComponent,
-  EditModeTooltipComponent
+  EditModeTooltipComponent,
+  IndexPageCardComponent,
 };
 
 export const components = [
@@ -227,7 +229,8 @@ export const components = [
   MapDemoComponent,
   Panel3dModelsComponent,
   ThreejsSceneComponent,
-  EditModeTooltipComponent
+  EditModeTooltipComponent,
+  IndexPageCardComponent,
 ];
 
 

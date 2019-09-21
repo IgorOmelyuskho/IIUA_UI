@@ -221,7 +221,7 @@
           }
 
           .text-and-sender {
-            .sender-and-private-chat {
+            .sender {
               font-size: 11px;
               display: flex;
 
@@ -230,12 +230,6 @@
                 letter-spacing: -0.3px;
                 color: rgba(50, 50, 50, 0.6);
                 margin-bottom: 5px;
-              }
-
-              .private-chat {
-                color: $green;
-                margin-left: 10px;
-                cursor: pointer;
               }
             }
 

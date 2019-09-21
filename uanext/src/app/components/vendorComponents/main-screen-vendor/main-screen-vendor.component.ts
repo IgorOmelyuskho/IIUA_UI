@@ -3,6 +3,9 @@ import { GeoObject } from 'src/app/models';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { StateService } from 'src/app/services/state/state.service';
 import { ProjectsService } from 'src/app/services/http/projects.service';
+import { MapService } from 'src/app/services/http/map.service';
+import { Object3DDto } from 'src/app/models/object3DDto';
+import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 
 @Component({
   selector: 'app-main-screen-vendor',
@@ -17,24 +20,36 @@ export class MainScreenVendorComponent implements OnInit {
   geoObjects: GeoObject[];
   showTooltip = false;
 
-  constructor(private stateService: StateService, private projectsService: ProjectsService) { }
+  constructor(private stateService: StateService, private projectsService: ProjectsService, private mapService: MapService) { }
 
   ngOnInit() {
     this.projectsService.fetchVendorProjects().subscribe(
       (projects: VendorProject[]) => {
-        const geoObjectsArr: GeoObject[] = [];
-        for (let i = 0; i < projects.length; i++) {
-          for (let j = 0; j < projects[i].geoObjects.length; j++) {
-            geoObjectsArr.push(projects[i].geoObjects[j]);
+        const projectGeoObjects: ProjectGeoObjectDto[] = this.getAllGeoObjectsFromProjects(projects);
+        // const geoObjectsArr: GeoObject[] = [];
+        // this.geoObjects = geoObjectsArr;
+        console.log(this.geoObjects);
+        this.mapService.get3DObject(this.geoObjects[0].geoObjectId).subscribe(
+          (val: Object3DDto) => {
+            console.log(val);
           }
-        }
-        this.geoObjects = geoObjectsArr;
+        );
       },
       err => {
         console.warn(err);
         this.geoObjects = [];
       }
     );
+  }
+
+  getAllGeoObjectsFromProjects(projectsArr: VendorProject[]): GeoObject[] {
+    const result: GeoObject[] = [];
+    for (let i = 0; i < projectsArr.length; i++) {
+      for (let j = 0; j < projectsArr[i].geoObjects.length; j++) {
+        result.push(projectsArr[i].geoObjects[j]);
+      }
+    }
+    return result;
   }
 
   onMapObjectClick(mapObject: GeoObject) {

@@ -6,30 +6,31 @@ import { map, tap, delay } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from 'src/app/helperClasses/projects';
 import { StateService } from '../state/state.service';
+import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 
 const emptyVendorProject: VendorProject = {
   name: '',
   avatara: '',
   legalEntityName: '',
-  goal: '',
+  // goal: '',
   region: '',
   address: '',
-  sphereActivities: [{ id: 1, name: 'string' }],
-  companyAge: 0,
-  employeesNumberMin: 0,
-  employeesNumberMax: 0,
-  employeesToHire: 0,
-  grossIncome: '',
-  averageCheck: 0,
-  mounthlyClients: 0,
-  averagePrice: 0,
+  // sphereActivities: [{ id: 1, name: 'string' }],
+  // companyAge: 0,
+  // employeesNumberMin: 0,
+  // employeesNumberMax: 0,
+  // employeesToHire: 0,
+  // grossIncome: '',
+  // averageCheck: 0,
+  // mounthlyClients: 0,
+  // averagePrice: 0,
   description: '',
-  moneyRequired: 0,
-  investmentDescription: '',
-  steps: [],
+  // moneyRequired: 0,
+  // investmentDescription: '',
+  // steps: [],
   videos: [],
   images: [],
-  files: [],
+  // files: [],
   rating: ''
 };
 
@@ -53,9 +54,9 @@ export class ProjectsService {
           return response;
         }),
         map((response: VendorProject[]) => { // todo remove
-          this.add3DObjectsArr(response);
-          return this.addRating(response);
-          // return this.addAvatara(response);
+          // this.add3DObjectsArr(response);
+          this.addRating(response);
+          return this.addAvatara(response);
         }),
       );
 
@@ -94,6 +95,21 @@ export class ProjectsService {
 
   setProjectsQueue(param): Observable<any> {
     return this.http.put<any>(environment.projects + environment.changeQueuePosition, param);
+  }
+
+  addProjectGeoObject(projectGeoObjectDto: ProjectGeoObjectDto): Observable<any> {
+    return this.http.post<any>(environment.projects + environment.addProjectGeoObject, projectGeoObjectDto);
+  }
+
+  getProjectsWhenNotAuthorized(): Observable<VendorProject[]> {
+    // return of([...responseProjects.projectsList, ...responseProjects.projectsList, ...responseProjects.projectsList]);
+    return this.http.get<VendorProject[]>(environment.projects + environment.getLatestProjects)
+      .pipe(
+        map((response: VendorProject[]) => { // todo remove
+          this.addRating(response);
+          return this.addAvatara(response);
+        })
+      );
   }
 
   private addAvatara(projects: VendorProject[]): VendorProject[] {
@@ -151,7 +167,7 @@ export class ProjectsService {
           geoObjectId: 'ID-' + Math.random(),
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
           projectName: filteredProjects[i].name,
-          pathToZip: window.location.origin + '/assets/objects/low-poly-building.zip',
+          path: window.location.origin + '/assets/objects/low-poly-building.zip',
           // pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
           project: filteredProjects[i],
           canMove: false,
