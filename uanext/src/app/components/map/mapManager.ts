@@ -165,7 +165,7 @@ export class MapManager {
       geoObjectId: object3DId,
       project: project,
       coords: this.map.getCenter(),
-      pathToZip: object3DDto.path,
+      path: object3DDto.path,
       canMove: false,
       currentUser: true,
       projectName: project.name,
@@ -176,7 +176,7 @@ export class MapManager {
 
   private updateGeoObjectSettings(geoObject: GeoObject) {
     const historyPosition: HistoryPositionDto = {
-      objecId: geoObject.geoObjectId,
+      objectId: geoObject.geoObjectId,
       positionX: geoObject.coords.x,
       positionY: geoObject.coords.y,
       scale: geoObject.scale,
@@ -698,7 +698,7 @@ export class MapManager {
 
   private loadObject3D(geoObject: GeoObject) {
     let pathToZip: string;
-    pathToZip = geoObject.pathToZip;
+    pathToZip = geoObject.path;
     geoObject.object3DHPStartLoaded = true;
 
     THREE.ZipLoadingManager

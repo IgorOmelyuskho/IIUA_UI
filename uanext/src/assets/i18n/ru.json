@@ -718,6 +718,9 @@
     "Panel3dModelsComponent": {
       "selectProject": "ВЫБЕРИТЕ ПРОЕКТ"
     },
+    "VendorProjectMinCardComponent": {
+        "privateChat":"Приватный чат"
+    },
     "checkEmailShared": "Вы получили сообщение по электронной почте",
     "firstNeedRegister": "Сначала нужно зарегистрироваться как Вендор или как Инвестор",
     "reallyRemoveAccount": "Действительно удалить аккаунт?",

@@ -19,11 +19,9 @@ export class MapService {
     return this.http.post<any>(environment.map + environment.post3DObject, object3DDto);
   }
 
-  get3DObject(id: string | number): Observable<Object3DDto> {
-    return this.http.get<any>(environment.map + environment.get3DObject + '/' + id)
-      .pipe(
-        map(response => response.data)
-      );
+  get3DObject(objectId: string | number): Observable<Object3DDto> {
+    const params = new HttpParams().set('objectId', objectId.toString());
+    return this.http.get<any>(environment.map + environment.get3DObject, { params: params });
   }
 
   postHistoryData(historyPositionDto: HistoryPositionDto): Observable<any> {

@@ -196,13 +196,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.filteredProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          const geoObjectsArr: GeoObject[] = [];
-          for (let i = 0; i < filteringProjects.projectsList.length; i++) {
-            for (let j = 0; j < filteringProjects.projectsList[i].geoObjects.length; j++) {
-              geoObjectsArr.push(filteringProjects.projectsList[i].geoObjects[j]);
-            }
-          }
-          this.geoObjects = geoObjectsArr;
+          this.geoObjects = this.getAllGeoObjectsFromProjects(filteringProjects.projectsList);;
           this.showProgress = false;
         },
         err => {
@@ -220,13 +214,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.filteredProjectsService.searchByFilter(filterParam)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          const geoObjectsArr: GeoObject[] = [];
-          for (let i = 0; i < filteringProjects.projectsList.length; i++) {
-            for (let j = 0; j < filteringProjects.projectsList[i].geoObjects.length; j++) {
-              geoObjectsArr.push(filteringProjects.projectsList[i].geoObjects[j]);
-            }
-          }
-          this.geoObjects = geoObjectsArr;
+          this.geoObjects = this.getAllGeoObjectsFromProjects(filteringProjects.projectsList);
           this.showProgress = false;
         },
         err => {
@@ -235,6 +223,16 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
           this.showProgress = false;
         }
       );
+  }
+
+  getAllGeoObjectsFromProjects(projectsArr: VendorProject[]): GeoObject[] {
+    const result: GeoObject[] = [];
+    for (let i = 0; i < projectsArr.length; i++) {
+      for (let j = 0; j < projectsArr[i].geoObjects.length; j++) {
+        result.push(projectsArr[i].geoObjects[j]);
+      }
+    }
+    return result;
   }
 
   ngOnDestroy() {

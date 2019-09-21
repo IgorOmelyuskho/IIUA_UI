@@ -140,14 +140,4 @@ export class VendorProjectsComponent implements OnInit {
   onCardClick(project: VendorProject) {
     this.goToProject(project);
   }
-
-  removeCard(project: VendorProject) {
-    for (let i = 0; i < this.projects.length; i++) {
-      if (this.projects[i].id === project.id) {
-        this.projects.splice(i, 1);
-        return;
-      }
-    }
-  }
-
 }

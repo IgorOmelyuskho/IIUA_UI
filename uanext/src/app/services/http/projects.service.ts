@@ -167,7 +167,7 @@ export class ProjectsService {
           geoObjectId: 'ID-' + Math.random(),
           coords: { x: 35.028 + Math.random() * delta, y: 48.4747 + Math.random() * delta },
           projectName: filteredProjects[i].name,
-          pathToZip: window.location.origin + '/assets/objects/low-poly-building.zip',
+          path: window.location.origin + '/assets/objects/low-poly-building.zip',
           // pathToZipLP: window.location.origin + '/assets/objects/low-poly-building.zip',
           project: filteredProjects[i],
           canMove: false,

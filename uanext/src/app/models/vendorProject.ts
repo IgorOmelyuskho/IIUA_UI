@@ -1,5 +1,6 @@
 import { GeoObject } from './geoObject';
 import { Chat } from './chat/chat';
+import { ProjectGeoObjectDto } from './projectGeoObjectDto';
 
 export interface VendorProject {
   id?: number;
@@ -29,6 +30,6 @@ export interface VendorProject {
   rating?: string;
   queuePosition?: any;
 
-  geoObjects?: GeoObject[];
+  geoObjects?: GeoObject[]/*  | ProjectGeoObjectDto[] */;
   chat?: Chat;
 }

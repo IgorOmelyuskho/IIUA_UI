@@ -12,6 +12,7 @@
       </div>
       <div class="field-activity">
         <div class="field-activity-left">
+          <div (click)="createPrivateChat($event)" class="private-chat">{{ 'privateChat' | translate:self }}</div>
           <img class="flame" src="../../../../assets/img/squares.png" alt="">
           <!-- <div class="field-activity-text">
             <div class="ellipsis">
@@ -20,7 +21,7 @@
             </div>
           </div> -->
         </div>
-        <div class="d-flex">
+        <div class="d-flex align-items-center">
           <img class="right-img" src="../../../../assets/img/car.png" alt="">
           <img class="right-img" src="../../../../assets/img/s-city.png" alt="">
         </div>
