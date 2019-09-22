@@ -20,6 +20,8 @@ export class InvestorProfileComponent implements OnInit {
   isLoaded = false;
   FormHelper = FormHelper;
   self = 'InvestorProfileComponent';
+  @ViewChild('passwordInput') passwordInput: ElementRef;
+  @ViewChild('togglePasswordImg') togglePasswordImg: ElementRef;
 
   @ViewChild('phone') phoneInput: ElementRef;
 
@@ -33,18 +35,18 @@ export class InvestorProfileComponent implements OnInit {
   ) {
     this.editProfileForm = this.formBuilder.group({
       password: ['', Validators.minLength(6)],
-      creditCardNumber: ['', [Validators.required, Validators.pattern(FormHelper.creditCardPattern)]],
+      // creditCardNumber: ['', [Validators.required, Validators.pattern(FormHelper.creditCardPattern)]],
       fullName: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
+      // phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
     });
   }
 
   setFormValues(): void {
     this.editProfileForm.setValue({
       password: '',
-      creditCardNumber: this.investor.creditCardNumber,
+      // creditCardNumber: this.investor.creditCardNumber,
       fullName: this.investor.fullName,
-      phone: this.investor.phone
+      // phone: this.investor.phone
     });
     // how its fix ??
     setTimeout(() => {
@@ -73,6 +75,16 @@ export class InvestorProfileComponent implements OnInit {
 
   get formControls() {
     return this.editProfileForm.controls;
+  }
+
+  togglePasswordVisible() {
+    if (this.passwordInput.nativeElement.type === 'password') {
+      this.passwordInput.nativeElement.type = 'text';
+      this.togglePasswordImg.nativeElement.src = '../../../../assets/img/hide-password.png';
+    } else {
+      this.passwordInput.nativeElement.type = 'password';
+      this.togglePasswordImg.nativeElement.src = '../../../../assets/img/show-password.png';
+    }
   }
 
   removeAccount() {

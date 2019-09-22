@@ -18,7 +18,7 @@ export class ChatService {
   constructor(private http: HttpClient) { }
 
   getOrCreateP2P(projectId: number): Observable<Chat> {
-    const params = new HttpParams().set('userId', projectId.toString());
+    const params = new HttpParams().set('projectId', projectId.toString());
     return this.http.get<any>(environment.chat + environment.getOrCreateChat, { params: params });
   }
 

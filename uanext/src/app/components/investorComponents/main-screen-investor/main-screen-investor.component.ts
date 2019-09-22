@@ -196,7 +196,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.filteredProjectsService.searchByKeyword(keyword, pageSize, pageNumber)
       .subscribe(
         (filteringProjects: FilteredProjects) => {
-          this.geoObjects = this.getAllGeoObjectsFromProjects(filteringProjects.projectsList);;
+          this.geoObjects = this.getAllGeoObjectsFromProjects(filteringProjects.projectsList);
           this.showProgress = false;
         },
         err => {

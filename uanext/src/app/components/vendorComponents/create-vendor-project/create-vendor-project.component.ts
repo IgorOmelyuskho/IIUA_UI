@@ -30,7 +30,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
   avataraIsTouched = false;
   avataraData: any;
 
-  minPhotosCount = 5;
+  minPhotosCount = 1;
 
   fieldActivityOptions: FieldActivityInterface[];
   fieldOfActivitySubscription: Subscription;
@@ -71,7 +71,6 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('ngOnInit');
     this.fieldOfActivitySubscription = this.translateService.fieldOfActivityOptions.subscribe(
       (val: FieldActivityInterface[]) => {
         this.fieldActivityOptions = JSON.parse(JSON.stringify(val));
@@ -225,9 +224,9 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     // if (this.vendorProject.steps.length === 0) {
     //   this.vendorProjectForm.controls['forSteps'].setErrors({ 'err': true });
     // }
-    if (this.vendorProject.videos.length === 0) {
-      this.vendorProjectForm.controls['forVideos'].setErrors({ 'err': true });
-    }
+    // if (this.vendorProject.videos.length === 0) {
+    //   this.vendorProjectForm.controls['forVideos'].setErrors({ 'err': true });
+    // }
     if (this.vendorProject.images.length < this.minPhotosCount) {
       this.vendorProjectForm.controls['forPhotos'].setErrors({ 'err': true });
     }

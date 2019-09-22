@@ -12,7 +12,7 @@
       </div>
       <div class="field-activity">
         <div class="field-activity-left">
-          <div (click)="createPrivateChat($event)" class="private-chat">{{ 'privateChat' | translate:self }}</div>
+          <div *ngIf="canCreatePrivateChat() === true" (click)="createPrivateChat($event)" class="private-chat">{{ 'privateChat' | translate:self }}</div>
           <img class="flame" src="../../../../assets/img/squares.png" alt="">
           <!-- <div class="field-activity-text">
             <div class="ellipsis">

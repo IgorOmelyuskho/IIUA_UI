@@ -722,7 +722,7 @@
         "privateChat":"Private chat"
     },
     "checkEmailShared": "You received a message in the email",
-    "firstNeedRegister": "First you need to register as Vendor or Investor",
+    "firstNeedRegister": "First you need to register as User or Company",
     "reallyRemoveAccount": "Really remove account?",
     "projectSuccessfullyCreated": "You have successfully created project",
     "projectNotCreated": "Project not created",
