@@ -20,6 +20,8 @@ export class VendorProfileComponent implements OnInit {
   isLoaded = false;
   FormHelper = FormHelper;
   self = 'VendorProfileComponent';
+  @ViewChild('passwordInput') passwordInput: ElementRef;
+  @ViewChild('togglePasswordImg') togglePasswordImg: ElementRef;
 
   @ViewChild('phone') phoneInput: ElementRef;
 
@@ -33,18 +35,18 @@ export class VendorProfileComponent implements OnInit {
   ) {
     this.editProfileForm = this.formBuilder.group({
       password: ['', Validators.minLength(6)],
-      itn: ['', Validators.required],
+      // itn: ['', Validators.required],
       fullName: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
+      // phone: ['', [Validators.required, Validators.pattern(FormHelper.phonePattern)]],
     });
   }
 
   setFormValues(): void {
     this.editProfileForm.setValue({
       password: '',
-      itn: this.vendor.itn,
+      // itn: this.vendor.itn,
       fullName: this.vendor.fullName,
-      phone: this.vendor.phone
+      // phone: this.vendor.phone
     });
     // how its fix ??
     setTimeout(() => {
@@ -73,6 +75,16 @@ export class VendorProfileComponent implements OnInit {
 
   get formControls() {
     return this.editProfileForm.controls;
+  }
+
+  togglePasswordVisible() {
+    if (this.passwordInput.nativeElement.type === 'password') {
+      this.passwordInput.nativeElement.type = 'text';
+      this.togglePasswordImg.nativeElement.src = '../../../../assets/img/hide-password.png';
+    } else {
+      this.passwordInput.nativeElement.type = 'password';
+      this.togglePasswordImg.nativeElement.src = '../../../../assets/img/show-password.png';
+    }
   }
 
   removeAccount() {

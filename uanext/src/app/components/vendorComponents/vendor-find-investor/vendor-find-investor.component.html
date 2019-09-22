@@ -17,7 +17,7 @@
       <div *ngFor="let project of projects">
         <app-vendor-project-min-card *ngIf="allowedCards(project) === true"
           [isSelect]="selectedProject?.id === project.id" (selectEvent)="projectSelectHandler($event)"
-          [project]="project"></app-vendor-project-min-card>
+          [project]="project" (createChat)="createChat($event)"></app-vendor-project-min-card>
         <!-- <app-investor-card [project]="project"></app-investor-card> -->
       </div>
     </div>

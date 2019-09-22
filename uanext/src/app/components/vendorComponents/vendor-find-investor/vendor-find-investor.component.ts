@@ -7,6 +7,7 @@ import { StateService } from 'src/app/services/state/state.service';
 import { ChatsCacheService } from 'src/app/services/chats-cache.service';
 import { Chat } from 'src/app/models/chat/chat';
 import { ChatType } from 'src/app/models/chat/chatType';
+import { ChatService } from 'src/app/services/http/chat.service';
 
 @Component({
   selector: 'app-vendor-find-investor',
@@ -22,7 +23,7 @@ export class VendorFindInvestorComponent implements OnInit {
   selectedProject: VendorProject;
   searchName = '';
 
-  constructor(private filteredProjectsService: FilteredProjectsService, private stateService: StateService, private chatsCacheService: ChatsCacheService) {
+  constructor(private filteredProjectsService: FilteredProjectsService, private stateService: StateService, private chatsCacheService: ChatsCacheService, private chatService: ChatService) {
   }
 
   ngOnInit() {
@@ -104,5 +105,15 @@ export class VendorFindInvestorComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  createChat(project: VendorProject) {
+    console.log(project);
+    this.chatService.getOrCreateP2P(project.id).subscribe(
+      (chat: Chat) => {
+        console.log(chat);
+        this.projects.push(project);
+      }
+    );
   }
 }
