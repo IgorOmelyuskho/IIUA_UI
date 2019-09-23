@@ -6,9 +6,9 @@ import { FilteredProjects } from 'src/app/models';
 import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
-  selector: 'app-investor-last-activity',
-  templateUrl: './investor-last-activity.component.html',
-  styleUrls: ['./investor-last-activity.component.scss']
+  selector: 'app-investor-chat-cards',
+  templateUrl: './investor-chat-cards.component.html',
+  styleUrls: ['./investor-chat-cards.component.scss']
 })
 export class InvestorLastActivityComponent implements OnInit {
   // projects: VendorProject[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
@@ -27,9 +27,6 @@ export class InvestorLastActivityComponent implements OnInit {
         this.projects = filteredProjects.projectsList;
         this.selectedProject = this.projects[0];
         this.stateService.selectedProjectForChat$.next(this.selectedProject);
-      },
-      err => {
-        console.warn(err);
       }
     );
   }

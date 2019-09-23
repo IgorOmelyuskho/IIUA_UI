@@ -34,6 +34,9 @@ export class VendorProjectMinCardComponent implements OnInit {
   }
 
   canCreatePrivateChat(): boolean {
+    if (this.project.chat == null) {
+      return false;
+    }
     if (this.project.chat.creatorId === this.stateService.getUserId()) {
       return false;
     }

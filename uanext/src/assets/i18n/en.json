@@ -14,8 +14,8 @@
     },
     "SignupComponent": {
         "registration": "Registration",
-        "investor": "Company",
-        "vendor": "User",
+        "investor": "User",
+        "vendor": "Company",
         "social": "Sign up using social networks:",
         "useEmail": "Use email for registration"
     },

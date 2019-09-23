@@ -17,7 +17,6 @@ export class FilesService {
     return this.http.post<any>(environment.files + environment.uploadFiles, formData)
       .pipe(
         map(response => {
-          // return response.data;
           return response;
         })
       );
@@ -27,7 +26,6 @@ export class FilesService {
     return this.http.get<any>(environment.files + environment.uploadFiles + '/' + fileId)
       .pipe(
         map(response => {
-          // return response.data;
           return response;
         })
       );

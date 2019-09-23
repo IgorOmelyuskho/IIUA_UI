@@ -8,11 +8,12 @@ import { ChatsCacheService } from 'src/app/services/chats-cache.service';
 import { Chat } from 'src/app/models/chat/chat';
 import { ChatType } from 'src/app/models/chat/chatType';
 import { ChatService } from 'src/app/services/http/chat.service';
+import { ProjectsService } from 'src/app/services/http/projects.service';
 
 @Component({
-  selector: 'app-vendor-find-investor',
-  templateUrl: './vendor-find-investor.component.html',
-  styleUrls: ['./vendor-find-investor.component.scss']
+  selector: 'app-vendor-chat-cards',
+  templateUrl: './vendor-chat-cards.component.html',
+  styleUrls: ['./vendor-chat-cards.component.scss']
 })
 export class VendorFindInvestorComponent implements OnInit {
   // projects: VendorProject[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
@@ -23,7 +24,13 @@ export class VendorFindInvestorComponent implements OnInit {
   selectedProject: VendorProject;
   searchName = '';
 
-  constructor(private filteredProjectsService: FilteredProjectsService, private stateService: StateService, private chatsCacheService: ChatsCacheService, private chatService: ChatService) {
+  constructor(
+    private filteredProjectsService: FilteredProjectsService,
+    private stateService: StateService,
+    private chatsCacheService: ChatsCacheService,
+    private chatService: ChatService,
+    private projectsService: ProjectsService
+  ) {
   }
 
   ngOnInit() {
@@ -35,9 +42,6 @@ export class VendorFindInvestorComponent implements OnInit {
         for (let i = 0; i < this.projectsWithoutChat.length; i++) {
           this.getChatByProject(this.projectsWithoutChat[i]);
         }
-      },
-      err => {
-        console.warn(err);
       }
     );
   }
@@ -64,7 +68,7 @@ export class VendorFindInvestorComponent implements OnInit {
     this.stateService.selectedProjectForChat$.next(this.selectedProject);
   }
 
-  findByNameClick() {
+  findCardsByProjectName() {
     this.filteredProjectsService.searchByKeyword(this.searchName, 1000, 1).subscribe(
       (filteredProjects: FilteredProjects) => {
         this.projectsWithoutChat = filteredProjects.projectsList;
@@ -72,9 +76,6 @@ export class VendorFindInvestorComponent implements OnInit {
         for (let i = 0; i < this.projectsWithoutChat.length; i++) {
           this.getChatByProject(this.projectsWithoutChat[i]);
         }
-      },
-      err => {
-        console.warn(err);
       }
     );
   }
@@ -83,12 +84,24 @@ export class VendorFindInvestorComponent implements OnInit {
     this.chatsCacheService.getData(project.id.toString()).subscribe(
       (chat: Chat) => {
         if (chat != null) {
-          project.chat = chat;
-          this.projects.push(project);
-          console.log(project.chat.conversationType);
+          const projectWithChat: VendorProject = this.projectWithChat(project, chat);
+          this.projects.push(projectWithChat);
         }
       }
     );
+  }
+
+  getProjectByChat(chat: Chat) {
+    this.projectsService.getProjectById(chat.projectId).subscribe(
+      (project: VendorProject) => {
+        console.log(project);
+      }
+    );
+  }
+
+  projectWithChat(project: VendorProject, chat: Chat): VendorProject {
+    project.chat = chat;
+    return project;
   }
 
   allowedCards(project: VendorProject): boolean { // all/single/group
@@ -108,11 +121,12 @@ export class VendorFindInvestorComponent implements OnInit {
   }
 
   createChat(project: VendorProject) {
-    console.log(project);
     this.chatService.getOrCreateP2P(project.id).subscribe(
       (chat: Chat) => {
-        console.log(chat);
-        this.projects.push(project);
+        const newProject: VendorProject = {...project};
+        const projectWithChat: VendorProject = this.projectWithChat(newProject, chat);
+        this.projects.unshift(projectWithChat);
+        this.projectSelectHandler(newProject);
       }
     );
   }
