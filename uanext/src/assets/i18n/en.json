@@ -364,7 +364,7 @@
         "findPlaceholder": "Find a project or investor",
         "all": "All",
         "group": "Group",
-        "single": "Single"
+        "single": "Private"
     },
     "VendorInvestmentOfferComponent": {
         "investmentOffer": "Investment offer",
@@ -713,7 +713,7 @@
         "findPlaceholder": "Find a project or investor",
         "all": "All",
         "group": "Group",
-        "single": "Single"
+        "single": "Private"
     },
     "Panel3dModelsComponent": {
       "selectProject": "SELECT PROJECT"

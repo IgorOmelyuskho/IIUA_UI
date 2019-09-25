@@ -364,7 +364,7 @@
         "findPlaceholder": "Найти проект или инвестора",
         "all": "Все",
         "group": "Групповые",
-        "single": "Одиночные"
+        "single": "Приватные"
     },
     "VendorInvestmentOfferComponent": {
         "investmentOffer": "Предложение инвестиций",
@@ -713,7 +713,7 @@
         "findPlaceholder": "Найти проект или инвестора",
         "all": "Все",
         "group": "Групповые",
-        "single": "Одиночные"
+        "single": "Приватные"
     },
     "Panel3dModelsComponent": {
       "selectProject": "ВЫБЕРИТЕ ПРОЕКТ"

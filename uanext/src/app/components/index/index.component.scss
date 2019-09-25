@@ -35,7 +35,7 @@
       height: 20px;
       z-index: 10;
       cursor: pointer;
-      opacity: 0.2;
+      opacity: 0.8;
     }
 
     .slide-up {
@@ -43,7 +43,7 @@
       transform: rotate(180deg);
 
       &:hover {
-        opacity: 0.3;
+        opacity: 1;
         transform: rotate(180deg) scaleX(0.9);
       }
     }
@@ -52,7 +52,7 @@
       bottom: 10px;
 
       &:hover {
-        opacity: 0.3;
+        opacity: 1;
         transform: scaleX(0.9);
       }
     }

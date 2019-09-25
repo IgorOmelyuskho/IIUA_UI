@@ -21,7 +21,6 @@ export class VendorFindInvestorComponent implements OnInit {
   projects: VendorProject[] = [];
   self = 'VendorFindInvestorComponent';
   selected = 'all'; // group/single
-  selectedProject: VendorProject;
   searchName = '';
 
   constructor(
@@ -37,8 +36,6 @@ export class VendorFindInvestorComponent implements OnInit {
     this.filteredProjectsService.searchByKeyword('', 1000, 1).subscribe(
       (filteredProjects: FilteredProjects) => {
         this.projectsWithoutChat = filteredProjects.projectsList;
-        // this.selectedProject = this.projectsWithoutChat[0];
-        // this.stateService.selectedProjectForChat$.next(this.selectedProject);
         for (let i = 0; i < this.projectsWithoutChat.length; i++) {
           this.getChatByProject(this.projectsWithoutChat[i]);
         }
@@ -63,9 +60,15 @@ export class VendorFindInvestorComponent implements OnInit {
     this.selected = 'single';
   }
 
-  projectSelectHandler(project: VendorProject) {
-    this.selectedProject = project;
-    this.stateService.selectedProjectForChat$.next(this.selectedProject);
+  removeDuplicateProjects(allProjects: VendorProject[], allCurrentUserChats: Chat[]) {
+    const result: VendorProject[] = [];
+    for (let i = 0; i < allProjects.length; i++) {
+      for (let j = 0; j < allCurrentUserChats.length; j++) {
+        if (allProjects[i].id !== allCurrentUserChats[i].projectId) {
+          result.push(allProjects[i]);
+        }
+      }
+    }
   }
 
   findCardsByProjectName() {
@@ -125,8 +128,9 @@ export class VendorFindInvestorComponent implements OnInit {
       (chat: Chat) => {
         const newProject: VendorProject = {...project};
         const projectWithChat: VendorProject = this.projectWithChat(newProject, chat);
-        this.projects.unshift(projectWithChat);
-        this.projectSelectHandler(newProject);
+        // this.projects.unshift(projectWithChat);
+        // this.projectSelectHandler(newProject);
+        this.single();
       }
     );
   }

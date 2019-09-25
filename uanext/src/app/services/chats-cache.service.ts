@@ -7,7 +7,7 @@ import { ChatService } from './http/chat.service';
   providedIn: 'root'
 })
 export class ChatsCacheService {
-  private cache: { [key: string]: BehaviorSubject<Chat> }[] = [];
+  private cache: { [key: string]: BehaviorSubject<Chat> } = {};
 
   constructor(private chatService: ChatService) { }
 
