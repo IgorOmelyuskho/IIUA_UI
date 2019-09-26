@@ -28,7 +28,7 @@ export class ChatSignalRService {
       .withUrl(environment.signalR, options)
       .build();
 
-    this.hubConnection.serverTimeoutInMilliseconds = 1000 * 60 * 5000000; // 5000000 minute
+    //this.hubConnection.serverTimeoutInMilliseconds = 1000 * 60 * 5000000; // 5000000 minute
 
     this.hubConnection.on('MessageSBEvent', (message) => {
       const parsedMessage = JSON.parse(message);
@@ -39,9 +39,9 @@ export class ChatSignalRService {
 
     this.connectionStart();
 
-    this.hubConnection.onclose((err) => {
-      this.connectionStart();
-    });
+    // this.hubConnection.onclose((err) => {
+    //   this.connectionStart();
+    // });
   }
 
   connectionStart() {
