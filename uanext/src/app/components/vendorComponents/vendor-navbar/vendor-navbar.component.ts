@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from '../../../helperClasses/projects';
@@ -15,21 +15,18 @@ import { Subscription } from 'rxjs';
 })
 export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('home') homeTab: ElementRef;
-  @ViewChild('profile') profileTab: ElementRef;
-  @ViewChild('myProjects') myProjectsTab: ElementRef;
   @ViewChild('createProjectUser') createProjectUser: ElementRef;
   self = 'VendorNavbarComponent';
   mediaQueryString = 'screen and (max-width: 760px)'; // also used in .scss
   mq = window.matchMedia(this.mediaQueryString);
   matchesMediaQuery = false;
-  menuIsOpen = false;
-
   projects: VendorProject[];
-
   profileSelectedProject: VendorProject;
   selectedProjectSubscription: Subscription;
   profileMenuOpen = false;
+  menuIsOpen = false;
   showProfileProgress = false;
+  routerSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -41,6 +38,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.initMenu();
+
     this.mq.addListener(this.matchMediaHandler);
 
     this.selectedProjectSubscription = this.stateService.selectedVendorProject$.subscribe(
@@ -51,21 +49,29 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         console.warn(err);
       }
     );
+
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.setSelectedTab(event.urlAfterRedirects);
+      }
+    });
   }
 
   ngAfterViewInit() {
-    const url = this.router.url.split('/');
-    const tab = url[url.length - 1];
-    if (tab === 'profile') {
-      this.profileTab.nativeElement.classList.add('selected');
-    }
-    if (tab === 'projects') {
-      this.myProjectsTab.nativeElement.classList.add('selected');
-    }
-    if (tab === 'main-page') {
+    this.setSelectedTab(this.router.url);
+  }
+
+  setSelectedTab(url: string) {
+    const urlArr: string[] = url.split('/');
+    const endOfUrl: string = urlArr[urlArr.length - 1];
+
+    this.createProjectUser.nativeElement.classList.remove('selected');
+    this.homeTab.nativeElement.classList.remove('selected');
+
+    if (endOfUrl === 'main-page') {
       this.homeTab.nativeElement.classList.add('selected');
     }
-    if (tab === 'create-project-user') {
+    if (endOfUrl === 'create-project-user') {
       this.createProjectUser.nativeElement.classList.add('selected');
     }
   }
@@ -89,34 +95,22 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   homeClick() {
-    this.profileTab.nativeElement.classList.remove('selected');
-    this.myProjectsTab.nativeElement.classList.remove('selected');
-    this.homeTab.nativeElement.classList.add('selected');
-    this.createProjectUser.nativeElement.classList.remove('selected');
+    this.profileMenuOpen = false;
     this.router.navigate(['home', 'vendor', 'main-page']);
   }
 
   profileClick() {
-    this.profileTab.nativeElement.classList.add('selected');
-    this.myProjectsTab.nativeElement.classList.remove('selected');
-    this.homeTab.nativeElement.classList.remove('selected');
-    this.createProjectUser.nativeElement.classList.remove('selected');
+    this.profileMenuOpen = false;
     this.router.navigate(['home', 'vendor', 'profile']);
   }
 
   projectsClick() {
-    this.profileTab.nativeElement.classList.remove('selected');
-    this.myProjectsTab.nativeElement.classList.add('selected');
-    this.homeTab.nativeElement.classList.remove('selected');
-    this.createProjectUser.nativeElement.classList.remove('selected');
+    this.profileMenuOpen = false;
     this.router.navigate(['home', 'vendor', 'projects']);
   }
 
   createProjectUserClick() {
-    this.profileTab.nativeElement.classList.remove('selected');
-    this.myProjectsTab.nativeElement.classList.remove('selected');
-    this.homeTab.nativeElement.classList.remove('selected');
-    this.createProjectUser.nativeElement.classList.add('selected');
+    this.profileMenuOpen = false;
     this.router.navigate(['home', 'vendor', 'create-project-user']);
   }
 
@@ -171,5 +165,6 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.mq.removeListener(this.matchMediaHandler);
     this.selectedProjectSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 }

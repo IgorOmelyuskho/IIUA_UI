@@ -160,6 +160,22 @@
         transform: translateY(5px);
         min-width: 150px;
 
+        .profile-settings {
+          padding-top: 15px !important;
+        }
+
+        .profile-settings,
+        .view-change-projects {
+          color: $green;
+          padding: 5px 10px;
+          font-size: 12px;
+          cursor: pointer;
+
+          &:hover {
+            color: $darkGreen;
+          }
+        }
+
         .change-project {
           color: rgba(0, 0, 0, 0.65);
           padding: 10px;

@@ -396,7 +396,9 @@
         "createProjectUser": "Создать пользователя проекта",
         "changeProject": "Сменить проект:",
         "signOut": "Выйти",
-        "menu": "Меню"
+        "menu": "Меню",
+        "profileSettings": "Нвстройки профиля",
+        "viewEditingProjects": "Просмотр/редактирование проектов"
     },
     "VendorProfileComponent": {
         "created": "Созданный",

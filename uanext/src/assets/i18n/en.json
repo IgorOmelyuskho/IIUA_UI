@@ -396,7 +396,9 @@
         "selectProject": "Select project",
         "changeProject": "Change project:",
         "signOut": "Sign out",
-        "menu": "Menu"
+        "menu": "Menu",
+        "profileSettings": "Profile settings",
+        "viewEditingProjects": "View/editing projects"
     },
     "VendorProfileComponent": {
         "created": "Created",

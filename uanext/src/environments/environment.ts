@@ -6,7 +6,7 @@ const domain = 'https://master.iiua.com.ua';
 
 export const environment = {
   production: false,
-  signalR: domain + '/notifications/api/CoordinatesHub',
+  signalR: domain + '/notifications/cord',
   auth:  domain + '/auth',
   projects: domain +  '/projects',
   map:  domain + '/map',
