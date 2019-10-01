@@ -22,8 +22,7 @@ export class VendorProfileComponent implements OnInit {
   self = 'VendorProfileComponent';
   @ViewChild('passwordInput') passwordInput: ElementRef;
   @ViewChild('togglePasswordImg') togglePasswordImg: ElementRef;
-
-  @ViewChild('phone') phoneInput: ElementRef;
+  // @ViewChild('phone') phoneInput: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,9 +48,9 @@ export class VendorProfileComponent implements OnInit {
       // phone: this.vendor.phone
     });
     // how its fix ??
-    setTimeout(() => {
-      this.phoneInput.nativeElement.dispatchEvent(new Event('input')); // fix possible bug
-    }, 50);
+    // setTimeout(() => {
+    //   this.phoneInput.nativeElement.dispatchEvent(new Event('input')); // fix possible bug
+    // }, 50);
   }
 
   ngOnInit() {

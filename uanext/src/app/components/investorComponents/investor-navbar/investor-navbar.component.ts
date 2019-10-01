@@ -19,6 +19,7 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit, OnDestroy
   matchesMediaQuery = false;
   menuIsOpen = false;
   routerSubscription: Subscription;
+  languageMenuIsOpen = false;
 
   constructor(private router: Router, private authService: AuthorizationService, public translateService: TranslateService) { }
 
@@ -92,13 +93,18 @@ export class InvestorNavbarComponent implements OnInit, AfterViewInit, OnDestroy
     this.router.navigate(['home', 'investor', 'viewProjects']);
   }
 
-  languageChange(e) {
-    if (e.target.value === 'ru') {
+  languageChange(lang) {
+    if (lang === 'ru') {
       this.translateService.use('ru').then(() => { });
     }
-    if (e.target.value === 'en') {
+    if (lang === 'en') {
       this.translateService.use('en').then(() => { });
     }
+    this.languageMenuIsOpen = false;
+  }
+
+  openLanguageMenu() {
+    this.languageMenuIsOpen = !this.languageMenuIsOpen;
   }
 
   ngOnDestroy() {

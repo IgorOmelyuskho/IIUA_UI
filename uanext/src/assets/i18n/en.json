@@ -160,7 +160,7 @@
         "privateChat": "Private chat"
     },
     "InvestorNavbarComponent": {
-        "home": "Home",
+        "home": "Map",
         "myProfile": "My profile",
         "findProjects": "Find projects",
         "signOut": "Sign out",
@@ -288,8 +288,9 @@
     },
     "MainScreenVendorComponent": {
         "quickAction": "Quick action",
-        "onlyMyProjects": "Only my projects",
-        "upload3dModels": "Download 3D model to the map"
+        "onlyMyProjects": "My projects",
+        "upload3dModels": "Download 3D model to the map",
+        "chooseProject": "Choose project"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Update you project settings",
@@ -389,7 +390,7 @@
         "privateChat": "Private chat"
     },
     "VendorNavbarComponent": {
-        "home": "Home",
+        "home": "Map",
         "profile": "Profile",
         "projects": "Projects",
         "createProjectUser": "Create project user",
@@ -398,7 +399,7 @@
         "signOut": "Sign out",
         "menu": "Menu",
         "profileSettings": "Profile settings",
-        "viewEditingProjects": "View/editing projects"
+        "editingProjects": "Editing projects"
     },
     "VendorProfileComponent": {
         "created": "Created",
@@ -718,7 +719,7 @@
         "single": "Private"
     },
     "Panel3dModelsComponent": {
-      "selectProject": "SELECT PROJECT"
+      "selectProject": "Select project"
     },
     "VendorProjectMinCardComponent": {
         "privateChat":"Private chat"

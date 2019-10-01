@@ -59,7 +59,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   replaceObjects(objects: GeoObject[]) {
     try {
       if (objects != null && this.mapManager != null) {
-        console.log(objects);
         this.mapManager.mapReplaceObjects(objects);
 
         // this.signalRService.objectsArr = objects.map((obj) => { // todo remove

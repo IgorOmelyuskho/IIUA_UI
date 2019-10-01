@@ -2,7 +2,12 @@ export interface FilterFields {
   page?: string | number;
   pageSize?: string | number;
 
-  coordinateFrame?: any;
+  coordinateFrame?: {
+    upperBoundX: number,
+    upperBoundY: number,
+    lowerBoundX: number,
+    lowerBoundY: number
+  };
 
   projectName?: string;
   companyName?: string;

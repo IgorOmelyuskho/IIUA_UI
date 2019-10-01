@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   mq = window.matchMedia(this.mediaQueryString);
   matchesMediaQuery = false;
   menuIsOpen = false;
+  languageMenuIsOpen = false;
 
   constructor(private router: Router, public translateService: TranslateService) { }
 
@@ -40,13 +41,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  languageChange(e) {
-    if (e.target.value === 'ru') {
-      this.translateService.use('ru').then(() => {});
+  languageChange(lang) {
+    if (lang === 'ru') {
+      this.translateService.use('ru').then(() => { });
     }
-    if (e.target.value === 'en') {
-      this.translateService.use('en').then(() => {});
+    if (lang === 'en') {
+      this.translateService.use('en').then(() => { });
     }
+    this.languageMenuIsOpen = false;
+  }
+
+  openLanguageMenu() {
+    this.languageMenuIsOpen = !this.languageMenuIsOpen;
   }
 
   signIn() {

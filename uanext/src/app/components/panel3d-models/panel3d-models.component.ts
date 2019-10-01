@@ -33,11 +33,12 @@ export class Panel3dModelsComponent implements OnInit, OnDestroy {
           object3DResponse[i]['imgUrl'] = window.location.origin + '/assets/objects/objects-image/' + object3DResponse[i].originalName + '.png';
         }
         this.object3DResponse = object3DResponse;
-      },
-      err => {
-        console.log(err);
       }
     );
+  }
+
+  changeProject(project: VendorProject) {
+    this.stateService.selectedVendorProject$.next(project);
   }
 
   ngOnDestroy() {

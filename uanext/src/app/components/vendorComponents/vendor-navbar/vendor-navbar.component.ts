@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('home') homeTab: ElementRef;
-  @ViewChild('createProjectUser') createProjectUser: ElementRef;
+  // @ViewChild('createProjectUser') createProjectUser: ElementRef;
   self = 'VendorNavbarComponent';
   mediaQueryString = 'screen and (max-width: 760px)'; // also used in .scss
   mq = window.matchMedia(this.mediaQueryString);
@@ -27,6 +27,7 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   menuIsOpen = false;
   showProfileProgress = false;
   routerSubscription: Subscription;
+  languageMenuIsOpen = false;
 
   constructor(
     private router: Router,
@@ -44,9 +45,6 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedProjectSubscription = this.stateService.selectedVendorProject$.subscribe(
       (val: VendorProject) => {
         this.profileSelectedProject = val;
-      },
-      err => {
-        console.warn(err);
       }
     );
 
@@ -65,15 +63,15 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     const urlArr: string[] = url.split('/');
     const endOfUrl: string = urlArr[urlArr.length - 1];
 
-    this.createProjectUser.nativeElement.classList.remove('selected');
+    // this.createProjectUser.nativeElement.classList.remove('selected');
     this.homeTab.nativeElement.classList.remove('selected');
 
     if (endOfUrl === 'main-page') {
       this.homeTab.nativeElement.classList.add('selected');
     }
-    if (endOfUrl === 'create-project-user') {
-      this.createProjectUser.nativeElement.classList.add('selected');
-    }
+    // if (endOfUrl === 'create-project-user') {
+    //   this.createProjectUser.nativeElement.classList.add('selected');
+    // }
   }
 
   initMenu() {
@@ -153,13 +151,18 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  languageChange(e) {
-    if (e.target.value === 'ru') {
+  languageChange(lang) {
+    if (lang === 'ru') {
       this.translateService.use('ru').then(() => { });
     }
-    if (e.target.value === 'en') {
+    if (lang === 'en') {
       this.translateService.use('en').then(() => { });
     }
+    this.languageMenuIsOpen = false;
+  }
+
+  openLanguageMenu() {
+    this.languageMenuIsOpen = !this.languageMenuIsOpen;
   }
 
   ngOnDestroy() {

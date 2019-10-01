@@ -16,10 +16,44 @@
     align-items: center;
 
     .language {
-      select {
-        padding-bottom: 0px;
-        padding-top: 0px;
-        height: 30px;
+      margin: 0 15px;
+      cursor: pointer;
+
+      .selected-lang {
+        font-size: 20px;
+        color: #9A9A9A;
+        display: flex;
+        align-items: center;
+      }
+
+      img {
+        margin-left: 4px;
+      }
+
+      img.menu-open {
+        transform: rotate(180deg);
+      }
+
+      ul {
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+        border-radius: 4px;
+        padding: 10px 0 10px 0;
+        color: $green;
+        font-family: Roboto, sans-serif;
+        font-size: 14px;
+        z-index: 1;
+        transform: translate(-20px, 5px);
+
+        li {
+          padding: 4px 11px 4px 11px;
+          list-style: none;
+
+          &:hover {
+            background-color: #dcdcdc;
+          }
+        }
       }
     }
 
@@ -107,6 +141,7 @@
     .profile-wrapper {
       position: relative;
       max-width: 50vw;
+      margin-left: 15px;
 
       .profile {
         height: 36px;

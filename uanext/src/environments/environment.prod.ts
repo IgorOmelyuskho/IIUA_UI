@@ -42,7 +42,7 @@ export const environment = {
   postHistoryData: '/api/Map/PostHistoryData',
   getLastHistoryCoordinates: '/api/Map/GetLastHistoryCoordinates',
   search3DObject: '/api/Map/Search3DObject',
-  mapFilteringProjects: '/api/Map/projects-filtering',
+  mapFilteringProjects: '/api/Map/ProjectsFiltering',
   addGeoModel: '/api/Map/addGeoModel',
   getGeoModels: '/api/Map/getGeoModels',
   updateGeoObjectSettings: '/api/Map/UpdateGeoObjectSettings',

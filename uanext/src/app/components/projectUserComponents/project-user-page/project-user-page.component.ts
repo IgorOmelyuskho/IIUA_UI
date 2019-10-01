@@ -12,6 +12,7 @@ export class ProjectUserPageComponent implements OnInit, AfterViewInit {
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('upload') uploadTab: ElementRef;
   self = 'ProjectUserPageComponent';
+  languageMenuIsOpen = false;
 
   constructor(private router: Router, private authService: AuthorizationService, public translateService: TranslateService) { }
 
@@ -41,13 +42,18 @@ export class ProjectUserPageComponent implements OnInit, AfterViewInit {
     this.router.navigate(['admin', 'upload3dModel']);
   }
 
-  languageChange(e) {
-    if (e.target.value === 'ru') {
-      this.translateService.use('ru').then(() => {});
+  languageChange(lang) {
+    if (lang === 'ru') {
+      this.translateService.use('ru').then(() => { });
     }
-    if (e.target.value === 'en') {
-      this.translateService.use('en').then(() => {});
+    if (lang === 'en') {
+      this.translateService.use('en').then(() => { });
     }
+    this.languageMenuIsOpen = false;
+  }
+
+  openLanguageMenu() {
+    this.languageMenuIsOpen = !this.languageMenuIsOpen;
   }
 
   signOut() {

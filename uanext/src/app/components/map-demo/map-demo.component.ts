@@ -34,7 +34,6 @@ export class MapDemoComponent implements OnInit, AfterViewInit, OnDestroy  {
   set replace3DObjects(objects: GeoObjectEdit[]) {
     try {
       if (objects != null && this.mapManager != null) {
-        console.log(objects);
         this.mapManager.mapReplaceObjects(objects);
 
         this.signalRService.objectsArr = objects.map((obj) => { // todo remove
