@@ -1,6 +1,6 @@
 <div class="last-activity">
-  <div (click)="findByNameClick()" class="find">
-    <button><i class="fa fa-search"></i></button>
+  <div class="find">
+    <button (click)="findCardsByProjectName()"><i class="fa fa-search"></i></button>
     <input [(ngModel)]="searchName" placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
   </div>
   <div class="param">
@@ -11,7 +11,13 @@
     <button [ngClass]="{'selected': selected === 'group'}" (click)="group()"
       class="right-btn">{{ 'group' | translate:self }}</button>
   </div>
-  <div *ngFor="let project of projects">
-    <app-vendor-project-min-card [isSelect]="selectedProject?.id === project.id" (selectEvent)="projectSelectHandler($event)" [project]="project"></app-vendor-project-min-card>
+
+  <div class="projects">
+    <div class="wrapper-for-border">
+      <div *ngFor="let project of projects">
+        <app-vendor-project-min-card *ngIf="allowedCards(project) === true" [project]="project" (createChat)="createChat($event)"></app-vendor-project-min-card>
+        <!-- <app-investor-card [project]="project"></app-investor-card> -->
+      </div>
+    </div>
   </div>
 </div>

@@ -14,8 +14,8 @@
     },
     "SignupComponent": {
         "registration": "Регистрация",
-        "investor": "Компания",
-        "vendor": "Пользователь",
+        "investor": "Пользователь",
+        "vendor": "Компания",
         "social": "Зарегистрироватся с помощью социальных сетей:",
         "useEmail": "Использовать почту для регистрации"
     },
@@ -160,7 +160,7 @@
         "privateChat": "Приватный чат"
     },
     "InvestorNavbarComponent": {
-        "home": "Домой",
+        "home": "Карта",
         "myProfile": "Мой профиль",
         "findProjects": "Найти проект",
         "signOut": "Выйти",
@@ -288,8 +288,9 @@
     },
     "MainScreenVendorComponent": {
         "quickAction": "Быстрые действия",
-        "onlyMyProjects": "Только мои проекты",
-        "upload3dModels": "Загрузить 3Д модель на карту"
+        "onlyMyProjects": "Мои проекты",
+        "upload3dModels": "Загрузить 3Д модель на карту",
+        "chooseProject": "Выберите проект"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Обновите настройки вашего проекта",
@@ -364,7 +365,7 @@
         "findPlaceholder": "Найти проект или инвестора",
         "all": "Все",
         "group": "Групповые",
-        "single": "Одиночные"
+        "single": "Приватные"
     },
     "VendorInvestmentOfferComponent": {
         "investmentOffer": "Предложение инвестиций",
@@ -389,14 +390,16 @@
         "privateChat": "Приватный чат"
     },
     "VendorNavbarComponent": {
-        "home": "Домой",
+        "home": "Карта",
         "profile": "Профиль",
         "projects": "Проекты",
         "selectProject": "Выбрать проект",
         "createProjectUser": "Создать пользователя проекта",
         "changeProject": "Сменить проект:",
         "signOut": "Выйти",
-        "menu": "Меню"
+        "menu": "Меню",
+        "profileSettings": "Нвстройки профиля",
+        "editingProjects": "Редактирование проектов"
     },
     "VendorProfileComponent": {
         "created": "Созданный",
@@ -713,10 +716,10 @@
         "findPlaceholder": "Найти проект или инвестора",
         "all": "Все",
         "group": "Групповые",
-        "single": "Одиночные"
+        "single": "Приватные"
     },
     "Panel3dModelsComponent": {
-      "selectProject": "ВЫБЕРИТЕ ПРОЕКТ"
+      "selectProject": "Выберите проект"
     },
     "VendorProjectMinCardComponent": {
         "privateChat":"Приватный чат"

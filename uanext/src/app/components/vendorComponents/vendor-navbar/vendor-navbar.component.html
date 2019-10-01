@@ -3,26 +3,33 @@
     <span class="navbar-brand mb-0 h1">IIUA</span>
   </a>
   <div class="right-part">
-    <div class="language">
-      <select (change)="languageChange($event)" class="custom-select">
-        <option value="ru" [selected]="translateService.lang === 'ru'">ru</option>
-        <option value="en" [selected]="translateService.lang === 'en'">en</option>
-      </select>
-    </div>
     <div class="adaptive-menu">
       <div (click)="menuIsOpen = !menuIsOpen" class="menu-text">{{ 'menu' | translate:self }}</div>
-      <div (click)="menuIsOpen = false" [style.display]="menuIsOpen === true || matchesMediaQuery === false ? 'flex' : 'none'" class="btn-wrapper">
+      <div (click)="menuIsOpen = false"
+        [style.display]="menuIsOpen === true || matchesMediaQuery === false ? 'flex' : 'none'" class="btn-wrapper">
         <button #home (click)='homeClick()' type="button">{{ 'home' | translate:self }}</button>
-        <button #profile (click)='profileClick()' type="button">{{ 'profile' | translate:self }}</button>
-        <button #myProjects (click)='projectsClick()' type="button">{{ 'projects' | translate:self }}</button>
-        <button #createProjectUser (click)='createProjectUserClick()' type="button">{{ 'createProjectUser' | translate:self }}</button>
+        <!-- <button #createProjectUser (click)='createProjectUserClick()'
+          type="button">{{ 'createProjectUser' | translate:self }}</button> -->
       </div>
     </div>
+
+    <div class="language">
+      <div (click)="openLanguageMenu()" class="selected-lang">
+        <div *ngIf="translateService.lang === 'ru'">RU</div>
+        <div *ngIf="translateService.lang === 'en'">EN</div>
+        <img src="../../../../assets/img/triangle.png" alt="" [ngClass]="{'menu-open':languageMenuIsOpen}">
+      </div>
+      <ul *ngIf="languageMenuIsOpen">
+        <li (click)="languageChange('ru')">Русский</li>
+        <li (click)="languageChange('en')">English</li>
+      </ul>
+    </div>
+
     <div class="profile-wrapper">
       <div (click)="openProfileMenu()" class="profile">
         <div class="text">
-          <span *ngIf="!profileSelectedProject">{{ 'selectProject' | translate:self }}</span>
-          <span *ngIf="profileSelectedProject">{{profileSelectedProject?.name}}</span>
+          <span *ngIf="!profileSelectedProject">{{ 'profile' | translate:self }}</span>
+          <span *ngIf="profileSelectedProject">{{ profileSelectedProject?.name }}</span>
         </div>
         <figure>
           <img *ngIf="profileSelectedProject" src={{profileSelectedProject?.avatara.url}} alt="">
@@ -34,7 +41,9 @@
       </div>
 
       <div [style.display]="profileMenuOpen === true ? 'block' : 'none'" class="profile-menu">
-        <div class="change-project">{{ 'changeProject' | translate:self }}</div>
+        <div class="profile-settings" (click)='profileClick()'>{{ 'profileSettings' | translate:self }}</div>
+        <div class="view-change-projects" (click)='projectsClick()'>{{ 'editingProjects' | translate:self }}</div>
+        <div *ngIf="projects?.length > 0" class="change-project">{{ 'changeProject' | translate:self }}</div>
         <div class="projects">
           <div (click)="changeProject(project)" *ngFor="let project of projects" class="project">
             <figure>

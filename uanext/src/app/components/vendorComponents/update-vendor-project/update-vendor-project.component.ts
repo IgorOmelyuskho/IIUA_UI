@@ -30,7 +30,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
   showAvataraProgress = false;
   avataraIsTouched = false;
 
-  minPhotosCount = 5;
+  minPhotosCount = 1;
 
   fieldActivityOptions_2: FieldActivityInterface[];
   fieldOfActivitySubscription: Subscription;

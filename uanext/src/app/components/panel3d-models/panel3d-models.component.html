@@ -1,13 +1,13 @@
 <div class="panel3d-models">
   <!-- <img alt="" class="slide-up" src="../../../assets/img/slide-arrow.png"> -->
-  <ng-container *ngIf="project != null; else selectProject">
+  <ng-container *ngIf="project != null">
     <div *ngFor="let object3D of object3DResponse" class="threejs-scene-wrapper">
       <app-threejs-scene [project]="project" [object3DResponse]="object3D"></app-threejs-scene>
     </div>
   </ng-container>
 
-  <ng-template #selectProject>
+  <!-- <ng-template #selectProject>
     <div class="select-project">{{ 'selectProject' | translate:self }}</div>
-  </ng-template>
+  </ng-template> -->
   <!-- <img alt="" class="slide-down" src="../../../assets/img/slide-arrow.png"> -->
 </div>

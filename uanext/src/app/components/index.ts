@@ -34,7 +34,7 @@ import { MainScreenVendorComponent } from './vendorComponents/main-screen-vendor
 import {
   InvestorIterativeInvestmentComponent
 } from './investorComponents/investor-iterative-investment/investor-iterative-investment.component';
-import { InvestorLastActivityComponent } from './investorComponents/investor-last-activity/investor-last-activity.component';
+import { InvestorLastActivityComponent } from './investorComponents/investor-chat-cards/investor-chat-cards.component';
 import { InvestorMessagesComponent } from './investorComponents/investor-messages/investor-messages.component';
 import { InvestorNotificationsComponent } from './investorComponents/investor-notifications/investor-notifications.component';
 import { InvestorCommentsComponent } from './investorComponents/investor-comments/investor-comments.component';
@@ -47,7 +47,7 @@ import { ProjectUserSignupComponent } from './vendorComponents/project-user-sign
 import { VendorInvestmentOfferComponent } from './vendorComponents/vendor-investment-offer/vendor-investment-offer.component';
 import { VendorMainScreenRightComponent } from './vendorComponents/vendor-main-screen-right/vendor-main-screen-right.component';
 import { VendorMessagesComponent } from './vendorComponents/vendor-messages/vendor-messages.component';
-import { VendorFindInvestorComponent } from './vendorComponents/vendor-find-investor/vendor-find-investor.component';
+import { VendorFindInvestorComponent } from './vendorComponents/vendor-chat-cards/vendor-chat-cards.component';
 import { VendorCreateUpdateComponent } from './vendorComponents/vendor-create-update/vendor-create-update.component';
 import {
   InvestorInteractiveInvestmentCardComponent

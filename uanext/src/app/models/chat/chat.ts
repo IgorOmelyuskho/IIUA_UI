@@ -14,4 +14,5 @@ export interface Chat {
     leaveDate: any;
     participants?: Participant[]; // get from /api/Participants/GetByConversationId
     isBlock: boolean;
+    projectId: number;
 }

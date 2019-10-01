@@ -28,12 +28,12 @@ export class ChatSignalRService {
       .withUrl(environment.signalR, options)
       .build();
 
-    //this.hubConnection.serverTimeoutInMilliseconds = 1000 * 60 * 5000000; // 5000000 minute
+    // this.hubConnection.serverTimeoutInMilliseconds = 1000 * 60 * 5000000; // 5000000 minute
 
     this.hubConnection.on('MessageSBEvent', (message) => {
       const parsedMessage = JSON.parse(message);
       const msg: Message = this.replaceFieldsName(parsedMessage);
-      console.log('MESSAGE = ', msg);
+      // console.log('MESSAGE = ', msg);
       this.messageReceived$.next(msg);
     });
 

@@ -35,7 +35,6 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   showPreviewCard = false;
   previewCardX = 0;
   previewCardY = 0;
-  hoveredProjectUploaded = false;
   hoveredProject: VendorProject;
   geoObjects: GeoObject[];
   readonly maxPageSize = 500;
@@ -216,6 +215,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
         (filteringProjects: FilteredProjects) => {
           this.geoObjects = this.getAllGeoObjectsFromProjects(filteringProjects.projectsList);
           this.showProgress = false;
+          console.log(this.geoObjects);
         },
         err => {
           console.warn(err);

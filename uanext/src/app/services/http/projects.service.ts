@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map, tap, delay } from 'rxjs/operators';
@@ -110,6 +110,11 @@ export class ProjectsService {
           return this.addAvatara(response);
         })
       );
+  }
+
+  getProjectById(projectId: number): Observable<VendorProject> {
+    const params = new HttpParams().set('id', projectId.toString());
+    return this.http.get<any>(environment.projects + environment.getProjectById, { params: params });
   }
 
   private addAvatara(projects: VendorProject[]): VendorProject[] {

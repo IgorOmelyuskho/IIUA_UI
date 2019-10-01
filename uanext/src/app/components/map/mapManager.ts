@@ -486,7 +486,6 @@ export class MapManager {
             this.selectedObject.objectDivLabel.className = 'obj-label-selected';
           }
           this.setMarkerSymbolSelected(this.selectedObject.marker);
-          console.log(this.selectedObject);
           if (this.on_click_object != null) {
             this.on_click_object(this.selectedObject);
           }
@@ -592,6 +591,7 @@ export class MapManager {
     this.threeLayer.addTo(this.map);
   }
   //#endregion
+
 
   // init / remove 3D Object
   //#region

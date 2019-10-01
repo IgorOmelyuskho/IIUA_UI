@@ -1,23 +1,36 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { StateService } from 'src/app/services/state/state.service';
 import { ChatType } from 'src/app/models/chat/chatType';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-vendor-project-min-card',
   templateUrl: './vendor-project-min-card.component.html',
   styleUrls: ['./vendor-project-min-card.component.scss']
 })
-export class VendorProjectMinCardComponent implements OnInit {
+export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
   @Input() project: VendorProject;
-  @Input() isSelect: boolean;
-  @Output() selectEvent = new EventEmitter<VendorProject>();
   @Output() createChat = new EventEmitter<VendorProject>();
+  isSelect = false;
   self = 'VendorProjectMinCardComponent';
+  selectChatSubscription: Subscription;
 
   constructor(private stateService: StateService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.selectChatSubscription = this.stateService.selectedProjectForChat$.subscribe(
+      (project: VendorProject) => {
+        if (project != null) {
+          if (project.id === this.project.id) {
+            this.isSelect = true;
+          } else {
+            this.isSelect = false;
+          }
+        }
+      }
+    );
+  }
 
   getAvataraUrl(project) {
     const url = project.avatara.url;
@@ -25,7 +38,7 @@ export class VendorProjectMinCardComponent implements OnInit {
   }
 
   projectWrapperClick(project: VendorProject) {
-    this.selectEvent.emit(project);
+    this.stateService.selectedProjectForChat$.next(project);
   }
 
   createPrivateChat(event) {
@@ -34,6 +47,9 @@ export class VendorProjectMinCardComponent implements OnInit {
   }
 
   canCreatePrivateChat(): boolean {
+    if (this.project.chat == null) {
+      return false;
+    }
     if (this.project.chat.creatorId === this.stateService.getUserId()) {
       return false;
     }
@@ -41,5 +57,9 @@ export class VendorProjectMinCardComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  ngOnDestroy() {
+    this.selectChatSubscription.unsubscribe();
   }
 }

@@ -112,7 +112,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.chatService.getChatBProjectId(projectId).subscribe(
       (chat: Chat) => {
         this.chat = chat;
-        console.log(this.chat);
         this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), true);
       },
       err => {
