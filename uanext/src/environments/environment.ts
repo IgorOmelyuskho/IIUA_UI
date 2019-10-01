@@ -61,7 +61,8 @@ export const environment = {
   createMessage: '/api/Messages/CreateMessage',
   updateMessage: '/api/Messages/UpdateMessage',
   getParticipantById: '/api/Participants/GetByParticipantId',
-  getParticipantByChatId: '/api/Participants/GetByConversationId'
+  getParticipantByChatId: '/api/Participants/GetByConversationId',
+  getPaginationOfConversations: '/api/Conversations/GetPaginationOfConversations'
 };
 
 /*

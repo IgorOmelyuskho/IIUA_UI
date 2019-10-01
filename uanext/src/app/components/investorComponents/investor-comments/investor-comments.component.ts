@@ -60,7 +60,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
       autosize(document.querySelectorAll(this.textareaSelector2));
     });
 
-    this.chatService.getChatBProjectId(this.project.id).subscribe(
+    this.chatService.getChatByProjectId(this.project.id).subscribe(
       (chat: Chat) => {
         this.chat = chat;
         console.log(this.chat);
@@ -156,11 +156,9 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   getParticipantByParticipantId(message: Message) {
-    this.participantsCacheService.getData(message.participantId).subscribe(
+    this.participantsCacheService.getParticipant(message.participantId).subscribe(
       (participant: Participant) => {
-        if (participant != null) {
-          message.participant = participant;
-        }
+        message.participant = participant;
       }
     );
   }
@@ -242,7 +240,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     };
 
     this.chatService.createMessage(message).subscribe(
-      (msg: Message) => {},
+      (msg: Message) => { },
       err => {
         console.warn(err);
       }

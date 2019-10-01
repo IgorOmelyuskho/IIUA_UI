@@ -109,7 +109,7 @@ export class InvestorMessagesComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   getChatByProjectIdSubscribe(projectId: number) {
-    this.chatService.getChatBProjectId(projectId).subscribe(
+    this.chatService.getChatByProjectId(projectId).subscribe(
       (chat: Chat) => {
         this.chat = chat;
         console.log(this.chat);
@@ -159,11 +159,9 @@ export class InvestorMessagesComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   getParticipantByParticipantId(message: Message) {
-    this.participantsCacheService.getData(message.participantId).subscribe(
+    this.participantsCacheService.getParticipant(message.participantId).subscribe(
       (participant: Participant) => {
-        if (participant != null) {
-          message.participant = participant;
-        }
+        message.participant = participant;
       }
     );
   }

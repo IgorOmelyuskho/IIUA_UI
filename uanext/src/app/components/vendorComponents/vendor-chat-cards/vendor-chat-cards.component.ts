@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { responseProjects } from 'src/app/helperClasses/projects';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
-import { FilteredProjects } from 'src/app/models';
-import { StateService } from 'src/app/services/state/state.service';
-import { ChatsCacheService } from 'src/app/services/chats-cache.service';
 import { Chat } from 'src/app/models/chat/chat';
 import { ChatType } from 'src/app/models/chat/chatType';
 import { ChatService } from 'src/app/services/http/chat.service';
-import { ProjectsService } from 'src/app/services/http/projects.service';
+import { GetChatsParams } from 'src/app/models/chat/getChatsParams';
+import { ProjectsCacheService } from 'src/app/services/projects-cache.service';
+import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
   selector: 'app-vendor-chat-cards',
@@ -17,30 +14,25 @@ import { ProjectsService } from 'src/app/services/http/projects.service';
 })
 export class VendorFindInvestorComponent implements OnInit {
   // projects: VendorProject[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
-  projectsWithoutChat: VendorProject[] = [];
-  projects: VendorProject[] = [];
+  projectsWithChat: VendorProject[] = [];
   self = 'VendorFindInvestorComponent';
-  selected = 'all'; // group/single
+  selectedChatType = 'all'; // group/single
   searchName = '';
+  numberOfConversation = 0;
+  chats: Chat[] = [];
+  readonly chatsCount = 15;
+  @ViewChild('projectsElem') projectsElem: ElementRef;
+  requestNumber = 0;
+  projectWithPrivateChat: VendorProject;
 
   constructor(
-    private filteredProjectsService: FilteredProjectsService,
-    private stateService: StateService,
-    private chatsCacheService: ChatsCacheService,
     private chatService: ChatService,
-    private projectsService: ProjectsService
-  ) {
-  }
+    private projectsCacheService: ProjectsCacheService,
+    private stateService: StateService
+  ) { }
 
   ngOnInit() {
-    this.filteredProjectsService.searchByKeyword('', 1000, 1).subscribe(
-      (filteredProjects: FilteredProjects) => {
-        this.projectsWithoutChat = filteredProjects.projectsList;
-        for (let i = 0; i < this.projectsWithoutChat.length; i++) {
-          this.getChatByProject(this.projectsWithoutChat[i]);
-        }
-      }
-    );
+    this.allChats();
   }
 
   getAvataraUrl(project) {
@@ -48,58 +40,138 @@ export class VendorFindInvestorComponent implements OnInit {
     return 'url("' + url + '")';
   }
 
-  all() {
-    this.selected = 'all';
-  }
-
-  group() {
-    this.selected = 'group';
-  }
-
-  single() {
-    this.selected = 'single';
-  }
-
-  removeDuplicateProjects(allProjects: VendorProject[], allCurrentUserChats: Chat[]) {
-    const result: VendorProject[] = [];
-    for (let i = 0; i < allProjects.length; i++) {
-      for (let j = 0; j < allCurrentUserChats.length; j++) {
-        if (allProjects[i].id !== allCurrentUserChats[i].projectId) {
-          result.push(allProjects[i]);
+  getPaginationChatSubscribe(params: GetChatsParams) {
+    this.requestNumber++;
+    const requestNumber = this.requestNumber;
+    this.chatService.getPaginationOfConversations(params).subscribe(
+      (chats: Chat[]) => {
+        if (this.requestNumber !== requestNumber) {
+          return;
         }
+        this.numberOfConversation += chats.length;
+        for (let i = 0; i < chats.length; i++) {
+          this.getProjectByChatSubscribe(chats[i], requestNumber);
+        }
+      }
+    );
+  }
+
+  getProjectByChatSubscribe(chat: Chat, requestNumber: number) {
+    this.projectsCacheService.getProject(chat.projectId).subscribe(
+      (project: VendorProject) => {
+        if (this.requestNumber !== requestNumber) { // if the previous request did not have time to complete, and we are already waiting for the results from the next request
+          return;
+        }
+        if (this.samePrivateChatAlreadyExist() === true && this.selectedChatType === 'single') { // so as not to duplicate a private chat if it has already been created
+          return;
+        }
+        const projectWithChat: VendorProject = this.projectWithChat(project, chat);
+        if (this.projectsWithChat.length === 0) {
+          this.stateService.selectedProjectForChat$.next(projectWithChat);
+        }
+        this.projectsWithChat.push(projectWithChat);
+      }
+    );
+  }
+
+  allChats() {
+    this.selectedChatType = 'all';
+    this.beforeFindNewChats();
+    const params: GetChatsParams = {
+      numberOfConversation: this.numberOfConversation,
+      count: this.chatsCount,
+    };
+    this.getPaginationChatSubscribe(params);
+  }
+
+  allChatsScroll() {
+    const params: GetChatsParams = {
+      numberOfConversation: this.numberOfConversation,
+      count: this.chatsCount,
+    };
+    this.getPaginationChatSubscribe(params);
+  }
+
+  groupChats() {
+    this.selectedChatType = 'group';
+    this.beforeFindNewChats();
+    const params: GetChatsParams = {
+      numberOfConversation: this.numberOfConversation,
+      count: this.chatsCount,
+      conversationType: ChatType.all2all
+    };
+    this.getPaginationChatSubscribe(params);
+  }
+
+  groupChatsScroll() {
+    const params: GetChatsParams = {
+      numberOfConversation: this.numberOfConversation,
+      count: this.chatsCount,
+      conversationType: ChatType.all2all
+    };
+    this.getPaginationChatSubscribe(params);
+  }
+
+  singleChats(project?: VendorProject) { // use in HTML without params
+    this.selectedChatType = 'single';
+    this.beforeFindNewChats();
+    if (project != null) {
+      this.projectsWithChat.push(project);
+      this.stateService.selectedProjectForChat$.next(project);
+    }
+    const params: GetChatsParams = {
+      numberOfConversation: this.numberOfConversation,
+      count: this.chatsCount,
+      conversationType: ChatType.p2p
+    };
+    this.getPaginationChatSubscribe(params);
+  }
+
+  singleChatsScroll() {
+    const params: GetChatsParams = {
+      numberOfConversation: this.numberOfConversation,
+      count: this.chatsCount,
+      conversationType: ChatType.p2p
+    };
+    this.getPaginationChatSubscribe(params);
+  }
+
+  findChatByProjectName() {
+    this.selectedChatType = 'all';
+    this.beforeFindNewChats();
+    const params: GetChatsParams = {
+      count: this.chatsCount,
+      projectName: this.searchName
+    };
+    this.getPaginationChatSubscribe(params);
+  }
+
+  findChatByProjectNameScroll() {
+    const params: GetChatsParams = {
+      count: this.chatsCount,
+      projectName: this.searchName
+    };
+    this.getPaginationChatSubscribe(params);
+  }
+
+  // if this.chatService.getOrCreateP2P return already exist chat - not now created
+  samePrivateChatAlreadyExist(): boolean {
+    if (this.projectWithPrivateChat == null) {
+      return false;
+    }
+    for (let i = 0; i < this.projectsWithChat.length; i++) {
+      if (this.projectsWithChat[i].chat.id === this.projectWithPrivateChat.chat.id) {
+        return true;
       }
     }
+    return false;
   }
 
-  findCardsByProjectName() {
-    this.filteredProjectsService.searchByKeyword(this.searchName, 1000, 1).subscribe(
-      (filteredProjects: FilteredProjects) => {
-        this.projectsWithoutChat = filteredProjects.projectsList;
-        this.projects = [];
-        for (let i = 0; i < this.projectsWithoutChat.length; i++) {
-          this.getChatByProject(this.projectsWithoutChat[i]);
-        }
-      }
-    );
-  }
-
-  getChatByProject(project: VendorProject) {
-    this.chatsCacheService.getData(project.id.toString()).subscribe(
-      (chat: Chat) => {
-        if (chat != null) {
-          const projectWithChat: VendorProject = this.projectWithChat(project, chat);
-          this.projects.push(projectWithChat);
-        }
-      }
-    );
-  }
-
-  getProjectByChat(chat: Chat) {
-    this.projectsService.getProjectById(chat.projectId).subscribe(
-      (project: VendorProject) => {
-        console.log(project);
-      }
-    );
+  beforeFindNewChats() {
+    this.stateService.selectedProjectForChat$.next(null);
+    this.projectsElem.nativeElement.scrollTop = 0;
+    this.numberOfConversation = 0;
+    this.projectsWithChat = [];
   }
 
   projectWithChat(project: VendorProject, chat: Chat): VendorProject {
@@ -107,31 +179,17 @@ export class VendorFindInvestorComponent implements OnInit {
     return project;
   }
 
-  allowedCards(project: VendorProject): boolean { // all/single/group
-    if (this.selected === 'all') {
-      return true;
-    }
-    if (project.chat == null) {
-      return false;
-    }
-    if (project.chat.conversationType === ChatType.all2all && this.selected === 'group') {
-      return true;
-    }
-    if (project.chat.conversationType === ChatType.p2p && this.selected === 'single') {
-      return true;
-    }
-    return false;
-  }
-
-  createChat(project: VendorProject) {
+  createPrivateChat(project: VendorProject) {
     this.chatService.getOrCreateP2P(project.id).subscribe(
       (chat: Chat) => {
-        const newProject: VendorProject = {...project};
-        const projectWithChat: VendorProject = this.projectWithChat(newProject, chat);
-        // this.projects.unshift(projectWithChat);
-        // this.projectSelectHandler(newProject);
-        this.single();
+        const projectClone: VendorProject = { ...project };
+        this.projectWithPrivateChat = this.projectWithChat(projectClone, chat);
+        this.singleChats(this.projectWithPrivateChat);
       }
     );
+  }
+
+  onScroll() {
+    this.allChatsScroll();
   }
 }

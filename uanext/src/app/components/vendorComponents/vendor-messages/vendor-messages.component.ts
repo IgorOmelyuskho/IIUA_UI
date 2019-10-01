@@ -33,7 +33,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   textareaSelector = '.bottom-wrapper .textarea-wrapper textarea';
   projectSubscription: Subscription;
   signalRSubscription: Subscription;
-  chat: Chat;
   newMsgCame = false;
 
   constructor(
@@ -54,7 +53,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
       (project: VendorProject) => {
         if (project != null) {
           this.project = project;
-          this.getChatByProjectIdSubscribe(this.project.id);
+          this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.project.chat.id), true);
         }
       }
     );
@@ -70,7 +69,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onSignalRMessage = (message: Message) => {
-    if (this.chat == null || message.conversationId !== this.chat.id) {
+    if (message.conversationId !== this.project.chat.id) {
       return;
     }
     message.isYou = this.messageIsYou(message);
@@ -108,17 +107,17 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.scrollToBottom();
   }
 
-  getChatByProjectIdSubscribe(projectId: number) {
-    this.chatService.getChatBProjectId(projectId).subscribe(
-      (chat: Chat) => {
-        this.chat = chat;
-        this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), true);
-      },
-      err => {
-        console.warn(err);
-      }
-    );
-  }
+  // getChatByProjectIdSubscribe(projectId: number) {
+  //   this.chatService.getChatByProjectId(projectId).subscribe(
+  //     (chat: Chat) => {
+  //       this.chat = chat;
+  //       this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), true);
+  //     },
+  //     err => {
+  //       console.warn(err);
+  //     }
+  //   );
+  // }
 
   getMessagesByChatIdSubscribe(observable: Observable<any>, initial: boolean) {
     this.messagesLoading = true;
@@ -158,11 +157,9 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getParticipantByParticipantId(message: Message) {
-    this.participantsCacheService.getData(message.participantId).subscribe(
+    this.participantsCacheService.getParticipant(message.participantId).subscribe(
       (participant: Participant) => {
-        if (participant != null) {
-          message.participant = participant;
-        }
+        message.participant = participant;
       }
     );
   }
@@ -209,7 +206,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
 
     const message: Message = {
       text: this.textFromInput,
-      conversationId: this.chat.id,
+      conversationId: this.project.chat.id,
       userId: this.stateService.getUserId(),
       attachmentId: this.attachmentData.id,
       attachmentUrl: this.attachmentData.url,

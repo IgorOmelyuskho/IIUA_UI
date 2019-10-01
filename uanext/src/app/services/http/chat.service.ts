@@ -8,6 +8,7 @@ import { testMessagePhoto, testMessageFile, testMessageVideo } from 'src/app/hel
 import { delay, map, tap } from 'rxjs/operators';
 import { Participant } from 'src/app/models/chat/chatParticipant';
 import { ChatType } from 'src/app/models/chat/chatType';
+import { GetChatsParams } from 'src/app/models/chat/getChatsParams';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class ChatService {
     return this.http.get<any>(environment.chat + environment.getChatById, { params: params });
   }
 
-  getChatBProjectId(projectId: number): Observable<Chat> {
+  getChatByProjectId(projectId: number): Observable<Chat> {
     const params = new HttpParams().set('projectId', projectId.toString());
     return this.http.get<any>(environment.chat + environment.getChatByProjectId, { params: params });
     // const chat: Chat = {
@@ -70,6 +71,23 @@ export class ChatService {
     //   projectId: projectId.toString() // for All2All
     // };
     // return of(chat);
+  }
+
+  getPaginationOfConversations(getChatParams: GetChatsParams): Observable<Chat[]> {
+    let params = new HttpParams();
+    if (getChatParams.conversationType != null) {
+      params = params.append('conversationType', getChatParams.conversationType);
+    }
+    if (getChatParams.count != null) {
+      params = params.append('count', getChatParams.count.toString());
+    }
+    if (getChatParams.numberOfConversation != null) {
+      params = params.append('numberOfConversation', getChatParams.numberOfConversation.toString());
+    }
+    if (getChatParams.projectName != null) {
+      params = params.append('projectName', getChatParams.projectName);
+    }
+    return this.http.get<any>(environment.chat + environment.getPaginationOfConversations, { params: params });
   }
 
 

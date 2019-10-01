@@ -149,41 +149,42 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
     //       result[i].projectName = 'RANDOM PROJECT NAME';
     //     }
     //     this.geoObjects = result;
-    //     console.log(this.geoObjects); 
+    //     console.log(this.geoObjects);
     //   }
     // );
   }
 
   onMapObjectHover(mapObject: GeoObject) {
-    const cardWidth = 578;
-    const cardHeight = 178;
-    const deltaY = 30;
+    console.log('TODO SHOW PROJECT CARD');
+    // const cardWidth = 578;
+    // const cardHeight = 178;
+    // const deltaY = 30;
 
-    const rightMenu = document.getElementById('investor-main-screen-right-menu');
-    const rightMenuOffset = rightMenu.offsetWidth + parseInt(window.getComputedStyle(rightMenu).right, 10);
+    // const rightMenu = document.getElementById('investor-main-screen-right-menu');
+    // const rightMenuOffset = rightMenu.offsetWidth + parseInt(window.getComputedStyle(rightMenu).right, 10);
 
-    const rightComponent = document.getElementById('investor-main-screen-right-component');
-    let rightComponentOffset = 0;
-    if (rightComponent != null) {
-      rightComponentOffset = rightComponent.offsetWidth + parseInt(window.getComputedStyle(rightComponent).right, 10);
-    }
+    // const rightComponent = document.getElementById('investor-main-screen-right-component');
+    // let rightComponentOffset = 0;
+    // if (rightComponent != null) {
+    //   rightComponentOffset = rightComponent.offsetWidth + parseInt(window.getComputedStyle(rightComponent).right, 10);
+    // }
 
-    let resultX = this.previewCardX;
-    let resultY = this.previewCardY + deltaY;
+    // let resultX = this.previewCardX;
+    // let resultY = this.previewCardY + deltaY;
 
-    if (this.previewCardX > window.innerWidth - cardWidth - rightMenuOffset) {
-      resultX = window.innerWidth - cardWidth - rightMenuOffset - 5;
-    }
-    if (rightComponentOffset !== 0 && this.previewCardX > window.innerWidth - cardWidth - rightComponentOffset) {
-      resultX = window.innerWidth - cardWidth - rightComponentOffset - 5;
-    }
-    if (this.previewCardY + deltaY > window.innerHeight - cardHeight) {
-      resultY = this.previewCardY - deltaY - cardHeight;
-    }
-    this.previewCardWrapper.nativeElement.style.left = resultX + 'px';
-    this.previewCardWrapper.nativeElement.style.top = resultY + 'px';
-    this.hoveredProject = mapObject.project;
-    this.showPreviewCard = true;
+    // if (this.previewCardX > window.innerWidth - cardWidth - rightMenuOffset) {
+    //   resultX = window.innerWidth - cardWidth - rightMenuOffset - 5;
+    // }
+    // if (rightComponentOffset !== 0 && this.previewCardX > window.innerWidth - cardWidth - rightComponentOffset) {
+    //   resultX = window.innerWidth - cardWidth - rightComponentOffset - 5;
+    // }
+    // if (this.previewCardY + deltaY > window.innerHeight - cardHeight) {
+    //   resultY = this.previewCardY - deltaY - cardHeight;
+    // }
+    // this.previewCardWrapper.nativeElement.style.left = resultX + 'px';
+    // this.previewCardWrapper.nativeElement.style.top = resultY + 'px';
+    // this.hoveredProject = mapObject.project;
+    // this.showPreviewCard = true;
   }
 
   ngOnDestroy() {

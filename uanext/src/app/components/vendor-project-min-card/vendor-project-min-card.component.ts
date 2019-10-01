@@ -22,7 +22,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
     this.selectChatSubscription = this.stateService.selectedProjectForChat$.subscribe(
       (project: VendorProject) => {
         if (project != null) {
-          if (project.id === this.project.id) {
+          if (project.chat.id === this.project.chat.id) {
             this.isSelect = true;
           } else {
             this.isSelect = false;
@@ -39,6 +39,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
 
   projectWrapperClick(project: VendorProject) {
     this.stateService.selectedProjectForChat$.next(project);
+    console.log(project);
   }
 
   createPrivateChat(event) {

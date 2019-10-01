@@ -114,7 +114,19 @@ export class ProjectsService {
 
   getProjectById(projectId: number): Observable<VendorProject> {
     const params = new HttpParams().set('id', projectId.toString());
-    return this.http.get<any>(environment.projects + environment.getProjectById, { params: params });
+    return this.http.get<any>(environment.projects + environment.getProjectById, { params: params }).pipe(
+      map((project: VendorProject) => { // todo remove
+        if (project.avatara == null) {
+          const projectWithAvatara: VendorProject = project;
+          projectWithAvatara.avatara = {
+            id: 1,
+            url: 'https://www.eguardtech.com/wp-content/uploads/2018/08/Network-Profile.png',
+            originalName: 'Network-Profile.png'
+          };
+          return projectWithAvatara;
+        }
+      })
+    );
   }
 
   private addAvatara(projects: VendorProject[]): VendorProject[] {
