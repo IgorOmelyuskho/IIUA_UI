@@ -112,6 +112,47 @@
           margin-right: 5px;
           height: 8px;
         }
+
+        .more-actions {
+          display: flex;
+          align-items: center;
+          border-radius: 3px;
+          padding: 7px;
+          position: relative;
+
+          &:hover {
+            background: rgb(184, 184, 184);
+          }
+
+          img {
+            height: 5px;
+            margin: 0;
+            opacity: 0.8;
+          }
+
+          .menu {
+            bottom: 3px;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+            border-radius: 4px;
+            padding: 5px 0 5px 0;
+            color: $darkGreen;
+            font-family: Roboto, sans-serif;
+            font-size: 14px;
+            right: 33px;
+            width: max-content;
+
+            .item {
+              padding: 4px 11px 4px 11px;
+              list-style: none;
+
+              &:hover {
+                background-color: #dcdcdc;
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -128,5 +169,14 @@
     right: 15px;
     color: red;
     position: absolute;
+  }
+
+  .info-2 {
+    color: #0359bb;
+    position: initial;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(10px);
+    margin-bottom: 50px;
   }
 }

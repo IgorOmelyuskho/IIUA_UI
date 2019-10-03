@@ -190,6 +190,14 @@ export class VendorFindInvestorComponent implements OnInit {
   }
 
   onScroll() {
-    this.allChatsScroll();
+    if (this.selectedChatType === 'all') {
+      this.allChatsScroll();
+    }
+    if (this.selectedChatType === 'single') {
+      this.singleChatsScroll();
+    }
+    if (this.selectedChatType === 'group') {
+      this.groupChatsScroll();
+    }
   }
 }

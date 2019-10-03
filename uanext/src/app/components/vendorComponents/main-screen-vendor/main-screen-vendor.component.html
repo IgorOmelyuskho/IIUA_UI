@@ -11,31 +11,41 @@
         <i *ngIf="actionIsExpanded" class="fa fa-angle-up ml-2"></i>
         <i *ngIf="!actionIsExpanded" class="fa fa-angle-down ml-2"></i>
       </button> -->
-      <button #animatedBtn (click)="chooseProjectClick()" type="button"
-        [ngClass]="{ 'btn-active': chooseProject }">{{ 'chooseProject' | translate:self }}
-      </button>
       <div *ngIf="chooseProject" class="choose-projects">
+        <div *ngIf="true" class="no-yet-project">
+          <div *ngIf="projects.length === 0">{{ 'noYetProject' | translate:self }}</div>
+          <a [routerLink]="['/home/vendor/projects']">{{ 'createProject' | translate:self }}</a>
+        </div>
         <div (click)="changeProject(project)" *ngFor="let project of projects" class="project">
           <figure>
             <img src={{project.avatara.url}} alt="">
           </figure>
           <div class="project-name">{{project.name}}</div>
-          <div [ngClass]="{'rotate-arrow': stateService.selectedVendorProject$.getValue()?.id === project.id}" class="arrow">
+          <div [ngClass]="{'rotate-arrow': stateService.selectedVendorProject$.getValue()?.id === project.id}"
+            class="arrow">
             <i class="fa fa-chevron-right"></i>
           </div>
         </div>
       </div>
+
       <button (click)="onlyMyProjectsClick()" type="button"
         [ngClass]="{ 'btn-active': onlyMyProjects }">{{ 'onlyMyProjects' | translate:self }}</button>
-      <button (click)="upload3dModelsClick()" type="button"
-        [ngClass]="{ 'btn-active': upload3dModels }">{{ 'upload3dModels' | translate:self }}</button>
+
+      <button (click)="edit()" type="button" [ngClass]="{ 'btn-active': editMode }">
+        <span *ngIf="!editMode">{{ 'edit' | translate:self }}</span>
+        <span *ngIf="editMode">{{ 'exit' | translate:self }}</span>
+      </button>
+
+      <button *ngIf="editMode" #animatedBtn (click)="chooseProjectClick()" type="button"
+        [ngClass]="{ 'btn-active': chooseProject}">{{ 'chooseProject' | translate:self }}
+      </button>
     </div>
 
     <div *ngIf="actionIsExpanded" class="create-update-wrapper">
       <app-vendor-create-update></app-vendor-create-update>
     </div>
 
-    <div *ngIf="upload3dModels" class="panel3d-models-wrapper">
+    <div *ngIf="editMode" class="panel3d-models-wrapper">
       <app-panel3d-models></app-panel3d-models>
     </div>
   </div>

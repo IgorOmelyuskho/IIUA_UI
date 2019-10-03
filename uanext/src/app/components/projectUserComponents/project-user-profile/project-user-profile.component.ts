@@ -76,13 +76,11 @@ export class ProjectUserProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    const id = this.stateService.getId();
-
-    if (this.editProfileForm.valid === false || id == null) {
+    if (this.editProfileForm.valid === false) {
       return;
     }
 
-    this.profileService.updateAdminProfile(id, this.editProfileForm.value).subscribe(
+    this.profileService.updateAdminProfile(this.editProfileForm.value).subscribe(
       response => {
         this.notify.show(response['data']);
       },

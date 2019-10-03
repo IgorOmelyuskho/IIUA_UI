@@ -107,18 +107,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.scrollToBottom();
   }
 
-  // getChatByProjectIdSubscribe(projectId: number) {
-  //   this.chatService.getChatByProjectId(projectId).subscribe(
-  //     (chat: Chat) => {
-  //       this.chat = chat;
-  //       this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), true);
-  //     },
-  //     err => {
-  //       console.warn(err);
-  //     }
-  //   );
-  // }
-
   getMessagesByChatIdSubscribe(observable: Observable<any>, initial: boolean) {
     this.messagesLoading = true;
     observable.subscribe(
