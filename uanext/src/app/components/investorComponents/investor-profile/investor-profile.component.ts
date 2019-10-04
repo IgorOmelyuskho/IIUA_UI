@@ -103,13 +103,11 @@ export class InvestorProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    const id = this.stateService.getId();
-
-    if (this.editProfileForm.valid === false || id == null) {
+    if (this.editProfileForm.valid === false) {
       return;
     }
 
-    this.profileService.updateInvestorProfile(id, this.editProfileForm.value).subscribe(
+    this.profileService.updateInvestorProfile(this.editProfileForm.value).subscribe(
       response => {
         this.notify.show(response['data']);
       },

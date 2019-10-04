@@ -289,8 +289,11 @@
     "MainScreenVendorComponent": {
         "quickAction": "Быстрые действия",
         "onlyMyProjects": "Мои проекты",
-        "upload3dModels": "Загрузить 3Д модель на карту",
-        "chooseProject": "Выберите проект"
+        "edit": "Редактировать",
+        "exit": "Выход",
+        "chooseProject": "Выберите проект",
+        "noYetProject": "Не создано ни одного проекта",
+        "createProject":"Создать новый проект"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Обновите настройки вашего проекта",
@@ -722,7 +725,10 @@
       "selectProject": "Выберите проект"
     },
     "VendorProjectMinCardComponent": {
-        "privateChat":"Приватный чат"
+        "privateChat":"Приватный чат",
+        "block": "Заблокировать",
+        "unblock": "Разблокировать",
+        "sendMessage": "Отправить сообщение"
     },
     "checkEmailShared": "Вы получили сообщение по электронной почте",
     "firstNeedRegister": "Сначала нужно зарегистрироваться как Пользователь или как Компания",

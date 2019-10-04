@@ -34,20 +34,20 @@ export class ProfileService {
 
 
 
-  updateInvestorProfile(userId: string, updatedData: any) {
-    return this.http.put(environment.auth + environment.investorProfile + userId, updatedData);
+  updateInvestorProfile(updatedData: any) {
+    return this.http.put(environment.auth + environment.investorProfile, updatedData);
   }
 
-  updateVendorProfile(userId: string, updatedData: any) {
-    return this.http.put(environment.auth + environment.vendorProfile + userId, updatedData);
+  updateVendorProfile(updatedData: any) {
+    return this.http.put(environment.auth + environment.vendorProfile, updatedData);
   }
 
-  updateAdminProfile(userId: string, updatedData: any) {
-    return this.http.put(environment.auth + environment.adminProfile + userId, updatedData);
+  updateAdminProfile(updatedData: any) {
+    return this.http.put(environment.auth + environment.adminProfile, updatedData);
   }
 
-  updateProjectUserProfile(userId: string, updatedData: any) {
-    return this.http.put(environment.auth + environment.projectUserProfile + userId, updatedData);
+  updateProjectUserProfile(updatedData: any) {
+    return this.http.put(environment.auth + environment.projectUserProfile, updatedData);
   }
 
 

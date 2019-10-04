@@ -1,4 +1,4 @@
-<div (click)="projectWrapperClick(project)" class="project-wrapper">
+<div (click)="projectWrapperClick()" class="project-wrapper">
   <div [ngClass]="{'select': isSelect === true}" class="project">
     <div class="red-circle"></div>
     <div class="avatara-wrapper">
@@ -12,22 +12,27 @@
       </div>
       <div class="field-activity">
         <div class="field-activity-left">
-          <div *ngIf="canCreatePrivateChat() === true" (click)="createPrivateChat($event)" class="private-chat">{{ 'privateChat' | translate:self }}</div>
           <img class="flame" src="../../../../assets/img/squares.png" alt="">
-          <!-- <div class="field-activity-text">
-            <div class="ellipsis">
-              <span *ngFor="let sphereActivity of project.sphereActivities; let i = index">{{sphereActivity.name}}<span
-                  *ngIf="i !== project.sphereActivities.length - 1">, </span></span>
-            </div>
-          </div> -->
         </div>
-        <div class="d-flex align-items-center">
-          <img class="right-img" src="../../../../assets/img/car.png" alt="">
-          <img class="right-img" src="../../../../assets/img/s-city.png" alt="">
+        <div (click)="moreActions($event)" class="more-actions">
+          <img class="right-img" src="../../../../assets/img/ellipsis.png" alt="">
+          <div class="menu" *ngIf="menuIsOpen">
+            <div class="item" (click)="sendMessage()">{{ 'sendMessage' | translate:self }}</div>
+            <div *ngIf="canCreatePrivateChat() === true" class="item" (click)="privateChat()">
+              {{ 'privateChat' | translate:self }}</div>
+            <div *ngIf="canBlockOrUnblock() === true && chatIsBlock() === false" class="item" (click)="block()">
+              {{ 'block' | translate:self }}</div>
+            <div *ngIf="canBlockOrUnblock() === true && chatIsBlock() === true" class="item" (click)="unblock()">
+              {{ 'unblock' | translate:self }}</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <hr>
   <div class="chat-title">{{project.chat?.title || 'chat empty'}}</div>
+  <!-- <div class="info-2">
+    <div>IsCurrentUserChat: {{project.chat.creatorId === stateService.getUserId()}}</div>
+    <div>ChatType: {{project.chat.conversationType}}</div>
+  </div> -->
 </div>

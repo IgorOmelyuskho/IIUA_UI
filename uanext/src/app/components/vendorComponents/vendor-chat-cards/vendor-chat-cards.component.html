@@ -1,22 +1,22 @@
 <div class="last-activity">
   <div class="find">
-    <button (click)="findCardsByProjectName()"><i class="fa fa-search"></i></button>
+    <button (click)="findChatByProjectName()"><i class="fa fa-search"></i></button>
     <input [(ngModel)]="searchName" placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
   </div>
   <div class="param">
-    <button [ngClass]="{'selected': selected === 'all'}" (click)="all()"
+    <button [ngClass]="{'selected': selectedChatType === 'all'}" (click)="allChats()"
       class="left-btn">{{ 'all' | translate:self }}</button>
-    <button [ngClass]="{'selected': selected === 'single'}" (click)="single()"
+    <button [ngClass]="{'selected': selectedChatType === 'single'}" (click)="singleChats()"
       class="center-btn">{{ 'single' | translate:self }}</button>
-    <button [ngClass]="{'selected': selected === 'group'}" (click)="group()"
+    <button [ngClass]="{'selected': selectedChatType === 'group'}" (click)="groupChats()"
       class="right-btn">{{ 'group' | translate:self }}</button>
   </div>
 
-  <div class="projects">
+  <div class="projects" #projectsElem infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
+    [infiniteScrollThrottle]="500" (scrolled)="onScroll()">
     <div class="wrapper-for-border">
-      <div *ngFor="let project of projects">
-        <app-vendor-project-min-card *ngIf="allowedCards(project) === true" [project]="project" (createChat)="createChat($event)"></app-vendor-project-min-card>
-        <!-- <app-investor-card [project]="project"></app-investor-card> -->
+      <div *ngFor="let project of projectsWithChat">
+        <app-vendor-project-min-card [project]="project" (createChat)="createPrivateChat($event)"></app-vendor-project-min-card>
       </div>
     </div>
   </div>

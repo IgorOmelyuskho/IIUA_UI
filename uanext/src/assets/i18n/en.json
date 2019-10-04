@@ -289,8 +289,11 @@
     "MainScreenVendorComponent": {
         "quickAction": "Quick action",
         "onlyMyProjects": "My projects",
-        "upload3dModels": "Download 3D model to the map",
-        "chooseProject": "Choose project"
+        "edit": "Edit",
+        "exit": "Exit",
+        "chooseProject": "Choose project",
+        "noYetProject": "No projects created",
+        "createProject": "Create new project"
     },
     "UpdateVendorProjectComponent": {
         "updateProjectHeader": "Update you project settings",
@@ -722,7 +725,10 @@
       "selectProject": "Select project"
     },
     "VendorProjectMinCardComponent": {
-        "privateChat":"Private chat"
+        "privateChat": "Private chat",
+        "block": "Block",
+        "unblock": "Unblock",
+        "sendMessage": "Send message"
     },
     "checkEmailShared": "You received a message in the email",
     "firstNeedRegister": "First you need to register as User or Company",

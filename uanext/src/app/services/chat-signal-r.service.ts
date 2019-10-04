@@ -21,7 +21,7 @@ export class ChatSignalRService {
     // this.emulateSignalR();
     const token = localStorage.getItem('token');
 
-    const options = { accessTokenFactory: () => token};
+    const options = { accessTokenFactory: () => token };
 
     this.hubConnection = new HubConnectionBuilder()
       .configureLogging(LogLevel.Debug)
@@ -33,7 +33,7 @@ export class ChatSignalRService {
     this.hubConnection.on('MessageSBEvent', (message) => {
       const parsedMessage = JSON.parse(message);
       const msg: Message = this.replaceFieldsName(parsedMessage);
-      // console.log('MESSAGE = ', msg);
+      console.log('MESSAGE = ', msg);
       this.messageReceived$.next(msg);
     });
 

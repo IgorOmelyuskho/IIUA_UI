@@ -12,7 +12,7 @@ export interface Chat {
     icon: string;
     lastActivityDate: any;
     leaveDate: any;
-    participants?: Participant[]; // get from /api/Participants/GetByConversationId
+    participant?: Participant;
     isBlock: boolean;
     projectId: number;
 }

@@ -48,12 +48,6 @@
                 </div>
               </div>
               <div class="text">{{message.text}}</div>
-              <!-- <div class="answer">
-                    <div class="textarea-wrapper">
-                      <textarea rows="1" placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
-                    </div>
-                    <button type="button">{{ 'replyBtn' | translate:self}}</button>
-                  </div> -->
             </div>
           </div>
         </div>
@@ -140,7 +134,7 @@
         <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">
       </div>
       <div class="textarea-wrapper">
-        <textarea [(ngModel)]="sharedChatMsgText" rows="1"
+        <textarea (keydown.control.enter)="sendMessage()" [(ngModel)]="sharedChatMsgText" rows="1"
           placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
       </div>
       <button [ngClass]="{'send-disabled': attachmentReady === false}" (click)="sendMessageToSharedChat()"
