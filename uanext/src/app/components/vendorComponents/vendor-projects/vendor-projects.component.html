@@ -6,7 +6,7 @@
   <div class="for-scroll">
     <div *ngIf="projects?.length !== 0 && isLoaded === true" id="projects-1-for-muuri">
       <div *ngFor="let project of projects" class="project" [attr.data-id]="project.id">
-        <app-vendor-project-card (clickOnCardEvent)="onCardClick($event)" [project]="project"></app-vendor-project-card>
+        <app-vendor-project-card (clickOnCardEvent)="onCardClick($event)" (removeCardEvent)="removeCard($event)" [project]="project"></app-vendor-project-card>
       </div>
     </div>
   </div>

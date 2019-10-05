@@ -36,6 +36,7 @@ export const environment = {
   addProjectGeoObject: '/api/Projects/AddProjectGeoObject',
   getLatestProjects: '/api/Projects/GetLatestProjects',
   getProjectById: '/api/Projects/GetProjectById',
+  removeProject: '/api/Projects/',
 
   get3DObject: '/api/Map/Get3DObject',
   post3DObject: '/api/Map/Post3DObject',
