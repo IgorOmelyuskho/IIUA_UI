@@ -10,7 +10,7 @@
       <div class="d-flex">
         <h5 class="project-name" [innerHTML]="project.name"></h5>
       </div>
-      <!-- <img (click)="removeProject()" class="remove-btn" src="../../../../assets/img/close-2.png" alt=""> -->
+      <img (click)="removeProject($event)" class="remove-btn" src="../../../../assets/img/close-2.png" alt="">
     </div>
     <div class="name-and-region">
       <div class="company-name" [innerHTML]="project.legalEntityName"></div>

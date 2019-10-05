@@ -129,6 +129,10 @@ export class ProjectsService {
     );
   }
 
+  removeProjectById(projectId: number): Observable<any> {
+    return this.http.delete(environment.projects + environment.removeProject + projectId);
+  }
+
   private addAvatara(projects: VendorProject[]): VendorProject[] {
     for (let i = 0; i < projects.length; i++) {
       if (projects[i].avatara == null) {

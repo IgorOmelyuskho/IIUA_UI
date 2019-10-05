@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2, EventEmitter, ElementRef, ViewChild, Output, Input, AfterViewInit } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { StateService } from 'src/app/services/state/state.service';
+import { ProjectsService } from 'src/app/services/http/projects.service';
 
 @Component({
   selector: 'app-vendor-project-card',
@@ -11,9 +12,9 @@ export class VendorProjectCardComponent implements OnInit, AfterViewInit {
   @ViewChild('stepsElement') stepsElement: ElementRef;
   @Input() project: VendorProject;
   @Output() clickOnCardEvent = new EventEmitter<VendorProject>();
-  // @Output() removeCardEvent = new EventEmitter<VendorProject>();
+  @Output() removeCardEvent = new EventEmitter<VendorProject>();
 
-  constructor(private renderer: Renderer2, private stateService: StateService) {
+  constructor(private renderer: Renderer2, private stateService: StateService, private projectsService: ProjectsService) {
   }
 
   ngOnInit() {
@@ -64,7 +65,9 @@ export class VendorProjectCardComponent implements OnInit, AfterViewInit {
     this.clickOnCardEvent.emit(this.project);
   }
 
-  // removeProject() {
-  //   this.removeCardEvent.emit(this.project);
-  // }
+  removeProject(event) {
+    event.stopPropagation();
+    this.projectsService.removeProjectById(this.project.id).subscribe();
+    this.removeCardEvent.emit(this.project);
+  }
 }
