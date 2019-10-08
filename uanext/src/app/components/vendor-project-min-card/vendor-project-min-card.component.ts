@@ -4,6 +4,7 @@ import { StateService } from 'src/app/services/state/state.service';
 import { ChatType } from 'src/app/models/chat/chatType';
 import { Subscription } from 'rxjs';
 import { ChatService } from 'src/app/services/http/chat.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vendor-project-min-card',
@@ -17,6 +18,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
   self = 'VendorProjectMinCardComponent';
   selectChatSubscription: Subscription;
   menuIsOpen = false;
+  closeMenuSubscription: Subscription;
 
   constructor(private stateService: StateService, private chatService: ChatService) { }
 
@@ -33,11 +35,13 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
       }
     );
 
-    window.addEventListener('click', this.windowClickHandler);
-  }
-
-  windowClickHandler = () => {
-    this.menuIsOpen = false;
+    this.closeMenuSubscription = this.stateService.setCloseAllCardsMenu$.subscribe(
+      val => {
+        if (val) {
+          this.menuIsOpen = false;
+        }
+      }
+    );
   }
 
   getAvataraUrl(project) {
@@ -79,24 +83,27 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
 
   moreActions(event) {
     event.stopPropagation();
-    this.menuIsOpen = !this.menuIsOpen;
+    this.stateService.setCloseAllCardsMenu$.next(true);
+    requestAnimationFrame(() => {
+      this.menuIsOpen = !this.menuIsOpen;
+    });
   }
 
   sendMessage() {
     event.stopPropagation();
-    this.menuIsOpen = false;
+    this.stateService.setCloseAllCardsMenu$.next(true);
     this.stateService.selectedProjectForChat$.next(this.project);
   }
 
   privateChat() {
     event.stopPropagation();
-    this.menuIsOpen = false;
+    this.stateService.setCloseAllCardsMenu$.next(true);
     this.createChat.emit(this.project);
   }
 
   block() {
     event.stopPropagation();
-    this.menuIsOpen = false;
+    this.stateService.setCloseAllCardsMenu$.next(true);
     this.chatService.blockConversationP2P(this.project.chat.id, this.project.chat.participant.id).subscribe(
       () => {
         this.project.chat.isBlock = true;
@@ -116,6 +123,6 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.selectChatSubscription.unsubscribe();
-    window.removeEventListener('click', this.windowClickHandler);
+    this.closeMenuSubscription.unsubscribe();
   }
 }

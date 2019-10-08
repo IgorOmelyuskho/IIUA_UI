@@ -245,6 +245,7 @@
           overflow: hidden;
           cursor: pointer;
           width: fit-content;
+          max-width: 100%;
 
           &:hover {
             border: 1px solid #A9A9A9;

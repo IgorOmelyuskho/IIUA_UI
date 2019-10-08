@@ -131,8 +131,14 @@ export class ChatService {
     return this.http.put<any>(environment.chat + environment.updateMessage + '/' + messageId, updatedMessage);
   }
 
-  getMessagesByChatId(chatId: string, data?: any, count?: number): Observable<Message[]> {
-    const params = new HttpParams().set('conversationId', chatId);
+  getMessagesByChatId(chatId: string, date?: any, count?: number): Observable<Message[]> {
+    let params = new HttpParams().set('conversationId', chatId);
+    if (date != null) {
+      params = params.append('date', date);
+    }
+    if (count != null) {
+      params = params.append('count', count.toString());
+    }
     return this.http.get<any>(environment.chat + environment.getMessagesByChatId, { params: params })
       .pipe(
         map((messages: Message[]) => {

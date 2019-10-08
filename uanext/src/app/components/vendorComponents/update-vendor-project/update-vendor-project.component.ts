@@ -183,6 +183,7 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
     const avataraFile = event.target['files'][0];
     this.avataraFormData.append('AVATAR', avataraFile, avataraFile.name);
+    this.uploadAvatara();
   }
 
   showAvataraProgressBar(show: boolean) {
@@ -329,12 +330,13 @@ export class UpdateVendorProjectComponent implements OnInit, OnDestroy {
 
     // updatedVendorProject.steps = this.vendorProject.steps;
     updatedVendorProject.videos = this.vendorProject.videos;
-    updatedVendorProject.avatara = this.vendorProject.avatara;
-    updatedVendorProject.avatara.isAvatara = true;
-    updatedVendorProject.images = this.vendorProject.images;
-    updatedVendorProject.images.push(updatedVendorProject.avatara);
+    const avatara = {
+      ...this.vendorProject.avatara,
+      isAvatara: true
+    };
+    updatedVendorProject.images = [...this.vendorProject.images];
+    updatedVendorProject.images.push(avatara);
     // updatedVendorProject.files = this.vendorProject.files;
-    delete updatedVendorProject.avatara;
     // for (let i = 0; i < updatedVendorProject.sphereActivities.length; i++) {
     //   updatedVendorProject.sphereActivities[i] = {
     //     id: updatedVendorProject.sphereActivities[i]

@@ -281,7 +281,7 @@
         "investmentsDescribeEmpty": "Investment description cannot be empty",
         "investmentsDescribeLength": "Investment description length cannot be largest than 4096 chars",
         "media": "Media",
-        "uploadPhotos": "Uploaded photos",
+        "uploadPhotos": "Uploaded photos (one photo is required)",
         "minPhotosCount": "Minimal photos count is",
         "uploadedFiles": "Uploaded files",
         "createProject": "Create project"
@@ -729,6 +729,9 @@
         "block": "Block",
         "unblock": "Unblock",
         "sendMessage": "Send message"
+    },
+    "MapComponent": {
+        "edit": "edit"
     },
     "checkEmailShared": "You received a message in the email",
     "firstNeedRegister": "First you need to register as User or Company",

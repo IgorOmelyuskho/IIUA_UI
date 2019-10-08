@@ -32,7 +32,7 @@ export class Object3dUploadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.filteredProjectsService.searchByFilter({ page: 1, pageSize: 1000 }).subscribe(
+    this.filteredProjectsService.searchByFilter({ page: 1, pageSize: 10 }).subscribe(
       (val: FilteredProjects) => {
         this.projects = val.projectsList;
       },

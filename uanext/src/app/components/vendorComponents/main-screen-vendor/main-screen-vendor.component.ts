@@ -133,7 +133,7 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
   onMapChangeExtent(extent) {
     const filter: FilterFields = {};
     filter.coordinateFrame = extent;
-    filter.pageSize = 1000;
+    filter.pageSize = 10;
     filter.page = 1;
 
     this.mapService.mapFilteringProjects(filter).subscribe(
@@ -167,36 +167,39 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onMapObjectHover(mapObject: GeoObject) {
-    console.log('TODO SHOW PROJECT CARD');
-    // const cardWidth = 578;
-    // const cardHeight = 178;
-    // const deltaY = 30;
+    const cardWidth = 578;
+    const cardHeight = 178;
+    const deltaY = 30;
 
-    // const rightMenu = document.getElementById('investor-main-screen-right-menu');
-    // const rightMenuOffset = rightMenu.offsetWidth + parseInt(window.getComputedStyle(rightMenu).right, 10);
+    const rightMenu = document.getElementById('vendor-main-screen-right-menu');
+    const rightMenuOffset = rightMenu.offsetWidth + parseInt(window.getComputedStyle(rightMenu).right, 10);
 
-    // const rightComponent = document.getElementById('investor-main-screen-right-component');
-    // let rightComponentOffset = 0;
-    // if (rightComponent != null) {
-    //   rightComponentOffset = rightComponent.offsetWidth + parseInt(window.getComputedStyle(rightComponent).right, 10);
-    // }
+    const rightComponent = document.getElementById('vendor-main-screen-right-component');
+    let rightComponentOffset = 0;
+    if (rightComponent != null) {
+      rightComponentOffset = rightComponent.offsetWidth + parseInt(window.getComputedStyle(rightComponent).right, 10);
+    }
 
-    // let resultX = this.previewCardX;
-    // let resultY = this.previewCardY + deltaY;
+    let resultX = this.previewCardX;
+    let resultY = this.previewCardY + deltaY;
 
-    // if (this.previewCardX > window.innerWidth - cardWidth - rightMenuOffset) {
-    //   resultX = window.innerWidth - cardWidth - rightMenuOffset - 5;
-    // }
-    // if (rightComponentOffset !== 0 && this.previewCardX > window.innerWidth - cardWidth - rightComponentOffset) {
-    //   resultX = window.innerWidth - cardWidth - rightComponentOffset - 5;
-    // }
-    // if (this.previewCardY + deltaY > window.innerHeight - cardHeight) {
-    //   resultY = this.previewCardY - deltaY - cardHeight;
-    // }
-    // this.previewCardWrapper.nativeElement.style.left = resultX + 'px';
-    // this.previewCardWrapper.nativeElement.style.top = resultY + 'px';
-    // this.hoveredProject = mapObject.project;
-    // this.showPreviewCard = true;
+    if (this.previewCardX > window.innerWidth - cardWidth - rightMenuOffset) {
+      resultX = window.innerWidth - cardWidth - rightMenuOffset - 5;
+    }
+    if (rightComponentOffset !== 0 && this.previewCardX > window.innerWidth - cardWidth - rightComponentOffset) {
+      resultX = window.innerWidth - cardWidth - rightComponentOffset - 5;
+    }
+    if (this.previewCardY + deltaY > window.innerHeight - cardHeight) {
+      resultY = this.previewCardY - deltaY - cardHeight;
+    }
+    this.previewCardWrapper.nativeElement.style.left = resultX + 'px';
+    this.previewCardWrapper.nativeElement.style.top = resultY + 'px';
+    this.hoveredProject = mapObject.project;
+    this.showPreviewCard = true;
+  }
+
+  onCardClick(project: VendorProject) {
+    console.log(project); // todo
   }
 
   ngOnDestroy() {
@@ -204,5 +207,4 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
     window.removeEventListener('mousedown', this.windowClickHandler);
     this.selectedVendorProjectSubscription.unsubscribe();
   }
-
 }
