@@ -4,15 +4,19 @@
   from {
     background-color: white;
   }
+
   25% {
     background-color: $green;
   }
+
   50% {
     background-color: white;
   }
+
   75% {
     background-color: $green;
   }
+
   to {
     background-color: white;
   }
@@ -198,8 +202,24 @@
   .right-component-wrapper {
     font-weight: normal;
   }
+}
 
 
+
+.preview-card-wrapper {
+  position: fixed;
+  z-index: 100;
+  cursor: pointer;
+
+  .preview-card {
+    border-radius: 6px;
+    border: solid 1px #bfbfbf;
+    overflow: hidden;
+
+    &:hover {
+      box-shadow: 0 0 0 2px rgba($green, 0.5);
+    }
+  }
 }
 
 .highlighted {

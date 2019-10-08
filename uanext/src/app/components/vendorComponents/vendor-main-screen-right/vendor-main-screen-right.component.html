@@ -1,4 +1,4 @@
-<div #mainScreenRight class="main-screen-right">
+<div #mainScreenRight id="vendor-main-screen-right-component" class="main-screen-right">
   <div class="main-block">
     <div class="find-investor-wrapper" *ngIf="find_investor_show">
       <app-vendor-chat-cards></app-vendor-chat-cards>
@@ -21,7 +21,7 @@
 
 
 <!-- right menu -->
-<div class="right-menu">
+<div class="right-menu" id="vendor-main-screen-right-menu">
   <div data-toggle="tooltip" title="{{ 'chat' | translate:self }}" (click)="showMessages()" class="message" [ngClass]="{ 'selected': messages_show }">
     <div class="img-bg"></div>
   </div>

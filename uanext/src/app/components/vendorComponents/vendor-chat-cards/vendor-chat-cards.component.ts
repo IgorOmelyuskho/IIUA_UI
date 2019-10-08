@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { Chat } from 'src/app/models/chat/chat';
 import { ChatType } from 'src/app/models/chat/chatType';
@@ -12,10 +12,9 @@ import { StateService } from 'src/app/services/state/state.service';
   templateUrl: './vendor-chat-cards.component.html',
   styleUrls: ['./vendor-chat-cards.component.scss']
 })
-export class VendorFindInvestorComponent implements OnInit {
-  // projects: VendorProject[] = [...responseProjects.projectsList, ...responseProjects.projectsList];
-  projectsWithChat: VendorProject[] = [];
+export class VendorFindInvestorComponent implements OnInit, OnDestroy {
   self = 'VendorFindInvestorComponent';
+  projectsWithChat: VendorProject[] = [];
   selectedChatType = 'all'; // group/single
   searchName = '';
   numberOfConversation = 0;
@@ -33,6 +32,11 @@ export class VendorFindInvestorComponent implements OnInit {
 
   ngOnInit() {
     this.allChats();
+    window.addEventListener('click', this.windowClickHandler);
+  }
+
+  windowClickHandler = () => {
+    this.stateService.setCloseAllCardsMenu$.next(true);
   }
 
   getAvataraUrl(project) {
@@ -199,5 +203,9 @@ export class VendorFindInvestorComponent implements OnInit {
     if (this.selectedChatType === 'group') {
       this.groupChatsScroll();
     }
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('click', this.windowClickHandler);
   }
 }

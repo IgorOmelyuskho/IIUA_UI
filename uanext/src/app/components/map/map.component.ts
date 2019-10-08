@@ -22,7 +22,7 @@ import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  self = 'MapComponent';
   @Output() objectClick = new EventEmitter<GeoObject>();
   @Output() objectHover = new EventEmitter<GeoObject>();
   @Output() changeExtent = new EventEmitter<any>();
@@ -30,6 +30,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   mapManager: MapManager;
   mapIsFinishInit = false;
   bufferGeoObjectsArr: GeoObject[];
+  showProgressBar = false;
 
   @Input()
   set changeSelectedProject(project: VendorProject) {
@@ -171,9 +172,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     object3DDto.staticPositionY = mapCenter.y;
     object3DDto.scale = 1;
     object3DDto.rotate = 0;
+    this.showProgressBar = true;
     this.mapService.post3DObject(object3DDto).subscribe(
       (val: {objectId: string}) => {
-        this.mapManager.drop3DObject(object3DDto, val.objectId, project);
+        this.mapManager.drop3DObject(object3DDto, val.objectId, project, this.when3DObjectLoaded);
         const projectGeoObjectDto: ProjectGeoObjectDto = {
           projectId: project.id,
           projectUserId: this.stateService.getUserId(),
@@ -181,11 +183,24 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           path: object3DDto.path
         };
         this.projectsService.addProjectGeoObject(projectGeoObjectDto).subscribe();
+
+        const historyPositionDto: HistoryPositionDto = {
+          objectId: projectGeoObjectDto.geoObjectId,
+          positionX: object3DDto.staticPositionX,
+          positionY: object3DDto.staticPositionY,
+          scale: object3DDto.scale,
+          rotate: object3DDto.rotate
+        };
+        this.mapService.postHistoryData(historyPositionDto).subscribe();
       },
       err => {
         console.warn(err);
       }
     );
+  }
+
+  when3DObjectLoaded = (object: GeoObject) => {
+    this.showProgressBar = false;
   }
 
   ngOnDestroy() {

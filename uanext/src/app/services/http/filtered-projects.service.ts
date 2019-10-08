@@ -108,7 +108,7 @@ export class FilteredProjectsService {
       if (filteredProjects.projectsList[i].avatara == null) {
         filteredProjects.projectsList[i].avatara = {
           id: 1,
-          url: 'https://www.eguardtech.com/wp-content/uploads/2018/08/Network-Profile.png',
+          url: window.location.origin + '/assets/img/Network-Profile.png',
           originalName: 'Network-Profile.png'
         };
       }

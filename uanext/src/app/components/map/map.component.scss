@@ -1,3 +1,5 @@
+@import '../../../styles-variables.scss';
+
 #map-wrapper-html-element-id-3585349 {
   position: relative;
   width: 100%;
@@ -5,6 +7,12 @@
   height: 100%;
   background: white;
   overflow: hidden;
+
+  .progress-bar-wrapper {
+    position: absolute;
+    width: inherit;
+    z-index: 1;
+  }
 
   #map-html-element-id-495367235 {
     width: 100%;
@@ -80,9 +88,34 @@
         display: block;
       }
     }
+
     .slider-range {
       height: 2px;
       border: none;
+    }
+  }
+}
+
+.obj-edit-label-class {
+  top: 30px;
+  cursor: pointer;
+  display: none;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .text {
+      line-height: 1;
     }
   }
 }

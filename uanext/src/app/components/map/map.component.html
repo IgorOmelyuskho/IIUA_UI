@@ -1,4 +1,10 @@
+<!-- <mat-progress-bar *ngIf="true" mode="indeterminate" class="progress-bar-fixed"></mat-progress-bar> -->
+<!-- <mat-progress-bar *ngIf="true" mode="indeterminate"></mat-progress-bar> -->
+
 <div (drop)="drop($event)" (dragover)="allowDrop($event)" id="map-wrapper-html-element-id-3585349">
+  <div class="progress-bar-wrapper">
+    <mat-progress-bar *ngIf="showProgressBar" mode="indeterminate"></mat-progress-bar>
+  </div>
   <div id="map-html-element-id-495367235"></div>
 </div>
 
@@ -14,5 +20,13 @@
       <img src="../../../assets/img/slider.png" alt="">
     </div>
     <div class="slider-range"></div>
+  </div>
+</div>
+
+
+<div id="obj-edit-label" class="obj-edit-label-class">
+  <div class="wrapper">
+    <img src="../../../assets/img/edit.png" alt="">
+    <div class="text">&nbsp;{{ 'edit' | translate:self }}</div>
   </div>
 </div>
