@@ -27,6 +27,7 @@ export class StateService {
 
   object3DAndProject: Object3DAndProject;
   cardClickEnabled = true;
+  setCloseAllCardsMenu$: BehaviorSubject<boolean> = new BehaviorSubject(null);
 
   constructor(private notify: NotificationService, private router: Router, private socialAuthService: AuthService) { }
 

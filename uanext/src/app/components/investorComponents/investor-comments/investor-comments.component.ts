@@ -135,7 +135,6 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
           messages[i].isYou = this.messageIsYou(messages[i]);
           this.messages.push(messages[i]);
           this.getParticipantByParticipantId(messages[i]);
-          console.log(messages[i].createdDate.getDate());
         }
         this.chatService.sortMessages(this.messages);
         this.messagesLoading = false;
@@ -207,7 +206,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onScrollUp() {
-    // this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), false); // get not all messages
+    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), false);
   }
 
   defineFileType(originalFileName: string) {

@@ -34,6 +34,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   projectSubscription: Subscription;
   signalRSubscription: Subscription;
   newMsgCame = false;
+  msgCountForReceive = 20;
 
   constructor(
     private chatService: ChatService,
@@ -53,7 +54,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
       (project: VendorProject) => {
         if (project != null) {
           this.project = project;
-          this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.project.chat.id), true);
+          this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.project.chat.id, null, this.msgCountForReceive), true);
         }
       }
     );
@@ -253,7 +254,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onScrollUp() {
-    // this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId('chatId'), false);
+    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.project.chat.id, null, this.msgCountForReceive), false);
   }
 
   ngOnDestroy() {

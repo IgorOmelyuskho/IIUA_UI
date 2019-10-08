@@ -96,6 +96,8 @@ export class FileUploaderComponent implements OnInit {
       };
       imageReader.readAsDataURL(event.target['files'][i]);
     }
+
+    this.uploadFiles();
   }
 
   showProgressBar(show: boolean) {

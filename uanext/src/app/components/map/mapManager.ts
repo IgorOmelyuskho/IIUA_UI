@@ -18,9 +18,9 @@ export enum MapZoomEnum {
 
 export class MapManager {
   // constants region
-  private readonly bigZoom = 16;
+  private readonly bigZoom = 17;
   private readonly deltaZoom = 0.2;
-  private readonly avgZoom = 12;
+  private readonly avgZoom = 14;
   private readonly initZoom = 18;
   private readonly updatedInterval = 3500;
   private readonly drawInterval = 50;
@@ -155,9 +155,9 @@ export class MapManager {
     }
   }
 
-  drop3DObject(object3DDto: Object3DDto, object3DId: string, project: VendorProject) {
+  drop3DObject(object3DDto: Object3DDto, object3DId: string, project: VendorProject, cbObjectLoaded: Function) {
     const geoObject: GeoObject = this.object3DDtoToGeoObject(object3DDto, object3DId, project);
-    this.mapAddNewObjects([geoObject]);
+    this.mapAddNewObject(geoObject, cbObjectLoaded);
   }
 
   private object3DDtoToGeoObject(object3DDto: Object3DDto, object3DId: string, project: VendorProject): GeoObject {
@@ -268,26 +268,30 @@ export class MapManager {
 
   mapAddNewObjects(objects: GeoObject[]) {
     for (let i = 0; i < objects.length; i++) {
-      const newObj: GeoObject = objects[i];
-      newObj.marker = null;
-      newObj.object3DHP = null;
-      newObj.object3DHPStartLoaded = false;
-      newObj.mouseUnder = false;
-      newObj.speedX = 0;
-      newObj.speedY = 0;
-      newObj.prevCoords = {};
-      newObj.prevCoords.x = newObj.coords.x;
-      newObj.prevCoords.y = newObj.coords.y;
-      newObj.enabledEditMode = false;
-
-      if (newObj.scale == null) {
-        newObj.scale = 1;
-      }
-
-      this.createMarker(newObj);
-      this.loadObject3D(newObj);
-      this.objectsArr.push(newObj);
+      this.mapAddNewObject(objects[i]);
     }
+  }
+
+  mapAddNewObject(objects: GeoObject, cbObjectLoaded?: Function) {
+    const newObj: GeoObject = objects;
+    newObj.marker = null;
+    newObj.object3DHP = null;
+    newObj.object3DHPStartLoaded = false;
+    newObj.mouseUnder = false;
+    newObj.speedX = 0;
+    newObj.speedY = 0;
+    newObj.prevCoords = {};
+    newObj.prevCoords.x = newObj.coords.x;
+    newObj.prevCoords.y = newObj.coords.y;
+    newObj.enabledEditMode = false;
+
+    if (newObj.scale == null) {
+      newObj.scale = 1;
+    }
+
+    this.createMarker(newObj);
+    this.loadObject3D(newObj, cbObjectLoaded);
+    this.objectsArr.push(newObj);
   }
 
   mapAddNewPolygons(polygons: any[]) {
@@ -408,13 +412,11 @@ export class MapManager {
       center: [35.028, 48.474],
       zoom: this.initZoom,
       minZoom: 3,
-      // pitch: 60,
+      pitch: 60,
       // bearing: 30,
-      pitch: 0,
-      bearing: 0,
       // centerCross: true,
       baseLayer: new maptalks.TileLayer('tile', {
-        'urlTemplate': 'http://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!' +
+        'urlTemplate': 'https://www.google.cn/maps/vt?pb=!1m5!1m4!1i{z}!2i{x}!3i{y}!4i256!2m3!1e0!2sm!3i342009817!' +
           '3m9!2sen-US!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0&token=32965',
         'attribution': '&copy; <a href="http://ditu.google.cn/">Google</a>'
       })
@@ -647,7 +649,7 @@ export class MapManager {
     }
   }
 
-  private init3dObject(geoObject: GeoObject, object3D: any) {
+  private init3dObject(geoObject: GeoObject, object3D: any, cbObjectLoaded?: Function) {
     const childScale = 0.004;
     object3D.traverse((child) => {
       if (child instanceof THREE.Mesh) {
@@ -688,6 +690,9 @@ export class MapManager {
     this.changeVisibleAndScale(geoObject);
     this.scene.add(object3D);
     this.threeLayer.renderScene();
+    if (cbObjectLoaded) {
+      cbObjectLoaded(geoObject);
+    }
   }
 
   private labelMouseLeaveHandler = (event) => {
@@ -696,7 +701,7 @@ export class MapManager {
     }
   }
 
-  private loadObject3D(geoObject: GeoObject) {
+  private loadObject3D(geoObject: GeoObject, cbObjectLoaded?: Function) {
     let pathToZip: string;
     pathToZip = geoObject.path;
     geoObject.object3DHPStartLoaded = true;
@@ -717,7 +722,7 @@ export class MapManager {
         }
 
         this.mtlLoad(
-          (materials) => { this.mtlLoadOnLoad(materials, zip.manager, pathToFolder, objFileName, geoObject); },
+          (materials) => { this.mtlLoadOnLoad(materials, zip.manager, pathToFolder, objFileName, geoObject, cbObjectLoaded); },
           (err) => { console.error(err); },
           zip.manager,
           pathToFolder,
@@ -732,9 +737,9 @@ export class MapManager {
     mtlLoader.load(mtlFileName, onLoadCb, null, onErrorCb);
   }
 
-  private mtlLoadOnLoad = (materials, zipManager, pathToFolder, objFileName, geoObject) => {
+  private mtlLoadOnLoad = (materials, zipManager, pathToFolder, objFileName, geoObject, cbObjectLoaded?: Function) => {
     this.objLoad(
-      (object3D) => { this.objLoadOnLoad(object3D, geoObject); },
+      (object3D) => { this.objLoadOnLoad(object3D, geoObject, cbObjectLoaded); },
       (err) => { console.error(err); },
       zipManager,
       materials,
@@ -751,9 +756,9 @@ export class MapManager {
     objLoader.load(objFileName, onLoadCb, null, onErrorCb);
   }
 
-  private objLoadOnLoad = (object3D, geoObject) => {
+  private objLoadOnLoad = (object3D, geoObject, cbObjectLoaded?: Function) => {
     geoObject.object3DHPStartLoaded = false;
-    this.init3dObject(geoObject, object3D);
+    this.init3dObject(geoObject, object3D, cbObjectLoaded);
   }
   //#endregion
 
@@ -777,12 +782,14 @@ export class MapManager {
   }
 
   private createObjectEditLabel(geoObject: GeoObject) {
-    const objectEditLabel = document.createElement('div');
-    objectEditLabel['geoObject'] = geoObject;
-    objectEditLabel.addEventListener('click', this.editBtnLabelClickHandler);
-    objectEditLabel.className = 'obj-edit-label';
-    const objLabel = new THREE.CSS2DObject(objectEditLabel);
-    geoObject.editBtnLabel = objectEditLabel;
+    const elemForClone = document.getElementById('obj-edit-label');
+    const editLabel: HTMLElement = <HTMLElement>elemForClone.cloneNode(true);
+    editLabel.removeAttribute('id');
+    editLabel['geoObject'] = geoObject;
+    editLabel.style.display = 'block';
+    editLabel.addEventListener('click', this.editBtnLabelClickHandler);
+    const objLabel = new THREE.CSS2DObject(editLabel);
+    geoObject.editBtnLabel = editLabel;
     objLabel.position.x = 0;
     objLabel.position.y = 0;
     objLabel.position.z = 0; // for edit panel
@@ -871,7 +878,7 @@ export class MapManager {
       this.selectedForEditObject.editPanelLabel.style.display = 'none';
       this.selectedForEditObject.editBtnLabel.style.display = 'block';
     }
-    const geoObject: GeoObject = event.target['geoObject'];
+    const geoObject: GeoObject = event.target.closest('.obj-edit-label-class')['geoObject'];
     this.selectedForEditObject = geoObject;
     this.selectedForEditObject.editBtnLabel.style.display = 'none';
     this.selectedForEditObject.editPanelLabel.style.display = 'block';

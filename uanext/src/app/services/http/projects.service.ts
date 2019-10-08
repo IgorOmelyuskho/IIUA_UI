@@ -120,7 +120,7 @@ export class ProjectsService {
           const projectWithAvatara: VendorProject = project;
           projectWithAvatara.avatara = {
             id: 1,
-            url: 'https://www.eguardtech.com/wp-content/uploads/2018/08/Network-Profile.png',
+            url: window.location.origin + '/assets/img/Network-Profile.png',
             originalName: 'Network-Profile.png'
           };
           return projectWithAvatara;
@@ -138,7 +138,7 @@ export class ProjectsService {
       if (projects[i].avatara == null) {
         projects[i].avatara = {
           id: 1,
-          url: 'https://www.eguardtech.com/wp-content/uploads/2018/08/Network-Profile.png',
+          url: window.location.origin + '/assets/img/Network-Profile.png',
           originalName: 'Network-Profile.png'
         };
       }

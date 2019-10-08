@@ -1,7 +1,7 @@
 <div class="last-activity">
   <div class="find">
     <button (click)="findChatByProjectName()"><i class="fa fa-search"></i></button>
-    <input [(ngModel)]="searchName" placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
+    <input (keydown.enter)="findChatByProjectName()" [(ngModel)]="searchName" placeholder="{{ 'findPlaceholder' | translate:self }}" type="text">
   </div>
   <div class="param">
     <button [ngClass]="{'selected': selectedChatType === 'all'}" (click)="allChats()"

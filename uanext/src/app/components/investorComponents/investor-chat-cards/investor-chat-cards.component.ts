@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { responseProjects } from '../../../helperClasses/projects';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
-import { FilteredProjects } from 'src/app/models';
+import { Chat } from 'src/app/models/chat/chat';
+import { ChatType } from 'src/app/models/chat/chatType';
+import { ChatService } from 'src/app/services/http/chat.service';
+import { GetChatsParams } from 'src/app/models/chat/getChatsParams';
+import { ProjectsCacheService } from 'src/app/services/projects-cache.service';
 import { StateService } from 'src/app/services/state/state.service';
 
 @Component({
@@ -11,6 +13,7 @@ import { StateService } from 'src/app/services/state/state.service';
   styleUrls: ['./investor-chat-cards.component.scss']
 })
 export class InvestorLastActivityComponent implements OnInit {
-  ngOnInit() {
-  }
+  self = 'InvestorLastActivityComponent';
+
+  ngOnInit() { }
 }
