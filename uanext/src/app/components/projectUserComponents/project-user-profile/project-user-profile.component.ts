@@ -3,7 +3,7 @@ import { AuthorizationService } from '../../../services/http/authorization.servi
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import FormHelper from '../../../helperClasses/helperClass';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';

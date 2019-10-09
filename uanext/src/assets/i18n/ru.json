@@ -368,7 +368,7 @@
         "findPlaceholder": "Найти проект или инвестора",
         "all": "Все",
         "group": "Групповые",
-        "single": "Приватные"
+        "private": "Приватные"
     },
     "VendorInvestmentOfferComponent": {
         "investmentOffer": "Предложение инвестиций",
@@ -390,7 +390,8 @@
         "message": "Сообщение",
         "download": "Скачать",
         "newMessage": "Пришло новое сообщение",
-        "privateChat": "Приватный чат"
+        "privateChat": "Приватный чат",
+        "chatIsBlocked": "Чат заблокирован"
     },
     "VendorNavbarComponent": {
         "home": "Карта",
@@ -719,7 +720,7 @@
         "findPlaceholder": "Найти проект или инвестора",
         "all": "Все",
         "group": "Групповые",
-        "single": "Приватные"
+        "private": "Приватные"
     },
     "Panel3dModelsComponent": {
       "selectProject": "Выберите проект"
@@ -728,7 +729,8 @@
         "privateChat":"Приватный чат",
         "block": "Заблокировать",
         "unblock": "Разблокировать",
-        "sendMessage": "Отправить сообщение"
+        "sendMessage": "Отправить сообщение",
+        "private": "(приватный)"
     },
     "MapComponent": {
         "edit": "редактировать"

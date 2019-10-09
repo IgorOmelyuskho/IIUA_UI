@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { AuthorizationService } from '../../services/http/authorization.service';
-import { StateService } from './../../services/state/state.service';
+import { StateService } from '../../services/state.service';
 import { ProfileService } from 'src/app/services/http/profile.service';
 import { Observable } from 'rxjs';
 import { VendorRole, InvestorRole, AdminRole, UserRole } from 'src/app/models';

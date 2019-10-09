@@ -5,7 +5,10 @@ import { ChatType } from 'src/app/models/chat/chatType';
 import { ChatService } from 'src/app/services/http/chat.service';
 import { GetChatsParams } from 'src/app/models/chat/getChatsParams';
 import { ProjectsCacheService } from 'src/app/services/projects-cache.service';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
+import { Subscription } from 'rxjs';
+import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';
+import { Message } from 'src/app/models/chat/message';
 
 @Component({
   selector: 'app-vendor-chat-cards',
@@ -15,7 +18,7 @@ import { StateService } from 'src/app/services/state/state.service';
 export class VendorFindInvestorComponent implements OnInit, OnDestroy {
   self = 'VendorFindInvestorComponent';
   projectsWithChat: VendorProject[] = [];
-  selectedChatType = 'all'; // group/single
+  selectedChatType = 'all'; // group/private
   searchName = '';
   numberOfConversation = 0;
   chats: Chat[] = [];
@@ -23,16 +26,63 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
   @ViewChild('projectsElem') projectsElem: ElementRef;
   requestNumber = 0;
   projectWithPrivateChat: VendorProject;
+  signalChatRSubscription: Subscription; // use for create new chat if private chat message receive. but chat still not created
+
+  helperChatProject: VendorProject = { // todo or get by id ?
+    name: 'HELP CHAT TODO',
+    legalEntityName: 'legal entity name todo',
+    region: 'todo',
+    address: 'todo',
+    description: 'todo',
+    avatara: {
+      id: 1,
+      originalName: 'Network-Profile.png',
+      url: 'http://localhost:4200/assets/img/Network-Profile.png'
+    }
+  };
 
   constructor(
     private chatService: ChatService,
     private projectsCacheService: ProjectsCacheService,
-    private stateService: StateService
+    private stateService: StateService,
+    private chatSignalR: ChatSignalRService,
   ) { }
 
   ngOnInit() {
-    this.allChats();
+    // this.allChats();
     window.addEventListener('click', this.windowClickHandler);
+    this.chatService.getOrCreateHelp().subscribe(
+      (helpChat: Chat) => {
+        this.helperChatProject = this.projectWithChat(this.helperChatProject, helpChat);
+        this.allChats();
+      }
+    );
+
+    this.signalChatRSubscription = this.chatSignalR.messageReceived$.subscribe(
+      (message: Message) => {
+        if (this.chatService.messageIsYou(message) === false) {
+          this.stateService.showUnreadMessages$.next({ message });
+        }
+
+        for (let i = 0; i < this.projectsWithChat.length; i++) { // remove?
+          if (this.projectsWithChat[i].chat.id === message.conversationId) {
+            console.log('SAME CHAT ALREADY HAS');
+            return;
+          }
+        }
+        console.log('there is no such chat yet, message = ', message);
+      }
+    );
+
+    this.chatService.getAllChats().subscribe(
+      (chats: Chat[]) => {
+        this.stateService.unreadChatsCount$.next(chats.length);
+
+        for (let i = 0; i < chats.length; i++) {
+          console.log(chats[i].participant);
+        }
+      }
+    );
   }
 
   windowClickHandler = () => {
@@ -52,7 +102,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
         if (this.requestNumber !== requestNumber) {
           return;
         }
-        this.numberOfConversation += chats.length;
+        this.numberOfConversation += this.chatsCount;
         for (let i = 0; i < chats.length; i++) {
           this.getProjectByChatSubscribe(chats[i], requestNumber);
         }
@@ -64,9 +114,6 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     this.projectsCacheService.getProject(chat.projectId).subscribe(
       (project: VendorProject) => {
         if (this.requestNumber !== requestNumber) { // if the previous request did not have time to complete, and we are already waiting for the results from the next request
-          return;
-        }
-        if (this.samePrivateChatAlreadyExist() === true && this.selectedChatType === 'single') { // so as not to duplicate a private chat if it has already been created
           return;
         }
         const projectWithChat: VendorProject = this.projectWithChat(project, chat);
@@ -116,8 +163,8 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     this.getPaginationChatSubscribe(params);
   }
 
-  singleChats(project?: VendorProject) { // use in HTML without params
-    this.selectedChatType = 'single';
+  privateChats(project?: VendorProject) { // use in HTML without params
+    this.selectedChatType = 'private';
     this.beforeFindNewChats();
     if (project != null) {
       this.projectsWithChat.push(project);
@@ -131,7 +178,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     this.getPaginationChatSubscribe(params);
   }
 
-  singleChatsScroll() {
+  privateChatsScroll() {
     const params: GetChatsParams = {
       numberOfConversation: this.numberOfConversation,
       count: this.chatsCount,
@@ -158,24 +205,17 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     this.getPaginationChatSubscribe(params);
   }
 
-  // if this.chatService.getOrCreateP2P return already exist chat - not now created
-  samePrivateChatAlreadyExist(): boolean {
-    if (this.projectWithPrivateChat == null) {
-      return false;
-    }
-    for (let i = 0; i < this.projectsWithChat.length; i++) {
-      if (this.projectsWithChat[i].chat.id === this.projectWithPrivateChat.chat.id) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   beforeFindNewChats() {
     this.stateService.selectedProjectForChat$.next(null);
     this.projectsElem.nativeElement.scrollTop = 0;
     this.numberOfConversation = 0;
     this.projectsWithChat = [];
+    this.insertHelpChat();
+  }
+
+  insertHelpChat() {
+    this.projectsWithChat.push(this.helperChatProject);
+    this.stateService.selectedProjectForChat$.next(this.helperChatProject);
   }
 
   projectWithChat(project: VendorProject, chat: Chat): VendorProject {
@@ -188,7 +228,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
       (chat: Chat) => {
         const projectClone: VendorProject = { ...project };
         this.projectWithPrivateChat = this.projectWithChat(projectClone, chat);
-        this.singleChats(this.projectWithPrivateChat);
+        this.privateChats(this.projectWithPrivateChat);
       }
     );
   }
@@ -197,8 +237,8 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     if (this.selectedChatType === 'all') {
       this.allChatsScroll();
     }
-    if (this.selectedChatType === 'single') {
-      this.singleChatsScroll();
+    if (this.selectedChatType === 'private') {
+      this.privateChatsScroll();
     }
     if (this.selectedChatType === 'group') {
       this.groupChatsScroll();
@@ -207,5 +247,6 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     window.removeEventListener('click', this.windowClickHandler);
+    this.signalChatRSubscription.unsubscribe();
   }
 }

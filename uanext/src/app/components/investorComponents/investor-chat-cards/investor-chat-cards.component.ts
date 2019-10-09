@@ -5,7 +5,7 @@ import { ChatType } from 'src/app/models/chat/chatType';
 import { ChatService } from 'src/app/services/http/chat.service';
 import { GetChatsParams } from 'src/app/models/chat/getChatsParams';
 import { ProjectsCacheService } from 'src/app/services/projects-cache.service';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-investor-chat-cards',

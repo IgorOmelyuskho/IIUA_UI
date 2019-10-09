@@ -24,6 +24,7 @@
 <div class="right-menu" id="vendor-main-screen-right-menu">
   <div data-toggle="tooltip" title="{{ 'chat' | translate:self }}" (click)="showMessages()" class="message" [ngClass]="{ 'selected': messages_show }">
     <div class="img-bg"></div>
+    <div *ngIf="stateService.unreadChatsCount$.getValue() !== 0" class="unread-chats-count">{{ stateService.unreadChatsCount$ | async}}</div>
   </div>
   <div data-toggle="tooltip" title="{{ 'investmentOffer' | translate:self }}" (click)="showInvestmentOffer()" class="investment-offer"
     [ngClass]="{ 'selected': investment_offer_show }">

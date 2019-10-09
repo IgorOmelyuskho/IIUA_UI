@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, OnDestroy, Ren
 // import { Map } from './map3';
 import { VendorProject } from 'src/app/models/vendorProject.js';
 import { FilterFields, UserRole, GeoObject, FilteredProjects } from 'src/app/models/index.js';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import { responseProject } from 'src/app/helperClasses/projects';
 import { BehaviorSubject, Subscription, fromEvent } from 'rxjs';
 import { map, debounceTime, filter, distinctUntilChanged, tap } from 'rxjs/operators';
