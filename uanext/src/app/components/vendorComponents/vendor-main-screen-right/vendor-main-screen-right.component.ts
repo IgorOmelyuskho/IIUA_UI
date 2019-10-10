@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject2 } from 'src/app/helperClasses/projects';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-vendor-main-screen-right',
@@ -16,7 +17,7 @@ export class VendorMainScreenRightComponent implements OnInit, OnDestroy {
   matchesMediaQuery = false;
   self = 'VendorMainScreenRightComponent';
 
-  constructor() { }
+  constructor(public stateService: StateService) { }
 
   ngOnInit() {
     this.rightBlock.nativeElement.style.display = 'none';

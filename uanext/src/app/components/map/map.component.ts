@@ -12,7 +12,7 @@ import { Object3DDto } from 'src/app/models/object3DDto';
 import { MapService } from 'src/app/services/http/map.service';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 import { Object3DAndProject } from '../threejs-scene/threejs-scene.component';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import { ProjectsService } from 'src/app/services/http/projects.service';
 import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 

@@ -6,8 +6,8 @@
   <div class="param">
     <button [ngClass]="{'selected': selectedChatType === 'all'}" (click)="allChats()"
       class="left-btn">{{ 'all' | translate:self }}</button>
-    <button [ngClass]="{'selected': selectedChatType === 'single'}" (click)="singleChats()"
-      class="center-btn">{{ 'single' | translate:self }}</button>
+    <button [ngClass]="{'selected': selectedChatType === 'private'}" (click)="privateChats()"
+      class="center-btn">{{ 'private' | translate:self }}</button>
     <button [ngClass]="{'selected': selectedChatType === 'group'}" (click)="groupChats()"
       class="right-btn">{{ 'group' | translate:self }}</button>
   </div>

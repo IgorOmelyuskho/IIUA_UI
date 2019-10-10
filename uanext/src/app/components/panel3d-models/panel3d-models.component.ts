@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MapService } from 'src/app/services/http/map.service';
 import { Subscription } from 'rxjs';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 
 @Component({

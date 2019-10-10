@@ -8,6 +8,7 @@ import { delay, map, tap } from 'rxjs/operators';
 import { Participant } from 'src/app/models/chat/chatParticipant';
 import { ChatType } from 'src/app/models/chat/chatType';
 import { GetChatsParams } from 'src/app/models/chat/getChatsParams';
+import { StateService } from '../state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,21 @@ import { GetChatsParams } from 'src/app/models/chat/getChatsParams';
 export class ChatService {
   counter = 0; // todo remove
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private stateService: StateService) { }
 
   getOrCreateP2P(projectId: number): Observable<Chat> {
     const params = new HttpParams().set('projectId', projectId.toString());
     return this.http.get<any>(environment.chat + environment.getOrCreateChat, { params: params });
   }
 
-  getAllChats(chatType: ChatType): Observable<Chat[]> { // chats for current user (token)
-    const params = new HttpParams().set('conversationType', chatType);
+  getAllChats(chatType?: ChatType, projectName?: string): Observable<Chat[]> { // chats for current user (token)
+    let params = new HttpParams();
+    if (chatType != null) {
+      params = params.append('chatType', chatType);
+    }
+    if (projectName != null) {
+      params = params.append('projectName', projectName);
+    }
     return this.http.get<any>(environment.chat + environment.getAllChats, { params: params });
   }
 
@@ -103,6 +110,10 @@ export class ChatService {
     return this.http.put<any>(environment.chat + environment.unblockConversationP2P + '?conversationId=' + conversationId + '&participantId=' + participantId, {});
   }
 
+  getOrCreateHelp(): Observable<Chat> {
+    return this.http.get<any>(environment.chat + environment.getOrCreateHelp);
+  }
+
 
 
 
@@ -131,7 +142,7 @@ export class ChatService {
     return this.http.put<any>(environment.chat + environment.updateMessage + '/' + messageId, updatedMessage);
   }
 
-  getMessagesByChatId(chatId: string, date?: any, count?: number): Observable<Message[]> {
+  getMessagesByChatId(chatId: string, date: any, count: number): Observable<Message[]> {
     let params = new HttpParams().set('conversationId', chatId);
     if (date != null) {
       params = params.append('date', date);
@@ -164,13 +175,25 @@ export class ChatService {
     return this.http.get<any>(environment.chat + environment.getParticipantByChatId, { params: params });
   }
 
+  updateLastReadDate(participantId: string): Observable<any> {
+    return this.http.put(environment.chat + environment.updateLastReadDate + '?participantId=' + participantId, {});
+  }
 
 
 
-  sortMessages(messages: Message[]): Message[] {
-    return messages.sort((a: Message, b: Message) => {
-      return a.createdDate.getTime() - b.createdDate.getTime();
-    });
+
+  // sortMessages(messages: Message[]): Message[] {
+  //   return messages.sort((a: Message, b: Message) => {
+  //     return a.createdDate.getTime() - b.createdDate.getTime();
+  //   });
+  // }
+
+  messageIsYou(message: Message): boolean {
+    if (message.userId === this.stateService.getUserId()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

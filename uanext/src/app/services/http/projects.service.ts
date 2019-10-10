@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { map, tap, delay } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { responseProject, responseProject2 } from 'src/app/helperClasses/projects';
-import { StateService } from '../state/state.service';
+import { StateService } from '../state.service';
 import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 
 const emptyVendorProject: VendorProject = {

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-investor-interactive-investment-card',

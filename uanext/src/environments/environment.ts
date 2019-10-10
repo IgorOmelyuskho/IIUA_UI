@@ -2,7 +2,7 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const domain = 'https://master.iiua.com.ua';
+const domain = 'https://iiua.com.ua';
 
 export const environment = {
   production: false,
@@ -66,6 +66,8 @@ export const environment = {
   getPaginationOfConversations: '/api/Conversations/GetPaginationOfConversations',
   blockConversationP2P: '/api/Conversations/BlockConversationP2P',
   unblockConversationP2P: '/api/Conversations/UnblockConversationP2P',
+  updateLastReadDate: '/api/Participants/UpdateLastReadDate',
+  getOrCreateHelp: '/api/Conversations/GetOrCreateHelp'
 };
 
 /*

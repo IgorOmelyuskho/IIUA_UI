@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
-import { StateService } from '../state/state.service';
+import { StateService } from '../state.service';
 import { environment } from '../../../environments/environment';
 import { VendorDto, InvestorDto, UserRole, VendorRole, InvestorRole, AdminRole } from '../../models';
 import { JwtHelperService } from '@auth0/angular-jwt';

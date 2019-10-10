@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2, EventEmitter, ElementRef, ViewChild, Output, Input, AfterViewInit } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import { ProjectsService } from 'src/app/services/http/projects.service';
 
 @Component({

@@ -8,7 +8,7 @@ import { FilteredProjects, FilterFields, GeoObject } from 'src/app/models';
 import { responseProjects } from 'src/app/helperClasses/projects';
 import { FilterComponent } from 'src/app/components';
 import { FieldActivityInterface, TranslateService } from '../translate.service';
-import { StateService } from '../state/state.service';
+import { StateService } from '../state.service';
 
 const emptyFilteredProjects = {
   pages: 0,
@@ -170,12 +170,4 @@ export class FilteredProjectsService {
     }
     return filteredProjects;
   }
-
-  private currentUserGeoObject(geoObject: GeoObject): boolean {
-    console.log(this.stateService.getId());
-    console.log(this.stateService.getUserId());
-
-    return true;
-  }
-
 }

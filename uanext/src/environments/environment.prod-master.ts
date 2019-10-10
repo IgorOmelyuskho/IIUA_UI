@@ -62,4 +62,6 @@ export const environment = {
   getPaginationOfConversations: '/api/Conversations/GetPaginationOfConversations',
   blockConversationP2P: '/api/Conversations/BlockConversationP2P',
   unblockConversationP2P: '/api/Conversations/UnblockConversationP2P',
+  updateLastReadDate: '/api/Participants/UpdateLastReadDate',
+  getOrCreateHelp: '/api/Conversations/GetOrCreateHelp'
 };
