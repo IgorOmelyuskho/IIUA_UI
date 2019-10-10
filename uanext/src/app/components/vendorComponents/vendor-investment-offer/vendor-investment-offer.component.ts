@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { TranslateService } from 'src/app/services/translate.service';
 import { FilesService } from 'src/app/services/http/files.service';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-vendor-investment-offer',

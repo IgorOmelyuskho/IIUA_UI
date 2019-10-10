@@ -1,11 +1,14 @@
 <div (click)="projectWrapperClick()" class="project-wrapper">
   <div [ngClass]="{'select': isSelect === true}" class="project">
-    <div class="red-circle"></div>
+    <div *ngIf="showUnreadMessageCircle" class="red-circle"></div>
     <div class="avatara-wrapper">
       <div class="avatara" [ngStyle]="{ 'background-image': getAvataraUrl(project) }"></div>
     </div>
     <div class="info">
-      <div class="project-name">{{project.name}}</div>
+      <div class="project-name">
+        <span>{{project.name}}</span>
+        <span *ngIf="isPrivateChat() === true"> {{ 'private' | translate:self }}</span>
+      </div>
       <div class="region">
         <i class="fa fa-map-marker mr-1" aria-hidden="true"></i>
         <span class="region">{{project.region}}</span>

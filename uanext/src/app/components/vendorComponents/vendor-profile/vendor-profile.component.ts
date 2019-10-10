@@ -1,4 +1,4 @@
-import { StateService } from '../../../services/state/state.service';
+import { StateService } from '../../../services/state.service';
 import { AuthorizationService } from '../../../services/http/authorization.service';
 import FormHelper from '../../../helperClasses/helperClass';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';

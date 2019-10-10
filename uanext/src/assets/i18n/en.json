@@ -368,7 +368,7 @@
         "findPlaceholder": "Find a project or investor",
         "all": "All",
         "group": "Group",
-        "single": "Private"
+        "private": "Private"
     },
     "VendorInvestmentOfferComponent": {
         "investmentOffer": "Investment offer",
@@ -390,7 +390,8 @@
         "message": "Message",
         "download": "Download",
         "newMessage": "New message arrived",
-        "privateChat": "Private chat"
+        "privateChat": "Private chat",
+        "chatIsBlocked": "ЧChat is blocked"
     },
     "VendorNavbarComponent": {
         "home": "Map",
@@ -719,7 +720,7 @@
         "findPlaceholder": "Find a project or investor",
         "all": "All",
         "group": "Group",
-        "single": "Private"
+        "private": "Private"
     },
     "Panel3dModelsComponent": {
       "selectProject": "Select project"
@@ -728,7 +729,8 @@
         "privateChat": "Private chat",
         "block": "Block",
         "unblock": "Unblock",
-        "sendMessage": "Send message"
+        "sendMessage": "Send message",
+        "private": "(private)"
     },
     "MapComponent": {
         "edit": "edit"

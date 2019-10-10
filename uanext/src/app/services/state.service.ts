@@ -1,17 +1,18 @@
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, } from 'rxjs';
 
-import { VendorRole, AdminRole, UserRole } from './../../models';
-import { InvestorRole } from './../../models';
-import { NotificationService } from '../notification.service';
+import { VendorRole, AdminRole, UserRole } from '../models';
+import { InvestorRole } from '../models';
+import { NotificationService } from './notification.service';
 import { Router } from '@angular/router';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { AuthService } from 'angularx-social-login';
 import { Object3DAndProject } from 'src/app/components/threejs-scene/threejs-scene.component';
-
+import { IShowUnreadMessages } from 'src/app/models/chat/unreadMessage';
+import { Chat } from '../models/chat/chat';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,12 @@ export class StateService {
   interactiveInvestmentProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
   selectedVendorProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
   selectedProjectForChat$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
-
   object3DAndProject: Object3DAndProject;
   cardClickEnabled = true;
   setCloseAllCardsMenu$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  showUnreadMessages$: ReplaySubject<IShowUnreadMessages> = new ReplaySubject(1);
+  unreadChatsCount$: BehaviorSubject<number> = new BehaviorSubject(0);
+  blockedOrUnblockedChat$: ReplaySubject<Chat> = new ReplaySubject(null);
 
   constructor(private notify: NotificationService, private router: Router, private socialAuthService: AuthService) { }
 
@@ -44,9 +47,9 @@ export class StateService {
     }
   }
 
-  getId(): string {
-    return this.user$.value.id;
-  }
+  // getId(): string {
+  //   return this.user$.value.id;
+  // }
 
   getUserId(): string {
     return this.user$.value.userId;

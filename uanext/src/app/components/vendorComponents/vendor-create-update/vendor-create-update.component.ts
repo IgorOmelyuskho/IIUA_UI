@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, Input, ViewChild, ElementRef, OnDestr
 import { VendorProject } from 'src/app/models/vendorProject';
 import { FilesService } from 'src/app/services/http/files.service';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import { Subscription } from 'rxjs';
 
 @Component({

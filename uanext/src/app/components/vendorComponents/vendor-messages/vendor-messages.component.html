@@ -1,9 +1,12 @@
 <div class="messages-wrapper">
-  <div class="name-adn-progress-bar">
+  <div class="bottom-part">
     <div class="name">{{ 'communication' | translate:self }}</div>
-    <mat-progress-bar *ngIf="messagesLoading === true" mode="indeterminate"></mat-progress-bar>
+    <div class="progress-bar-wrapper">
+      <mat-progress-bar *ngIf="messagesLoading === true" mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div *ngIf="chatIsBlocked" class="chat-is-blocked">{{ 'chatIsBlocked' | translate:self }}</div>
   </div>
-  <div #messagesElem class="messages" infiniteScroll [infiniteScrollDistance]="2" [scrollWindow]="false"
+  <div #messagesElem class="messages" infiniteScroll [infiniteScrollUpDistance]="0.5" [scrollWindow]="false"
     [infiniteScrollThrottle]="500" (scrolledUp)="onScrollUp()">
     <div *ngFor="let message of messages; let i = index" class="message">
 
@@ -41,7 +44,7 @@
         <div *ngIf="message.text" class="message-text-wrapper">
           <div class="text">
             <div class="message-text">{{message.text}}</div>
-            <div class="time">{{message.lastUpdatedDate | date:"HH:mm"}}</div>
+            <div class="time">{{message.lastUpdatedDate | date:"HH:mm:ss"}}</div>
           </div>
         </div>
       </div>
@@ -81,12 +84,13 @@
             </div>
             <div *ngIf="message.text" class="text">
               <div class="message-text">{{message.text}}</div>
-              <div class="time">{{message.lastUpdatedDate | date:"HH:mm"}}</div>
+              <div class="time">{{message.lastUpdatedDate | date:"HH:mm:ss"}}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="anchor"></div>
   </div>
 
   <div class="send-message">
@@ -128,7 +132,8 @@
         <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">
       </div>
       <div class="textarea-wrapper">
-        <textarea (keydown.control.enter)="sendMessage()" rows="1" [(ngModel)]="textFromInput" placeholder="{{ 'message' | translate:self }}"></textarea>
+        <textarea (keydown.control.enter)="sendMessage()" rows="1" [(ngModel)]="textFromInput"
+          placeholder="{{ 'message' | translate:self }}"></textarea>
       </div>
       <div (click)="sendMessage()" [ngClass]="{'send-disabled': attachmentReady === false}" class="send">
         <img src="../../../../assets/img/send-message.png" alt="">

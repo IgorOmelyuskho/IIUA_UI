@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, Inp
 import { ChatService } from 'src/app/services/http/chat.service';
 import { Message } from 'src/app/models/chat/message';
 import { FilesService } from 'src/app/services/http/files.service';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import { Observable, Subscription } from 'rxjs';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import * as autosize from 'autosize';

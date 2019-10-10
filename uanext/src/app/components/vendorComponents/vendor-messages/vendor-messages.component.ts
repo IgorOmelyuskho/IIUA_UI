@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy, Inp
 import { ChatService } from 'src/app/services/http/chat.service';
 import { Message } from 'src/app/models/chat/message';
 import { FilesService } from 'src/app/services/http/files.service';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import { Observable, Subscription } from 'rxjs';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import * as autosize from 'autosize';
@@ -11,6 +11,7 @@ import { Chat } from 'src/app/models/chat/chat';
 import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';
 import { Participant } from 'src/app/models/chat/chatParticipant';
 import { ParticipantsCacheService } from 'src/app/services/participants-cache.service';
+import { IShowUnreadMessages } from 'src/app/models/chat/unreadMessage';
 
 @Component({
   selector: 'app-vendor-messages',
@@ -22,7 +23,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   @ViewChild('messagesElem') messagesElement: ElementRef;
   project: VendorProject;
   textFromInput: string;
-  selfUserId: string;
   chatParticipantAvatara = 'https://www.shareicon.net/data/128x128/2015/09/24/106428_man_512x512.png'; // todo get avatara from user id ?
   attachmentData: FileResponseDto | any = {};
   previewAttachment: any;
@@ -32,9 +32,12 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   uploadFilesSubscribe: Subscription;
   textareaSelector = '.bottom-wrapper .textarea-wrapper textarea';
   projectSubscription: Subscription;
-  signalRSubscription: Subscription;
+  signalChatRSubscription: Subscription;
   newMsgCame = false;
-  msgCountForReceive = 20;
+  readonly msgCountForReceive = 20;
+  chatIsBlocked = false;
+  cnt = 0; // for automaticallyCreateMsg
+  blockedOrUnblockedChatSubscription: Subscription;
 
   constructor(
     private chatService: ChatService,
@@ -44,22 +47,36 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     private participantsCacheService: ParticipantsCacheService
   ) { }
 
-  ngOnInit() { }
-
-  ngAfterViewInit() {
-    autosize(document.querySelector(this.textareaSelector));
-    this.selfUserId = this.stateService.getUserId();
-
+  ngOnInit() {
     this.projectSubscription = this.stateService.selectedProjectForChat$.subscribe(
       (project: VendorProject) => {
         if (project != null) {
           this.project = project;
-          this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.project.chat.id, null, this.msgCountForReceive), true);
+          this.chatIsBlocked = this.project.chat.isBlock;
+          this.getMessagesByChatIdSubscribe(
+            this.chatService.getMessagesByChatId(this.project.chat.id, null, this.msgCountForReceive), true
+          );
         }
       }
     );
 
-    this.signalRSubscription = this.chatSignalR.messageReceived$.subscribe(
+    this.blockedOrUnblockedChatSubscription = this.stateService.blockedOrUnblockedChat$.subscribe(
+      (blockedOrUnblockedChat: Chat) => {
+        if (blockedOrUnblockedChat.id === this.project.chat.id) {
+          if (blockedOrUnblockedChat.isBlock === true) {
+            this.chatIsBlocked = true;
+          } else {
+            this.chatIsBlocked = false;
+          }
+        }
+      }
+    );
+   }
+
+  ngAfterViewInit() {
+    autosize(document.querySelector(this.textareaSelector));
+
+    this.signalChatRSubscription = this.chatSignalR.messageReceived$.subscribe(
       (message: Message) => {
         this.onSignalRMessage(message);
       }
@@ -69,14 +86,30 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.messagesElement.nativeElement.addEventListener('scroll', this.scrollHandler);
   }
 
+  automaticallyCreateMsg() {
+    setInterval(() => {
+      this.attachmentReady = true;
+      this.cnt++;
+      this.textFromInput = 'Message created automatically ' + this.cnt;
+      this.sendMessage();
+    }, 1000);
+  }
+
   onSignalRMessage = (message: Message) => {
+    if (this.project == null) { // wait for this.stateService.selectedProjectForChat$.subscribe
+      return;
+    }
     if (message.conversationId !== this.project.chat.id) {
       return;
     }
-    message.isYou = this.messageIsYou(message);
+    message.isYou = this.chatService.messageIsYou(message);
     this.messages.push(message);
+
+    if (this.messagesElement.nativeElement.offsetHeight === this.messagesElement.nativeElement.scrollHeight) {
+      this.whenReadMessage();
+    }
+
     this.getParticipantByParticipantId(message);
-    this.chatService.sortMessages(this.messages);
 
     this.attachmentData = {};
     this.previewAttachment = null;
@@ -100,12 +133,19 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   scrollHandler = (event) => {
     if (this.messagesElement.nativeElement.scrollTop + this.messagesElement.nativeElement.offsetHeight >= this.messagesElement.nativeElement.scrollHeight) {
       this.newMsgCame = false;
+      this.whenReadMessage();
     }
   }
 
   newMsgCameBtnClick() {
     this.newMsgCame = false;
+    this.whenReadMessage();
     this.scrollToBottom();
+  }
+
+  whenReadMessage() {
+    this.stateService.showUnreadMessages$.next({ projectWithChat: this.project });
+    this.chatService.updateLastReadDate(this.project.chat.participant.id).subscribe();
   }
 
   getMessagesByChatIdSubscribe(observable: Observable<any>, initial: boolean) {
@@ -123,11 +163,10 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
           });
         }
         for (let i = 0; i < messages.length; i++) {
-          messages[i].isYou = this.messageIsYou(messages[i]);
-          this.messages.push(messages[i]);
+          messages[i].isYou = this.chatService.messageIsYou(messages[i]);
           this.getParticipantByParticipantId(messages[i]);
         }
-        this.chatService.sortMessages(this.messages);
+        this.messages = this.messages.concat(messages.reverse());
         this.messagesLoading = false;
       },
       err => {
@@ -135,14 +174,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
         this.messagesLoading = false;
       }
     );
-  }
-
-  messageIsYou(message: Message): boolean {
-    if (message.userId === this.selfUserId) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   getParticipantByParticipantId(message: Message) {
@@ -203,9 +234,13 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     };
 
     this.chatService.createMessage(message).subscribe(
-      (msg: Message) => { },
+      (msg: Message) => {
+        this.chatIsBlocked = false;
+      },
       err => {
-        console.warn(err);
+        if (err.status === 404) { // chat is blocked
+          this.chatIsBlocked = true;
+        }
       }
     );
   }
@@ -254,13 +289,18 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   onScrollUp() {
-    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.project.chat.id, null, this.msgCountForReceive), false);
+    const date = this.messages[0].createdDate;
+    // this.automaticallyCreateMsg();
+    this.getMessagesByChatIdSubscribe(
+      this.chatService.getMessagesByChatId(this.project.chat.id, date, this.msgCountForReceive), false
+    );
   }
 
   ngOnDestroy() {
     this.messagesElement.nativeElement.removeEventListener('scroll', this.scrollHandler);
     this.projectSubscription.unsubscribe();
-    this.signalRSubscription.unsubscribe();
+    this.signalChatRSubscription.unsubscribe();
+    this.blockedOrUnblockedChatSubscription.unsubscribe();
     autosize.destroy(document.querySelector(this.textareaSelector));
     if (this.uploadFilesSubscribe != null) {
       this.uploadFilesSubscribe.unsubscribe();

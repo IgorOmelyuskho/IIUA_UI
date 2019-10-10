@@ -76,6 +76,7 @@
 
   .message,
   .investment-offer {
+    position: relative;
     width: 40px;
     height: 40px;
     border-radius: 100px;
@@ -92,6 +93,22 @@
       height: 45%;
       background-size: contain;
       background-repeat: no-repeat;
+    }
+
+    .unread-chats-count {
+      position: absolute;
+      right: -7px;
+      bottom: -7px;
+      background: #f00;
+      border-radius: 100px;
+      color: #fff;
+      font-size: 12px;
+      padding: 0 4px;
+      min-height: 20px;
+      min-width: 20px;
+      line-height: 20px;
+      text-align: center;
+      font-weight: bold;
     }
 
     &.selected {

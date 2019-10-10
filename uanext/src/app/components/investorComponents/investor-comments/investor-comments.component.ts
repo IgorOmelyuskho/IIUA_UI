@@ -5,7 +5,7 @@ import { ChatService } from 'src/app/services/http/chat.service';
 import { Chat } from 'src/app/models/chat/chat';
 import { Observable, Subscription } from 'rxjs';
 import { Message } from 'src/app/models/chat/message';
-import { StateService } from 'src/app/services/state/state.service';
+import { StateService } from 'src/app/services/state.service';
 import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import { FilesService } from 'src/app/services/http/files.service';
@@ -46,7 +46,6 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   ngOnInit() { }
 
   ngAfterViewInit() {
-    console.log(this.project);
     this.selfUserId = this.stateService.getUserId();
 
     this.signalRSubscription = this.chatSignalR.messageReceived$.subscribe(
@@ -63,8 +62,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     this.chatService.getChatByProjectId(this.project.id).subscribe(
       (chat: Chat) => {
         this.chat = chat;
-        console.log(this.chat);
-        this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), true);
+        this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id, null, null), true);
       },
       err => {
         console.warn(err);
@@ -88,7 +86,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     message.isYou = this.messageIsYou(message);
     this.messages.push(message);
     this.getParticipantByParticipantId(message);
-    this.chatService.sortMessages(this.messages);
+    // this.chatService.sortMessages(this.messages);
 
     if (message.isYou === true) {
       this.sharedChatMsgText = '';
@@ -136,7 +134,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
           this.messages.push(messages[i]);
           this.getParticipantByParticipantId(messages[i]);
         }
-        this.chatService.sortMessages(this.messages);
+        // this.chatService.sortMessages(this.messages);
         this.messagesLoading = false;
       },
       err => {
@@ -206,7 +204,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onScrollUp() {
-    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id), false);
+    this.getMessagesByChatIdSubscribe(this.chatService.getMessagesByChatId(this.chat.id, null, null), false);
   }
 
   defineFileType(originalFileName: string) {
