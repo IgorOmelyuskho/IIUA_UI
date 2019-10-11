@@ -21,12 +21,12 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
   selectedChatType = 'all'; // group/private
   searchName = '';
   numberOfConversation = 0;
-  chats: Chat[] = [];
   readonly chatsCount = 15;
   @ViewChild('projectsElem') projectsElem: ElementRef;
   requestNumber = 0;
   projectWithPrivateChat: VendorProject;
   signalChatRSubscription: Subscription; // use for create new chat if private chat message receive. but chat still not created
+  notShownChatsId: string[];
 
   helperChatProject: VendorProject = { // todo or get by id ?
     name: 'HELP CHAT TODO',
@@ -49,28 +49,11 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // this.allChats();
     window.addEventListener('click', this.windowClickHandler);
     this.chatService.getOrCreateHelp().subscribe(
       (helpChat: Chat) => {
         this.helperChatProject = this.projectWithChat(this.helperChatProject, helpChat);
         this.allChats();
-      }
-    );
-
-    this.signalChatRSubscription = this.chatSignalR.messageReceived$.subscribe(
-      (message: Message) => {
-        if (this.chatService.messageIsYou(message) === false) {
-          this.stateService.showUnreadMessages$.next({ message });
-        }
-
-        for (let i = 0; i < this.projectsWithChat.length; i++) { // remove?
-          if (this.projectsWithChat[i].chat.id === message.conversationId) {
-            console.log('SAME CHAT ALREADY HAS');
-            return;
-          }
-        }
-        console.log('there is no such chat yet, message = ', message);
       }
     );
 
@@ -81,8 +64,41 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
         for (let i = 0; i < chats.length; i++) {
           console.log(chats[i].participant);
         }
+      },
+      err => {
+        this.stateService.unreadChatsCount$.next(0);
       }
     );
+
+    this.signalChatRSubscription = this.chatSignalR.messageReceived$.subscribe(
+      (message: Message) => {
+        if (this.chatService.messageIsYou(message) === false) {
+          this.stateService.markChatAsUnread(message.conversationId);
+        }
+
+        this.messageFromExistOrNotExistChat(message);
+      }
+    );
+  }
+
+  messageFromExistOrNotExistChat(message: Message) {
+    for (let i = 0; i < this.projectsWithChat.length; i++) {
+      if (this.projectsWithChat[i].chat.id === message.conversationId) {
+        console.log('SAME CHAT ALREADY HAS');
+        return;
+      }
+    }
+    this.messageFromNonExistentChat(message);
+  }
+
+  messageFromNonExistentChat(message: Message) {
+    // also need check when notShownChat already shown
+    // if send lot of msg from 1 not exist chat - unread chats count must change by 1 (not by msg count)
+    console.log('there is no such chat yet, message = ', message);
+    if (this.notShownChatsId.indexOf(message.conversationId) === -1) {
+      this.notShownChatsId.push(message.conversationId);
+      this.stateService.markChatAsUnread(null);
+    }
   }
 
   windowClickHandler = () => {

@@ -144,8 +144,10 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   whenReadMessage() {
-    this.stateService.showUnreadMessages$.next({ projectWithChat: this.project });
-    this.chatService.updateLastReadDate(this.project.chat.participant.id).subscribe();
+    this.stateService.markChatAsRead(this.project.chat.id);
+    if (this.project.chat.participant != null) { // if user exist as participant in this chat
+      this.chatService.updateLastReadDate(this.project.chat.participant.id).subscribe();
+    }
   }
 
   getMessagesByChatIdSubscribe(observable: Observable<any>, initial: boolean) {

@@ -32,7 +32,7 @@
         [ngClass]="{ 'btn-active': onlyMyProjects }">{{ 'onlyMyProjects' | translate:self }}</button>
 
       <button (click)="edit()" type="button" [ngClass]="{ 'btn-active': editMode }">
-        <span *ngIf="!editMode">{{ 'edit' | translate:self }}</span>
+        <span *ngIf="!editMode">{{ 'addObject' | translate:self }}</span>
         <span *ngIf="editMode">{{ 'exit' | translate:self }}</span>
       </button>
 
