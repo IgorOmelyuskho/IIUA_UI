@@ -1,1 +1,3 @@
-<div [ngStyle]="setMyStyles()" class="scene" draggable="true" (dragstart)="drag($event)"></div>
+<div (mousedown)="dragStart($event)" (dragstart)="disableDefaultDragStart()" [ngStyle]="setMyStyles()" #elementForCopy class="object-photo" draggable="true"></div>
+
+

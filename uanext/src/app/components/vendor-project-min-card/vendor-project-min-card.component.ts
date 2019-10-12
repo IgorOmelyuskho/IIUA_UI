@@ -51,13 +51,10 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
 
     this.showUnreadMessagesSubscription = this.stateService.showUnreadMessages$.subscribe(
       (showUnreadMessages: IShowUnreadMessages) => {
-        if (showUnreadMessages.message != null) {
-          if (this.project.chat.id === showUnreadMessages.message.conversationId) {
+        if (this.project.chat.id === showUnreadMessages.chatId) {
+          if (showUnreadMessages.isUnread === true) {
             this.showUnreadMessageCircle = true;
-          }
-        }
-        if (showUnreadMessages.projectWithChat != null) {
-          if (this.project.chat.id === showUnreadMessages.projectWithChat.chat.id) {
+          } else {
             this.showUnreadMessageCircle = false;
           }
         }
@@ -66,13 +63,16 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
   }
 
   getAvataraUrl(project) {
+    if (project.avatara == null) {
+      return 'url(null_avatara)';
+    }
     const url = project.avatara.url;
     return 'url("' + url + '")';
   }
 
   projectWrapperClick() {
     this.stateService.selectedProjectForChat$.next(this.project);
-    this.stateService.showUnreadMessages$.next({ projectWithChat: this.project });
+    this.stateService.markChatAsRead(this.project.chat.id);
     console.log('project = ', this.project);
   }
 
@@ -155,7 +155,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
       needShowUnreadMsg = new Date(this.project.chat.lastActivityDate).getTime() > new Date(this.project.chat.participant.lastReadDate).getTime();
     }
 
-    if (this.project.chat.participant != null && needShowUnreadMsg) { // todo
+    if (this.project.chat.participant != null && needShowUnreadMsg) {
       this.showUnreadMessageCircle = true;
     } else {
       this.showUnreadMessageCircle = false;

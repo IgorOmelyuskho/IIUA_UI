@@ -5,16 +5,11 @@ import { environment } from 'src/environments/environment';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { GeoObject } from 'src/app/models';
 import { SignalRService } from 'src/app/services/signal-r.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { FileResponseDto } from 'src/app/models/fileResponseDto';
-import { Object3DDto } from 'src/app/models/object3DDto';
 import { MapService } from 'src/app/services/http/map.service';
-import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
-import { Object3DAndProject } from '../threejs-scene/threejs-scene.component';
 import { StateService } from 'src/app/services/state.service';
 import { ProjectsService } from 'src/app/services/http/projects.service';
-import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 
 @Component({
   selector: 'app-map',
@@ -24,13 +19,14 @@ import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   self = 'MapComponent';
   @Output() objectClick = new EventEmitter<GeoObject>();
-  @Output() objectHover = new EventEmitter<GeoObject>();
+  @Output() objectHover = new EventEmitter<{ geoObject: GeoObject, enableObjectEditMode: boolean }>();
   @Output() changeExtent = new EventEmitter<any>();
 
   mapManager: MapManager;
   mapIsFinishInit = false;
   bufferGeoObjectsArr: GeoObject[];
   showProgressBar = false;
+  showProgressBarSubscription: Subscription;
 
   @Input()
   set changeSelectedProject(project: VendorProject) {
@@ -76,12 +72,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  clickObjectCallback: Function = (object: GeoObject) => {
-    this.objectClick.emit(object);
+  clickObjectCallback: Function = (geoObject: GeoObject) => {
+    this.objectClick.emit(geoObject);
   }
 
-  hoverObjectCallback: Function = (object: GeoObject) => {
-    this.objectHover.emit(object);
+  hoverObjectCallback: Function = (geoObject: GeoObject, enableObjectEditMode: boolean) => {
+    this.objectHover.emit({ geoObject, enableObjectEditMode });
   }
 
   mapFinishInitCallback: Function = () => {
@@ -126,6 +122,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private signalRService: SignalRService, private mapService: MapService, private stateService: StateService, private projectsService: ProjectsService) { }
 
   ngOnInit() {
+    this.showProgressBarSubscription = this.stateService.showProgressWhenDropObject$.subscribe(
+      (val: boolean) => {
+        this.showProgressBar = val;
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -136,7 +137,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
         mapId: 'map-html-element-id-495367235',
         labelRendererId: 'label-renderer-843744329'
       },
-      this.mapService
+      this.mapService,
+      this.stateService,
+      this.projectsService
     );
 
     this.mapManager.setObjectClickCallback(this.clickObjectCallback);
@@ -154,53 +157,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
       );
-  }
-
-  drop(event) {
-    event.preventDefault();
-    const object3DAndProject: Object3DAndProject = this.stateService.object3DAndProject;
-    this.post3DObjectSubscribe(object3DAndProject.object3DDto, object3DAndProject.project);
-  }
-
-  allowDrop(event) {
-    event.preventDefault();
-  }
-
-  post3DObjectSubscribe(object3DDto: Object3DDto, project: VendorProject) {
-    const mapCenter = this.mapManager.getCenter();
-    object3DDto.staticPositionX = mapCenter.x;
-    object3DDto.staticPositionY = mapCenter.y;
-    object3DDto.scale = 1;
-    object3DDto.rotate = 0;
-    this.showProgressBar = true;
-    this.mapService.post3DObject(object3DDto).subscribe(
-      (val: {objectId: string}) => {
-        this.mapManager.drop3DObject(object3DDto, val.objectId, project, this.when3DObjectLoaded);
-        const projectGeoObjectDto: ProjectGeoObjectDto = {
-          projectId: project.id,
-          projectUserId: this.stateService.getUserId(),
-          geoObjectId: val.objectId,
-          path: object3DDto.path
-        };
-        this.projectsService.addProjectGeoObject(projectGeoObjectDto).subscribe();
-
-        const historyPositionDto: HistoryPositionDto = {
-          objectId: projectGeoObjectDto.geoObjectId,
-          positionX: object3DDto.staticPositionX,
-          positionY: object3DDto.staticPositionY,
-          scale: object3DDto.scale,
-          rotate: object3DDto.rotate
-        };
-        this.mapService.postHistoryData(historyPositionDto).subscribe();
-      },
-      err => {
-        console.warn(err);
-      }
-    );
-  }
-
-  when3DObjectLoaded = (object: GeoObject) => {
-    this.showProgressBar = false;
   }
 
   ngOnDestroy() {

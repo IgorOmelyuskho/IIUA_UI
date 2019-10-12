@@ -114,6 +114,7 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
 
   chooseProjectClick() {
     this.chooseProject = !this.chooseProject;
+    this.showTooltip = false;
     if (this.chooseProject === true) {
       this.animatedBtn.nativeElement.classList.remove('animated-btn');
     }
@@ -166,7 +167,14 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
     // );
   }
 
-  onMapObjectHover(mapObject: GeoObject) {
+  onMapObjectHover(data: { geoObject: GeoObject, enableObjectEditMode: boolean }) {
+    if (data.enableObjectEditMode === true) {
+      this.showPreviewCard = false;
+      return;
+    } else {
+      this.showPreviewCard = true;
+    }
+
     const cardWidth = 578;
     const cardHeight = 178;
     const deltaY = 30;
@@ -194,7 +202,7 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
     }
     this.previewCardWrapper.nativeElement.style.left = resultX + 'px';
     this.previewCardWrapper.nativeElement.style.top = resultY + 'px';
-    this.hoveredProject = mapObject.project;
+    this.hoveredProject = data.geoObject.project;
     this.showPreviewCard = true;
   }
 

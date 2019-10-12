@@ -111,7 +111,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     this.selectedProjectId = mapObject.project.id;
   }
 
-  onMapObjectHover(mapObject: GeoObject) {
+  onMapObjectHover(data: { geoObject: GeoObject, enableObjectEditMode: boolean }) {
     const cardWidth = 578;
     const cardHeight = 178;
     const deltaY = 30;
@@ -139,7 +139,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
     }
     this.previewCardWrapper.nativeElement.style.left = resultX + 'px';
     this.previewCardWrapper.nativeElement.style.top = resultY + 'px';
-    this.hoveredProject = mapObject.project;
+    this.hoveredProject = data.geoObject.project;
     this.showPreviewCard = true;
   }
 
