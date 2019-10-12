@@ -288,8 +288,8 @@
     },
     "MainScreenVendorComponent": {
         "quickAction": "Быстрые действия",
-        "onlyMyProjects": "Мои проекты",
-        "edit": "Редактировать",
+        "onlyMyProjects": "Показать мои проекты",
+        "addObject": "Добавить объект на карту",
         "exit": "Выход",
         "chooseProject": "Выберите проект",
         "noYetProject": "Не создано ни одного проекта",
@@ -733,7 +733,10 @@
         "private": "(приватный)"
     },
     "MapComponent": {
-        "edit": "редактировать"
+        "edit": "редактировать",
+        "rotateLeft": "повернуть влево",
+        "rotateRight": "повернуть вправо",
+        "changeSize": "изменить размер"
     },
     "checkEmailShared": "Вы получили сообщение по электронной почте",
     "firstNeedRegister": "Сначала нужно зарегистрироваться как Пользователь или как Компания",

@@ -7,6 +7,10 @@ import { MapService } from 'src/app/services/http/map.service';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 import { debounceTime } from 'rxjs/operators';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { StateService } from 'src/app/services/state.service';
+import { Object3DAndProject } from '../threejs-scene/threejs-scene.component';
+import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
+import { ProjectsService } from 'src/app/services/http/projects.service';
 declare var THREE: any;
 declare var maptalks: any;
 
@@ -51,7 +55,6 @@ export class MapManager {
   private camera = null;
   private prevClusterGeoObjectId: string = null;
   private mapZoomEnum: MapZoomEnum;
-  private mapService: MapService;
   private selectedForEditObject: GeoObject = null;
   private rotateLeftInterval: any;
   private rotateRightInterval: any;
@@ -64,11 +67,16 @@ export class MapManager {
   private mapId: string;
   private labelRendererId: string;
 
-  public constructor(cb: Function, htmlId: { mapWrapperId: string, mapId: string, labelRendererId: string }, mapService: MapService) {
+  public constructor(
+    cb: Function,
+    htmlId: { mapWrapperId: string, mapId: string, labelRendererId: string },
+    private mapService: MapService,
+    private stateService: StateService,
+    private projectsService: ProjectsService
+  ) {
     this.mapWrapperId = htmlId.mapWrapperId;
     this.mapId = htmlId.mapId;
     this.labelRendererId = htmlId.labelRendererId;
-    this.mapService = mapService;
     this.mapInit(cb);
     this.updateGeoObjectSubject
       .pipe(
@@ -111,7 +119,6 @@ export class MapManager {
     this.polygonLayer = null;
     this.camera = null;
     this.prevClusterGeoObjectId = null;
-    this.mapService = null;
     this.selectedForEditObject = null;
     this.rotateLeftInterval = null;
     this.rotateRightInterval = null;
@@ -155,16 +162,14 @@ export class MapManager {
     }
   }
 
-  drop3DObject(object3DDto: Object3DDto, object3DId: string, project: VendorProject, cbObjectLoaded: Function) {
-    const geoObject: GeoObject = this.object3DDtoToGeoObject(object3DDto, object3DId, project);
-    this.mapAddNewObject(geoObject, cbObjectLoaded);
-  }
-
   private object3DDtoToGeoObject(object3DDto: Object3DDto, object3DId: string, project: VendorProject): GeoObject {
     const geoObject: GeoObject = {
       geoObjectId: object3DId,
       project: project,
-      coords: this.map.getCenter(),
+      coords: {
+        x: object3DDto.staticPositionX,
+        y: object3DDto.staticPositionY
+      },
       path: object3DDto.path,
       canMove: false,
       currentUser: true,
@@ -447,12 +452,19 @@ export class MapManager {
         const geoObject: GeoObject = identify.children[0].parent;
         if (geoObject.geoObjectId !== this.prevClusterGeoObjectId) { // so that there are not many events
           if (this.on_hover_object != null) {
-            this.on_hover_object(geoObject);
+            const enableObjectEditMode: boolean = this.selectedForEditObject != null;
+            this.on_hover_object(geoObject, enableObjectEditMode);
           }
         }
         this.prevClusterGeoObjectId = geoObject.geoObjectId;
       } else { // if number 2 or more on cluster
         this.setCanvasCursor('default');
+      }
+    });
+
+    this.map.on('mouseup', (event) => {
+      if (this.stateService.dragStarted === true && this.stateService.object3DAndProject != null) {
+        this.drop(this.stateService.object3DAndProject, event.coordinate.x, event.coordinate.y);
       }
     });
 
@@ -856,7 +868,8 @@ export class MapManager {
   private labelMouseEnterHandler = (event) => {
     event.target['geoObject'].objectDivLabel.className = 'obj-label-selected';
     if (this.on_hover_object != null) {
-      this.on_hover_object(event.target['geoObject']);
+      const enableObjectEditMode: boolean = this.selectedForEditObject != null;
+      this.on_hover_object(event.target['geoObject'], enableObjectEditMode);
     }
   }
 
@@ -955,7 +968,8 @@ export class MapManager {
     marker.on('mouseenter', (e) => {
       this.setMarkerSymbolSelected(e.target); // e.target === marker
       if (this.on_hover_object != null) {
-        this.on_hover_object(e.target.parent);
+        const enableObjectEditMode: boolean = this.selectedForEditObject != null;
+        this.on_hover_object(e.target.parent, enableObjectEditMode);
       }
     });
 
@@ -1062,7 +1076,8 @@ export class MapManager {
         geoObj.objectDivLabel.className = 'obj-label-selected';
       }
       if (this.on_hover_object != null) {
-        this.on_hover_object(geoObj);
+        const enableObjectEditMode: boolean = this.selectedForEditObject != null;
+        this.on_hover_object(geoObj, enableObjectEditMode);
       }
     }
 
@@ -1292,6 +1307,50 @@ export class MapManager {
       this.selectedForEditObject.coords.y = y;
       this.updateGeoObjectSettings(this.selectedForEditObject);
     }
+  }
+  //#endregion
+
+  // drag and drop
+  //#region
+  private drop(object3DAndProject: Object3DAndProject, x: number, y: number) {
+    const object3DDto: Object3DDto = object3DAndProject.object3DDto;
+    const project: VendorProject = object3DAndProject.project;
+    object3DDto.staticPositionX = x;
+    object3DDto.staticPositionY = y;
+    object3DDto.scale = 1;
+    object3DDto.rotate = 0;
+    this.stateService.showProgressWhenDropObject$.next(true);
+
+    this.mapService.post3DObject(object3DDto).subscribe(
+      (val: { objectId: string }) => {
+        this.addNewObjectWhenDrop(object3DDto, val.objectId, project, this.when3DObjectLoaded);
+        const projectGeoObjectDto: ProjectGeoObjectDto = {
+          projectId: project.id,
+          projectUserId: this.stateService.getUserId(),
+          geoObjectId: val.objectId,
+          path: object3DDto.path
+        };
+        this.projectsService.addProjectGeoObject(projectGeoObjectDto).subscribe();
+
+        const historyPositionDto: HistoryPositionDto = {
+          objectId: projectGeoObjectDto.geoObjectId,
+          positionX: object3DDto.staticPositionX,
+          positionY: object3DDto.staticPositionY,
+          scale: object3DDto.scale,
+          rotate: object3DDto.rotate
+        };
+        this.mapService.postHistoryData(historyPositionDto).subscribe();
+      }
+    );
+  }
+
+  private when3DObjectLoaded = () => {
+    this.stateService.showProgressWhenDropObject$.next(false);
+  }
+
+  private addNewObjectWhenDrop(object3DDto: Object3DDto, object3DId: string, project: VendorProject, cbObjectLoaded: Function) {
+    const geoObject: GeoObject = this.object3DDtoToGeoObject(object3DDto, object3DId, project);
+    this.mapAddNewObject(geoObject, cbObjectLoaded);
   }
   //#endregion
 }

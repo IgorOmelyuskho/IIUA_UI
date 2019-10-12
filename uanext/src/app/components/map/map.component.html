@@ -1,7 +1,7 @@
 <!-- <mat-progress-bar *ngIf="true" mode="indeterminate" class="progress-bar-fixed"></mat-progress-bar> -->
 <!-- <mat-progress-bar *ngIf="true" mode="indeterminate"></mat-progress-bar> -->
 
-<div (drop)="drop($event)" (dragover)="allowDrop($event)" id="map-wrapper-html-element-id-3585349">
+<div id="map-wrapper-html-element-id-3585349">
   <div class="progress-bar-wrapper">
     <mat-progress-bar *ngIf="showProgressBar" mode="indeterminate"></mat-progress-bar>
   </div>
@@ -12,14 +12,21 @@
 <div id="edit-panel-label" class="edit-panel-label-class">
   <div class="close"></div>
   <div class="rotate-container">
-    <div class="rotate-left"></div>
-    <div class="rotate-right"></div>
+    <div class="rotate-left">
+      <div class="left"></div>
+      <div class="rotate-text">{{ 'rotateLeft' | translate:self }}</div>
+    </div>
+    <div class="rotate-right">
+      <div class="right"></div>
+      <div class="rotate-text ">{{ 'rotateRight' | translate:self }}</div>
+    </div>
   </div>
   <div class="scale-container">
     <div class="slider">
       <img src="../../../assets/img/slider.png" alt="">
     </div>
     <div class="slider-range"></div>
+    <div class="scale-text">{{ 'changeSize' | translate:self }}</div>
   </div>
 </div>
 

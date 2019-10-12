@@ -13,6 +13,7 @@ import { AuthService } from 'angularx-social-login';
 import { Object3DAndProject } from 'src/app/components/threejs-scene/threejs-scene.component';
 import { IShowUnreadMessages } from 'src/app/models/chat/unreadMessage';
 import { Chat } from '../models/chat/chat';
+import { Message } from '../models/chat/message';
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +25,20 @@ export class StateService {
 
   interactiveInvestmentProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
   selectedVendorProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
-  selectedProjectForChat$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
-  object3DAndProject: Object3DAndProject;
   cardClickEnabled = true;
+
+  // chat
   setCloseAllCardsMenu$: BehaviorSubject<boolean> = new BehaviorSubject(null);
   showUnreadMessages$: ReplaySubject<IShowUnreadMessages> = new ReplaySubject(1);
   unreadChatsCount$: BehaviorSubject<number> = new BehaviorSubject(0);
   blockedOrUnblockedChat$: ReplaySubject<Chat> = new ReplaySubject(null);
+  selectedProjectForChat$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
+  displayedChats: Chat[]; // not all chats - only displayed
+
+  // map drag and drop
+  object3DAndProject: Object3DAndProject;
+  dragStarted = false;
+  showProgressWhenDropObject$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private notify: NotificationService, private router: Router, private socialAuthService: AuthService) { }
 
@@ -53,5 +61,15 @@ export class StateService {
 
   getUserId(): string {
     return this.user$.value.userId;
+  }
+
+  markChatAsUnread(chatId: string) {
+    this.showUnreadMessages$.next({ chatId, isUnread: true });
+    this.unreadChatsCount$.next(this.unreadChatsCount$.getValue() + 1);
+  }
+
+  markChatAsRead(chatId: string) {
+    this.showUnreadMessages$.next({ chatId, isUnread: false });
+    this.unreadChatsCount$.next(this.unreadChatsCount$.getValue() - 1);
   }
 }

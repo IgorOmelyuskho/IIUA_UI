@@ -288,8 +288,8 @@
     },
     "MainScreenVendorComponent": {
         "quickAction": "Quick action",
-        "onlyMyProjects": "My projects",
-        "edit": "Edit",
+        "onlyMyProjects": "Show my projects",
+        "addObject": "Add object on map",
         "exit": "Exit",
         "chooseProject": "Choose project",
         "noYetProject": "No projects created",
@@ -733,7 +733,10 @@
         "private": "(private)"
     },
     "MapComponent": {
-        "edit": "edit"
+        "edit": "edit",
+        "rotateLeft": "rotate left",
+        "rotateRight": "rotate right",
+        "changeSize": "change size"
     },
     "checkEmailShared": "You received a message in the email",
     "firstNeedRegister": "First you need to register as User or Company",
