@@ -124,6 +124,8 @@ export class ProjectsService {
             originalName: 'Network-Profile.png'
           };
           return projectWithAvatara;
+        } else {
+          return project;
         }
       })
     );
