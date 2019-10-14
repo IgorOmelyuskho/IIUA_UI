@@ -42,7 +42,7 @@
     }
   }
 
-  .messages {
+  #messages {
     overflow: auto;
     padding-right: 4px;
     padding-left: 10px;
@@ -314,8 +314,9 @@
       }
     }
 
-    .anchor {
+    #vendor-messages-anchor {
       overflow-anchor: auto;
+      height: 1px;
     }
   }
 

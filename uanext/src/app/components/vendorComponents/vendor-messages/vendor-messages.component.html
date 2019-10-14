@@ -6,7 +6,7 @@
     </div>
     <div *ngIf="chatIsBlocked" class="chat-is-blocked">{{ 'chatIsBlocked' | translate:self }}</div>
   </div>
-    <div #messagesElem class="messages" infiniteScroll [infiniteScrollUpDistance]="0.5" [scrollWindow]="false"
+    <div #messagesElem id="messages" infiniteScroll [infiniteScrollUpDistance]="2" [scrollWindow]="false"
       [infiniteScrollThrottle]="500" (scrolledUp)="onScrollUp()">
       <div *ngFor="let message of messages; let i = index" class="message">
 
@@ -90,7 +90,7 @@
           </div>
         </div>
       </div>
-      <div class="anchor"></div>
+      <div id="vendor-messages-anchor"></div>
     </div>
 
     <div class="send-message">

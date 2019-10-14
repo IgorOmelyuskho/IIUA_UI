@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="left-side">
+    <div class="email-list">
+      <div *ngFor="let email of emailList" class="item">
+        <div class="email">{{email.email}}</div>
+        <div [ngClass]="{isSended:email.sended}"class="sended">{{email.sended}}</div>
+        <button class="send btn btn btn-green">send</button>
+        <button class="remove btn">remove</button>
+      </div>
+    </div>
+  </div>
+  <div class="right-side">
+    <div class="wrapper">
+      <input class="form-control" [(ngModel)]="newEmail" type="text">
+      <button class="btn btn-green" click="addEmail()">Add</button>
+    </div>
+    <button class="btn btn-green" (click)="addAllNonAdded()">Send all unsent</button>
+  </div>
+</div>

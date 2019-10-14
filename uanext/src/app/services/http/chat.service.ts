@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Chat } from 'src/app/models/chat/chat';
 import { Message } from 'src/app/models/chat/message';
 import { delay, map, tap } from 'rxjs/operators';
@@ -9,12 +9,20 @@ import { Participant } from 'src/app/models/chat/chatParticipant';
 import { ChatType } from 'src/app/models/chat/chatType';
 import { GetChatsParams } from 'src/app/models/chat/getChatsParams';
 import { StateService } from '../state.service';
+import { IShowUnreadMessages } from 'src/app/models/chat/unreadMessage';
+import { VendorProject } from 'src/app/models/vendorProject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   counter = 0; // todo remove
+  setCloseAllCardsMenu$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  showUnreadMessages$: ReplaySubject<IShowUnreadMessages> = new ReplaySubject(1);
+  unreadChatsCount$: BehaviorSubject<number> = new BehaviorSubject(0);
+  blockedOrUnblockedChat$: ReplaySubject<Chat> = new ReplaySubject(null);
+  selectedProjectForChat$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
+  allCurrentUserChats: Chat[];
 
   constructor(private http: HttpClient, private stateService: StateService) { }
 
@@ -145,7 +153,7 @@ export class ChatService {
   getMessagesByChatId(chatId: string, date: any, count: number): Observable<Message[]> {
     let params = new HttpParams().set('conversationId', chatId);
     if (date != null) {
-      params = params.append('date', date);
+      params = params.append('date', date.toISOString());
     }
     if (count != null) {
       params = params.append('count', count.toString());
@@ -193,6 +201,32 @@ export class ChatService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  hasChatUnreadMessage(chat: Chat): boolean {
+    let needShowUnreadMsg: boolean;
+    if (chat.participant != null) {
+      needShowUnreadMsg = new Date(chat.lastActivityDate).getTime() > new Date(chat.participant.lastReadDate).getTime();
+    }
+
+    if (chat.participant != null && needShowUnreadMsg) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  markChatAsUnread(chatId: string) {
+    this.showUnreadMessages$.next({ chatId, isUnread: true });
+    this.unreadChatsCount$.next(this.unreadChatsCount$.getValue() + 1);
+  }
+
+  markChatAsRead(chat: Chat) {
+    this.showUnreadMessages$.next({ chatId: chat.id, isUnread: false });
+    this.unreadChatsCount$.next(this.unreadChatsCount$.getValue() - 1);
+    if (chat.participant != null) { // if user exist as participant in this chat
+      this.updateLastReadDate(chat.participant.id).subscribe();
     }
   }
 

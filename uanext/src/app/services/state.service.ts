@@ -14,6 +14,7 @@ import { Object3DAndProject } from 'src/app/components/threejs-scene/threejs-sce
 import { IShowUnreadMessages } from 'src/app/models/chat/unreadMessage';
 import { Chat } from '../models/chat/chat';
 import { Message } from '../models/chat/message';
+import { ChatService } from './http/chat.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +27,6 @@ export class StateService {
   interactiveInvestmentProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
   selectedVendorProject$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
   cardClickEnabled = true;
-
-  // chat
-  setCloseAllCardsMenu$: BehaviorSubject<boolean> = new BehaviorSubject(null);
-  showUnreadMessages$: ReplaySubject<IShowUnreadMessages> = new ReplaySubject(1);
-  unreadChatsCount$: BehaviorSubject<number> = new BehaviorSubject(0);
-  blockedOrUnblockedChat$: ReplaySubject<Chat> = new ReplaySubject(null);
-  selectedProjectForChat$: BehaviorSubject<VendorProject> = new BehaviorSubject(null);
-  displayedChats: Chat[]; // not all chats - only displayed
 
   // map drag and drop
   object3DAndProject: Object3DAndProject;
@@ -61,15 +54,5 @@ export class StateService {
 
   getUserId(): string {
     return this.user$.value.userId;
-  }
-
-  markChatAsUnread(chatId: string) {
-    this.showUnreadMessages$.next({ chatId, isUnread: true });
-    this.unreadChatsCount$.next(this.unreadChatsCount$.getValue() + 1);
-  }
-
-  markChatAsRead(chatId: string) {
-    this.showUnreadMessages$.next({ chatId, isUnread: false });
-    this.unreadChatsCount$.next(this.unreadChatsCount$.getValue() - 1);
   }
 }

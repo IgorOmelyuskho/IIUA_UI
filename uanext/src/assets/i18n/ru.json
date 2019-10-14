@@ -504,7 +504,8 @@
     "AdminPageComponent": {
         "profile": "Профиль",
         "upload3DModels": "Загузить 3D модели",
-        "signOut": "Выйти"
+        "signOut": "Выйти",
+        "mailDelivery": "Рассылка почты"
     },
     "ProjectUserPageComponent": {
         "profile": "Профиль",
