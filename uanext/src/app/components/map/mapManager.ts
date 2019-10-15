@@ -181,7 +181,7 @@ export class MapManager {
 
   private updateGeoObjectSettings(geoObject: GeoObject) {
     const historyPosition: HistoryPositionDto = {
-      objectId: geoObject.geoObjectId,
+      object3DId: geoObject.geoObjectId,
       positionX: geoObject.coords.x,
       positionY: geoObject.coords.y,
       scale: geoObject.scale,
@@ -1333,7 +1333,7 @@ export class MapManager {
         this.projectsService.addProjectGeoObject(projectGeoObjectDto).subscribe();
 
         const historyPositionDto: HistoryPositionDto = {
-          objectId: projectGeoObjectDto.geoObjectId,
+          object3DId: projectGeoObjectDto.geoObjectId,
           positionX: object3DDto.staticPositionX,
           positionY: object3DDto.staticPositionY,
           scale: object3DDto.scale,

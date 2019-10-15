@@ -1,5 +1,5 @@
 export interface HistoryPositionDto {
-  objectId: string;
+  object3DId: string;
   positionX: number;
   positionY: number;
   scale: number;
