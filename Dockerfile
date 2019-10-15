@@ -15,7 +15,7 @@ COPY . .
 WORKDIR /ng-app/uanext
 RUN npm ci 
 
-RUN npm run ng build -- --configuration master --output-path=dist
+RUN npm run ng build -- --configuration prod --output-path=dist
 
 ### STAGE 2: Setup ###
 
