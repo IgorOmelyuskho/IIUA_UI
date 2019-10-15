@@ -8,6 +8,8 @@ import { Object3DDto } from 'src/app/models/object3DDto';
 import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 import { Subscription } from 'rxjs';
+import { ChatService } from 'src/app/services/http/chat.service';
+import { Chat } from 'src/app/models/chat/chat';
 
 @Component({
   selector: 'app-main-screen-vendor',
@@ -42,7 +44,13 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
     }, 100);
   }
 
-  constructor(private stateService: StateService, private projectsService: ProjectsService, private mapService: MapService, private filteredProjectsService: FilteredProjectsService) { }
+  constructor(
+    private stateService: StateService,
+    private projectsService: ProjectsService,
+    private mapService: MapService,
+    private filteredProjectsService: FilteredProjectsService,
+    private chatService: ChatService
+  ) { }
 
   ngOnInit() {
     this.projectsService.fetchVendorProjects().subscribe(
@@ -56,6 +64,23 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
           }
           return 0;
         });
+      }
+    );
+
+    this.chatService.getAllChats().subscribe(
+      (chats: Chat[]) => {
+        let unreadChatsCount = 0;
+        for (let i = 0; i < chats.length; i++) {
+          if (this.chatService.hasChatUnreadMessage(chats[i]) === true) {
+            unreadChatsCount++;
+          }
+        }
+        this.chatService.allCurrentUserChats = chats;
+        this.chatService.unreadChatsCount$.next(unreadChatsCount);
+      },
+      err => {
+        this.chatService.allCurrentUserChats = [];
+        this.chatService.unreadChatsCount$.next(0);
       }
     );
   }

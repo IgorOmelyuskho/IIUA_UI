@@ -10,6 +10,7 @@ import { AuthorizationService } from 'src/app/services/http/authorization.servic
 export class AdminPageComponent implements OnInit, AfterViewInit {
   @ViewChild('profile') profileTab: ElementRef;
   @ViewChild('upload') uploadTab: ElementRef;
+  @ViewChild('mailDelivery') mailDeliveryTab: ElementRef;
   self = 'AdminPageComponent';
 
   constructor(private router: Router, private authService: AuthorizationService) { }
@@ -30,14 +31,23 @@ export class AdminPageComponent implements OnInit, AfterViewInit {
 
   goToProfile() {
     this.profileTab.nativeElement.classList.add('selected');
+    this.mailDeliveryTab.nativeElement.classList.remove('selected');
     this.uploadTab.nativeElement.classList.remove('selected');
     this.router.navigate(['admin', 'profile']);
   }
 
   uploadModel() {
     this.profileTab.nativeElement.classList.remove('selected');
+    this.mailDeliveryTab.nativeElement.classList.remove('selected');
     this.uploadTab.nativeElement.classList.add('selected');
     this.router.navigate(['admin', 'upload3dModel']);
+  }
+
+  mailDeliveryClick() {
+    this.profileTab.nativeElement.classList.remove('selected');
+    this.uploadTab.nativeElement.classList.remove('selected');
+    this.mailDeliveryTab.nativeElement.classList.add('selected');
+    this.router.navigate(['admin', 'mailDelivery']);
   }
 
   signOut() {

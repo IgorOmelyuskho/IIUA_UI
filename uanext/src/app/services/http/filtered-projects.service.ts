@@ -77,7 +77,7 @@ export class FilteredProjectsService {
       );
   }
 
-  private fixFilterForBackend(filter: FilterFields | any): FilterFields {
+  public fixFilterForBackend(filter: FilterFields | any): FilterFields {
     // if (filter.companyName == null) {
     //   filter.companyName = '';
     // }

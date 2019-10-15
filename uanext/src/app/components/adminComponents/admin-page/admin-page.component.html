@@ -5,8 +5,11 @@
   <div>
     <button #profile (click)='goToProfile()' type="button">{{ 'profile' | translate:self }}</button>
     <button #upload (click)='uploadModel()' type="button">{{ 'upload3DModels' | translate:self }}</button>
+    <button #mailDelivery (click)='mailDeliveryClick()' type="button">{{ 'mailDelivery' | translate:self }}</button>
     <button (click)="signOut()" type="button">{{ 'signOut' | translate:self }}</button>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="router-outlet-wrapper">
+  <router-outlet></router-outlet>
+</div>

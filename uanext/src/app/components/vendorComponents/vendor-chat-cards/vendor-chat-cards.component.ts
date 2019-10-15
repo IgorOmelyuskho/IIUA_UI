@@ -57,23 +57,10 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.chatService.getAllChats().subscribe(
-      (chats: Chat[]) => {
-        this.stateService.unreadChatsCount$.next(chats.length);
-
-        for (let i = 0; i < chats.length; i++) {
-          console.log(chats[i].participant);
-        }
-      },
-      err => {
-        this.stateService.unreadChatsCount$.next(0);
-      }
-    );
-
     this.signalChatRSubscription = this.chatSignalR.messageReceived$.subscribe(
       (message: Message) => {
         if (this.chatService.messageIsYou(message) === false) {
-          this.stateService.markChatAsUnread(message.conversationId);
+          this.chatService.markChatAsUnread(message.conversationId);
         }
 
         this.messageFromExistOrNotExistChat(message);
@@ -97,12 +84,12 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     console.log('there is no such chat yet, message = ', message);
     if (this.notShownChatsId.indexOf(message.conversationId) === -1) {
       this.notShownChatsId.push(message.conversationId);
-      this.stateService.markChatAsUnread(null);
+      this.chatService.markChatAsUnread(null);
     }
   }
 
   windowClickHandler = () => {
-    this.stateService.setCloseAllCardsMenu$.next(true);
+    this.chatService.setCloseAllCardsMenu$.next(true);
   }
 
   getAvataraUrl(project) {
@@ -134,7 +121,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
         }
         const projectWithChat: VendorProject = this.projectWithChat(project, chat);
         if (this.projectsWithChat.length === 0) {
-          this.stateService.selectedProjectForChat$.next(projectWithChat);
+          this.chatService.selectedProjectForChat$.next(projectWithChat);
         }
         this.projectsWithChat.push(projectWithChat);
       }
@@ -184,7 +171,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     this.beforeFindNewChats();
     if (project != null) {
       this.projectsWithChat.push(project);
-      this.stateService.selectedProjectForChat$.next(project);
+      this.chatService.selectedProjectForChat$.next(project);
     }
     const params: GetChatsParams = {
       numberOfConversation: this.numberOfConversation,
@@ -222,7 +209,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
   }
 
   beforeFindNewChats() {
-    this.stateService.selectedProjectForChat$.next(null);
+    this.chatService.selectedProjectForChat$.next(null);
     this.projectsElem.nativeElement.scrollTop = 0;
     this.numberOfConversation = 0;
     this.projectsWithChat = [];
@@ -231,7 +218,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
 
   insertHelpChat() {
     this.projectsWithChat.push(this.helperChatProject);
-    this.stateService.selectedProjectForChat$.next(this.helperChatProject);
+    this.chatService.selectedProjectForChat$.next(this.helperChatProject);
   }
 
   projectWithChat(project: VendorProject, chat: Chat): VendorProject {

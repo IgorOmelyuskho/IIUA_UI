@@ -52,7 +52,8 @@ export const environment = {
   getGeoModels: '/api/Map/getGeoModels',
   updateGeoObjectSettings: '/api/Map/UpdateGeoObjectSettings',
 
-  Notification: '/api/Notification',
+  createAdvertising: '/api/Notification/advertising',
+  notificationMessage: '/api/Notification/message',
 
   getOrCreateChat: '/api/Conversations/GetOrCreateP2P',
   getAllChats: '/api/Conversations/GetAll',

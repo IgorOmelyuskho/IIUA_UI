@@ -504,7 +504,8 @@
     "AdminPageComponent": {
         "profile": "Profile",
         "upload3DModels": "Upload 3d models",
-        "signOut": "Sign out"
+        "signOut": "Sign out",
+        "mailDelivery": "Mail delivery"
     },
     "ProjectUserPageComponent": {
         "profile": "Profile",

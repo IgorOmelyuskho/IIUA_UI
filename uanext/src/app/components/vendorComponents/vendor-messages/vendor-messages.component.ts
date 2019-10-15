@@ -11,7 +11,21 @@ import { Chat } from 'src/app/models/chat/chat';
 import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';
 import { Participant } from 'src/app/models/chat/chatParticipant';
 import { ParticipantsCacheService } from 'src/app/services/participants-cache.service';
-import { IShowUnreadMessages } from 'src/app/models/chat/unreadMessage';
+
+const msg_test: Message = {
+  attachmentId: null,
+  attachmentOriginalName: null,
+  attachmentUrl: null,
+  conversationId: '2270fbca-6757-4553-19c5-08d73f7fc4c7_35',
+  createdDate: new Date(),
+  creator: '3e26d08b-2348-49a8-82ae-08d74bf1fffb',
+  id: '1ce6f3f7-1a02-4473-a7ab-9c97540276e2',
+  lastUpdatedDate: new Date(),
+  leaveDate: null,
+  participantId: '836ece40-80a6-44e5-a520-c1757a2a0ad1',
+  text: 'Message created automatically 308',
+  userId: '3e26d08b-2348-49a8-82ae-08d74bf1fffb',
+};
 
 @Component({
   selector: 'app-vendor-messages',
@@ -37,6 +51,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   readonly msgCountForReceive = 20;
   chatIsBlocked = false;
   cnt = 0; // for automaticallyCreateMsg
+  cnt1 = 0; // todo remove
   blockedOrUnblockedChatSubscription: Subscription;
 
   constructor(
@@ -48,7 +63,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   ) { }
 
   ngOnInit() {
-    this.projectSubscription = this.stateService.selectedProjectForChat$.subscribe(
+    this.projectSubscription = this.chatService.selectedProjectForChat$.subscribe(
       (project: VendorProject) => {
         if (project != null) {
           this.project = project;
@@ -60,7 +75,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
       }
     );
 
-    this.blockedOrUnblockedChatSubscription = this.stateService.blockedOrUnblockedChat$.subscribe(
+    this.blockedOrUnblockedChatSubscription = this.chatService.blockedOrUnblockedChat$.subscribe(
       (blockedOrUnblockedChat: Chat) => {
         if (blockedOrUnblockedChat.id === this.project.chat.id) {
           if (blockedOrUnblockedChat.isBlock === true) {
@@ -71,7 +86,14 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
         }
       }
     );
-   }
+
+    // setInterval(() => {
+    //   this.messages.push({
+    //     ...msg_test,
+    //     text: (this.cnt1++).toString()
+    //   } );
+    // }, 500);
+  }
 
   ngAfterViewInit() {
     autosize(document.querySelector(this.textareaSelector));
@@ -144,10 +166,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   whenReadMessage() {
-    this.stateService.markChatAsRead(this.project.chat.id);
-    if (this.project.chat.participant != null) { // if user exist as participant in this chat
-      this.chatService.updateLastReadDate(this.project.chat.participant.id).subscribe();
-    }
+    this.chatService.markChatAsRead(this.project.chat);
   }
 
   getMessagesByChatIdSubscribe(observable: Observable<any>, initial: boolean) {
@@ -168,7 +187,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
           messages[i].isYou = this.chatService.messageIsYou(messages[i]);
           this.getParticipantByParticipantId(messages[i]);
         }
-        this.messages = this.messages.concat(messages.reverse());
+        this.messages = messages.reverse().concat(this.messages);
         this.messagesLoading = false;
       },
       err => {

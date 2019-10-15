@@ -28,6 +28,7 @@ import { AuthGuard, NoAuthGuard, AdminGuard } from './services/guards';
 import { InvestorGuard } from './services/guards';
 import { VendorGuard } from './services/guards';
 import { ProjectUserGuard } from './services/guards/project-user.guard';
+import { AdminMailDeliveryComponent } from './components/adminComponents/admin-mail-delivery/admin-mail-delivery.component';
 
 const childInvestorRoutes: Routes = [
   { path: '', redirectTo: 'main-page', pathMatch: 'full' },
@@ -53,6 +54,7 @@ const childAdminRoutes: Routes = [
   { path: 'upload3dModel', component: Object3dUploadComponent, canActivate: [AdminGuard] },
   { path: 'profile', component: AdminProfileComponent, canActivate: [AdminGuard] },
   { path: 'signup', component: AdminSignupComponent },
+  { path: 'mailDelivery', component: AdminMailDeliveryComponent, canActivate: [AdminGuard] }
 ];
 
 const childProjectUserRoutes: Routes = [

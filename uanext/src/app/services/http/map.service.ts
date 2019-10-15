@@ -7,13 +7,14 @@ import { GeoObject, FilterFields } from 'src/app/models';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import { Object3DDto } from 'src/app/models/object3DDto';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
+import { FilteredProjectsService } from './filtered-projects.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private filteredProjectsService: FilteredProjectsService) { }
 
   post3DObject(object3DDto: Object3DDto): Observable<any> {
     return this.http.post<any>(environment.map + environment.post3DObject, object3DDto);
@@ -40,6 +41,7 @@ export class MapService {
   }
 
   mapFilteringProjects(filter: FilterFields): Observable<Object3DDto> {
+    filter = this.filteredProjectsService.fixFilterForBackend(filter);
     return this.http.post<any>(environment.map + environment.mapFilteringProjects, filter);
   }
 

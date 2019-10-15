@@ -29,7 +29,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.setUnreadMessagesWhenInit();
 
-    this.selectChatSubscription = this.stateService.selectedProjectForChat$.subscribe(
+    this.selectChatSubscription = this.chatService.selectedProjectForChat$.subscribe(
       (project: VendorProject) => {
         if (project != null) {
           if (project.chat.id === this.project.chat.id) {
@@ -41,7 +41,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.closeMenuSubscription = this.stateService.setCloseAllCardsMenu$.subscribe(
+    this.closeMenuSubscription = this.chatService.setCloseAllCardsMenu$.subscribe(
       val => {
         if (val) {
           this.menuIsOpen = false;
@@ -49,7 +49,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.showUnreadMessagesSubscription = this.stateService.showUnreadMessages$.subscribe(
+    this.showUnreadMessagesSubscription = this.chatService.showUnreadMessages$.subscribe(
       (showUnreadMessages: IShowUnreadMessages) => {
         if (this.project.chat.id === showUnreadMessages.chatId) {
           if (showUnreadMessages.isUnread === true) {
@@ -71,8 +71,8 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
   }
 
   projectWrapperClick() {
-    this.stateService.selectedProjectForChat$.next(this.project);
-    this.stateService.markChatAsRead(this.project.chat.id);
+    this.chatService.selectedProjectForChat$.next(this.project);
+    this.chatService.markChatAsRead(this.project.chat);
     console.log('project = ', this.project);
   }
 
@@ -102,7 +102,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
 
   moreActions(event) {
     event.stopPropagation();
-    this.stateService.setCloseAllCardsMenu$.next(true);
+    this.chatService.setCloseAllCardsMenu$.next(true);
     requestAnimationFrame(() => {
       this.menuIsOpen = !this.menuIsOpen;
     });
@@ -110,23 +110,23 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
 
   sendMessage() {
     event.stopPropagation();
-    this.stateService.setCloseAllCardsMenu$.next(true);
-    this.stateService.selectedProjectForChat$.next(this.project);
+    this.chatService.setCloseAllCardsMenu$.next(true);
+    this.chatService.selectedProjectForChat$.next(this.project);
   }
 
   privateChat() {
     event.stopPropagation();
-    this.stateService.setCloseAllCardsMenu$.next(true);
+    this.chatService.setCloseAllCardsMenu$.next(true);
     this.createChat.emit(this.project);
   }
 
   block() {
     event.stopPropagation();
-    this.stateService.setCloseAllCardsMenu$.next(true);
+    this.chatService.setCloseAllCardsMenu$.next(true);
     this.chatService.blockConversationP2P(this.project.chat.id, this.project.chat.participant.id).subscribe(
       () => {
         this.project.chat.isBlock = true;
-        this.stateService.blockedOrUnblockedChat$.next(this.project.chat);
+        this.chatService.blockedOrUnblockedChat$.next(this.project.chat);
       }
     );
   }
@@ -137,7 +137,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
     this.chatService.unblockConversationP2P(this.project.chat.id, this.project.chat.participant.id).subscribe(
       () => {
         this.project.chat.isBlock = null; // as in response
-        this.stateService.blockedOrUnblockedChat$.next(this.project.chat);
+        this.chatService.blockedOrUnblockedChat$.next(this.project.chat);
       }
     );
   }
@@ -150,16 +150,7 @@ export class VendorProjectMinCardComponent implements OnInit, OnDestroy {
   }
 
   setUnreadMessagesWhenInit() {
-    let needShowUnreadMsg: boolean;
-    if (this.project.chat.participant != null) {
-      needShowUnreadMsg = new Date(this.project.chat.lastActivityDate).getTime() > new Date(this.project.chat.participant.lastReadDate).getTime();
-    }
-
-    if (this.project.chat.participant != null && needShowUnreadMsg) {
-      this.showUnreadMessageCircle = true;
-    } else {
-      this.showUnreadMessageCircle = false;
-    }
+    this.showUnreadMessageCircle = this.chatService.hasChatUnreadMessage(this.project.chat);
   }
 
   ngOnDestroy() {

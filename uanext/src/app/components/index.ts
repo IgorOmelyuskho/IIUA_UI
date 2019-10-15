@@ -79,6 +79,7 @@ import { Panel3dModelsComponent } from './panel3d-models/panel3d-models.componen
 import { ThreejsSceneComponent } from './threejs-scene/threejs-scene.component';
 import { EditModeTooltipComponent } from './edit-mode-tooltip/edit-mode-tooltip.component';
 import { IndexPageCardComponent } from './index-page-card/index-page-card.component';
+import { AdminMailDeliveryComponent } from './adminComponents/admin-mail-delivery/admin-mail-delivery.component';
 
 // this exports for app-routing.module.ts
 export {
@@ -155,6 +156,7 @@ export {
   ThreejsSceneComponent,
   EditModeTooltipComponent,
   IndexPageCardComponent,
+  AdminMailDeliveryComponent
 };
 
 export const components = [
@@ -231,6 +233,7 @@ export const components = [
   ThreejsSceneComponent,
   EditModeTooltipComponent,
   IndexPageCardComponent,
+  AdminMailDeliveryComponent
 ];
 
 
