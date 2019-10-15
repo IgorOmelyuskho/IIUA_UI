@@ -15,7 +15,9 @@ COPY . .
 WORKDIR /ng-app/uanext
 RUN npm ci 
 
-RUN npm run ng build -- --configuration  echo ${Configuration} --prod --output-path=dist
+#RUN npm run ng build -- --configuration  echo ${Configuration} --prod --output-path=dist
+
+RUN if [ "$Configuration" = "master" ]; then npm run ng build -- --configuration  echo master --prod --output-path=dist; else then npm run ng build -- --configuration  echo realese --prod --output-path=dist; fi;
 
 ### STAGE 2: Setup ###
 
