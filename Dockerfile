@@ -3,7 +3,7 @@
 # We label our stage as ‘builder’
 FROM node:10-alpine as builder
 
-ARG BRANCH prod
+ARG BRANCH
 
 #COPY ./uanext/package.json ./uanext/package-lock.json ./
 
@@ -15,7 +15,7 @@ COPY . .
 WORKDIR /ng-app/uanext
 RUN npm ci 
 
-RUN if [ "$BRANCH " = "prod" ] ; then npm run ng build -- --configuration prod --output-path=dist; else echo npm run ng build -- --configuration master --output-path=dist; fi
+RUN if [ "$BRANCH " = "prod" ] ; then npm run ng build -- --configuration prod --output-path=dist; else npm run ng build -- --configuration master --output-path=dist; fi
 
 
 ### STAGE 2: Setup ###
