@@ -10,7 +10,7 @@ export class NotificationService {
 
   constructor(private notifier: MatSnackBar) { }
 
-  show(msg: string, duration: number = 5000): void {
+  show(msg: string, duration: number = 10000): void {
     this.ref = this.notifier.openFromComponent(SnackBarComponent, {
       duration: duration,
       data: msg,

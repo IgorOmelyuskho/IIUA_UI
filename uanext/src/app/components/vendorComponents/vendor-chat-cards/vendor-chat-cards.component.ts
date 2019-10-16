@@ -37,7 +37,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     avatara: {
       id: 1,
       originalName: 'Network-Profile.png',
-      url: 'http://localhost:4200/assets/img/Network-Profile.png'
+      url: window.location.origin + '/../../assets/img/Network-Profile.png'
     }
   };
 
@@ -52,6 +52,7 @@ export class VendorFindInvestorComponent implements OnInit, OnDestroy {
     window.addEventListener('click', this.windowClickHandler);
     this.chatService.getOrCreateHelp().subscribe(
       (helpChat: Chat) => {
+        console.log(this.helperChatProject);
         this.helperChatProject = this.projectWithChat(this.helperChatProject, helpChat);
         this.allChats();
       }

@@ -1,19 +1,20 @@
 <div class="container">
   <div class="left-side">
-    <div class="email-list">
-      <div *ngFor="let email of emailList" class="item">
-        <div class="email">{{email.email}}</div>
-        <div [ngClass]="{isSended:email.sended}"class="sended">{{email.sended}}</div>
-        <button class="send btn btn btn-green">send</button>
-        <button class="remove btn">remove</button>
+    <div class="email-list" infiniteScroll [infiniteScrollUpDistance]="2" [scrollWindow]="false"
+      [infiniteScrollThrottle]="500" (scrolled)="onScroll()">
+      <div *ngFor="let emailData of emailList" class="item">
+        <div class="email">{{emailData.email}}</div>
+        <div [ngClass]="{isSended: emailData.sended}" class="sended">{{emailData.sended}}</div>
+        <button (click)="send(emailData)" class="send btn btn btn-green">send</button>
+        <button (click)="remove(emailData)" class="remove btn">remove</button>
       </div>
     </div>
   </div>
   <div class="right-side">
     <div class="wrapper">
       <input class="form-control" [(ngModel)]="newEmail" type="text">
-      <button class="btn btn-green" click="addEmail()">Add</button>
+      <button class="btn btn-green" (click)="createNotification()">Add</button>
     </div>
-    <button class="btn btn-green" (click)="addAllNonAdded()">Send all unsent</button>
+    <button class="btn btn-green" (click)="sendForAll()">Send for all</button>
   </div>
 </div>

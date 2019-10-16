@@ -10,7 +10,7 @@
     .email-list {
       .item {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         border: 1px solid #808080;
         margin-bottom: -1px;
 
@@ -22,6 +22,7 @@
 
         .email {
           font-size: 16px;
+          width: 50%;
         }
 
         .sended {
@@ -61,7 +62,7 @@
       display: flex;
 
       input {
-        min-width: 380px;
+        width: calc(100% - 50px);
       }
 
       button {

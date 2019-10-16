@@ -234,6 +234,7 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
     }
 
     if (this.vendorProjectForm.valid === false) {
+      this.notify.show(this.translateService.data.checkEnteredData);
       return;
     }
 

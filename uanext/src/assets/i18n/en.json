@@ -745,5 +745,6 @@
     "projectSuccessfullyCreated": "You have successfully created project",
     "projectNotCreated": "Project not created",
     "projectUpdated": "Project successfully updated",
-    "projectNotUpdated": "Project not updated"
+    "projectNotUpdated": "Project not updated",
+    "checkEnteredData": "Check the correctness of the entered data"
 }

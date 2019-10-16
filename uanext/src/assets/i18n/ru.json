@@ -745,5 +745,6 @@
     "projectSuccessfullyCreated": "Вы успешно создали проект",
     "projectNotCreated": "Проект не создан",
     "projectUpdated": "Проект успешно обновлен",
-    "projectNotUpdated": "Проект не обновлен"
+    "projectNotUpdated": "Проект не обновлен",
+    "checkEnteredData": "Проверьте правильность введенных данных"
 }
