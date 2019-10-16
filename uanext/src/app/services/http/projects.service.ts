@@ -112,7 +112,7 @@ export class ProjectsService {
       );
   }
 
-  getProjectById(projectId: number): Observable<VendorProject> {
+  getProjectById(projectId: string): Observable<VendorProject> {
     const params = new HttpParams().set('id', projectId.toString());
     return this.http.get<any>(environment.projects + environment.getProjectById, { params: params }).pipe(
       map((project: VendorProject) => { // todo remove
