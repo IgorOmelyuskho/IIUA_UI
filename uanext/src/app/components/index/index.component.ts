@@ -404,7 +404,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     buttons[0].classList.add('selected');
     this.projectsForView = [];
     for (let i = 0; i < 3; i++) {
-      this.projectsForView.push(this.allProjects[i]);
+      if (this.allProjects[i] != null) {
+        this.projectsForView.push(this.allProjects[i]);
+      }
     }
   }
 
@@ -416,7 +418,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     buttons[1].classList.add('selected');
     this.projectsForView = [];
     for (let i = 3; i < 6; i++) {
-      this.projectsForView.push(this.allProjects[i]);
+      if (this.allProjects[i] != null) {
+        this.projectsForView.push(this.allProjects[i]);
+      }
     }
   }
 
@@ -428,7 +432,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     buttons[2].classList.add('selected');
     this.projectsForView = [];
     for (let i = 6; i < 9; i++) {
-      this.projectsForView.push(this.allProjects[i]);
+      if (this.allProjects[i] != null) {
+        this.projectsForView.push(this.allProjects[i]);
+      }
     }
   }
 

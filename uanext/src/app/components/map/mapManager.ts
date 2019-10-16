@@ -11,6 +11,7 @@ import { StateService } from 'src/app/services/state.service';
 import { Object3DAndProject } from '../threejs-scene/threejs-scene.component';
 import { ProjectGeoObjectDto } from 'src/app/models/projectGeoObjectDto';
 import { ProjectsService } from 'src/app/services/http/projects.service';
+import { regionalCentersCoords } from 'src/assets/regional-centers-coords';
 declare var THREE: any;
 declare var maptalks: any;
 
@@ -89,12 +90,13 @@ export class MapManager {
       );
   }
 
-  mapSetCenterByProject(project: VendorProject) {
-    // project.coords = {};
-    // project.coords.x = Math.random() * 30;
-    // project.coords.y = Math.random() * 30;
-    // this.map.setCenter(new maptalks.Coordinate(project.coords.x, project.coords.y));
-    // set selected project ??
+  setCenterByProjectRegion(region: string) {
+    for (let i = 0; i < regionalCentersCoords.length; i++) {
+      if (regionalCentersCoords[i].value === region) {
+        this.map.setCenter(new maptalks.Coordinate(regionalCentersCoords[i].x, regionalCentersCoords[i].y));
+        return;
+      }
+    }
   }
 
   mapDestroy() {

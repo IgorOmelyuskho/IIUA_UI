@@ -44,6 +44,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  @Input()
+  set setCenterByRegion(region: string) {
+    if (region != null) {
+      this.mapManager.setCenterByProjectRegion(region);
+    }
+  }
+
   timeOut1: any;
   timeOut2: any;
   timeOut3: any;

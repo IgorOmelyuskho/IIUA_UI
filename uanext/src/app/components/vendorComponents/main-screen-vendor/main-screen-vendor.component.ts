@@ -32,6 +32,7 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
   projects: VendorProject[] = [];
   @ViewChild('animatedBtn') animatedBtn: ElementRef;
   selectedVendorProjectSubscription: Subscription;
+  projectRegion: string;
 
   windowMouseMoveHandler = (e) => {
     this.previewCardX = e.pageX;
@@ -49,7 +50,7 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
     private projectsService: ProjectsService,
     private mapService: MapService,
     private filteredProjectsService: FilteredProjectsService,
-    private chatService: ChatService
+    private chatService: ChatService,
   ) { }
 
   ngOnInit() {
@@ -93,6 +94,10 @@ export class MainScreenVendorComponent implements OnInit, AfterViewInit, OnDestr
       (project: VendorProject) => {
         if (project != null && this.editMode === true) {
           this.animatedBtn.nativeElement.classList.remove('animated-btn');
+        }
+
+        if (project != null) {
+          this.projectRegion = project.region;
         }
       }
     );

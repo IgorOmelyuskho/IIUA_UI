@@ -1,6 +1,6 @@
 <div class="full-screen-block">
   <div class="map-wrapper">
-    <app-map [replace3DObjects]="geoObjects" (objectHover)="onMapObjectHover($event)"
+    <app-map [replace3DObjects]="geoObjects" [setCenterByRegion]="projectRegion" (objectHover)="onMapObjectHover($event)"
       (changeExtent)="onMapChangeExtent($event)"></app-map>
   </div>
 
