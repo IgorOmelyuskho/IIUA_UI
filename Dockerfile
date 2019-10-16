@@ -3,7 +3,7 @@
 # We label our stage as ‘builder’
 FROM node:10-alpine as builder
 
-ENV BRANCH prod
+ARG BRANCH prod
 
 #COPY ./uanext/package.json ./uanext/package-lock.json ./
 
