@@ -14,5 +14,5 @@ export interface Chat {
     leaveDate: any;
     participant?: Participant;
     isBlock: boolean;
-    projectId: number;
+    projectId: string;
 }

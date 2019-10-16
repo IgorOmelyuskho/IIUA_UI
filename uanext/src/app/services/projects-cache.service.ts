@@ -8,11 +8,11 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProjectsCacheService {
-  private cache: { [key: number]: ReplaySubject<VendorProject> } = {};
+  private cache: { [key: string]: ReplaySubject<VendorProject> } = {};
 
   constructor(private projectsService: ProjectsService) { }
 
-  getProject(projectId: number): Observable<VendorProject> {
+  getProject(projectId: string): Observable<VendorProject> {
     let result: Observable<VendorProject>;
     if (this.cache[projectId]) {
       result =  this.cache[projectId];
@@ -27,7 +27,7 @@ export class ProjectsCacheService {
     );
   }
 
-  private addProjectToCache(projectId: number): Observable<VendorProject> {
+  private addProjectToCache(projectId: string): Observable<VendorProject> {
     this.cache[projectId] = new ReplaySubject(1);
     this.projectsService.getProjectById(projectId).subscribe(
       (project: VendorProject) => {

@@ -1,6 +1,6 @@
 export interface ProjectGeoObjectDto {
     id?: number;
-    projectId?: number;
+    projectId?: string;
     projectUserId?: string;
     geoObjectId: string;
     path: string;

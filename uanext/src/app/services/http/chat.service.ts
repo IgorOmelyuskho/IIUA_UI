@@ -26,7 +26,7 @@ export class ChatService {
 
   constructor(private http: HttpClient, private stateService: StateService) { }
 
-  getOrCreateP2P(projectId: number): Observable<Chat> {
+  getOrCreateP2P(projectId: string): Observable<Chat> {
     const params = new HttpParams().set('projectId', projectId.toString());
     return this.http.get<any>(environment.chat + environment.getOrCreateChat, { params: params });
   }
@@ -47,7 +47,7 @@ export class ChatService {
     return this.http.get<any>(environment.chat + environment.getChatById, { params: params });
   }
 
-  getChatByProjectId(projectId: number): Observable<Chat> {
+  getChatByProjectId(projectId: string): Observable<Chat> {
     const params = new HttpParams().set('projectId', projectId.toString());
     return this.http.get<any>(environment.chat + environment.getChatByProjectId, { params: params });
     // const chat: Chat = {
