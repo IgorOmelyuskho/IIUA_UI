@@ -1,7 +1,7 @@
 <div class="container">
   <div class="left-side">
-    <div class="email-list" infiniteScroll [infiniteScrollUpDistance]="2" [scrollWindow]="false"
-      [infiniteScrollThrottle]="500" (scrolled)="onScroll()">
+    <div class="email-list" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500"
+      (scrolled)="onScroll()" [scrollWindow]="false">
       <div *ngFor="let emailData of emailList" class="item">
         <div class="email">{{emailData.email}}</div>
         <div [ngClass]="{isSended: emailData.sended}" class="sended">{{emailData.sended}}</div>

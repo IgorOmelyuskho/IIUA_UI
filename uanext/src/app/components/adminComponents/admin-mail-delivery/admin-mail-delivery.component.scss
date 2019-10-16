@@ -5,9 +5,11 @@
 
   .left-side {
     width: 50%;
-    overflow: auto;
 
     .email-list {
+      height: 100%;
+      overflow: scroll;
+
       .item {
         display: flex;
         justify-content: space-between;
