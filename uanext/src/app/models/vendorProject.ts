@@ -3,7 +3,7 @@ import { Chat } from './chat/chat';
 import { ProjectGeoObjectDto } from './projectGeoObjectDto';
 
 export interface VendorProject {
-  id?: number;
+  id?: string;
   userId?: number;
   name: string;
   avatara?: any;

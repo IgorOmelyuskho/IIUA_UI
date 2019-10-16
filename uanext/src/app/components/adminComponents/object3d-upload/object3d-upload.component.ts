@@ -23,7 +23,7 @@ export class Object3dUploadComponent implements OnInit {
   zipUploaded = false;
   pathToZip: string;
   searchWord: string;
-  projectId: number;
+  projectId: string;
 
   constructor(
     private filesService: FilesService,

@@ -81,7 +81,7 @@ export class ProjectsService {
     return this.http.post<any>(environment.projects + environment.vendorProject, newVendorProject);
   }
 
-  updateVendorProject(projectId: number, updatedVendorProject: VendorProject): Observable<any> {
+  updateVendorProject(projectId: string, updatedVendorProject: VendorProject): Observable<any> {
     return this.http.put<any>(environment.projects + environment.vendorProject + projectId, updatedVendorProject);
   }
 
@@ -131,7 +131,7 @@ export class ProjectsService {
     );
   }
 
-  removeProjectById(projectId: number): Observable<any> {
+  removeProjectById(projectId: string): Observable<any> {
     return this.http.delete(environment.projects + environment.removeProject + projectId);
   }
 

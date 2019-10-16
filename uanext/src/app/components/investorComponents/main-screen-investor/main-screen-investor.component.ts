@@ -22,7 +22,7 @@ export class MainScreenInvestorComponent implements OnInit, AfterViewInit, OnDes
   self = 'MainScreenInvestorComponent';
 
   selectedProject: VendorProject = null;
-  selectedProjectId: number;
+  selectedProjectId: string;
 
   filter: FilterFields = {};
   searchWord: string;
