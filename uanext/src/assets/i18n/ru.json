@@ -284,7 +284,12 @@
         "uploadPhotos": "Загруженные фотографии (одна фотография обязательна)",
         "minPhotosCount": "Минимальное количество фотографий",
         "uploadedFiles": "Загруженные файлы",
-        "createProject": "Создать проект"
+        "createProject": "Создать проект",
+        "phonePlaceholder": "Введите свой телефон (не обязательно)",
+        "skypePlaceholder": "Введите свой Скайп (не обязательно)",
+        "telegramPlaceholder": "Введите свой Телеграм (не обязательно)",
+        "viberPlaceholder": "Введите свой Вайбер (не обязательно)",
+        "instagramPlaceholder": "Введите свой Инстаграм (не обязательно)"
     },
     "MainScreenVendorComponent": {
         "quickAction": "Быстрые действия",

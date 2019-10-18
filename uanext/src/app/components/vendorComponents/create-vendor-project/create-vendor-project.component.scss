@@ -117,3 +117,18 @@ hr {
   position: relative;
   left: 13.4px;
 }
+
+
+.contacts {
+  margin: 0 auto;
+  width: 50%;
+
+  @media screen and (max-width: 760px) {
+    width: 100%;
+  }
+
+  input {
+    width: 100%;
+    margin: 10px 0;
+  }
+}

@@ -94,6 +94,10 @@ export class MapManager {
     for (let i = 0; i < regionalCentersCoords.length; i++) {
       if (regionalCentersCoords[i].value === region) {
         this.map.setCenter(new maptalks.Coordinate(regionalCentersCoords[i].x, regionalCentersCoords[i].y));
+        if (this.on_map_change_extent != null) {
+          const extent = this.getExtent();
+          this.on_map_change_extent(extent);
+        }
         return;
       }
     }
