@@ -67,6 +67,11 @@ export class CreateVendorProjectComponent implements OnInit, OnDestroy {
       forVideos: [''],
       forPhotos: [''],
       forFiles: [''],
+      phone: ['', [Validators.pattern(FormHelper.phonePattern)]],
+      skype: [''],
+      telegram: [''],
+      viber: [''],
+      instagram: [''],
     });
   }
 

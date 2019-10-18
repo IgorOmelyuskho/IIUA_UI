@@ -2,7 +2,7 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const domain = 'https://iiua.com.ua';
+const domain = 'https://master.iiua.com.ua';
 
 export const environment = {
   production: false,

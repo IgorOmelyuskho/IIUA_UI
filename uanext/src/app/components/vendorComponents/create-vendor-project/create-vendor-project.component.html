@@ -300,6 +300,45 @@
       </div> -->
     </div>
 
+    <hr>
+
+    <div class="row contacts">
+      <div class="col-12">
+        <div class="form-group">
+          <input placeholder="{{ 'phonePlaceholder' | translate:self }}" [textMask]="{mask: FormHelper.phoneMask}"
+            type="phone" formControlName="phone" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && formControls.phone.errors }" />
+          <div *ngIf="submitted && formControls.phone.errors" class="invalid-feedback">
+            <div *ngIf="formControls.phone.errors.pattern">{{ 'validPhone' | translate:self }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <input placeholder="{{ 'skypePlaceholder' | translate:self }}" type="text" formControlName="skype"
+            class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.skype.errors }" />
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <input placeholder="{{ 'telegramPlaceholder' | translate:self }}" type="text" formControlName="telegram"
+            class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.telegram.errors }" />
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <input placeholder="{{ 'viberPlaceholder' | translate:self }}" type="text" formControlName="viber"
+            class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.viber.errors }" />
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <input placeholder="{{ 'instagramPlaceholder' | translate:self }}" type="text" formControlName="instagram"
+            class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.instagram.errors }" />
+        </div>
+      </div>
+    </div>
+
 
     <div class="form-group text-center">
       <button [disabled]="submitted && !vendorProjectForm.valid"

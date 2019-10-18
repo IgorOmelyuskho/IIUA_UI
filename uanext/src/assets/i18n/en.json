@@ -284,7 +284,12 @@
         "uploadPhotos": "Uploaded photos (one photo is required)",
         "minPhotosCount": "Minimal photos count is",
         "uploadedFiles": "Uploaded files",
-        "createProject": "Create project"
+        "createProject": "Create project",
+        "phonePlaceholder": "Enter your phone number (optional)",
+        "skypePlaceholder": "Enter your Skype (optional)",
+        "telegramPlaceholder": "Enter your Telegram (optional)",
+        "viberPlaceholder": "Enter your Vibe (optional)",
+        "instagramPlaceholder": "Enter your Instagram (optional)"
     },
     "MainScreenVendorComponent": {
         "quickAction": "Quick action",

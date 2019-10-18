@@ -94,6 +94,10 @@ export class MapManager {
     for (let i = 0; i < regionalCentersCoords.length; i++) {
       if (regionalCentersCoords[i].value === region) {
         this.map.setCenter(new maptalks.Coordinate(regionalCentersCoords[i].x, regionalCentersCoords[i].y));
+        if (this.on_map_change_extent != null) {
+          const extent = this.getExtent();
+          this.on_map_change_extent(extent);
+        }
         return;
       }
     }
@@ -183,7 +187,7 @@ export class MapManager {
 
   private updateGeoObjectSettings(geoObject: GeoObject) {
     const historyPosition: HistoryPositionDto = {
-      object3DId: geoObject.geoObjectId,
+      objectId: geoObject.geoObjectId,
       positionX: geoObject.coords.x,
       positionY: geoObject.coords.y,
       scale: geoObject.scale,
@@ -1335,7 +1339,7 @@ export class MapManager {
         this.projectsService.addProjectGeoObject(projectGeoObjectDto).subscribe();
 
         const historyPositionDto: HistoryPositionDto = {
-          object3DId: projectGeoObjectDto.geoObjectId,
+          objectId: projectGeoObjectDto.geoObjectId,
           positionX: object3DDto.staticPositionX,
           positionY: object3DDto.staticPositionY,
           scale: object3DDto.scale,
