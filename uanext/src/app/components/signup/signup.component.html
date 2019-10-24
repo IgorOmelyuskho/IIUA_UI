@@ -15,8 +15,8 @@
             <div class="registration">{{ 'registration' | translate:self }}</div>
 
             <div class="text-center">
-              <!-- <button [ngClass]="{ 'selected': userRole === 'Investor' }" (click)="asInvestor()"
-                class="btn btn-primary select-role investor">{{ 'investor' | translate:self }}</button> -->
+              <button [ngClass]="{ 'selected': userRole === 'Investor' }" (click)="asInvestor()"
+                class="btn btn-primary select-role investor">{{ 'investor' | translate:self }}</button>
               <button [ngClass]="{ 'selected': userRole === 'Vendor' }" (click)="asVendor()"
                 class="btn btn-primary select-role vendor">{{ 'vendor' | translate:self }}</button>
             </div>
