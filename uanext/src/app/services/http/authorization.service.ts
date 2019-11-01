@@ -1,9 +1,7 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { Observable, of } from 'rxjs';
-
 import { StateService } from '../state.service';
 import { environment } from '../../../environments/environment';
 import { VendorDto, InvestorDto, UserRole, VendorRole, InvestorRole, AdminRole } from '../../models';
@@ -13,7 +11,7 @@ import { AdminDto } from 'src/app/models/adminDto';
 import { ProjectUserDto } from 'src/app/models/projectUserDto';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { SocialUserDto } from 'src/app/models/socialUserDto';
-import { NotificationService } from '../notification.service';
+import { ToastService } from '../toast.service';
 import { TranslateService } from '../translate.service';
 import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
@@ -32,7 +30,7 @@ export class AuthorizationService {
     private router: Router,
     private profileService: ProfileService,
     private socialAuthService: AuthService,
-    private notify: NotificationService,
+    private notify: ToastService,
     private translate: TranslateService) { }
 
   init() {

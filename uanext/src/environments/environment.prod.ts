@@ -3,10 +3,10 @@ const domain = 'https://iiua.com.ua';
 export const environment = {
   production: true,
   signalR: domain + '/notifications/cord',
-  auth:  domain + '/auth',
-  projects: domain +  '/projects',
-  map:  domain + '/map',
-  notifications: domain +  '/notifications',
+  auth: domain + '/auth',
+  projects: domain + '/projects',
+  map: domain + '/map',
+  notifications: domain + '/notifications',
   files: domain + '/files',
   chat: domain + '/conversation',
 

@@ -5,14 +5,14 @@ import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
 import { AuthorizationService } from '../http/authorization.service';
-import { NotificationService } from '../notification.service';
+import { ToastService } from '../toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private authService: AuthorizationService, private notify: NotificationService) { }
+  constructor(private authService: AuthorizationService, private notify: ToastService) { }
 
   intercept(
     request: HttpRequest<any>,

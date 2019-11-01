@@ -6,7 +6,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { VendorRole } from 'src/app/models';
 import { ProfileService } from 'src/app/services/http/profile.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class VendorProfileComponent implements OnInit {
     private stateService: StateService,
     private authService: AuthorizationService,
     private profileService: ProfileService,
-    private notify: NotificationService,
+    private notify: ToastService,
     private translate: TranslateService,
   ) {
     this.editProfileForm = this.formBuilder.group({

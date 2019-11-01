@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import FormHelper from 'src/app/helperClasses/helperClass';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class PasswordRecoveryComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
-    private notify: NotificationService,
+    private notify: ToastService,
     private translate: TranslateService
   ) {
     this.recoveryForm = this.formBuilder.group({

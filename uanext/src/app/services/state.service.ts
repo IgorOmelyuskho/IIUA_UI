@@ -5,7 +5,7 @@ import { BehaviorSubject, ReplaySubject, } from 'rxjs';
 
 import { VendorRole, AdminRole, UserRole } from '../models';
 import { InvestorRole } from '../models';
-import { NotificationService } from './notification.service';
+import { ToastService } from './toast.service';
 import { Router } from '@angular/router';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
 import { VendorProject } from 'src/app/models/vendorProject';
@@ -33,7 +33,7 @@ export class StateService {
   dragStarted = false;
   showProgressWhenDropObject$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  constructor(private notify: NotificationService, private router: Router, private socialAuthService: AuthService) { }
+  constructor(private notify: ToastService, private router: Router, private socialAuthService: AuthService) { }
 
   /**
   * must call after localStorage.setItem(token)

@@ -5,7 +5,7 @@ import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-logi
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { SocialUserDto } from 'src/app/models/socialUserDto';
 import { Observable } from 'rxjs';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 import { TranslateService } from 'src/app/services/translate.service';
 
@@ -22,7 +22,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private socialAuthService: AuthService,
     private authService: AuthorizationService,
-    private notify: NotificationService,
+    private notify: ToastService,
     private router: Router,
     private translate: TranslateService) { }
 

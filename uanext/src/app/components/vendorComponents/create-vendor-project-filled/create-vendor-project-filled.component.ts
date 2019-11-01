@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ToastService } from 'src/app/services/toast.service';
 import FormHelper from '../../../helperClasses/helperClass';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { ProjectsService } from 'src/app/services/http/projects.service';
@@ -39,7 +39,7 @@ export class CreateVendorProjectFilledComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private notify: NotificationService,
+    private notify: ToastService,
     private projectsService: ProjectsService,
     private filesService: FilesService,
     private translateService: TranslateService,

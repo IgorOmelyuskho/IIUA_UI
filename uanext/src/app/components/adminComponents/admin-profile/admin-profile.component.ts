@@ -5,7 +5,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { StateService } from 'src/app/services/state.service';
 import FormHelper from '../../../helperClasses/helperClass';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { AdminRole } from 'src/app/models';
 @Component({
   selector: 'app-admin-profile',
@@ -25,7 +25,7 @@ export class AdminProfileComponent implements OnInit {
     private stateService: StateService,
     private authService: AuthorizationService,
     private profileService: ProfileService,
-    private notify: NotificationService
+    private notify: ToastService
   ) {
     this.editProfileForm = this.formBuilder.group({
       password: ['', Validators.minLength(6)],

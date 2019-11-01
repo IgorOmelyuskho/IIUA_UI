@@ -4,7 +4,7 @@ import { AuthorizationService } from '../../../services/http/authorization.servi
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { matchOtherValidator } from '../../../validators/validators';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class SignupVendorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
     private router: Router,
-    private notify: NotificationService,
+    private notify: ToastService,
     private translate: TranslateService
   ) {
     this.signupForm = this.formBuilder.group({

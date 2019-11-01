@@ -7,7 +7,7 @@ import { StateService } from '../../services/state.service';
 import { ProfileService } from 'src/app/services/http/profile.service';
 import { Observable } from 'rxjs';
 import { VendorRole, InvestorRole, AdminRole, UserRole } from 'src/app/models';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ToastService } from 'src/app/services/toast.service';
 import FormHelper from '../../helperClasses/helperClass';
 import { take, first, delay } from 'rxjs/operators';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
@@ -34,7 +34,7 @@ export class SigninComponent implements OnInit {
     private router: Router,
     private stateService: StateService,
     private profileService: ProfileService,
-    private notify: NotificationService,
+    private notify: ToastService,
     private socialAuthService: AuthService,
     private translate: TranslateService
   ) {

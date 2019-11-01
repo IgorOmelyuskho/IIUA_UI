@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-
 import { environment } from '../../../environments/environment';
-import { InvestorRole, AdminRole } from 'src/app/models';
 import { VendorRole } from '../../models/vendorRole';
 import { ProjectUserRole } from 'src/app/models/projectUserRole';
+import { InvestorRole, AdminRole } from 'src/app/models';
 
 @Injectable({
   providedIn: 'root'

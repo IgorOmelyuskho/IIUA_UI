@@ -3,11 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
-import { GeoObject, FilterFields } from 'src/app/models';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
 import { Object3DDto } from 'src/app/models/object3DDto';
 import { HistoryPositionDto } from 'src/app/models/historyPositionDto';
 import { FilteredProjectsService } from './filtered-projects.service';
+import { FilterFields } from 'src/app/models';
 
 @Injectable({
   providedIn: 'root'

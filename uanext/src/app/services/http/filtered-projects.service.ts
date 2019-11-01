@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { environment } from 'src/environments/environment';
 import { tap, map, catchError, delay } from 'rxjs/operators';
-import { FilteredProjects, FilterFields, GeoObject } from 'src/app/models';
+import { FilterFields, FilteredProjects, GeoObject } from 'src/app/models';
 import { responseProjects } from 'src/app/helperClasses/projects';
 import { FilterComponent } from 'src/app/components';
 import { FieldActivityInterface, TranslateService } from '../translate.service';

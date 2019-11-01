@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import FormHelper from '../../../helperClasses/helperClass';
 import { AuthorizationService } from 'src/app/services/http/authorization.service';
 import { Router } from '@angular/router';
-import { NotificationService } from 'src/app/services/notification.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { matchOtherValidator } from '../../../validators/validators';
 
 @Component({
@@ -21,7 +21,7 @@ export class AdminSignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthorizationService,
     private router: Router,
-    private notify: NotificationService
+    private notify: ToastService
   ) {
     this.signupForm = this.formBuilder.group({
       fullName: ['', Validators.required],

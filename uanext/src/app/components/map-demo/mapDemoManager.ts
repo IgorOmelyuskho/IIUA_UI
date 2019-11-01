@@ -1,4 +1,3 @@
-import Stats from 'stats-js';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { TouchSequence } from 'selenium-webdriver';
 import { GeoObjectEdit } from 'src/app/models/geoObjectEdit';
@@ -34,7 +33,6 @@ export class MapManager {
 
   // fields
   private canvasElem: HTMLElement = null;
-  private stats: Stats = null;
   private scene = null;
   private raycaster = null;
   private mouse = null;
@@ -82,7 +80,6 @@ export class MapManager {
     window.removeEventListener('keydown', this.windowKeyDown);
 
     this.canvasElem = null;
-    this.stats = null;
     this.scene = null;
     this.threeLayer = null;
     this.raycaster = null;
@@ -309,9 +306,6 @@ export class MapManager {
     this.mapWrapperElement = document.getElementById(this.mapWrapperId);
     this.canvasElem = this.mapElement.querySelector('canvas');
 
-    // this.stats = new Stats();
-    // this.stats.dom.style.left = '80px';
-    // this.mapElement.appendChild(this.stats.dom);
     this.raycaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
 
@@ -350,7 +344,6 @@ export class MapManager {
 
   private animation = () => {
     this.animationFrame = requestAnimationFrame(this.animation);
-    // this.stats.update();
     if (this.labelRenderer != null && this.scene != null && this.camera != null) {
       this.labelRenderer.render(this.scene, this.camera);
     }

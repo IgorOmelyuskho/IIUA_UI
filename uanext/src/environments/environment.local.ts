@@ -3,10 +3,10 @@ const domain = 'http://localhost';
 export const environment = {
   production: true,
   signalR: domain + '/notifications/api/CoordinatesHub',
-  auth:  domain + '/auth',
-  projects: domain +  '/projects',
-  map:  domain + '/map',
-  notifications: domain +  '/notifications',
+  auth: domain + '/auth',
+  projects: domain + '/projects',
+  map: domain + '/map',
+  notifications: domain + '/notifications',
   files: domain + '/files',
   chat: domain + '/conversation',
 
