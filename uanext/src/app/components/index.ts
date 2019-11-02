@@ -40,7 +40,7 @@ import { InvestorNotificationsComponent } from './investorComponents/investor-no
 import { InvestorCommentsComponent } from './investorComponents/investor-comments/investor-comments.component';
 import { InvestorUpdatesComponent } from './investorComponents/investor-updates/investor-updates.component';
 import { HoveredProjectCardComponent } from './hovered-project-card/hovered-project-card.component';
-import { InvestorFilterPageComponent } from './investorComponents/investor-filter-page/investor-filter-page.component';
+import { FilterPageComponent } from './filter-page/filter-page.component';
 import { ProjectUserPageComponent } from './projectUserComponents/project-user-page/project-user-page.component';
 import { ProjectUserProfileComponent } from './projectUserComponents/project-user-profile/project-user-profile.component';
 import { ProjectUserSignupComponent } from './vendorComponents/project-user-signup/project-user-signup.component';
@@ -102,7 +102,7 @@ export {
   StepsComponent,
   VideosComponent,
   ViewProjectComponent,
-  InvestorFilterPageComponent,
+  FilterPageComponent,
   Object3dUploadComponent,
   AdminPageComponent,
   AdminProfileComponent,
@@ -179,7 +179,7 @@ export const components = [
   StepsComponent,
   VideosComponent,
   ViewProjectComponent,
-  InvestorFilterPageComponent,
+  FilterPageComponent,
   Object3dUploadComponent,
   AdminPageComponent,
   AdminProfileComponent,

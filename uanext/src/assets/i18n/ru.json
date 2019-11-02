@@ -130,7 +130,7 @@
         "newMessage": "Пришло новое сообщение",
         "download": "Скачать"
     },
-    "InvestorFilterPageComponent": {
+    "FilterPageComponent": {
         "findProject": "Найти проект или компанию по ключевым словам",
         "noProjects": "Проекты не найдены",
         "shared": "Общее",
@@ -402,6 +402,7 @@
         "home": "Карта",
         "profile": "Профиль",
         "projects": "Проекты",
+        "viewProjects": "Проекты",
         "selectProject": "Выбрать проект",
         "createProjectUser": "Создать пользователя проекта",
         "changeProject": "Сменить проект:",

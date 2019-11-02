@@ -17,7 +17,7 @@ import { ViewProjectComponent } from './components';
 import { UpdateVendorProjectComponent } from './components';
 import { Object3dUploadComponent } from './components';
 import { AdminPageComponent } from './components';
-import { InvestorFilterPageComponent } from './components';
+import { FilterPageComponent } from './components';
 import { AdminProfileComponent } from './components';
 import { AdminSignupComponent } from './components';
 import { MainScreenInvestorComponent } from './components';
@@ -33,8 +33,8 @@ import { AdminMailDeliveryComponent } from './components/adminComponents/admin-m
 const childInvestorRoutes: Routes = [
   { path: '', redirectTo: 'main-page', pathMatch: 'full' },
   { path: 'profile', component: InvestorProfileComponent },
-  { path: 'viewProjects', component: InvestorFilterPageComponent },
-  { path: 'project/:id', component: ViewProjectComponent },
+  { path: 'viewProjects', component: FilterPageComponent },
+  { path: 'viewProjects/project/:id', component: ViewProjectComponent },
   { path: 'main-page', component: MainScreenInvestorComponent },
 ];
 
@@ -47,6 +47,8 @@ const childVendorRoutes: Routes = [
   { path: 'project/:id', component: UpdateVendorProjectComponent },
   { path: 'main-page', component: MainScreenVendorComponent },
   { path: 'create-project-user', component: ProjectUserSignupComponent },
+  { path: 'viewProjects', component: FilterPageComponent },
+  { path: 'viewProjects/project/:id', component: ViewProjectComponent },
 ];
 
 const childAdminRoutes: Routes = [
@@ -69,7 +71,7 @@ const childHomeRoutes: Routes = [
 ];
 
 const routes: Routes = [
-  { path: 'investor_test', component: InvestorFilterPageComponent },
+  { path: 'investor_test', component: FilterPageComponent },
   { path: 'main-screen_test', component: InvestorComponent, children: childInvestorRoutes },
   { path: 'map_test', component: MapComponent },
   { path: 'main-screen_vendor_test', component: VendorComponent, children: childVendorRoutes },

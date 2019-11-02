@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
-import FormHelper from '../../../helperClasses/helperClass';
+import FormHelper from '../../helperClasses/helperClass';
 import { fromEvent, BehaviorSubject, Observable, Subscription, concat } from 'rxjs';
 import { tap, map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { VendorProject } from 'src/app/models/vendorProject';
@@ -12,16 +12,16 @@ import { FilterFields, FilteredProjects, GeoObject } from 'src/app/models';
 import { FilteredProjectsService } from 'src/app/services/http/filtered-projects.service';
 
 @Component({
-  selector: 'app-investor-filter-page',
-  templateUrl: './investor-filter-page.component.html',
-  styleUrls: ['./investor-filter-page.component.scss']
+  selector: 'app-filter-page',
+  templateUrl: './filter-page.component.html',
+  styleUrls: ['./filter-page.component.scss']
 })
-export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FilterPageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('searchByKeyWordInput') searchByKeyWordInput: ElementRef;
   @ViewChild('rightCol') rightCol: ElementRef;
 
   FormHelper = FormHelper;
-  self = 'InvestorFilterPageComponent';
+  self = 'FilterPageComponent';
 
   projects: VendorProject[] = [];
   selectedProject: VendorProject;
@@ -130,8 +130,15 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
   goToProject(project: VendorProject) {
+    let vendorOrInvestor: string;
     this.filteredProjectsService.projectForView = project;
-    this.router.navigate(['home', 'investor', 'project', project.id]);
+    if (this.router.url.includes('investor')) {
+      vendorOrInvestor = 'investor';
+    }
+    if (this.router.url.includes('vendor')) {
+      vendorOrInvestor = 'vendor';
+    }
+    this.router.navigate(['home', vendorOrInvestor, 'viewProjects', 'project', project.id]);
   }
 
   selectProject(project: VendorProject) {
@@ -263,3 +270,4 @@ export class InvestorFilterPageComponent implements OnInit, AfterViewInit, OnDes
   }
 
 }
+

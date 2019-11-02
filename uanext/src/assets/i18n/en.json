@@ -130,7 +130,7 @@
         "newMessage": "New message arrived",
         "download": "Download"
     },
-    "InvestorFilterPageComponent": {
+    "FilterPageComponent": {
         "findProject": "Find a project or company by keywords",
         "noProjects": "No projects found",
         "shared": "Shared",
@@ -402,6 +402,7 @@
         "home": "Map",
         "profile": "Profile",
         "projects": "Projects",
+        "viewProjects": "Projects",
         "createProjectUser": "Create project user",
         "selectProject": "Select project",
         "changeProject": "Change project:",

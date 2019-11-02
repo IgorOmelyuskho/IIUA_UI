@@ -8,6 +8,7 @@
       <div (click)="menuIsOpen = false"
         [style.display]="menuIsOpen === true || matchesMediaQuery === false ? 'flex' : 'none'" class="btn-wrapper">
         <button #home (click)='homeClick()' type="button">{{ 'home' | translate:self }}</button>
+        <button #viewProjects (click)='viewProjectsClick()' type="button">{{ 'viewProjects' | translate:self }}</button>
         <!-- <button #createProjectUser (click)='createProjectUserClick()'
           type="button">{{ 'createProjectUser' | translate:self }}</button> -->
       </div>

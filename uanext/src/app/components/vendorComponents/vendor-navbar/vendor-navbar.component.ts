@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('home') homeTab: ElementRef;
+  @ViewChild('viewProjects') viewProjectsTab: ElementRef;
   // @ViewChild('createProjectUser') createProjectUser: ElementRef;
   self = 'VendorNavbarComponent';
   mediaQueryString = 'screen and (max-width: 760px)'; // also used in .scss
@@ -65,9 +66,13 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // this.createProjectUser.nativeElement.classList.remove('selected');
     this.homeTab.nativeElement.classList.remove('selected');
+    this.viewProjectsTab.nativeElement.classList.remove('selected');
 
     if (endOfUrl === 'main-page') {
       this.homeTab.nativeElement.classList.add('selected');
+    }
+    if (endOfUrl === 'viewProjects') {
+      this.viewProjectsTab.nativeElement.classList.add('selected');
     }
     // if (endOfUrl === 'create-project-user') {
     //   this.createProjectUser.nativeElement.classList.add('selected');
@@ -95,6 +100,11 @@ export class VendorNavbarComponent implements OnInit, AfterViewInit, OnDestroy {
   homeClick() {
     this.profileMenuOpen = false;
     this.router.navigate(['home', 'vendor', 'main-page']);
+  }
+
+  viewProjectsClick() {
+    this.profileMenuOpen = false;
+    this.router.navigate(['home', 'vendor', 'viewProjects']);
   }
 
   profileClick() {

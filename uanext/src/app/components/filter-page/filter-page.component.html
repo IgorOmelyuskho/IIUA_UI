@@ -125,7 +125,7 @@
             </div>
           </div>
           <div class="button-wrapper">
-            <button>{{ 'downloadAll' | translate:self }}</button>
+            <button *ngIf="selectedProject.files.length > 0">{{ 'downloadAll' | translate:self }}</button>
           </div>
         </div>
       </div>
