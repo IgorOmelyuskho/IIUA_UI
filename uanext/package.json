@@ -26,7 +26,6 @@
     "@auth0/angular-jwt": "^2.1.0",
     "angular2-text-mask": "^9.0.0",
     "angularx-social-login": "1.2.6",
-    "autosize": "^4.0.2",
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",

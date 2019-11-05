@@ -1,6 +1,6 @@
 // use for signUp
 export interface InvestorDto {
-  userName?: string;
+  fullName?: string;
   rePassword?: string;
   password: string;
   email: string;

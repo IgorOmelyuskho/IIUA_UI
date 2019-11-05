@@ -5,7 +5,6 @@ import { FilesService } from 'src/app/services/http/files.service';
 import { StateService } from 'src/app/services/state.service';
 import { Observable, Subscription } from 'rxjs';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
-import * as autosize from 'autosize';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { Chat } from 'src/app/models/chat/chat';
 import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';

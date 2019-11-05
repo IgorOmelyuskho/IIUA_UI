@@ -132,7 +132,7 @@
           <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">
         </div>
         <div class="textarea-wrapper">
-          <textarea (keydown.control.enter)="sendMessage()" rows="1" [(ngModel)]="textFromInput"
+          <textarea (keydown.enter)="sendMessage()" rows="1" [(ngModel)]="textFromInput"
             placeholder="{{ 'message' | translate:self }}"></textarea>
         </div>
         <div (click)="sendMessage()" [ngClass]="{'send-disabled': attachmentReady === false}" class="send">

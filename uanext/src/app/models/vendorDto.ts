@@ -1,6 +1,6 @@
 // use for signUp
 export interface VendorDto {
-  userName?: string;
+  fullName?: string;
   rePassword?: string;
   password: string;
   email: string;

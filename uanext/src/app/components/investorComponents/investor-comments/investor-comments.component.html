@@ -134,7 +134,7 @@
         <input (change)="handleAttachmentChange($event)" class="attach-input" type="file">
       </div>
       <div class="textarea-wrapper">
-        <textarea (keydown.control.enter)="sendMessageToSharedChat()" [(ngModel)]="sharedChatMsgText" rows="1"
+        <textarea (keydown.enter)="sendMessageToSharedChat()" [(ngModel)]="sharedChatMsgText" rows="1"
           placeholder="{{ 'leaveComment' | translate:self }}"></textarea>
       </div>
       <button [ngClass]="{'send-disabled': attachmentReady === false}" (click)="sendMessageToSharedChat()"

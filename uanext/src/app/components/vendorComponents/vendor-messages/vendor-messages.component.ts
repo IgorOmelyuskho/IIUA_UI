@@ -5,12 +5,12 @@ import { FilesService } from 'src/app/services/http/files.service';
 import { StateService } from 'src/app/services/state.service';
 import { Observable, Subscription } from 'rxjs';
 import { FileResponseDto } from 'src/app/models/fileResponseDto';
-import * as autosize from 'autosize';
 import { VendorProject } from 'src/app/models/vendorProject';
 import { Chat } from 'src/app/models/chat/chat';
 import { ChatSignalRService } from 'src/app/services/chat-signal-r.service';
 import { Participant } from 'src/app/models/chat/chatParticipant';
 import { ParticipantsCacheService } from 'src/app/services/participants-cache.service';
+import { AutoSizeService } from 'src/app/services/auto-size.service';
 
 const msg_test: Message = {
   attachmentId: null,
@@ -59,7 +59,8 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     private fileService: FilesService,
     private stateService: StateService,
     private chatSignalR: ChatSignalRService,
-    private participantsCacheService: ParticipantsCacheService
+    private participantsCacheService: ParticipantsCacheService,
+    private autoSize: AutoSizeService
   ) { }
 
   ngOnInit() {
@@ -96,7 +97,7 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit() {
-    autosize(document.querySelector(this.textareaSelector));
+    this.autoSize.init(document.querySelector(this.textareaSelector));
 
     this.signalChatRSubscription = this.chatSignalR.messageReceived$.subscribe(
       (message: Message) => {
@@ -147,9 +148,9 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
         this.scrollToBottom();
       });
     }
-    requestAnimationFrame(() => {
-      autosize.update(document.querySelector(this.textareaSelector));
-    });
+    // requestAnimationFrame(() => {
+    //   this.autoSize.update(document.querySelector(this.textareaSelector));
+    // });
   }
 
   scrollHandler = (event) => {
@@ -173,10 +174,10 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.messagesLoading = true;
     observable.subscribe(
       (messages: Message[]) => {
-        requestAnimationFrame(() => {
+/*         requestAnimationFrame(() => {
           autosize.destroy(document.querySelectorAll(this.textareaSelector)); // update not work
           autosize(document.querySelectorAll(this.textareaSelector));
-        });
+        }); */
         if (initial === true) {
           this.messages = [];
           requestAnimationFrame(() => {
@@ -322,7 +323,6 @@ export class VendorMessagesComponent implements OnInit, AfterViewInit, OnDestroy
     this.projectSubscription.unsubscribe();
     this.signalChatRSubscription.unsubscribe();
     this.blockedOrUnblockedChatSubscription.unsubscribe();
-    autosize.destroy(document.querySelector(this.textareaSelector));
     if (this.uploadFilesSubscribe != null) {
       this.uploadFilesSubscribe.unsubscribe();
     }

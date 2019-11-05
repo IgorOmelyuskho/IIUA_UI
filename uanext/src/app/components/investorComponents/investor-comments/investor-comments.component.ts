@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { VendorProject } from 'src/app/models/vendorProject';
-import * as autosize from 'autosize';
 import { ChatService } from 'src/app/services/http/chat.service';
 import { Chat } from 'src/app/models/chat/chat';
 import { Observable, Subscription } from 'rxjs';
@@ -55,8 +54,8 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     );
 
     requestAnimationFrame(() => {
-      autosize(document.querySelector(this.textareaSelector1));
-      autosize(document.querySelectorAll(this.textareaSelector2));
+  /*     autosize(document.querySelector(this.textareaSelector1));
+      autosize(document.querySelectorAll(this.textareaSelector2)); */
     });
 
     this.chatService.getChatByProjectId(this.project.id).subscribe(
@@ -102,7 +101,7 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
       });
     }
     requestAnimationFrame(() => {
-      autosize.update(document.querySelector(this.textareaSelector1));
+      /* autosize.update(document.querySelector(this.textareaSelector1)); */
     });
   }
 
@@ -120,8 +119,8 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
     observable.subscribe(
       (messages: Message[]) => {
         requestAnimationFrame(() => {
-          autosize.destroy(document.querySelectorAll(this.textareaSelector2)); // update not work
-          autosize(document.querySelectorAll(this.textareaSelector2));
+     /*      autosize.destroy(document.querySelectorAll(this.textareaSelector2)); // update not work
+          autosize(document.querySelectorAll(this.textareaSelector2)); */
         });
         if (initial === true) {
           this.messages = [];
@@ -246,8 +245,6 @@ export class InvestorCommentsComponent implements OnInit, AfterViewInit, OnDestr
 
   ngOnDestroy() {
     this.messagesElement.nativeElement.removeEventListener('scroll', this.scrollHandler);
-    autosize.destroy(document.querySelector(this.textareaSelector1));
-    autosize.destroy(document.querySelectorAll(this.textareaSelector2));
     this.signalRSubscription.unsubscribe();
     if (this.uploadFilesSubscribe != null) {
       this.uploadFilesSubscribe.unsubscribe();

@@ -1,7 +1,7 @@
 // use for signUp
 
 export interface ProjectUserDto {
-  userName?: string;
+  fullName?: string;
   rePassword?: string;
   password: string;
   email: string;

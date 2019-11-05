@@ -1,7 +1,7 @@
 // use for signUp
 
 export interface AdminDto {
-  userName?: string;
+  fullName?: string;
   rePassword?: string;
   password: string;
   email: string;
